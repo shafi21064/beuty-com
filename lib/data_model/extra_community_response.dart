@@ -43,6 +43,7 @@ class Datum {
     this.hashtags,
     this.date,
     this.likeCount,
+    this.isLiked,
     this.commentsCount,
     this.allComments,
   });
@@ -56,8 +57,9 @@ class Datum {
   String hashtags;
   String date;
   int likeCount;
+  bool isLiked;
   int commentsCount;
-  List<dynamic> allComments;
+  List<AllComment> allComments;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
@@ -69,8 +71,9 @@ class Datum {
     hashtags: json["hashtags"],
     date: json["date"],
     likeCount: json["like_count"],
+    isLiked: json["isLiked"],
     commentsCount: json["comments_count"],
-    allComments: List<dynamic>.from(json["all_comments"].map((x) => x)),
+    allComments: List<AllComment>.from(json["all_comments"].map((x) => AllComment.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -83,7 +86,72 @@ class Datum {
     "hashtags": hashtags,
     "date": date,
     "like_count": likeCount,
+    "isLiked": isLiked,
     "comments_count": commentsCount,
-    "all_comments": List<dynamic>.from(allComments.map((x) => x)),
+    "all_comments": List<dynamic>.from(allComments.map((x) => x.toJson())),
+  };
+}
+
+class AllComment {
+  AllComment({
+    this.id,
+    this.parentId,
+    this.customerId,
+    this.postId,
+    this.comment,
+    this.order,
+    this.isActive,
+    this.createdBy,
+    this.updatedBy,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
+    this.customerName,
+  });
+
+  int id;
+  int parentId;
+  int customerId;
+  int postId;
+  String comment;
+  int order;
+  int isActive;
+  dynamic createdBy;
+  dynamic updatedBy;
+  DateTime createdAt;
+  DateTime updatedAt;
+  dynamic deletedAt;
+  String customerName;
+
+  factory AllComment.fromJson(Map<String, dynamic> json) => AllComment(
+    id: json["id"],
+    parentId: json["parent_id"] == null ? null : json["parent_id"],
+    customerId: json["customer_id"],
+    postId: json["post_id"],
+    comment: json["comment"],
+    order: json["order"],
+    isActive: json["is_active"],
+    createdBy: json["created_by"],
+    updatedBy: json["updated_by"],
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
+    deletedAt: json["deleted_at"],
+    customerName: json["customer_name"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "parent_id": parentId == null ? null : parentId,
+    "customer_id": customerId,
+    "post_id": postId,
+    "comment": comment,
+    "order": order,
+    "is_active": isActive,
+    "created_by": createdBy,
+    "updated_by": updatedBy,
+    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt.toIso8601String(),
+    "deleted_at": deletedAt,
+    "customer_name": customerName,
   };
 }

@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/helpers/file_helper.dart';
 import 'package:active_ecommerce_flutter/repositories/extra_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +7,10 @@ import 'package:active_ecommerce_flutter/ui_sections/drawer.dart';
 import 'package:active_ecommerce_flutter/custom/toast_component.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:like_button/like_button.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:readmore/readmore.dart';
 import 'package:toast/toast.dart';
 import 'package:active_ecommerce_flutter/screens/category_products.dart';
@@ -29,6 +32,92 @@ class FeedList extends StatefulWidget {
 class _FeedListState extends State<FeedList> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   List<bool> isMore = [];
+
+  TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _hashtagsController = TextEditingController();
+
+  //for image uploading
+  final ImagePicker _picker = ImagePicker();
+  XFile _file;
+
+  addCommunityPost(context) async {
+    var status = await Permission.photos.request();
+
+    if (status.isDenied) {
+      // We didn't ask for permission yet.
+      showDialog(
+          context: context,
+          builder: (BuildContext context) => CupertinoAlertDialog(
+                title:
+                    Text(AppLocalizations.of(context).common_photo_permission),
+                content: Text(
+                    AppLocalizations.of(context).common_app_needs_permission),
+                actions: <Widget>[
+                  CupertinoDialogAction(
+                    child: Text(AppLocalizations.of(context).common_deny),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  CupertinoDialogAction(
+                    child: Text(AppLocalizations.of(context).common_settings),
+                    onPressed: () => openAppSettings(),
+                  ),
+                ],
+              ));
+    } else if (status.isRestricted) {
+      ToastComponent.showDialog(
+          AppLocalizations.of(context).common_give_photo_permission, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    } else if (status.isGranted) {
+      //file = await ImagePicker.pickImage(source: ImageSource.camera);
+      _file = await _picker.pickImage(source: ImageSource.gallery);
+
+      if (_file == null) {
+        ToastComponent.showDialog(
+            AppLocalizations.of(context).common_no_file_chosen, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        return;
+      }
+
+      //return;
+      String base64Image = FileHelper.getBase64FormateFile(_file.path);
+      String fileName = _file.path.split("/").last;
+
+      var newCommunityPostResponse =
+          await ExtraRepository().getNewCommunityPostResponse(
+        base64Image,
+        fileName,
+        _titleController.text.toString(),
+        _descriptionController.text.toString(),
+        _hashtagsController.text.toString(),
+      );
+
+      if (newCommunityPostResponse.result == false) {
+        ToastComponent.showDialog(newCommunityPostResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        return;
+      } else {
+        ToastComponent.showDialog(newCommunityPostResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+
+        setState(() {});
+      }
+    }
+  }
+
+  Future<void> _onPageRefresh() async {}
+
+  Future<bool> addLike(String post_id) async {
+    var addLikeResponse =
+        await ExtraRepository().getCommunityLikeCreateResponse(post_id);
+
+  if (addLikeResponse.result == false) {
+      ToastComponent.showDialog("Login first!", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,18 +227,22 @@ class _FeedListState extends State<FeedList> {
                     ),
                   ),
                   Container(
-                      margin: EdgeInsets.only(left: 15,top: 12,bottom: 12),
-                      child: Container(decoration: BoxDecoration(
-                        border: Border(left: BorderSide(color: Colors.teal, width: 5)),
-                      ),
-
+                      margin: EdgeInsets.only(left: 15, top: 12, bottom: 12),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                              left: BorderSide(color: Colors.teal, width: 5)),
+                        ),
                         child: Text(
                           ' HashTags',
                           style: GoogleFonts.ubuntu(
-                              color: Colors.red[800], fontSize: 22),
+                              color: Colors.red[800], fontSize: 18),
                         ),
                       )),
-                  buildFeedHashList(),
+                  SizedBox(
+                    child: buildFeedHashList(),
+                    height: 42,
+                  ),
                   buildFeedList(),
                 ]))
               ],
@@ -474,9 +567,11 @@ class _FeedListState extends State<FeedList> {
               });
             },
             child: ReadMoreText(
-              compostResponse.data[index].title +
-                  '\n' +
-                  compostResponse.data[index].description,
+              compostResponse.data[index].title == null
+                  ? ''
+                  : compostResponse.data[index].title + '\n' + compostResponse.data[index].description == null
+                      ? ''
+                      : compostResponse.data[index].description,
               trimLines: 3,
               style: TextStyle(color: Colors.black, fontSize: 15),
               colorClickableText: Colors.blueGrey,
@@ -507,8 +602,22 @@ class _FeedListState extends State<FeedList> {
               Padding(
                 padding: EdgeInsets.fromLTRB(6, 8, 8, 0),
                 child: LikeButton(
+                  // onTap: addLike(compostResponse.data[index].id),
+                  // ignore: missing_return
+                  onTap: (bool isLiked) async {
+                    if (1 == 1) {
+                      addLike(compostResponse.data[index].id.toString());
+                    } else {
+                      ToastComponent.showDialog("Login first!", context,
+                          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+                    }
+                    return !isLiked;
+                  },
+
                   size: 56,
-                  isLiked: false,
+                  isLiked:compostResponse.data[index].isLiked != null
+                      ? true
+                      : false,
                   circleColor: CircleColor(
                       start: Color(0xff00ddff), end: Color(0xff0099cc)),
                   bubblesColor: BubblesColor(
@@ -555,12 +664,7 @@ class _FeedListState extends State<FeedList> {
                 ),
               ),
               InkWell(
-                onTap: () {
-                  showMaterialModalBottomSheet(
-                    context: context,
-                    builder: (context) => Container(),
-                  );
-                },
+                onTap: () {},
                 child: Padding(
                   padding: EdgeInsets.only(left: 20, top: 23),
                   child: Text(

@@ -22,8 +22,7 @@ class ProfileEdit extends StatefulWidget {
 class _ProfileEditState extends State<ProfileEdit> {
   ScrollController _mainScrollController = ScrollController();
 
-  TextEditingController _nameController =
-      TextEditingController(text: "${user_name.$}");
+  TextEditingController _nameController = TextEditingController(text: "${user_name.$}");
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _passwordConfirmController = TextEditingController();
 

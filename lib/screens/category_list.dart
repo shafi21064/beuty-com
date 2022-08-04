@@ -315,15 +315,13 @@ class _CategoryListState extends State<CategoryList> {
                           );
                         }));
                       },
-                      child:
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             color: Color(int.parse("0xffff0000")).withAlpha(20)
                         ),
-                        child:
-                        Text(
+                        child: Text(
                           AppLocalizations.of(context).category_list_screen_view_products,
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.ellipsis,
