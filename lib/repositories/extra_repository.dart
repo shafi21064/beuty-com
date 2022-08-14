@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:active_ecommerce_flutter/data_model/extra/BeautyBooksResponse.dart';
+import 'package:active_ecommerce_flutter/data_model/extra/BlogPostResponse.dart';
+import 'package:active_ecommerce_flutter/data_model/extra/CommunityCommentResponse.dart';
 import 'package:active_ecommerce_flutter/data_model/extra/NewCommunityPostResponse.dart';
 import 'package:active_ecommerce_flutter/data_model/extra/addCommunityComment.dart';
 import 'package:active_ecommerce_flutter/data_model/extra/addCommunityLike.dart';
@@ -10,10 +13,31 @@ import 'package:http/http.dart' as http;
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 
 class ExtraRepository {
+   var token="113|QcbzqMYo8HcDEcBfeNuCpdAKbD2ujHwmGl3hTZF3";
+
+
+  //Community View- Posts
+  Future<BlogPostResponse> getBlogPosts() async {
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/blogs");
+    final response = await http.get(url, headers: {
+      "Content-Type": "application/json", "Authorization": "Bearer $token",
+      "App-Language": app_language.$
+    });
+    print(url);
+    print(response.body.toString());
+
+    return blogPostResponseFromJson(response.body);
+  }
+
+
+
+  //Community View- Posts
+
   Future<CommunityPostResponse> getCommunityPosts() async {
     Uri url = Uri.parse("${AppConfig.BASE_URL_1}/community-posts");
     final response = await http.get(url, headers: {
-      "App-Language": app_language.$,
+      "Content-Type": "application/json", "Authorization": "Bearer $token",
+      "App-Language": app_language.$
     });
     print(url);
     print(response.body.toString());
@@ -34,20 +58,22 @@ class ExtraRepository {
 
 
 
-  //Community post create
+  ////Community Create- Post
 
   Future<NewCommunityPostResponse> getNewCommunityPostResponse(
       String image,
       String filename,
-      String title,
+     // String title,
       String description,
-      String hashtags) async {
+    //  String hashtags
+
+      ) async {
     var post_body = jsonEncode({
       "banner": "${image}",
       "filename": "$filename",
-      "title": "$title",
       "description": "$description",
-      "hashtags": "$hashtags",
+      // "title": "$title",
+     // "hashtags": "$hashtags",
     });
     //print(post_body.toString());
 
@@ -55,7 +81,7 @@ class ExtraRepository {
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer ${access_token.$}",
+          "Authorization": "Bearer $token",
           "App-Language": app_language.$,
         },
         body: post_body);
@@ -65,7 +91,7 @@ class ExtraRepository {
   }
 
 
-
+//Community Create- Comment
 
   Future<AddCommunityComment> getCommunityCommentCreateResponse(
       String comment,
@@ -83,14 +109,15 @@ class ExtraRepository {
 
     Uri url = Uri.parse("${AppConfig.BASE_URL_1}/community-comment-create");
     final response = await http.post(url,
-        headers: {"Content-Type": "application/json", "Authorization": "Bearer ${access_token.$}","App-Language": app_language.$,},body: post_body );
+        headers: {"Content-Type": "application/json", "Authorization": "Bearer $token","App-Language": app_language.$,},body: post_body );
 
-    //print(response.body.toString());
+    print(url);
+    print(response.body.toString());
     return addCommunityCommentFromJson(response.body);
   }
 
 
-
+//Community Create- Like
   Future<AddCommunityLike> getCommunityLikeCreateResponse(
       String post_id
       ) async {
@@ -101,7 +128,7 @@ class ExtraRepository {
 
     Uri url = Uri.parse("${AppConfig.BASE_URL_1}/community-like-create");
     final response = await http.post(url,
-        headers: {"Content-Type": "application/json", "Authorization": "Bearer 113|QcbzqMYo8HcDEcBfeNuCpdAKbD2ujHwmGl3hTZF3","App-Language": app_language.$,},body: post_body );
+        headers: {"Content-Type": "application/json", "Authorization": "Bearer $token","App-Language": app_language.$,},body: post_body );
     print(url);
     print(response.body.toString());
     return addCommunityLikeFromJson(response.body);
@@ -109,6 +136,41 @@ class ExtraRepository {
 
 
 
+
+//Community View- Comments:::{post_id}
+  Future<CommunityCommentResponse> getCommunityCommentResponse(
+      int post_id
+      ) async {
+
+    var post_body = jsonEncode({
+      //"post_id": "$post_id"
+    });
+
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/community-comments/$post_id");
+    final response = await http.get(url, headers: {
+      "Content-Type": "application/json", "Authorization": "Bearer $token",
+      "App-Language": app_language.$
+    });
+    print(url);
+    print(response.body.toString());
+    return communityCommentResponseFromJson(response.body);
+  }
+
+
+//Beauty books:::
+
+
+  Future<List<BeautyBooksResponse>> getBeautyBooks() async {
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/beauty-books");
+    final response = await http.get(url, headers: {
+      "Content-Type": "application/json", "Authorization": "Bearer $token",
+      "App-Language": app_language.$
+    });
+    print(url);
+    print(response.body.toString());
+
+    return beautyBooksResponseFromJson(response.body);
+  }
 
 
 

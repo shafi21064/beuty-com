@@ -42,8 +42,8 @@ class Datum {
     this.banner,
     this.hashtags,
     this.date,
+    this.isLike,
     this.likeCount,
-    this.isLiked,
     this.commentsCount,
     this.allComments,
   });
@@ -56,8 +56,8 @@ class Datum {
   String banner;
   String hashtags;
   String date;
+  bool isLike;
   int likeCount;
-  bool isLiked;
   int commentsCount;
   List<AllComment> allComments;
 
@@ -70,8 +70,8 @@ class Datum {
     banner: json["banner"],
     hashtags: json["hashtags"],
     date: json["date"],
+    isLike: json["is_like"],
     likeCount: json["like_count"],
-    isLiked: json["isLiked"],
     commentsCount: json["comments_count"],
     allComments: List<AllComment>.from(json["all_comments"].map((x) => AllComment.fromJson(x))),
   );
@@ -85,8 +85,8 @@ class Datum {
     "banner": banner,
     "hashtags": hashtags,
     "date": date,
+    "is_like": isLike,
     "like_count": likeCount,
-    "isLiked": isLiked,
     "comments_count": commentsCount,
     "all_comments": List<dynamic>.from(allComments.map((x) => x.toJson())),
   };

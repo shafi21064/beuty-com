@@ -44,7 +44,7 @@ dependencies:
   after_init: ^0.1.2
   webview_flutter: ^2.1.1
   clipboard: ^0.1.2+8
-  google_fonts: ^2.1.0
+  google_fonts: 2.2.0
   flutter_rating_bar: ^4.0.0
   expandable: ^5.0.1
   dropdown_search: ^2.0.0
@@ -66,7 +66,9 @@ dependencies:
   flutter_facebook_auth: ^3.5.0
   google_sign_in: ^5.1.1
   google_maps_place_picker: ^2.1.0-nullsafety.3
-  firebase_messaging: ^10.0.8
+  firebase_core: ^1.10.0
+  firebase_messaging: ^11.1.0
+  firebase_messaging_platform_interface: 3.1.6
   one_context: ^1.1.1
   social_share: ^2.2.1
   flutter_typeahead: ^3.2.1
@@ -81,6 +83,8 @@ dependencies:
   dynamic_themes: ^1.1.0
   restart_app: ^1.1.0
   flutter_tags: ^0.4.9+1
+  comment_box: ^0.0.17
+  back_button_interceptor: 5.0.0
 
 
 dev_dependencies:

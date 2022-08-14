@@ -969,6 +969,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                       ),
                     ),
+
+
+
+
+
+
                     Divider(
                       height: 1,
                     ),

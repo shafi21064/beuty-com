@@ -40,8 +40,10 @@ class _FeedListState extends State<FeedList> {
   //for image uploading
   final ImagePicker _picker = ImagePicker();
   XFile _file;
+  String base64Image='';
+  String fileName='';
 
-  addCommunityPost(context) async {
+  pickCommunityImg(context) async {
     var status = await Permission.photos.request();
 
     if (status.isDenied) {
@@ -80,16 +82,29 @@ class _FeedListState extends State<FeedList> {
       }
 
       //return;
-      String base64Image = FileHelper.getBase64FormateFile(_file.path);
-      String fileName = _file.path.split("/").last;
+       base64Image = FileHelper.getBase64FormateFile(_file.path);
+       fileName = _file.path.split("/").last;
+
+    }
+  }
+
+  addCommunityPost(context) async {
+    if(_descriptionController.text==''){
+      ToastComponent.showDialog("Write something...", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    }else{
+      ToastComponent.showDialog("Adding post..", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    }
 
       var newCommunityPostResponse =
           await ExtraRepository().getNewCommunityPostResponse(
         base64Image,
         fileName,
-        _titleController.text.toString(),
-        _descriptionController.text.toString(),
-        _hashtagsController.text.toString(),
+      //  _titleController.text.toString(),
+        _descriptionController.text.toString()
+       // _hashtagsController.text.toString(),
       );
 
       if (newCommunityPostResponse.result == false) {
@@ -97,12 +112,12 @@ class _FeedListState extends State<FeedList> {
             gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
         return;
       } else {
+        _descriptionController.clear();
         ToastComponent.showDialog(newCommunityPostResponse.message, context,
             gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-
         setState(() {});
       }
-    }
+
   }
 
   Future<void> _onPageRefresh() async {}
@@ -159,6 +174,7 @@ class _FeedListState extends State<FeedList> {
                               Padding(
                                 padding: const EdgeInsets.only(right: 32.0),
                                 child: TextFormField(
+                                  controller: _descriptionController,
                                   keyboardType: TextInputType.multiline,
                                   minLines:
                                       3, //Normal textInputField will be displayed
@@ -181,7 +197,10 @@ class _FeedListState extends State<FeedList> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   FlatButton(
-                                    onPressed: () {},
+                                  onPressed: () async {
+                        await pickCommunityImg(context);
+                        },
+
                                     child: Icon(
                                       Icons.add_photo_alternate_outlined,
                                       color: Colors.white,
@@ -192,6 +211,10 @@ class _FeedListState extends State<FeedList> {
                                     width: 20,
                                   ),
                                   RaisedButton(
+                                    onPressed: () async {
+                                      await addCommunityPost(context);
+                                    },
+
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(40.0)),
@@ -283,7 +306,7 @@ class _FeedListState extends State<FeedList> {
   }
 
   String getAppBarTitle() {
-    String name = "Rajkonna Feed ";
+    String name = "Kirei Community ";
 
     return name;
   }
@@ -596,9 +619,22 @@ class _FeedListState extends State<FeedList> {
           height: 60,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
             children: [
+
+              InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Comments(compostResponse.data[index].id))); },
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20, top: 23),
+                  child: Text(
+                    " Comment       ",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: MyTheme.medium_grey, fontSize: 16),
+                  ),
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.fromLTRB(6, 8, 8, 0),
                 child: LikeButton(
@@ -615,7 +651,7 @@ class _FeedListState extends State<FeedList> {
                   },
 
                   size: 56,
-                  isLiked:compostResponse.data[index].isLiked != null
+                  isLiked:compostResponse.data[index].isLike ==true
                       ? true
                       : false,
                   circleColor: CircleColor(
@@ -653,45 +689,10 @@ class _FeedListState extends State<FeedList> {
                   },
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 25),
-                child: Text(
-                  " | ",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: MyTheme.medium_grey,
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {},
-                child: Padding(
-                  padding: EdgeInsets.only(left: 20, top: 23),
-                  child: Text(
-                    " Comment       ",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: MyTheme.medium_grey, fontSize: 16),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 25),
-                child: Text(
-                  " | ",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: MyTheme.medium_grey,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20, top: 23),
-                child: Text(
-                  " Share ",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: MyTheme.medium_grey, fontSize: 16),
-                ),
-              ),
+
+
+
+
             ],
           ),
         ),

@@ -1,4 +1,7 @@
+import 'package:active_ecommerce_flutter/screens/BeautyBooks.dart';
+import 'package:active_ecommerce_flutter/screens/blogs.dart';
 import 'package:active_ecommerce_flutter/screens/change_language.dart';
+import 'package:active_ecommerce_flutter/screens/kireiYT.dart';
 import 'package:active_ecommerce_flutter/screens/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -137,6 +140,60 @@ class _MainDrawerState extends State<MainDrawer> {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return DynamicThemesExampleApp();
+                      }));
+                    }),
+                ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    leading: Image.asset("assets/blog.jpg",
+                        height: 22, color: Theme.of(context)
+                            .buttonTheme
+                            .colorScheme
+                            .primary),
+                    title: Text('Kirei Blogs',
+                        style: TextStyle(
+                            color:Theme.of(context)
+                                .buttonTheme
+                                .colorScheme
+                                .primary,
+                            fontSize: 14)),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return Blogs();
+                      }));
+                    }),
+                ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    leading: Image.asset("assets/kyt.png",
+                        height: 22),
+                    title: Text('Kirei Youtube',
+                        style: TextStyle(
+                            color:Theme.of(context)
+                                .buttonTheme
+                                .colorScheme
+                                .primary,
+                            fontSize: 14)),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return kireiYT();
+                      }));
+                    }),
+                ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    leading: Image.asset("assets/bb.png",
+                        height: 24),
+                    title: Text('Beauty Books',
+                        style: TextStyle(
+                            color:Theme.of(context)
+                                .buttonTheme
+                                .colorScheme
+                                .primary,
+                            fontSize: 14)),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return BeautyBooks();
                       }));
                     }),
                 is_logged_in.$ == true
