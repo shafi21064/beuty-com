@@ -1,5 +1,6 @@
 import 'package:active_ecommerce_flutter/helpers/api.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
 import 'package:active_ecommerce_flutter/custom/toast_component.dart';
 import 'package:active_ecommerce_flutter/repositories/extra_repository.dart';
@@ -28,44 +29,8 @@ class ViewBlog extends StatefulWidget {
 }
 
 class _ViewBlogState extends State<ViewBlog> {
-  var token = "113|QcbzqMYo8HcDEcBfeNuCpdAKbD2ujHwmGl3hTZF3";
 
-  List blog = [
-    {
-      "id": 2,
-      "author": "John Doe",
-      "comments": 10,
-      "content": null,
-      "date": "2022-08-07",
-      "slug": "pigmentesn-theke-mukti-pawar-upay-kee",
-      "title": "পিগমেন্টেশন থেকে মুক্তি পাওয়ার উপায় কী?",
-      "type": "text",
-      "blog_categories": [
-        {
-          "name": "Health",
-          "slug": "health",
-          "pivot": {"blog_id": 2, "blog_category_id": 1}
-        }
-      ],
-      "video": null,
-      "picture": [
-        {
-          "url": "Blogs/banner_2.jpg",
-          "width": 1280,
-          "height": 500,
-          "pivot": {"related_id": 2, "upload_file_id": 0}
-        }
-      ],
-      "small_picture": [
-        {
-          "url": "Blogs/banner_2.jpg",
-          "width": 1280,
-          "height": 500,
-          "pivot": {"related_id": 2, "upload_file_id": 0}
-        }
-      ]
-    },
-  ];
+  List blog = [];
   Future viewBlog() async {
     var data = await getApi("blogs/${''}");
     if (data['data'] != null) {
@@ -97,9 +62,9 @@ class _ViewBlogState extends State<ViewBlog> {
           child: Container(
             child: Column(
               children: <Widget>[
-                !widget.picture.contains('http')
+                widget.picture==null
                     ? Image.asset(
-                        'assets/noimg.png',
+                        'assets/no_pic.png',
                         fit: BoxFit.cover,
                       )
                     : Image.network(
@@ -132,14 +97,10 @@ class _ViewBlogState extends State<ViewBlog> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        widget.content,
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 18,
-                          letterSpacing: 0.6,
-                          wordSpacing: 0.6,
-                        ),
+                      Html(
+    data: """
+    ${widget.content}
+    """,
                       ),
                       SizedBox(
                         height: 80,

@@ -21,7 +21,7 @@ class AuthRepository {
       "identity_matrix": AppConfig.purchase_code
     });
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/login");
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/auth/login");
     final response = await http.post(url,
         headers: {
           "Accept": "*/*",
@@ -29,9 +29,27 @@ class AuthRepository {
           "App-Language": app_language.$,
         },
         body: post_body);
-
+print(post_body);
     return loginResponseFromJson(response.body);
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   Future<LoginResponse> getSocialLoginResponse(@required String social_provider,
       @required String name, @required String email, @required String provider,
@@ -41,7 +59,7 @@ class AuthRepository {
     var post_body = jsonEncode(
         {"name": "${name}", "email": email, "provider": "$provider","social_provider":"$social_provider","access_token":"$access_token"});
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/social-login");
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/auth/social-login");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -54,7 +72,7 @@ class AuthRepository {
   }
 
   Future<LogoutResponse> getLogoutResponse() async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/logout");
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/auth/logout");
     final response = await http.get(
       url,
       headers: {
@@ -82,7 +100,7 @@ class AuthRepository {
       "register_by": "$register_by"
     });
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/signup");
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/auth/signup");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -98,7 +116,7 @@ class AuthRepository {
     var post_body =
         jsonEncode({"user_id": "$user_id", "register_by": "$verify_by"});
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/resend_code");
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/auth/resend_code");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -114,7 +132,7 @@ class AuthRepository {
     var post_body = jsonEncode(
         {"user_id": "$user_id", "verification_code": "$verification_code"});
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/confirm_code");
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/auth/confirm_code");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -131,7 +149,7 @@ class AuthRepository {
         {"email_or_phone": "$email_or_phone", "send_code_by": "$send_code_by"});
 
     Uri url = Uri.parse(
-      "${AppConfig.BASE_URL}/auth/password/forget_request",
+      "${AppConfig.BASE_URL_1}/auth/password/forget_request",
     );
     final response = await http.post(url,
         headers: {
@@ -151,7 +169,7 @@ class AuthRepository {
         {"verification_code": "$verification_code", "password": "$password"});
 
     Uri url = Uri.parse(
-      "${AppConfig.BASE_URL}/auth/password/confirm_reset",
+      "${AppConfig.BASE_URL_1}/auth/password/confirm_reset",
     );
     final response = await http.post(url,
         headers: {
@@ -168,7 +186,7 @@ class AuthRepository {
     var post_body = jsonEncode(
         {"email_or_code": "$email_or_code", "verify_by": "$verify_by"});
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/password/resend_code");
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/auth/password/resend_code");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -181,7 +199,7 @@ class AuthRepository {
 
   Future<UserByTokenResponse> getUserByTokenResponse() async {
     var post_body = jsonEncode({"access_token": "${access_token.$}"});
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/get-user-by-access_token");
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/get-user-by-access_token");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",

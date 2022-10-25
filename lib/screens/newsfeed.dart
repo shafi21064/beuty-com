@@ -83,8 +83,10 @@ class _FeedListState extends State<FeedList> {
 
       //return;
        base64Image = FileHelper.getBase64FormateFile(_file.path);
-       fileName = _file.path.split("/").last;
+    setState(() {
+      fileName = _file.path.split("/").last;
 
+    });
     }
   }
 
@@ -165,7 +167,7 @@ class _FeedListState extends State<FeedList> {
                                 alignment: Alignment.center,
                                 width: double.infinity,
                                 child: Text(
-                                  'Add post',
+                                  'Community post',
                                   style: TextStyle(
                                       fontSize: 18.0, color: Colors.blue),
                                 ),
@@ -180,7 +182,7 @@ class _FeedListState extends State<FeedList> {
                                       3, //Normal textInputField will be displayed
                                   maxLines: 5, //
                                   decoration: InputDecoration(
-                                      hintText: 'Share your mind..'),
+                                      hintText: 'Share your mind on community..'),
                                   validator: (v) {
                                     if (v.trim().isEmpty) {
                                       return 'Please enter something';
@@ -196,6 +198,11 @@ class _FeedListState extends State<FeedList> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
+                                  Container(
+                                     width:50,
+                                      height: 18,
+                                      margin: EdgeInsets.only(right: 10),
+                                      child: fileName==''?Text(''):Text(fileName,textAlign: TextAlign.end,)),
                                   FlatButton(
                                   onPressed: () async {
                         await pickCommunityImg(context);
@@ -510,8 +517,9 @@ class _FeedListState extends State<FeedList> {
 
   buildFeedHashCard(comHashResponse, index) {
     return Container(
-      width: 200,
-      child: ElevatedButton(
+      constraints: const BoxConstraints(
+      maxWidth: 200,
+    ),    child: ElevatedButton(
         onPressed: () {},
         child: Text(comHashResponse.data[index].title,
             style: TextStyle(fontSize: 20)),

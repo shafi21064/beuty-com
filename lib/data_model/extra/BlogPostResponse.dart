@@ -224,7 +224,7 @@ class Picture {
     this.pivot,
   });
 
-  String url;
+  dynamic url;
   int width;
   int height;
   PicturePivot pivot;
@@ -251,19 +251,26 @@ class PicturePivot {
   });
 
   int relatedId;
-  int uploadFileId;
+  UploadFileId uploadFileId;
 
   factory PicturePivot.fromJson(Map<String, dynamic> json) => PicturePivot(
     relatedId: json["related_id"],
-    uploadFileId: json["upload_file_id"],
+    uploadFileId: uploadFileIdValues.map[json["upload_file_id"]],
   );
 
   Map<String, dynamic> toJson() => {
     "related_id": relatedId,
-    "upload_file_id": uploadFileId,
+    "upload_file_id": uploadFileIdValues.reverse[uploadFileId],
   };
 }
 
+enum UploadFileId { BLOGS_BANNER_1_JPG, BLOGS_BANNER_2_JPG, BLOGS_BANNER_3_JPG }
+
+final uploadFileIdValues = EnumValues({
+  "Blogs/banner_1.jpg": UploadFileId.BLOGS_BANNER_1_JPG,
+  "Blogs/banner_2.jpg": UploadFileId.BLOGS_BANNER_2_JPG,
+  "Blogs/banner_3.jpg": UploadFileId.BLOGS_BANNER_3_JPG
+});
 
 class EnumValues<T> {
   Map<String, T> map;

@@ -39,14 +39,13 @@ class _BeautyBooksState extends State<BeautyBooks> {
 
   List books = [];
   Future viewBooks() async {
-    var data = await getApi("beauty-books");
+    var data = await getApi("beauty-blogs");
     if (data != null) {
       for (int i = 0; i < data.length; i++) {
         setState(() {
           books.add(data[i]);
         });
       }
-      setState(() {});
     }
   }
 
@@ -97,10 +96,14 @@ class _BeautyBooksState extends State<BeautyBooks> {
                                           left: BorderSide(
                                               color: Colors.teal, width: 5)),
                                     ),
-                                    child: Text(
-                                      books[index]['name'],
-                                      style: GoogleFonts.ubuntu(
-                                          color: Colors.red[800], fontSize: 18),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: Text(
+                                        books[index]['name'],
+                                        style: GoogleFonts.ubuntu(
+                                            color: Colors.red[800],
+                                            fontSize: 18),
+                                      ),
                                     ),
                                   )),
                               ConstrainedBox(
@@ -128,8 +131,15 @@ class _BeautyBooksState extends State<BeautyBooks> {
                                             Navigator.push(context,
                                                 MaterialPageRoute(
                                                     builder: (context) {
-                                              return ViewBook(books[index]
-                                                  ['books']['data'][ind]['id']);
+                                              return ViewBook(
+                                                  books[index]['books']['data'][ind]['id'],
+                                                  books[index]['books']['data'][ind]['title'],
+                                                  books[index]['books']['data'][ind]['category_name'],
+                                                  books[index]['books']['data'][ind]['banner'],
+                                                  books[index]['books']['data'][ind]['short_description'],
+                                                  books[index]['books']['data'][ind]['description']
+
+                                              );
                                             }));
                                           },
                                           child: Card(
@@ -146,6 +156,8 @@ class _BeautyBooksState extends State<BeautyBooks> {
                                                     MainAxisAlignment.start,
                                                 children: <Widget>[
                                                   Container(
+                                                    padding:
+                                                        const EdgeInsets.all(5),
                                                     // height: 170,
                                                     child: Row(
                                                       crossAxisAlignment:
@@ -155,33 +167,6 @@ class _BeautyBooksState extends State<BeautyBooks> {
                                                           MainAxisAlignment
                                                               .start,
                                                       children: [
-                                                        Container(
-                                                            height: 58,
-                                                            width: 54,
-                                                            margin: const EdgeInsets
-                                                                    .only(
-                                                                left: 5.0,
-                                                                right: 0,
-                                                                top: 5,
-                                                                bottom: 0),
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(0),
-                                                            decoration: BoxDecoration(
-                                                                border: Border.all(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    width: 2),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            140)),
-                                                            child: CircleAvatar(
-                                                              backgroundImage:
-                                                                  NetworkImage(
-                                                                'https://i.insider.com/5c9a115d8e436a63e42c2883?width=600&format=jpeg&auto=webp',
-                                                              ),
-                                                            )),
                                                         Column(
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
@@ -194,46 +179,25 @@ class _BeautyBooksState extends State<BeautyBooks> {
                                                               padding:
                                                                   const EdgeInsets
                                                                           .only(
-                                                                      left: 5.0,
-                                                                      top: 15),
-                                                              child: Text(
-                                                                books[index][
-                                                                            'books']
-                                                                        ['data']
-                                                                    [
-                                                                    ind]['title'],
-                                                                style: GoogleFonts.lato(
-                                                                    color: Colors
-                                                                            .grey[
-                                                                        700],
-                                                                    fontSize:
-                                                                        16,
-                                                                    letterSpacing:
-                                                                        1,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      left: 5.0,
-                                                                      top: 2),
-                                                              child: Text(
-                                                                books[index]['books']
-                                                                            [
-                                                                            'data']
-                                                                        [ind][
-                                                                    'short_description'],
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .ubuntu(
-                                                                  color: Colors
-                                                                          .grey[
-                                                                      700],
-                                                                  fontSize: 14,
+                                                                      top: 5,
+                                                                      bottom:
+                                                                          15),
+                                                              child: Container(
+                                                                width: 270,
+                                                                height: 35,
+                                                                child: Text(
+                                                                  books[index][
+                                                                              'books']
+                                                                          [
+                                                                          'data']
+                                                                      [
+                                                                      ind]['title'],
+                                                                  style: GoogleFonts.actor(
+                                                                      color: Colors
+                                                                              .grey[
+                                                                          600],
+                                                                      fontSize:
+                                                                          14),
                                                                 ),
                                                               ),
                                                             ),
@@ -254,12 +218,9 @@ class _BeautyBooksState extends State<BeautyBooks> {
                                                                   right: Radius
                                                                       .circular(
                                                                           10)),
-                                                          child: FadeInImage
-                                                              .assetNetwork(
-                                                            placeholder:
-                                                                'assets/placeholder.png',
-                                                            image:
-                                                                'https://picsum.photos/seed/picsum/200/300',
+                                                          child:books[index]['books']['data'][ind]['banner'].contains('http')?Image.network(books[index]['books']['data'][ind]['banner']):
+                                                              Image.asset(
+                                                            "assets/bb.jpg",
                                                             fit: BoxFit.cover,
                                                           ))),
                                                 ]),

@@ -19,7 +19,6 @@ class Comments extends StatefulWidget {
 
 class _CommentsState extends State<Comments> {
   TextEditingController _commentController = TextEditingController();
-  var token = "113|QcbzqMYo8HcDEcBfeNuCpdAKbD2ujHwmGl3hTZF3";
 
   List comments = [];
   Future viewComments() async {

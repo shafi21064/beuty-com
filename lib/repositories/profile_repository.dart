@@ -16,7 +16,7 @@ class ProfileRepository {
 
   Future<ProfileCountersResponse> getProfileCountersResponse() async {
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/profile/counters");
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/profile/counters");
     final response = await http.get(
       url,
       headers: {
@@ -31,7 +31,7 @@ class ProfileRepository {
 
     var post_body = jsonEncode({"name": "${name}", "password": "$password"});
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/profile/update");
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/profile/update");
     final response = await http.post(url,
         headers: {"Content-Type": "application/json", "Authorization": "Bearer ${access_token.$}","App-Language": app_language.$,},body: post_body );
 
@@ -44,7 +44,7 @@ class ProfileRepository {
 
     var post_body = jsonEncode({"device_token": "${device_token}"});
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/profile/update-device-token");
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/profile/update-device-token");
     final response = await http.post(url,
         headers: {"Content-Type": "application/json", "Authorization": "Bearer ${access_token.$}","App-Language": app_language.$,},body: post_body );
 
@@ -58,7 +58,7 @@ class ProfileRepository {
     var post_body = jsonEncode({"image": "${image}", "filename": "$filename"});
     //print(post_body.toString());
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/profile/update-image");
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/profile/update-image");
     final response = await http.post(url,
         headers: {"Content-Type": "application/json", "Authorization": "Bearer ${access_token.$}","App-Language": app_language.$,},body: post_body );
 
@@ -70,7 +70,7 @@ class ProfileRepository {
 
     //var post_body = jsonEncode({"user_id":"${user_id.$}"});
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/profile/check-phone-and-email");
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/profile/check-phone-and-email");
     final response = await http.post(url,
         headers: {"Authorization": "Bearer ${access_token.$}","App-Language": app_language.$,});
 

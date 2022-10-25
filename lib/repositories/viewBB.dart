@@ -11,7 +11,12 @@ import '../app_config.dart';
 
 class ViewBook extends StatefulWidget {
   int id;
-  ViewBook(this.id);
+  String title;
+  String category_name;
+  String banner;
+  String short_description;
+  String description;
+  ViewBook(this.id,this.title,this.category_name,this.banner,this.short_description,this.description);
 
   @override
   _ViewBookState createState() => _ViewBookState();
@@ -19,18 +24,7 @@ class ViewBook extends StatefulWidget {
 
 class _ViewBookState extends State<ViewBook> {
 
-  var token = "113|QcbzqMYo8HcDEcBfeNuCpdAKbD2ujHwmGl3hTZF3";
-
-  List book = [ {
-    "id": 3,
-    "title": "this is makeup",
-    "slug": "this-is-makeup",
-    "category_name": "Makeup",
-    "banner": "BeautyBooks/banner_3.jpg",
-    "short_description": "det4er",
-    "description": "grdfsdfcds",
-    "links": []
-  }];
+  List book = [ ];
   Future viewBook() async {
     var data = await getApi("beauty-book/${widget.id}");
     if (data['data'] != null) {
@@ -39,7 +33,6 @@ class _ViewBookState extends State<ViewBook> {
           book.add(data['data'][i]);
         });
       }
-      setState(() {});
     }
   }
 
@@ -63,8 +56,11 @@ class _ViewBookState extends State<ViewBook> {
         child: Container(
           child: Column(
             children: <Widget>[
-
-              Image.network(book[0]['banner'],width: MediaQuery.of(context).size.width,fit: BoxFit.fitWidth,),
+              widget.banner.contains('http')?Image.network(widget.banner):
+              Image.asset(
+                "assets/bb.jpg",
+                fit: BoxFit.cover,
+              ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 24,vertical: 20),
                 child: Column(
@@ -73,17 +69,19 @@ class _ViewBookState extends State<ViewBook> {
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        Text(book[0]['title'], style: TextStyle(
-                            color: Colors.black87,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 21
-                        ),),
+                        Container(width: MediaQuery.of(context).size.width/1.6,
+                          child: Text(widget.title, style: TextStyle(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15
+                          ),),
+                        ),
                         Spacer(),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[
                             SizedBox(height: 6,),
-                            Text(book[0]['category_name'], style: TextStyle(
+                            Text(widget.category_name, style: TextStyle(
                                 color: Colors.teal,
                                 fontSize: 14
                             ),)
@@ -92,14 +90,14 @@ class _ViewBookState extends State<ViewBook> {
                       ],
                     ),
                     SizedBox(height: 30,),
-                    Text(book[0]['short_description'], style: TextStyle(
+                    Text(widget.short_description, style: TextStyle(
                       color: Colors.blue,
                       fontSize: 18,
                       letterSpacing: 0.6,
                       wordSpacing: 0.4,
                     ),),
                     SizedBox(height: 30,),
-                    Text(book[0]['description'], style: TextStyle(
+                    Text(widget.description, style: TextStyle(
                       color: Colors.grey,
                       fontSize: 18,
                       letterSpacing: 0.6,

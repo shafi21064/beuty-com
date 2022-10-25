@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/helpers/auth_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/ui_sections/drawer.dart';
@@ -16,6 +17,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'main.dart';
+
 class Profile extends StatefulWidget {
   Profile({Key key, this.show_back_button = false}) : super(key: key);
 
@@ -28,6 +31,23 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   ScrollController _mainScrollController = ScrollController();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  onTapLogout(context) async {
+    AuthHelper().clearUserData();
+
+    // var logoutResponse = await AuthRepository().getLogoutResponse();
+    //
+    // if (logoutResponse.result == true) {
+    //   ToastComponent.showDialog(logoutResponse.message, context,
+    //       gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    //
+    //   Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //     return Login();
+    //   }));
+    // }
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
+      return Main();
+    }),(route)=>false);
+  }
 
   int _cartCounter = 0;
   String _cartCounterString = "...";
@@ -545,10 +565,8 @@ class _ProfileState extends State<Profile> {
 
           InkWell(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return OrderList();
-              }));
-            },
+              onTapLogout(context);
+             },
             child: Padding(
               padding: const EdgeInsets.only(bottom: 16.0,top: 50),
               child: Row(

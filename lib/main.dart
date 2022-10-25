@@ -83,7 +83,7 @@ class _MyAppState extends State<MyApp> {
         child: Consumer<LocaleProvider>(builder: (context, provider, snapshot) {
           return DynamicTheme(
               themeCollection: themeCollection,
-              defaultThemeId: AppThemes.LightBlue,
+              defaultThemeId: AppThemes.Default,
               builder: (context, theme) {
                 return Container(
                   child:  MaterialApp(

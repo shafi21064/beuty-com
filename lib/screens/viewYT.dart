@@ -2,6 +2,7 @@ import 'package:active_ecommerce_flutter/helpers/api.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:active_ecommerce_flutter/screens/video_description_screen.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:active_ecommerce_flutter/custom/toast_component.dart';
 import 'package:active_ecommerce_flutter/repositories/extra_repository.dart';
@@ -29,46 +30,8 @@ class ViewYT extends StatefulWidget {
 }
 
 class _ViewYTState extends State<ViewYT> {
-  var token = "113|QcbzqMYo8HcDEcBfeNuCpdAKbD2ujHwmGl3hTZF3";
 
-  List book = [
-    {
-      "id": 3,
-      "category_id": 1,
-      "title": "Mega tips",
-      "slug": "dsfdf",
-      "banner": "KireiYoutubes/banner_3.png",
-      "video": "https://www.youtube.com/watch?v=SiZmEJmiU9M",
-      "short_description": "fg",
-      "description": "dfdfdf",
-      "order": 0,
-      "is_active": 1,
-      "created_by": null,
-      "updated_by": null,
-      "created_at": "2022-07-20T10:10:27.000000Z",
-      "updated_at": "2022-07-20T10:10:27.000000Z",
-      "deleted_at": null
-    }
-  ];
 
-  Future viewYT() async {
-    var data = await getApi("kirei-youtube-video/${widget.slug}");
-    if (data['data'] != null) {
-      for (int i = 0; i < data['data'].length; i++) {
-        setState(() {
-          book.add(data['data'][i]);
-        });
-      }
-      setState(() {});
-    }
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    //this.viewYT();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,36 +51,7 @@ class _ViewYTState extends State<ViewYT> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          widget.short_description,
-                          style: TextStyle(
-                              color: Colors.black87,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 21),
-                        ),
-                        Spacer(),
 
-                      ],
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Text(
-                      widget.description,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 18,
-                        letterSpacing: 0.6,
-                        wordSpacing: 0.6,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 80,
-                    ),
                     InkWell(
                       onTap: () {
                         if (widget.video == "") {
@@ -137,33 +71,93 @@ class _ViewYTState extends State<ViewYT> {
                           );
                         }));
                       },
-                      child: Container(
-                        color: Theme.of(context).colorScheme.secondary,
-                        height: 40,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            16.0,
-                            0.0,
-                            8.0,
-                            0.0,
-                          ),
-                          child: Row(
-                            children: [
-                              Text("Play video",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
+                      child: Column(
+                        children: [
+
+                          Container(
+                              width: double.infinity,
+                              height: 210,
+                              child: ClipRRect(
+                                  borderRadius:
+                                  BorderRadius.horizontal(
+                                      left: Radius
+                                          .circular(
+                                          10),
+                                      right: Radius
+                                          .circular(
+                                          10)),
+                                  child:widget.banner.contains('http')?Image.network(widget.banner):
+                                  Image.asset("assets/ytt.webp",fit: BoxFit.cover,)
+
+
+                              )),
+
+
+                          Container(
+                            color: Theme.of(context).colorScheme.secondary,
+                            height: 40,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                16.0,
+                                0.0,
+                                8.0,
+                                0.0,
                               ),
-                              Spacer(),
-                              Icon(
-                                Ionicons.logo_youtube,
-                                color: MyTheme.font_grey,
-                                size: 24,
-                              )
-                            ],
+                              child: Row(
+                                children: [
+                                  Text("Play video",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  Spacer(),
+                                  Icon(
+                                    Ionicons.logo_youtube,
+                                    color: MyTheme.font_grey,
+                                    size: 24,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(top: 20),
+                          width:320,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              widget.short_description,
+                              style:
+                              GoogleFonts.abel(
+                                color: Colors
+                                    .grey[
+                                700],
+                                fontSize: 18,
+                              ),
+                            ),
                           ),
                         ),
+
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      widget.description,
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 18,
+                        letterSpacing: 0.6,
+                        wordSpacing: 0.6,
                       ),
                     ),
 

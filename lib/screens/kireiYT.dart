@@ -40,14 +40,14 @@ class _kireiYTState extends State<kireiYT> {
 
   List youtubes = [];
   Future viewYTS() async {
-    var data = await getApi("kirei-youtube-category");
+    var data = await getApi("youtube-videos");
     if (data['data'] != null) {
       for (int i = 0; i < data['data'].length; i++) {
         setState(() {
           youtubes.add(data['data'][i]);
         });
       }
-      setState(() {});
+
     }
   }
 
@@ -73,206 +73,114 @@ class _kireiYTState extends State<kireiYT> {
                 SliverList(
                     delegate: SliverChildListDelegate([
                       SizedBox(
-                        child: ListView.builder(
-                          itemCount: youtubes.length,
-                          scrollDirection: Axis.vertical,
-                          physics: NeverScrollableScrollPhysics(),
+                        //height: 400,
+                        child:  ListView.builder(
+                          itemCount:
+                          youtubes.length,
+
+                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             isMore.add(false);
                             print(isMore[index]);
 
-                            return Padding(
+                            return Container(
                               padding: const EdgeInsets.only(
-                                  top: 4.0, bottom: 4.0, left: 10.0, right: 10.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                      margin: EdgeInsets.only(
-                                          left: 15, top: 12, bottom: 12),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          border: Border(
-                                              left: BorderSide(
-                                                  color: Colors.teal, width: 5)),
-                                        ),
-                                        child: Text(
-                                          youtubes[index]['name'],
-                                          style: GoogleFonts.ubuntu(
-                                              color: Colors.red[800], fontSize: 18),
-                                        ),
-                                      )),
-                                  ConstrainedBox(
-                                    constraints: BoxConstraints(maxHeight: 300),
-                                    child: ListView.builder(
-                                      itemCount:
-                                      youtubes[index]['youtube'].length,
-                                      scrollDirection: Axis.horizontal,
-                                      // physics: NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemBuilder: (context, ind) {
-                                        isMore.add(false);
-                                        print(isMore[ind]);
+                                  top: 4.0,
+                                  bottom: 4.0,
+                                  left: 10.0,
+                                  right: 10.0),
+                              child: Container(
+                                width: 300,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(
+                                            builder: (context) {
+                                              return ViewYT(
+                                                youtubes[index]['id'],
+                                                youtubes[index]['title'],
+                                                youtubes[index]['slug'],
+                                                youtubes[index]['banner'],
+                                                youtubes[index]['video'],
+                                                youtubes[index]['short_description'],
+                                                youtubes[index]['description'],
+                                              );
+                                            }));
+                                  },
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      side: new BorderSide(
+                                          color: MyTheme.light_grey,
+                                          width: 0.4),
+                                      borderRadius:
+                                      BorderRadius.circular(16.0),
+                                    ),
+                                    elevation: 0,
+                                    child: Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        children: <Widget>[
+                                          Container(
+                                            // height: 170,
+                                            child: Row(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment
+                                                  .start,
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .start,
+                                              children: [
 
-                                        return Container(
-                                          padding: const EdgeInsets.only(
-                                              top: 4.0,
-                                              bottom: 4.0,
-                                              left: 10.0,
-                                              right: 10.0),
-                                          child: Container(
-                                            width: 300,
-                                            child: InkWell(
-                                              onTap: () {
-                                                Navigator.push(context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) {
-                                                          return ViewYT(
-                                                              youtubes[index]['youtube'][ind]['id'],
-                                                              youtubes[index]['youtube'][ind]['title'],
-                                                              youtubes[index]['youtube'][ind]['slug'],
-                                                              youtubes[index]['youtube'][ind]['banner'],
-                                                              youtubes[index]['youtube'][ind]['video'],
-                                                              youtubes[index]['youtube'][ind]['short_description'],
-                                                              youtubes[index]['youtube'][ind]['description'],
-                                                          );
-                                                        }));
-                                              },
-                                              child: Card(
-                                                shape: RoundedRectangleBorder(
-                                                  side: new BorderSide(
-                                                      color: MyTheme.light_grey,
-                                                      width: 0.4),
-                                                  borderRadius:
-                                                  BorderRadius.circular(16.0),
-                                                ),
-                                                elevation: 0,
-                                                child: Column(
-                                                    mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                    children: <Widget>[
-                                                      Container(
-                                                        // height: 170,
-                                                        child: Row(
-                                                          crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                          mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                          children: [
-                                                            Container(
-                                                                height: 58,
-                                                                width: 54,
-                                                                margin: const EdgeInsets
-                                                                    .only(
-                                                                    left: 5.0,
-                                                                    right: 0,
-                                                                    top: 5,
-                                                                    bottom: 0),
-                                                                padding:
-                                                                const EdgeInsets
-                                                                    .all(0),
-                                                                decoration: BoxDecoration(
-                                                                    border: Border.all(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        width: 2),
-                                                                    borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                        140)),
-                                                                child: CircleAvatar(
-                                                                  backgroundImage:
-                                                                  NetworkImage(
-                                                                    'https://i.insider.com/5c9a115d8e436a63e42c2883?width=600&format=jpeg&auto=webp',
-                                                                  ),
-                                                                )),
-                                                            Column(
-                                                              crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                              mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                              children: [
-                                                                Padding(
-                                                                  padding:
-                                                                  const EdgeInsets
-                                                                      .only(
-                                                                      left: 5.0,
-                                                                      top: 15),
-                                                                  child: Text(
-                                                                    youtubes[index]
-                                                                    ['youtube'][ind]['title'],
-                                                                    style: GoogleFonts.lato(
-                                                                        color: Colors
-                                                                            .grey[
-                                                                        700],
-                                                                        fontSize:
-                                                                        16,
-                                                                        letterSpacing:
-                                                                        1,
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                                  ),
-                                                                ),
-                                                                Padding(
-                                                                  padding:
-                                                                  const EdgeInsets
-                                                                      .only(
-                                                                      left: 5.0,
-                                                                      top: 2),
-                                                                  child: Text(
-                                                                    youtubes[index]
-                                                                    ['youtube'][ind]['short_description'],
-                                                                    style:
-                                                                    GoogleFonts
-                                                                        .ubuntu(
-                                                                      color: Colors
-                                                                          .grey[
-                                                                      700],
-                                                                      fontSize: 14,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
+                                                Column(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment
+                                                      .start,
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .start,
+                                                  children: [
+                                                    Container(
+                                                      width:300,
+                                                      margin:
+                                                      const EdgeInsets
+                                                          .all(20),
+                                                      child: Text(
+                                                        youtubes[index]['title'],
+                                                        style:
+                                                        GoogleFonts
+                                                            .ubuntu(
+                                                          color: Colors
+                                                              .black,
+                                                          fontSize: 14,
                                                         ),
                                                       ),
-                                                      Container(
-                                                          width: double.infinity,
-                                                          height: 210,
-                                                          child: ClipRRect(
-                                                              borderRadius:
-                                                              BorderRadius.horizontal(
-                                                                  left: Radius
-                                                                      .circular(
-                                                                      10),
-                                                                  right: Radius
-                                                                      .circular(
-                                                                      10)),
-                                                              child: FadeInImage
-                                                                  .assetNetwork(
-                                                                placeholder:
-                                                                'assets/placeholder.png',
-                                                                image:
-                                                                'https://picsum.photos/seed/picsum/200/300',
-                                                                fit: BoxFit.cover,
-                                                              ))),
-                                                    ]),
-                                              ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        );
-                                      },
-                                    ),
-                                  )
-                                ],
+                                          Container(
+                                              width: double.infinity,
+                                              height: 210,
+                                              child: ClipRRect(
+                                                  borderRadius:
+                                                  BorderRadius.horizontal(
+                                                      left: Radius
+                                                          .circular(
+                                                          10),
+                                                      right: Radius
+                                                          .circular(
+                                                          10)),
+                                                  child:youtubes[index]['banner'].contains('http')?Image.network(youtubes[index]['banner'],):
+                                                  Image.asset("assets/ytt.webp",fit: BoxFit.cover,)
+
+
+                                              )),
+                                        ]),
+                                  ),
+                                ),
                               ),
                             );
                           },
@@ -317,7 +225,7 @@ class _kireiYTState extends State<kireiYT> {
   }
 
   String getAppBarTitle() {
-    String name = "Beauty Books";
+    String name = "Kirei Youtube";
 
     return name;
   }

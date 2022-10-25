@@ -14,9 +14,9 @@ class AuthHelper {
       user_name.save();
       user_email.$ = loginResponse.user.email;
       user_email.save();
-      user_phone.$ = loginResponse.user.phone;
+      user_phone.$ = loginResponse.user.phone??'';
       user_phone.save();
-      avatar_original.$ = loginResponse.user.avatar_original;
+      avatar_original.$ = loginResponse.user.avatar_original??'';
       avatar_original.save();
     }
   }

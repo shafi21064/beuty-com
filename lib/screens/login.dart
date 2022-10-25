@@ -105,9 +105,11 @@ class _LoginState extends State<Login> {
           print("--fcm token--");
           print(fcmToken);
           if (is_logged_in.$ == true) {
+            print("true------------------------");
             // update device token
             var deviceTokenUpdateResponse = await ProfileRepository()
                 .getDeviceTokenUpdateResponse(fcmToken);
+            print("hmmmm------------------------");
           }
         }
       }

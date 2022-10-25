@@ -35,99 +35,66 @@ class KireiYoutubeResponse {
 class Datum {
   Datum({
     this.id,
-    this.name,
-    this.youtube,
-    this.date,
+    this.title,
+    this.slug,
+    this.categoryName,
+    this.banner,
+    this.shortDescription,
+    this.description,
+    this.video,
   });
 
   int id;
-  String name;
-  List<Youtube> youtube;
-  String date;
+  String title;
+  String slug;
+  CategoryName categoryName;
+  String banner;
+  String shortDescription;
+  String description;
+  String video;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
-    name: json["name"],
-    youtube: List<Youtube>.from(json["youtube"].map((x) => Youtube.fromJson(x))),
-    date: json["date"],
+    title: json["title"],
+    slug: json["slug"],
+    categoryName: categoryNameValues.map[json["category_name"]],
+    banner: json["banner"],
+    shortDescription: json["short_description"],
+    description: json["description"],
+    video: json["video"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "name": name,
-    "youtube": List<dynamic>.from(youtube.map((x) => x.toJson())),
-    "date": date,
+    "title": title,
+    "slug": slug,
+    "category_name": categoryNameValues.reverse[categoryName],
+    "banner": banner,
+    "short_description": shortDescription,
+    "description": description,
+    "video": video,
   };
 }
 
-class Youtube {
-  Youtube({
-    this.id,
-    this.categoryId,
-    this.title,
-    this.slug,
-    this.banner,
-    this.video,
-    this.shortDescription,
-    this.description,
-    this.order,
-    this.isActive,
-    this.createdBy,
-    this.updatedBy,
-    this.createdAt,
-    this.updatedAt,
-    this.deletedAt,
-  });
+enum CategoryName { EXPERT_MASTERCLASS, CELEBRITY_BEAUTY_SECRETS, SKINCARE_SECRETS, HAIRCARE_AND_STYLING }
 
-  int id;
-  int categoryId;
-  String title;
-  String slug;
-  String banner;
-  String video;
-  String shortDescription;
-  String description;
-  int order;
-  int isActive;
-  dynamic createdBy;
-  dynamic updatedBy;
-  DateTime createdAt;
-  DateTime updatedAt;
-  dynamic deletedAt;
+final categoryNameValues = EnumValues({
+  "Celebrity Beauty Secrets": CategoryName.CELEBRITY_BEAUTY_SECRETS,
+  "Expert Masterclass": CategoryName.EXPERT_MASTERCLASS,
+  "Haircare And Styling": CategoryName.HAIRCARE_AND_STYLING,
+  "Skincare Secrets": CategoryName.SKINCARE_SECRETS
+});
 
-  factory Youtube.fromJson(Map<String, dynamic> json) => Youtube(
-    id: json["id"],
-    categoryId: json["category_id"],
-    title: json["title"],
-    slug: json["slug"],
-    banner: json["banner"],
-    video: json["video"],
-    shortDescription: json["short_description"],
-    description: json["description"],
-    order: json["order"],
-    isActive: json["is_active"],
-    createdBy: json["created_by"],
-    updatedBy: json["updated_by"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-    deletedAt: json["deleted_at"],
-  );
+class EnumValues<T> {
+  Map<String, T> map;
+  Map<T, String> reverseMap;
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "category_id": categoryId,
-    "title": title,
-    "slug": slug,
-    "banner": banner,
-    "video": video,
-    "short_description": shortDescription,
-    "description": description,
-    "order": order,
-    "is_active": isActive,
-    "created_by": createdBy,
-    "updated_by": updatedBy,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-    "deleted_at": deletedAt,
-  };
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    if (reverseMap == null) {
+      reverseMap = map.map((k, v) => new MapEntry(v, k));
+    }
+    return reverseMap;
+  }
 }

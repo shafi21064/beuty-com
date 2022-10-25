@@ -4,15 +4,75 @@
 
 import 'dart:convert';
 
-List<BeautyBooksResponse> beautyBooksResponseFromJson(String str) => List<BeautyBooksResponse>.from(json.decode(str).map((x) => BeautyBooksResponse.fromJson(x)));
+BeautyBooksResponse beautyBooksResponseFromJson(String str) => BeautyBooksResponse.fromJson(json.decode(str));
 
-String beautyBooksResponseToJson(List<BeautyBooksResponse> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String beautyBooksResponseToJson(BeautyBooksResponse data) => json.encode(data.toJson());
 
 class BeautyBooksResponse {
   BeautyBooksResponse({
+    this.data,
+    this.success,
+    this.status,
+  });
+
+  List<Datum> data;
+  bool success;
+  int status;
+
+  factory BeautyBooksResponse.fromJson(Map<String, dynamic> json) => BeautyBooksResponse(
+    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+    success: json["success"],
+    status: json["status"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "success": success,
+    "status": status,
+  };
+}
+
+class Datum {
+  Datum({
     this.id,
     this.name,
+    this.page,
+    this.posts,
+    this.date,
+  });
+
+  int id;
+  String name;
+  int page;
+  List<Post> posts;
+  String date;
+
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+    id: json["id"],
+    name: json["name"],
+    page: json["page"],
+    posts: List<Post>.from(json["posts"].map((x) => Post.fromJson(x))),
+    date: json["date"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "page": page,
+    "posts": List<dynamic>.from(posts.map((x) => x.toJson())),
+    "date": date,
+  };
+}
+
+class Post {
+  Post({
+    this.id,
+    this.categoryId,
+    this.title,
     this.slug,
+    this.banner,
+    this.shortDescription,
+    this.description,
     this.order,
     this.isActive,
     this.createdBy,
@@ -20,12 +80,15 @@ class BeautyBooksResponse {
     this.createdAt,
     this.updatedAt,
     this.deletedAt,
-    this.books,
   });
 
   int id;
-  String name;
+  int categoryId;
+  String title;
   String slug;
+  String banner;
+  String shortDescription;
+  String description;
   int order;
   int isActive;
   dynamic createdBy;
@@ -33,12 +96,15 @@ class BeautyBooksResponse {
   DateTime createdAt;
   DateTime updatedAt;
   dynamic deletedAt;
-  Books books;
 
-  factory BeautyBooksResponse.fromJson(Map<String, dynamic> json) => BeautyBooksResponse(
+  factory Post.fromJson(Map<String, dynamic> json) => Post(
     id: json["id"],
-    name: json["name"],
+    categoryId: json["category_id"],
+    title: json["title"],
     slug: json["slug"],
+    banner: json["banner"],
+    shortDescription: json["short_description"],
+    description: json["description"],
     order: json["order"],
     isActive: json["is_active"],
     createdBy: json["created_by"],
@@ -46,13 +112,16 @@ class BeautyBooksResponse {
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
     deletedAt: json["deleted_at"],
-    books: Books.fromJson(json["books"]),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "name": name,
+    "category_id": categoryId,
+    "title": title,
     "slug": slug,
+    "banner": banner,
+    "short_description": shortDescription,
+    "description": description,
     "order": order,
     "is_active": isActive,
     "created_by": createdBy,
@@ -60,72 +129,5 @@ class BeautyBooksResponse {
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
     "deleted_at": deletedAt,
-    "books": books.toJson(),
   };
 }
-
-class Books {
-  Books({
-    this.data,
-  });
-
-  List<Datum> data;
-
-  factory Books.fromJson(Map<String, dynamic> json) => Books(
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-  };
-}
-
-class Datum {
-  Datum({
-    this.id,
-    this.title,
-    this.slug,
-    this.categoryName,
-    this.banner,
-    this.shortDescription,
-    this.description,
-    this.links,
-  });
-
-  int id;
-  String title;
-  String slug;
-  String categoryName;
-  String banner;
-  String shortDescription;
-  String description;
-  List<dynamic> links;
-
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    id: json["id"],
-    title: json["title"],
-    slug: json["slug"],
-    categoryName: json["category_name"],
-    banner: json["banner"],
-    shortDescription: json["short_description"],
-    description: json["description"],
-    links: List<dynamic>.from(json["links"].map((x) => x)),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "slug": slug,
-    "category_name": categoryName,
-    "banner": banner,
-    "short_description": shortDescription,
-    "description": description,
-    "links": List<dynamic>.from(links.map((x) => x)),
-  };
-}
-
-
-
-
-
-
