@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:active_ecommerce_flutter/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
@@ -13,7 +14,7 @@ class CartRepository {
   Future<List<CartResponse>> getCartResponseList(
     @required int user_id,
   ) async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/carts");
+    Uri url = Uri.parse("${ENDP.GET_CARTS}");
     final response = await http.post(
       url,
       headers: {
@@ -22,14 +23,15 @@ class CartRepository {
         "App-Language": app_language.$,
       },
     );
-
+    print(url);
+    print(response.body.toString());
     return cartResponseFromJson(response.body);
   }
 
   Future<CartDeleteResponse> getCartDeleteResponse(
     @required int cart_id,
   ) async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/carts/$cart_id");
+    Uri url = Uri.parse("${ENDP.GET_CARTS}/$cart_id");
     final response = await http.delete(
       url,
       headers: {
@@ -47,7 +49,7 @@ class CartRepository {
     var post_body = jsonEncode(
         {"cart_ids": "${cart_ids}", "cart_quantities": "$cart_quantities"});
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/carts/process");
+    Uri url = Uri.parse("${ENDP.GET_PROCESS}");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -56,6 +58,8 @@ class CartRepository {
         },
         body: post_body);
 
+    print(url);
+    print(response.body.toString());
     return cartProcessResponseFromJson(response.body);
   }
 
@@ -74,7 +78,7 @@ class CartRepository {
 
     print(post_body.toString());
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/carts/add");
+    Uri url = Uri.parse("${ENDP.ADD_CART}");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +92,7 @@ class CartRepository {
   }
 
   Future<CartSummaryResponse> getCartSummaryResponse() async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/cart-summary");
+    Uri url = Uri.parse("${ENDP.CART_SUMMARY}");
     print(" cart summary");
     final response = await http.get(
       url,

@@ -23,6 +23,10 @@ class ProfileRepository {
         "Authorization": "Bearer ${access_token.$}","App-Language": app_language.$,
       },
     );
+
+
+    print(url);
+    print(response.body.toString());
     return profileCountersResponseFromJson(response.body);
   }
 

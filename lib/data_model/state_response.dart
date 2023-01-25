@@ -20,7 +20,7 @@ class MyStateResponse {
   int status;
 
   factory MyStateResponse.fromJson(Map<String, dynamic> json) => MyStateResponse(
-    states: List<MyState>.from(json["data"].map((x) => MyState.fromJson(x))),
+    states: List<MyState>.from(json["states"].map((x) => MyState.fromJson(x))),
     success: json["success"],
     status: json["status"],
   );

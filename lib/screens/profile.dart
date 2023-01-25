@@ -1,4 +1,6 @@
 import 'package:active_ecommerce_flutter/helpers/auth_helper.dart';
+import 'package:active_ecommerce_flutter/screens/theme.dart';
+import 'package:active_ecommerce_flutter/screens/wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/ui_sections/drawer.dart';
@@ -18,6 +20,7 @@ import 'package:toast/toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'main.dart';
+import 'messenger_list.dart';
 
 class Profile extends StatefulWidget {
   Profile({Key key, this.show_back_button = false}) : super(key: key);
@@ -213,7 +216,7 @@ class _ProfileState extends State<Profile> {
         InkWell(
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return OrderList();
+              return Wishlist();
             }));
           },
           child: Column(
@@ -238,11 +241,11 @@ class _ProfileState extends State<Profile> {
                   child: Column(
                     children: [
                       Icon(
-                        Icons.mobile_friendly,
+                        Icons.favorite,
                         color: Colors.green,
                       ),
                       Text(
-                        "Balance",
+                        "Wishlist",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: MyTheme.font_grey,
@@ -430,7 +433,7 @@ class _ProfileState extends State<Profile> {
           onTap: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) {
-                  return Clubpoint();
+                  return MessengerList();
                 }));
           },
           child: Column(
@@ -455,11 +458,11 @@ class _ProfileState extends State<Profile> {
                   child: Column(
                     children: [
                         Icon(
-                        Icons.credit_card_rounded,
+                        Icons.email_outlined,
                         color: Colors.deepOrange,
                       ),
                       Text(
-                        "Earning",
+                        "Inbox",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: MyTheme.font_grey,
@@ -475,7 +478,7 @@ class _ProfileState extends State<Profile> {
           onTap: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) {
-                  return Clubpoint();
+                  return DynamicThemesExampleApp();
                 }));
           },
           child: Column(
@@ -500,11 +503,11 @@ class _ProfileState extends State<Profile> {
                   child: Column(
                     children: [
                       Icon(
-                        Icons.double_arrow_outlined,
+                        Icons.theater_comedy_rounded,
                         color: Colors.pink,
                       ),
                       Text(
-                        "Refund",
+                        "Themes",
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 10,
                             color: MyTheme.font_grey,

@@ -1,7 +1,6 @@
-import 'package:active_ecommerce_flutter/helpers/api.dart';
 import 'package:active_ecommerce_flutter/helpers/file_helper.dart';
 import 'package:active_ecommerce_flutter/repositories/extra_repository.dart';
-import 'package:active_ecommerce_flutter/repositories/viewBB.dart';
+import 'package:active_ecommerce_flutter/screens/blog_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
@@ -35,27 +34,6 @@ class _BeautyBooksState extends State<BeautyBooks> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   List<bool> isMore = [];
 
-  Future<void> _onPageRefresh() async {}
-
-  List books = [];
-  Future viewBooks() async {
-    var data = await getApi("beauty-blogs");
-    if (data != null) {
-      for (int i = 0; i < data.length; i++) {
-        setState(() {
-          books.add(data[i]);
-        });
-      }
-    }
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    this.viewBooks();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -70,174 +48,9 @@ class _BeautyBooksState extends State<BeautyBooks> {
               slivers: [
                 SliverList(
                     delegate: SliverChildListDelegate([
-                  SizedBox(
-                    child: ListView.builder(
-                      itemCount: books.length,
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        isMore.add(false);
-                        print(isMore[index]);
 
-                        return Padding(
-                          padding: const EdgeInsets.only(
-                              top: 4.0, bottom: 4.0, left: 10.0, right: 10.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                  margin: EdgeInsets.only(
-                                      left: 15, top: 12, bottom: 12),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      border: Border(
-                                          left: BorderSide(
-                                              color: Colors.teal, width: 5)),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Text(
-                                        books[index]['name'],
-                                        style: GoogleFonts.ubuntu(
-                                            color: Colors.red[800],
-                                            fontSize: 18),
-                                      ),
-                                    ),
-                                  )),
-                              ConstrainedBox(
-                                constraints: BoxConstraints(maxHeight: 300),
-                                child: ListView.builder(
-                                  itemCount:
-                                      books[index]['books']['data'].length,
-                                  scrollDirection: Axis.horizontal,
-                                  // physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, ind) {
-                                    isMore.add(false);
-                                    print(isMore[ind]);
-
-                                    return Container(
-                                      padding: const EdgeInsets.only(
-                                          top: 4.0,
-                                          bottom: 4.0,
-                                          left: 10.0,
-                                          right: 10.0),
-                                      child: Container(
-                                        width: 300,
-                                        child: InkWell(
-                                          onTap: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                                    builder: (context) {
-                                              return ViewBook(
-                                                  books[index]['books']['data'][ind]['id'],
-                                                  books[index]['books']['data'][ind]['title'],
-                                                  books[index]['books']['data'][ind]['category_name'],
-                                                  books[index]['books']['data'][ind]['banner'],
-                                                  books[index]['books']['data'][ind]['short_description'],
-                                                  books[index]['books']['data'][ind]['description']
-
-                                              );
-                                            }));
-                                          },
-                                          child: Card(
-                                            shape: RoundedRectangleBorder(
-                                              side: new BorderSide(
-                                                  color: MyTheme.light_grey,
-                                                  width: 0.4),
-                                              borderRadius:
-                                                  BorderRadius.circular(16.0),
-                                            ),
-                                            elevation: 0,
-                                            child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: <Widget>[
-                                                  Container(
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    // height: 170,
-                                                    child: Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      top: 5,
-                                                                      bottom:
-                                                                          15),
-                                                              child: Container(
-                                                                width: 270,
-                                                                height: 35,
-                                                                child: Text(
-                                                                  books[index][
-                                                                              'books']
-                                                                          [
-                                                                          'data']
-                                                                      [
-                                                                      ind]['title'],
-                                                                  style: GoogleFonts.actor(
-                                                                      color: Colors
-                                                                              .grey[
-                                                                          600],
-                                                                      fontSize:
-                                                                          14),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                      width: double.infinity,
-                                                      height: 210,
-                                                      child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius.horizontal(
-                                                                  left: Radius
-                                                                      .circular(
-                                                                          10),
-                                                                  right: Radius
-                                                                      .circular(
-                                                                          10)),
-                                                          child:books[index]['books']['data'][ind]['banner'].contains('http')?Image.network(books[index]['books']['data'][ind]['banner']):
-                                                              Image.asset(
-                                                            "assets/bb.jpg",
-                                                            fit: BoxFit.cover,
-                                                          ))),
-                                                ]),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ]))
+                      buildFeedList(),
+                    ]))
               ],
             ),
           ])),
@@ -255,7 +68,7 @@ class _BeautyBooksState extends State<BeautyBooks> {
         child: Builder(
           builder: (context) => Padding(
             padding:
-                const EdgeInsets.symmetric(vertical: 18.0, horizontal: 0.0),
+            const EdgeInsets.symmetric(vertical: 18.0, horizontal: 0.0),
             child: Container(
               child: Image.asset(
                 'assets/hamburger.png',
@@ -276,9 +89,224 @@ class _BeautyBooksState extends State<BeautyBooks> {
   }
 
   String getAppBarTitle() {
-    String name = "Beauty Books";
+    String name = "Beauty Blogs ";
 
     return name;
+  }
+
+
+  buildFeedList() {
+    var future = ExtraRepository().getBeautyBlogPosts();
+    return FutureBuilder(
+        future: future,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            //snapshot.hasError
+            print("Beauty Blogs list error");
+            print("SNAPSHOT: $snapshot");
+            //print(snapshot.error.toString());
+            return Container(
+              height: 10,
+            );
+          } else if (snapshot.hasData) {
+            //snapshot.hasData
+            var compostResponse = snapshot.data;
+            return SingleChildScrollView(
+              child: ListView.builder(
+                itemCount: compostResponse.data.recentPosts.length,
+                scrollDirection: Axis.vertical,
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  isMore.add(false);
+                  print(isMore[index]);
+
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                        top: 4.0, bottom: 4.0, left: 10.0, right: 10.0),
+                    child: buildFeedItemCard(compostResponse.data.recentPosts, index),
+                  );
+                },
+              ),
+            );
+          } else {
+            return SingleChildScrollView(
+              child: ListView.builder(
+                itemCount: 3,
+                scrollDirection: Axis.vertical,
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                        top: 4.0, bottom: 4.0, left: 16.0, right: 16.0),
+                    child: Row(
+                      children: [
+                        Shimmer.fromColors(
+                          baseColor: MyTheme.shimmer_base,
+                          highlightColor: MyTheme.shimmer_highlighted,
+                          child: Container(
+                            height: 60,
+                            width: 60,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 16.0, bottom: 8.0),
+                              child: Shimmer.fromColors(
+                                baseColor: MyTheme.shimmer_base,
+                                highlightColor: MyTheme.shimmer_highlighted,
+                                child: Container(
+                                  height: 20,
+                                  width: MediaQuery.of(context).size.width * .7,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 16.0),
+                              child: Shimmer.fromColors(
+                                baseColor: MyTheme.shimmer_base,
+                                highlightColor: MyTheme.shimmer_highlighted,
+                                child: Container(
+                                  height: 20,
+                                  width: MediaQuery.of(context).size.width * .5,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            );
+          }
+        });
+  }
+
+
+  Card buildFeedItemCard(compostResponse, index) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        side: new BorderSide(color: MyTheme.light_grey, width: 0.4),
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      elevation: 0,
+      child:
+      InkWell(onTap: (){
+        Navigator.push(context,
+            MaterialPageRoute(
+                builder: (context) {
+                  return ViewBlog(
+                    author: compostResponse[index].author,
+                    date: compostResponse[index].date.toString(),
+                    title: compostResponse[index].title,
+                    content: compostResponse[index].content,
+                    picture: compostResponse[index].picture[0].url,
+                  );
+                }));
+
+
+
+      },
+        child: Column(mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                height: 70,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: 58,
+                        width: 54,
+                        margin: const EdgeInsets.only(
+                            left: 5.0, right: 0, top: 5, bottom: 0),
+                        padding: const EdgeInsets.all(0),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white, width: 2),
+                            borderRadius: BorderRadius.circular(140)),
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            'https://i.insider.com/5c9a115d8e436a63e42c2883?width=600&format=jpeg&auto=webp',
+                          ),
+                        )),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5.0, top: 15),
+                          child: Text(
+                            compostResponse[index].author,
+                            style: GoogleFonts.lato(
+                                color: Colors.grey[700],
+                                fontSize: 16,
+                                letterSpacing: 1,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5.0, top: 2),
+                          child: Text(
+                            compostResponse[index].date.toString(),
+                            style: GoogleFonts.ubuntu(
+                              color: Colors.grey[700],
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0, bottom: 10, right: 10),
+                child:
+                //text widget to display long text
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      // toggle the bool variable true or false
+                      isMore[index] = !isMore[index];
+                    });
+                  },
+                  child: Text(
+                    compostResponse[index].title,
+
+                  ),
+                ),
+              ),
+              Container(
+                  width: double.infinity,
+                  height: 210,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.horizontal(
+                          left: Radius.circular(10), right: Radius.circular(10)),
+                      child: compostResponse[index].picture[0].url==null?
+                      Image.asset('assets/no_pic.png',fit: BoxFit.cover,):
+
+
+
+                      FadeInImage.assetNetwork(
+                        placeholder: 'assets/placeholder.png',
+                        image: compostResponse[index].picture[0].url,
+                        fit: BoxFit.cover,
+                      ))),
+
+            ]),
+      ),
+    );
   }
 
   Container buildBottomContainer() {
@@ -304,10 +332,10 @@ class _BeautyBooksState extends State<BeautyBooks> {
                   color: MyTheme.accent_color,
                   shape: RoundedRectangleBorder(
                       borderRadius:
-                          const BorderRadius.all(Radius.circular(8.0))),
+                      const BorderRadius.all(Radius.circular(8.0))),
                   child: Text(
                     AppLocalizations.of(context)
-                            .category_list_screen_all_products_of +
+                        .category_list_screen_all_products_of +
                         " ",
                     style: TextStyle(
                         color: Colors.white,

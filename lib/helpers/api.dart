@@ -15,7 +15,8 @@ Future getApi(String endPoint) async {
   Uri url = Uri.parse("${AppConfig.BASE_URL_1}/$endPoint");
   print("requent url: $url");
   final response = await http.get(url, headers: {
-    "Content-Type": "application/json", "Authorization": "Bearer $token",
+    "Content-Type": "application/json",
+    "Authorization": "Bearer $token",
     "App-Language": app_language.$
   });
   print(url);

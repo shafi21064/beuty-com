@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:active_ecommerce_flutter/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -12,7 +13,7 @@ class FileRepository {
     var post_body = jsonEncode({"image": "${image}", "filename": "$filename"});
     //print(post_body.toString());
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/file/image-upload");
+    Uri url = Uri.parse("${ENDP.IMAGE_UPLOAD}");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",

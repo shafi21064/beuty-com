@@ -103,7 +103,8 @@ class _BlogsState extends State<Blogs> {
           if (snapshot.hasError) {
             //snapshot.hasError
             print("Blog post list error");
-            print(snapshot.error.toString());
+            print("SNAPSHOT: $snapshot");
+            //print(snapshot.error.toString());
             return Container(
               height: 10,
             );

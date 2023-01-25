@@ -679,7 +679,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                       AppLocalizations.of(context)
                           .order_details_screen_timeline_tile_order_placed,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: MyTheme.font_grey),
+                      style: TextStyle(color: MyTheme.font_grey,fontSize: 12),
                     ),
                   )
                 ],

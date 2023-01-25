@@ -40,11 +40,20 @@ class _BrandSquareCardState extends State<BrandSquareCard> {
                   child: ClipRRect(
                       borderRadius: BorderRadius.vertical(
                           top: Radius.circular(16), bottom: Radius.zero),
-                      child: FadeInImage.assetNetwork(
+                      child: widget.image==''?FadeInImage.assetNetwork(
                         placeholder: 'assets/placeholder.png',
                         image:  widget.image,
                         fit: BoxFit.scaleDown,
-                      ))),
+                      ):
+                      Image.asset(
+                        'assets/app_logo.png',
+                        fit: BoxFit.fitWidth,
+                      )
+
+
+
+
+                  )),
               Container(
                 height: 40,
                 child: Padding(

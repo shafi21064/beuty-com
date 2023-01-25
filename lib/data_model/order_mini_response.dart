@@ -1,184 +1,177 @@
 // To parse this JSON data, do
 //
 //     final orderMiniResponse = orderMiniResponseFromJson(jsonString);
-// https://app.quicktype.io/
+
 import 'dart:convert';
 
-OrderMiniResponse orderMiniResponseFromJson(String str) => OrderMiniResponse.fromJson(json.decode(str));
+OrderMiniResponse orderMiniResponseFromJson(String str) =>
+    OrderMiniResponse.fromJson(json.decode(str));
 
-String orderMiniResponseToJson(OrderMiniResponse data) => json.encode(data.toJson());
+String orderMiniResponseToJson(OrderMiniResponse data) =>
+    json.encode(data.toJson());
 
 class OrderMiniResponse {
   OrderMiniResponse({
-    this.orders,
-    this.links,
-    this.meta,
-    this.success,
-    this.status,
+     this.data,
+     this.success,
+     this.status,
   });
 
-  List<Order> orders;
-  OrderMiniResponseLinks links;
-  Meta meta;
+  List<Datum> data;
   bool success;
   int status;
 
-  factory OrderMiniResponse.fromJson(Map<String, dynamic> json) => OrderMiniResponse(
-    orders: List<Order>.from(json["data"].map((x) => Order.fromJson(x))),
-    links: OrderMiniResponseLinks.fromJson(json["links"]),
-    meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
-    success: json["success"],
-    status: json["status"],
-  );
+  factory OrderMiniResponse.fromJson(Map<String, dynamic> json) =>
+      OrderMiniResponse(
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+        success: json["success"],
+        status: json["status"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": List<dynamic>.from(orders.map((x) => x.toJson())),
-    "links": links.toJson(),
-    "meta": meta == null ? null : meta.toJson(),
-    "success": success,
-    "status": status,
-  };
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "success": success,
+        "status": status,
+      };
 }
 
-class Order {
-  Order({
-    this.id,
-    this.code,
-    this.user_id,
-    this.payment_type,
-    this.payment_status,
-    this.payment_status_string,
-    this.delivery_status,
-    this.delivery_status_string,
-    this.grand_total,
-    this.date,
-    this.links,
+class Datum {
+  Datum({
+     this.id,
+     this.shippingAddress,
+     this.userId,
+     this.paymentType,
+     this.paymentStatus,
+     this.paymentStatusString,
+     this.deliveryStatus,
+    this.couponCode,
+     this.couponDiscount,
+    this.shippingCost,
+     this.deliveryStatusString,
+     this.grandTotal,
+     this.subtotal,
+     this.date,
+     this.links,
   });
 
   int id;
-  String code;
-  int user_id;
-  String  payment_type;
-  String payment_status;
-  String  payment_status_string;
-  String delivery_status;
-  String delivery_status_string;
-  String grand_total;
+  ShippingAddress shippingAddress;
+  int userId;
+  String paymentType;
+  String paymentStatus;
+  String paymentStatusString;
+  String deliveryStatus;
+  dynamic couponCode;
+  int couponDiscount;
+  dynamic shippingCost;
+  String deliveryStatusString;
+  String grandTotal;
+  int subtotal;
   String date;
-  OrderLinks links;
+  Links links;
 
-  factory Order.fromJson(Map<String, dynamic> json) => Order(
-    id: json["id"],
-    code: json["code"],
-    user_id: json["user_id"],
-    payment_type: json["payment_type"],
-    payment_status: json["payment_status"],
-    payment_status_string: json["payment_status_string"],
-    delivery_status: json["delivery_status"],
-    delivery_status_string: json["delivery_status_string"],
-    grand_total: json["grand_total"],
-    date: json["date"],
-    links: OrderLinks.fromJson(json["links"]),
-  );
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+        id: json["id"],
+        shippingAddress: ShippingAddress.fromJson(json["shipping_address"]),
+        userId: json["user_id"],
+        paymentType: json["payment_type"],
+        paymentStatus: json["payment_status"],
+        paymentStatusString: json["payment_status_string"],
+        deliveryStatus: json["delivery_status"],
+        couponCode: json["coupon_code"],
+        couponDiscount: json["coupon_discount"],
+        shippingCost: json["shipping_cost"],
+        deliveryStatusString: json["delivery_status_string"],
+        grandTotal: json["grand_total"],
+        subtotal: json["subtotal"],
+        date: json["date"],
+        links: Links.fromJson(json["links"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "code": code,
-    "user_id": user_id,
-    "payment_type":payment_type,
-    "payment_status": payment_status,
-    "payment_status_string": payment_status_string,
-    "delivery_status": delivery_status,
-    "delivery_status_string": delivery_status_string,
-    "grand_total": grand_total,
-    "date": date,
-    "links": links.toJson(),
-  };
+        "id": id,
+        "shipping_address": shippingAddress.toJson(),
+        "user_id": userId,
+        "payment_type": paymentType,
+        "payment_status": paymentStatus,
+        "payment_status_string": paymentStatusString,
+        "delivery_status": deliveryStatus,
+        "coupon_code": couponCode,
+        "coupon_discount": couponDiscount,
+        "shipping_cost": shippingCost,
+        "delivery_status_string": deliveryStatusString,
+        "grand_total": grandTotal,
+        "subtotal": subtotal,
+        "date": date,
+        "links": links.toJson(),
+      };
 }
 
-class OrderLinks {
-  OrderLinks({
-    this.details,
+class Links {
+  Links({
+     this.details,
   });
 
   String details;
 
-  factory OrderLinks.fromJson(Map<String, dynamic> json) => OrderLinks(
-    details: json["details"],
-  );
+  factory Links.fromJson(Map<String, dynamic> json) => Links(
+        details: json["details"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "details": details,
-  };
+        "details": details,
+      };
 }
 
-
-
-class OrderMiniResponseLinks {
-  OrderMiniResponseLinks({
-    this.first,
-    this.last,
-    this.prev,
-    this.next,
+class ShippingAddress {
+  ShippingAddress({
+     this.name,
+     this.email,
+     this.address,
+     this.country,
+     this.state,
+     this.city,
+     this.postalCode,
+     this.phone,
+     this.stateId,
+     this.cityId,
   });
 
-  dynamic first;
-  dynamic last;
-  dynamic prev;
-  dynamic next;
+  String name;
+  String email;
+  String address;
+  String country;
+  String state;
+  String city;
+  String postalCode;
+  String phone;
+  int stateId;
+  int cityId;
 
-  factory OrderMiniResponseLinks.fromJson(Map<String, dynamic> json) => OrderMiniResponseLinks(
-    first: json["first"],
-    last: json["last"],
-    prev: json["prev"],
-    next: json["next"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "first": first,
-    "last": last,
-    "prev": prev,
-    "next": next,
-  };
-}
-
-class Meta {
-  Meta({
-    this.currentPage,
-    this.from,
-    this.lastPage,
-    this.path,
-    this.perPage,
-    this.to,
-    this.total,
-  });
-
-  int currentPage;
-  int from;
-  int lastPage;
-  String path;
-  int perPage;
-  int to;
-  int total;
-
-  factory Meta.fromJson(Map<String, dynamic> json) => Meta(
-    currentPage: json["current_page"],
-    from: json["from"],
-    lastPage: json["last_page"],
-    path: json["path"],
-    perPage: json["per_page"],
-    to: json["to"],
-    total: json["total"],
-  );
+  factory ShippingAddress.fromJson(Map<String, dynamic> json) =>
+      ShippingAddress(
+        name: json["name"],
+        email: json["email"],
+        address: json["address"],
+        country: json["country"],
+        state: json["state"],
+        city: json["city"],
+        postalCode: json["postal_code"],
+        phone: json["phone"],
+        stateId: json["state_id"],
+        cityId: json["city_id"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "current_page": currentPage,
-    "from": from,
-    "last_page": lastPage,
-    "path": path,
-    "per_page": perPage,
-    "to": to,
-    "total": total,
-  };
+        "name": name,
+        "email": email,
+        "address": address,
+        "country": country,
+        "state": state,
+        "city": city,
+        "postal_code": postalCode,
+        "phone": phone,
+        "state_id": stateId,
+        "city_id": cityId,
+      };
 }
-

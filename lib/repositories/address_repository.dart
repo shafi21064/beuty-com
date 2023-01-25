@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:active_ecommerce_flutter/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -19,7 +20,7 @@ import 'package:flutter/foundation.dart';
 class AddressRepository {
   Future<AddressResponse> getAddressList() async {
     Uri url =
-        Uri.parse("${AppConfig.BASE_URL}/user/shipping/address");
+        Uri.parse("${ENDP.AddrList}");
     final response = await http.get(
       url,
       headers: {
@@ -50,7 +51,7 @@ class AddressRepository {
       "phone": "$phone"
     });
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/user/shipping/create");
+    Uri url = Uri.parse("${ENDP.AddAddr}");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -59,6 +60,8 @@ class AddressRepository {
         },
         body: post_body);
 
+    print(url);
+    print(response.body.toString());
     return addressAddResponseFromJson(response.body);
   }
 
@@ -81,7 +84,7 @@ class AddressRepository {
       "phone": "$phone"
     });
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/user/shipping/update");
+    Uri url = Uri.parse("${ENDP.UpdateAddr}");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -105,7 +108,7 @@ class AddressRepository {
       "longitude": "$longitude"
     });
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/user/shipping/update-location");
+    Uri url = Uri.parse("${ENDP.UpdateShipAddr}");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -124,7 +127,7 @@ class AddressRepository {
       "id": "$id",
     });
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/user/shipping/make_default");
+    Uri url = Uri.parse("${ENDP.ShipDefault}");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -139,7 +142,7 @@ class AddressRepository {
   Future<AddressDeleteResponse> getAddressDeleteResponse(
     @required int id,
   ) async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/user/shipping/delete/$id");
+    Uri url = Uri.parse("${ENDP.ShipDelete}/$id");
     final response = await http.get(
       url,
       headers: {
@@ -153,7 +156,7 @@ class AddressRepository {
 
   Future<CityResponse> getCityListByState({state_id = 0, name = ""}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/cities-by-state/${state_id}?name=${name}");
+        "${ENDP.AddrDelete}/${state_id}?name=${name}");
     final response = await http.get(url);
 
     print(url.toString());
@@ -165,14 +168,21 @@ class AddressRepository {
   Future<MyStateResponse> getStateListByCountry(
       {country_id = 0, name = ""}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/states-by-country/${country_id}?name=${name}");
+        "${ENDP.StateList}/${country_id}?name=${name}");
     final response = await http.get(url);
+
+
+    print(url);
+    print(response.body.toString());
     return myStateResponseFromJson(response.body);
   }
 
   Future<CountryResponse> getCountryList({name = ""}) async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/countries?name=${name}");
+    Uri url = Uri.parse("${ENDP.CountryList}?name=${name}");
     final response = await http.get(url);
+
+    print(url);
+    print(response.body.toString());
     return countryResponseFromJson(response.body);
   }
 
@@ -187,7 +197,7 @@ class AddressRepository {
       "shipping_type": "$shipping_type"
     });
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/shipping_cost");
+    Uri url = Uri.parse("${ENDP.ShippingCost}");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -208,7 +218,7 @@ class AddressRepository {
       "user_id": "${user_id.$}"
     });
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/update-address-in-cart");
+    Uri url = Uri.parse("${ENDP.AddrUpdateInCart}");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",

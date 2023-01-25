@@ -165,9 +165,9 @@ class _OrderListState extends State<OrderList> {
         payment_status: _selectedPaymentStatus.option_key,
         delivery_status: _selectedDeliveryStatus.option_key);
     //print("or:"+orderResponse.toJson().toString());
-    _orderList.addAll(orderResponse.orders);
+    _orderList.addAll(orderResponse.data);
     _isInitial = false;
-    _totalData = orderResponse.meta.total;
+   // _totalData = orderResponse.meta.total;
     _showLoadingContainer = false;
     setState(() {});
   }
@@ -473,16 +473,7 @@ class _OrderListState extends State<OrderList> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                _orderList[index].code,
-                style: TextStyle(
-                    color: MyTheme.accent_color,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600),
-              ),
-            ),
+
             Padding(
               padding: const EdgeInsets.only(bottom: 4.0),
               child: Row(
@@ -501,7 +492,7 @@ class _OrderListState extends State<OrderList> {
                       style: TextStyle(color: MyTheme.font_grey, fontSize: 13)),
                   Spacer(),
                   Text(
-                    _orderList[index].grand_total,
+                    _orderList[index].grandTotal,
                     style: TextStyle(
                         color: MyTheme.accent_color,
                         fontSize: 14,
@@ -529,7 +520,7 @@ class _OrderListState extends State<OrderList> {
                     style: TextStyle(color: MyTheme.font_grey, fontSize: 13),
                   ),
                   Text(
-                    _orderList[index].payment_status_string,
+                    _orderList[index].paymentStatusString,
                     style: TextStyle(color: MyTheme.font_grey, fontSize: 13),
                   ),
                   Padding(
@@ -537,7 +528,7 @@ class _OrderListState extends State<OrderList> {
                         ? const EdgeInsets.only(right: 8.0)
                         : const EdgeInsets.only(left: 8.0),
                     child: buildPaymentStatusCheckContainer(
-                        _orderList[index].payment_status),
+                        _orderList[index].paymentStatus),
                   ),
                 ],
               ),
@@ -559,7 +550,7 @@ class _OrderListState extends State<OrderList> {
                   style: TextStyle(color: MyTheme.font_grey, fontSize: 13),
                 ),
                 Text(
-                  _orderList[index].delivery_status_string,
+                  _orderList[index].deliveryStatus,
                   style: TextStyle(color: MyTheme.font_grey, fontSize: 13),
                 ),
               ],

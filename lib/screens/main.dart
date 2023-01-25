@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:active_ecommerce_flutter/custom/CommonFunctoins.dart';
+import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/screens/cart.dart';
 import 'package:active_ecommerce_flutter/screens/category_list.dart';
@@ -7,12 +8,13 @@ import 'package:active_ecommerce_flutter/screens/home.dart';
 import 'package:active_ecommerce_flutter/screens/login.dart';
 import 'package:active_ecommerce_flutter/screens/profile.dart';
 import 'package:active_ecommerce_flutter/screens/filter.dart';
+import 'package:active_ecommerce_flutter/screens/top_selling_products.dart';
+import 'package:active_ecommerce_flutter/screens/wishlist.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter/services.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
 
@@ -32,10 +34,8 @@ class _MainState extends State<Main> {
   int _currentIndex = 0;
   var _children = [
     Home(),
-    CategoryList(
-      is_base_category: true,
-    ),
-    FeedList(),
+    TopSellingProducts(),
+    Wishlist(),
     Cart(has_bottomnav: true),
     Profile()
   ];
@@ -109,11 +109,10 @@ class _MainState extends State<Main> {
                     .main_screen_bottom_navigation_home,
               ),
               TabItem(
-                icon: Icons.list_rounded,
-                title: AppLocalizations.of(context)
-                    .main_screen_bottom_navigation_categories,
+                icon: Icons.view_list_sharp,
+                title: "Shop",
               ),
-              TabItem(icon: Icons.view_list_outlined, title: 'News feed'),
+              TabItem(icon: Icons.favorite_border, title: 'Wish List'),
               TabItem(
                 icon: Icons.shopping_cart,
                 title: AppLocalizations.of(context)

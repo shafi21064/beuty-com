@@ -29,6 +29,9 @@ import 'package:active_ecommerce_flutter/helpers/shimmer_helper.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'BeautyBooks.dart';
+import 'kireiYT.dart';
+
 class Home extends StatefulWidget {
   Home({Key key, this.title, this.show_back_button = false, go_back = true})
       : super(key: key);
@@ -485,7 +488,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                               borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(16),
                                   bottom: Radius.zero),
-                              child: FadeInImage.assetNetwork(
+                              child: _featuredCategoryList[index].banner==''?Image.asset(
+                            'assets/app_logo.png',
+                            fit: BoxFit.fitWidth,
+                          ):FadeInImage.assetNetwork(
                                 placeholder: 'assets/placeholder.png',
                                 image: _featuredCategoryList[index].banner,
                                 fit: BoxFit.cover,
@@ -535,7 +541,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return CategoryList(
-                is_top_category: true,
+                is_base_category: true,
               );
             }));
           },
@@ -669,7 +675,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Text(
-                        AppLocalizations.of(context).home_screen_top_sellers,
+                        "Top solds",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Theme.of(context).buttonTheme.colorScheme.secondary,
@@ -681,7 +687,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         GestureDetector(
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return TodaysDealProducts();
+              return BeautyBooks();
             }));
           },
           child: Container(
@@ -709,14 +715,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Image.asset(
-                        "assets/todays_deal.png",
-                        color: Colors.white,
+                        "assets/bb.png",
+                        //color: Colors.white,
                       ),
                     )),
                 Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Text(
-                        AppLocalizations.of(context).home_screen_todays_deal,
+                        "Beauty Books",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Theme.of(context).buttonTheme.colorScheme.secondary,
@@ -728,7 +734,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         GestureDetector(
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return FlashDealList();
+              return kireiYT();
             }));
           },
           child: Container(
@@ -757,14 +763,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Image.asset(
-                        "assets/flash_deal.png",
-                        color: Colors.white,
+                        "assets/kyt.png",
+
                       ),
                     )),
                 Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Text(
-                        AppLocalizations.of(context).home_screen_flash_deal,
+                        "Kirei Youtube",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Theme.of(context).buttonTheme.colorScheme.secondary,

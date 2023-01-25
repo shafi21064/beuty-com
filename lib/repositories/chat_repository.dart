@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:active_ecommerce_flutter/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -12,7 +13,7 @@ class ChatRepository {
   Future<ConversationResponse> getConversationResponse(
       {@required page = 1}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/chat/conversations?page=${page}");
+        "${ENDP.GET_CONVERSATION}${page}");
     final response = await http.get(
       url,
       headers: {
@@ -26,7 +27,7 @@ class ChatRepository {
   Future<MessageResponse> getMessageResponse(
       {@required conversation_id, @required page = 1}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/chat/messages/${conversation_id}?page=${page}");
+        "${ENDP.GET_MESSAGE+conversation_id}?page=${page}");
     final response = await http.get(
       url,
       headers: {
@@ -45,7 +46,7 @@ class ChatRepository {
       "message": "${message}"
     });
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/chat/insert-message");
+    Uri url = Uri.parse("${ENDP.INSERT_MESSAGE}");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +60,7 @@ class ChatRepository {
   Future<MessageResponse> getNewMessageResponse(
       {@required conversation_id, @required last_message_id}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/chat/get-new-messages/${conversation_id}/${last_message_id}");
+        "${ENDP.NEW_MESSAGE+conversation_id}/${last_message_id}");
     final response = await http.get(
       url,
       headers: {
@@ -83,7 +84,7 @@ class ChatRepository {
       "message": "${message}"
     });
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/chat/create-conversation");
+    Uri url = Uri.parse("${ENDP.CREATE_CONVERSATION}");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",

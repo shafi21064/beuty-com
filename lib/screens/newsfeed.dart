@@ -620,7 +620,7 @@ class _FeedListState extends State<FeedList> {
                     left: Radius.circular(10), right: Radius.circular(10)),
                 child: FadeInImage.assetNetwork(
                   placeholder: 'assets/placeholder.png',
-                  image: 'https://picsum.photos/seed/picsum/200/300',
+                  image: compostResponse.data[index].banner!=''?compostResponse.data[index].banner:'https://picsum.photos/seed/picsum/200/300',
                   fit: BoxFit.cover,
                 ))),
         Container(
@@ -637,7 +637,7 @@ class _FeedListState extends State<FeedList> {
                 child: Padding(
                   padding: EdgeInsets.only(left: 20, top: 23),
                   child: Text(
-                    " Comment       ",
+                    "${compostResponse.data[index].commentsCount} Comment    ",
                     textAlign: TextAlign.center,
                     style: TextStyle(color: MyTheme.medium_grey, fontSize: 16),
                   ),

@@ -221,12 +221,15 @@ class _CategoryListState extends State<CategoryList> {
             child: ClipRRect(
                 borderRadius: BorderRadius.horizontal(
                     left: Radius.circular(10), right: Radius.zero),
-                child: FadeInImage.assetNetwork(
+                child:categoryResponse.categories[index].banner!=''? FadeInImage.assetNetwork(
                   placeholder: 'assets/placeholder.png',
                   image:
                       categoryResponse.categories[index].banner,
                   fit: BoxFit.cover,
-                ))),
+                ): Image.asset(
+              'assets/app_logo.png',
+              fit: BoxFit.fitWidth,
+            ))),
         Container(
           height: 80,
           child: Column(

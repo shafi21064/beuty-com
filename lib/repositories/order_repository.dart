@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:active_ecommerce_flutter/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:active_ecommerce_flutter/data_model/order_mini_response.dart';
@@ -9,7 +10,7 @@ import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 class OrderRepository {
   Future<OrderMiniResponse> getOrderList(
       {page = 1, payment_status = "", delivery_status = ""}) async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/purchase-history" +
+    Uri url = Uri.parse("${ENDP.PURCHASE_HISTORY}" +
         "?page=${page}&payment_status=${payment_status}&delivery_status=${delivery_status}");
     print("url:" +url.toString());
     print("token:" +access_token.$);
@@ -18,13 +19,13 @@ class OrderRepository {
       "App-Language": app_language.$,
         });
 
-    print("res:${response.body}");
+    print("Order His.res:${response.body}");
     return orderMiniResponseFromJson(response.body);
   }
 
   Future<OrderDetailResponse> getOrderDetails({@required int id = 0}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/purchase-history-details/" + id.toString());
+        "${ENDP.PURCHASE_HISTORY_DETAILS}" + id.toString());
 
     final response = await http.get(url,headers: {
       "Authorization": "Bearer ${access_token.$}",
@@ -37,12 +38,14 @@ class OrderRepository {
 
   Future<OrderItemResponse> getOrderItems({@required int id = 0}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/purchase-history-items/" + id.toString());
+        "${ENDP.PURCHASE_HISTORY_ITEM}" + id.toString());
     final response = await http.get(url,headers: {
       "Authorization": "Bearer ${access_token.$}",
       "App-Language": app_language.$,
         });
 
+    print(url);
+    print(response.body.toString());
     return orderItemlResponseFromJson(response.body);
   }
 }

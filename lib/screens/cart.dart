@@ -34,11 +34,11 @@ class _CartState extends State<Cart> {
     // TODO: implement initState
     super.initState();
 
-    /*print("user data");
+    print("user data");
     print(is_logged_in.$);
-    print(access_token.value);
+    print(access_token.$);
     print(user_id.$);
-    print(user_name.$);*/
+    print(user_name.$);
 
     if (is_logged_in.$ == true) {
       fetchData();

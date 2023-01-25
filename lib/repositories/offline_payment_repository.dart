@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:active_ecommerce_flutter/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -22,7 +23,7 @@ class OfflinePaymentRepository {
       "photo": "$photo",
     });
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/offline/payment/submit");
+    Uri url = Uri.parse("${ENDP.PAYMENT_SUBMIT}");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",

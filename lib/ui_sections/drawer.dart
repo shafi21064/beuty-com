@@ -2,6 +2,7 @@ import 'package:active_ecommerce_flutter/screens/BeautyBooks.dart';
 import 'package:active_ecommerce_flutter/screens/blogs.dart';
 import 'package:active_ecommerce_flutter/screens/change_language.dart';
 import 'package:active_ecommerce_flutter/screens/kireiYT.dart';
+import 'package:active_ecommerce_flutter/screens/newsfeed.dart';
 import 'package:active_ecommerce_flutter/screens/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -80,28 +81,7 @@ class _MainDrawerState extends State<MainDrawer> {
                                 .primary,
                             fontSize: 14)),
                 Divider(),
-                ListTile(
-                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    leading: Image.asset("assets/language.png",
-                        height: 16, color: Theme.of(context)
-                            .buttonTheme
-                            .colorScheme
-                            .primary),
-                    title: Text(
-                        AppLocalizations.of(context)
-                            .main_drawer_change_language,
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .buttonTheme
-                                .colorScheme
-                                .primary,
-                            fontSize: 14)),
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return ChangeLanguage();
-                      }));
-                    }),
+
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     leading: Image.asset("assets/home.png",
@@ -161,6 +141,23 @@ class _MainDrawerState extends State<MainDrawer> {
                           MaterialPageRoute(builder: (context) {
                         return Blogs();
                       }));
+                    }),
+                ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    leading: Image.asset("assets/community.png",
+                        height: 25, ),
+                    title: Text('Kirei Community',
+                        style: TextStyle(
+                            color:Theme.of(context)
+                                .buttonTheme
+                                .colorScheme
+                                .primary,
+                            fontSize: 14)),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                            return FeedList();
+                          }));
                     }),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
@@ -247,30 +244,7 @@ class _MainDrawerState extends State<MainDrawer> {
                                   return OrderList(from_checkout: false);
                                 }));
                               }),
-                          ListTile(
-                              visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                              leading: Image.asset("assets/heart.png",
-                                  height: 16,
-                                  color: Theme.of(context)
-                                      .buttonTheme
-                                      .colorScheme
-                                      .primary),
-                              title: Text(
-                                  AppLocalizations.of(context)
-                                      .main_drawer_my_wishlist,
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .buttonTheme
-                                          .colorScheme
-                                          .primary,
-                                      fontSize: 14)),
-                              onTap: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return Wishlist();
-                                }));
-                              }),
+
                           ListTile(
                               visualDensity:
                                   VisualDensity(horizontal: -4, vertical: -4),

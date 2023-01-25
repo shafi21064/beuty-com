@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:active_ecommerce_flutter/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'package:active_ecommerce_flutter/data_model/login_response.dart';
 import 'package:active_ecommerce_flutter/data_model/logout_response.dart';
@@ -21,7 +22,7 @@ class AuthRepository {
       "identity_matrix": AppConfig.purchase_code
     });
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/auth/login");
+    Uri url = Uri.parse("${ENDP.LOGIN}");
     final response = await http.post(url,
         headers: {
           "Accept": "*/*",

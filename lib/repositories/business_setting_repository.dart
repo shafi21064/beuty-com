@@ -1,12 +1,13 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
 import 'package:active_ecommerce_flutter/data_model/business_setting_response.dart';
+import 'package:active_ecommerce_flutter/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 
 class BusinessSettingRepository{
   Future<List<BusinessSettingListResponse>> getBusinessSettingList()async{
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/business-settings");
+    Uri url = Uri.parse("${ENDP.BUSINESS_SETTING}");
 
    var businessSettings = [
       "facebook_login",

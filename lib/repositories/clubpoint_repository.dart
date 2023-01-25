@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:active_ecommerce_flutter/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
@@ -10,7 +11,7 @@ class ClubpointRepository {
   Future<ClubpointResponse> getClubPointListResponse(
       {@required page = 1}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/clubpoint/get-list?page=$page");
+        "${ENDP.CLUB_POINT}$page");
     // print("url(${url.toString()}) access token (Bearer ${access_token.$})");
     final response = await http.get(
       url,
@@ -20,7 +21,11 @@ class ClubpointRepository {
         "App-Language": app_language.$
       },
     );
-    // print(response.body.toString());
+
+
+    print(url);
+    print(response.body.toString());
+
     return clubpointResponseFromJson(response.body);
   }
 
@@ -29,7 +34,7 @@ class ClubpointRepository {
     var post_body = jsonEncode({
       "id": "${id}",
     });
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/clubpoint/convert-into-wallet");
+    Uri url = Uri.parse("${ENDP.CLUB_POINT_WALLET}");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -38,6 +43,8 @@ class ClubpointRepository {
         },
         body: post_body);
 
+    print(url);
+    print(response.body.toString());
     return clubpointToWalletResponseFromJson(response.body);
   }
 }

@@ -43,11 +43,13 @@ class _MiniProductCardState extends State<MiniProductCard> {
                   child: ClipRRect(
                       borderRadius: BorderRadius.vertical(
                           top: Radius.circular(16), bottom: Radius.zero),
-                      child: FadeInImage.assetNetwork(
+                      child:FadeInImage.assetNetwork(
                         placeholder: 'assets/placeholder.png',
                         image:  widget.image,
                         fit: BoxFit.cover,
-                      ))),
+                      )
+
+                  )),
               Padding(
                 padding: EdgeInsets.fromLTRB(8, 4, 8, 0),
                 child: Text(

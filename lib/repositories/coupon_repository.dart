@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:active_ecommerce_flutter/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
@@ -13,7 +14,7 @@ class CouponRepository {
     var post_body =
         jsonEncode({"user_id": "${user_id.$}", "coupon_code": "$coupon_code"});
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/coupon-apply");
+    Uri url = Uri.parse("${ENDP.COUPON_APPLY}");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +29,7 @@ class CouponRepository {
   Future<CouponRemoveResponse> getCouponRemoveResponse() async {
     var post_body = jsonEncode({"user_id": "${user_id.$}"});
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/coupon-remove");
+    Uri url = Uri.parse("${ENDP.COUPON_REMOVE}");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",

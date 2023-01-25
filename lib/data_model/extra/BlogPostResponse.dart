@@ -146,7 +146,7 @@ class Post {
     author: json["author"],
     comments: json["comments"],
     content: json["content"] == null ? null : json["content"],
-    date: DateTime.parse(json["date"]),
+    date: DateTime.parse(json["date"]==null ? '2022-01-01 00:00:00':json["date"]),
     slug: json["slug"],
     title: json["title"],
     type: json["type"],
