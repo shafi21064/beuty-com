@@ -9,7 +9,6 @@ import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:one_context/one_context.dart';
 
-
 class PaymentStatus {
   String option_key;
   String name;
@@ -18,9 +17,12 @@ class PaymentStatus {
 
   static List<PaymentStatus> getPaymentStatusList() {
     return <PaymentStatus>[
-      PaymentStatus('', AppLocalizations.of(OneContext().context).order_list_screen_all),
-      PaymentStatus('paid', AppLocalizations.of(OneContext().context).order_list_screen_paid),
-      PaymentStatus('unpaid', AppLocalizations.of(OneContext().context).order_list_screen_unpaid),
+      PaymentStatus(
+          '', AppLocalizations.of(OneContext().context).order_list_screen_all),
+      PaymentStatus('paid',
+          AppLocalizations.of(OneContext().context).order_list_screen_paid),
+      PaymentStatus('unpaid',
+          AppLocalizations.of(OneContext().context).order_list_screen_unpaid),
     ];
   }
 }
@@ -33,10 +35,20 @@ class DeliveryStatus {
 
   static List<DeliveryStatus> getDeliveryStatusList() {
     return <DeliveryStatus>[
-      DeliveryStatus('', AppLocalizations.of(OneContext().context).order_list_screen_all),
-      DeliveryStatus('confirmed', AppLocalizations.of(OneContext().context).order_list_screen_confirmed),
-      DeliveryStatus('on_delivery', AppLocalizations.of(OneContext().context).order_list_screen_on_delivery),
-      DeliveryStatus('delivered', AppLocalizations.of(OneContext().context).order_list_screen_delivered),
+      DeliveryStatus(
+          '', AppLocalizations.of(OneContext().context).order_list_screen_all),
+      DeliveryStatus(
+          'confirmed',
+          AppLocalizations.of(OneContext().context)
+              .order_list_screen_confirmed),
+      DeliveryStatus(
+          'on_delivery',
+          AppLocalizations.of(OneContext().context)
+              .order_list_screen_on_delivery),
+      DeliveryStatus(
+          'delivered',
+          AppLocalizations.of(OneContext().context)
+              .order_list_screen_delivered),
     ];
   }
 }
@@ -167,7 +179,7 @@ class _OrderListState extends State<OrderList> {
     //print("or:"+orderResponse.toJson().toString());
     _orderList.addAll(orderResponse.data);
     _isInitial = false;
-   // _totalData = orderResponse.meta.total;
+    // _totalData = orderResponse.meta.total;
     _showLoadingContainer = false;
     setState(() {});
   }
@@ -235,7 +247,8 @@ class _OrderListState extends State<OrderList> {
       child: Center(
         child: Text(_totalData == _orderList.length
             ? AppLocalizations.of(context).order_list_screen_no_more_orders
-            : AppLocalizations.of(context).order_list_screen_loading_more_orders),
+            : AppLocalizations.of(context)
+                .order_list_screen_loading_more_orders),
       ),
     );
   }
@@ -455,7 +468,8 @@ class _OrderListState extends State<OrderList> {
         ),
       );
     } else if (_totalData == 0) {
-      return Center(child: Text(AppLocalizations.of(context).common_no_data_available));
+      return Center(
+          child: Text(AppLocalizations.of(context).common_no_data_available));
     } else {
       return Container(); // should never be happening
     }
@@ -473,7 +487,6 @@ class _OrderListState extends State<OrderList> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Padding(
               padding: const EdgeInsets.only(bottom: 4.0),
               child: Row(

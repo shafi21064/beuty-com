@@ -6,14 +6,13 @@ import 'package:restart_app/restart_app.dart';
 class DynamicThemesExampleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return DynamicTheme(
         themeCollection: themeCollection,
         defaultThemeId: AppThemes.LightBlue,
         builder: (context, theme) {
           return Container(
             child: MaterialApp(
-
+              debugShowCheckedModeBanner: false,
               theme: theme,
               home: HomePage(),
             ),
@@ -78,7 +77,6 @@ class _HomePageState extends State<HomePage> {
                 });
                 Restart.restartApp();
               }),
-
         ],
       )),
     );

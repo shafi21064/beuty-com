@@ -67,18 +67,19 @@ class CartRepository {
       @required int id,
       @required String variant,
       @required int user_id,
-      @required int quantity) async {
+      @required int _quantity) async {
     var post_body = jsonEncode({
       "id": "${id}",
       "variant": "$variant",
       "user_id": "$user_id",
-      "quantity": "$quantity",
+      "quantity": "$_quantity",
       "cost_matrix": AppConfig.purchase_code
     });
 
-    print(post_body.toString());
+    print(post_body);
 
     Uri url = Uri.parse("${ENDP.ADD_CART}");
+    print(url);
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",

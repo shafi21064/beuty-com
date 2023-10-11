@@ -28,17 +28,11 @@ class WhichFilter {
   static List<WhichFilter> getWhichFilterList() {
     return <WhichFilter>[
       WhichFilter('product',
-          AppLocalizations
-              .of(OneContext().context)
-              .filter_screen_product),
+          AppLocalizations.of(OneContext().context).filter_screen_product),
       WhichFilter('sellers',
-          AppLocalizations
-              .of(OneContext().context)
-              .filter_screen_sellers),
+          AppLocalizations.of(OneContext().context).filter_screen_sellers),
       WhichFilter('brands',
-          AppLocalizations
-              .of(OneContext().context)
-              .filter_screen_brands),
+          AppLocalizations.of(OneContext().context).filter_screen_brands),
     ];
   }
 }
@@ -113,13 +107,14 @@ class _FilterState extends State<Filter> {
   fetchFilteredBrands() async {
     var filteredBrandResponse = await BrandRepository().getFilterPageBrands();
     _filterBrandList.addAll(filteredBrandResponse.brands);
+    print(filteredBrandResponse);
     _filteredBrandsCalled = true;
     setState(() {});
   }
 
   fetchFilteredCategories() async {
     var filteredCategoriesResponse =
-    await CategoryRepository().getFilterPageCategories();
+        await CategoryRepository().getFilterPageCategories();
     _filterCategoryList.addAll(filteredCategoriesResponse.categories);
     _filteredCategoriesCalled = true;
     setState(() {});
@@ -231,7 +226,7 @@ class _FilterState extends State<Filter> {
 
   fetchBrandData() async {
     var brandResponse =
-    await BrandRepository().getBrands(page: _brandPage, name: _searchKey);
+        await BrandRepository().getBrands(page: _brandPage, name: _searchKey);
     _brandList.addAll(brandResponse.brands);
     _isBrandInitial = false;
     _totalBrandData = brandResponse.meta.total;
@@ -250,7 +245,7 @@ class _FilterState extends State<Filter> {
 
   fetchShopData() async {
     var shopResponse =
-    await ShopRepository().getShops(page: _shopPage, name: _searchKey);
+        await ShopRepository().getShops(page: _shopPage, name: _searchKey);
     _shopList.addAll(shopResponse.shops);
     _isShopInitial = false;
     _totalShopData = shopResponse.meta.total;
@@ -352,12 +347,8 @@ class _FilterState extends State<Filter> {
       color: Colors.white,
       child: Center(
         child: Text(_totalProductData == _productList.length
-            ? AppLocalizations
-            .of(context)
-            .common_no_more_products
-            : AppLocalizations
-            .of(context)
-            .common_loading_more_products),
+            ? AppLocalizations.of(context).common_no_more_products
+            : AppLocalizations.of(context).common_loading_more_products),
       ),
     );
   }
@@ -369,12 +360,8 @@ class _FilterState extends State<Filter> {
       color: Colors.white,
       child: Center(
         child: Text(_totalBrandData == _brandList.length
-            ? AppLocalizations
-            .of(context)
-            .common_no_more_brands
-            : AppLocalizations
-            .of(context)
-            .common_loading_more_brands),
+            ? AppLocalizations.of(context).common_no_more_brands
+            : AppLocalizations.of(context).common_loading_more_brands),
       ),
     );
   }
@@ -386,12 +373,8 @@ class _FilterState extends State<Filter> {
       color: Colors.white,
       child: Center(
         child: Text(_totalShopData == _shopList.length
-            ? AppLocalizations
-            .of(context)
-            .common_no_more_shops
-            : AppLocalizations
-            .of(context)
-            .common_loading_more_shops),
+            ? AppLocalizations.of(context).common_no_more_shops
+            : AppLocalizations.of(context).common_loading_more_shops),
       ),
     );
   }
@@ -413,8 +396,8 @@ class _FilterState extends State<Filter> {
           _selectedFilter.option_key == 'product'
               ? buildProductList()
               : (_selectedFilter.option_key == 'brands'
-              ? buildBrandList()
-              : buildShopList()),
+                  ? buildBrandList()
+                  : buildShopList()),
           Positioned(
             top: 0.0,
             left: 0.0,
@@ -426,8 +409,8 @@ class _FilterState extends State<Filter> {
               child: _selectedFilter.option_key == 'product'
                   ? buildProductLoadingContainer()
                   : (_selectedFilter.option_key == 'brands'
-                  ? buildBrandLoadingContainer()
-                  : buildShopLoadingContainer()))
+                      ? buildBrandLoadingContainer()
+                      : buildShopLoadingContainer()))
         ]),
       ),
     );
@@ -435,7 +418,6 @@ class _FilterState extends State<Filter> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-
         backgroundColor: Colors.white.withOpacity(0.95),
         automaticallyImplyLeading: false,
         actions: [
@@ -444,17 +426,10 @@ class _FilterState extends State<Filter> {
         centerTitle: false,
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [
-                  Theme
-                      .of(context)
-                      .colorScheme
-                      .primary,
-                  Theme
-                      .of(context)
-                      .colorScheme
-                      .secondary,
-                ]),
+            gradient: LinearGradient(colors: [
+              Theme.of(context).colorScheme.primary,
+              Theme.of(context).colorScheme.secondary,
+            ]),
           ),
           padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
           child: Column(
@@ -469,24 +444,14 @@ class _FilterState extends State<Filter> {
       children: [
         Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [
-                  Theme
-                      .of(context)
-                      .colorScheme
-                      .primary,
-                  Theme
-                      .of(context)
-                      .colorScheme
-                      .secondary,
-                ]),
+            gradient: LinearGradient(colors: [
+              Theme.of(context).colorScheme.primary,
+              Theme.of(context).colorScheme.secondary,
+            ]),
           ),
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           height: 36,
-          width: MediaQuery
-              .of(context)
-              .size
-              .width * .33,
+          width: MediaQuery.of(context).size.width * .33,
           child: new DropdownButton<WhichFilter>(
             dropdownColor: Theme.of(context).colorScheme.primary,
             style: new TextStyle(
@@ -496,12 +461,13 @@ class _FilterState extends State<Filter> {
               padding: app_language_rtl.$
                   ? const EdgeInsets.only(right: 16.0)
                   : const EdgeInsets.only(left: 16.0),
-              child: Icon(Icons.expand_more,  color: Colors.white,),
+              child: Icon(
+                Icons.expand_more,
+                color: Colors.white,
+              ),
             ),
             hint: Text(
-              AppLocalizations
-                  .of(context)
-                  .filter_screen_products,
+              AppLocalizations.of(context).filter_screen_products,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 13,
@@ -525,262 +491,224 @@ class _FilterState extends State<Filter> {
             _selectedFilter.option_key == "product"
                 ? _scaffoldKey.currentState.openEndDrawer()
                 : ToastComponent.showDialog(
-                AppLocalizations
-                    .of(context)
-                    .filter_screen_sort_warning,
-                context,
-                gravity: Toast.CENTER,
-                duration: Toast.LENGTH_LONG);
-
+                    AppLocalizations.of(context).filter_screen_sort_warning,
+                    context,
+                    gravity: Toast.CENTER,
+                    duration: Toast.LENGTH_LONG);
           },
           child: Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [
-                    Theme
-                        .of(context)
-                        .colorScheme
-                        .primary,
-                    Theme
-                        .of(context)
-                        .colorScheme
-                        .secondary,
-                  ]),
+              gradient: LinearGradient(colors: [
+                Theme.of(context).colorScheme.primary,
+                Theme.of(context).colorScheme.secondary,
+              ]),
             ),
             height: 36,
-            width: MediaQuery
-                .of(context)
-                .size
-                .width * .33,
+            width: MediaQuery.of(context).size.width * .33,
             child: Center(
                 child: Container(
-                  width: 50,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.filter_alt_outlined,
-                        size: 13,
-                        color: Colors.white,
-                      ),
-                      SizedBox(width: 2),
-                      Text(
-                        AppLocalizations
-                            .of(context)
-                            .filter_screen_filter,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ],
+              width: 50,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.filter_alt_outlined,
+                    size: 13,
+                    color: Colors.white,
                   ),
-                )),
+                  SizedBox(width: 2),
+                  Text(
+                    AppLocalizations.of(context).filter_screen_filter,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
+              ),
+            )),
           ),
         ),
         GestureDetector(
           onTap: () {
             _selectedFilter.option_key == "product"
                 ? showDialog(
-                context: context,
-                builder: (_) =>
-                    Directionality(
-                      textDirection: app_language_rtl.$
-                          ? TextDirection.rtl
-                          : TextDirection.ltr,
-                      child: AlertDialog(
-                        contentPadding: EdgeInsets.only(
-                            top: 16.0, left: 2.0, right: 2.0, bottom: 2.0),
-                        content: StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 24.0),
-                                  child: Text(
-                                    AppLocalizations
-                                        .of(context)
-                                        .filter_screen_sort_products_by,
-                                  )),
-                              RadioListTile(
-                                dense: true,
-                                value: "",
-                                groupValue: _selectedSort,
-                                activeColor: MyTheme.font_grey,
-                                controlAffinity:
-                                ListTileControlAffinity.leading,
-                                title: Text(AppLocalizations
-                                    .of(context)
-                                    .filter_screen_default),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectedSort = value;
-                                  });
-                                  _onSortChange();
-                                  Navigator.pop(context);
-                                },
-                              ),
-                              RadioListTile(
-                                dense: true,
-                                value: "price_high_to_low",
-                                groupValue: _selectedSort,
-                                activeColor: MyTheme.font_grey,
-                                controlAffinity:
-                                ListTileControlAffinity.leading,
-                                title: Text(AppLocalizations
-                                    .of(context)
-                                    .filter_screen_price_high_to_low),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectedSort = value;
-                                  });
-                                  _onSortChange();
-                                  Navigator.pop(context);
-                                },
-                              ),
-                              RadioListTile(
-                                dense: true,
-                                value: "price_low_to_high",
-                                groupValue: _selectedSort,
-                                activeColor: MyTheme.font_grey,
-                                controlAffinity:
-                                ListTileControlAffinity.leading,
-                                title: Text(AppLocalizations
-                                    .of(context)
-                                    .filter_screen_price_low_to_high),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectedSort = value;
-                                  });
-                                  _onSortChange();
-                                  Navigator.pop(context);
-                                },
-                              ),
-                              RadioListTile(
-                                dense: true,
-                                value: "new_arrival",
-                                groupValue: _selectedSort,
-                                activeColor: MyTheme.font_grey,
-                                controlAffinity:
-                                ListTileControlAffinity.leading,
-                                title: Text(AppLocalizations
-                                    .of(context)
-                                    .filter_screen_price_new_arrival),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectedSort = value;
-                                  });
-                                  _onSortChange();
-                                  Navigator.pop(context);
-                                },
-                              ),
-                              RadioListTile(
-                                dense: true,
-                                value: "popularity",
-                                groupValue: _selectedSort,
-                                activeColor: MyTheme.font_grey,
-                                controlAffinity:
-                                ListTileControlAffinity.leading,
-                                title: Text(AppLocalizations
-                                    .of(context)
-                                    .filter_screen_popularity),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectedSort = value;
-                                  });
-                                  _onSortChange();
-                                  Navigator.pop(context);
-                                },
-                              ),
-                              RadioListTile(
-                                dense: true,
-                                value: "top_rated",
-                                groupValue: _selectedSort,
-                                activeColor: MyTheme.font_grey,
-                                controlAffinity:
-                                ListTileControlAffinity.leading,
-                                title: Text(AppLocalizations
-                                    .of(context)
-                                    .filter_screen_top_rated),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectedSort = value;
-                                  });
-                                  _onSortChange();
-                                  Navigator.pop(context);
+                    context: context,
+                    builder: (_) => Directionality(
+                          textDirection: app_language_rtl.$
+                              ? TextDirection.rtl
+                              : TextDirection.ltr,
+                          child: AlertDialog(
+                            contentPadding: EdgeInsets.only(
+                                top: 16.0, left: 2.0, right: 2.0, bottom: 2.0),
+                            content: StatefulBuilder(builder:
+                                (BuildContext context, StateSetter setState) {
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 24.0),
+                                      child: Text(
+                                        AppLocalizations.of(context)
+                                            .filter_screen_sort_products_by,
+                                      )),
+                                  RadioListTile(
+                                    dense: true,
+                                    value: "",
+                                    groupValue: _selectedSort,
+                                    activeColor: MyTheme.font_grey,
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    title: Text(AppLocalizations.of(context)
+                                        .filter_screen_default),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedSort = value;
+                                      });
+                                      _onSortChange();
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  RadioListTile(
+                                    dense: true,
+                                    value: "price_high_to_low",
+                                    groupValue: _selectedSort,
+                                    activeColor: MyTheme.font_grey,
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    title: Text(AppLocalizations.of(context)
+                                        .filter_screen_price_high_to_low),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedSort = value;
+                                      });
+                                      _onSortChange();
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  RadioListTile(
+                                    dense: true,
+                                    value: "price_low_to_high",
+                                    groupValue: _selectedSort,
+                                    activeColor: MyTheme.font_grey,
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    title: Text(AppLocalizations.of(context)
+                                        .filter_screen_price_low_to_high),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedSort = value;
+                                      });
+                                      _onSortChange();
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  RadioListTile(
+                                    dense: true,
+                                    value: "new_arrival",
+                                    groupValue: _selectedSort,
+                                    activeColor: MyTheme.font_grey,
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    title: Text(AppLocalizations.of(context)
+                                        .filter_screen_price_new_arrival),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedSort = value;
+                                      });
+                                      _onSortChange();
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  RadioListTile(
+                                    dense: true,
+                                    value: "popularity",
+                                    groupValue: _selectedSort,
+                                    activeColor: MyTheme.font_grey,
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    title: Text(AppLocalizations.of(context)
+                                        .filter_screen_popularity),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedSort = value;
+                                      });
+                                      _onSortChange();
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  RadioListTile(
+                                    dense: true,
+                                    value: "top_rated",
+                                    groupValue: _selectedSort,
+                                    activeColor: MyTheme.font_grey,
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    title: Text(AppLocalizations.of(context)
+                                        .filter_screen_top_rated),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedSort = value;
+                                      });
+                                      _onSortChange();
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              );
+                            }),
+                            actions: [
+                              FlatButton(
+                                child: Text(
+                                  AppLocalizations.of(context)
+                                      .common_close_in_all_capital,
+                                  style: TextStyle(color: MyTheme.medium_grey),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop();
                                 },
                               ),
                             ],
-                          );
-                        }),
-                        actions: [
-                          FlatButton(
-                            child: Text(
-                              AppLocalizations
-                                  .of(context)
-                                  .common_close_in_all_capital,
-                              style: TextStyle(color: MyTheme.medium_grey),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context, rootNavigator: true)
-                                  .pop();
-                            },
                           ),
-                        ],
-                      ),
-                    ))
+                        ))
                 : ToastComponent.showDialog(
-                AppLocalizations
-                    .of(context)
-                    .filter_screen_filter_warning,
-                context,
-                gravity: Toast.CENTER,
-                duration: Toast.LENGTH_LONG);
+                    AppLocalizations.of(context).filter_screen_filter_warning,
+                    context,
+                    gravity: Toast.CENTER,
+                    duration: Toast.LENGTH_LONG);
           },
           child: Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [
-                    Theme
-                        .of(context)
-                        .colorScheme
-                        .primary,
-                    Theme
-                        .of(context)
-                        .colorScheme
-                        .secondary,
-                  ]),
-
-
+              gradient: LinearGradient(colors: [
+                Theme.of(context).colorScheme.primary,
+                Theme.of(context).colorScheme.secondary,
+              ]),
             ),
             height: 36,
-            width: MediaQuery
-                .of(context)
-                .size
-                .width * .33,
+            width: MediaQuery.of(context).size.width * .33,
             child: Center(
                 child: Container(
-                  width: 50,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.swap_vert,
-                        color: Colors.white,
-                        size: 13,
-                      ),
-                      SizedBox(width: 2),
-                      Text(
-                        "Sort",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ],
+              width: 50,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.swap_vert,
+                    color: Colors.white,
+                    size: 13,
                   ),
-                )),
+                  SizedBox(width: 2),
+                  Text(
+                    "Sort",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
+              ),
+            )),
           ),
         )
       ],
@@ -795,17 +723,11 @@ class _FilterState extends State<Filter> {
         onPressed: () => Navigator.of(context).pop(),
       ),
       Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width * .6,
+        width: MediaQuery.of(context).size.width * .6,
         child: Container(
           child: Padding(
-              padding: MediaQuery
-                  .of(context)
-                  .viewPadding
-                  .top >
-                  30 //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
+              padding: MediaQuery.of(context).viewPadding.top >
+                      30 //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
                   ? const EdgeInsets.symmetric(vertical: 36.0, horizontal: 0.0)
                   : const EdgeInsets.symmetric(vertical: 14.0, horizontal: 0.0),
               child: TypeAheadField(
@@ -813,7 +735,7 @@ class _FilterState extends State<Filter> {
                   //return await BackendService.getSuggestions(pattern);
                   var suggestions = await SearchRepository()
                       .getSearchSuggestionListResponse(
-                      query_key: pattern, type: _selectedFilter.option_key);
+                          query_key: pattern, type: _selectedFilter.option_key);
                   //print(suggestions.toString());
                   return suggestions;
                 },
@@ -822,8 +744,7 @@ class _FilterState extends State<Filter> {
                     height: 50,
                     child: Center(
                         child: Text(
-                            AppLocalizations
-                                .of(context)
+                            AppLocalizations.of(context)
                                 .filter_screen_loading_suggestions,
                             style: TextStyle(color: MyTheme.medium_grey))),
                   );
@@ -831,17 +752,10 @@ class _FilterState extends State<Filter> {
                 itemBuilder: (context, suggestion) {
                   //print(suggestion.toString());
                   var subtitle =
-                      "${AppLocalizations
-                      .of(context)
-                      .filter_screen_searched_for} ${suggestion
-                      .count} ${AppLocalizations
-                      .of(context)
-                      .filter_screen_times}";
+                      "${AppLocalizations.of(context).filter_screen_searched_for} ${suggestion.count} ${AppLocalizations.of(context).filter_screen_times}";
                   if (suggestion.type != "search") {
                     subtitle =
-                    "${suggestion.type_string} ${AppLocalizations
-                        .of(context)
-                        .filter_screen_found}";
+                        "${suggestion.type_string} ${AppLocalizations.of(context).filter_screen_found}";
                   }
                   return ListTile(
                     dense: true,
@@ -864,8 +778,7 @@ class _FilterState extends State<Filter> {
                     height: 50,
                     child: Center(
                         child: Text(
-                            AppLocalizations
-                                .of(context)
+                            AppLocalizations.of(context)
                                 .filter_screen_no_suggestion_available,
                             style: TextStyle(color: MyTheme.medium_grey))),
                   );
@@ -887,16 +800,12 @@ class _FilterState extends State<Filter> {
                   },
                   autofocus: true,
                   decoration: InputDecoration(
-
-                      hintText: AppLocalizations
-                          .of(context)
+                      hintText: AppLocalizations.of(context)
                           .filter_screen_search_here,
-
-                      hintStyle: TextStyle(
-                          fontSize: 16.0, color: Colors.white),
+                      hintStyle: TextStyle(fontSize: 16.0, color: Colors.white),
                       focusedBorder: OutlineInputBorder(
                         borderSide:
-                        BorderSide(color: MyTheme.white, width: 0.0),
+                            BorderSide(color: MyTheme.white, width: 0.0),
                       ),
                       contentPadding: EdgeInsets.all(0.0)),
                 ),
@@ -931,8 +840,7 @@ class _FilterState extends State<Filter> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text(
-                          AppLocalizations
-                              .of(context)
+                          AppLocalizations.of(context)
                               .filter_screen_price_range,
                           style: TextStyle(
                               fontSize: 14, fontWeight: FontWeight.bold),
@@ -951,8 +859,7 @@ class _FilterState extends State<Filter> {
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [_amountValidator],
                                 decoration: InputDecoration(
-                                    hintText: AppLocalizations
-                                        .of(context)
+                                    hintText: AppLocalizations.of(context)
                                         .filter_screen_minimum,
                                     hintStyle: TextStyle(
                                         fontSize: 12.0,
@@ -988,8 +895,7 @@ class _FilterState extends State<Filter> {
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [_amountValidator],
                                 decoration: InputDecoration(
-                                    hintText: AppLocalizations
-                                        .of(context)
+                                    hintText: AppLocalizations.of(context)
                                         .filter_screen_maximum,
                                     hintStyle: TextStyle(
                                         fontSize: 12.0,
@@ -1027,53 +933,47 @@ class _FilterState extends State<Filter> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Text(
-                          AppLocalizations
-                              .of(context)
-                              .filter_screen_categories,
+                          AppLocalizations.of(context).filter_screen_categories,
                           style: TextStyle(
                               fontSize: 14, fontWeight: FontWeight.bold),
                         ),
                       ),
                       _filterCategoryList.length == 0
                           ? Container(
-                        height: 100,
-                        child: Center(
-                          child: Text(
-                            AppLocalizations
-                                .of(context)
-                                .common_no_category_is_available,
-                            style: TextStyle(color: MyTheme.font_grey),
-                          ),
-                        ),
-                      )
+                              height: 100,
+                              child: Center(
+                                child: Text(
+                                  AppLocalizations.of(context)
+                                      .common_no_category_is_available,
+                                  style: TextStyle(color: MyTheme.font_grey),
+                                ),
+                              ),
+                            )
                           : SingleChildScrollView(
-                        child: buildFilterCategoryList(),
-                      ),
+                              child: buildFilterCategoryList(),
+                            ),
                       Padding(
                         padding: const EdgeInsets.only(left: 16.0),
                         child: Text(
-                          AppLocalizations
-                              .of(context)
-                              .filter_screen_brands,
+                          AppLocalizations.of(context).filter_screen_brands,
                           style: TextStyle(
                               fontSize: 14, fontWeight: FontWeight.bold),
                         ),
                       ),
                       _filterBrandList.length == 0
                           ? Container(
-                        height: 100,
-                        child: Center(
-                          child: Text(
-                            AppLocalizations
-                                .of(context)
-                                .common_no_brand_is_available,
-                            style: TextStyle(color: MyTheme.font_grey),
-                          ),
-                        ),
-                      )
+                              height: 100,
+                              child: Center(
+                                child: Text(
+                                  AppLocalizations.of(context)
+                                      .common_no_brand_is_available,
+                                  style: TextStyle(color: MyTheme.font_grey),
+                                ),
+                              ),
+                            )
                           : SingleChildScrollView(
-                        child: buildFilterBrandsList(),
-                      ),
+                              child: buildFilterBrandsList(),
+                            ),
                     ]),
                   )
                 ]),
@@ -1091,8 +991,7 @@ class _FilterState extends State<Filter> {
                         borderRadius: BorderRadius.circular(4.0),
                       ),
                       child: Text(
-                        AppLocalizations
-                            .of(context)
+                        AppLocalizations.of(context)
                             .common_clear_in_all_capital,
                         style: TextStyle(color: Colors.white),
                       ),
@@ -1118,8 +1017,7 @@ class _FilterState extends State<Filter> {
                         if (min != "" && max != "") {
                           if (max.compareTo(min) < 0) {
                             ToastComponent.showDialog(
-                                AppLocalizations
-                                    .of(context)
+                                AppLocalizations.of(context)
                                     .filter_screen_min_max_warning,
                                 context,
                                 gravity: Toast.CENTER,
@@ -1151,8 +1049,7 @@ class _FilterState extends State<Filter> {
       children: <Widget>[
         ..._filterBrandList
             .map(
-              (brand) =>
-              CheckboxListTile(
+              (brand) => CheckboxListTile(
                 controlAffinity: ListTileControlAffinity.leading,
                 dense: true,
                 title: Text(brand.name),
@@ -1169,7 +1066,7 @@ class _FilterState extends State<Filter> {
                   }
                 },
               ),
-        )
+            )
             .toList()
       ],
     );
@@ -1183,8 +1080,7 @@ class _FilterState extends State<Filter> {
       children: <Widget>[
         ..._filterCategoryList
             .map(
-              (category) =>
-              CheckboxListTile(
+              (category) => CheckboxListTile(
                 controlAffinity: ListTileControlAffinity.leading,
                 dense: true,
                 title: Text(category.name),
@@ -1202,7 +1098,7 @@ class _FilterState extends State<Filter> {
                   }
                 },
               ),
-        )
+            )
             .toList()
       ],
     );
@@ -1238,12 +1134,9 @@ class _FilterState extends State<Filter> {
             children: [
               SizedBox(
                   height:
-                  MediaQuery
-                      .of(context)
-                      .viewPadding
-                      .top > 40 ? 180 : 135
-                //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
-              ),
+                      MediaQuery.of(context).viewPadding.top > 40 ? 180 : 135
+                  //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
+                  ),
               GridView.builder(
                 // 2
                 //addAutomaticKeepAlives: true,
@@ -1275,9 +1168,7 @@ class _FilterState extends State<Filter> {
     } else if (_totalProductData == 0) {
       return Center(
           child: Text(
-              AppLocalizations
-                  .of(context)
-                  .common_no_product_is_available));
+              AppLocalizations.of(context).common_no_product_is_available));
     } else {
       return Container(); // should never be happening
     }
@@ -1313,12 +1204,9 @@ class _FilterState extends State<Filter> {
             children: [
               SizedBox(
                   height:
-                  MediaQuery
-                      .of(context)
-                      .viewPadding
-                      .top > 40 ? 180 : 135
-                //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
-              ),
+                      MediaQuery.of(context).viewPadding.top > 40 ? 180 : 135
+                  //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
+                  ),
               GridView.builder(
                 // 2
                 //addAutomaticKeepAlives: true,
@@ -1348,9 +1236,7 @@ class _FilterState extends State<Filter> {
     } else if (_totalBrandData == 0) {
       return Center(
           child:
-          Text(AppLocalizations
-              .of(context)
-              .common_no_brand_is_available));
+              Text(AppLocalizations.of(context).common_no_brand_is_available));
     } else {
       return Container(); // should never be happening
     }
@@ -1387,12 +1273,9 @@ class _FilterState extends State<Filter> {
             children: [
               SizedBox(
                   height:
-                  MediaQuery
-                      .of(context)
-                      .viewPadding
-                      .top > 40 ? 180 : 135
-                //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
-              ),
+                      MediaQuery.of(context).viewPadding.top > 40 ? 180 : 135
+                  //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
+                  ),
               GridView.builder(
                 // 2
                 //addAutomaticKeepAlives: true,
@@ -1412,8 +1295,8 @@ class _FilterState extends State<Filter> {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                            return SellerDetails();
-                          }));
+                        return SellerDetails();
+                      }));
                     },
                     child: ShopSquareCard(
                       id: _shopList[index].id,
@@ -1430,9 +1313,7 @@ class _FilterState extends State<Filter> {
     } else if (_totalShopData == 0) {
       return Center(
           child:
-          Text(AppLocalizations
-              .of(context)
-              .common_no_shop_is_available));
+              Text(AppLocalizations.of(context).common_no_shop_is_available));
     } else {
       return Container(); // should never be happening
     }

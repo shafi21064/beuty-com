@@ -4,9 +4,11 @@
 // https://app.quicktype.io/
 import 'dart:convert';
 
-ProductDetailsResponse productDetailsResponseFromJson(String str) => ProductDetailsResponse.fromJson(json.decode(str));
+ProductDetailsResponse productDetailsResponseFromJson(String str) =>
+    ProductDetailsResponse.fromJson(json.decode(str));
 
-String productDetailsResponseToJson(ProductDetailsResponse data) => json.encode(data.toJson());
+String productDetailsResponseToJson(ProductDetailsResponse data) =>
+    json.encode(data.toJson());
 
 class ProductDetailsResponse {
   ProductDetailsResponse({
@@ -19,49 +21,50 @@ class ProductDetailsResponse {
   bool success;
   int status;
 
-  factory ProductDetailsResponse.fromJson(Map<String, dynamic> json) => ProductDetailsResponse(
-    detailed_products: List<DetailedProduct>.from(json["data"].map((x) => DetailedProduct.fromJson(x))),
-    success: json["success"],
-    status: json["status"],
-  );
+  factory ProductDetailsResponse.fromJson(Map<String, dynamic> json) =>
+      ProductDetailsResponse(
+        detailed_products: List<DetailedProduct>.from(
+            json["data"].map((x) => DetailedProduct.fromJson(x))),
+        success: json["success"],
+        status: json["status"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": List<dynamic>.from(detailed_products.map((x) => x.toJson())),
-    "success": success,
-    "status": status,
-  };
+        "data": List<dynamic>.from(detailed_products.map((x) => x.toJson())),
+        "success": success,
+        "status": status,
+      };
 }
 
 class DetailedProduct {
-  DetailedProduct({
-    this.id,
-    this.name,
-    this.added_by,
-    this.seller_id,
-    this.shop_id,
-    this.shop_name,
-    this.shop_logo,
-    this.photos,
-    this.thumbnail_image,
-    this.tags,
-    this.price_high_low,
-    this.choice_options,
-    this.colors,
-    this.has_discount,
-    this.stroked_price,
-    this.main_price,
-    this.calculable_price,
-    this.currency_symbol,
-    this.current_stock,
-    this.unit,
-    this.rating,
-    this.rating_count,
-    this.earn_point,
-    this.description,
-    this.video_link,
-    this.link,
-    this.brand
-  });
+  DetailedProduct(
+      {this.id,
+      this.name,
+      this.added_by,
+      this.seller_id,
+      this.shop_id,
+      this.shop_name,
+      this.shop_logo,
+      this.photos,
+      this.thumbnail_image,
+      this.tags,
+      this.price_high_low,
+      this.choice_options,
+      this.colors,
+      this.has_discount,
+      this.stroked_price,
+      this.main_price,
+      this.calculable_price,
+      this.currency_symbol,
+      this.current_stock,
+      this.unit,
+      this.rating,
+      this.rating_count,
+      this.earn_point,
+      this.description,
+      this.video_link,
+      this.link,
+      this.brand});
 
   int id;
   String name;
@@ -76,7 +79,7 @@ class DetailedProduct {
   String price_high_low;
   List<ChoiceOption> choice_options;
   List<dynamic> colors;
-  bool has_discount;
+  var has_discount;
   String stroked_price;
   String main_price;
   var calculable_price;
@@ -91,65 +94,72 @@ class DetailedProduct {
   String link;
   Brand brand;
 
-  factory DetailedProduct.fromJson(Map<String, dynamic> json) => DetailedProduct(
-    id: json["id"],
-    name: json["name"],
-    added_by: json["added_by"],
-    seller_id: json["seller_id"],
-    shop_id: json["shop_id"],
-    shop_name: json["shop_name"],
-    shop_logo: json["shop_logo"],
-    photos: List<Photo>.from(json["photos"].map((x) => Photo.fromJson(x))),
-    thumbnail_image: json["thumbnail_image"],
-    tags: List<String>.from(json["tags"].map((x) => x)),
-    price_high_low: json["price_high_low"],
-    choice_options: List<ChoiceOption>.from(json["choice_options"].map((x) => ChoiceOption.fromJson(x))),
-    colors: List<String>.from(json["colors"].map((x) => x)),
-    has_discount: json["has_discount"],
-    stroked_price: json["stroked_price"],
-    main_price: json["main_price"],
-    calculable_price: json["calculable_price"],
-    currency_symbol: json["currency_symbol"],
-    current_stock: json["current_stock"],
-    unit: json["unit"],
-    rating: json["rating"].toInt(),
-    rating_count: json["rating_count"],
-    earn_point: json["earn_point"].toInt(),
-    description: json["description"] == null || json["description"] == "" ? "No Description is available" : json['description'],
-    video_link: json["video_link"],
-    link: json["link"],
-    brand: Brand.fromJson(json["brand"]),
-  );
+  factory DetailedProduct.fromJson(Map<String, dynamic> json) =>
+      DetailedProduct(
+        id: json["id"],
+        name: json["name"],
+        added_by: json["added_by"],
+        seller_id: json["seller_id"],
+        shop_id: json["shop_id"],
+        shop_name: json["shop_name"],
+        shop_logo: json["shop_logo"],
+        photos: List<Photo>.from(json["photos"].map((x) => Photo.fromJson(x))),
+        thumbnail_image: json["thumbnail_image"],
+        tags: List<String>.from(json["tags"].map((x) => x)),
+        price_high_low: json["price_high_low"],
+        choice_options: List<ChoiceOption>.from(
+            json["choice_options"].map((x) => ChoiceOption.fromJson(x))),
+        colors: List<String>.from(json["colors"].map((x) => x)),
+        has_discount: json["has_discount"],
+        stroked_price: json["stroked_price"],
+        main_price: json["main_price"],
+        calculable_price: json["calculable_price"],
+        currency_symbol: json["currency_symbol"],
+        current_stock: json["current_stock"] != null
+            ? int.tryParse(json["current_stock"].toString()) ?? 0
+            : 0,
+        unit: json["unit"],
+        rating: json["rating"].toInt(),
+        rating_count: json["rating_count"],
+        earn_point: json["earn_point"].toInt(),
+        description: json["description"] == null || json["description"] == ""
+            ? "No Description is available"
+            : json['description'],
+        video_link: json["video_link"],
+        link: json["link"],
+        brand: Brand.fromJson(json["brand"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "added_by": added_by,
-    "seller_id": seller_id,
-    "shop_id": shop_id,
-    "shop_name": shop_name,
-    "shop_logo": shop_logo,
-    "photos": List<dynamic>.from(photos.map((x) => x.toJson())),
-    "thumbnail_image": thumbnail_image,
-    "tags": List<dynamic>.from(tags.map((x) => x)),
-    "price_high_low": price_high_low,
-    "choice_options": List<dynamic>.from(choice_options.map((x) => x.toJson())),
-    "colors": List<dynamic>.from(colors.map((x) => x)),
-    "has_discount": has_discount,
-    "stroked_price": stroked_price,
-    "main_price": main_price,
-    "calculable_price": calculable_price,
-    "currency_symbol": currency_symbol,
-    "current_stock": current_stock,
-    "unit": unit,
-    "rating": rating,
-    "rating_count": rating_count,
-    "earn_point": earn_point,
-    "description": description,
-    "video_link": video_link,
-    "link": link,
-    "brand": brand.toJson(),
-  };
+        "id": id,
+        "name": name,
+        "added_by": added_by,
+        "seller_id": seller_id,
+        "shop_id": shop_id,
+        "shop_name": shop_name,
+        "shop_logo": shop_logo,
+        "photos": List<dynamic>.from(photos.map((x) => x.toJson())),
+        "thumbnail_image": thumbnail_image,
+        "tags": List<dynamic>.from(tags.map((x) => x)),
+        "price_high_low": price_high_low,
+        "choice_options":
+            List<dynamic>.from(choice_options.map((x) => x.toJson())),
+        "colors": List<dynamic>.from(colors.map((x) => x)),
+        "has_discount": has_discount,
+        "stroked_price": stroked_price,
+        "main_price": main_price,
+        "calculable_price": calculable_price,
+        "currency_symbol": currency_symbol,
+        "current_stock": current_stock,
+        "unit": unit,
+        "rating": rating,
+        "rating_count": rating_count,
+        "earn_point": earn_point,
+        "description": description,
+        "video_link": video_link,
+        "link": link,
+        "brand": brand.toJson(),
+      };
 }
 
 class Brand {
@@ -164,16 +174,16 @@ class Brand {
   String logo;
 
   factory Brand.fromJson(Map<String, dynamic> json) => Brand(
-    id: json["id"],
-    name: json["name"],
-    logo: json["logo"],
-  );
+        id: json["id"],
+        name: json["name"],
+        logo: json["logo"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "logo": logo,
-  };
+        "id": id,
+        "name": name,
+        "logo": logo,
+      };
 }
 
 class Photo {
@@ -185,14 +195,12 @@ class Photo {
   String variant;
   String path;
 
-  factory Photo.fromJson(Map<String, dynamic> json) =>
-      Photo(
+  factory Photo.fromJson(Map<String, dynamic> json) => Photo(
         variant: json["variant"],
         path: json["path"],
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "variant": variant,
         "path": path,
       };
@@ -210,14 +218,14 @@ class ChoiceOption {
   List<String> options;
 
   factory ChoiceOption.fromJson(Map<String, dynamic> json) => ChoiceOption(
-    name: json["name"],
-    title: json["title"],
-    options: List<String>.from(json["options"].map((x) => x)),
-  );
+        name: json["name"],
+        title: json["title"],
+        options: List<String>.from(json["options"].map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "name": name,
-    "title": title,
-    "options": List<dynamic>.from(options.map((x) => x)),
-  };
+        "name": name,
+        "title": title,
+        "options": List<dynamic>.from(options.map((x) => x)),
+      };
 }

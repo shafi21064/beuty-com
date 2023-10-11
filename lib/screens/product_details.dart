@@ -168,7 +168,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         await WishListRepository().isProductInUserWishList(
       product_id: widget.id,
     );
-
+    print(wishListCheckResponse);
     //print("p&u:" + widget.id.toString() + " | " + _user_id.toString());
     _isInWishList = wishListCheckResponse.is_in_wishlist;
     setState(() {});
@@ -321,7 +321,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     // print(widget.id);
     // print(_variant);
     // print(user_id.$);
-    // print(_quantity);
+    //print(_quantity);
 
     var cartAddResponse = await CartRepository()
         .getCartAddResponse(widget.id, _variant, user_id.$, _quantity);

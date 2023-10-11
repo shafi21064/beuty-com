@@ -34,7 +34,7 @@ class _CategoryListState extends State<CategoryList> {
 
   @override
   Widget build(BuildContext context) {
-     return Directionality(
+    return Directionality(
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
           key: _scaffoldKey,
@@ -96,7 +96,10 @@ class _CategoryListState extends State<CategoryList> {
             ),
       title: Text(
         getAppBarTitle(),
-        style: GoogleFonts.ubuntu(fontSize: 18,color: Theme.of(context).colorScheme.primary,),
+        style: GoogleFonts.ubuntu(
+          fontSize: 18,
+          color: Theme.of(context).colorScheme.primary,
+        ),
       ),
       elevation: 0.0,
       titleSpacing: 0,
@@ -105,7 +108,9 @@ class _CategoryListState extends State<CategoryList> {
 
   String getAppBarTitle() {
     String name = widget.parent_category_name == ""
-        ? (widget.is_top_category ? AppLocalizations.of(context).category_list_screen_top_categories : AppLocalizations.of(context).category_list_screen_categories)
+        ? (widget.is_top_category
+            ? AppLocalizations.of(context).category_list_screen_top_categories
+            : AppLocalizations.of(context).category_list_screen_categories)
         : widget.parent_category_name;
 
     return name;
@@ -116,12 +121,13 @@ class _CategoryListState extends State<CategoryList> {
         ? CategoryRepository().getTopCategories()
         : CategoryRepository()
             .getCategories(parent_id: widget.parent_category_id);
+    print(future);
     return FutureBuilder(
         future: future,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             //snapshot.hasError
-            print("category list error");
+            print("category list error:${snapshot}");
             print(snapshot.error.toString());
             return Container(
               height: 10,
@@ -221,15 +227,16 @@ class _CategoryListState extends State<CategoryList> {
             child: ClipRRect(
                 borderRadius: BorderRadius.horizontal(
                     left: Radius.circular(10), right: Radius.zero),
-                child:categoryResponse.categories[index].banner!=''? FadeInImage.assetNetwork(
-                  placeholder: 'assets/placeholder.png',
-                  image:
-                      categoryResponse.categories[index].banner,
-                  fit: BoxFit.cover,
-                ): Image.asset(
-              'assets/app_logo.png',
-              fit: BoxFit.fitWidth,
-            ))),
+                child: categoryResponse.categories[index].banner != ''
+                    ? FadeInImage.assetNetwork(
+                        placeholder: 'assets/placeholder.png',
+                        image: categoryResponse.categories[index].banner,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.asset(
+                        'assets/app_logo.png',
+                        fit: BoxFit.fitWidth,
+                      ))),
         Container(
           height: 80,
           child: Column(
@@ -271,34 +278,34 @@ class _CategoryListState extends State<CategoryList> {
                           }));
                         } else {
                           ToastComponent.showDialog(
-                              AppLocalizations.of(context).category_list_screen_no_subcategories, context,
+                              AppLocalizations.of(context)
+                                  .category_list_screen_no_subcategories,
+                              context,
                               gravity: Toast.CENTER,
                               duration: Toast.LENGTH_LONG);
                         }
                       },
-                      child:
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 5),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            color: Colors.grey.shade200
-                        ),
-                        child:  Text(
-                          AppLocalizations.of(context).category_list_screen_view_subcategories,
+                            color: Colors.grey.shade200),
+                        child: Text(
+                          AppLocalizations.of(context)
+                              .category_list_screen_view_subcategories,
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
                             color: categoryResponse
-                                .categories[index].number_of_children >
-                                0
+                                        .categories[index].number_of_children >
+                                    0
                                 ? MyTheme.medium_grey
                                 : MyTheme.light_grey,
                           ),
                         ),
                       ),
-
-
                     ),
                     Text(
                       " | ",
@@ -319,23 +326,22 @@ class _CategoryListState extends State<CategoryList> {
                         }));
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 4),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            color: Color(int.parse("0xffff0000")).withAlpha(20)
-                        ),
+                            color:
+                                Color(int.parse("0xffff0000")).withAlpha(20)),
                         child: Text(
-                          AppLocalizations.of(context).category_list_screen_view_products,
+                          AppLocalizations.of(context)
+                              .category_list_screen_view_products,
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: TextStyle(
-                              color: Color(int.parse("0xffff0000"))
-                          ),
+                          style:
+                              TextStyle(color: Color(int.parse("0xffff0000"))),
                         ),
                       ),
-
-
                     ),
                   ],
                 ),
@@ -372,7 +378,10 @@ class _CategoryListState extends State<CategoryList> {
                       borderRadius:
                           const BorderRadius.all(Radius.circular(8.0))),
                   child: Text(
-                    AppLocalizations.of(context).category_list_screen_all_products_of + " " + widget.parent_category_name,
+                    AppLocalizations.of(context)
+                            .category_list_screen_all_products_of +
+                        " " +
+                        widget.parent_category_name,
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 13,

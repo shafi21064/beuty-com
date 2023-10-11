@@ -121,6 +121,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   fetchFeaturedCategories() async {
     var categoryResponse = await CategoryRepository().getFeturedCategories();
+    print("featuredCategory-------->" + categoryResponse.categories.toString());
     _featuredCategoryList.addAll(categoryResponse.categories);
     _isCategoryInitial = false;
     setState(() {});
@@ -132,6 +133,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     );
 
     _featuredProductList.addAll(productResponse.products);
+    print(_featuredProductList);
     _isProductInitial = false;
     _totalProductData = productResponse.meta.total;
     _showProductLoadingContainer = false;
@@ -312,7 +314,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                 .home_screen_featured_categories,
                                             style: GoogleFonts.ubuntu(
                                                 fontSize: 16,
-                                                color: Theme.of(context).buttonTheme.colorScheme.primary),
+                                                color: Theme.of(context)
+                                                    .buttonTheme
+                                                    .colorScheme
+                                                    .primary),
                                           ),
                                         ],
                                       ),
@@ -352,7 +357,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                 .home_screen_featured_products,
                                             style: GoogleFonts.ubuntu(
                                                 fontSize: 16,
-                                                color: Theme.of(context).buttonTheme.colorScheme.primary),
+                                                color: Theme.of(context)
+                                                    .buttonTheme
+                                                    .colorScheme
+                                                    .primary),
                                           ),
                                         ],
                                       ),
@@ -488,14 +496,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                               borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(16),
                                   bottom: Radius.zero),
-                              child: _featuredCategoryList[index].banner==''?Image.asset(
-                            'assets/app_logo.png',
-                            fit: BoxFit.fitWidth,
-                          ):FadeInImage.assetNetwork(
-                                placeholder: 'assets/placeholder.png',
-                                image: _featuredCategoryList[index].banner,
-                                fit: BoxFit.cover,
-                              ))),
+                              child: _featuredCategoryList[index].banner == ''
+                                  ? Image.asset(
+                                      'assets/app_logo.png',
+                                      fit: BoxFit.fitWidth,
+                                    )
+                                  : FadeInImage.assetNetwork(
+                                      placeholder: 'assets/placeholder.png',
+                                      image:
+                                          _featuredCategoryList[index].banner,
+                                      fit: BoxFit.cover,
+                                    ))),
                       Padding(
                         padding: EdgeInsets.fromLTRB(8, 8, 8, 4),
                         child: Container(
@@ -555,10 +566,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     width: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        color: Theme.of(context)
-                            .buttonTheme
-                            .colorScheme
-                            .primary,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(1.0),
@@ -607,10 +616,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     width: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        color: Theme.of(context)
-                            .buttonTheme
-                            .colorScheme
-                            .primary ,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(1.0),
@@ -631,7 +638,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     child: Text(AppLocalizations.of(context).home_screen_brands,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            color:Theme.of(context).buttonTheme.colorScheme.secondary,
+                            color: Theme.of(context)
+                                .buttonTheme
+                                .colorScheme
+                                .secondary,
                             fontWeight: FontWeight.w300))),
               ],
             ),
@@ -653,10 +663,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     width: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        color: Theme.of(context)
-                            .buttonTheme
-                            .colorScheme
-                            .primary ,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(1.0),
@@ -674,11 +682,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     )),
                 Padding(
                     padding: const EdgeInsets.only(top: 8),
-                    child: Text(
-                        "Top solds",
+                    child: Text("Top solds",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            color: Theme.of(context).buttonTheme.colorScheme.secondary,
+                            color: Theme.of(context)
+                                .buttonTheme
+                                .colorScheme
+                                .secondary,
                             fontWeight: FontWeight.w300))),
               ],
             ),
@@ -700,10 +710,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     width: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        color: Theme.of(context)
-                            .buttonTheme
-                            .colorScheme
-                            .primary ,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(1.0),
@@ -721,11 +729,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     )),
                 Padding(
                     padding: const EdgeInsets.only(top: 8),
-                    child: Text(
-                        "Beauty Books",
+                    child: Text("Beauty Books",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            color: Theme.of(context).buttonTheme.colorScheme.secondary,
+                            color: Theme.of(context)
+                                .buttonTheme
+                                .colorScheme
+                                .secondary,
                             fontWeight: FontWeight.w300))),
               ],
             ),
@@ -747,10 +757,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     width: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        color: Theme.of(context)
-                            .buttonTheme
-                            .colorScheme
-                            .primary ,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(1.0),
@@ -764,16 +772,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       padding: const EdgeInsets.all(16.0),
                       child: Image.asset(
                         "assets/kyt.png",
-
                       ),
                     )),
                 Padding(
                     padding: const EdgeInsets.only(top: 8),
-                    child: Text(
-                        "Kirei Youtube",
+                    child: Text("Kirei Youtube",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            color: Theme.of(context).buttonTheme.colorScheme.secondary,
+                            color: Theme.of(context)
+                                .buttonTheme
+                                .colorScheme
+                                .secondary,
                             fontWeight: FontWeight.w300))),
               ],
             ),
@@ -924,9 +933,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   Container(
                       margin: EdgeInsets.only(
                           left: MediaQuery.of(context).size.width / 3.7),
-                      child:  Image.asset(
+                      child: Image.asset(
                         "assets/logo.png",
-
                       )),
                   GestureDetector(
                       onTap: () {
@@ -944,13 +952,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           child: Row(
                             children: [
                               //Text('Search ',style: TextStyle(color: Colors.blueGrey),),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(
-                                  Icons.search_sharp,
-                                  color: Colors.blueGrey,
-                                ),
-                              ),
+                              // Padding(
+                              //   padding: const EdgeInsets.all(8.0),
+                              //   child: Icon(
+                              //     Icons.search_sharp,
+                              //     color: Colors.blueGrey,
+                              //   ),
+                              // ),
                             ],
                           )))
                 ],

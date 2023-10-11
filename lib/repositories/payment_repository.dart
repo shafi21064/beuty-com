@@ -91,14 +91,13 @@ class PaymentRepository {
         },
         body: post_body);
 
-    //print(response.body.toString());
+    print(response.body.toString());
     return orderCreateResponseFromJson(response.body);
   }
 
   Future<OrderCreateResponse> getOrderCreateResponseFromCod(
       @required payment_method) async {
-    var post_body = jsonEncode(
-        {"user_id": "${user_id.$}", "payment_type": "${payment_method}"});
+    var post_body = jsonEncode({"payment_type": "${payment_method}"});
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/payments/pay/cod");
 
@@ -109,7 +108,7 @@ class PaymentRepository {
         },
         body: post_body);
 
-    //print(response.body.toString());
+    print(response.body.toString());
     return orderCreateResponseFromJson(response.body);
   }
 
@@ -128,7 +127,7 @@ class PaymentRepository {
         },
         body: post_body);
 
-    //print(response.body.toString());
+    print(response.body.toString());
     return orderCreateResponseFromJson(response.body);
   }
 
@@ -157,7 +156,7 @@ class PaymentRepository {
         },
         body: post_body);
 
-    //print(response.body.toString());
+    print(response.body.toString());
     return razorpayPaymentSuccessResponseFromJson(response.body);
   }
 
@@ -182,7 +181,7 @@ class PaymentRepository {
         },
         body: post_body);
 
-    //print(response.body.toString());
+    print(response.body.toString());
     return paystackPaymentSuccessResponseFromJson(response.body);
   }
 
@@ -207,7 +206,7 @@ class PaymentRepository {
         },
         body: post_body);
 
-    //print(response.body.toString());
+    print(response.body.toString());
     return iyzicoPaymentSuccessResponseFromJson(response.body);
   }
 
@@ -249,7 +248,7 @@ class PaymentRepository {
         },
         body: post_body);
 
-    //print(response.body.toString());
+    print(response.body.toString());
     return bkashPaymentProcessResponseFromJson(response.body);
   }
 

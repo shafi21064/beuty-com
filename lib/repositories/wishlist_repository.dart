@@ -16,6 +16,7 @@ class WishListRepository {
         "App-Language": app_language.$,
       },
     );
+    print(response.body);
     return wishlistResponseFromJson(response.body);
   }
 
@@ -37,6 +38,7 @@ class WishListRepository {
       {@required product_id = 0}) async {
     Uri url = Uri.parse(
         "${AppConfig.BASE_URL}/wishlists-check-product?product_id=${product_id}");
+    print(access_token.$);
     final response = await http.get(
       url,
       headers: {
@@ -44,6 +46,7 @@ class WishListRepository {
         "App-Language": app_language.$,
       },
     );
+    print(response.body);
     return wishListChekResponseFromJson(response.body);
   }
 
