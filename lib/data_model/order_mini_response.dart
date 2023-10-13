@@ -12,9 +12,9 @@ String orderMiniResponseToJson(OrderMiniResponse data) =>
 
 class OrderMiniResponse {
   OrderMiniResponse({
-     this.data,
-     this.success,
-     this.status,
+    this.data,
+    this.success,
+    this.status,
   });
 
   List<Datum> data;
@@ -37,21 +37,21 @@ class OrderMiniResponse {
 
 class Datum {
   Datum({
-     this.id,
-     this.shippingAddress,
-     this.userId,
-     this.paymentType,
-     this.paymentStatus,
-     this.paymentStatusString,
-     this.deliveryStatus,
+    this.id,
+    this.shippingAddress,
+    this.userId,
+    this.paymentType,
+    this.paymentStatus,
+    this.paymentStatusString,
+    this.deliveryStatus,
     this.couponCode,
-     this.couponDiscount,
+    this.couponDiscount,
     this.shippingCost,
-     this.deliveryStatusString,
-     this.grandTotal,
-     this.subtotal,
-     this.date,
-     this.links,
+    this.deliveryStatusString,
+    this.grandTotal,
+    this.subtotal,
+    this.date,
+    this.links,
   });
 
   int id;
@@ -109,7 +109,7 @@ class Datum {
 
 class Links {
   Links({
-     this.details,
+    this.details,
   });
 
   String details;
@@ -125,16 +125,16 @@ class Links {
 
 class ShippingAddress {
   ShippingAddress({
-     this.name,
-     this.email,
-     this.address,
-     this.country,
-     this.state,
-     this.city,
-     this.postalCode,
-     this.phone,
-     this.stateId,
-     this.cityId,
+    this.name,
+    this.email,
+    this.address,
+    this.country,
+    this.state,
+    this.city,
+    this.postalCode,
+    this.phone,
+    this.stateId,
+    this.cityId,
   });
 
   String name;
@@ -159,7 +159,9 @@ class ShippingAddress {
         postalCode: json["postal_code"],
         phone: json["phone"],
         stateId: json["state_id"],
-        cityId: json["city_id"],
+        cityId: (json["city_id"] is String)
+            ? int.tryParse(json["city_id"]) ?? 0
+            : json["city_id"],
       );
 
   Map<String, dynamic> toJson() => {

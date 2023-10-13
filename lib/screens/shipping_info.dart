@@ -453,13 +453,13 @@ class _ShippingInfoState extends State<ShippingInfo> {
                     ),
                     Container(
                       width: 200,
-                      // child: Text(
-                      //   _shippingAddressList[index].city_name,
-                      //   maxLines: 2,
-                      //   style: TextStyle(
-                      //       color: MyTheme.dark_grey,
-                      //       fontWeight: FontWeight.w600),
-                      // ),
+                      child: Text(
+                        _shippingAddressList[index].city_name,
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: MyTheme.dark_grey,
+                            fontWeight: FontWeight.w600),
+                      ),
                     ),
                   ],
                 ),

@@ -74,6 +74,7 @@ class _AddressState extends State<Address> {
     setState(() {
       _isInitial = false;
     });
+    print(_shippingAddressList);
     if (_shippingAddressList.length > 0) {
       //_default_shipping_address = _shippingAddressList[0].id;
 
@@ -1614,13 +1615,13 @@ class _AddressState extends State<Address> {
                         ),
                         Container(
                           width: 200,
-                          // child: Text(
-                          //   _shippingAddressList[index].city_name,
-                          //   maxLines: 2,
-                          //   style: TextStyle(
-                          //       color: MyTheme.dark_grey,
-                          //       fontWeight: FontWeight.w600),
-                          // ),
+                          child: Text(
+                            _shippingAddressList[index].city_name,
+                            maxLines: 2,
+                            style: TextStyle(
+                                color: MyTheme.dark_grey,
+                                fontWeight: FontWeight.w600),
+                          ),
                         ),
                       ],
                     ),

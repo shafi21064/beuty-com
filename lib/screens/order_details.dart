@@ -104,7 +104,6 @@ class _OrderDetailsState extends State<OrderDetails> {
     fetchAll();
   }
 
-
   onPressOfflinePaymentButton() {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return Checkout(
@@ -112,7 +111,8 @@ class _OrderDetailsState extends State<OrderDetails> {
         title: AppLocalizations.of(context).checkout_screen_checkout,
         list: "offline",
         manual_payment_from_order_details: true,
-        rechargeAmount:double.parse(_orderDetails.grand_total.toString().replaceAll('\$','')),
+        rechargeAmount: double.parse(
+            _orderDetails.grand_total.toString().replaceAll('\$', '')),
       );
     })).then((value) {
       onPopped(value);
@@ -679,7 +679,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                       AppLocalizations.of(context)
                           .order_details_screen_timeline_tile_order_placed,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: MyTheme.font_grey,fontSize: 12),
+                      style: TextStyle(color: MyTheme.font_grey, fontSize: 12),
                     ),
                   )
                 ],

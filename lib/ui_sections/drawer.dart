@@ -45,13 +45,12 @@ class _MainDrawerState extends State<MainDrawer> {
     // }
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
       return Main();
-    }),(route)=>false);
+    }), (route) => false);
   }
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-
       child: Directionality(
         textDirection:
             app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
@@ -64,7 +63,8 @@ class _MainDrawerState extends State<MainDrawer> {
                     ? ListTile(
                         leading: CircleAvatar(
                           backgroundImage: NetworkImage(
-                             "${avatar_original.$}",
+                            "${avatar_original.$}" ??
+                                "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png",
                           ),
                         ),
                         title: Text("${user_name.$}"),
@@ -75,20 +75,18 @@ class _MainDrawerState extends State<MainDrawer> {
                     : Text(
                         AppLocalizations.of(context).main_drawer_not_logged_in,
                         style: TextStyle(
-                            color:Theme.of(context)
+                            color: Theme.of(context)
                                 .buttonTheme
                                 .colorScheme
                                 .primary,
                             fontSize: 14)),
                 Divider(),
-
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     leading: Image.asset("assets/home.png",
-                        height: 16, color: Theme.of(context)
-                            .buttonTheme
-                            .colorScheme
-                            .primary),
+                        height: 16,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.primary),
                     title: Text(AppLocalizations.of(context).main_drawer_home,
                         style: TextStyle(
                             color: Theme.of(context)
@@ -105,13 +103,12 @@ class _MainDrawerState extends State<MainDrawer> {
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     leading: Image.asset("assets/theme.png",
-                        height: 16, color: Theme.of(context)
-                            .buttonTheme
-                            .colorScheme
-                            .primary),
+                        height: 16,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.primary),
                     title: Text('Theme',
                         style: TextStyle(
-                            color:Theme.of(context)
+                            color: Theme.of(context)
                                 .buttonTheme
                                 .colorScheme
                                 .primary,
@@ -125,13 +122,12 @@ class _MainDrawerState extends State<MainDrawer> {
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     leading: Image.asset("assets/blog.jpg",
-                        height: 22, color: Theme.of(context)
-                            .buttonTheme
-                            .colorScheme
-                            .primary),
+                        height: 22,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.primary),
                     title: Text('Kirei Blogs',
                         style: TextStyle(
-                            color:Theme.of(context)
+                            color: Theme.of(context)
                                 .buttonTheme
                                 .colorScheme
                                 .primary,
@@ -144,11 +140,13 @@ class _MainDrawerState extends State<MainDrawer> {
                     }),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    leading: Image.asset("assets/community.png",
-                        height: 25, ),
+                    leading: Image.asset(
+                      "assets/community.png",
+                      height: 25,
+                    ),
                     title: Text('Kirei Community',
                         style: TextStyle(
-                            color:Theme.of(context)
+                            color: Theme.of(context)
                                 .buttonTheme
                                 .colorScheme
                                 .primary,
@@ -156,16 +154,15 @@ class _MainDrawerState extends State<MainDrawer> {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                            return FeedList();
-                          }));
+                        return FeedList();
+                      }));
                     }),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    leading: Image.asset("assets/kyt.png",
-                        height: 22),
+                    leading: Image.asset("assets/kyt.png", height: 22),
                     title: Text('Kirei Youtube',
                         style: TextStyle(
-                            color:Theme.of(context)
+                            color: Theme.of(context)
                                 .buttonTheme
                                 .colorScheme
                                 .primary,
@@ -178,11 +175,10 @@ class _MainDrawerState extends State<MainDrawer> {
                     }),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    leading: Image.asset("assets/bb.png",
-                        height: 24),
+                    leading: Image.asset("assets/bb.png", height: 24),
                     title: Text('Beauty Books',
                         style: TextStyle(
-                            color:Theme.of(context)
+                            color: Theme.of(context)
                                 .buttonTheme
                                 .colorScheme
                                 .primary,
@@ -244,7 +240,6 @@ class _MainDrawerState extends State<MainDrawer> {
                                   return OrderList(from_checkout: false);
                                 }));
                               }),
-
                           ListTile(
                               visualDensity:
                                   VisualDensity(horizontal: -4, vertical: -4),
@@ -283,8 +278,7 @@ class _MainDrawerState extends State<MainDrawer> {
                                       AppLocalizations.of(context)
                                           .main_drawer_wallet,
                                       style: TextStyle(
-                                          color:
-                                          Theme.of(context)
+                                          color: Theme.of(context)
                                               .buttonTheme
                                               .colorScheme
                                               .primary,

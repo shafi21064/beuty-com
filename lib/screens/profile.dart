@@ -49,7 +49,7 @@ class _ProfileState extends State<Profile> {
     // }
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
       return Main();
-    }),(route)=>false);
+    }), (route) => false);
   }
 
   int _cartCounter = 0;
@@ -191,7 +191,6 @@ class _ProfileState extends State<Profile> {
                 buildHorizontalMenu(),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
-
                 ),
                 buildHorizontalMenu2(),
                 Padding(
@@ -250,7 +249,7 @@ class _ProfileState extends State<Profile> {
                         style: TextStyle(
                             color: MyTheme.font_grey,
                             fontWeight: FontWeight.w300,
-                        fontSize: 11),
+                            fontSize: 11),
                       ),
                     ],
                   )),
@@ -286,15 +285,15 @@ class _ProfileState extends State<Profile> {
                   ),
                   child: Column(
                     children: [
-                        Icon(
+                      Icon(
                         Icons.person,
                         color: Colors.blueAccent,
                       ),
                       Text(
                         "Profile",
-
                         textAlign: TextAlign.center,
-                        style: TextStyle( fontSize: 11,
+                        style: TextStyle(
+                            fontSize: 11,
                             color: MyTheme.font_grey,
                             fontWeight: FontWeight.w300),
                       ),
@@ -340,7 +339,7 @@ class _ProfileState extends State<Profile> {
                         style: TextStyle(
                             color: MyTheme.font_grey,
                             fontWeight: FontWeight.w300,
-                        fontSize: 10),
+                            fontSize: 10),
                       ),
                     ],
                   )),
@@ -382,6 +381,7 @@ class _ProfileState extends State<Profile> {
       ],
     );
   }
+
   buildHorizontalMenu2() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -420,7 +420,8 @@ class _ProfileState extends State<Profile> {
                       Text(
                         AppLocalizations.of(context).profile_screen_orders,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 10,
+                        style: TextStyle(
+                            fontSize: 10,
                             color: MyTheme.font_grey,
                             fontWeight: FontWeight.w300),
                       ),
@@ -431,10 +432,9 @@ class _ProfileState extends State<Profile> {
         ),
         InkWell(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) {
-                  return MessengerList();
-                }));
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return MessengerList();
+            }));
           },
           child: Column(
             children: [
@@ -457,7 +457,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   child: Column(
                     children: [
-                        Icon(
+                      Icon(
                         Icons.email_outlined,
                         color: Colors.deepOrange,
                       ),
@@ -467,7 +467,7 @@ class _ProfileState extends State<Profile> {
                         style: TextStyle(
                             color: MyTheme.font_grey,
                             fontWeight: FontWeight.w300,
-                        fontSize: 10),
+                            fontSize: 10),
                       ),
                     ],
                   )),
@@ -476,10 +476,9 @@ class _ProfileState extends State<Profile> {
         ),
         InkWell(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) {
-                  return DynamicThemesExampleApp();
-                }));
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return DynamicThemesExampleApp();
+            }));
           },
           child: Column(
             children: [
@@ -509,7 +508,8 @@ class _ProfileState extends State<Profile> {
                       Text(
                         "Themes",
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 10,
+                        style: TextStyle(
+                            fontSize: 10,
                             color: MyTheme.font_grey,
                             fontWeight: FontWeight.w300),
                       ),
@@ -554,10 +554,6 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-
-
-
-
   buildVerticalMenu() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -565,13 +561,12 @@ class _ProfileState extends State<Profile> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-
           InkWell(
             onTap: () {
               onTapLogout(context);
-             },
+            },
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 16.0,top: 50),
+              padding: const EdgeInsets.only(bottom: 16.0, top: 50),
               child: Row(
                 children: [
                   Container(
@@ -592,7 +587,7 @@ class _ProfileState extends State<Profile> {
                   Padding(
                     padding: const EdgeInsets.all(6.0),
                     child: Text(
-                     "Logout",
+                      "Logout",
                       textAlign: TextAlign.center,
                       style: TextStyle(color: MyTheme.font_grey, fontSize: 18),
                     ),
@@ -601,7 +596,6 @@ class _ProfileState extends State<Profile> {
               ),
             ),
           ),
-
         ],
       ),
     );
@@ -693,11 +687,10 @@ class _ProfileState extends State<Profile> {
                 child: Container(
                   height: 215, //150
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [
-                          Theme.of(context).colorScheme.primary,
-                          Theme.of(context).colorScheme.secondary,
-                        ]),
+                    gradient: LinearGradient(colors: [
+                      Theme.of(context).colorScheme.primary,
+                      Theme.of(context).colorScheme.secondary,
+                    ]),
                   ),
                 ),
               ),
@@ -716,7 +709,8 @@ class _ProfileState extends State<Profile> {
                         ),
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: NetworkImage("${avatar_original.$}"),
+                          image: NetworkImage("${avatar_original.$}" ??
+                              "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png"),
                         ),
                       ),
                     ),
@@ -736,22 +730,19 @@ class _ProfileState extends State<Profile> {
                 fontWeight: FontWeight.w600),
           ),
         ),
-
         Visibility(
           visible: wallet_system_status.$,
           child: Padding(
-            padding: const EdgeInsets.only(top: 6.0,bottom: 10),
+            padding: const EdgeInsets.only(top: 6.0, bottom: 10),
             child: Container(
               height: 24,
               decoration: BoxDecoration(
-                gradient:  LinearGradient(
-                    colors: [
-                      Theme.of(context).colorScheme.primary,
-                      Theme.of(context).colorScheme.secondary,
-                    ]),
+                gradient: LinearGradient(colors: [
+                  Theme.of(context).colorScheme.primary,
+                  Theme.of(context).colorScheme.secondary,
+                ]),
               ),
               child: FlatButton(
-
                 // 	rgb(50,205,50)
                 shape: RoundedRectangleBorder(
                     borderRadius: const BorderRadius.only(
@@ -786,11 +777,10 @@ class _ProfileState extends State<Profile> {
       centerTitle: true,
       flexibleSpace: Container(
         decoration: BoxDecoration(
-          gradient:  LinearGradient(
-              colors: [
-                Theme.of(context).colorScheme.primary,
-                Theme.of(context).colorScheme.secondary,
-              ]),
+          gradient: LinearGradient(colors: [
+            Theme.of(context).colorScheme.primary,
+            Theme.of(context).colorScheme.secondary,
+          ]),
         ),
       ),
       leading: GestureDetector(
@@ -810,12 +800,9 @@ class _ProfileState extends State<Profile> {
                     padding: const EdgeInsets.symmetric(
                         vertical: 18.0, horizontal: 0.0),
                     child: Container(
-                      child: Image.asset(
-                        'assets/hamburger.png',
-                        height: 16,
-                    color:  Theme.of(context)
-                        .primaryIconTheme.color
-                      ),
+                      child: Image.asset('assets/hamburger.png',
+                          height: 16,
+                          color: Theme.of(context).primaryIconTheme.color),
                     ),
                   ),
                 ),
