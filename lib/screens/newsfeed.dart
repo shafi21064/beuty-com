@@ -620,8 +620,9 @@ class _FeedListState extends State<FeedList> {
                     left: Radius.circular(10), right: Radius.circular(10)),
                 child: FadeInImage.assetNetwork(
                   placeholder: 'assets/placeholder.png',
-                  image: compostResponse.data[index].banner!=''?compostResponse.data[index].banner:'https://picsum.photos/seed/picsum/200/300',
-                  fit: BoxFit.cover,
+image: (compostResponse.data[index].banner != null && compostResponse.data[index].banner.isNotEmpty)
+      ? compostResponse.data[index].banner
+      : 'https://picsum.photos/seed/picsum/200/300',                  fit: BoxFit.cover,
                 ))),
         Container(
           height: 60,

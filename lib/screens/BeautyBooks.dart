@@ -293,10 +293,10 @@ class _BeautyBooksState extends State<BeautyBooks> {
                   child: ClipRRect(
                       borderRadius: BorderRadius.horizontal(
                           left: Radius.circular(10), right: Radius.circular(10)),
-                      child: compostResponse[index].picture[0].url==null?
-                      Image.asset('assets/no_pic.png',fit: BoxFit.cover,):
-
-
+                      child: compostResponse[index].picture.length == 0
+  ? Image.asset('assets/no_pic.png',fit:BoxFit.cover)
+  : compostResponse[index].picture[0].url == null
+    ? Image.asset('assets/no_pic.png',fit:BoxFit.cover,):
 
                       FadeInImage.assetNetwork(
                         placeholder: 'assets/placeholder.png',

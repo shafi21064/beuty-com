@@ -206,11 +206,13 @@ class BlogCategoryPivot {
   int blogCategoryId;
 
   factory BlogCategoryPivot.fromJson(Map<String, dynamic> json) => BlogCategoryPivot(
-    blogId: json["blog_id"],
-    blogCategoryId: json["blog_category_id"],
+    blogId: json["blog_id"] as int,
+    blogCategoryId: (json["blog_category_id"] is String)
+            ? int.tryParse(json["blog_category_id"]) ?? 0
+            : json["blog_category_id"],
   );
 
-  Map<String, dynamic> toJson() => {
+  Map<String,dynamic> toJson() => {
     "blog_id": blogId,
     "blog_category_id": blogCategoryId,
   };
@@ -230,7 +232,7 @@ class Picture {
   PicturePivot pivot;
 
   factory Picture.fromJson(Map<String, dynamic> json) => Picture(
-    url: json["url"],
+    url: json["url"]??"",
     width: json["width"],
     height: json["height"],
     pivot: PicturePivot.fromJson(json["pivot"]),
