@@ -143,8 +143,7 @@ class _RegistrationState extends State<Registration> {
           children: [
             Container(
               width: _screen_width * (3 / 4),
-              child: Image.asset(
-                  "assets/image_02.png"),
+              child: Image.asset("assets/image_02.png"),
             ),
             Container(
               width: double.infinity,
@@ -157,8 +156,7 @@ class _RegistrationState extends State<Registration> {
                     child: Container(
                       width: 305,
                       height: 175,
-                      child:
-                      Image.asset('assets/image_01.png'),
+                      child: Image.asset('assets/image_01.png'),
                     ),
                   ),
                   Padding(
@@ -166,10 +164,8 @@ class _RegistrationState extends State<Registration> {
                     child: Text(
                       "Register",
                       style: TextStyle(
-                          color:Theme.of(context)
-                              .buttonTheme
-                              .colorScheme
-                              .primary,
+                          color:
+                              Theme.of(context).buttonTheme.colorScheme.primary,
                           fontSize: 18,
                           fontWeight: FontWeight.w600),
                     ),
@@ -178,40 +174,45 @@ class _RegistrationState extends State<Registration> {
                     width: _screen_width * (3 / 4),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [     
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 4.0),
-                            child: Text(
-                              AppLocalizations.of(context).registration_screen_name,
-                              style: TextStyle(
-                                color: MyTheme.accent_color,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: Container(
-                              height: 36,
-                              child: TextField(
-                                controller: _nameController,
-                                autofocus: false,
-                                decoration: InputDecorations.buildInputDecoration_1(
-                                  hint_text: "Farhan Khan",
+                      children: [
+                        Visibility(
+                          visible: _register_by == 'phone',
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 4.0),
+                                child: Text(
+                                  AppLocalizations.of(context)
+                                      .registration_screen_name,
+                                  style: TextStyle(
+                                    color: MyTheme.accent_color,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
-                            ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Container(
+                                  height: 36,
+                                  child: TextField(
+                                    controller: _nameController,
+                                    autofocus: false,
+                                    decoration:
+                                        InputDecorations.buildInputDecoration_1(
+                                      hint_text: "Farhan Khan",
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 4.0),
                           child: Text(
-                                 AppLocalizations.of(context)
-                                    .registration_screen_phone,
+                            AppLocalizations.of(context)
+                                .registration_screen_phone,
                             style: TextStyle(
                                 color: MyTheme.accent_color,
                                 fontWeight: FontWeight.w600),
@@ -249,258 +250,274 @@ class _RegistrationState extends State<Registration> {
                         //         //                   TextDecoration.underline),
                         //         //         ),
                         //         //       )
-                                   
+
                         //       ],
                         //     ),
                         //   )
-                     
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Container(
-                                  height: 36,
-                                  child: CustomInternationalPhoneNumberInput(
-                                    onInputChanged: (PhoneNumber number) {
-                                      print(number.phoneNumber);
-                                      setState(() {
-                                        _phone = number.phoneNumber;
-                                      });
-                                    },
-                                    onInputValidated: (bool value) {
-                                      print(value);
-                                    },
-                                    selectorConfig: SelectorConfig(
-                                      selectorType:
-                                          PhoneInputSelectorType.DIALOG,
-                                    ),
-                                    ignoreBlank: false,
-                                    autoValidateMode: AutovalidateMode.disabled,
-                                    selectorTextStyle:
-                                        TextStyle(color: MyTheme.font_grey),
-                                    initialValue: phoneCode,
-                                    textFieldController: _phoneNumberController,
-                                    formatInput: true,
-                                    keyboardType:
-                                        TextInputType.numberWithOptions(
-                                            signed: true, decimal: true),
-                                    inputDecoration: InputDecorations
-                                        .buildInputDecoration_phone(
-                                            hint_text: "01710 333 558"),
-                                    onSaved: (PhoneNumber number) {
-                                      //print('On Saved: $number');
-                                    },
-                                  ),
-                                ),
-          
-                              ],
-                            ),
-                          )
-                     ,
 
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 4.0),
-                                  child: Text(
-                                    AppLocalizations.of(context).registration_screen_password,
-                                    style: TextStyle(
-                                      color: MyTheme.accent_color,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Container(
+                                height: 36,
+                                child: CustomInternationalPhoneNumberInput(
+                                  onInputChanged: (PhoneNumber number) {
+                                    print(number.phoneNumber);
+                                    setState(() {
+                                      _phone = number.phoneNumber;
+                                    });
+                                  },
+                                  onInputValidated: (bool value) {
+                                    print(value);
+                                  },
+                                  selectorConfig: SelectorConfig(
+                                    selectorType: PhoneInputSelectorType.DIALOG,
+                                  ),
+                                  ignoreBlank: false,
+                                  autoValidateMode: AutovalidateMode.disabled,
+                                  selectorTextStyle:
+                                      TextStyle(color: MyTheme.font_grey),
+                                  initialValue: phoneCode,
+                                  textFieldController: _phoneNumberController,
+                                  formatInput: true,
+                                  keyboardType: TextInputType.numberWithOptions(
+                                      signed: true, decimal: true),
+                                  inputDecoration: InputDecorations
+                                      .buildInputDecoration_phone(
+                                          hint_text: "01710 333 558"),
+                                  onSaved: (PhoneNumber number) {
+                                    //print('On Saved: $number');
+                                  },
+                                  countries: ["BD"],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        Visibility(
+                          visible: _register_by == 'phone',
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 4.0),
+                                child: Text(
+                                  AppLocalizations.of(context)
+                                      .registration_screen_password,
+                                  style: TextStyle(
+                                    color: MyTheme.accent_color,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 8.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Container(
-                                        height: 36,
-                                        child: TextField(
-                                          controller: _passwordController,
-                                          autofocus: false,
-                                          obscureText: true,
-                                          enableSuggestions: false,
-                                          autocorrect: false,
-                                          decoration: InputDecorations.buildInputDecoration_1(
-                                            hint_text: "• • • • • • • •",
-                                          ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      height: 36,
+                                      child: TextField(
+                                        controller: _passwordController,
+                                        autofocus: false,
+                                        obscureText: true,
+                                        enableSuggestions: false,
+                                        autocorrect: false,
+                                        decoration: InputDecorations
+                                            .buildInputDecoration_1(
+                                          hint_text: "• • • • • • • •",
                                         ),
                                       ),
-                                      Text(
-                                        AppLocalizations.of(context)
-                                            .registration_screen_password_length_recommendation,
-                                        style: TextStyle(
-                                          color: MyTheme.textfield_grey,
-                                          fontStyle: FontStyle.italic,
-                                        ),
+                                    ),
+                                    Text(
+                                      AppLocalizations.of(context)
+                                          .registration_screen_password_length_recommendation,
+                                      style: TextStyle(
+                                        color: MyTheme.textfield_grey,
+                                        fontStyle: FontStyle.italic,
                                       ),
-                                    ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 4.0),
+                                child: Text(
+                                  AppLocalizations.of(context)
+                                      .registration_screen_retype_password,
+                                  style: TextStyle(
+                                    color: MyTheme.accent_color,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 4.0),
-                                  child: Text(
-                                    AppLocalizations.of(context).registration_screen_retype_password,
-                                    style: TextStyle(
-                                      color: MyTheme.accent_color,
-                                      fontWeight: FontWeight.w600,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Container(
+                                  height: 36,
+                                  child: TextField(
+                                    controller: _passwordConfirmController,
+                                    autofocus: false,
+                                    obscureText: true,
+                                    enableSuggestions: false,
+                                    autocorrect: false,
+                                    decoration:
+                                        InputDecorations.buildInputDecoration_1(
+                                      hint_text: "• • • • • • • •",
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 8.0),
-                                  child: Container(
-                                    height: 36,
-                                    child: TextField(
-                                      controller: _passwordConfirmController,
-                                      autofocus: false,
-                                      obscureText: true,
-                                      enableSuggestions: false,
-                                      autocorrect: false,
-                                      decoration: InputDecorations.buildInputDecoration_1(
-                                        hint_text: "• • • • • • • •",
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                
+                              ),
+                            ],
+                          ),
+                        ),
+
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: RaisedButton(
-                            onPressed:  onPressSignUp,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(.0)),
+                            onPressed: onPressSignUp,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(.0)),
                             padding: EdgeInsets.all(0.0),
                             child: Ink(
                               decoration: BoxDecoration(
-
-                                  borderRadius: BorderRadius.circular(30.0)
-                              ),
+                                  borderRadius: BorderRadius.circular(30.0)),
                               child: Container(
-                                constraints: BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+                                constraints: BoxConstraints(
+                                    maxWidth: 300.0, minHeight: 50.0),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  _register_by!="otp"?"Register":"Send OTP",
+                                  _register_by != "otp"
+                                      ? "Register"
+                                      : "Send OTP",
                                   textAlign: TextAlign.center,
-                                  style:GoogleFonts.ubuntu(color:Colors.white,fontSize: 16 ),
+                                  style: GoogleFonts.ubuntu(
+                                      color: Colors.white, fontSize: 16),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                          Padding(
+                        Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                           child: Center(
                               child: Text(
-                                "Or, Register with",
+                            "Or, Register with",
                             style: TextStyle(
                                 color: MyTheme.medium_grey, fontSize: 12),
                           )),
-                                ),
-                    Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: _register_by != "otp"
-              ? RaisedButton(
-                  onPressed: () {
-                    setState(() {
-                      _register_by = "otp";
-                    });
-                  },
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2.0)),
-                  padding: EdgeInsets.all(0.0),
-                  child: Ink(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: Container(
-                      constraints: BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Sign Up With OTP",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.ubuntu(color: Colors.white, fontSize: 16),
-                      ),
-                    ),
-                  ),
-                )
-              : RaisedButton(
-                  onPressed: () {
-                    setState(() {
-                      _register_by = "phone";
-                    });
-                  },
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2.0)),
-                  padding: EdgeInsets.all(0.0),
-                  child: Ink(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: Container(
-                      constraints: BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Sign Up With Password",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.ubuntu(color: Colors.white, fontSize: 16),
-                      ),
-                    ),
-                  ),
-                ),
-        ),
-                        
-                         Padding(
+                        ),
+                        Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: RaisedButton(
-                            onPressed:  () {
+                          child: _register_by != "otp"
+                              ? RaisedButton(
+                                  onPressed: () {
                                     setState(() {
                                       _register_by = "otp";
                                     });
                                   },
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2.0)),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(2.0)),
+                                  padding: EdgeInsets.all(0.0),
+                                  child: Ink(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                    child: Container(
+                                      constraints: BoxConstraints(
+                                          maxWidth: 300.0, minHeight: 50.0),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "Sign Up With OTP",
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.ubuntu(
+                                            color: Colors.white, fontSize: 16),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : RaisedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _register_by = "phone";
+                                    });
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(2.0)),
+                                  padding: EdgeInsets.all(0.0),
+                                  child: Ink(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                    child: Container(
+                                      constraints: BoxConstraints(
+                                          maxWidth: 300.0, minHeight: 50.0),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "Sign Up With Password",
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.ubuntu(
+                                            color: Colors.white, fontSize: 16),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RaisedButton(
+                            onPressed: () {
+                              setState(() {
+                                _register_by = "otp";
+                              });
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(2.0)),
                             padding: EdgeInsets.all(0.0),
                             child: Ink(
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30.0)
-                              ),
+                                  borderRadius: BorderRadius.circular(30.0)),
                               child: Container(
-                                constraints: BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+                                constraints: BoxConstraints(
+                                    maxWidth: 300.0, minHeight: 50.0),
                                 alignment: Alignment.center,
                                 child: Text(
                                   "Register With Facebook",
                                   textAlign: TextAlign.center,
-                                  style:GoogleFonts.ubuntu(color:Colors.white,fontSize: 16 ),
+                                  style: GoogleFonts.ubuntu(
+                                      color: Colors.white, fontSize: 16),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                         Padding(
+                        Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: RaisedButton(
-                            onPressed:  () {
-                                    setState(() {
-                                      _register_by = "otp";
-                                    });
-                                  },
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2.0)),
+                            onPressed: () {
+                              setState(() {
+                                _register_by = "otp";
+                              });
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(2.0)),
                             padding: EdgeInsets.all(0.0),
                             child: Ink(
                               decoration: BoxDecoration(
-
-                                  borderRadius: BorderRadius.circular(30.0)
-                              ),
+                                  borderRadius: BorderRadius.circular(30.0)),
                               child: Container(
-                                constraints: BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+                                constraints: BoxConstraints(
+                                    maxWidth: 300.0, minHeight: 50.0),
                                 alignment: Alignment.center,
                                 child: Text(
                                   "Register With Google",
                                   textAlign: TextAlign.center,
-                                  style:GoogleFonts.ubuntu(color:Colors.white,fontSize: 16 ),
+                                  style: GoogleFonts.ubuntu(
+                                      color: Colors.white, fontSize: 16),
                                 ),
                               ),
                             ),
@@ -520,32 +537,32 @@ class _RegistrationState extends State<Registration> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: RaisedButton(
-                            onPressed:  (){
+                            onPressed: () {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                    return Login();
-                                  }));
+                                return Login();
+                              }));
                             },
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2.0)),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(2.0)),
                             padding: EdgeInsets.all(0.0),
                             child: Ink(
                               decoration: BoxDecoration(
-                                 
-                                  borderRadius: BorderRadius.circular(10.0)
-                              ),
+                                  borderRadius: BorderRadius.circular(10.0)),
                               child: Container(
-                                constraints: BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+                                constraints: BoxConstraints(
+                                    maxWidth: 300.0, minHeight: 50.0),
                                 alignment: Alignment.center,
                                 child: Text(
                                   "Sign In",
                                   textAlign: TextAlign.center,
-                                  style:GoogleFonts.ubuntu(color:Colors.white,fontSize: 16 ),
+                                  style: GoogleFonts.ubuntu(
+                                      color: Colors.white, fontSize: 16),
                                 ),
                               ),
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   )
