@@ -58,7 +58,9 @@ final themeCollection = ThemeCollection(themes: {
               background: Colors.red[600],
               secondaryVariant: Colors.pink,
               secondary: Colors.black,
-            )),
+              
+            )
+            ),
       ),
 
   //Kirei_1 theme

@@ -141,10 +141,10 @@ class _RegistrationState extends State<Registration> {
         backgroundColor: Colors.white,
         body: Stack(
           children: [
-            Container(
-              width: _screen_width * (3 / 4),
-              child: Image.asset("assets/image_02.png"),
-            ),
+            // Container(
+            //   width: _screen_width * (3 / 4),
+            //   child: Image.asset("assets/image_02.png"),
+            // ),
             Container(
               width: double.infinity,
               child: SingleChildScrollView(
@@ -154,9 +154,8 @@ class _RegistrationState extends State<Registration> {
                   Padding(
                     padding: const EdgeInsets.only(top: 40.0, bottom: 15),
                     child: Container(
-                      width: 305,
-                      height: 175,
-                      child: Image.asset('assets/image_01.png'),
+                      width: 120,
+                      child: Image.asset('assets/logo.png'),
                     ),
                   ),
                   Padding(
@@ -383,18 +382,18 @@ class _RegistrationState extends State<Registration> {
                                 borderRadius: BorderRadius.circular(.0)),
                             padding: EdgeInsets.all(0.0),
                             child: Ink(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30.0)),
+                              decoration:
+                                  BoxDecoration(color: MyTheme.send_otp),
                               child: Container(
                                 constraints: BoxConstraints(
                                     maxWidth: 300.0, minHeight: 50.0),
                                 alignment: Alignment.center,
                                 child: Text(
                                   _register_by != "otp"
-                                      ? "Register"
-                                      : "Send OTP",
+                                      ? "REGISTER"
+                                      : "SEND OTP",
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.ubuntu(
+                                  style: GoogleFonts.openSans(
                                       color: Colors.white, fontSize: 16),
                                 ),
                               ),
@@ -431,9 +430,9 @@ class _RegistrationState extends State<Registration> {
                                           maxWidth: 300.0, minHeight: 50.0),
                                       alignment: Alignment.center,
                                       child: Text(
-                                        "Sign Up With OTP",
+                                        "SIGN UP WITH OTP !",
                                         textAlign: TextAlign.center,
-                                        style: GoogleFonts.ubuntu(
+                                        style: GoogleFonts.openSans(
                                             color: Colors.white, fontSize: 16),
                                       ),
                                     ),
@@ -450,7 +449,7 @@ class _RegistrationState extends State<Registration> {
                                   padding: EdgeInsets.all(0.0),
                                   child: Ink(
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(30.0),
+                                      color: MyTheme.sign_up_with_password,
                                     ),
                                     child: Container(
                                       constraints: BoxConstraints(
@@ -459,7 +458,7 @@ class _RegistrationState extends State<Registration> {
                                       child: Text(
                                         "Sign Up With Password",
                                         textAlign: TextAlign.center,
-                                        style: GoogleFonts.ubuntu(
+                                        style: GoogleFonts.openSans(
                                             color: Colors.white, fontSize: 16),
                                       ),
                                     ),
@@ -476,20 +475,32 @@ class _RegistrationState extends State<Registration> {
                               });
                             },
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(2.0)),
+                              borderRadius: BorderRadius.circular(2.0),
+                            ),
                             padding: EdgeInsets.all(0.0),
                             child: Ink(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30.0)),
+                              decoration:
+                                  BoxDecoration(color: MyTheme.facebook_login),
                               child: Container(
                                 constraints: BoxConstraints(
                                     maxWidth: 300.0, minHeight: 50.0),
                                 alignment: Alignment.center,
-                                child: Text(
-                                  "Register With Facebook",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.ubuntu(
-                                      color: Colors.white, fontSize: 16),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons
+                                          .facebook_outlined, // You can replace this with the Google Icon
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      "REGISTER WITH FACEBOOK",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.openSans(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -504,65 +515,88 @@ class _RegistrationState extends State<Registration> {
                               });
                             },
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(2.0)),
+                              borderRadius: BorderRadius.circular(2.0),
+                            ),
                             padding: EdgeInsets.all(0.0),
                             child: Ink(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30.0)),
+                              decoration:
+                                  BoxDecoration(color: MyTheme.google_login),
                               child: Container(
                                 constraints: BoxConstraints(
                                     maxWidth: 300.0, minHeight: 50.0),
                                 alignment: Alignment.center,
-                                child: Text(
-                                  "Register With Google",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.ubuntu(
-                                      color: Colors.white, fontSize: 16),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icon_google.png', // Replace with the actual path to your Google icon
+                                      // Adjust the width as needed
+                                      color: Colors
+                                          .white, // Set the desired color for the icon
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      "REGISTER WITH GOOGLE",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.openSans(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
                           ),
                         ),
 
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20.0),
-                          child: Center(
-                              child: Text(
-                            AppLocalizations.of(context)
-                                .registration_screen_already_have_account,
-                            style: TextStyle(
-                                color: MyTheme.medium_grey, fontSize: 12),
-                          )),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: RaisedButton(
-                            onPressed: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return Login();
-                              }));
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(2.0)),
-                            padding: EdgeInsets.all(0.0),
-                            child: Ink(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              child: Container(
-                                constraints: BoxConstraints(
-                                    maxWidth: 300.0, minHeight: 50.0),
-                                alignment: Alignment.center,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return Login();
+                            }));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 20.0),
+                            child: Center(
                                 child: Text(
-                                  "Sign In",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.ubuntu(
-                                      color: Colors.white, fontSize: 16),
-                                ),
-                              ),
-                            ),
+                              "Login Now ! ",
+                              style: TextStyle(
+                                  color: MyTheme.dont_have_account,
+                                  fontWeight: FontWeight.bold,
+                                  // Add this line for underline
+                                  fontSize: 16),
+                            )),
                           ),
                         ),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: RaisedButton(
+                        //     onPressed: () {
+                        //       Navigator.push(context,
+                        //           MaterialPageRoute(builder: (context) {
+                        //         return Login();
+                        //       }));
+                        //     },
+                        //     shape: RoundedRectangleBorder(
+                        //         borderRadius: BorderRadius.circular(2.0)),
+                        //     padding: EdgeInsets.all(0.0),
+                        //     child: Ink(
+                        //       decoration: BoxDecoration(
+                        //           borderRadius: BorderRadius.circular(10.0)),
+                        //       child: Container(
+                        //         constraints: BoxConstraints(
+                        //             maxWidth: 300.0, minHeight: 50.0),
+                        //         alignment: Alignment.center,
+                        //         child: Text(
+                        //           "Sign In",
+                        //           textAlign: TextAlign.center,
+                        //           style: GoogleFonts.openSans(
+                        //               color: Colors.white, fontSize: 16),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   )
