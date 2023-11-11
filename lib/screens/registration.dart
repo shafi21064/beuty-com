@@ -26,6 +26,7 @@ class _RegistrationState extends State<Registration> {
   PhoneNumber phoneCode = PhoneNumber(isoCode: 'BD', dialCode: "+880");
 
   String _phone = "";
+  bool validPhoneNumber = false;
 
   //controllers
   TextEditingController _nameController = TextEditingController();
@@ -54,8 +55,9 @@ class _RegistrationState extends State<Registration> {
     var email = _emailController.text.toString();
     var password = _passwordController.text.toString();
     var password_confirm = _passwordConfirmController.text.toString();
+    var _phone = _phoneNumberController.text.toString();
 
-    if (name == "") {
+    if (_register_by == 'phone' && name == "") {
       ToastComponent.showDialog(
           AppLocalizations.of(context).registration_screen_name_warning,
           context,
@@ -69,21 +71,21 @@ class _RegistrationState extends State<Registration> {
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
       return;
-    } else if (_register_by == 'phone' && _phone == "") {
+    } else if (_register_by == 'phone' && _phone == "" && !validPhoneNumber) {
       ToastComponent.showDialog(
           AppLocalizations.of(context).registration_screen_phone_warning,
           context,
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
       return;
-    } else if (password == "") {
+    } else if (_register_by == 'phone' && password == "") {
       ToastComponent.showDialog(
           AppLocalizations.of(context).registration_screen_password_warning,
           context,
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
       return;
-    } else if (password_confirm == "") {
+    } else if (_register_by == 'phone' && password_confirm == "") {
       ToastComponent.showDialog(
           AppLocalizations.of(context)
               .registration_screen_password_confirm_warning,
@@ -91,7 +93,7 @@ class _RegistrationState extends State<Registration> {
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
       return;
-    } else if (password.length < 6) {
+    } else if (_register_by == 'phone' && password.length < 6) {
       ToastComponent.showDialog(
           AppLocalizations.of(context)
               .registration_screen_password_length_warning,
@@ -99,7 +101,7 @@ class _RegistrationState extends State<Registration> {
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
       return;
-    } else if (password != password_confirm) {
+    } else if (_register_by == 'phone' && password != password_confirm) {
       ToastComponent.showDialog(
           AppLocalizations.of(context)
               .registration_screen_password_match_warning,
@@ -107,8 +109,25 @@ class _RegistrationState extends State<Registration> {
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
       return;
+    } else if (_register_by == "otp") {
+      var signupResponse = await AuthRepository().getSignupOtpResponse(_phone);
+      if (signupResponse.result == false) {
+        ToastComponent.showDialog(signupResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      } else {
+        ToastComponent.showDialog(signupResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return Otp(
+            verify_by: _register_by,
+            phoneNumber: signupResponse.phone,
+            responseData: signupResponse,
+            // user_id: signupResponse.user_id,
+          );
+        }));
+      }
+      return;
     }
-
     var signupResponse = await AuthRepository().getSignupResponse(
         name,
         _register_by == 'email' ? email : _phone,
@@ -269,7 +288,13 @@ class _RegistrationState extends State<Registration> {
                                     });
                                   },
                                   onInputValidated: (bool value) {
-                                    print(value);
+                                    if (value) {
+                                      // Valid phone number, do something
+                                      validPhoneNumber = true;
+                                    } else {
+                                      // Invalid phone number, show an error
+                                      _phone = "";
+                                    }
                                   },
                                   selectorConfig: SelectorConfig(
                                     selectorType: PhoneInputSelectorType.DIALOG,

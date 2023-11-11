@@ -6,11 +6,11 @@ class AuthHelper {
     if (loginResponse.result == true) {
       is_logged_in.$ = true;
       is_logged_in.save();
-      access_token.$ = loginResponse.access_token;
+      access_token.$ = loginResponse.access_token ?? '';
       access_token.save();
       user_id.$ = loginResponse.user.id;
       user_id.save();
-      user_name.$ = loginResponse.user.name;
+      user_name.$ = loginResponse.user.name ?? '';
       user_name.save();
       user_email.$ = loginResponse.user.email;
       user_email.save();

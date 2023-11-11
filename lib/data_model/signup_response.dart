@@ -4,9 +4,16 @@
 
 import 'dart:convert';
 
-SignupResponse signupResponseFromJson(String str) => SignupResponse.fromJson(json.decode(str));
+SignupResponse signupResponseFromJson(String str) =>
+    SignupResponse.fromJson(json.decode(str));
 
 String signupResponseToJson(SignupResponse data) => json.encode(data.toJson());
+
+SignUpOtpResponse signUpOtpResponseFromJson(String str) =>
+    SignUpOtpResponse.fromJson(json.decode(str));
+
+String signUpOtpResponseToJson(SignUpOtpResponse data) =>
+    json.encode(data.toJson());
 
 class SignupResponse {
   SignupResponse({
@@ -20,14 +27,39 @@ class SignupResponse {
   int user_id;
 
   factory SignupResponse.fromJson(Map<String, dynamic> json) => SignupResponse(
-    result: json["result"],
-    message: json["message"],
-    user_id: json["user_id"],
-  );
+        result: json["result"],
+        message: json["message"],
+        user_id: json["user_id"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "result": result,
-    "message": message,
-    "user_id": user_id,
-  };
+        "result": result,
+        "message": message,
+        "user_id": user_id,
+      };
+}
+
+class SignUpOtpResponse {
+  SignUpOtpResponse({
+    this.result,
+    this.phone,
+    this.message,
+  });
+
+  bool result;
+  String phone;
+  String message;
+
+  factory SignUpOtpResponse.fromJson(Map<String, dynamic> json) =>
+      SignUpOtpResponse(
+        result: json['result'],
+        phone: json['phone'],
+        message: json['message'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        'result': result,
+        'phone': phone,
+        'message': message,
+      };
 }

@@ -1,4 +1,6 @@
+import 'package:active_ecommerce_flutter/helpers/auth_helper.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:active_ecommerce_flutter/screens/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:active_ecommerce_flutter/custom/input_decorations.dart';
@@ -9,12 +11,13 @@ import 'package:toast/toast.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
-
 class Otp extends StatefulWidget {
-  Otp({Key key, this.verify_by = "email",this.user_id}) : super(key: key);
+  Otp({Key key, this.verify_by, this.user_id, this.phoneNumber,this.responseData})
+      : super(key: key);
   final String verify_by;
   final int user_id;
+  final String phoneNumber;
+  final Object responseData;
 
   @override
   _OtpState createState() => _OtpState();
@@ -41,7 +44,7 @@ class _OtpState extends State<Otp> {
 
   onTapResend() async {
     var resendCodeResponse = await AuthRepository()
-        .getResendCodeResponse(widget.user_id,widget.verify_by);
+        .getResendCodeResponse(widget.user_id, widget.verify_by);
 
     if (resendCodeResponse.result == false) {
       ToastComponent.showDialog(resendCodeResponse.message, context,
@@ -49,35 +52,36 @@ class _OtpState extends State<Otp> {
     } else {
       ToastComponent.showDialog(resendCodeResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-
     }
-
   }
 
   onPressConfirm() async {
-
     var code = _verificationCodeController.text.toString();
 
-    if(code == ""){
-      ToastComponent.showDialog(AppLocalizations.of(context).otp_screen_verification_code_warning, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    if (code == "") {
+      ToastComponent.showDialog(
+          AppLocalizations.of(context).otp_screen_verification_code_warning,
+          context,
+          gravity: Toast.CENTER,
+          duration: Toast.LENGTH_LONG);
       return;
     }
+    if (widget.verify_by == 'otp') {
+      var confirmCodeResponse = await AuthRepository()
+          .getOtpConfirmCodeResponse(widget.phoneNumber, code);
 
-    var confirmCodeResponse = await AuthRepository()
-        .getConfirmCodeResponse(widget.user_id,code);
+      if (confirmCodeResponse.result == false) {
+        ToastComponent.showDialog(confirmCodeResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      } else {
+        ToastComponent.showDialog(confirmCodeResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        AuthHelper().setUserData(widget.responseData);
 
-    if (confirmCodeResponse.result == false) {
-      ToastComponent.showDialog(confirmCodeResponse.message, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-    } else {
-      ToastComponent.showDialog(confirmCodeResponse.message, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return Login();
-      }));
-
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return Main();
+        }));
+      }
     }
   }
 
@@ -108,8 +112,8 @@ class _OtpState extends State<Otp> {
                     child: Container(
                       width: 75,
                       height: 75,
-                      child:
-                          Image.asset('assets/login_registration_form_logo.png'),
+                      child: Image.asset(
+                          'assets/login_registration_form_logo.png'),
                     ),
                   ),
                   Padding(
@@ -117,8 +121,10 @@ class _OtpState extends State<Otp> {
                     child: Text(
                       "${AppLocalizations.of(context).otp_screen_verify_your} " +
                           (_verify_by == "email"
-                              ? AppLocalizations.of(context).otp_screen_email_account
-                              : AppLocalizations.of(context).otp_screen_phone_number),
+                              ? AppLocalizations.of(context)
+                                  .otp_screen_email_account
+                              : AppLocalizations.of(context)
+                                  .otp_screen_phone_number),
                       style: TextStyle(
                           color: MyTheme.accent_color,
                           fontSize: 18,
@@ -131,12 +137,14 @@ class _OtpState extends State<Otp> {
                         width: _screen_width * (3 / 4),
                         child: _verify_by == "email"
                             ? Text(
-                            AppLocalizations.of(context).otp_screen_enter_verification_code_to_email,
+                                AppLocalizations.of(context)
+                                    .otp_screen_enter_verification_code_to_email,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: MyTheme.dark_grey, fontSize: 14))
                             : Text(
-                            AppLocalizations.of(context).otp_screen_enter_verification_code_to_phone,
+                                AppLocalizations.of(context)
+                                    .otp_screen_enter_verification_code_to_phone,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: MyTheme.dark_grey, fontSize: 14))),
@@ -188,7 +196,7 @@ class _OtpState extends State<Otp> {
                                     fontWeight: FontWeight.w600),
                               ),
                               onPressed: () {
-                               onPressConfirm();
+                                onPressConfirm();
                               },
                             ),
                           ),
@@ -199,10 +207,11 @@ class _OtpState extends State<Otp> {
                   Padding(
                     padding: const EdgeInsets.only(top: 100),
                     child: InkWell(
-                      onTap: (){
+                      onTap: () {
                         onTapResend();
                       },
-                      child: Text(AppLocalizations.of(context).otp_screen_resend_code,
+                      child: Text(
+                          AppLocalizations.of(context).otp_screen_resend_code,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: MyTheme.accent_color,

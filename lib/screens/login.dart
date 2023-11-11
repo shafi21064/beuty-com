@@ -1,6 +1,7 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/other_config.dart';
+import 'package:active_ecommerce_flutter/screens/otp.dart';
 import 'package:active_ecommerce_flutter/social_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,6 +37,7 @@ class _LoginState extends State<Login> {
   String initialCountry = 'BD';
   PhoneNumber phoneCode = PhoneNumber(isoCode: 'BD', dialCode: "+880");
   String _phone = "";
+  bool validPhoneNumber = false;
 
   //controllers
   TextEditingController _phoneNumberController = TextEditingController();
@@ -60,6 +62,7 @@ class _LoginState extends State<Login> {
   onPressedLogin() async {
     var email = _emailController.text.toString();
     var password = _passwordController.text.toString();
+    var _phone = _phoneNumberController.text.toString();
 
     if (_login_by == 'email' && email == "") {
       ToastComponent.showDialog(
@@ -71,10 +74,32 @@ class _LoginState extends State<Login> {
           AppLocalizations.of(context).login_screen_phone_warning, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
-    } else if (password == "") {
+    } else if (_login_by == 'phone' && password == "") {
       ToastComponent.showDialog(
           AppLocalizations.of(context).login_screen_password_warning, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    } else if (_login_by == 'otp' && validPhoneNumber) {
+      var loginResponse = await AuthRepository().getLoginOTPResponse(_phone);
+      if (loginResponse.result == false) {
+        ToastComponent.showDialog(loginResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      } else {
+        ToastComponent.showDialog(loginResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+
+        // push notification starts
+
+        //push norification end
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return Otp(
+            verify_by: _login_by,
+            phoneNumber: loginResponse.phone,
+            responseData: loginResponse,
+            // user_id: signupResponse.user_id,01865284103
+          );
+        }));
+      }
       return;
     }
 
@@ -337,7 +362,11 @@ class _LoginState extends State<Login> {
                                       });
                                     },
                                     onInputValidated: (bool value) {
-                                      print(value);
+                                      if (value) {
+                                        validPhoneNumber = true;
+                                      } else {
+                                        _phone = '';
+                                      }
                                     },
                                     selectorConfig: SelectorConfig(
                                       selectorType:

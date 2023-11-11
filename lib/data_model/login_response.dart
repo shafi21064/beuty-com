@@ -8,6 +8,11 @@ LoginResponse loginResponseFromJson(String str) =>
     LoginResponse.fromJson(json.decode(str));
 
 String loginResponseToJson(LoginResponse data) => json.encode(data.toJson());
+LoginOtpResponse loginOtpResponseFromJson(String str) =>
+    LoginOtpResponse.fromJson(json.decode(str));
+
+String loginOtpResponseToJson(LoginOtpResponse data) =>
+    json.encode(data.toJson());
 
 class LoginResponse {
   LoginResponse({
@@ -45,6 +50,31 @@ class LoginResponse {
         "token_type": token_type == null ? null : token_type,
         "expires_at": expires_at == null ? null : expires_at.toIso8601String(),
         "user": user == null ? null : user.toJson(),
+      };
+}
+
+class LoginOtpResponse {
+  LoginOtpResponse({
+    this.result,
+    this.phone,
+    this.message,
+  });
+
+  bool result;
+  String phone;
+  String message;
+
+  factory LoginOtpResponse.fromJson(Map<String, dynamic> json) =>
+      LoginOtpResponse(
+        result: json['result'],
+        phone: json['phone'],
+        message: json['message'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        'result': result,
+        'phone': phone,
+        'message': message,
       };
 }
 

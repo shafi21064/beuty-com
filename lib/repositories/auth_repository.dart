@@ -30,35 +30,37 @@ class AuthRepository {
           "App-Language": app_language.$,
         },
         body: post_body);
-print(post_body);
+    print(post_body);
     return loginResponseFromJson(response.body);
   }
 
+  Future<LoginOtpResponse> getLoginOTPResponse(@required String phone) async {
+    var post_body = jsonEncode({"email": "${phone}"});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/send-login-otp");
+    final response = await http.post(url,
+        headers: {
+          "Accept": "*/*",
+          "Content-Type": "application/json",
+          "App-Language": app_language.$,
+        },
+        body: post_body);
+    print(response.body);
+    return loginOtpResponseFromJson(response.body);
+  }
 
   Future<LoginResponse> getSocialLoginResponse(@required String social_provider,
       @required String name, @required String email, @required String provider,
       {access_token = ""}) async {
     email = email == ("null") ? "" : email;
 
-    var post_body = jsonEncode(
-        {"name": "${name}", "email": email, "provider": "$provider","social_provider":"$social_provider","access_token":"$access_token"});
+    var post_body = jsonEncode({
+      "name": "${name}",
+      "email": email,
+      "provider": "$provider",
+      "social_provider": "$social_provider",
+      "access_token": "$access_token"
+    });
 
     Uri url = Uri.parse("${AppConfig.BASE_URL_1}/auth/social-login");
     final response = await http.post(url,
@@ -112,6 +114,25 @@ print(post_body);
     return signupResponseFromJson(response.body);
   }
 
+  Future<SignUpOtpResponse> getSignupOtpResponse(
+    @required String phone,
+  ) async {
+    var post_body = jsonEncode({
+      "email": "${phone}",
+    });
+    print(post_body);
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/send-signup-otp");
+    print(url);
+    final response = await http.post(url,
+        headers: {
+          "Content-Type": "application/json",
+          "App-Language": app_language.$,
+        },
+        body: post_body);
+    print(response.body);
+    return signUpOtpResponseFromJson(response.body);
+  }
+
   Future<ResendCodeResponse> getResendCodeResponse(
       @required int user_id, @required String verify_by) async {
     var post_body =
@@ -134,6 +155,22 @@ print(post_body);
         {"user_id": "$user_id", "verification_code": "$verification_code"});
 
     Uri url = Uri.parse("${AppConfig.BASE_URL_1}/auth/confirm_code");
+    final response = await http.post(url,
+        headers: {
+          "Content-Type": "application/json",
+          "App-Language": app_language.$,
+        },
+        body: post_body);
+
+    return confirmCodeResponseFromJson(response.body);
+  }
+
+  Future<ConfirmCodeResponse> getOtpConfirmCodeResponse(
+      @required String phone, @required String verification_code) async {
+    var post_body =
+        jsonEncode({"email": "$phone", "otp_code": "$verification_code"});
+
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/verify-signup-otp");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
