@@ -12,9 +12,16 @@ import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Otp extends StatefulWidget {
-  Otp({Key key, this.verify_by, this.user_id, this.phoneNumber,this.responseData})
+  Otp(
+      {Key key,
+      this.verify_by,
+      this.user_id,
+      this.phoneNumber,
+      this.responseData,
+      this.prev_screen})
       : super(key: key);
   final String verify_by;
+  final String prev_screen;
   final int user_id;
   final String phoneNumber;
   final Object responseData;
@@ -67,8 +74,11 @@ class _OtpState extends State<Otp> {
       return;
     }
     if (widget.verify_by == 'otp') {
-      var confirmCodeResponse = await AuthRepository()
-          .getOtpConfirmCodeResponse(widget.phoneNumber, code);
+      var confirmCodeResponse = widget.prev_screen == "Login"
+          ? await AuthRepository()
+              .getLogInOtpConfirmCodeResponse(widget.phoneNumber, code)
+          : await AuthRepository()
+              .getSignUpOtpConfirmCodeResponse(widget.phoneNumber, code);
 
       if (confirmCodeResponse.result == false) {
         ToastComponent.showDialog(confirmCodeResponse.message, context,
@@ -76,7 +86,7 @@ class _OtpState extends State<Otp> {
       } else {
         ToastComponent.showDialog(confirmCodeResponse.message, context,
             gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-        AuthHelper().setUserData(widget.responseData);
+        AuthHelper().setUserDataFromOTP(widget.responseData);
 
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return Main();

@@ -38,6 +38,7 @@ class _LoginState extends State<Login> {
   PhoneNumber phoneCode = PhoneNumber(isoCode: 'BD', dialCode: "+880");
   String _phone = "";
   bool validPhoneNumber = false;
+  bool rememberMe = false;
 
   //controllers
   TextEditingController _phoneNumberController = TextEditingController();
@@ -96,6 +97,7 @@ class _LoginState extends State<Login> {
             verify_by: _login_by,
             phoneNumber: loginResponse.phone,
             responseData: loginResponse,
+            prev_screen: "Login",
             // user_id: signupResponse.user_id,01865284103
           );
         }));
@@ -104,7 +106,7 @@ class _LoginState extends State<Login> {
     }
 
     var loginResponse = await AuthRepository()
-        .getLoginResponse(_login_by == 'email' ? email : _phone, password);
+        .getLoginResponse(_login_by == 'email' ? email : _phone, password,rememberMe);
     if (loginResponse.result == false) {
       ToastComponent.showDialog(loginResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
@@ -461,9 +463,13 @@ class _LoginState extends State<Login> {
                                   Row(
                                     children: [
                                       Checkbox(
-                                        value: false,
+                                        value: rememberMe,
+                                        activeColor: Colors.black,
                                         onChanged: (value) {
-                                          setState(() {});
+                                          setState(() {
+                                            rememberMe = !rememberMe;
+                                            // print(rememberMe);
+                                          });
                                         },
                                       ),
                                       Text(
@@ -589,11 +595,7 @@ class _LoginState extends State<Login> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: RaisedButton(
-                            onPressed: () {
-                              setState(() {
-                                _login_by = "otp";
-                              });
-                            },
+                            onPressed: onPressedFacebookLogin,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(2.0),
                             ),
@@ -629,11 +631,7 @@ class _LoginState extends State<Login> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: RaisedButton(
-                            onPressed: () {
-                              setState(() {
-                                _login_by = "otp";
-                              });
-                            },
+                            onPressed: onPressedGoogleLogin,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(2.0),
                             ),

@@ -14,10 +14,21 @@ class AuthHelper {
       user_name.save();
       user_email.$ = loginResponse.user.email;
       user_email.save();
-      user_phone.$ = loginResponse.user.phone ?? '';
+      user_phone.$ = loginResponse.user.phone ;
       user_phone.save();
       avatar_original.$ = loginResponse.user.avatar_original ?? '';
       avatar_original.save();
+    }
+  }
+
+  setUserDataFromOTP(loginResponse)
+  {
+ if (loginResponse.result == true) {
+      is_logged_in.$ = true;
+      is_logged_in.save();
+      access_token.save();
+      user_phone.$ = loginResponse.phone ;
+      user_phone.save();
     }
   }
 

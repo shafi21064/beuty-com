@@ -14,12 +14,32 @@ import 'dart:convert';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 
 class AuthRepository {
-  Future<LoginResponse> getLoginResponse(
-      @required String email, @required String password) async {
+  // Future<LoginResponse> getLoginResponse(
+  //     @required String email, @required String password) async {
+  //   var post_body = jsonEncode({
+  //     "email": "${email}",
+  //     "password": "$password",
+  //     "identity_matrix": AppConfig.purchase_code
+  //   });
+
+  //   Uri url = Uri.parse("${ENDP.LOGIN}");
+  //   final response = await http.post(url,
+  //       headers: {
+  //         "Accept": "*/*",
+  //         "Content-Type": "application/json",
+  //         "App-Language": app_language.$,
+  //       },
+  //       body: post_body);
+  //   print(post_body);
+  //   return loginResponseFromJson(response.body);
+  // }
+
+  Future<LoginResponse> getLoginResponse(@required String email,
+      @required String password, @required bool remember_me) async {
     var post_body = jsonEncode({
       "email": "${email}",
       "password": "$password",
-      "identity_matrix": AppConfig.purchase_code
+      "remember_me": remember_me
     });
 
     Uri url = Uri.parse("${ENDP.LOGIN}");
@@ -110,6 +130,7 @@ class AuthRepository {
           "App-Language": app_language.$,
         },
         body: post_body);
+    print(response.body);
 
     return signupResponseFromJson(response.body);
   }
@@ -165,7 +186,7 @@ class AuthRepository {
     return confirmCodeResponseFromJson(response.body);
   }
 
-  Future<ConfirmCodeResponse> getOtpConfirmCodeResponse(
+  Future<ConfirmCodeResponse> getSignUpOtpConfirmCodeResponse(
       @required String phone, @required String verification_code) async {
     var post_body =
         jsonEncode({"email": "$phone", "otp_code": "$verification_code"});
@@ -177,7 +198,23 @@ class AuthRepository {
           "App-Language": app_language.$,
         },
         body: post_body);
+    print(response.body);
+    return confirmCodeResponseFromJson(response.body);
+  }
 
+  Future<ConfirmCodeResponse> getLogInOtpConfirmCodeResponse(
+      @required String phone, @required String verification_code) async {
+    var post_body =
+        jsonEncode({"email": "$phone", "otp_code": "$verification_code"});
+
+    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/verify-login-otp");
+    final response = await http.post(url,
+        headers: {
+          "Content-Type": "application/json",
+          "App-Language": app_language.$,
+        },
+        body: post_body);
+    print(response.body);
     return confirmCodeResponseFromJson(response.body);
   }
 

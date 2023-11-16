@@ -1,5 +1,8 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:active_ecommerce_flutter/helpers/auth_helper.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:active_ecommerce_flutter/repositories/profile_repository.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:active_ecommerce_flutter/custom/input_decorations.dart';
@@ -14,6 +17,9 @@ import 'package:toast/toast.dart';
 import 'package:active_ecommerce_flutter/repositories/auth_repository.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../other_config.dart';
+import 'main.dart';
 
 class Registration extends StatefulWidget {
   @override
@@ -122,6 +128,7 @@ class _RegistrationState extends State<Registration> {
             verify_by: _register_by,
             phoneNumber: signupResponse.phone,
             responseData: signupResponse,
+            prev_screen: 'Registration',
             // user_id: signupResponse.user_id,
           );
         }));
@@ -141,12 +148,41 @@ class _RegistrationState extends State<Registration> {
     } else {
       ToastComponent.showDialog(signupResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      AuthHelper().setUserData(signupResponse);
+      // push notification starts
+      // if (OtherConfig.USE_PUSH_NOTIFICATION) {
+      //   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+
+      //   await _fcm.requestPermission(
+      //     alert: true,
+      //     announcement: false,
+      //     badge: true,
+      //     carPlay: false,
+      //     criticalAlert: false,
+      //     provisional: false,
+      //     sound: true,
+      //   );
+
+      //   String fcmToken = await _fcm.getToken();
+
+      //   if (fcmToken != null) {
+      //     print("--fcm token--");
+      //     print(fcmToken);
+      //     if (is_logged_in.$ == true) {
+      //       print("true------------------------");
+      //       // update device token
+      //       var deviceTokenUpdateResponse = await ProfileRepository()
+      //           .getDeviceTokenUpdateResponse(fcmToken);
+      //       print("hmmmm------------------------");
+      //     }
+      //   }
+      // }
+
+      //push norification ends
       Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return Otp(
-          verify_by: _register_by,
-          user_id: signupResponse.user_id,
-        );
+        return Main();
       }));
+      ;
     }
   }
 

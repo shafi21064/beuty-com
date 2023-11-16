@@ -91,7 +91,7 @@ class _MyAppState extends State<MyApp> {
                     navigatorKey: OneContext().navigator.key,
                     title: AppConfig.app_name,
                     debugShowCheckedModeBanner: false,
-                    theme: theme,
+                    theme: theme, 
                     localizationsDelegates: [
                       GlobalMaterialLocalizations.delegate,
                       GlobalWidgetsLocalizations.delegate,

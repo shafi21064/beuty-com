@@ -20,12 +20,12 @@ class AppConfig {
 
   //configure this
   // static const DOMAIN_PATH = "192.168.1.112/ecommerce"; //localhost
-  static const DOMAIN_PATH_1 = "app.kireibd.com"; //inside a folder
+  static const DOMAIN_PATH_1 = "appbeta.kireibd.com"; //inside a folder
   //static const DOMAIN_PATH = "app.kireibd.com"; //inside a folder
   //static const DOMAIN_PATH = "mydomain.com"; // directly inside the public folder
 
   //static const DOMAIN_PATH = "demo.activeitzone.com/ecommerce_flutter_demo"; //inside a folder
-  static const DOMAIN_PATH = "app.kireibd.com"; //inside a folder
+  static const DOMAIN_PATH = "appbeta.kireibd.com"; //inside a folder
 
   //do not configure these below
   static const String API_ENDPATH = "api/v2";
