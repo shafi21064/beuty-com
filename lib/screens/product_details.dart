@@ -102,6 +102,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     if (productDetailsResponse.detailed_products.length > 0) {
       _productDetails = productDetailsResponse.detailed_products[0];
+
       sellerChatTitleController.text =
           productDetailsResponse.detailed_products[0].name;
     }
@@ -129,39 +130,39 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   setProductDetailValues() {
     if (_productDetails != null) {
-      _appbarPriceString = _productDetails.price_high_low;
-      _singlePrice = _productDetails.calculable_price;
-      _singlePriceString = _productDetails.main_price;
-      calculateTotalPrice();
-      _stock = _productDetails.current_stock;
-      _productDetails.photos.forEach((photo) {
-        _productImageList.add(photo.path);
+      _appbarPriceString = _productDetails.price.toString();
+      // _singlePrice = _productDetails.calculable_price;
+      // _singlePriceString = _productDetails.main_price;
+      // calculateTotalPrice();
+      _stock = _productDetails.stock;
+      _productDetails.pictures.forEach((photo) {
+        _productImageList.add(photo.url);
       });
 
-      _productDetails.choice_options.forEach((choice_opiton) {
-        _selectedChoices.add(choice_opiton.options[0]);
-      });
-      _productDetails.colors.forEach((color) {
-        _colorList.add(color);
-      });
+      // _productDetails.choice_options.forEach((choice_opiton) {
+      //   _selectedChoices.add(choice_opiton.options[0]);
+      // });
+      // _productDetails.colors.forEach((color) {
+      //   _colorList.add(color);
+      // });
 
-      setChoiceString();
+      // setChoiceString();
 
-      if (_productDetails.colors.length > 0 ||
-          _productDetails.choice_options.length > 0) {
-        fetchAndSetVariantWiseInfo(change_appbar_string: true);
-      }
+      // if (_productDetails.colors.length > 0 ||
+      //     _productDetails.choice_options.length > 0) {
+      //   fetchAndSetVariantWiseInfo(change_appbar_string: true);
+      // }
       _productDetailsFetched = true;
 
       setState(() {});
     }
   }
 
-  setChoiceString() {
-    _choiceString = _selectedChoices.join(",").toString();
-    //print(_choiceString);
-    setState(() {});
-  }
+  // setChoiceString() {
+  //   _choiceString = _selectedChoices.join(",").toString();
+  //   //print(_choiceString);
+  //   setState(() {});
+  // }
 
   fetchWishListCheckInfo() async {
     var wishListCheckResponse =
@@ -211,48 +212,49 @@ class _ProductDetailsState extends State<ProductDetails> {
     }
   }
 
-  fetchAndSetVariantWiseInfo({bool change_appbar_string = true}) async {
-    var color_string = _colorList.length > 0
-        ? _colorList[_selectedColorIndex].toString().replaceAll("#", "")
-        : "";
+  // fetchAndSetVariantWiseInfo({bool change_appbar_string = true}) async {
+  //   var _colorList = [];
+  //   var color_string = _colorList.length > 0
+  //       ? _colorList[_selectedColorIndex].toString().replaceAll("#", "")
+  //       : "";
 
-    /*print("color string: "+color_string);
-    return;*/
+  //   /*print("color string: "+color_string);
+  //   return;*/
 
-    var variantResponse = await ProductRepository().getVariantWiseInfo(
-        id: widget.id, color: color_string, variants: _choiceString);
+  //   var variantResponse = await ProductRepository().getVariantWiseInfo(
+  //       id: widget.id, color: color_string, variants: _choiceString);
 
-    /*print("vr"+variantResponse.toJson().toString());
-    return;*/
+  //   /*print("vr"+variantResponse.toJson().toString());
+  //   return;*/
 
-    _singlePrice = variantResponse.price;
-    _stock = variantResponse.stock;
-    if (_quantity > _stock) {
-      _quantity = _stock;
-      setState(() {});
-    }
+  //   _singlePrice = variantResponse.price;
+  //   _stock = variantResponse.stock;
+  //   if (_quantity > _stock) {
+  //     _quantity = _stock;
+  //     setState(() {});
+  //   }
 
-    _variant = variantResponse.variant;
-    setState(() {});
+  //   _variant = variantResponse.variant;
+  //   setState(() {});
 
-    calculateTotalPrice();
-    _singlePriceString = variantResponse.price_string;
+  //   calculateTotalPrice();
+  //   _singlePriceString = variantResponse.price_string;
 
-    if (change_appbar_string) {
-      _appbarPriceString = "${variantResponse.variant} ${_singlePriceString}";
-    }
+  //   if (change_appbar_string) {
+  //     _appbarPriceString = "${variantResponse.variant} ${_singlePriceString}";
+  //   }
 
-    int pindex = 0;
-    _productDetails.photos.forEach((photo) {
-      if (photo.variant == _variant && variantResponse.image != "") {
-        _currentImage = pindex;
-      }
+  //   int pindex = 0;
+  //   _productDetails.pictures.forEach((photo) {
+  //     if (photo.variant == _variant && variantResponse.image != "") {
+  //       _currentImage = pindex;
+  //     }
 
-      pindex++;
-    });
+  //     pindex++;
+  //   });
 
-    setState(() {});
-  }
+  //   setState(() {});
+  // }
 
   reset() {
     restProductDetailValues();
@@ -284,23 +286,23 @@ class _ProductDetailsState extends State<ProductDetails> {
     fetchAll();
   }
 
-  calculateTotalPrice() {
-    _totalPrice = (_singlePrice * _quantity).toStringAsFixed(2);
-    setState(() {});
-  }
+  // calculateTotalPrice() {
+  //   _totalPrice = (_singlePrice * _quantity).toStringAsFixed(2);
+  //   setState(() {});
+  // }
 
-  _onVariantChange(_choice_options_index, value) {
-    _selectedChoices[_choice_options_index] = value;
-    setChoiceString();
-    setState(() {});
-    fetchAndSetVariantWiseInfo();
-  }
+  // _onVariantChange(_choice_options_index, value) {
+  //   _selectedChoices[_choice_options_index] = value;
+  //   setChoiceString();
+  //   setState(() {});
+  //   fetchAndSetVariantWiseInfo();
+  // }
 
-  _onColorChange(index) {
-    _selectedColorIndex = index;
-    setState(() {});
-    fetchAndSetVariantWiseInfo();
-  }
+  // _onColorChange(index) {
+  //   _selectedColorIndex = index;
+  //   setState(() {});
+  //   fetchAndSetVariantWiseInfo();
+  // }
 
   onPressAddToCart(context, snackbar) {
     addToCart(mode: "add_to_cart", context: context, snackbar: snackbar);
@@ -1483,14 +1485,14 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   buildChoiceOptionList() {
     return ListView.builder(
-      itemCount: _productDetails.choice_options.length,
+      // itemCount: _productDetails.choice_options.length,
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
-          child: buildChoiceOpiton(_productDetails.choice_options, index),
+          // child: buildChoiceOpiton(_productDetails.choice_options, index),
         );
       },
     );
@@ -1552,7 +1554,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           : EdgeInsets.only(right: 8.0),
       child: InkWell(
         onTap: () {
-          _onVariantChange(choice_options_index, option);
+          //  _onVariantChange(choice_options_index, option);
         },
         child: Container(
           decoration: BoxDecoration(
@@ -1628,7 +1630,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           : EdgeInsets.only(right: 8.0),
       child: InkWell(
         onTap: () {
-          _onColorChange(index);
+          // _onColorChange(index);
         },
         child: Container(
           height: 30,
@@ -2127,7 +2129,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               if (_quantity < _stock) {
                 _quantity++;
                 setState(() {});
-                calculateTotalPrice();
+                //calculateTotalPrice();
               }
             }),
       );
@@ -2140,7 +2142,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             if (_quantity > 1) {
               _quantity--;
               setState(() {});
-              calculateTotalPrice();
+              // calculateTotalPrice();
             }
           }));
 

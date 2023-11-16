@@ -1,7 +1,7 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
 import 'package:http/http.dart' as http;
 import 'package:active_ecommerce_flutter/data_model/product_mini_response.dart';
-import 'package:active_ecommerce_flutter/data_model/product_details_response.dart';
+import 'package:active_ecommerce_flutter/data_model/product_details_response_new.dart';
 import 'package:active_ecommerce_flutter/data_model/variant_response.dart';
 import 'package:flutter/foundation.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
@@ -94,7 +94,8 @@ class ProductRepository {
 
   Future<ProductDetailsResponse> getProductDetails(
       {@required int id = 0}) async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/products/" + id.toString());
+    Uri url =
+        Uri.parse("${AppConfig.BASE_URL}/products/details/" + id.toString());
     print(url.toString());
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
