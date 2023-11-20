@@ -17,20 +17,19 @@ class ProductDetailsResponse {
     this.status,
   });
 
-  List<DetailedProduct> detailed_products;
+  DetailedProduct detailed_products;
   bool success;
   int status;
 
   factory ProductDetailsResponse.fromJson(Map<String, dynamic> json) =>
       ProductDetailsResponse(
-        detailed_products: List<DetailedProduct>.from(
-            [json["data"]].map((x) => DetailedProduct.fromJson(x))),
+        detailed_products: DetailedProduct.fromJson(json["data"]),
         success: json["success"],
         status: json["status"],
       );
 
   Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(detailed_products.map((x) => x.toJson())),
+        "data": detailed_products.toJson(),
         "success": success,
         "status": status,
       };
@@ -94,7 +93,7 @@ class DetailedProduct {
   String preorderDeliveryDate;
   int salePrice;
   int saleCount;
-  int ratings;
+  dynamic ratings;
   int reviews;
   int isHot;
   dynamic sideFeatured;
@@ -152,11 +151,11 @@ class DetailedProduct {
         until: json["until"],
         productCategories: List<ProductCategory>.from(
             json["product_categories"].map((x) => ProductCategory.fromJson(x))),
-        // productBrands:
-        //     List<ProductBrand>.from(json["product_brands"].map((x) => x)),
+        productBrands:
+            List<ProductBrand>.from(
+            json["product_brands"].map((x) => ProductBrand.fromJson(x))),
         productTags: List<ProductTag>.from(
             (json["product_tags"] as List).map((x) => ProductTag.fromJson(x))),
-
         pictures: List<Picture>.from(
             json["pictures"].map((x) => Picture.fromJson(x))),
         largePictures: List<Picture>.from(
@@ -198,10 +197,11 @@ class DetailedProduct {
         "game_mode": gameMode,
         "rated": rated,
         "until": until,
-        "product_categories":
-            List<ProductCategory>.from(productCategories.map((x) => x.toJson())),
-        "product_brands": List<ProductBrand>.from(productBrands.map((x) => x)),
-        "product_tags": List<ProductTag>.from(productTags.map((x) => x.toJson())),
+        "product_categories": List<ProductCategory>.from(
+            productCategories.map((x) => x.toJson())),
+        "product_brands": List<ProductBrand>.from(productBrands.map((x) => x.toJson())),
+        "product_tags":
+            List<ProductTag>.from(productTags.map((x) => x.toJson())),
         "pictures": List<Picture>.from(pictures.map((x) => x.toJson())),
         "large_pictures":
             List<dynamic>.from(largePictures.map((x) => x.toJson())),

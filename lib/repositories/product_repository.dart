@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:active_ecommerce_flutter/dummy_data/products.dart';
 import 'package:http/http.dart' as http;
 import 'package:active_ecommerce_flutter/data_model/product_mini_response.dart';
 import 'package:active_ecommerce_flutter/data_model/product_details_response_new.dart';
@@ -100,7 +101,7 @@ class ProductRepository {
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
-    print(response.body.toString());
+    // print(response.body.toString());
     return productDetailsResponseFromJson(response.body);
   }
 

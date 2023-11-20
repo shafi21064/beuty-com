@@ -19,7 +19,6 @@ import 'package:active_ecommerce_flutter/app_config.dart';
 import 'package:active_ecommerce_flutter/helpers/shimmer_helper.dart';
 import 'package:active_ecommerce_flutter/helpers/color_helper.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
-
 import 'package:active_ecommerce_flutter/custom/toast_component.dart';
 import 'package:active_ecommerce_flutter/repositories/chat_repository.dart';
 import 'package:active_ecommerce_flutter/screens/chat.dart';
@@ -42,7 +41,7 @@ class ProductDetails extends StatefulWidget {
 
 class _ProductDetailsState extends State<ProductDetails> {
   bool _showCopied = false;
-  String _appbarPriceString = ". . .";
+  String _appbarPriceString;
   int _currentImage = 0;
   ScrollController _mainScrollController = ScrollController();
   ScrollController _colorScrollController = ScrollController();
@@ -99,13 +98,13 @@ class _ProductDetailsState extends State<ProductDetails> {
   fetchProductDetails() async {
     var productDetailsResponse =
         await ProductRepository().getProductDetails(id: widget.id);
+    print(productDetailsResponse.detailed_products);
 
-    if (productDetailsResponse.detailed_products.length > 0) {
-      _productDetails = productDetailsResponse.detailed_products[0];
+    _productDetails = productDetailsResponse.detailed_products;
+    print(_productDetails.price);
 
-      sellerChatTitleController.text =
-          productDetailsResponse.detailed_products[0].name;
-    }
+    // sellerChatTitleController.text =
+    //     productDetailsResponse.detailed_products.name;
 
     setProductDetailValues();
 
@@ -132,7 +131,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     if (_productDetails != null) {
       _appbarPriceString = _productDetails.price.toString();
       // _singlePrice = _productDetails.calculable_price;
-      // _singlePriceString = _productDetails.main_price;
+      _singlePriceString = _productDetails.price;
       // calculateTotalPrice();
       _stock = _productDetails.stock;
       _productDetails.pictures.forEach((photo) {
@@ -716,7 +715,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     return Directionality(
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
-          bottomNavigationBar: buildBottomAppBar(context, _addedToCartSnackbar),
+          // bottomNavigationBar: buildBottomAppBar(context, _addedToCartSnackbar),
           backgroundColor: Colors.white,
           appBar: buildAppBar(statusBarHeight, context),
           body: RefreshIndicator(
@@ -810,33 +809,33 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ),
                   ),
                 ])),
-                SliverList(
-                    delegate: SliverChildListDelegate([
-                  club_point_addon_installed.$
-                      ? Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            16.0,
-                            8.0,
-                            16.0,
-                            0.0,
-                          ),
-                          child: _productDetails != null
-                              ? buildClubPointRow()
-                              : ShimmerHelper().buildBasicShimmer(
-                                  height: 30.0,
-                                ),
-                        )
-                      : Container(),
-                  Divider(
-                    height: 24.0,
-                  ),
-                ])),
-                SliverList(
-                    delegate: SliverChildListDelegate([
-                  _productDetails != null
-                      ? buildChoiceOptionList()
-                      : buildVariantShimmers(),
-                ])),
+                // SliverList(
+                //     delegate: SliverChildListDelegate([
+                //   club_point_addon_installed.$
+                //       ? Padding(
+                //           padding: const EdgeInsets.fromLTRB(
+                //             16.0,
+                //             8.0,
+                //             16.0,
+                //             0.0,
+                //           ),
+                //           child: _productDetails != null
+                //               ? buildClubPointRow()
+                //               : ShimmerHelper().buildBasicShimmer(
+                //                   height: 30.0,
+                //                 ),
+                //         )
+                //       : Container(),
+                //   Divider(
+                //     height: 24.0,
+                //   ),
+                // ])),
+                // SliverList(
+                //     delegate: SliverChildListDelegate([
+                //   _productDetails != null
+                //       ? buildChoiceOptionList()
+                //       : buildVariantShimmers(),
+                // ])),
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(
@@ -845,13 +844,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                       16.0,
                       0.0,
                     ),
-                    child: _productDetails != null
-                        ? (_colorList.length > 0
-                            ? buildColorRow()
-                            : Container())
-                        : ShimmerHelper().buildBasicShimmer(
-                            height: 30.0,
-                          ),
+                    // child: _productDetails != null
+                    //     ? (_colorList.length > 0
+                    //         ? buildColorRow()
+                    //         : Container())
+                    //     : ShimmerHelper().buildBasicShimmer(
+                    //         height: 30.0,
+                    //       ),
                   ),
                 ),
                 SliverList(
@@ -879,11 +878,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                       16.0,
                       0.0,
                     ),
-                    child: _productDetails != null
-                        ? buildTotalPriceRow()
-                        : ShimmerHelper().buildBasicShimmer(
-                            height: 30.0,
-                          ),
+                    // child: _productDetails != null
+                    //     ? buildTotalPriceRow()
+                    //     : ShimmerHelper().buildBasicShimmer(
+                    //         height: 30.0,
+                    //       ),
                   ),
                   Divider(
                     height: 24.0,
@@ -898,11 +897,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                       16.0,
                       0.0,
                     ),
-                    child: _productDetails != null
-                        ? buildSellerRow(context)
-                        : ShimmerHelper().buildBasicShimmer(
-                            height: 50.0,
-                          ),
+                    // child: _productDetails != null
+                    //     ? buildSellerRow(context)
+                    //     : ShimmerHelper().buildBasicShimmer(
+                    //         height: 50.0,
+                    //       ),
                   ),
                   Divider(
                     height: 24,
@@ -926,22 +925,22 @@ class _ProductDetailsState extends State<ProductDetails> {
                             fontWeight: FontWeight.w600),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        8.0,
-                        0.0,
-                        8.0,
-                        8.0,
-                      ),
-                      child: _productDetails != null
-                          ? buildExpandableDescription()
-                          : Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8.0, vertical: 8.0),
-                              child: ShimmerHelper().buildBasicShimmer(
-                                height: 60.0,
-                              )),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.fromLTRB(
+                    //     8.0,
+                    //     0.0,
+                    //     8.0,
+                    //     8.0,
+                    //   ),
+                    //   child: _productDetails != null
+                    //       ? buildExpandableDescription()
+                    //       : Padding(
+                    //           padding: const EdgeInsets.symmetric(
+                    //               horizontal: 8.0, vertical: 8.0),
+                    //           child: ShimmerHelper().buildBasicShimmer(
+                    //             height: 60.0,
+                    //           )),
+                    // ),
                     Divider(
                       height: 1,
                     ),
@@ -1196,15 +1195,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                             fontWeight: FontWeight.w600),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        8.0,
-                        16.0,
-                        0.0,
-                        0.0,
-                      ),
-                      child: buildProductsMayLikeList(),
-                    )
+                    // Padding(
+                    //   padding: const EdgeInsets.fromLTRB(
+                    //     8.0,
+                    //     16.0,
+                    //     0.0,
+                    //     0.0,
+                    //   ),
+                    //   child: buildProductsMayLikeList(),
+                    // )
                   ]),
                 ),
                 SliverList(
@@ -1225,15 +1224,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                             fontWeight: FontWeight.w600),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        16.0,
-                        16.0,
-                        16.0,
-                        0.0,
-                      ),
-                      child: buildTopSellingProductList(),
-                    )
+                    // Padding(
+                    //   padding: const EdgeInsets.fromLTRB(
+                    //     16.0,
+                    //     16.0,
+                    //     16.0,
+                    //     0.0,
+                    //   ),
+                    //   child: buildTopSellingProductList(),
+                    // )
                   ]),
                 )
               ],
@@ -1722,19 +1721,19 @@ class _ProductDetailsState extends State<ProductDetails> {
             ),
           ),
         ),
-        _productDetails.has_discount
-            ? Padding(
-                padding: EdgeInsets.only(right: 8.0),
-                child: Text(_productDetails.stroked_price,
-                    style: TextStyle(
-                        decoration: TextDecoration.lineThrough,
-                        color: Color.fromRGBO(224, 224, 225, 1),
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w600)),
-              )
-            : Container(),
+        // _productDetails.has_discount
+        //     ? Padding(
+        //         padding: EdgeInsets.only(right: 8.0),
+        //         child: Text(_productDetails.stroked_price,
+        //             style: TextStyle(
+        //                 decoration: TextDecoration.lineThrough,
+        //                 color: Color.fromRGBO(224, 224, 225, 1),
+        //                 fontSize: 18.0,
+        //                 fontWeight: FontWeight.w600)),
+        //       )
+        //     : Container(),
         Text(
-          _singlePriceString,
+          "৳" + _singlePriceString.toString(),
           style: TextStyle(
               color: MyTheme.accent_color,
               fontSize: 18.0,
@@ -1771,7 +1770,9 @@ class _ProductDetailsState extends State<ProductDetails> {
             child: Padding(
               padding: const EdgeInsets.only(top: 22.0),
               child: Text(
-                _appbarPriceString,
+                _productDetails != null
+                    ? "৳" + _appbarPriceString
+                    : 'Default Name',
                 style: TextStyle(fontSize: 16, color: Colors.white),
               ),
             )),
@@ -1883,7 +1884,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         RatingBar(
           itemSize: 18.0,
           ignoreGestures: true,
-          initialRating: double.parse(_productDetails.rating.toString()),
+          initialRating: double.parse(_productDetails.ratings.toString()),
           direction: Axis.horizontal,
           allowHalfRating: false,
           itemCount: 5,
@@ -1900,7 +1901,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4.0),
           child: Text(
-            "(" + _productDetails.rating_count.toString() + ")",
+            "(" + _productDetails.reviews.toString() + ")",
             style: TextStyle(
                 color: Color.fromRGBO(152, 152, 153, 1), fontSize: 14),
           ),
@@ -1932,13 +1933,13 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   buildBrandRow() {
-    return _productDetails.brand.id > 0
+    return _productDetails.productBrands.length > 0
         ? InkWell(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return BrandProducts(
-                  id: _productDetails.brand.id,
-                  brand_name: _productDetails.brand.name,
+                  id: _productDetails.productBrands[0].pivot.product_brand_id,
+                  brand_name: _productDetails.productBrands[0].name,
                 );
               }));
             },
@@ -1959,7 +1960,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4.0),
                   child: Text(
-                    _productDetails.brand.name,
+                    _productDetails.productBrands[0].name,
                     style: TextStyle(
                         color: Color.fromRGBO(152, 152, 153, 1), fontSize: 16),
                   ),
