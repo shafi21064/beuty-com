@@ -250,13 +250,13 @@ class _SellerDetailsState extends State<SellerDetails> {
         shrinkWrap: true,
         itemBuilder: (context, index) {
           // 3
-          return ProductCard(
-              id: _featuredProducts[index].id,
-              image: _featuredProducts[index].thumbnail_image,
-              name: _featuredProducts[index].name,
-              main_price: _featuredProducts[index].main_price,
-              stroked_price: _featuredProducts[index].stroked_price,
-              has_discount: _featuredProducts[index].has_discount);
+          // return ProductCard(
+          //     id: _featuredProducts[index].id,
+          //     image: _featuredProducts[index].thumbnail_image,
+          //     name: _featuredProducts[index].name,
+          //     main_price: _featuredProducts[index].main_price,
+          //     stroked_price: _featuredProducts[index].stroked_price,
+          //     has_discount: _featuredProducts[index].has_discount);
         },
       );
     } else {

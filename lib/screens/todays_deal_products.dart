@@ -84,15 +84,15 @@ class _TodaysDealProductsState extends State<TodaysDealProducts> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   // 3
-                  return ProductCard(
-                    id: productResponse.products[index].id,
-                    image: productResponse.products[index].thumbnail_image,
-                    name: productResponse.products[index].name,
-                    main_price: productResponse.products[index].main_price,
-                    stroked_price:
-                        productResponse.products[index].stroked_price,
-                    has_discount: productResponse.products[index].has_discount,
-                  );
+                  // return ProductCard(
+                  //   id: productResponse.products[index].id,
+                  //   image: productResponse.products[index].thumbnail_image,
+                  //   name: productResponse.products[index].name,
+                  //   main_price: productResponse.products[index].main_price,
+                  //   stroked_price:
+                  //       productResponse.products[index].stroked_price,
+                  //   has_discount: productResponse.products[index].has_discount,
+                  // );
                 },
               ),
             );

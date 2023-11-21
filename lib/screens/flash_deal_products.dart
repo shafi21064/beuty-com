@@ -7,7 +7,6 @@ import 'package:active_ecommerce_flutter/helpers/string_helper.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class FlashDealProducts extends StatefulWidget {
   FlashDealProducts({Key key, this.flash_deal_id, this.flash_deal_name})
       : super(key: key);
@@ -80,7 +79,7 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       toolbarHeight: 75,
       /*bottom: PreferredSize(
           child: Container(
@@ -107,7 +106,9 @@ backgroundColor: Colors.white,
             onTap: () {},
             autofocus: true,
             decoration: InputDecoration(
-                hintText: "${AppLocalizations.of(context).flash_deal_products_screen_search_products_from} : " + widget.flash_deal_name,
+                hintText:
+                    "${AppLocalizations.of(context).flash_deal_products_screen_search_products_from} : " +
+                        widget.flash_deal_name,
                 hintStyle:
                     TextStyle(fontSize: 14.0, color: MyTheme.textfield_grey),
                 enabledBorder: OutlineInputBorder(
@@ -167,13 +168,13 @@ backgroundColor: Colors.white,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   // 3
-                  return ProductCard(
-                      id: _searchList[index].id,
-                      image: _searchList[index].thumbnail_image,
-                      name: _searchList[index].name,
-                      main_price: _searchList[index].main_price,
-                      stroked_price: _searchList[index].stroked_price,
-                      has_discount: _searchList[index].has_discount);
+                  // return ProductCard(
+                  //     id: _searchList[index].id,
+                  //     image: _searchList[index].thumbnail_image,
+                  //     name: _searchList[index].name,
+                  //     main_price: _searchList[index].main_price,
+                  //     stroked_price: _searchList[index].stroked_price,
+                  //     has_discount: _searchList[index].has_discount);
                 },
               ),
             );

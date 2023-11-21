@@ -128,14 +128,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   }
 
   fetchFeaturedProducts() async {
-    var productResponse = await ProductRepository().getFeaturedProducts(
-      page: _productPage,
-    );
+    var productResponse = await ProductRepository().getFeaturedProducts();
 
     _featuredProductList.addAll(productResponse.products);
     print(_featuredProductList);
     _isProductInitial = false;
-    _totalProductData = productResponse.meta.total;
+    _totalProductData = productResponse.products.length;
     _showProductLoadingContainer = false;
     setState(() {});
   }
@@ -423,12 +421,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         itemBuilder: (context, index) {
           // 3
           return ProductCard(
-              id: _featuredProductList[index].id,
-              image: _featuredProductList[index].thumbnail_image,
-              name: _featuredProductList[index].name,
-              main_price: _featuredProductList[index].main_price,
-              stroked_price: _featuredProductList[index].stroked_price,
-              has_discount: _featuredProductList[index].has_discount);
+            id: _featuredProductList[index].id,
+            image: _featuredProductList[index].pictures[0].url,
+            ratings: _featuredProductList[index].ratings,
+            name: _featuredProductList[index].name,
+            price: _featuredProductList[index].price.toString(),
+            sale_price: _featuredProductList[index].sale_price.toString(),
+          );
         },
       );
     } else if (_totalProductData == 0) {

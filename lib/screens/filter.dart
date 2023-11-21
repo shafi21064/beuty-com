@@ -1152,13 +1152,13 @@ class _FilterState extends State<Filter> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   // 3
-                  return ProductCard(
-                      id: _productList[index].id,
-                      image: _productList[index].thumbnail_image,
-                      name: _productList[index].name,
-                      main_price: _productList[index].main_price,
-                      stroked_price: _productList[index].stroked_price,
-                      has_discount: _productList[index].has_discount);
+                  // return ProductCard(
+                  //     id: _productList[index].id,
+                  //     image: _productList[index].thumbnail_image,
+                  //     name: _productList[index].name,
+                  //     main_price: _productList[index].main_price,
+                  //     stroked_price: _productList[index].stroked_price,
+                  //     has_discount: _productList[index].has_discount);
                 },
               )
             ],

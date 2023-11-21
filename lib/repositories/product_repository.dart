@@ -8,11 +8,12 @@ import 'package:flutter/foundation.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 
 class ProductRepository {
-  Future<ProductMiniResponse> getFeaturedProducts({page = 1}) async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/products/featured?page=${page}");
+  Future<ProductMiniResponse> getFeaturedProducts() async {
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products");
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
+    print(response.body);
     return productMiniResponseFromJson(response.body);
   }
 
