@@ -97,7 +97,7 @@ class _ProductCardState extends State<ProductCard> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
+                      padding: EdgeInsets.fromLTRB(16, 0, 16, 5),
                       child: RatingBar(
                         itemSize: 18.0,
                         ignoreGestures: true,
@@ -116,35 +116,43 @@ class _ProductCardState extends State<ProductCard> {
                         },
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(16, 4, 16, 0),
-                      child: Text(
-                        "৳" + widget.sale_price,
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: TextStyle(
-                            color: MyTheme.accent_color,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600),
-                      ),
+                    Row(
+                      children: [
+                        Visibility(
+                          visible: widget.price != widget.sale_price,
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                            child: Text(
+                              "৳" + widget.price,
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: TextStyle(
+                                  decoration: TextDecoration.lineThrough,
+                                  color: MyTheme.medium_grey,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(16, 4, 16, 0),
+                          child: Text(
+                            "৳" + widget.sale_price,
+                            textAlign: TextAlign.left,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: TextStyle(
+                                color: MyTheme.accent_color,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
                     ),
                     // widget.has_discount
                     //     ?
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                      child: Text(
-                        "৳" + widget.price,
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: TextStyle(
-                            decoration: TextDecoration.lineThrough,
-                            color: MyTheme.medium_grey,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    )
+
                     //: Container(),
                   ],
                 ),

@@ -65,6 +65,7 @@ class _ProductReviewsState extends State<ProductReviews> {
       page: _page,
     );
     _reviewList.addAll(reviewResponse.reviews);
+    print(_reviewList);
     _isInitial = false;
     _totalData = reviewResponse.meta.total;
     _showLoadingContainer = false;
@@ -273,7 +274,9 @@ class _ProductReviewsState extends State<ProductReviews> {
                 borderRadius: BorderRadius.circular(35),
                 child: FadeInImage.assetNetwork(
                   placeholder: 'assets/placeholder.png',
-                  image:  _reviewList[index].avatar,
+                  image: _reviewList[index].avatar != null
+                      ? _reviewList[index].avatar
+                      : 'assets/profile.png',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -370,7 +373,9 @@ class _ProductReviewsState extends State<ProductReviews> {
                         var controller = ExpandableController.of(context);
                         return FlatButton(
                           child: Text(
-                            !controller.expanded ? AppLocalizations.of(context).common_view_more : AppLocalizations.of(context).common_show_less,
+                            !controller.expanded
+                                ? AppLocalizations.of(context).common_view_more
+                                : AppLocalizations.of(context).common_show_less,
                             style: TextStyle(
                                 color: MyTheme.font_grey, fontSize: 11),
                           ),
@@ -395,8 +400,10 @@ class _ProductReviewsState extends State<ProductReviews> {
       color: Colors.white,
       child: Center(
         child: Text(_totalData == _reviewList.length
-            ? AppLocalizations.of(context).product_reviews_screen_no_more_reviews
-            : AppLocalizations.of(context).product_reviews_screen_loading_more_reviews),
+            ? AppLocalizations.of(context)
+                .product_reviews_screen_no_more_reviews
+            : AppLocalizations.of(context)
+                .product_reviews_screen_loading_more_reviews),
       ),
     );
   }
@@ -441,7 +448,8 @@ class _ProductReviewsState extends State<ProductReviews> {
                 decoration: InputDecoration(
                     filled: true,
                     fillColor: Color.fromRGBO(251, 251, 251, 1),
-                    hintText: AppLocalizations.of(context).product_reviews_screen_type_your_review_here,
+                    hintText: AppLocalizations.of(context)
+                        .product_reviews_screen_type_your_review_here,
                     hintStyle: TextStyle(
                         fontSize: 14.0, color: MyTheme.textfield_grey),
                     enabledBorder: OutlineInputBorder(

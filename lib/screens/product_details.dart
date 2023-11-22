@@ -91,14 +91,13 @@ class _ProductDetailsState extends State<ProductDetails> {
     if (is_logged_in.$ == true) {
       fetchWishListCheckInfo();
     }
-    fetchRelatedProducts();
-    fetchTopProducts();
+    // fetchRelatedProducts();
+    // fetchTopProducts();
   }
 
   fetchProductDetails() async {
     var productDetailsResponse =
         await ProductRepository().getProductDetails(id: widget.id);
-    print(productDetailsResponse.detailed_products);
 
     _productDetails = productDetailsResponse.detailed_products;
     print(_productDetails.price);
@@ -925,79 +924,79 @@ class _ProductDetailsState extends State<ProductDetails> {
                             fontWeight: FontWeight.w600),
                       ),
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.fromLTRB(
-                    //     8.0,
-                    //     0.0,
-                    //     8.0,
-                    //     8.0,
-                    //   ),
-                    //   child: _productDetails != null
-                    //       ? buildExpandableDescription()
-                    //       : Padding(
-                    //           padding: const EdgeInsets.symmetric(
-                    //               horizontal: 8.0, vertical: 8.0),
-                    //           child: ShimmerHelper().buildBasicShimmer(
-                    //             height: 60.0,
-                    //           )),
-                    // ),
-                    Divider(
-                      height: 1,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        if (_productDetails.video_link == "") {
-                          ToastComponent.showDialog(
-                              AppLocalizations.of(context)
-                                  .product_details_screen_video_not_available,
-                              context,
-                              gravity: Toast.CENTER,
-                              duration: Toast.LENGTH_LONG);
-                          return;
-                        }
-
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return VideoDescription(
-                            url: _productDetails.video_link,
-                          );
-                        })).then((value) {
-                          onPopped(value);
-                        });
-                      },
-                      child: Container(
-                        height: 40,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            16.0,
-                            0.0,
-                            8.0,
-                            0.0,
-                          ),
-                          child: Row(
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)
-                                    .product_details_screen_video,
-                                style: TextStyle(
-                                    color: MyTheme.font_grey,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              Spacer(),
-                              Icon(
-                                Ionicons.ios_add,
-                                color: MyTheme.font_grey,
-                                size: 24,
-                              )
-                            ],
-                          ),
-                        ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        8.0,
+                        0.0,
+                        8.0,
+                        8.0,
                       ),
+                      child: _productDetails != null
+                          ? buildExpandableDescription()
+                          : Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0, vertical: 8.0),
+                              child: ShimmerHelper().buildBasicShimmer(
+                                height: 60.0,
+                              )),
                     ),
                     Divider(
                       height: 1,
                     ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     if (_productDetails.video_link == "") {
+                    //       ToastComponent.showDialog(
+                    //           AppLocalizations.of(context)
+                    //               .product_details_screen_video_not_available,
+                    //           context,
+                    //           gravity: Toast.CENTER,
+                    //           duration: Toast.LENGTH_LONG);
+                    //       return;
+                    //     }
+
+                    //     Navigator.push(context,
+                    //         MaterialPageRoute(builder: (context) {
+                    //       return VideoDescription(
+                    //         url: _productDetails.video_link,
+                    //       );
+                    //     })).then((value) {
+                    //       onPopped(value);
+                    //     });
+                    //   },
+                    //   child: Container(
+                    //     height: 40,
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.fromLTRB(
+                    //         16.0,
+                    //         0.0,
+                    //         8.0,
+                    //         0.0,
+                    //       ),
+                    //       child: Row(
+                    //         children: [
+                    //           Text(
+                    //             AppLocalizations.of(context)
+                    //                 .product_details_screen_video,
+                    //             style: TextStyle(
+                    //                 color: MyTheme.font_grey,
+                    //                 fontSize: 14,
+                    //                 fontWeight: FontWeight.w600),
+                    //           ),
+                    //           Spacer(),
+                    //           Icon(
+                    //             Ionicons.ios_add,
+                    //             color: MyTheme.font_grey,
+                    //             size: 24,
+                    //           )
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Divider(
+                    //   height: 1,
+                    // ),
                     InkWell(
                       onTap: () {
                         Navigator.push(context,
@@ -1980,8 +1979,10 @@ class _ProductDetailsState extends State<ProductDetails> {
         children: <Widget>[
           Expandable(
             collapsed: Container(
-                height: 50, child: Html(data: _productDetails.description)),
-            expanded: Container(child: Html(data: _productDetails.description)),
+                height: 50,
+                child: Html(data: _productDetails.shortDescription)),
+            expanded:
+                Container(child: Html(data: _productDetails.shortDescription)),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
