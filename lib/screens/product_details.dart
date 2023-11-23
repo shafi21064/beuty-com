@@ -55,6 +55,10 @@ class _ProductDetailsState extends State<ProductDetails> {
   var _productDetailsFetched = false;
   var _productDetails = null;
   var _productImageList = [];
+  var _skinTypes = [];
+  var _keyIngredients = [];
+  var _goodFor = [];
+  var _categories = [];
   var _colorList = [];
   int _selectedColorIndex = 0;
   var _selectedChoices = [];
@@ -136,6 +140,20 @@ class _ProductDetailsState extends State<ProductDetails> {
       _productDetails.pictures.forEach((photo) {
         _productImageList.add(photo.url);
       });
+
+      _productDetails.skinTypes.forEach((skinType) {
+        _skinTypes.add(skinType.name);
+      });
+
+      _productDetails.keyIngredients.forEach((key) {
+        _keyIngredients.add(key.name);
+      });
+
+      _productDetails.goodFor.forEach((key) {
+        _goodFor.add(key.name);
+      });
+
+      print(_keyIngredients);
 
       // _productDetails.choice_options.forEach((choice_opiton) {
       //   _selectedChoices.add(choice_opiton.options[0]);
@@ -943,6 +961,56 @@ class _ProductDetailsState extends State<ProductDetails> {
                     Divider(
                       height: 1,
                     ),
+
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        16.0,
+                        16.0,
+                        16.0,
+                        0.0,
+                      ),
+                      child: _productDetails != null
+                          ? buildSkinTypesRow()
+                          : ShimmerHelper().buildBasicShimmer(
+                              height: 50.0,
+                            ),
+                    ),
+                    Divider(
+                      height: 24.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        16.0,
+                        16.0,
+                        16.0,
+                        0.0,
+                      ),
+                      child: _productDetails != null
+                          ? buildKeyIngredientsRow()
+                          : ShimmerHelper().buildBasicShimmer(
+                              height: 50.0,
+                            ),
+                    ),
+                    Divider(
+                      height: 24.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        16.0,
+                        16.0,
+                        16.0,
+                        0.0,
+                      ),
+                      child: _productDetails != null
+                          ? buildGoodForRow()
+                          : ShimmerHelper().buildBasicShimmer(
+                              height: 50.0,
+                            ),
+                    ),
+                    Divider(
+                      height: 24.0,
+                    ),
+
                     // InkWell(
                     //   onTap: () {
                     //     if (_productDetails.video_link == "") {
@@ -2008,6 +2076,179 @@ class _ProductDetailsState extends State<ProductDetails> {
         ],
       ),
     ));
+  }
+
+  buildSkinTypesRow() {
+    bool isHovered = false;
+    return _productDetails.skinTypes.length > 0
+        ? Container(
+            child: Row(
+              children: [
+                Padding(
+                  padding: app_language_rtl.$
+                      ? EdgeInsets.only(left: 8.0)
+                      : EdgeInsets.only(right: 8.0),
+                  child: Container(
+                    width: 75,
+                    child: Text(
+                      AppLocalizations.of(context)
+                          .product_details_screen_skin_types,
+                      style: TextStyle(
+                          color: MyTheme.font_grey,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: Row(
+                    children: _skinTypes.map((skinType) {
+                      return MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: InkWell(
+                          onTap: () {
+                            // Handle the click on the skin type (add your logic here)
+                            print("Clicked on $skinType");
+                          },
+                          onHover: (isHovering) {
+                            // Update the hover state
+                            isHovered = isHovering;
+                          },
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 4.0),
+                            child: Text(
+                              "${skinType.substring(0, 1).toUpperCase()}${skinType.substring(1)}${_skinTypes.last == skinType ? '' : ','}",
+                              style: TextStyle(
+                                color: Colors.black,
+
+                                fontSize: 16,
+                                decoration: isHovered
+                                    ? TextDecoration.underline
+                                    : TextDecoration.none,
+
+                                // decoration: TextDecoration
+                                //     .underline, // Add underline for better indication
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+                Spacer(),
+              ],
+            ),
+          )
+        : Container();
+  }
+
+  buildKeyIngredientsRow() {
+    return _productDetails.keyIngredients.length > 0
+        ? InkWell(
+            onTap: () {},
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                Padding(
+                  padding: app_language_rtl.$
+                      ? EdgeInsets.only(left: 8.0)
+                      : EdgeInsets.only(right: 8.0),
+                  child: Container(
+                    width: 75,
+                    child: Text(
+                      AppLocalizations.of(context)
+                          .product_details_screen_key_ingredients,
+                      style: TextStyle(
+                        color: MyTheme.font_grey,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                ...List.generate(_keyIngredients.length, (index) {
+                  final ingredients = _keyIngredients[index];
+                  return MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: InkWell(
+                      onTap: () {
+                        // Handle the click on the ingredients (add your logic here)
+                        print("Clicked on $ingredients");
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        child: Text(
+                          "${ingredients.substring(0, 1).toUpperCase()}${ingredients.substring(1)}${index == _keyIngredients.length - 1 ? '' : ','}",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+                Spacer(),
+              ],
+            ),
+          )
+        : Container();
+  }
+
+  buildGoodForRow() {
+    return _productDetails.goodFor.length > 0
+        ? InkWell(
+            onTap: () {},
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                Padding(
+                  padding: app_language_rtl.$
+                      ? EdgeInsets.only(left: 8.0)
+                      : EdgeInsets.only(right: 8.0),
+                  child: Container(
+                    width: 75,
+                    child: Text(
+                      AppLocalizations.of(context)
+                          .product_details_screen_good_for,
+                      style: TextStyle(
+                        color: MyTheme.font_grey,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                ...List.generate(_goodFor.length, (index) {
+                  final good_for = _goodFor[index];
+                  return MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: InkWell(
+                      onTap: () {
+                        // Handle the click on the ingredients (add your logic here)
+                        print("Clicked on $good_for");
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        child: Text(
+                          "${good_for.substring(0, 1).toUpperCase()}${good_for.substring(1)}${index == good_for.length - 1 ? '' : ','}",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+                Spacer(),
+              ],
+            ),
+          )
+        : Container();
   }
 
   buildTopSellingProductList() {

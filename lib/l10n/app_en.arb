@@ -160,6 +160,11 @@
   "product_details_screen_snackbar_added_to_cart" : "Added to cart",
   "product_details_screen_snackbar_show_cart" : "SHOW CART",
   "product_details_screen_description" : "Description:",
+  "product_details_screen_skin_types" : "Skin Types:",
+  "product_details_screen_key_ingredients" : "Ingredients:",
+  "product_details_screen_good_for" : "Good For:",
+
+
   "product_details_screen_brand" : "Brand:",
   "product_details_screen_total_price" : "Total Price:",
   "product_details_screen_price" : "Price:",

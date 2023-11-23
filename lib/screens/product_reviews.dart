@@ -276,7 +276,7 @@ class _ProductReviewsState extends State<ProductReviews> {
                   placeholder: 'assets/placeholder.png',
                   image: _reviewList[index].avatar != null
                       ? _reviewList[index].avatar
-                      : 'assets/profile.png',
+                      :  "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png",
                   fit: BoxFit.cover,
                 ),
               ),
