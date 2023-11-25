@@ -306,7 +306,7 @@ class _SellerDetailsState extends State<SellerDetails> {
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                           child: FadeInImage.assetNetwork(
                             placeholder: 'assets/placeholder_rectangle.png',
-                            image:  i,
+                            image: i,
                             fit: BoxFit.fill,
                           ))),
                   Align(
@@ -468,14 +468,14 @@ class _SellerDetailsState extends State<SellerDetails> {
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(right: 3.0),
-                child: MiniProductCard(
-                  id: _newArrivalProducts[index].id,
-                  image: _newArrivalProducts[index].thumbnail_image,
-                  name: _newArrivalProducts[index].name,
-                  main_price: _newArrivalProducts[index].main_price,
-                  stroked_price: _newArrivalProducts[index].stroked_price,
-                  has_discount: _newArrivalProducts[index].has_discount,
-                ),
+                // child: MiniProductCard(
+                //   id: _newArrivalProducts[index].id,
+                //   image: _newArrivalProducts[index].thumbnail_image,
+                //   name: _newArrivalProducts[index].name,
+                //   main_price: _newArrivalProducts[index].main_price,
+                //   stroked_price: _newArrivalProducts[index].stroked_price,
+                //   has_discount: _newArrivalProducts[index].has_discount,
+                // ),
               );
             },
           ),
@@ -594,7 +594,7 @@ class _SellerDetailsState extends State<SellerDetails> {
             borderRadius: BorderRadius.circular(5),
             child: FadeInImage.assetNetwork(
               placeholder: 'assets/placeholder.png',
-              image:  _shopDetails.logo,
+              image: _shopDetails.logo,
               fit: BoxFit.cover,
             )),
       ),

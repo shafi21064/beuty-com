@@ -13,6 +13,7 @@ class ProductCard extends StatefulWidget {
   String sale_price;
   dynamic ratings;
   String image;
+  String slug;
   //bool has_discount;
 
   ProductCard({
@@ -23,6 +24,7 @@ class ProductCard extends StatefulWidget {
     this.price,
     this.sale_price,
     this.ratings,
+    this.slug,
     //this.has_discount
   }) : super(key: key);
 
@@ -39,6 +41,7 @@ class _ProductCardState extends State<ProductCard> {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return ProductDetails(
             id: widget.id,
+            slug:widget.slug,
           );
         }));
       },

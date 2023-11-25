@@ -5,14 +5,24 @@ import 'package:active_ecommerce_flutter/app_config.dart';
 
 class MiniProductCard extends StatefulWidget {
   int id;
-  String image;
+  //String image;
   String name;
-  String main_price;
-  String stroked_price;
-  bool has_discount;
+  String price;
+  String sale_price;
+  dynamic ratings;
+  String image;
+  String slug;
 
-  MiniProductCard({Key key, this.id, this.image, this.name, this.main_price,this.stroked_price,this.has_discount})
-      : super(key: key);
+  MiniProductCard({
+    Key key,
+    this.id,
+    this.image,
+    this.name,
+    this.price,
+    this.sale_price,
+    this.ratings,
+    this.slug,
+  }) : super(key: key);
 
   @override
   _MiniProductCardState createState() => _MiniProductCardState();
@@ -24,7 +34,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ProductDetails(id: widget.id);
+          return ProductDetails(id: widget.id, slug: widget.slug);
         }));
       },
       child: Card(
@@ -43,13 +53,11 @@ class _MiniProductCardState extends State<MiniProductCard> {
                   child: ClipRRect(
                       borderRadius: BorderRadius.vertical(
                           top: Radius.circular(16), bottom: Radius.zero),
-                      child:FadeInImage.assetNetwork(
+                      child: FadeInImage.assetNetwork(
                         placeholder: 'assets/placeholder.png',
-                        image:  widget.image,
+                        image: widget.image,
                         fit: BoxFit.cover,
-                      )
-
-                  )),
+                      ))),
               Padding(
                 padding: EdgeInsets.fromLTRB(8, 4, 8, 0),
                 child: Text(
@@ -66,7 +74,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
               Padding(
                 padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                 child: Text(
-                  widget.main_price,
+                  widget.sale_price,
                   textAlign: TextAlign.left,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
@@ -76,20 +84,23 @@ class _MiniProductCardState extends State<MiniProductCard> {
                       fontWeight: FontWeight.w600),
                 ),
               ),
-              widget.has_discount ? Padding(
-                padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                child: Text(
-                  widget.stroked_price,
-                  textAlign: TextAlign.left,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: TextStyle(
-                      decoration:TextDecoration.lineThrough,
-                      color: MyTheme.medium_grey,
-                      fontSize: 9,
-                      fontWeight: FontWeight.w600),
+              Visibility(
+                visible: widget.sale_price != widget.price,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  child: Text(
+                    widget.price,
+                    textAlign: TextAlign.left,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: TextStyle(
+                        decoration: TextDecoration.lineThrough,
+                        color: MyTheme.medium_grey,
+                        fontSize: 9,
+                        fontWeight: FontWeight.w600),
+                  ),
                 ),
-              ):Container(),
+              ),
             ]),
       ),
     );

@@ -23,14 +23,19 @@ class ProductMiniResponse {
   int status;
   Meta meta;
 
-  factory ProductMiniResponse.fromJson(Map<String, dynamic> json) =>
-      ProductMiniResponse(
-        products: List<Product>.from(
-            json["new_products"].map((x) => Product.fromJson(x))),
-        meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
-        success: json["success"],
-        status: json["status"],
-      );
+  factory ProductMiniResponse.fromJson(Map<String, dynamic> json) {
+    List<Product> productsList = (json.containsKey("new_products"))
+        ? List<Product>.from(
+            json["new_products"].map((x) => Product.fromJson(x)))
+        : List<Product>.from(json["data"].map((x) => Product.fromJson(x)));
+
+    return ProductMiniResponse(
+      products: productsList,
+      meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
+      success: json["success"],
+      status: json["status"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "data": List<dynamic>.from(products.map((x) => x.toJson())),
@@ -51,6 +56,7 @@ class Product {
     this.ratings,
     this.productCategories,
     this.pictures,
+    this.slug,
     // this.sales,
     // this.links,
   });
@@ -62,25 +68,27 @@ class Product {
   int sale_price;
   // bool has_discount;
   dynamic ratings;
+  String slug;
   // int sales;
   // Links links;
   List<ProductCategory> productCategories;
   List<Picture> pictures;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
-        id: json["id"],
-        name: json["name"],
-        //thumbnail_image: json["thumbnail_image"],
-        price: json["price"],
-        sale_price: json["sale_price"],
-        // has_discount: json["has_discount"],
-        ratings: json["ratings"],
-        productCategories: List<ProductCategory>.from(
-            json["product_categories"].map((x) => ProductCategory.fromJson(x))),
-        pictures: List<Picture>.from(
-            json["pictures"].map((x) => Picture.fromJson(x))),
-        // sales: json["sales"],
-        // links: Links.fromJson(json["links"]),
+      id: json["id"],
+      name: json["name"],
+      //thumbnail_image: json["thumbnail_image"],
+      price: json["price"],
+      sale_price: json["sale_price"],
+      // has_discount: json["has_discount"],
+      ratings: json["ratings"],
+      productCategories: List<ProductCategory>.from(
+          json["product_categories"].map((x) => ProductCategory.fromJson(x))),
+      pictures:
+          List<Picture>.from(json["pictures"].map((x) => Picture.fromJson(x))),
+      slug: json["slug"]
+      // sales: json["sales"],
+      // links: Links.fromJson(json["links"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -91,6 +99,7 @@ class Product {
         "sale_price": sale_price,
         // "has_discount": has_discount,
         "ratings": ratings,
+        "slug": slug,
         "product_categories": List<ProductCategory>.from(
             productCategories.map((x) => x.toJson())),
         "pictures": List<Picture>.from(pictures.map((x) => x.toJson())),

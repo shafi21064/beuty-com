@@ -163,8 +163,8 @@
   "product_details_screen_skin_types" : "Skin Types:",
   "product_details_screen_key_ingredients" : "Ingredients:",
   "product_details_screen_good_for" : "Good For:",
-
-
+  "product_details_screen_categories":"Categories:",
+  "product_details_screen_tags":"Tags:",
   "product_details_screen_brand" : "Brand:",
   "product_details_screen_total_price" : "Total Price:",
   "product_details_screen_price" : "Price:",

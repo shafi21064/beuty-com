@@ -10,6 +10,7 @@ import 'package:active_ecommerce_flutter/screens/top_selling_products.dart';
 import 'package:active_ecommerce_flutter/screens/category_products.dart';
 import 'package:active_ecommerce_flutter/screens/category_list.dart';
 import 'package:active_ecommerce_flutter/theme/appThemes.dart';
+import 'package:active_ecommerce_flutter/ui_elements/mini_product_card.dart';
 import 'package:active_ecommerce_flutter/ui_sections/drawer.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
@@ -404,32 +405,56 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               scontroller: _featuredProductScrollController));
     } else if (_featuredProductList.length > 0) {
       //snapshot.hasData
-
-      return GridView.builder(
-        // 2
-        //addAutomaticKeepAlives: true,
-        itemCount: _featuredProductList.length,
-        controller: _featuredProductScrollController,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio: 0.618),
-        padding: EdgeInsets.all(8),
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          // 3
-          return ProductCard(
-            id: _featuredProductList[index].id,
-            image: _featuredProductList[index].pictures[0].url,
-            ratings: _featuredProductList[index].ratings,
-            name: _featuredProductList[index].name,
-            price: _featuredProductList[index].price.toString(),
-            sale_price: _featuredProductList[index].sale_price.toString(),
-          );
-        },
+      return SingleChildScrollView(
+        child: SizedBox(
+          height: 200,
+          child: ListView.builder(
+            itemCount: _featuredProductList.length,
+            scrollDirection: Axis.horizontal,
+            itemExtent: 120,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 1),
+                child: MiniProductCard(
+                  id: _featuredProductList[index].id,
+                  image: _featuredProductList[index].pictures[0].url,
+                  ratings: _featuredProductList[index].ratings,
+                  name: _featuredProductList[index].name,
+                  price: _featuredProductList[index].price.toString(),
+                  sale_price: _featuredProductList[index].sale_price.toString(),
+                  slug: _featuredProductList[index].slug,
+                ),
+              );
+            },
+          ),
+        ),
       );
+      // return GridView.builder(
+      //   // 2
+      //   //addAutomaticKeepAlives: true,
+      //   itemCount: _featuredProductList.length,
+      //   controller: _featuredProductScrollController,
+      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      //       crossAxisCount: 2,
+      //       crossAxisSpacing: 10,
+      //       mainAxisSpacing: 10,
+      //       childAspectRatio: 0.618),
+      //   padding: EdgeInsets.all(8),
+      //   physics: NeverScrollableScrollPhysics(),
+      //   shrinkWrap: true,
+      //   itemBuilder: (context, index) {
+      //     // 3
+      //     return ProductCard(
+      //       id: _featuredProductList[index].id,
+      //       image: _featuredProductList[index].pictures[0].url,
+      //       ratings: _featuredProductList[index].ratings,
+      //       name: _featuredProductList[index].name,
+      //       price: _featuredProductList[index].price.toString(),
+      //       sale_price: _featuredProductList[index].sale_price.toString(),
+      //       slug:_featuredProductList[index].slug,
+      //     );
+      //   },
+      // );
     } else if (_totalProductData == 0) {
       return Center(
           child: Text(
