@@ -48,16 +48,22 @@ class _MiniProductCardState extends State<MiniProductCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                  width: double.infinity,
-                  height: (MediaQuery.of(context).size.width - 36) / 3.5,
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(16), bottom: Radius.zero),
-                      child: FadeInImage.assetNetwork(
-                        placeholder: 'assets/placeholder.png',
-                        image: widget.image,
-                        fit: BoxFit.cover,
-                      ))),
+                width: double.infinity,
+                height: (MediaQuery.of(context).size.width - 36) / 3.5,
+                child: ClipRRect(
+                    borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(16), bottom: Radius.zero),
+                    child: widget.image == ''
+                        ? Image.asset(
+                            'assets/app_logo.png',
+                            fit: BoxFit.fitWidth,
+                          )
+                        : FadeInImage.assetNetwork(
+                            placeholder: 'assets/placeholder.png',
+                            image: widget.image,
+                            fit: BoxFit.cover,
+                          )),
+              ),
               Padding(
                 padding: EdgeInsets.fromLTRB(8, 4, 8, 0),
                 child: Text(

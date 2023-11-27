@@ -14,15 +14,55 @@ class ProductRepository {
       "App-Language": app_language.$,
     });
     print(response.body);
-    return productMiniResponseFromJson(response.body);
+    
+    return productMiniResponseFromJson(response.body, key: "new_products");
   }
 
-  Future<ProductMiniResponse> getBestSellingProducts() async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/products/best-seller");
+    Future<ProductMiniResponse> getRecommendedProducts(
+     ) async {
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/gigalogy/users/search/recommend?gaip_user_id=${null}");
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
+    print(response.body);
     return productMiniResponseFromJson(response.body);
+  }
+
+  Future<ProductMiniResponse> getPopularSearchProducts() async {
+    Uri url = Uri.parse(
+        "${AppConfig.BASE_URL}/gigalogy/users/recommend?gaip_user_id=${null}");
+    final response = await http.get(url, headers: {
+      "App-Language": app_language.$,
+    });
+    print(response.body);
+    return productMiniResponseFromJson(response.body);
+  }
+  Future<ProductMiniResponse> getTrendingProducts() async {
+    Uri url = Uri.parse(
+        "${AppConfig.BASE_URL}/gigalogy/items/trending?gaip_user_id=${null}");
+    final response = await http.get(url, headers: {
+      "App-Language": app_language.$,
+    });
+    print(response.body);
+    return productMiniResponseFromJson(response.body);
+  }
+
+    Future<ProductMiniResponse> getHotDealsProducts() async {
+      Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products");
+
+    final response = await http.get(url, headers: {
+      "App-Language": app_language.$,
+    });
+    print(response.body);
+    return productMiniResponseFromJson(response.body,key: "featured_products");
+  }
+  
+  Future<ProductMiniResponse> getBestSellingProducts() async {
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products");
+    final response = await http.get(url, headers: {
+      "App-Language": app_language.$,
+    });
+    return productMiniResponseFromJson(response.body, key: "bestselling_products");
   }
 
   Future<ProductMiniResponse> getTodaysDealProducts() async {

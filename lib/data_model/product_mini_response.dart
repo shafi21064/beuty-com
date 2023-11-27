@@ -4,8 +4,9 @@
 //https://app.quicktype.io/
 import 'dart:convert';
 
-ProductMiniResponse productMiniResponseFromJson(String str) =>
-    ProductMiniResponse.fromJson(json.decode(str));
+ProductMiniResponse productMiniResponseFromJson(String str,
+        {String key = "data"}) =>
+    ProductMiniResponse.fromJson(json.decode(str), key: key);
 
 String productMiniResponseToJson(ProductMiniResponse data) =>
     json.encode(data.toJson());
@@ -23,11 +24,10 @@ class ProductMiniResponse {
   int status;
   Meta meta;
 
-  factory ProductMiniResponse.fromJson(Map<String, dynamic> json) {
-    List<Product> productsList = (json.containsKey("new_products"))
-        ? List<Product>.from(
-            json["new_products"].map((x) => Product.fromJson(x)))
-        : List<Product>.from(json["data"].map((x) => Product.fromJson(x)));
+  factory ProductMiniResponse.fromJson(Map<String, dynamic> json,
+      {String key = "data"}) {
+    List<Product> productsList =
+        List<Product>.from(json[key].map((x) => Product.fromJson(x)));
 
     return ProductMiniResponse(
       products: productsList,

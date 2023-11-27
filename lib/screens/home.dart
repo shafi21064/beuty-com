@@ -57,7 +57,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   int _current_slider = 0;
-  ScrollController _featuredProductScrollController;
+  ScrollController _productScrollController;
   ScrollController _mainScrollController = ScrollController();
 
   AnimationController pirated_logo_controller;
@@ -66,10 +66,25 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   var _carouselImageList = [];
   var _featuredCategoryList = [];
   var _featuredProductList = [];
-  bool _isProductInitial = true;
+  var _recommendedProductList = [];
+  var _popularSearchProductList = [];
+  var _trendingProductList = [];
+  var _bestSellingProductList = [];
+  var _hotDealsProductList = [];
+  bool _isFeaturedProuctInitial = true;
+  bool _isRecommendedProuctInitial = true;
+  bool _isPopularSearchProductInital = true;
+  bool _isTrendingProductInitial = true;
+  bool _isBestSellingProductInitial = true;
+  bool _isHotDealsProductInitial = true;
   bool _isCategoryInitial = true;
   bool _isCarouselInitial = true;
-  int _totalProductData = 0;
+  int _totalFeaturedProductData = 0;
+  int _totalRecommendedProductData = 0;
+  int _totalPopularSearchProductData = 0;
+  int _totalTrendingProductData = 0;
+  int _totalBestSellingProductData = 0;
+  int _totalHotDealsProductData = 0;
   int _productPage = 1;
   bool _showProductLoadingContainer = false;
 
@@ -99,6 +114,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         });
         _showProductLoadingContainer = true;
         fetchFeaturedProducts();
+        fetchRecommendedProducts();
+        fetchPopularSearchedProducts();
+        fetchTrendingProducts();
+        fetchBestSellingProducts();
+        fetchHotDealsProducts();
       }
     });
   }
@@ -107,6 +127,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     fetchCarouselImages();
     fetchFeaturedCategories();
     fetchFeaturedProducts();
+    fetchRecommendedProducts();
+    fetchPopularSearchedProducts();
+    fetchTrendingProducts();
+    fetchBestSellingProducts();
+    fetchHotDealsProducts();
+
+
     // AddonsHelper().setAddonsData();
     // BusinessSettingHelper().setBusinessSettingData();
   }
@@ -128,17 +155,61 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     setState(() {});
   }
 
-  fetchFeaturedProducts() async {
-    var productResponse = await ProductRepository().getFeaturedProducts();
-
-    _featuredProductList.addAll(productResponse.products);
-    print(_featuredProductList);
-    _isProductInitial = false;
-    _totalProductData = productResponse.products.length;
+  fetchBestSellingProducts() async {
+    var productResponse = await ProductRepository().getBestSellingProducts();
+    _bestSellingProductList.addAll(productResponse.products);
+    print("recomeened-------->${_bestSellingProductList}");
+    _isBestSellingProductInitial = false;
+    _totalBestSellingProductData = productResponse.products.length;
     _showProductLoadingContainer = false;
     setState(() {});
   }
 
+  fetchFeaturedProducts() async {
+    var productResponse = await ProductRepository().getFeaturedProducts();
+
+    _featuredProductList.addAll(productResponse.products);
+    // print(_featuredProductList);
+    _isFeaturedProuctInitial = false;
+    _totalFeaturedProductData = productResponse.products.length;
+    _showProductLoadingContainer = false;
+    setState(() {});
+  }
+
+  fetchRecommendedProducts() async {
+    var productResponse = await ProductRepository().getRecommendedProducts();
+    _recommendedProductList.addAll(productResponse.products);
+    _isRecommendedProuctInitial = false;
+    _totalRecommendedProductData = productResponse.products.length;
+    _showProductLoadingContainer = false;
+    setState(() {});
+  }
+
+  fetchPopularSearchedProducts() async {
+    var productResponse = await ProductRepository().getPopularSearchProducts();
+    _popularSearchProductList.addAll(productResponse.products);
+    _isPopularSearchProductInital = false;
+    _totalPopularSearchProductData = productResponse.products.length;
+    _showProductLoadingContainer = false;
+    setState(() {});
+  }
+
+  fetchTrendingProducts() async {
+    var productResponse = await ProductRepository().getTrendingProducts();
+    _trendingProductList.addAll(productResponse.products);
+    _isTrendingProductInitial = false;
+    _totalTrendingProductData = productResponse.products.length;
+    _showProductLoadingContainer = false;
+    setState(() {});
+  }
+      fetchHotDealsProducts() async {
+    var productResponse = await ProductRepository().getHotDealsProducts();
+    _hotDealsProductList.addAll(productResponse.products);
+    _isHotDealsProductInitial = false;
+    _totalHotDealsProductData = productResponse.products.length;
+    _showProductLoadingContainer = false;
+    setState(() {});
+  }
   reset() {
     _carouselImageList.clear();
     _featuredCategoryList.clear();
@@ -157,8 +228,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   resetProductList() {
     _featuredProductList.clear();
-    _isProductInitial = true;
-    _totalProductData = 0;
+    _isFeaturedProuctInitial = true;
+    _isRecommendedProuctInitial = true;
+    _isPopularSearchProductInital = true;
+    _totalFeaturedProductData = 0;
+    _totalRecommendedProductData = 0;
+    _totalPopularSearchProductData = 0;
+    _totalHotDealsProductData = 0;
+    _totalTrendingProductData = 0;
+    _totalBestSellingProductData = 0;
     _productPage = 1;
     _showProductLoadingContainer = false;
     setState(() {});
@@ -353,6 +431,226 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                         children: [
                                           Text(
                                             AppLocalizations.of(context)
+                                                .home_screen_best_selling_products,
+                                            style: GoogleFonts.ubuntu(
+                                                fontSize: 16,
+                                                color: Theme.of(context)
+                                                    .buttonTheme
+                                                    .colorScheme
+                                                    .primary),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SingleChildScrollView(
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                              4.0,
+                                              16.0,
+                                              8.0,
+                                              0.0,
+                                            ),
+                                            child: buildHomeBestSellingProducts(
+                                                context),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ]),
+                                ),
+                                SliverList(
+                                  delegate: SliverChildListDelegate([
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                        16.0,
+                                        16.0,
+                                        16.0,
+                                        0.0,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            AppLocalizations.of(context)
+                                                .home_screen_recommended_products,
+                                            style: GoogleFonts.ubuntu(
+                                                fontSize: 16,
+                                                color: Theme.of(context)
+                                                    .buttonTheme
+                                                    .colorScheme
+                                                    .primary),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SingleChildScrollView(
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                              4.0,
+                                              16.0,
+                                              8.0,
+                                              0.0,
+                                            ),
+                                            child: buildHomeRecommendedProducts(
+                                                context),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ]),
+                                ),
+                                SliverList(
+                                  delegate: SliverChildListDelegate([
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                        16.0,
+                                        16.0,
+                                        16.0,
+                                        0.0,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            AppLocalizations.of(context)
+                                                .home_screen_searched_products,
+                                            style: GoogleFonts.ubuntu(
+                                                fontSize: 16,
+                                                color: Theme.of(context)
+                                                    .buttonTheme
+                                                    .colorScheme
+                                                    .primary),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SingleChildScrollView(
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                              4.0,
+                                              16.0,
+                                              8.0,
+                                              0.0,
+                                            ),
+                                            child: buildPopularSearchProducts(
+                                                context),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ]),
+                                ),
+                                SliverList(
+                                  delegate: SliverChildListDelegate([
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                        16.0,
+                                        16.0,
+                                        16.0,
+                                        0.0,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            AppLocalizations.of(context)
+                                                .home_screen_trending_products,
+                                            style: GoogleFonts.ubuntu(
+                                                fontSize: 16,
+                                                color: Theme.of(context)
+                                                    .buttonTheme
+                                                    .colorScheme
+                                                    .primary),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SingleChildScrollView(
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                              4.0,
+                                              16.0,
+                                              8.0,
+                                              0.0,
+                                            ),
+                                            child:
+                                                buildTrendingProducts(context),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ]),
+                                ),
+                                  SliverList(
+                                  delegate: SliverChildListDelegate([
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                        16.0,
+                                        16.0,
+                                        16.0,
+                                        0.0,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            AppLocalizations.of(context)
+                                                .home_screen_hot_deals_products,
+                                            style: GoogleFonts.ubuntu(
+                                                fontSize: 16,
+                                                color: Theme.of(context)
+                                                    .buttonTheme
+                                                    .colorScheme
+                                                    .primary),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SingleChildScrollView(
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                              4.0,
+                                              16.0,
+                                              8.0,
+                                              0.0,
+                                            ),
+                                            child:
+                                                buildHotDealsProducts(context),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ]),
+                                ),
+                                SliverList(
+                                  delegate: SliverChildListDelegate([
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                        16.0,
+                                        16.0,
+                                        16.0,
+                                        0.0,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            AppLocalizations.of(context)
                                                 .home_screen_featured_products,
                                             style: GoogleFonts.ubuntu(
                                                 fontSize: 16,
@@ -396,72 +694,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 );
               })),
     );
-  }
-
-  buildHomeFeaturedProducts(context) {
-    if (_isProductInitial && _featuredProductList.length == 0) {
-      return SingleChildScrollView(
-          child: ShimmerHelper().buildProductGridShimmer(
-              scontroller: _featuredProductScrollController));
-    } else if (_featuredProductList.length > 0) {
-      //snapshot.hasData
-      return SingleChildScrollView(
-        child: SizedBox(
-          height: 200,
-          child: ListView.builder(
-            itemCount: _featuredProductList.length,
-            scrollDirection: Axis.horizontal,
-            itemExtent: 120,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(right: 1),
-                child: MiniProductCard(
-                  id: _featuredProductList[index].id,
-                  image: _featuredProductList[index].pictures[0].url,
-                  ratings: _featuredProductList[index].ratings,
-                  name: _featuredProductList[index].name,
-                  price: _featuredProductList[index].price.toString(),
-                  sale_price: _featuredProductList[index].sale_price.toString(),
-                  slug: _featuredProductList[index].slug,
-                ),
-              );
-            },
-          ),
-        ),
-      );
-      // return GridView.builder(
-      //   // 2
-      //   //addAutomaticKeepAlives: true,
-      //   itemCount: _featuredProductList.length,
-      //   controller: _featuredProductScrollController,
-      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      //       crossAxisCount: 2,
-      //       crossAxisSpacing: 10,
-      //       mainAxisSpacing: 10,
-      //       childAspectRatio: 0.618),
-      //   padding: EdgeInsets.all(8),
-      //   physics: NeverScrollableScrollPhysics(),
-      //   shrinkWrap: true,
-      //   itemBuilder: (context, index) {
-      //     // 3
-      //     return ProductCard(
-      //       id: _featuredProductList[index].id,
-      //       image: _featuredProductList[index].pictures[0].url,
-      //       ratings: _featuredProductList[index].ratings,
-      //       name: _featuredProductList[index].name,
-      //       price: _featuredProductList[index].price.toString(),
-      //       sale_price: _featuredProductList[index].sale_price.toString(),
-      //       slug:_featuredProductList[index].slug,
-      //     );
-      //   },
-      // );
-    } else if (_totalProductData == 0) {
-      return Center(
-          child: Text(
-              AppLocalizations.of(context).common_no_product_is_available));
-    } else {
-      return Container(); // should never be happening
-    }
   }
 
   buildHomeFeaturedCategories(context) {
@@ -564,6 +796,276 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       return Container(
         height: 100,
       );
+    }
+  }
+
+  buildHomeBestSellingProducts(context) {
+    if (_isBestSellingProductInitial && _bestSellingProductList.length == 0) {
+      return SingleChildScrollView(
+          child: ShimmerHelper()
+              .buildProductGridShimmer(scontroller: _productScrollController));
+    } else if (_bestSellingProductList.length > 0) {
+      //snapshot.hasData
+      return SingleChildScrollView(
+        child: SizedBox(
+          height: 200,
+          child: ListView.builder(
+            itemCount: _bestSellingProductList.length,
+            scrollDirection: Axis.horizontal,
+            itemExtent: 120,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 1),
+                child: MiniProductCard(
+                  id: _bestSellingProductList[index].id,
+                  image: _bestSellingProductList[index].pictures[0].url,
+                  ratings: _bestSellingProductList[index].ratings,
+                  name: _bestSellingProductList[index].name,
+                  price: _bestSellingProductList[index].price.toString(),
+                  sale_price:
+                      _bestSellingProductList[index].sale_price.toString(),
+                  slug: _bestSellingProductList[index].slug,
+                ),
+              );
+            },
+          ),
+        ),
+      );
+    } else if (_totalBestSellingProductData == 0) {
+      return Center(
+          child: Text(
+              AppLocalizations.of(context).common_no_product_is_available));
+    } else {
+      return Container(); // should never be happening
+    }
+  }
+
+  buildHomeFeaturedProducts(context) {
+    if (_isFeaturedProuctInitial && _featuredProductList.length == 0) {
+      return SingleChildScrollView(
+          child: ShimmerHelper()
+              .buildProductGridShimmer(scontroller: _productScrollController));
+    } else if (_featuredProductList.length > 0) {
+      //snapshot.hasData
+      return SingleChildScrollView(
+        child: SizedBox(
+          height: 200,
+          child: ListView.builder(
+            itemCount: _featuredProductList.length,
+            scrollDirection: Axis.horizontal,
+            itemExtent: 120,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 1),
+                child: MiniProductCard(
+                  id: _featuredProductList[index].id,
+                  image: _featuredProductList[index].pictures[0].url,
+                  ratings: _featuredProductList[index].ratings,
+                  name: _featuredProductList[index].name,
+                  price: _featuredProductList[index].price.toString(),
+                  sale_price: _featuredProductList[index].sale_price.toString(),
+                  slug: _featuredProductList[index].slug,
+                ),
+              );
+            },
+          ),
+        ),
+      );
+      // return GridView.builder(
+      //   // 2
+      //   //addAutomaticKeepAlives: true,
+      //   itemCount: _featuredProductList.length,
+      //   controller: _productScrollController,
+      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      //       crossAxisCount: 2,
+      //       crossAxisSpacing: 10,
+      //       mainAxisSpacing: 10,
+      //       childAspectRatio: 0.618),
+      //   padding: EdgeInsets.all(8),
+      //   physics: NeverScrollableScrollPhysics(),
+      //   shrinkWrap: true,
+      //   itemBuilder: (context, index) {
+      //     // 3
+      //     return ProductCard(
+      //       id: _featuredProductList[index].id,
+      //       image: _featuredProductList[index].pictures[0].url,
+      //       ratings: _featuredProductList[index].ratings,
+      //       name: _featuredProductList[index].name,
+      //       price: _featuredProductList[index].price.toString(),
+      //       sale_price: _featuredProductList[index].sale_price.toString(),
+      //       slug:_featuredProductList[index].slug,
+      //     );
+      //   },
+      // );
+    } else if (_totalFeaturedProductData == 0) {
+      return Center(
+          child: Text(
+              AppLocalizations.of(context).common_no_product_is_available));
+    } else {
+      return Container(); // should never be happening
+    }
+  }
+
+  buildHomeRecommendedProducts(context) {
+    if (_isRecommendedProuctInitial && _recommendedProductList.length == 0) {
+      return SingleChildScrollView(
+          child: ShimmerHelper()
+              .buildProductGridShimmer(scontroller: _productScrollController));
+    } else if (_recommendedProductList.length > 0) {
+      //snapshot.hasData
+      return SingleChildScrollView(
+        child: SizedBox(
+          height: 200,
+          child: ListView.builder(
+            itemCount: _recommendedProductList.length,
+            scrollDirection: Axis.horizontal,
+            itemExtent: 120,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 1),
+                child: MiniProductCard(
+                  id: _recommendedProductList[index].id,
+                  image: _recommendedProductList[index].pictures[0].url,
+                  ratings: _recommendedProductList[index].ratings,
+                  name: _recommendedProductList[index].name,
+                  price: _recommendedProductList[index].price.toString(),
+                  sale_price:
+                      _recommendedProductList[index].sale_price.toString(),
+                  slug: _recommendedProductList[index].slug,
+                ),
+              );
+            },
+          ),
+        ),
+      );
+    } else if (_totalRecommendedProductData == 0) {
+      return Center(
+          child: Text(
+              AppLocalizations.of(context).common_no_product_is_available));
+    } else {
+      return Container(); // should never be happening
+    }
+  }
+
+  buildPopularSearchProducts(context) {
+    if (_isPopularSearchProductInital &&
+        _popularSearchProductList.length == 0) {
+      return SingleChildScrollView(
+          child: ShimmerHelper()
+              .buildProductGridShimmer(scontroller: _productScrollController));
+    } else if (_popularSearchProductList.length > 0) {
+      //snapshot.hasData
+      return SingleChildScrollView(
+        child: SizedBox(
+          height: 200,
+          child: ListView.builder(
+            itemCount: _popularSearchProductList.length,
+            scrollDirection: Axis.horizontal,
+            itemExtent: 120,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 1),
+                child: MiniProductCard(
+                  id: _popularSearchProductList[index].id,
+                  image: _popularSearchProductList[index].pictures[0].url,
+                  ratings: _popularSearchProductList[index].ratings,
+                  name: _popularSearchProductList[index].name,
+                  price: _popularSearchProductList[index].price.toString(),
+                  sale_price:
+                      _popularSearchProductList[index].sale_price.toString(),
+                  slug: _popularSearchProductList[index].slug,
+                ),
+              );
+            },
+          ),
+        ),
+      );
+    } else if (_totalRecommendedProductData == 0) {
+      return Center(
+          child: Text(
+              AppLocalizations.of(context).common_no_product_is_available));
+    } else {
+      return Container(); // should never be happening
+    }
+  }
+
+  buildTrendingProducts(context) {
+    if (_isTrendingProductInitial && _trendingProductList.length == 0) {
+      return SingleChildScrollView(
+          child: ShimmerHelper()
+              .buildProductGridShimmer(scontroller: _productScrollController));
+    } else if (_trendingProductList.length > 0) {
+      //snapshot.hasData
+      return SingleChildScrollView(
+        child: SizedBox(
+          height: 200,
+          child: ListView.builder(
+            itemCount: _trendingProductList.length,
+            scrollDirection: Axis.horizontal,
+            itemExtent: 120,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 1),
+                child: MiniProductCard(
+                  id: _trendingProductList[index].id,
+                  image: _trendingProductList[index].pictures[0].url,
+                  ratings: _trendingProductList[index].ratings,
+                  name: _trendingProductList[index].name,
+                  price: _trendingProductList[index].price.toString(),
+                  sale_price: _trendingProductList[index].sale_price.toString(),
+                  slug: _trendingProductList[index].slug,
+                ),
+              );
+            },
+          ),
+        ),
+      );
+    } else if (_totalTrendingProductData == 0) {
+      return Center(
+          child: Text(
+              AppLocalizations.of(context).common_no_product_is_available));
+    } else {
+      return Container(); // should never be happening
+    }
+  }
+
+   buildHotDealsProducts(context) {
+    if (_isHotDealsProductInitial && _hotDealsProductList.length == 0) {
+      return SingleChildScrollView(
+          child: ShimmerHelper()
+              .buildProductGridShimmer(scontroller: _productScrollController));
+    } else if (_hotDealsProductList.length > 0) {
+      //snapshot.hasData
+      return SingleChildScrollView(
+        child: SizedBox(
+          height: 200,
+          child: ListView.builder(
+            itemCount: _hotDealsProductList.length,
+            scrollDirection: Axis.horizontal,
+            itemExtent: 120,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 1),
+                child: MiniProductCard(
+                  id: _hotDealsProductList[index].id,
+                  image: _hotDealsProductList[index].pictures[0].url,
+                  ratings: _hotDealsProductList[index].ratings,
+                  name: _hotDealsProductList[index].name,
+                  price: _hotDealsProductList[index].price.toString(),
+                  sale_price: _hotDealsProductList[index].sale_price.toString(),
+                  slug: _hotDealsProductList[index].slug,
+                ),
+              );
+            },
+          ),
+        ),
+      );
+    } else if (_totalTrendingProductData == 0) {
+      return Center(
+          child: Text(
+              AppLocalizations.of(context).common_no_product_is_available));
+    } else {
+      return Container(); // should never be happening
     }
   }
 
@@ -1056,7 +1558,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       width: double.infinity,
       color: Colors.white,
       child: Center(
-        child: Text(_totalProductData == _featuredProductList.length
+        child: Text(_totalFeaturedProductData == _featuredProductList.length
             ? AppLocalizations.of(context).common_no_more_products
             : AppLocalizations.of(context).common_loading_more_products),
       ),
