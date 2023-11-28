@@ -159,6 +159,19 @@ class ProductRepository {
     return productMiniResponseFromJson(response.body);
   }
 
+    Future<ProductMiniResponse> getPurchasedTogether(
+      {@required String slug}) async {
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/gigalogy/items/purchased/together/" +
+        slug +
+        "?gaip_user_id=${null}");
+    print(url);
+    final response = await http.get(url, headers: {
+      "App-Language": app_language.$,
+    });
+    print(response.body);
+    return productMiniResponseFromJson(response.body);
+  }
+
   Future<ProductMiniResponse> getTopFromThisSellerProducts(
       {@required int id = 0}) async {
     Uri url = Uri.parse(

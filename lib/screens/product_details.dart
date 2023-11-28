@@ -1,6 +1,7 @@
 import 'package:active_ecommerce_flutter/screens/cart.dart';
 import 'package:active_ecommerce_flutter/screens/common_webview_screen.dart';
 import 'package:active_ecommerce_flutter/screens/login.dart';
+import 'package:active_ecommerce_flutter/screens/product_questions.dart';
 import 'package:active_ecommerce_flutter/screens/product_reviews.dart';
 import 'package:active_ecommerce_flutter/ui_elements/list_product_card.dart';
 import 'package:active_ecommerce_flutter/ui_elements/mini_product_card.dart';
@@ -74,6 +75,9 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   List<dynamic> _relatedProducts = [];
   bool _relatedProductInit = false;
+  List<dynamic> _recommendedProducts = [];
+  bool _recommendedProductInit = false;
+
   List<dynamic> _topProducts = [];
   bool _topProductInit = false;
 
@@ -98,8 +102,8 @@ class _ProductDetailsState extends State<ProductDetails> {
       fetchWishListCheckInfo();
     }
     fetchRelatedProducts();
-
-    // fetchTopProducts();
+    fetchRecommendedProducts();
+    fetchTopProducts();
   }
 
   fetchProductDetails() async {
@@ -126,11 +130,21 @@ class _ProductDetailsState extends State<ProductDetails> {
     setState(() {});
   }
 
+  fetchRecommendedProducts() async {
+    var recommendedProductResponse =
+        await ProductRepository().getRecommendedProducts();
+    _recommendedProducts.addAll(recommendedProductResponse.products);
+    _recommendedProductInit = true;
+
+    setState(() {});
+  }
+
   fetchTopProducts() async {
     var topProductResponse =
-        await ProductRepository().getTopFromThisSellerProducts(id: widget.id);
+        await ProductRepository().getPurchasedTogether(slug: widget.slug);
     _topProducts.addAll(topProductResponse.products);
     _topProductInit = true;
+    setState(() {});
   }
 
   setProductDetailValues() {
@@ -288,6 +302,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     _colorList.clear();
     _selectedChoices.clear();
     _relatedProducts.clear();
+    _recommendedProducts.clear();
     _topProducts.clear();
     _choiceString = "";
     _variant = "";
@@ -1148,6 +1163,48 @@ class _ProductDetailsState extends State<ProductDetails> {
                     Divider(
                       height: 1,
                     ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return ProductQuestions(id: widget.id);
+                        })).then((value) {
+                          onPopped(value);
+                        });
+                      },
+                      child: Container(
+                        height: 40,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(
+                            16.0,
+                            0.0,
+                            8.0,
+                            0.0,
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)
+                                    .product_details_product_questions,
+                                style: TextStyle(
+                                    color: MyTheme.font_grey,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Spacer(),
+                              Icon(
+                                Ionicons.ios_add,
+                                color: MyTheme.font_grey,
+                                size: 24,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Divider(
+                      height: 1,
+                    ),
                     // InkWell(
                     //   onTap: () {
                     //     Navigator.push(context,
@@ -1296,7 +1353,66 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
                       child: Text(
                         AppLocalizations.of(context)
-                            .product_details_screen_products_may_like,
+                            .product_details_screen_products_purchased,
+                        style: TextStyle(
+                            color: MyTheme.font_grey,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        16.0,
+                        16.0,
+                        16.0,
+                        0.0,
+                      ),
+                      child: buildTopSellingProductList(),
+                    )
+                  ]),
+                ),
+
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        16.0,
+                        16.0,
+                        16.0,
+                        0.0,
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)
+                            .product_details_screen_products_recommended,
+                        style: TextStyle(
+                            color: MyTheme.font_grey,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        8.0,
+                        16.0,
+                        0.0,
+                        0.0,
+                      ),
+                      child: buildRecommendedProductList(),
+                    )
+                  ]),
+                ),
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        16.0,
+                        16.0,
+                        16.0,
+                        0.0,
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)
+                            .product_details_screen_products_related,
                         style: TextStyle(
                             color: MyTheme.font_grey,
                             fontSize: 16,
@@ -1314,35 +1430,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                     )
                   ]),
                 ),
-                SliverList(
-                  delegate: SliverChildListDelegate([
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        16.0,
-                        16.0,
-                        16.0,
-                        0.0,
-                      ),
-                      child: Text(
-                        AppLocalizations.of(context)
-                            .top_selling_products_screen_top_selling_products,
-                        style: TextStyle(
-                            color: MyTheme.font_grey,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    // Padding(
-                    //   padding: const EdgeInsets.fromLTRB(
-                    //     16.0,
-                    //     16.0,
-                    //     16.0,
-                    //     0.0,
-                    //   ),
-                    //   child: buildTopSellingProductList(),
-                    // )
-                  ]),
-                )
               ],
             ),
           )),
@@ -2085,12 +2172,14 @@ class _ProductDetailsState extends State<ProductDetails> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Expandable(
-            collapsed: Container(
-                height: 50,
-                child: Html(data: _productDetails.shortDescription)),
-            expanded:
-                Container(child: Html(data: _productDetails.shortDescription)),
+          Visibility(
+            child: Expandable(
+              collapsed: Container(
+                  height: 50,
+                  child: Html(data: _productDetails.shortDescription ?? '')),
+              expanded: Container(
+                  child: Html(data: _productDetails.shortDescription ?? '')),
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -2418,24 +2507,29 @@ class _ProductDetailsState extends State<ProductDetails> {
         ],
       );
     } else if (_topProducts.length > 0) {
+      print("top: $_topProducts");
       return SingleChildScrollView(
-        child: ListView.builder(
-          itemCount: _topProducts.length,
-          scrollDirection: Axis.vertical,
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 3.0),
-              child: ListProductCard(
+        child: SizedBox(
+          height: 175,
+          child: ListView.builder(
+            itemCount: _topProducts.length,
+            scrollDirection: Axis.horizontal,
+            itemExtent: 120,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 3.0),
+                child: MiniProductCard(
                   id: _topProducts[index].id,
-                  image: _topProducts[index].thumbnail_image,
+                  image: _topProducts[index].pictures[0].url,
+                  ratings: _topProducts[index].ratings,
                   name: _topProducts[index].name,
-                  main_price: _topProducts[index].main_price,
-                  stroked_price: _topProducts[index].stroked_price,
-                  has_discount: _topProducts[index].has_discount),
-            );
-          },
+                  price: _topProducts[index].price.toString(),
+                  sale_price: _topProducts[index].sale_price.toString(),
+                  slug: _topProducts[index].slug,
+                ),
+              );
+            },
+          ),
         ),
       );
     } else {
@@ -2443,9 +2537,10 @@ class _ProductDetailsState extends State<ProductDetails> {
           height: 100,
           child: Center(
               child: Text(
-                  AppLocalizations.of(context)
-                      .product_details_screen_no_top_selling_product,
-                  style: TextStyle(color: MyTheme.font_grey))));
+            AppLocalizations.of(context)
+                .product_details_screen_no_related_product,
+            style: TextStyle(color: MyTheme.font_grey),
+          )));
     }
   }
 
@@ -2506,6 +2601,68 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: Text(
             AppLocalizations.of(context)
                 .product_details_screen_no_related_product,
+            style: TextStyle(color: MyTheme.font_grey),
+          )));
+    }
+  }
+
+  buildRecommendedProductList() {
+    if (_recommendedProductInit == false && _recommendedProducts.length == 0) {
+      return Row(
+        children: [
+          Padding(
+              padding: app_language_rtl.$
+                  ? EdgeInsets.only(left: 8.0)
+                  : EdgeInsets.only(right: 8.0),
+              child: ShimmerHelper().buildBasicShimmer(
+                  height: 120.0,
+                  width: (MediaQuery.of(context).size.width - 32) / 3)),
+          Padding(
+              padding: app_language_rtl.$
+                  ? EdgeInsets.only(left: 8.0)
+                  : EdgeInsets.only(right: 8.0),
+              child: ShimmerHelper().buildBasicShimmer(
+                  height: 120.0,
+                  width: (MediaQuery.of(context).size.width - 32) / 3)),
+          Padding(
+              padding: const EdgeInsets.only(right: 0.0),
+              child: ShimmerHelper().buildBasicShimmer(
+                  height: 120.0,
+                  width: (MediaQuery.of(context).size.width - 32) / 3)),
+        ],
+      );
+    } else if (_recommendedProducts.length > 0) {
+      return SingleChildScrollView(
+        child: SizedBox(
+          height: 175,
+          child: ListView.builder(
+            itemCount: _recommendedProducts.length,
+            scrollDirection: Axis.horizontal,
+            itemExtent: 120,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 3.0),
+                child: MiniProductCard(
+                  id: _recommendedProducts[index].id,
+                  image: _recommendedProducts[index].pictures[0].url,
+                  ratings: _recommendedProducts[index].ratings,
+                  name: _recommendedProducts[index].name,
+                  price: _recommendedProducts[index].price.toString(),
+                  sale_price: _recommendedProducts[index].sale_price.toString(),
+                  slug: _recommendedProducts[index].slug,
+                ),
+              );
+            },
+          ),
+        ),
+      );
+    } else {
+      return Container(
+          height: 100,
+          child: Center(
+              child: Text(
+            AppLocalizations.of(context)
+                .product_details_screen_no_recommended_product,
             style: TextStyle(color: MyTheme.font_grey),
           )));
     }
