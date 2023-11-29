@@ -31,11 +31,10 @@ class _TopSellingProductsState extends State<TopSellingProducts> {
     return AppBar(
       flexibleSpace: Container(
         decoration: BoxDecoration(
-          gradient:  LinearGradient(
-              colors: [
-                Theme.of(context).colorScheme.primary,
-                Theme.of(context).colorScheme.secondary,
-              ]),
+          gradient: LinearGradient(colors: [
+            Theme.of(context).colorScheme.primary,
+            Theme.of(context).colorScheme.secondary,
+          ]),
         ),
       ),
       centerTitle: true,
@@ -82,15 +81,23 @@ class _TopSellingProductsState extends State<TopSellingProducts> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   // 3
-                  // return ProductCard(
-                  //   id: productResponse.products[index].id,
-                  //   image: productResponse.products[index].thumbnail_image,
-                  //   name: productResponse.products[index].name,
-                  //   main_price: productResponse.products[index].main_price,
-                  //   stroked_price:
-                  //       productResponse.products[index].stroked_price,
-                  //   has_discount: productResponse.products[index].has_discount,
-                  // );
+                  return ProductCard(
+                    id: productResponse.products[index].id,
+                    name: productResponse.products[index].name,
+                    price: productResponse.products[index].price.toString(),
+                    sale_price:
+                        productResponse.products[index].sale_price.toString(),
+                    ratings: productResponse.products[index].ratings,
+                    image: productResponse.products[index].pictures[0].url,
+                    slug: productResponse.products[index].slug,
+
+                    //image: productResponse.products[index].thumbnail_image,
+                    //name: productResponse.products[index].name,
+                    // main_price: productResponse.products[index].main_price,
+                    // stroked_price:
+                    //     productResponse.products[index].stroked_price,
+                    // has_discount: productResponse.products[index].has_discount,
+                  );
                 },
               ),
             );
