@@ -96,7 +96,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
                   padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                   child: Text(
                     "৳" + widget.price,
-                    textAlign: TextAlign.left,
+                    textAlign: TextAlign.left, 
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: TextStyle(

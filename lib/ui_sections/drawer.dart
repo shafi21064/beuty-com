@@ -1,6 +1,7 @@
 import 'package:active_ecommerce_flutter/screens/BeautyBooks.dart';
 import 'package:active_ecommerce_flutter/screens/blogs.dart';
 import 'package:active_ecommerce_flutter/screens/change_language.dart';
+import 'package:active_ecommerce_flutter/screens/common_webview_screen.dart';
 import 'package:active_ecommerce_flutter/screens/kireiYT.dart';
 import 'package:active_ecommerce_flutter/screens/newsfeed.dart';
 import 'package:active_ecommerce_flutter/screens/theme.dart';
@@ -187,6 +188,46 @@ class _MainDrawerState extends State<MainDrawer> {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return BeautyBooks();
+                      }));
+                    }),
+                ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    leading: Image.asset("assets/app_logo.png", height: 24),
+                    title: Text('Support Policy',
+                        style: TextStyle(
+                            color: Theme.of(context)
+                                .buttonTheme
+                                .colorScheme
+                                .primary,
+                            fontSize: 14)),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return CommonWebviewScreen(
+                          url: "https://kireibd.com/contact-us",
+                          page_name: AppLocalizations.of(context)
+                              .product_details_screen_support_policy,
+                        );
+                      }));
+                    }),
+                ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    leading: Image.asset("assets/app_logo.png", height: 24),
+                    title: Text('Return Policy',
+                        style: TextStyle(
+                            color: Theme.of(context)
+                                .buttonTheme
+                                .colorScheme
+                                .primary,
+                            fontSize: 14)),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return CommonWebviewScreen(
+                          url: "https://kireibd.com/contact-us",
+                          page_name: AppLocalizations.of(context)
+                              .product_details_screen_return_policy,
+                        );
                       }));
                     }),
                 is_logged_in.$ == true
