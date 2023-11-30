@@ -14,13 +14,13 @@ class ProductRepository {
       "App-Language": app_language.$,
     });
     print(response.body);
-    
+
     return productMiniResponseFromJson(response.body, key: "new_products");
   }
 
-    Future<ProductMiniResponse> getRecommendedProducts(
-     ) async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/gigalogy/users/search/recommend?gaip_user_id=${null}");
+  Future<ProductMiniResponse> getRecommendedProducts() async {
+    Uri url = Uri.parse(
+        "${AppConfig.BASE_URL}/gigalogy/users/search/recommend?gaip_user_id=${null}");
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
@@ -37,6 +37,7 @@ class ProductRepository {
     print(response.body);
     return productMiniResponseFromJson(response.body);
   }
+
   Future<ProductMiniResponse> getTrendingProducts() async {
     Uri url = Uri.parse(
         "${AppConfig.BASE_URL}/gigalogy/items/trending?gaip_user_id=${null}");
@@ -47,22 +48,23 @@ class ProductRepository {
     return productMiniResponseFromJson(response.body);
   }
 
-    Future<ProductMiniResponse> getHotDealsProducts() async {
-      Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products");
+  Future<ProductMiniResponse> getHotDealsProducts() async {
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products");
 
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
     print(response.body);
-    return productMiniResponseFromJson(response.body,key: "featured_products");
+    return productMiniResponseFromJson(response.body, key: "featured_products");
   }
-  
+
   Future<ProductMiniResponse> getBestSellingProducts() async {
     Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products");
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
-    return productMiniResponseFromJson(response.body, key: "bestselling_products");
+    return productMiniResponseFromJson(response.body,
+        key: "bestselling_products");
   }
 
   Future<ProductMiniResponse> getTodaysDealProducts() async {
@@ -84,10 +86,10 @@ class ProductRepository {
   }
 
   Future<ProductMiniResponse> getCategoryProducts(
-      {@required int id = 0, name = "", page = 1}) async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/products/category/" +
-        id.toString() +
-        "?page=${page}&name=${name}");
+      {@required name = "", page = 1}) async {
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/gigalogy/items/search?" +
+        "category=${name}&page=${page}&gaip_user_id=${null}");
+    print(url);
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
@@ -159,11 +161,12 @@ class ProductRepository {
     return productMiniResponseFromJson(response.body);
   }
 
-    Future<ProductMiniResponse> getPurchasedTogether(
+  Future<ProductMiniResponse> getPurchasedTogether(
       {@required String slug}) async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/gigalogy/items/purchased/together/" +
-        slug +
-        "?gaip_user_id=${null}");
+    Uri url = Uri.parse(
+        "${AppConfig.BASE_URL}/gigalogy/items/purchased/together/" +
+            slug +
+            "?gaip_user_id=${null}");
     print(url);
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,

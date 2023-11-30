@@ -117,11 +117,8 @@ class _CategoryListState extends State<CategoryList> {
   }
 
   buildCategoryList() {
-    var future = widget.is_top_category
-        ? CategoryRepository().getTopCategories()
-        : CategoryRepository()
-            .getCategories(parent_id: widget.parent_category_id);
-    print(future);
+    var future = CategoryRepository().getCategories();
+    print("future-------->$future");
     return FutureBuilder(
         future: future,
         builder: (context, snapshot) {
@@ -135,6 +132,7 @@ class _CategoryListState extends State<CategoryList> {
           } else if (snapshot.hasData) {
             //snapshot.hasData
             var categoryResponse = snapshot.data;
+            print(categoryResponse.categories[0]);
             return SingleChildScrollView(
               child: ListView.builder(
                 itemCount: categoryResponse.categories.length,
@@ -227,7 +225,7 @@ class _CategoryListState extends State<CategoryList> {
             child: ClipRRect(
                 borderRadius: BorderRadius.horizontal(
                     left: Radius.circular(10), right: Radius.zero),
-                child: categoryResponse.categories[index].banner != ''
+                child: categoryResponse.categories[index].banner != null
                     ? FadeInImage.assetNetwork(
                         placeholder: 'assets/placeholder.png',
                         image: categoryResponse.categories[index].banner,
@@ -264,8 +262,7 @@ class _CategoryListState extends State<CategoryList> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        if (categoryResponse
-                                .categories[index].number_of_children >
+                        if (categoryResponse.categories[index].children.length >
                             0) {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
@@ -285,33 +282,43 @@ class _CategoryListState extends State<CategoryList> {
                               duration: Toast.LENGTH_LONG);
                         }
                       },
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Colors.grey.shade200),
-                        child: Text(
-                          AppLocalizations.of(context)
-                              .category_list_screen_view_subcategories,
-                          textAlign: TextAlign.left,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(
-                            color: categoryResponse
-                                        .categories[index].number_of_children >
-                                    0
-                                ? MyTheme.medium_grey
-                                : MyTheme.light_grey,
+                      child: Visibility(
+                        visible:
+                            categoryResponse.categories[index].children.length >
+                                0,
+                        child: Container(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.grey.shade200),
+                          child: Text(
+                            AppLocalizations.of(context)
+                                .category_list_screen_view_subcategories,
+                            textAlign: TextAlign.left,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: TextStyle(
+                              color: categoryResponse
+                                          .categories[index].children.length >
+                                      0
+                                  ? MyTheme.medium_grey
+                                  : MyTheme.light_grey,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    Text(
-                      " | ",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: MyTheme.medium_grey,
+                    Visibility(
+                      visible:
+                          categoryResponse.categories[index].children.length >
+                              0,
+                      child: Text(
+                        " | ",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: MyTheme.medium_grey,
+                        ),
                       ),
                     ),
                     GestureDetector(

@@ -58,9 +58,10 @@ class _CategoryProductsState extends State<CategoryProducts> {
   }
 
   fetchData() async {
-    var productResponse = await ProductRepository().getCategoryProducts(
-        id: widget.category_id, page: _page, name: _searchKey);
+    var productResponse = await ProductRepository()
+        .getCategoryProducts(page: _page, name: _searchKey);
     _productList.addAll(productResponse.products);
+    //  print(_productList[0].);
     _isInitial = false;
     _totalData = productResponse.meta.total;
     _showLoadingContainer = false;
@@ -204,11 +205,16 @@ class _CategoryProductsState extends State<CategoryProducts> {
             itemBuilder: (context, index) {
               // 3
               return ProductCard(
-                  id: _productList[index].id,
-                  // image: _productList[index].thumbnail_image,
-                  name: _productList[index].name,
-                  price: _productList[index].price,
-                  sale_price: _productList[index].sale_price);
+                id: _productList[index].id,
+                name: _productList[index].name,
+                price: _productList[index].price.toString(),
+                sale_price: _productList[index].sale_price.toString(),
+                ratings: _productList[index].ratings,
+                image: _productList[index].pictures.length > 0
+                    ? _productList[index].pictures[0].url
+                    : "assets/app_logo.png",
+                slug: _productList[index].slug,
+              );
               //has_discount: _productList[index].has_discount);
             },
           ),

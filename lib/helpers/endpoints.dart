@@ -26,7 +26,7 @@ class ENDP {
   static const ADD_CART = "${AppConfig.BASE_URL}/carts/add";
   static const CART_SUMMARY = "${AppConfig.BASE_URL}/cart-summary";
   //CATEGORY REPO..
-  static const GET_CATEGORIES = "${AppConfig.BASE_URL}/categories?parent_id=";
+  static const GET_CATEGORIES = "${AppConfig.BASE_URL}/all-categories";
   static const GET_FEATURED_CATEGORIES =
       "${AppConfig.BASE_URL}/categories/featured";
   static const TOP_CATEGORIES = "${AppConfig.BASE_URL}/categories/top";

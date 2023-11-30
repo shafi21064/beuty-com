@@ -6,12 +6,12 @@ import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 
 class CategoryRepository {
   Future<CategoryResponse> getCategories({parent_id = 0}) async {
-    Uri url = Uri.parse("${ENDP.GET_CATEGORIES}${parent_id}");
+    Uri url = Uri.parse("${ENDP.GET_CATEGORIES}");
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
-    print("${ENDP.GET_CATEGORIES}${parent_id}");
-    print(response.body.toString());
+    print("${ENDP.GET_CATEGORIES}");
+    print("categoriesssss: $response.body.toString()");
     return categoryResponseFromJson(response.body);
   }
 
