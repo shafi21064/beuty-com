@@ -6,10 +6,9 @@ import 'package:active_ecommerce_flutter/helpers/shimmer_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CategoryProducts extends StatefulWidget {
-  CategoryProducts({Key key, this.category_name, this.category_id})
+  CategoryProducts({Key key, this.category_name})
       : super(key: key);
   final String category_name;
-  final int category_id;
 
   @override
   _CategoryProductsState createState() => _CategoryProductsState();
@@ -59,7 +58,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
 
   fetchData() async {
     var productResponse = await ProductRepository()
-        .getCategoryProducts(page: _page, name: _searchKey);
+        .getCategoryProducts(page: _page, name: _searchKey==""?widget.category_name:_searchKey);
     _productList.addAll(productResponse.products);
     //  print(_productList[0].);
     _isInitial = false;

@@ -35,7 +35,7 @@ class CategoryRepository {
   }
 
   Future<CategoryResponse> getFilterPageCategories() async {
-    Uri url = Uri.parse("${ENDP.FILTER_CATEGORIES}");
+    Uri url = Uri.parse("${ENDP.GET_CATEGORIES}");
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });

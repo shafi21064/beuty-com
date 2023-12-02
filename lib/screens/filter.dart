@@ -68,6 +68,7 @@ class _FilterState extends State<Filter> {
   List<DropdownMenuItem<WhichFilter>> _dropdownWhichFilterItems;
   List<dynamic> _selectedCategories = [];
   List<dynamic> _selectedBrands = [];
+  List<dynamic> _selectedSkins = [];
 
   final TextEditingController _searchController = new TextEditingController();
   final TextEditingController _minPriceController = new TextEditingController();
@@ -106,8 +107,8 @@ class _FilterState extends State<Filter> {
 
   fetchFilteredBrands() async {
     var filteredBrandResponse = await BrandRepository().getFilterPageBrands();
+    print("callllllled");
     _filterBrandList.addAll(filteredBrandResponse.brands);
-    print(filteredBrandResponse);
     _filteredBrandsCalled = true;
     setState(() {});
   }
@@ -200,13 +201,11 @@ class _FilterState extends State<Filter> {
     //print("sc:"+_selectedCategories.join(",").toString());
     //print("sb:"+_selectedBrands.join(",").toString());
     var productResponse = await ProductRepository().getFilteredProducts(
-        page: _productPage,
-        name: _searchKey,
-        sort_key: _selectedSort,
-        brands: _selectedBrands.join(",").toString(),
-        categories: _selectedCategories.join(",").toString(),
-        max: _maxPriceController.text.toString(),
-        min: _minPriceController.text.toString());
+      page: _productPage,
+      name: _searchKey,
+      categories: _selectedCategories.join(",").toString(),
+      skin_type: _selectedBrands.join(",").toString(),
+    );
 
     _productList.addAll(productResponse.products);
     _isProductInitial = false;
@@ -1052,7 +1051,7 @@ class _FilterState extends State<Filter> {
               (brand) => CheckboxListTile(
                 controlAffinity: ListTileControlAffinity.leading,
                 dense: true,
-                title: Text(brand.name),
+                title: Text(brand.title),
                 value: _selectedBrands.contains(brand.id),
                 onChanged: (bool value) {
                   if (value) {
@@ -1152,13 +1151,17 @@ class _FilterState extends State<Filter> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   // 3
-                  // return ProductCard(
-                  //     id: _productList[index].id,
-                  //     image: _productList[index].thumbnail_image,
-                  //     name: _productList[index].name,
-                  //     main_price: _productList[index].main_price,
-                  //     stroked_price: _productList[index].stroked_price,
-                  //     has_discount: _productList[index].has_discount);
+                  return ProductCard(
+                    id: _productList[index].id,
+                    name: _productList[index].name,
+                    price: _productList[index].price.toString(),
+                    sale_price: _productList[index].sale_price.toString(),
+                    ratings: _productList[index].ratings,
+                    image: _productList[index].pictures.length > 0
+                        ? _productList[index].pictures[0].url
+                        : "assets/app_logo.png",
+                    slug: _productList[index].slug,
+                  );
                 },
               )
             ],

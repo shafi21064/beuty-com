@@ -17,7 +17,7 @@ class ENDP {
   static const AddrUpdateInCart =
       "${AppConfig.BASE_URL}/update-address-in-cart";
   //Brand Repo
-  static const FILTER_PAGE_BRANDS = "${AppConfig.BASE_URL}/filter/brands";
+  static const FILTER_PAGE_BRANDS = "${AppConfig.BASE_URL}/skin-types";
   static const GET_BRANDS = "${AppConfig.BASE_URL}/brands";
   static const BUSINESS_SETTING = "${AppConfig.BASE_URL}/business-settings";
   //CART REPO

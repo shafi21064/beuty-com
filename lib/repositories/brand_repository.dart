@@ -10,7 +10,7 @@ class BrandRepository {
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
-    print(response.body);
+    print("response,,,," + response.body);
     return brandResponseFromJson(response.body);
   }
 

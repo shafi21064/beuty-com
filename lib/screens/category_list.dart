@@ -326,7 +326,7 @@ class _CategoryListState extends State<CategoryList> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return CategoryProducts(
-                            category_id: categoryResponse.categories[index].id,
+                            //category_id: categoryResponse.categories[index].id,
                             category_name:
                                 categoryResponse.categories[index].name,
                           );
@@ -398,7 +398,7 @@ class _CategoryListState extends State<CategoryList> {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
                       return CategoryProducts(
-                        category_id: widget.parent_category_id,
+                        //category_id: widget.parent_category_id,
                         category_name: widget.parent_category_name,
                       );
                     }));

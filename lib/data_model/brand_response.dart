@@ -45,10 +45,12 @@ class Brands {
     this.name,
     this.logo,
     this.links,
+    this.title,
   });
 
   int id;
   int is_top;
+  String title;
   String slug;
   String name;
   String logo;
@@ -58,6 +60,7 @@ class Brands {
         name: json["name"],
         id: json["id"],
         is_top: json["is_top"],
+        title: json["title"],
         slug: json["slug"],
         logo: json["logo"],
         links: BrandsLinks.fromJson(json["links"]),
@@ -69,6 +72,7 @@ class Brands {
         "is_top": is_top,
         "slug": slug,
         "logo": logo,
+        "titile": title,
         "links": links.toJson(),
       };
 }
