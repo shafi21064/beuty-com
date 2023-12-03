@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:active_ecommerce_flutter/repositories/skin_types_repository.dart';
 import 'package:active_ecommerce_flutter/screens/seller_details.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/ui_elements/product_card.dart';
@@ -29,10 +30,10 @@ class WhichFilter {
     return <WhichFilter>[
       WhichFilter('product',
           AppLocalizations.of(OneContext().context).filter_screen_product),
-      WhichFilter('sellers',
-          AppLocalizations.of(OneContext().context).filter_screen_sellers),
-      WhichFilter('brands',
-          AppLocalizations.of(OneContext().context).filter_screen_brands),
+      // WhichFilter('sellers',
+      //     AppLocalizations.of(OneContext().context).filter_screen_sellers),
+      // WhichFilter('brands',
+      //     AppLocalizations.of(OneContext().context).filter_screen_brands),
     ];
   }
 }
@@ -62,7 +63,7 @@ class _FilterState extends State<Filter> {
   ScrollController _scrollController;
   WhichFilter _selectedFilter;
   String _givenSelectedFilterOptionKey; // may be it can come from another page
-  var _selectedSort = "";
+  var _selectedSort = "default";
 
   List<WhichFilter> _which_filter_list = WhichFilter.getWhichFilterList();
   List<DropdownMenuItem<WhichFilter>> _dropdownWhichFilterItems;
@@ -96,7 +97,7 @@ class _FilterState extends State<Filter> {
   int _brandPage = 1;
   int _totalBrandData = 0;
   bool _showBrandLoadingContainer = false;
-
+  String _selectedCategory = "";
   List<dynamic> _shopList = [];
   bool _isShopInitial = true;
   int _shopPage = 1;
@@ -106,9 +107,11 @@ class _FilterState extends State<Filter> {
   //----------------------------------------
 
   fetchFilteredBrands() async {
-    var filteredBrandResponse = await BrandRepository().getFilterPageBrands();
+    var filteredBrandResponse =
+        await SkinTypesRepository().getFilterPageSkinTypes();
     print("callllllled");
-    _filterBrandList.addAll(filteredBrandResponse.brands);
+    _filterBrandList.addAll(filteredBrandResponse.skinTypes);
+    print(_filterBrandList);
     _filteredBrandsCalled = true;
     setState(() {});
   }
@@ -201,11 +204,13 @@ class _FilterState extends State<Filter> {
     //print("sc:"+_selectedCategories.join(",").toString());
     //print("sb:"+_selectedBrands.join(",").toString());
     var productResponse = await ProductRepository().getFilteredProducts(
-      page: _productPage,
-      name: _searchKey,
-      categories: _selectedCategories.join(",").toString(),
-      skin_type: _selectedBrands.join(",").toString(),
-    );
+        page: _productPage,
+        name: _searchKey,
+        sort_key: _selectedSort,
+        categories: _selectedCategory,
+        skin_type: _selectedBrands.join(",").toString(),
+        max: _maxPriceController.text.toString(),
+        min: _minPriceController.text.toString());
 
     _productList.addAll(productResponse.products);
     _isProductInitial = false;
@@ -460,10 +465,10 @@ class _FilterState extends State<Filter> {
               padding: app_language_rtl.$
                   ? const EdgeInsets.only(right: 16.0)
                   : const EdgeInsets.only(left: 16.0),
-              child: Icon(
-                Icons.expand_more,
-                color: Colors.white,
-              ),
+              // child: Icon(
+              //   Icons.expand_more,
+              //   color: Colors.white,
+              // ),
             ),
             hint: Text(
               AppLocalizations.of(context).filter_screen_products,
@@ -475,13 +480,13 @@ class _FilterState extends State<Filter> {
             iconSize: 14,
             underline: SizedBox(),
             value: _selectedFilter,
-            items: _dropdownWhichFilterItems,
+            //items: _dropdownWhichFilterItems,
             onChanged: (WhichFilter selectedFilter) {
               setState(() {
                 _selectedFilter = selectedFilter;
               });
 
-              _onWhichFilterChange();
+              //  _onWhichFilterChange();
             },
           ),
         ),
@@ -554,13 +559,81 @@ class _FilterState extends State<Filter> {
                                       )),
                                   RadioListTile(
                                     dense: true,
-                                    value: "",
+                                    value: "default",
                                     groupValue: _selectedSort,
                                     activeColor: MyTheme.font_grey,
                                     controlAffinity:
                                         ListTileControlAffinity.leading,
                                     title: Text(AppLocalizations.of(context)
                                         .filter_screen_default),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedSort = value;
+                                      });
+                                      _onSortChange();
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  RadioListTile(
+                                    dense: true,
+                                    value: "bestseller",
+                                    groupValue: _selectedSort,
+                                    activeColor: MyTheme.font_grey,
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    title: Text(AppLocalizations.of(context)
+                                        .filter_screen_popularity),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedSort = value;
+                                      });
+                                      _onSortChange();
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  RadioListTile(
+                                    dense: true,
+                                    value: "rating",
+                                    groupValue: _selectedSort,
+                                    activeColor: MyTheme.font_grey,
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    title: Text(AppLocalizations.of(context)
+                                        .filter_screen_top_rated),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedSort = value;
+                                      });
+                                      _onSortChange();
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  RadioListTile(
+                                    dense: true,
+                                    value: "new",
+                                    groupValue: _selectedSort,
+                                    activeColor: MyTheme.font_grey,
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    title: Text(AppLocalizations.of(context)
+                                        .filter_screen_price_new_arrival),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedSort = value;
+                                      });
+                                      _onSortChange();
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  RadioListTile(
+                                    dense: true,
+                                    value: "hot",
+                                    groupValue: _selectedSort,
+                                    activeColor: MyTheme.font_grey,
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    title: Text(AppLocalizations.of(context)
+                                        .filter_screen_hot_deals),
                                     onChanged: (value) {
                                       setState(() {
                                         _selectedSort = value;
@@ -595,57 +668,6 @@ class _FilterState extends State<Filter> {
                                         ListTileControlAffinity.leading,
                                     title: Text(AppLocalizations.of(context)
                                         .filter_screen_price_low_to_high),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _selectedSort = value;
-                                      });
-                                      _onSortChange();
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  RadioListTile(
-                                    dense: true,
-                                    value: "new_arrival",
-                                    groupValue: _selectedSort,
-                                    activeColor: MyTheme.font_grey,
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    title: Text(AppLocalizations.of(context)
-                                        .filter_screen_price_new_arrival),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _selectedSort = value;
-                                      });
-                                      _onSortChange();
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  RadioListTile(
-                                    dense: true,
-                                    value: "popularity",
-                                    groupValue: _selectedSort,
-                                    activeColor: MyTheme.font_grey,
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    title: Text(AppLocalizations.of(context)
-                                        .filter_screen_popularity),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _selectedSort = value;
-                                      });
-                                      _onSortChange();
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  RadioListTile(
-                                    dense: true,
-                                    value: "top_rated",
-                                    groupValue: _selectedSort,
-                                    activeColor: MyTheme.font_grey,
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    title: Text(AppLocalizations.of(context)
-                                        .filter_screen_top_rated),
                                     onChanged: (value) {
                                       setState(() {
                                         _selectedSort = value;
@@ -998,7 +1020,8 @@ class _FilterState extends State<Filter> {
                         _minPriceController.clear();
                         _maxPriceController.clear();
                         setState(() {
-                          _selectedCategories.clear();
+                          // _selectedCategories.clear();
+                          _selectedCategory = "";
                           _selectedBrands.clear();
                         });
                       },
@@ -1052,15 +1075,15 @@ class _FilterState extends State<Filter> {
                 controlAffinity: ListTileControlAffinity.leading,
                 dense: true,
                 title: Text(brand.title),
-                value: _selectedBrands.contains(brand.id),
+                value: _selectedBrands.contains(brand.title),
                 onChanged: (bool value) {
                   if (value) {
                     setState(() {
-                      _selectedBrands.add(brand.id);
+                      _selectedBrands.add(brand.title);
                     });
                   } else {
                     setState(() {
-                      _selectedBrands.remove(brand.id);
+                      _selectedBrands.remove(brand.title);
                     });
                   }
                 },
@@ -1079,22 +1102,17 @@ class _FilterState extends State<Filter> {
       children: <Widget>[
         ..._filterCategoryList
             .map(
-              (category) => CheckboxListTile(
+              (category) => RadioListTile<String>(
                 controlAffinity: ListTileControlAffinity.leading,
                 dense: true,
                 title: Text(category.name),
-                value: _selectedCategories.contains(category.id),
-                onChanged: (bool value) {
-                  if (value) {
-                    setState(() {
-                      _selectedCategories.clear();
-                      _selectedCategories.add(category.id);
-                    });
-                  } else {
-                    setState(() {
-                      _selectedCategories.remove(category.id);
-                    });
-                  }
+                groupValue: _selectedCategory,
+                value: category.name,
+                onChanged: (value) {
+                  setState(() {
+                    debugPrint("Val=$value");
+                    _selectedCategory = value;
+                  });
                 },
               ),
             )

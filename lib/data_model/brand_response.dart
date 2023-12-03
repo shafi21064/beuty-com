@@ -72,7 +72,7 @@ class Brands {
         "is_top": is_top,
         "slug": slug,
         "logo": logo,
-        "titile": title,
+        "title": title,
         "links": links.toJson(),
       };
 }

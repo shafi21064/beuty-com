@@ -122,12 +122,14 @@ class ProductRepository {
   Future<ProductMiniResponse> getFilteredProducts(
       {name = "",
       page = 1,
+      sort_key = "",
       categories = "",
       skin_type = "",
-     }) async {
+      min = "",
+      max = ""}) async {
     Uri url = Uri.parse("${AppConfig.BASE_URL}/gigalogy/items/search" +
-        "?page=${page}&name=${name}&category=${categories}&skin_type=${skin_type}&gaip_user_id=${null} ");
-
+        "?page=${page}&order_by=${sort_key}&category=${categories.toLowerCase().replaceAll(' ', '-')}&skin_type=${skin_type.toLowerCase()}&min_price=${int.tryParse(min)}&max_price=${int.tryParse(max)}&gaip_user_id=${null} ");
+    print(url);
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
