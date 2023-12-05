@@ -6,10 +6,12 @@ import 'package:active_ecommerce_flutter/screens/cart.dart';
 import 'package:active_ecommerce_flutter/screens/category_list.dart';
 import 'package:active_ecommerce_flutter/screens/home.dart';
 import 'package:active_ecommerce_flutter/screens/login.dart';
+import 'package:active_ecommerce_flutter/screens/product_details.dart';
 import 'package:active_ecommerce_flutter/screens/profile.dart';
 import 'package:active_ecommerce_flutter/screens/filter.dart';
 import 'package:active_ecommerce_flutter/screens/top_selling_products.dart';
 import 'package:active_ecommerce_flutter/screens/wishlist.dart';
+import 'package:active_ecommerce_flutter/ui_sections/drawer.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
 
 import 'newsfeed.dart';
+
 // ignore: must_be_immutable
 class Main extends StatefulWidget {
   Main({Key key, go_back = true}) : super(key: key);
@@ -34,10 +37,12 @@ class _MainState extends State<Main> {
   int _currentIndex = 0;
   var _children = [
     Home(),
-    TopSellingProducts(),
-    Wishlist(),
+    CategoryList(
+      is_base_category: true,
+    ),
+    Filter(),
     Cart(has_bottomnav: true),
-    Profile()
+    Profile(),
   ];
 
   void onTapped(int i) {
@@ -76,27 +81,26 @@ class _MainState extends State<Main> {
       },
       child: Directionality(
         textDirection:
-        app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
+            app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
         child: Scaffold(
           extendBody: true,
           body: _children[_currentIndex],
           floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerDocked,
+              FloatingActionButtonLocation.centerDocked,
           //specify the location of the FAB
 
           bottomNavigationBar: ConvexAppBar(
             onTap: onTapped,
             initialActiveIndex: 0,
-           // backgroundColor: Colors.deepPurple.shade400,
+            // backgroundColor: Colors.deepPurple.shade400,
             style: TabStyle.flip,
             elevation: 1,
             height: 50,
-           // cornerRadius: 20,
+            // cornerRadius: 20,
             curve: Curves.bounceOut,
-            gradient: LinearGradient(
-            colors: [
-            Theme.of(context).colorScheme.primary,
-            Theme.of(context).colorScheme.secondary,
+            gradient: LinearGradient(colors: [
+              Theme.of(context).colorScheme.primary,
+              Theme.of(context).colorScheme.secondary,
             ]),
 /*            gradient: FlutterGradients.orangeJuice(
               type: GradientType.linear,
@@ -109,10 +113,10 @@ class _MainState extends State<Main> {
                     .main_screen_bottom_navigation_home,
               ),
               TabItem(
-                icon: Icons.view_list_sharp,
-                title: "Shop",
+                icon: Icons.category,
+                title: "Categories",
               ),
-              TabItem(icon: Icons.favorite_border, title: 'Wish List'),
+              TabItem(icon: Icons.view_list_sharp, title: 'Shop'),
               TabItem(
                 icon: Icons.shopping_cart,
                 title: AppLocalizations.of(context)
@@ -120,11 +124,11 @@ class _MainState extends State<Main> {
               ),
               TabItem(
                 icon: Icons.account_circle_sharp,
-                title: AppLocalizations.of(context).main_screen_bottom_navigation_profile,
+                title: AppLocalizations.of(context)
+                    .main_screen_bottom_navigation_profile,
               ),
             ],
           ),
-
         ),
       ),
     );

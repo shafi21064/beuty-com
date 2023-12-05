@@ -1,5 +1,6 @@
 import 'package:active_ecommerce_flutter/screens/cart.dart';
 import 'package:active_ecommerce_flutter/screens/common_webview_screen.dart';
+import 'package:active_ecommerce_flutter/screens/filter.dart';
 import 'package:active_ecommerce_flutter/screens/login.dart';
 import 'package:active_ecommerce_flutter/screens/product_questions.dart';
 import 'package:active_ecommerce_flutter/screens/product_reviews.dart';
@@ -152,7 +153,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       _appbarPriceString = _productDetails.salePrice.toString();
       // _singlePrice = _productDetails.calculable_price;
       _singlePriceString = _productDetails.price;
-      // calculateTotalPrice();
+      calculateTotalPrice();
       _stock = _productDetails.stock;
       _productDetails.pictures.forEach((photo) {
         _productImageList.add(photo.url);
@@ -327,10 +328,11 @@ class _ProductDetailsState extends State<ProductDetails> {
     fetchAll();
   }
 
-  // calculateTotalPrice() {
-  //   _totalPrice = (_singlePrice * _quantity).toStringAsFixed(2);
-  //   setState(() {});
-  // }
+  calculateTotalPrice() {
+    _totalPrice = (_singlePriceString * _quantity).toStringAsFixed(2);
+    print(_totalPrice);
+    setState(() {});
+  }
 
   // _onVariantChange(_choice_options_index, value) {
   //   _selectedChoices[_choice_options_index] = value;
@@ -757,7 +759,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     return Directionality(
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
-          // bottomNavigationBar: buildBottomAppBar(context, _addedToCartSnackbar),
+          bottomNavigationBar: buildBottomAppBar(context, _addedToCartSnackbar),
           backgroundColor: Colors.white,
           appBar: buildAppBar(statusBarHeight, context),
           body: RefreshIndicator(
@@ -920,11 +922,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                       16.0,
                       0.0,
                     ),
-                    // child: _productDetails != null
-                    //     ? buildTotalPriceRow()
-                    //     : ShimmerHelper().buildBasicShimmer(
-                    //         height: 30.0,
-                    //       ),
+                    child: _productDetails != null
+                        ? buildTotalPriceRow()
+                        : ShimmerHelper().buildBasicShimmer(
+                            height: 30.0,
+                          ),
                   ),
                   Divider(
                     height: 24.0,
@@ -1396,7 +1398,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           ),
         ),
         Text(
-          _productDetails.currency_symbol + _totalPrice.toString(),
+          "৳" + _totalPrice.toString(),
           style: TextStyle(
               color: MyTheme.accent_color,
               fontSize: 18.0,
@@ -2103,7 +2105,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                         child: InkWell(
                           onTap: () {
                             // Handle the click on the skin type (add your logic here)
-                            print("Clicked on $skinType");
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return Filter(
+                                selected_skin: skinType,
+                              );
+                            }));
                           },
                           onHover: (isHovering) {
                             // Update the hover state
@@ -2170,7 +2177,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                     child: InkWell(
                       onTap: () {
                         // Handle the click on the ingredients (add your logic here)
-                        print("Clicked on $ingredients");
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return Filter(
+                            key_ingredients: ingredients,
+                          );
+                        }));
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -2223,7 +2235,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                     child: InkWell(
                       onTap: () {
                         // Handle the click on the ingredients (add your logic here)
-                        print("Clicked on $good_for");
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return Filter(
+                            good_for: good_for,
+                          );
+                        }));
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -2276,7 +2293,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                     child: InkWell(
                       onTap: () {
                         // Handle the click on the ingredients (add your logic here)
-                        print("Clicked on $category");
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return Filter(
+                            category: category,
+                          );
+                        }));
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -2327,8 +2349,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                     cursor: SystemMouseCursors.click,
                     child: InkWell(
                       onTap: () {
-                        // Handle the click on the ingredients (add your logic here)
-                        print("Clicked on $tag");
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return Filter(
+                            tag: tag,
+                          );
+                        }));
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -2541,7 +2567,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               if (_quantity < _stock) {
                 _quantity++;
                 setState(() {});
-                //calculateTotalPrice();
+                calculateTotalPrice();
               }
             }),
       );
@@ -2554,7 +2580,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             if (_quantity > 1) {
               _quantity--;
               setState(() {});
-              // calculateTotalPrice();
+              calculateTotalPrice();
             }
           }));
 

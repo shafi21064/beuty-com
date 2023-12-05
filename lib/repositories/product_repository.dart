@@ -125,6 +125,9 @@ class ProductRepository {
       sort_key = "",
       categories = "",
       skin_type = "",
+      key_ingredients = "",
+      good_for = "",
+      tag = "",
       min = "",
       max = ""}) async {
     Uri url = Uri.parse("${AppConfig.BASE_URL}/gigalogy/items/search" +

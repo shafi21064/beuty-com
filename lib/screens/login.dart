@@ -3,6 +3,7 @@ import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/other_config.dart';
 import 'package:active_ecommerce_flutter/screens/otp.dart';
 import 'package:active_ecommerce_flutter/social_config.dart';
+import 'package:active_ecommerce_flutter/ui_sections/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:active_ecommerce_flutter/custom/input_decorations.dart';
@@ -105,8 +106,8 @@ class _LoginState extends State<Login> {
       return;
     }
 
-    var loginResponse = await AuthRepository()
-        .getLoginResponse(_login_by == 'email' ? email : _phone, password,rememberMe);
+    var loginResponse = await AuthRepository().getLoginResponse(
+        _login_by == 'email' ? email : _phone, password, rememberMe);
     if (loginResponse.result == false) {
       ToastComponent.showDialog(loginResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
@@ -260,6 +261,7 @@ class _LoginState extends State<Login> {
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: Colors.white,
+        drawer: MainDrawer(),
         body: Stack(
           children: [
             // Container(

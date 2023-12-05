@@ -1,6 +1,7 @@
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/repositories/skin_types_repository.dart';
 import 'package:active_ecommerce_flutter/screens/seller_details.dart';
+import 'package:active_ecommerce_flutter/ui_sections/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/ui_elements/product_card.dart';
 import 'package:active_ecommerce_flutter/ui_elements/shop_square_card.dart';
@@ -39,12 +40,22 @@ class WhichFilter {
 }
 
 class Filter extends StatefulWidget {
-  Filter({
-    Key key,
-    this.selected_filter = "product",
-  }) : super(key: key);
+  Filter(
+      {Key key,
+      this.selected_filter = "product",
+      this.selected_skin,
+      this.good_for,
+      this.tag,
+      this.category,
+      this.key_ingredients})
+      : super(key: key);
 
   final String selected_filter;
+  final String selected_skin;
+  final String tag;
+  final String good_for;
+  final String key_ingredients;
+  final String category;
 
   @override
   _FilterState createState() => _FilterState();
@@ -207,8 +218,14 @@ class _FilterState extends State<Filter> {
         page: _productPage,
         name: _searchKey,
         sort_key: _selectedSort,
-        categories: _selectedCategory,
-        skin_type: _selectedBrands.join(",").toString(),
+        categories:
+            widget.category != null ? widget.category : _selectedCategory,
+        skin_type: widget.selected_skin != null
+            ? widget.selected_skin
+            : _selectedBrands.join(",").toString(),
+        tag: widget.tag,
+        good_for: widget.good_for,
+        key_ingredients: widget.key_ingredients,
         max: _maxPriceController.text.toString(),
         min: _minPriceController.text.toString());
 
@@ -393,8 +410,9 @@ class _FilterState extends State<Filter> {
     return Directionality(
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
-        endDrawer: buildFilterDrawer(),
         key: _scaffoldKey,
+        drawer: MainDrawer(),
+        endDrawer: buildFilterDrawer(),
         backgroundColor: Colors.grey[100],
         body: Stack(overflow: Overflow.visible, children: [
           _selectedFilter.option_key == 'product'
@@ -754,11 +772,12 @@ class _FilterState extends State<Filter> {
               child: TypeAheadField(
                 suggestionsCallback: (pattern) async {
                   //return await BackendService.getSuggestions(pattern);
-                  var suggestions = await SearchRepository()
-                      .getSearchSuggestionListResponse(
-                          query_key: pattern, type: _selectedFilter.option_key);
-                  //print(suggestions.toString());
-                  return suggestions;
+                  var suggestions =
+                      await SearchRepository().getSearchSuggestionListResponse(
+                    query_key: pattern,
+                  );
+                  print(suggestions.products.toString());
+                  return suggestions.products;
                 },
                 loadingBuilder: (context) {
                   return Container(
@@ -772,8 +791,8 @@ class _FilterState extends State<Filter> {
                 },
                 itemBuilder: (context, suggestion) {
                   //print(suggestion.toString());
-                  var subtitle =
-                      "${AppLocalizations.of(context).filter_screen_searched_for} ${suggestion.count} ${AppLocalizations.of(context).filter_screen_times}";
+                  var subtitle = "";
+                  // "${AppLocalizations.of(context).filter_screen_searched_for} ${suggestion.stock} ${AppLocalizations.of(context).filter_screen_times}";
                   if (suggestion.type != "search") {
                     subtitle =
                         "${suggestion.type_string} ${AppLocalizations.of(context).filter_screen_found}";

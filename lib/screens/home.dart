@@ -133,7 +133,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     fetchBestSellingProducts();
     fetchHotDealsProducts();
 
-
     // AddonsHelper().setAddonsData();
     // BusinessSettingHelper().setBusinessSettingData();
   }
@@ -202,7 +201,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     _showProductLoadingContainer = false;
     setState(() {});
   }
-      fetchHotDealsProducts() async {
+
+  fetchHotDealsProducts() async {
     var productResponse = await ProductRepository().getHotDealsProducts();
     _hotDealsProductList.addAll(productResponse.products);
     _isHotDealsProductInitial = false;
@@ -210,6 +210,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     _showProductLoadingContainer = false;
     setState(() {});
   }
+
   reset() {
     _carouselImageList.clear();
     _featuredCategoryList.clear();
@@ -592,7 +593,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                     ),
                                   ]),
                                 ),
-                                  SliverList(
+                                SliverList(
                                   delegate: SliverChildListDelegate([
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
@@ -1029,7 +1030,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     }
   }
 
-   buildHotDealsProducts(context) {
+  buildHotDealsProducts(context) {
     if (_isHotDealsProductInitial && _hotDealsProductList.length == 0) {
       return SingleChildScrollView(
           child: ShimmerHelper()
@@ -1128,7 +1129,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return Filter(
-                selected_filter: "brands",
+                selected_filter: "products",
               );
             }));
           },
