@@ -791,26 +791,55 @@ class _FilterState extends State<Filter> {
                 },
                 itemBuilder: (context, suggestion) {
                   //print(suggestion.toString());
-                  var subtitle = "";
-                  // "${AppLocalizations.of(context).filter_screen_searched_for} ${suggestion.stock} ${AppLocalizations.of(context).filter_screen_times}";
-                  if (suggestion.type != "search") {
-                    subtitle =
-                        "${suggestion.type_string} ${AppLocalizations.of(context).filter_screen_found}";
-                  }
+                  // var subtitle = "";
+                  // // "${AppLocalizations.of(context).filter_screen_searched_for} ${suggestion.stock} ${AppLocalizations.of(context).filter_screen_times}";
+                  // // if (suggestion.type != "search") {
+                  // subtitle =
+                  //     "${suggestion.type_string} ${AppLocalizations.of(context).filter_screen_found}";
+                  // // }
                   return ListTile(
                     dense: true,
-                    title: Text(
-                      suggestion.query,
-                      style: TextStyle(
-                          color: suggestion.type != "search"
-                              ? MyTheme.accent_color
-                              : MyTheme.font_grey),
+                    leading: Image.network(
+                      suggestion.pictures[0]
+                          .url, // Replace with the actual URL of your image
+                      width: 40, // Adjust the width as needed
+                      height: 40, // Adjust the height as needed
+                      fit: BoxFit.cover,
                     ),
-                    subtitle: Text(subtitle,
-                        style: TextStyle(
-                            color: suggestion.type != "search"
-                                ? MyTheme.font_grey
-                                : MyTheme.medium_grey)),
+                    title: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: suggestion.name,
+                            style: TextStyle(color: MyTheme.accent_color),
+                          ),
+                        ],
+                      ),
+                    ),
+                    subtitle: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: suggestion.sale_price != suggestion.price
+                                ? "৳" + suggestion.price.toString()
+                                : '',
+                            style: TextStyle(
+                              color: MyTheme.medium_grey,
+                              decoration:
+                                  suggestion.sale_price != suggestion.price
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                            ),
+                          ),
+                          TextSpan(
+                            text: suggestion.sale_price != suggestion.price
+                                ? ' ৳${suggestion.sale_price.toString()}'
+                                : "৳" + suggestion.price.toString(),
+                            style: TextStyle(color: MyTheme.medium_grey),
+                          ),
+                        ],
+                      ),
+                    ),
                   );
                 },
                 noItemsFoundBuilder: (context) {
@@ -824,8 +853,8 @@ class _FilterState extends State<Filter> {
                   );
                 },
                 onSuggestionSelected: (suggestion) {
-                  _searchController.text = suggestion.query;
-                  _searchKey = suggestion.query;
+                  _searchController.text = suggestion.name;
+                  _searchKey = suggestion.name;
                   setState(() {});
                   _onSearchSubmit();
                 },

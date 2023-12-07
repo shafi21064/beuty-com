@@ -17,7 +17,7 @@ class SearchRepository {
       },
     );
     //print(url);
-    //print(response.body.toString());
+    print(response.body.toString());
     return productMiniResponseFromJson(response.body);
   }
 }
