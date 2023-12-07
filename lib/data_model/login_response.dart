@@ -15,14 +15,14 @@ String loginOtpResponseToJson(LoginOtpResponse data) =>
     json.encode(data.toJson());
 
 class LoginResponse {
-  LoginResponse({
-    this.result,
-    this.message,
-    this.access_token,
-    this.token_type,
-    this.expires_at,
-    this.user,
-  });
+  LoginResponse(
+      {this.result,
+      this.message,
+      this.access_token,
+      this.token_type,
+      this.expires_at,
+      this.user,
+      this.phone});
 
   bool result;
   String message;
@@ -30,18 +30,18 @@ class LoginResponse {
   String token_type;
   DateTime expires_at;
   User user;
+  String phone;
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
-        result: json["result"],
-        message: json["message"],
-        access_token:
-            json["access_token"] == null ? null : json["access_token"],
-        token_type: json["token_type"] == null ? null : json["token_type"],
-        expires_at: json["expires_at"] == null
-            ? null
-            : DateTime.parse(json["expires_at"]),
-        user: json["user"] == null ? null : User.fromJson(json["user"]),
-      );
+      result: json["result"],
+      message: json["message"],
+      access_token: json["access_token"] == null ? null : json["access_token"],
+      token_type: json["token_type"] == null ? null : json["token_type"],
+      expires_at: json["expires_at"] == null
+          ? null
+          : DateTime.parse(json["expires_at"]),
+      user: json["user"] == null ? null : User.fromJson(json["user"]),
+      phone: json["phone"]);
 
   Map<String, dynamic> toJson() => {
         "result": result,
@@ -50,6 +50,7 @@ class LoginResponse {
         "token_type": token_type == null ? null : token_type,
         "expires_at": expires_at == null ? null : expires_at.toIso8601String(),
         "user": user == null ? null : user.toJson(),
+        "phone": phone
       };
 }
 

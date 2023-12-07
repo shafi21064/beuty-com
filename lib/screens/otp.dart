@@ -80,13 +80,14 @@ class _OtpState extends State<Otp> {
           : await AuthRepository()
               .getSignUpOtpConfirmCodeResponse(widget.phoneNumber, code);
 
-      if (confirmCodeResponse.result == false) {
-        ToastComponent.showDialog(confirmCodeResponse.message, context,
-            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      if (confirmCodeResponse == false) {
+        // ToastComponent.showDialog(confirmCodeResponse.message, context,
+        //     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       } else {
-        ToastComponent.showDialog(confirmCodeResponse.message, context,
-            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-        AuthHelper().setUserDataFromOTP(widget.responseData);
+        // ToastComponent.showDialog(confirmCodeResponse.message, context,
+        //     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        print(widget.responseData);
+        AuthHelper().setUserDataFromOTP(confirmCodeResponse);
 
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return Main();

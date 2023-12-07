@@ -54,7 +54,7 @@ class AuthRepository {
     return loginResponseFromJson(response.body);
   }
 
-  Future<LoginOtpResponse> getLoginOTPResponse(@required String phone) async {
+  Future<LoginResponse> getLoginOTPResponse(@required String phone) async {
     var post_body = jsonEncode({"email": "${phone}"});
 
     Uri url = Uri.parse("${AppConfig.BASE_URL_1}/send-login-otp");
@@ -66,7 +66,7 @@ class AuthRepository {
         },
         body: post_body);
     print(response.body);
-    return loginOtpResponseFromJson(response.body);
+    return loginResponseFromJson(response.body);
   }
 
   Future<LoginResponse> getSocialLoginResponse(@required String social_provider,
@@ -135,7 +135,7 @@ class AuthRepository {
     return signupResponseFromJson(response.body);
   }
 
-  Future<SignUpOtpResponse> getSignupOtpResponse(
+  Future<SignupResponse> getSignupOtpResponse(
     @required String phone,
   ) async {
     var post_body = jsonEncode({
@@ -151,7 +151,7 @@ class AuthRepository {
         },
         body: post_body);
     print(response.body);
-    return signUpOtpResponseFromJson(response.body);
+    return signupResponseFromJson(response.body);
   }
 
   Future<ResendCodeResponse> getResendCodeResponse(
@@ -186,7 +186,7 @@ class AuthRepository {
     return confirmCodeResponseFromJson(response.body);
   }
 
-  Future<ConfirmCodeResponse> getSignUpOtpConfirmCodeResponse(
+  Future<SignupResponse> getSignUpOtpConfirmCodeResponse(
       @required String phone, @required String verification_code) async {
     var post_body =
         jsonEncode({"email": "$phone", "otp_code": "$verification_code"});
@@ -199,10 +199,10 @@ class AuthRepository {
         },
         body: post_body);
     print(response.body);
-    return confirmCodeResponseFromJson(response.body);
+    return signupResponseFromJson(response.body);
   }
 
-  Future<ConfirmCodeResponse> getLogInOtpConfirmCodeResponse(
+  Future<LoginResponse> getLogInOtpConfirmCodeResponse(
       @required String phone, @required String verification_code) async {
     var post_body =
         jsonEncode({"email": "$phone", "otp_code": "$verification_code"});
@@ -215,16 +215,15 @@ class AuthRepository {
         },
         body: post_body);
     print(response.body);
-    return confirmCodeResponseFromJson(response.body);
+    return loginResponseFromJson(response.body);
   }
 
   Future<PasswordForgetResponse> getPasswordForgetResponse(
-      @required String email_or_phone, @required String send_code_by) async {
-    var post_body = jsonEncode(
-        {"email_or_phone": "$email_or_phone", "send_code_by": "$send_code_by"});
+      @required String email_or_phone) async {
+    var post_body = jsonEncode({"email": "$email_or_phone"});
 
     Uri url = Uri.parse(
-      "${AppConfig.BASE_URL_1}/auth/password/forget_request",
+      "${AppConfig.BASE_URL_1}/send-reset-otp",
     );
     final response = await http.post(url,
         headers: {
@@ -233,7 +232,7 @@ class AuthRepository {
         },
         body: post_body);
 
-    //print(response.body.toString());
+    print(response.body.toString());
 
     return passwordForgetResponseFromJson(response.body);
   }

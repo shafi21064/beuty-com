@@ -12,18 +12,21 @@ class PasswordForgetResponse {
   PasswordForgetResponse({
     this.result,
     this.message,
+    this.phone
   });
 
   bool result;
   String message;
-
+String phone;
   factory PasswordForgetResponse.fromJson(Map<String, dynamic> json) => PasswordForgetResponse(
     result: json["result"],
     message: json["message"],
+    phone: json["phone"]
   );
 
   Map<String, dynamic> toJson() => {
     "result": result,
     "message": message,
+    "phone":phone
   };
 }

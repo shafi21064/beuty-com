@@ -367,7 +367,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     // print(_variant);
     // print(user_id.$);
     //print(_quantity);
-
+    print(access_token.$);
     var cartAddResponse = await CartRepository()
         .getCartAddResponse(widget.id, _variant, user_id.$, _quantity);
 
@@ -2096,49 +2096,33 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  child: Row(
-                    children: _skinTypes.map((skinType) {
-                      return MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: InkWell(
-                          onTap: () {
-                            // Handle the click on the skin type (add your logic here)
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return Filter(
-                                selected_skin: skinType,
-                              );
-                            }));
-                          },
-                          onHover: (isHovering) {
-                            // Update the hover state
-                            isHovered = isHovering;
-                          },
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 4.0),
-                            child: Text(
-                              "${skinType.substring(0, 1).toUpperCase()}${skinType.substring(1)}${_skinTypes.last == skinType ? '' : ','}",
-                              style: TextStyle(
-                                color: Colors.black,
-
-                                fontSize: 16,
-                                decoration: isHovered
-                                    ? TextDecoration.underline
-                                    : TextDecoration.none,
-
-                                // decoration: TextDecoration
-                                //     .underline, // Add underline for better indication
-                              ),
-                            ),
+                ...List.generate(_skinTypes.length, (index) {
+                  final skinType = _skinTypes[index];
+                  return MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: InkWell(
+                      onTap: () {
+                        // Handle the click on the ingredients (add your logic here)
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return Filter(
+                            selected_skin: skinType,
+                          );
+                        }));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        child: Text(
+                          "${skinType.substring(0, 1).toUpperCase()}${skinType.substring(1)}${index == skinType.length - 1 ? '' : ','}",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
                           ),
                         ),
-                      );
-                    }).toList(),
-                  ),
-                ),
+                      ),
+                    ),
+                  );
+                }),
                 Spacer(),
               ],
             ),

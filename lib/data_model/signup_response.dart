@@ -18,14 +18,14 @@ String signUpOtpResponseToJson(SignUpOtpResponse data) =>
     json.encode(data.toJson());
 
 class SignupResponse {
-  SignupResponse({
-    this.result,
-    this.message,
-    this.user_id,
-    this.access_token,
-    this.token_type,
-    this.user,
-  });
+  SignupResponse(
+      {this.result,
+      this.message,
+      this.user_id,
+      this.access_token,
+      this.token_type,
+      this.user,
+      this.phone});
 
   bool result;
   String message;
@@ -33,16 +33,17 @@ class SignupResponse {
   String access_token;
   String token_type;
   User user;
+  String phone;
 
   factory SignupResponse.fromJson(Map<String, dynamic> json) => SignupResponse(
         result: json["result"],
         message: json["message"],
         user_id: json["user_id"],
-         access_token:
+        access_token:
             json["access_token"] == null ? null : json["access_token"],
         token_type: json["token_type"] == null ? null : json["token_type"],
         user: json["user"] == null ? null : User.fromJson(json["user"]),
-
+        phone: json["phone"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -52,6 +53,7 @@ class SignupResponse {
         "access_token": access_token == null ? null : access_token,
         "token_type": token_type == null ? null : token_type,
         "user": user == null ? null : user.toJson(),
+        "phone": phone
       };
 }
 

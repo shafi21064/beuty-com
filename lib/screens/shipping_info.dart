@@ -110,13 +110,13 @@ class _ShippingInfoState extends State<ShippingInfo> {
   getSetShippingCost() async {
     var shippingCostResponse;
     if (_shippingOptionIsAddress) {
-      shippingCostResponse = await AddressRepository().getShippingCostResponse(
-          user_id: user_id.$, address_id: _seleted_shipping_address);
+      // shippingCostResponse = await AddressRepository().getShippingCostResponse(
+      //     user_id: user_id.$, address_id: _seleted_shipping_address);
     } else {
-      shippingCostResponse = await AddressRepository().getShippingCostResponse(
-          user_id: user_id.$,
-          pick_up_id: _seleted_shipping_pickup_point,
-          shipping_type: "pickup_point");
+      // shippingCostResponse = await AddressRepository().getShippingCostResponse(
+      //     user_id: user_id.$,
+      //     pick_up_id: _seleted_shipping_pickup_point,
+      //     shipping_type: "pickup_point");
     }
 
     if (shippingCostResponse.result == true) {
