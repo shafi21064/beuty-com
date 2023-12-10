@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:active_ecommerce_flutter/data_model/cart_add_response.dart';
 import 'package:active_ecommerce_flutter/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'package:active_ecommerce_flutter/data_model/login_response.dart';
@@ -222,6 +223,7 @@ class AuthRepository {
       @required String email_or_phone) async {
     var post_body = jsonEncode({"email": "$email_or_phone"});
 
+    print(post_body);
     Uri url = Uri.parse(
       "${AppConfig.BASE_URL_1}/send-reset-otp",
     );
@@ -238,9 +240,30 @@ class AuthRepository {
   }
 
   Future<PasswordConfirmResponse> getPasswordConfirmResponse(
-      @required String verification_code, @required String password) async {
-    var post_body = jsonEncode(
-        {"verification_code": "$verification_code", "password": "$password"});
+      @required String verification_code, @required String phone) async {
+    var post_body =
+        jsonEncode({"otp_code": "$verification_code", "email": "$phone"});
+    print(post_body);
+
+    Uri url = Uri.parse(
+      "${AppConfig.BASE_URL_1}/verify-reset-otp",
+    );
+    final response = await http.post(url,
+        headers: {
+          "Content-Type": "application/json",
+          "App-Language": app_language.$,
+        },
+        body: post_body);
+
+    print(response.body.toString());
+
+    return passwordConfirmResponseFromJson(response.body);
+  }
+    Future<CartAddResponse> getConfirmReset(
+      @required String verification_code, @required String phone,@required bool otp_reset,@required String password) async {
+    var post_body =
+        jsonEncode({"otp_code": "$verification_code", "email": "$phone","otp_reset": "$otp_reset", "password": "$password"});
+    print(post_body);
 
     Uri url = Uri.parse(
       "${AppConfig.BASE_URL_1}/auth/password/confirm_reset",
@@ -252,8 +275,11 @@ class AuthRepository {
         },
         body: post_body);
 
-    return passwordConfirmResponseFromJson(response.body);
+    print(response.body.toString());
+
+    return cartAddResponseFromJson(response.body);
   }
+
 
   Future<ResendCodeResponse> getPasswordResendCodeResponse(
       @required String email_or_code, @required String verify_by) async {

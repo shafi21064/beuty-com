@@ -1,30 +1,29 @@
+import 'package:active_ecommerce_flutter/helpers/auth_helper.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
-import 'package:active_ecommerce_flutter/screens/reset_otp.dart';
+import 'package:active_ecommerce_flutter/screens/main.dart';
+import 'package:active_ecommerce_flutter/screens/password_otp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:active_ecommerce_flutter/custom/input_decorations.dart';
-import 'package:active_ecommerce_flutter/custom/intl_phone_input.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:active_ecommerce_flutter/screens/password_otp.dart';
+import 'package:active_ecommerce_flutter/screens/login.dart';
+import 'package:active_ecommerce_flutter/repositories/auth_repository.dart';
 import 'package:active_ecommerce_flutter/custom/toast_component.dart';
 import 'package:toast/toast.dart';
-import 'package:active_ecommerce_flutter/repositories/auth_repository.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class PasswordForget extends StatefulWidget {
+class ResetOTP extends StatefulWidget {
+  ResetOTP({Key key, this.phone}) : super(key: key);
+
+  String phone;
+
   @override
-  _PasswordForgetState createState() => _PasswordForgetState();
+  _ResetOtpState createState() => _ResetOtpState();
 }
 
-class _PasswordForgetState extends State<PasswordForget> {
-  String initialCountry = 'BD';
-  PhoneNumber phoneCode = PhoneNumber(isoCode: 'BD');
-  String _phone = "";
-
+class _ResetOtpState extends State<ResetOTP> {
   //controllers
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _phoneNumberController = TextEditingController();
+  TextEditingController _verificationCodeController = TextEditingController();
 
   @override
   void initState() {
@@ -41,30 +40,34 @@ class _PasswordForgetState extends State<PasswordForget> {
     super.dispose();
   }
 
-  onPressSendCode() async {
-    if (_phone == "") {
+  onPressConfirm() async {
+    var code = _verificationCodeController.text.toString();
+
+    if (code == "") {
       ToastComponent.showDialog(
-          AppLocalizations.of(context).password_forget_screen_phone_warning,
+          AppLocalizations.of(context).otp_screen_verification_code_warning,
           context,
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
       return;
     }
+    print(widget.phone);
+    var passwordConfirmResponse =
+        await AuthRepository().getPasswordConfirmResponse(code, widget.phone);
 
-    var passwordForgetResponse =
-        await AuthRepository().getPasswordForgetResponse(_phone);
-
-    if (passwordForgetResponse.result == false) {
-      ToastComponent.showDialog(passwordForgetResponse.message, context,
+    if (passwordConfirmResponse.result == false) {
+      ToastComponent.showDialog(passwordConfirmResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
     } else {
-      ToastComponent.showDialog(passwordForgetResponse.message, context,
+      ToastComponent.showDialog(passwordConfirmResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
 
       Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return ResetOTP(
-          phone: _phone,
-            );
+        return PasswordOtp(
+          phone:widget.phone,
+          code:code,
+          
+        );
       }));
     }
   }
@@ -102,7 +105,8 @@ class _PasswordForgetState extends State<PasswordForget> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20.0),
                     child: Text(
-                      "Forget Password ?",
+                      "${AppLocalizations.of(context).otp_screen_verify_your} " +
+                          AppLocalizations.of(context).otp_screen_phone_number,
                       style: TextStyle(
                           color: MyTheme.accent_color,
                           fontSize: 18,
@@ -115,50 +119,18 @@ class _PasswordForgetState extends State<PasswordForget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 4.0),
-                          child: Text(
-                            AppLocalizations.of(context)
-                                .password_forget_screen_phone,
-                            style: TextStyle(
-                                color: MyTheme.accent_color,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Container(
                                 height: 36,
-                                child: CustomInternationalPhoneNumberInput(
-                                  onInputChanged: (PhoneNumber number) {
-                                    print(number.phoneNumber);
-                                    setState(() {
-                                      _phone = number.phoneNumber;
-                                    });
-                                  },
-                                  onInputValidated: (bool value) {
-                                    print(value);
-                                  },
-                                  selectorConfig: SelectorConfig(
-                                    selectorType: PhoneInputSelectorType.DIALOG,
-                                  ),
-                                  ignoreBlank: false,
-                                  autoValidateMode: AutovalidateMode.disabled,
-                                  selectorTextStyle:
-                                      TextStyle(color: MyTheme.font_grey),
-                                  initialValue: phoneCode,
-                                  textFieldController: _phoneNumberController,
-                                  formatInput: true,
-                                  keyboardType: TextInputType.numberWithOptions(
-                                      signed: true, decimal: true),
-                                  inputDecoration: InputDecorations
-                                      .buildInputDecoration_phone(
-                                          hint_text: "01710 333 558"),
-                                  onSaved: (PhoneNumber number) {
-                                    print('On Saved: $number');
-                                  },
+                                child: TextField(
+                                  controller: _verificationCodeController,
+                                  autofocus: false,
+                                  decoration:
+                                      InputDecorations.buildInputDecoration_1(
+                                          hint_text: "A X B 4 J H"),
                                 ),
                               ),
                             ],
@@ -181,21 +153,21 @@ class _PasswordForgetState extends State<PasswordForget> {
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(12.0))),
                               child: Text(
-                                "Send Code",
+                                AppLocalizations.of(context).otp_screen_confirm,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600),
                               ),
                               onPressed: () {
-                                onPressSendCode();
+                                onPressConfirm();
                               },
                             ),
                           ),
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               )),
             )

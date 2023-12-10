@@ -12,18 +12,22 @@ class PasswordConfirmResponse {
   PasswordConfirmResponse({
     this.result,
     this.message,
+    this.phone,
   });
 
   bool result;
   String message;
+  String phone;
 
   factory PasswordConfirmResponse.fromJson(Map<String, dynamic> json) => PasswordConfirmResponse(
     result: json["result"],
     message: json["message"],
+    phone: json["phone"]
   );
 
   Map<String, dynamic> toJson() => {
     "result": result,
     "message": message,
+    "phone":phone
   };
 }
