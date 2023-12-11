@@ -1,10 +1,14 @@
 import 'package:active_ecommerce_flutter/custom/CommonFunctoins.dart';
+import 'package:active_ecommerce_flutter/data_model/shop_details_response.dart';
 import 'package:active_ecommerce_flutter/helpers/addons_helper.dart';
 import 'package:active_ecommerce_flutter/helpers/business_setting_helper.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/providers/locale_provider.dart';
+import 'package:active_ecommerce_flutter/screens/appointment.dart';
+import 'package:active_ecommerce_flutter/screens/beauty_tips.dart';
 import 'package:active_ecommerce_flutter/screens/filter.dart';
 import 'package:active_ecommerce_flutter/screens/flash_deal_list.dart';
+import 'package:active_ecommerce_flutter/screens/newsfeed.dart';
 import 'package:active_ecommerce_flutter/screens/todays_deal_products.dart';
 import 'package:active_ecommerce_flutter/screens/top_selling_products.dart';
 import 'package:active_ecommerce_flutter/screens/category_products.dart';
@@ -1078,9 +1082,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         GestureDetector(
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return CategoryList(
-                is_base_category: true,
-              );
+              return Filter();
             }));
           },
           child: Container(
@@ -1092,7 +1094,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     height: 50,
                     width: 50,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(30),
                         color:
                             Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
@@ -1104,16 +1106,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           ),
                         ]),
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Image.asset(
-                        "assets/top_categories.png",
-                        color: Colors.white,
-                      ),
-                    )),
+                        padding: const EdgeInsets.all(0.0),
+                        child: Icon(
+                          Icons.view_list_sharp,
+                          color: Colors.white,
+                        ))),
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: Text(
-                    AppLocalizations.of(context).home_screen_top_categories,
+                    "Shop",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color:
@@ -1128,9 +1129,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         GestureDetector(
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return Filter(
-                selected_filter: "products",
-              );
+              return BeautyTips();
             }));
           },
           child: Container(
@@ -1142,121 +1141,121 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     height: 50,
                     width: 50,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color:
-                            Theme.of(context).buttonTheme.colorScheme.primary,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(1.0),
-                            spreadRadius: 0,
-                            blurRadius: 9,
-                            offset: Offset(0, 1),
-                          ),
-                        ]),
+                      borderRadius: BorderRadius.circular(30),
+                      color: Theme.of(context).buttonTheme.colorScheme.primary,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(1.0),
+                          spreadRadius: 0,
+                          blurRadius: 9,
+                          offset: Offset(0, 1),
+                        ),
+                      ],
+                    ),
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(0.0),
                       child: Image.asset(
-                        "assets/brands.png",
-                        color: Colors.white,
-                      ),
-                    )),
-                Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Text(AppLocalizations.of(context).home_screen_brands,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .buttonTheme
-                                .colorScheme
-                                .secondary,
-                            fontWeight: FontWeight.w300))),
-              ],
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return TopSellingProducts();
-            }));
-          },
-          child: Container(
-            height: 100,
-            width: MediaQuery.of(context).size.width / 5 - 4,
-            child: Column(
-              children: [
-                Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color:
-                            Theme.of(context).buttonTheme.colorScheme.primary,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(1.0),
-                            spreadRadius: 0,
-                            blurRadius: 9,
-                            offset: Offset(0, 1),
-                          ),
-                        ]),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Image.asset(
-                        "assets/top_sellers.png",
-                        color: Colors.white,
-                      ),
-                    )),
-                Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Text("Top solds",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .buttonTheme
-                                .colorScheme
-                                .secondary,
-                            fontWeight: FontWeight.w300))),
-              ],
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return BeautyBooks();
-            }));
-          },
-          child: Container(
-            height: 100,
-            width: MediaQuery.of(context).size.width / 5 - 4,
-            child: Column(
-              children: [
-                Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color:
-                            Theme.of(context).buttonTheme.colorScheme.primary,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(1.0),
-                            spreadRadius: 0,
-                            blurRadius: 9,
-                            offset: Offset(0, 1),
-                          ),
-                        ]),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Image.asset(
-                        "assets/bb.png",
+                        "assets/beauty-tips-new.png",
                         //color: Colors.white,
                       ),
                     )),
                 Padding(
                     padding: const EdgeInsets.only(top: 8),
-                    child: Text("Beauty Books",
+                    child: Text("Beauty Tips",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Theme.of(context)
+                                .buttonTheme
+                                .colorScheme
+                                .secondary,
+                            fontWeight: FontWeight.w300))),
+              ],
+            ),
+          ),
+        ),
+        // GestureDetector(
+        //   onTap: () {
+        //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //       return BeautyBooks();
+        //     }));
+        //   },
+        //   child: Container(
+        //     height: 100,
+        //     width: MediaQuery.of(context).size.width / 5 - 4,
+        //     child: Column(
+        //       children: [
+        //         Container(
+        //             height: 50,
+        //             width: 50,
+        //             decoration: BoxDecoration(
+        //                 borderRadius: BorderRadius.circular(30),
+        //                 color:
+        //                     Theme.of(context).buttonTheme.colorScheme.primary,
+        //                 boxShadow: [
+        //                   BoxShadow(
+        //                     color: Colors.grey.withOpacity(1.0),
+        //                     spreadRadius: 0,
+        //                     blurRadius: 9,
+        //                     offset: Offset(0, 1),
+        //                   ),
+        //                 ]),
+        //             child: Padding(
+        //               padding: const EdgeInsets.all(16.0),
+        //               child: Image.asset(
+        //                 "assets/bb.png",
+        //                 //color: Colors.white,
+        //               ),
+        //             )),
+        //         Padding(
+        //             padding: const EdgeInsets.only(top: 8),
+        //             child: Text("Recommendation",
+        //                 textAlign: TextAlign.center,
+        //                 style: TextStyle(
+        //                     color: Theme.of(context)
+        //                         .buttonTheme
+        //                         .colorScheme
+        //                         .secondary,
+        //                     fontWeight: FontWeight.w300))),
+        //       ],
+        //     ),
+        //   ),
+        // ),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return FeedList();
+            }));
+          },
+          child: Container(
+            height: 100,
+            width: MediaQuery.of(context).size.width / 5 - 4,
+            child: Column(
+              children: [
+                Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.primary,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(1.0),
+                            spreadRadius: 0,
+                            blurRadius: 9,
+                            offset: Offset(0, 1),
+                          ),
+                        ]),
+                    child: Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: Image.asset(
+                        "assets/community-new.png",
+                        // color: Colors.white,
+                      ),
+                    )),
+                Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text("Community",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Theme.of(context)
@@ -1271,7 +1270,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         GestureDetector(
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return kireiYT();
+              return Appointment();
             }));
           },
           child: Container(
@@ -1280,30 +1279,33 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             child: Column(
               children: [
                 Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color:
-                            Theme.of(context).buttonTheme.colorScheme.primary,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(1.0),
-                            spreadRadius: 0,
-                            blurRadius: 9,
-                            offset: Offset(0, 1),
-                          ),
-                        ]),
-                    //<div style="padding:3px">hjgh</div>
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Image.asset(
-                        "assets/kyt.png",
-                      ),
-                    )),
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: Theme.of(context).buttonTheme.colorScheme.primary,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(1.0),
+                          spreadRadius: 0,
+                          blurRadius: 9,
+                          offset: Offset(0, 1),
+                        ),
+                      ]),
+                  //<div style="padding:3px">hjgh</div>
+                  child: ClipOval(
+                    child: Image.asset(
+                      "assets/expert2.jpg",
+                      fit: BoxFit
+                          .cover, // You can adjust this based on your needs
+                      height: 50,
+                      width: 50,
+                    ),
+                  ),
+                ),
                 Padding(
                     padding: const EdgeInsets.only(top: 8),
-                    child: Text("Kirei Youtube",
+                    child: Text("Appointment",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Theme.of(context)

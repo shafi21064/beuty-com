@@ -51,7 +51,7 @@ class AuthRepository {
           "App-Language": app_language.$,
         },
         body: post_body);
-    print(post_body);
+    print(response.body.toString());
     return loginResponseFromJson(response.body);
   }
 
@@ -259,10 +259,18 @@ class AuthRepository {
 
     return passwordConfirmResponseFromJson(response.body);
   }
-    Future<CartAddResponse> getConfirmReset(
-      @required String verification_code, @required String phone,@required bool otp_reset,@required String password) async {
-    var post_body =
-        jsonEncode({"otp_code": "$verification_code", "email": "$phone","otp_reset": "$otp_reset", "password": "$password"});
+
+  Future<CartAddResponse> getConfirmReset(
+      @required String verification_code,
+      @required String phone,
+      @required bool otp_reset,
+      @required String password) async {
+    var post_body = jsonEncode({
+      "otp_code": "$verification_code",
+      "email": "$phone",
+      "otp_reset": "$otp_reset",
+      "password": "$password"
+    });
     print(post_body);
 
     Uri url = Uri.parse(
@@ -279,7 +287,6 @@ class AuthRepository {
 
     return cartAddResponseFromJson(response.body);
   }
-
 
   Future<ResendCodeResponse> getPasswordResendCodeResponse(
       @required String email_or_code, @required String verify_by) async {

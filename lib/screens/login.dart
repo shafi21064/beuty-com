@@ -461,48 +461,52 @@ class _LoginState extends State<Login> {
                                   ),
                                 ),
                               ),
-                              Row(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                        value: rememberMe,
-                                        activeColor: Colors.black,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            rememberMe = !rememberMe;
-                                            // print(rememberMe);
-                                          });
-                                        },
-                                      ),
-                                      Text(
-                                        "Remember Me",
+                              Visibility(
+                                visible: _login_by == "phone",
+                                child: Row(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Checkbox(
+                                          value: rememberMe,
+                                          activeColor: Colors.black,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              rememberMe = !rememberMe;
+                                              // print(rememberMe);
+                                            });
+                                          },
+                                        ),
+                                        Text(
+                                          "Remember Me",
+                                          style: TextStyle(
+                                            color: MyTheme.accent_color,
+                                            fontStyle: FontStyle.italic,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Spacer(), // Add a spacer to push the next widget to the right
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return PasswordForget();
+                                        }));
+                                      },
+                                      child: Text(
+                                        AppLocalizations.of(context)
+                                            .login_screen_forgot_password,
                                         style: TextStyle(
                                           color: MyTheme.accent_color,
                                           fontStyle: FontStyle.italic,
+                                          decoration: TextDecoration.underline,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                  Spacer(), // Add a spacer to push the next widget to the right
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) {
-                                        return PasswordForget();
-                                      }));
-                                    },
-                                    child: Text(
-                                      AppLocalizations.of(context)
-                                          .login_screen_forgot_password,
-                                      style: TextStyle(
-                                        color: MyTheme.accent_color,
-                                        fontStyle: FontStyle.italic,
-                                        decoration: TextDecoration.underline,
-                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               )
                             ],
                           ),

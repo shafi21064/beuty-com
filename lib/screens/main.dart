@@ -62,6 +62,7 @@ class _MainState extends State<Main> {
     SystemChrome.setEnabledSystemUIOverlays(
         [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     super.initState();
+    // print(user_id.$);
   }
 
   @override
