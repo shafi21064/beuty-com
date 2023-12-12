@@ -1,9 +1,15 @@
+import 'package:active_ecommerce_flutter/custom/toast_component.dart';
+import 'package:active_ecommerce_flutter/dummy_data/payment_methods.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/repositories/appointment_repository.dart';
+import 'package:active_ecommerce_flutter/screens/bkash_screen.dart';
+import 'package:active_ecommerce_flutter/screens/common_webview_screen.dart';
+import 'package:active_ecommerce_flutter/screens/payment_web_view.dart';
 import 'package:active_ecommerce_flutter/ui_sections/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:toast/toast.dart';
 
 class Appointment extends StatefulWidget {
   @override
@@ -27,23 +33,42 @@ class _AppointmentState extends State<Appointment> {
     String whatsappNumber = contactNumberController.text.toString();
     String problem = problemController.text.toString();
     String paymentType = paymentMethod;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            BkashScreen(amount: 0.00, payment_type: "", payment_method_key: ""),
+      ),
+    );
 
-    var reviewSubmitResponse = await AppointmentRepository().submitAppointment(
-        age: age,
-        contactNumber: contactNumber,
-        name: name,
-        paymentType: paymentType,
-        problem: problem,
-        whatsappNumber: whatsappNumber);
+    // var reviewSubmitResponse = await AppointmentRepository().submitAppointment(
+    //     age: age,
+    //     contactNumber: contactNumber,
+    //     name: name,
+    //     paymentType: paymentType,
+    //     problem: problem,
+    //     whatsappNumber: whatsappNumber);
 
-    // if (reviewSubmitResponse.result == false) {
-    //   ToastComponent.showDialog(reviewSubmitResponse.message, context,
+    // print(reviewSubmitResponse);
+
+    // if (reviewSubmitResponse.statusCode == '0000') {
+    //   // Redirect to bKash URL
+    //   String bkashURL = reviewSubmitResponse.bkashURL;
+    //   ToastComponent.showDialog(reviewSubmitResponse.statusMessage, context,
     //       gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-    //   return;
-    // }
 
-    // ToastComponent.showDialog(reviewSubmitResponse.message, context,
-    //     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    //   if (bkashURL.isNotEmpty) {
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //         builder: (context) => PaymentWebviewScreen(url: bkashURL),
+    //       ),
+    //     );
+    //   }
+    // } else if(reviewSubmitResponse.statusCode == "2049") {
+    //   ToastComponent.showDialog(reviewSubmitResponse.statusMessage, context,
+    //       gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    // }
 
     reset();
   }

@@ -7,6 +7,7 @@ import 'package:active_ecommerce_flutter/ui_elements/product_card.dart';
 import 'package:active_ecommerce_flutter/ui_elements/shop_square_card.dart';
 import 'package:active_ecommerce_flutter/ui_elements/brand_square_card.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:toast/toast.dart';
 import 'package:active_ecommerce_flutter/custom/toast_component.dart';
 import 'package:active_ecommerce_flutter/repositories/category_repository.dart';
@@ -460,6 +461,41 @@ class _FilterState extends State<Filter> {
         ));
   }
 
+  // AppBar buildAppBar(BuildContext context) {
+  //   return AppBar(
+  //     centerTitle: true,
+  //     flexibleSpace: Container(
+  //       decoration: BoxDecoration(
+  //         gradient: LinearGradient(colors: [
+  //           Theme.of(context).colorScheme.primary,
+  //           Theme.of(context).colorScheme.secondary,
+  //         ]),
+  //       ),
+  //     ),
+  //     leading: GestureDetector(
+  //       onTap: () {
+  //         _scaffoldKey.currentState.openDrawer();
+  //       },
+  //       child: Builder(
+  //         builder: (context) => Padding(
+  //           padding:
+  //               const EdgeInsets.symmetric(vertical: 18.0, horizontal: 0.0),
+  //           child: Container(
+  //             child: Image.asset('assets/hamburger.png',
+  //                 height: 16, color: Theme.of(context).primaryIconTheme.color),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //     title: Text(
+  //       AppLocalizations.of(context).cart_screen_shopping_cart,
+  //       style: TextStyle(fontSize: 18, color: Colors.white),
+  //     ),
+  //     elevation: 0.0,
+  //     titleSpacing: 0,
+  //   );
+  // }
+
   Row buildBottomAppBar(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -757,9 +793,19 @@ class _FilterState extends State<Filter> {
   Row buildTopAppbar(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <
         Widget>[
-      IconButton(
-        icon: Icon(Icons.arrow_back, color: Colors.white),
-        onPressed: () => Navigator.of(context).pop(),
+      Container(
+        margin: EdgeInsets.all(8.0),
+        child: GestureDetector(
+          onTap: () {
+            _scaffoldKey.currentState.openDrawer();
+          },
+          child: Image.asset(
+            'assets/hamburger.png',
+            width: 20, // Set the width as needed
+            height: 20, // Set the height as needed
+            color: Colors.white,
+          ),
+        ),
       ),
       Container(
         width: MediaQuery.of(context).size.width * .6,

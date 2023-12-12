@@ -263,6 +263,7 @@ class _LoginState extends State<Login> {
       child: Scaffold(
         backgroundColor: Colors.white,
         drawer: MainDrawer(),
+        // appBar: buildAppBar(context),
         body: Stack(
           children: [
             // Container(
@@ -799,4 +800,39 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+
+  //    AppBar buildAppBar(BuildContext context) {
+  //   return AppBar(
+  //     centerTitle: true,
+  //     flexibleSpace: Container(
+  //       decoration: BoxDecoration(
+  //         gradient: LinearGradient(colors: [
+  //           Theme.of(context).colorScheme.primary,
+  //           Theme.of(context).colorScheme.secondary,
+  //         ]),
+  //       ),
+  //     ),
+  //     leading: GestureDetector(
+  //       onTap: () {
+  //         _scaffoldKey.currentState.openDrawer();
+  //       },
+  //       child: Builder(
+  //         builder: (context) => Padding(
+  //           padding:
+  //               const EdgeInsets.symmetric(vertical: 18.0, horizontal: 0.0),
+  //           child: Container(
+  //             child: Image.asset('assets/hamburger.png',
+  //                 height: 16, color: Theme.of(context).primaryIconTheme.color),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //     title: Text(
+  //       AppLocalizations.of(context).cart_screen_shopping_cart,
+  //       style: TextStyle(fontSize: 18, color: Colors.white),
+  //     ),
+  //     elevation: 0.0,
+  //     titleSpacing: 0,
+  //   );
+  // }
 }

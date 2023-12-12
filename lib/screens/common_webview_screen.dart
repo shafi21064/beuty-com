@@ -3,7 +3,6 @@ import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 
-
 class CommonWebviewScreen extends StatefulWidget {
   String url;
   String page_name;
@@ -57,7 +56,7 @@ class _CommonWebviewScreenState extends State<CommonWebviewScreen> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       centerTitle: true,
       leading: Builder(
         builder: (context) => IconButton(
