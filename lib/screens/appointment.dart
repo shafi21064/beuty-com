@@ -33,42 +33,42 @@ class _AppointmentState extends State<Appointment> {
     String whatsappNumber = contactNumberController.text.toString();
     String problem = problemController.text.toString();
     String paymentType = paymentMethod;
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) =>
-            BkashScreen(amount: 0.00, payment_type: "", payment_method_key: ""),
-      ),
-    );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => BkashScreen(
+    //         amount: 499.00, payment_type: "bkash", payment_method_key: "bkash"),
+    //   ),
+    // );
 
-    // var reviewSubmitResponse = await AppointmentRepository().submitAppointment(
-    //     age: age,
-    //     contactNumber: contactNumber,
-    //     name: name,
-    //     paymentType: paymentType,
-    //     problem: problem,
-    //     whatsappNumber: whatsappNumber);
+    var reviewSubmitResponse = await AppointmentRepository().submitAppointment(
+        age: age,
+        contactNumber: contactNumber,
+        name: name,
+        paymentType: paymentType,
+        problem: problem,
+        whatsappNumber: whatsappNumber);
 
-    // print(reviewSubmitResponse);
+    print(reviewSubmitResponse);
 
-    // if (reviewSubmitResponse.statusCode == '0000') {
-    //   // Redirect to bKash URL
-    //   String bkashURL = reviewSubmitResponse.bkashURL;
-    //   ToastComponent.showDialog(reviewSubmitResponse.statusMessage, context,
-    //       gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    if (reviewSubmitResponse.statusCode == '0000') {
+      // Redirect to bKash URL
+      String bkashURL = reviewSubmitResponse.bkashURL;
+      ToastComponent.showDialog(reviewSubmitResponse.statusMessage, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
 
-    //   if (bkashURL.isNotEmpty) {
-    //     Navigator.push(
-    //       context,
-    //       MaterialPageRoute(
-    //         builder: (context) => PaymentWebviewScreen(url: bkashURL),
-    //       ),
-    //     );
-    //   }
-    // } else if(reviewSubmitResponse.statusCode == "2049") {
-    //   ToastComponent.showDialog(reviewSubmitResponse.statusMessage, context,
-    //       gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-    // }
+      if (bkashURL.isNotEmpty) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PaymentWebviewScreen(url: bkashURL),
+          ),
+        );
+      }
+    } else if(reviewSubmitResponse.statusCode == "2049") {
+      ToastComponent.showDialog(reviewSubmitResponse.statusMessage, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    }
 
     reset();
   }

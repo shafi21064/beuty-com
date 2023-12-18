@@ -81,7 +81,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
 
   fetchShippingAddressList() async {
     var addressResponse = await AddressRepository().getAddressList();
-    _shippingAddressList.addAll(addressResponse.addresses);
+    // _shippingAddressList.addAll(addressResponse.addresses);
     if (_shippingAddressList.length > 0) {
       _seleted_shipping_address = _shippingAddressList[0].id;
 
@@ -509,7 +509,8 @@ class _ShippingInfoState extends State<ShippingInfo> {
                     Container(
                       width: 200,
                       child: Text(
-                        _shippingAddressList[index].country_name,
+                        "No City",
+                        // _shippingAddressList[index].country_name,
                         maxLines: 2,
                         style: TextStyle(
                             color: MyTheme.dark_grey,
@@ -537,7 +538,8 @@ class _ShippingInfoState extends State<ShippingInfo> {
                     Container(
                       width: 200,
                       child: Text(
-                        _shippingAddressList[index].postal_code,
+                        "No",
+                        // _shippingAddressList[index].postal_code,
                         maxLines: 2,
                         style: TextStyle(
                             color: MyTheme.dark_grey,

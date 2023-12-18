@@ -49,6 +49,7 @@ class _BkashScreenState extends State<BkashScreen> {
   }
 
   createOrder() async {
+
     var orderCreateResponse = await PaymentRepository()
         .getOrderCreateResponse( widget.payment_method_key);
 
@@ -67,6 +68,7 @@ class _BkashScreenState extends State<BkashScreen> {
   }
 
   getSetInitialUrl() async {
+    
     var bkashUrlResponse = await PaymentRepository().getBkashBeginResponse(
         widget.payment_type, _combined_order_id, widget.amount);
 

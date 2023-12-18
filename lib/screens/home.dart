@@ -9,6 +9,7 @@ import 'package:active_ecommerce_flutter/screens/beauty_tips.dart';
 import 'package:active_ecommerce_flutter/screens/filter.dart';
 import 'package:active_ecommerce_flutter/screens/flash_deal_list.dart';
 import 'package:active_ecommerce_flutter/screens/newsfeed.dart';
+import 'package:active_ecommerce_flutter/screens/personal_recommendation.dart';
 import 'package:active_ecommerce_flutter/screens/todays_deal_products.dart';
 import 'package:active_ecommerce_flutter/screens/top_selling_products.dart';
 import 'package:active_ecommerce_flutter/screens/category_products.dart';
@@ -1176,7 +1177,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         // GestureDetector(
         //   onTap: () {
         //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-        //       return BeautyBooks();
+        //       return PersonalRecommendation();
         //     }));
         //   },
         //   child: Container(
@@ -1185,27 +1186,30 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         //     child: Column(
         //       children: [
         //         Container(
-        //             height: 50,
-        //             width: 50,
-        //             decoration: BoxDecoration(
-        //                 borderRadius: BorderRadius.circular(30),
-        //                 color:
-        //                     Theme.of(context).buttonTheme.colorScheme.primary,
-        //                 boxShadow: [
-        //                   BoxShadow(
-        //                     color: Colors.grey.withOpacity(1.0),
-        //                     spreadRadius: 0,
-        //                     blurRadius: 9,
-        //                     offset: Offset(0, 1),
-        //                   ),
-        //                 ]),
-        //             child: Padding(
-        //               padding: const EdgeInsets.all(16.0),
-        //               child: Image.asset(
-        //                 "assets/bb.png",
-        //                 //color: Colors.white,
-        //               ),
-        //             )),
+        //           height: 50,
+        //           width: 50,
+        //           decoration: BoxDecoration(
+        //               borderRadius: BorderRadius.circular(30),
+        //               color: Theme.of(context).buttonTheme.colorScheme.primary,
+        //               boxShadow: [
+        //                 BoxShadow(
+        //                   color: Colors.grey.withOpacity(1.0),
+        //                   spreadRadius: 0,
+        //                   blurRadius: 9,
+        //                   offset: Offset(0, 1),
+        //                 ),
+        //               ]),
+        //           //<div style="padding:3px">hjgh</div>
+        //           child: ClipOval(
+        //             child: Image.asset(
+        //               "assets/recommended-new.jpeg",
+        //               fit: BoxFit
+        //                   .cover, // You can adjust this based on your needs
+        //               height: 50,
+        //               width: 50,
+        //             ),
+        //           ),
+        //         ),
         //         Padding(
         //             padding: const EdgeInsets.only(top: 8),
         //             child: Text("Recommendation",

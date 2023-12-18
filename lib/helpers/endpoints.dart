@@ -12,7 +12,7 @@ class ENDP {
   static const ShipDelete = "${AppConfig.BASE_URL}/user/shipping/delete";
   static const AddrDelete = "${AppConfig.BASE_URL}/cities-by-state";
   static const StateList = "${AppConfig.BASE_URL}/states-by-country";
-  static const CountryList = "${AppConfig.BASE_URL}/countries";
+  static const CountryList = "${AppConfig.BASE_URL}/areas-by-zone";
   static const ShippingCost = "${AppConfig.BASE_URL}/shipping_cost";
   static const AddrUpdateInCart =
       "${AppConfig.BASE_URL}/update-address-in-cart";

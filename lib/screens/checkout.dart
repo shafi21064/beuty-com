@@ -286,9 +286,8 @@ class _CheckoutState extends State<Checkout> {
             gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
         return;
       }
-
       Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return IyzicoScreen(
+        return BkashScreen(
           amount: _grandTotalValue,
           payment_type: payment_type,
           payment_method_key: _selected_payment_method_key,
@@ -296,6 +295,16 @@ class _CheckoutState extends State<Checkout> {
       })).then((value) {
         onPopped(value);
       });
+
+      // Navigator.push(context, MaterialPageRoute(builder: (context) {
+      //   return IyzicoScreen(
+      //     amount: _grandTotalValue,
+      //     payment_type: payment_type,
+      //     payment_method_key: _selected_payment_method_key,
+      //   );
+      // })).then((value) {
+      //   onPopped(value);
+      // });
     } else if (_selected_payment_method == "bkash") {
       if (_grandTotalValue == 0.00) {
         ToastComponent.showDialog(
@@ -307,8 +316,8 @@ class _CheckoutState extends State<Checkout> {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return BkashScreen(
           amount: _grandTotalValue,
-          payment_type: payment_type,
-          payment_method_key: _selected_payment_method_key,
+          payment_type: "bkash",
+          payment_method_key: "bkash",
         );
       })).then((value) {
         onPopped(value);

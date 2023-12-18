@@ -70,7 +70,7 @@ class _AddressState extends State<Address> {
   fetchShippingAddressList() async {
     print("enter fetchShippingAddressList");
     var addressResponse = await AddressRepository().getAddressList();
-    _shippingAddressList.addAll(addressResponse.addresses);
+    // _shippingAddressList.addAll(addressResponse.addresses);
     setState(() {
       _isInitial = false;
     });
@@ -243,6 +243,11 @@ class _AddressState extends State<Address> {
     var address = _addressController.text.toString();
     var postal_code = _postalCodeController.text.toString();
     var phone = _phoneController.text.toString();
+    var city = _stateController.text.toString();
+    var area = _countryController.text.toString();
+    var zone = _cityController.text.toString();
+
+    //print(city + zone + area);
 
     if (address == "") {
       ToastComponent.showDialog(
@@ -274,9 +279,9 @@ class _AddressState extends State<Address> {
 
     var addressAddResponse = await AddressRepository().getAddressAddResponse(
         address: address,
-        country_id: _selected_country.id,
-        state_id: _selected_state.id,
-        city_id: _selected_city.id,
+        area: area,
+        zone: zone,
+        city: city,
         postal_code: postal_code,
         phone: phone);
 
@@ -567,95 +572,7 @@ class _AddressState extends State<Address> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text(
-                            "${AppLocalizations.of(context).address_screen_country} *",
-                            style: TextStyle(
-                                color: MyTheme.font_grey, fontSize: 12)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: Container(
-                          height: 40,
-                          child: TypeAheadField(
-                            suggestionsCallback: (name) async {
-                              var countryResponse = await AddressRepository()
-                                  .getCountryList(name: name);
-                              return countryResponse.countries;
-                            },
-                            loadingBuilder: (context) {
-                              return Container(
-                                height: 50,
-                                child: Center(
-                                    child: Text(
-                                        AppLocalizations.of(context)
-                                            .address_screen_loading_countries,
-                                        style: TextStyle(
-                                            color: MyTheme.medium_grey))),
-                              );
-                            },
-                            itemBuilder: (context, country) {
-                              //print(suggestion.toString());
-                              return ListTile(
-                                dense: true,
-                                title: Text(
-                                  country.name,
-                                  style: TextStyle(color: MyTheme.font_grey),
-                                ),
-                              );
-                            },
-                            noItemsFoundBuilder: (context) {
-                              return Container(
-                                height: 50,
-                                child: Center(
-                                    child: Text(
-                                        AppLocalizations.of(context)
-                                            .address_screen_no_country_available,
-                                        style: TextStyle(
-                                            color: MyTheme.medium_grey))),
-                              );
-                            },
-                            onSuggestionSelected: (country) {
-                              onSelectCountryDuringAdd(country, setModalState);
-                            },
-                            textFieldConfiguration: TextFieldConfiguration(
-                              onTap: () {},
-                              //autofocus: true,
-                              controller: _countryController,
-                              onSubmitted: (txt) {
-                                // keep this blank
-                              },
-                              decoration: InputDecoration(
-                                  hintText: AppLocalizations.of(context)
-                                      .address_screen_enter_country,
-                                  hintStyle: TextStyle(
-                                      fontSize: 12.0,
-                                      color: MyTheme.textfield_grey),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 0.5),
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(8.0),
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 1.0),
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(8.0),
-                                    ),
-                                  ),
-                                  contentPadding:
-                                      EdgeInsets.symmetric(horizontal: 8.0)),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text(
-                            "${AppLocalizations.of(context).address_screen_state} *",
+                        child: Text("District *",
                             style: TextStyle(
                                 color: MyTheme.font_grey, fontSize: 12)),
                       ),
@@ -816,6 +733,92 @@ class _AddressState extends State<Address> {
                               decoration: InputDecoration(
                                   hintText: AppLocalizations.of(context)
                                       .address_screen_enter_city,
+                                  hintStyle: TextStyle(
+                                      fontSize: 12.0,
+                                      color: MyTheme.textfield_grey),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: MyTheme.textfield_grey,
+                                        width: 0.5),
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(8.0),
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: MyTheme.textfield_grey,
+                                        width: 1.0),
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(8.0),
+                                    ),
+                                  ),
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 8.0)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Text("State *",
+                            style: TextStyle(
+                                color: MyTheme.font_grey, fontSize: 12)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: Container(
+                          height: 40,
+                          child: TypeAheadField(
+                            suggestionsCallback: (name) async {
+                              var countryResponse = await AddressRepository()
+                                  .getCountryList(id: _selected_city.id);
+                              return countryResponse.countries;
+                            },
+                            loadingBuilder: (context) {
+                              return Container(
+                                height: 50,
+                                child: Center(
+                                    child: Text(
+                                        AppLocalizations.of(context)
+                                            .address_screen_loading_countries,
+                                        style: TextStyle(
+                                            color: MyTheme.medium_grey))),
+                              );
+                            },
+                            itemBuilder: (context, country) {
+                              //print(suggestion.toString());
+                              return ListTile(
+                                dense: true,
+                                title: Text(
+                                  country.name,
+                                  style: TextStyle(color: MyTheme.font_grey),
+                                ),
+                              );
+                            },
+                            noItemsFoundBuilder: (context) {
+                              return Container(
+                                height: 50,
+                                child: Center(
+                                    child: Text(
+                                        AppLocalizations.of(context)
+                                            .address_screen_no_country_available,
+                                        style: TextStyle(
+                                            color: MyTheme.medium_grey))),
+                              );
+                            },
+                            onSuggestionSelected: (country) {
+                              onSelectCountryDuringAdd(country, setModalState);
+                            },
+                            textFieldConfiguration: TextFieldConfiguration(
+                              onTap: () {},
+                              //autofocus: true,
+                              controller: _countryController,
+                              onSubmitted: (txt) {
+                                // keep this blank
+                              },
+                              decoration: InputDecoration(
+                                  hintText: AppLocalizations.of(context)
+                                      .address_screen_enter_country,
                                   hintStyle: TextStyle(
                                       fontSize: 12.0,
                                       color: MyTheme.textfield_grey),
@@ -1049,7 +1052,7 @@ class _AddressState extends State<Address> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text(
-                            "${AppLocalizations.of(context).address_screen_country} *",
+                            "${AppLocalizations.of(context).address_screen_city} *",
                             style: TextStyle(
                                 color: MyTheme.font_grey, fontSize: 12)),
                       ),
@@ -1059,9 +1062,19 @@ class _AddressState extends State<Address> {
                           height: 40,
                           child: TypeAheadField(
                             suggestionsCallback: (name) async {
-                              var countryResponse = await AddressRepository()
-                                  .getCountryList(name: name);
-                              return countryResponse.countries;
+                              if (_selected_state_list_for_update[index] ==
+                                  null) {
+                                var cityResponse = await AddressRepository()
+                                    .getCityListByState(); // blank response
+                                return cityResponse.cities;
+                              }
+                              var cityResponse = await AddressRepository()
+                                  .getCityListByState(
+                                      state_id:
+                                          _selected_state_list_for_update[index]
+                                              .id,
+                                      name: name);
+                              return cityResponse.cities;
                             },
                             loadingBuilder: (context) {
                               return Container(
@@ -1069,17 +1082,17 @@ class _AddressState extends State<Address> {
                                 child: Center(
                                     child: Text(
                                         AppLocalizations.of(context)
-                                            .address_screen_loading_countries,
+                                            .address_screen_loading_cities,
                                         style: TextStyle(
                                             color: MyTheme.medium_grey))),
                               );
                             },
-                            itemBuilder: (context, country) {
+                            itemBuilder: (context, city) {
                               //print(suggestion.toString());
                               return ListTile(
                                 dense: true,
                                 title: Text(
-                                  country.name,
+                                  city.name,
                                   style: TextStyle(color: MyTheme.font_grey),
                                 ),
                               );
@@ -1090,26 +1103,25 @@ class _AddressState extends State<Address> {
                                 child: Center(
                                     child: Text(
                                         AppLocalizations.of(context)
-                                            .address_screen_no_country_available,
+                                            .address_screen_no_city_available,
                                         style: TextStyle(
                                             color: MyTheme.medium_grey))),
                               );
                             },
-                            onSuggestionSelected: (country) {
-                              onSelectCountryDuringUpdate(
-                                  index, country, setModalState);
+                            onSuggestionSelected: (city) {
+                              onSelectCityDuringUpdate(
+                                  index, city, setModalState);
                             },
                             textFieldConfiguration: TextFieldConfiguration(
                               onTap: () {},
                               //autofocus: true,
-                              controller:
-                                  _countryControllerListForUpdate[index],
+                              controller: _cityControllerListForUpdate[index],
                               onSubmitted: (txt) {
-                                // keep this blank
+                                // keep blank
                               },
                               decoration: InputDecoration(
                                   hintText: AppLocalizations.of(context)
-                                      .address_screen_enter_country,
+                                      .address_screen_enter_city,
                                   hintStyle: TextStyle(
                                       fontSize: 12.0,
                                       color: MyTheme.textfield_grey),
@@ -1239,7 +1251,7 @@ class _AddressState extends State<Address> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text(
-                            "${AppLocalizations.of(context).address_screen_city} *",
+                            "${AppLocalizations.of(context).address_screen_country} *",
                             style: TextStyle(
                                 color: MyTheme.font_grey, fontSize: 12)),
                       ),
@@ -1249,19 +1261,9 @@ class _AddressState extends State<Address> {
                           height: 40,
                           child: TypeAheadField(
                             suggestionsCallback: (name) async {
-                              if (_selected_state_list_for_update[index] ==
-                                  null) {
-                                var cityResponse = await AddressRepository()
-                                    .getCityListByState(); // blank response
-                                return cityResponse.cities;
-                              }
-                              var cityResponse = await AddressRepository()
-                                  .getCityListByState(
-                                      state_id:
-                                          _selected_state_list_for_update[index]
-                                              .id,
-                                      name: name);
-                              return cityResponse.cities;
+                              // var countryResponse = await AddressRepository()
+                              //     .getCountryList(name: name);
+                              // return countryResponse.countries;
                             },
                             loadingBuilder: (context) {
                               return Container(
@@ -1269,17 +1271,17 @@ class _AddressState extends State<Address> {
                                 child: Center(
                                     child: Text(
                                         AppLocalizations.of(context)
-                                            .address_screen_loading_cities,
+                                            .address_screen_loading_countries,
                                         style: TextStyle(
                                             color: MyTheme.medium_grey))),
                               );
                             },
-                            itemBuilder: (context, city) {
+                            itemBuilder: (context, country) {
                               //print(suggestion.toString());
                               return ListTile(
                                 dense: true,
                                 title: Text(
-                                  city.name,
+                                  country.name,
                                   style: TextStyle(color: MyTheme.font_grey),
                                 ),
                               );
@@ -1290,25 +1292,26 @@ class _AddressState extends State<Address> {
                                 child: Center(
                                     child: Text(
                                         AppLocalizations.of(context)
-                                            .address_screen_no_city_available,
+                                            .address_screen_no_country_available,
                                         style: TextStyle(
                                             color: MyTheme.medium_grey))),
                               );
                             },
-                            onSuggestionSelected: (city) {
-                              onSelectCityDuringUpdate(
-                                  index, city, setModalState);
+                            onSuggestionSelected: (country) {
+                              onSelectCountryDuringUpdate(
+                                  index, country, setModalState);
                             },
                             textFieldConfiguration: TextFieldConfiguration(
                               onTap: () {},
                               //autofocus: true,
-                              controller: _cityControllerListForUpdate[index],
+                              controller:
+                                  _countryControllerListForUpdate[index],
                               onSubmitted: (txt) {
-                                // keep blank
+                                // keep this blank
                               },
                               decoration: InputDecoration(
                                   hintText: AppLocalizations.of(context)
-                                      .address_screen_enter_city,
+                                      .address_screen_enter_country,
                                   hintStyle: TextStyle(
                                       fontSize: 12.0,
                                       color: MyTheme.textfield_grey),
@@ -1392,8 +1395,10 @@ class _AddressState extends State<Address> {
                             controller: _phoneControllerListForUpdate[index],
                             autofocus: false,
                             decoration: InputDecoration(
-                                hintText: AppLocalizations.of(context)
-                                    .address_screen_enter_phone,
+                                hintText: user_phone.$ != null
+                                    ? user_phone.$
+                                    : AppLocalizations.of(context)
+                                        .address_screen_enter_phone,
                                 hintStyle: TextStyle(
                                     fontSize: 12.0,
                                     color: MyTheme.textfield_grey),

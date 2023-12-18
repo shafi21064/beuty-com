@@ -19,8 +19,7 @@ import 'package:flutter/foundation.dart';
 
 class AddressRepository {
   Future<AddressResponse> getAddressList() async {
-    Uri url =
-        Uri.parse("${ENDP.AddrList}");
+    Uri url = Uri.parse("${ENDP.AddrList}");
     final response = await http.get(
       url,
       headers: {
@@ -36,20 +35,20 @@ class AddressRepository {
 
   Future<AddressAddResponse> getAddressAddResponse(
       {@required String address,
-      @required int country_id,
-      @required int state_id,
-      @required int city_id,
+      @required String area,
+      @required String zone,
+      @required String city,
       @required String postal_code,
       @required String phone}) async {
     var post_body = jsonEncode({
-      "user_id": "${user_id.$}",
       "address": "$address",
-      "country_id": "$country_id",
-      "state_id": "$state_id",
-      "city_id": "$city_id",
+      "area": "$area",
+      "zone": "$zone",
+      "city": "$city",
       "postal_code": "$postal_code",
       "phone": "$phone"
     });
+    print(post_body);
 
     Uri url = Uri.parse("${ENDP.AddAddr}");
     final response = await http.post(url,
@@ -155,8 +154,7 @@ class AddressRepository {
   }
 
   Future<CityResponse> getCityListByState({state_id = 0, name = ""}) async {
-    Uri url = Uri.parse(
-        "${ENDP.AddrDelete}/${state_id}?name=${name}");
+    Uri url = Uri.parse("${ENDP.AddrDelete}/${state_id}?name=${name}");
     final response = await http.get(url);
 
     print(url.toString());
@@ -167,18 +165,16 @@ class AddressRepository {
 
   Future<MyStateResponse> getStateListByCountry(
       {country_id = 0, name = ""}) async {
-    Uri url = Uri.parse(
-        "${ENDP.StateList}/${country_id}?name=${name}");
+    Uri url = Uri.parse("${ENDP.StateList}/${country_id}?name=${name}");
     final response = await http.get(url);
-
 
     print(url);
     print(response.body.toString());
     return myStateResponseFromJson(response.body);
   }
 
-  Future<CountryResponse> getCountryList({name = ""}) async {
-    Uri url = Uri.parse("${ENDP.CountryList}?name=${name}");
+  Future<CountryResponse> getCountryList({id}) async {
+    Uri url = Uri.parse("${ENDP.CountryList}/${id}");
     final response = await http.get(url);
 
     print(url);
@@ -205,7 +201,6 @@ class AddressRepository {
           "App-Language": app_language.$
         },
         body: post_body);
-
 
     return shippingCostResponseFromJson(response.body);
   }
