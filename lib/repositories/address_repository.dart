@@ -33,6 +33,7 @@ class AddressRepository {
     return addressResponseFromJson(response.body);
   }
 
+
   Future<AddressAddResponse> getAddressAddResponse(
       {@required String address,
       @required String area,
@@ -154,7 +155,7 @@ class AddressRepository {
   }
 
   Future<CityResponse> getCityListByState({state_id = 0, name = ""}) async {
-    Uri url = Uri.parse("${ENDP.AddrDelete}/${state_id}?name=${name}");
+    Uri url = Uri.parse("${ENDP.AddrDelete}/${state_id}");
     final response = await http.get(url);
 
     print(url.toString());
@@ -163,9 +164,8 @@ class AddressRepository {
     return cityResponseFromJson(response.body);
   }
 
-  Future<MyStateResponse> getStateListByCountry(
-      {country_id = 0, name = ""}) async {
-    Uri url = Uri.parse("${ENDP.StateList}/${country_id}?name=${name}");
+  Future<MyStateResponse> getStateListByCountry({country_id = 0}) async {
+    Uri url = Uri.parse("${ENDP.StateList}/${country_id}");
     final response = await http.get(url);
 
     print(url);

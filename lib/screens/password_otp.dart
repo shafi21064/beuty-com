@@ -131,8 +131,8 @@ class _PasswordOtpState extends State<PasswordOtp> {
           children: [
             Container(
               width: _screen_width * (3 / 4),
-              child: Image.asset(
-                  "assets/splash_login_registration_background_image.png"),
+              // child: Image.asset(
+              //     "assets/splash_login_registration_background_image.png"),
             ),
             Container(
               width: double.infinity,

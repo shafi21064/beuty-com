@@ -64,7 +64,7 @@ class _PasswordForgetState extends State<PasswordForget> {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return ResetOTP(
           phone: _phone,
-            );
+        );
       }));
     }
   }
@@ -81,8 +81,8 @@ class _PasswordForgetState extends State<PasswordForget> {
           children: [
             Container(
               width: _screen_width * (3 / 4),
-              child: Image.asset(
-                  "assets/splash_login_registration_background_image.png"),
+              // child: Image.asset(
+              //     "assets/splash_login_registration_background_image.png"),
             ),
             Container(
               width: double.infinity,

@@ -64,9 +64,8 @@ class _ResetOtpState extends State<ResetOTP> {
 
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return PasswordOtp(
-          phone:widget.phone,
-          code:code,
-          
+          phone: widget.phone,
+          code: code,
         );
       }));
     }
@@ -84,8 +83,8 @@ class _ResetOtpState extends State<ResetOTP> {
           children: [
             Container(
               width: _screen_width * (3 / 4),
-              child: Image.asset(
-                  "assets/splash_login_registration_background_image.png"),
+              // child: Image.asset(
+              //     "assets/splash_login_registration_background_image.png"),
             ),
             Container(
               width: double.infinity,

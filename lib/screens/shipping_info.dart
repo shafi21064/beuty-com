@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:active_ecommerce_flutter/custom/scroll_to_hide_widget.dart';
 import 'package:active_ecommerce_flutter/data_model/pickup_points_response.dart';
+import 'package:active_ecommerce_flutter/repositories/order_repository.dart';
 import 'package:active_ecommerce_flutter/repositories/pickup_points_repository.dart';
 import 'package:active_ecommerce_flutter/screens/checkout.dart';
 
@@ -20,8 +21,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ShippingInfo extends StatefulWidget {
   int owner_id;
+  final dynamic product_ids;
+  final dynamic product_quantities;
 
-  ShippingInfo({Key key, this.owner_id}) : super(key: key);
+  ShippingInfo(
+      {Key key, this.owner_id, this.product_ids, this.product_quantities})
+      : super(key: key);
 
   @override
   _ShippingInfoState createState() => _ShippingInfoState();
@@ -41,7 +46,11 @@ class _ShippingInfoState extends State<ShippingInfo> {
   List<Country> _countryList = [];
 
   String _shipping_cost_string = ". . .";
+  String _orderNote = '';
+  String _selectedPaymentMethod = 'bkash'; // Default to bKash
 
+  // String variable for coupon code
+  String _couponCode = '';
   // Boolean variables
   bool isVisible = true;
   bool _isInitial = true;
@@ -56,6 +65,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
     // TODO: implement initState
     super.initState();
 
+    print(widget.product_ids);
     /*print("user data");
     print(is_logged_in.$);
     print(access_token.value);
@@ -81,7 +91,8 @@ class _ShippingInfoState extends State<ShippingInfo> {
 
   fetchShippingAddressList() async {
     var addressResponse = await AddressRepository().getAddressList();
-    // _shippingAddressList.addAll(addressResponse.addresses);
+    _shippingAddressList
+        .add(addressResponse.data[addressResponse.data.length - 1]);
     if (_shippingAddressList.length > 0) {
       _seleted_shipping_address = _shippingAddressList[0].id;
 
@@ -180,66 +191,121 @@ class _ShippingInfoState extends State<ShippingInfo> {
   }
 
   onPressProceed(context) async {
-    // detectShippingOption();
-
-    //pickup point is not enable so address must be added
-    if (!pick_up_status.$) {
-      if (_seleted_shipping_address == 0) {
-        ToastComponent.showDialog(
-            AppLocalizations.of(context)
-                .shipping_info_screen_address_choice_warning,
-            context,
-            gravity: Toast.CENTER,
-            duration: Toast.LENGTH_LONG);
-        return;
-      }
-    }
-
-    // pickup point is enable now we want to check address or pickup point is selected
-    if (_seleted_shipping_address == 0 && _seleted_shipping_pickup_point == 0) {
-      ToastComponent.showDialog(
-          AppLocalizations.of(context)
-              .shipping_info_screen_address_or_pickup_choice_warning,
-          context,
-          gravity: Toast.CENTER,
-          duration: Toast.LENGTH_LONG);
+    // Validate input
+    if (_selectedPaymentMethod.isEmpty) {
+      ToastComponent.showDialog("Please select a payment method", context);
       return;
     }
 
-    var addressUpdateInCartResponse;
+    if (_shippingOptionIsAddress && _seleted_shipping_address == 0) {
+      ToastComponent.showDialog("Please select a shipping address", context);
+      return;
+    }
 
-    if (_seleted_shipping_address != 0) {
-      addressUpdateInCartResponse = await AddressRepository()
-          .getAddressUpdateInCartResponse(
-              address_id: _seleted_shipping_address);
+    if (!_shippingOptionIsAddress && _seleted_shipping_pickup_point == 0) {
+      ToastComponent.showDialog("Please select a pickup point", context);
+      return;
+    }
+
+    // Prepare request body
+    Map<String, dynamic> requestBody = {
+      "api_key": "vXrAne",
+      "api_secret": "k7t2G2j3RFBI",
+      "product_ids_arr": jsonEncode(widget.product_ids),
+      "product_quantities_arr": jsonEncode(widget.product_quantities),
+    };
+
+    if (_shippingOptionIsAddress) {
+      requestBody["shipping_address"] = _shippingAddressList[0].address;
     } else {
-      addressUpdateInCartResponse = await AddressRepository()
-          .getAddressUpdateInCartResponse(
-              pickup_point_id: _seleted_shipping_pickup_point);
+      requestBody["shipping_pickup_point"] = _seleted_shipping_pickup_point;
     }
 
-    if (addressUpdateInCartResponse.result == false) {
-      ToastComponent.showDialog(addressUpdateInCartResponse.message, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-      return;
-    }
+    requestBody["shipping_name"] = user_name.$;
+    requestBody["shipping_phone"] = user_email.$;
+    requestBody["shipping_city"] = _shippingAddressList[0].city;
+    requestBody["shipping_zone"] = _shippingAddressList[0].zone;
+    requestBody["coupon_code"] = _couponCode;
+    requestBody["is_preorder"] = false;
+    requestBody["payment_type"] = _selectedPaymentMethod;
 
-    ToastComponent.showDialog(addressUpdateInCartResponse.message, context,
-        gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    // Call API
+    print(requestBody);
+    var response=await OrderRepository()
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return Checkout(
-          title: AppLocalizations.of(context).checkout_screen_checkout,
-          isWalletRecharge: false);
-    })).then((value) {
-      onPopped(value);
-    });
-    // } else if (_seleted_shipping_pickup_point != 0) {
-    //   print("Selected pickup point ");
+    // Handle response
+    // if (response.success) {
+    //   ToastComponent.showDialog("Order placed successfully!", context);
+    //   Navigator.of(context).pop();
     // } else {
-    //   print("..........something is wrong...........");
+    //   ToastComponent.showDialog(response.message, context);
     // }
   }
+
+  // onPressProceed(context) async {
+  //   // detectShippingOption();
+
+  //   //pickup point is not enable so address must be added
+  //   // if (!pick_up_status.$) {
+  //   //   if (_seleted_shipping_address == 0) {
+  //   //     ToastComponent.showDialog(
+  //   //         AppLocalizations.of(context)
+  //   //             .shipping_info_screen_address_choice_warning,
+  //   //         context,
+  //   //         gravity: Toast.CENTER,
+  //   //         duration: Toast.LENGTH_LONG);
+  //   //     return;
+  //   //   }
+  //   // }
+
+  //   // // pickup point is enable now we want to check address or pickup point is selected
+  //   // if (_seleted_shipping_address == 0 && _seleted_shipping_pickup_point == 0) {
+  //   //   ToastComponent.showDialog(
+  //   //       AppLocalizations.of(context)
+  //   //           .shipping_info_screen_address_or_pickup_choice_warning,
+  //   //       context,
+  //   //       gravity: Toast.CENTER,
+  //   //       duration: Toast.LENGTH_LONG);
+  //   //   return;
+  //   // }
+
+  //   // var addressUpdateInCartResponse;
+
+  //   // if (_seleted_shipping_address != 0) {
+  //   //   addressUpdateInCartResponse = await AddressRepository()
+  //   //       .getAddressUpdateInCartResponse(
+  //   //           address_id: _seleted_shipping_address);
+  //   // } else {
+  //   //   addressUpdateInCartResponse = await AddressRepository()
+  //   //       .getAddressUpdateInCartResponse(
+  //   //           pickup_point_id: _seleted_shipping_pickup_point);
+  //   // }
+
+  //   // if (addressUpdateInCartResponse.result == false) {
+  //   //   ToastComponent.showDialog(addressUpdateInCartResponse.message, context,
+  //   //       gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+  //   //   return;
+  //   // }
+
+  //   // ToastComponent.showDialog(addressUpdateInCartResponse.message, context,
+  //   //     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+
+  //   // Navigator.push(context, MaterialPageRoute(builder: (context) {
+  //   //   return Checkout(
+  //   //       title: AppLocalizations.of(context).checkout_screen_checkout,
+  //   //       product_ids: widget.product_ids,
+  //   //       product_quantities: widget.product_quantities,
+  //   //       address: _seleted_shipping_address,
+  //   //       isWalletRecharge: false);
+  //   // })).then((value) {
+  //   //   onPopped(value);
+  //   // });
+  //   // } else if (_seleted_shipping_pickup_point != 0) {
+  //   //   print("Selected pickup point ");
+  //   // } else {
+  //   //   print("..........something is wrong...........");
+  //   // }
+  // }
 
   @override
   void dispose() {
@@ -265,7 +331,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
               child: Stack(
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 100),
+                    padding: EdgeInsets.only(top: 50),
                     child: CustomScrollView(
                       controller: _mainScrollController,
                       physics: const BouncingScrollPhysics(
@@ -294,23 +360,95 @@ class _ShippingInfoState extends State<ShippingInfo> {
                                         onPopped(value);
                                       });
                                     },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        AppLocalizations.of(context)
-                                            .shipping_info_screen_go_to_address,
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            decoration:
-                                                TextDecoration.underline,
-                                            color: MyTheme.accent_color),
+                                    child: Visibility(
+                                      visible: _shippingAddressList.length == 0,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          AppLocalizations.of(context)
+                                              .shipping_info_screen_go_to_address,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              color: MyTheme.accent_color),
+                                        ),
                                       ),
                                     ),
                                   )))
                               : Container(),
-                          SizedBox(
-                            height: 100,
-                          )
+                          // SizedBox(
+                          //   height: 100,
+                          // ),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                labelText: 'Order Note',
+                                hintText: 'Add a note to your order (optional)',
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  _orderNote = value;
+                                });
+                              },
+                            ),
+                          ),
+
+                          // Coupon Code Input Field
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                labelText: 'Coupon Code',
+                                hintText: 'Enter your coupon code (if any)',
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  _couponCode = value;
+                                });
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Select Payment Method',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Radio(
+                                      value: 'bkash',
+                                      groupValue: _selectedPaymentMethod,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedPaymentMethod = value;
+                                        });
+                                      },
+                                    ),
+                                    Text('bKash'),
+                                    Radio(
+                                      value: 'cash_on_delivery',
+                                      groupValue: _selectedPaymentMethod,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedPaymentMethod = value;
+                                        });
+                                      },
+                                    ),
+                                    Text('Cash on Delivery'),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
                         ]))
                       ],
                     ),
@@ -423,7 +561,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
                     Container(
                       width: 175,
                       child: Text(
-                        _shippingAddressList[index].address,
+                        _shippingAddressList[index].address ?? '',
                         maxLines: 2,
                         style: TextStyle(
                             color: MyTheme.dark_grey,
@@ -454,7 +592,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
                     Container(
                       width: 200,
                       child: Text(
-                        _shippingAddressList[index].city_name,
+                        _shippingAddressList[index].city ?? '',
                         maxLines: 2,
                         style: TextStyle(
                             color: MyTheme.dark_grey,
@@ -481,7 +619,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
                     Container(
                       width: 200,
                       child: Text(
-                        _shippingAddressList[index].state_name,
+                        _shippingAddressList[index].zone ?? '',
                         maxLines: 2,
                         style: TextStyle(
                             color: MyTheme.dark_grey,
@@ -509,8 +647,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
                     Container(
                       width: 200,
                       child: Text(
-                        "No City",
-                        // _shippingAddressList[index].country_name,
+                        _shippingAddressList[index].area ?? '',
                         maxLines: 2,
                         style: TextStyle(
                             color: MyTheme.dark_grey,
@@ -538,8 +675,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
                     Container(
                       width: 200,
                       child: Text(
-                        "No",
-                        // _shippingAddressList[index].postal_code,
+                        _shippingAddressList[index].postal_code ?? '',
                         maxLines: 2,
                         style: TextStyle(
                             color: MyTheme.dark_grey,
@@ -566,7 +702,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
                     Container(
                       width: 200,
                       child: Text(
-                        _shippingAddressList[index].phone,
+                        _shippingAddressList[index].phone ?? '',
                         maxLines: 2,
                         style: TextStyle(
                             color: MyTheme.dark_grey,

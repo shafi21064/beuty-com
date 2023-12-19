@@ -233,7 +233,10 @@ class _CartState extends State<Cart> {
         fetchData();
       } else if (mode == "proceed_to_shipping") {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ShippingInfo();
+          return ShippingInfo(
+            product_ids:cart_ids_string,
+            product_quantities:cart_quantities_string
+          );
         })).then((value) {
           onPopped(value);
         });

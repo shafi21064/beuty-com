@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/repositories/address_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/screens/order_list.dart';
@@ -31,11 +32,17 @@ class Checkout extends StatefulWidget {
   final bool isWalletRecharge;
   final double rechargeAmount;
   final String title;
+  final dynamic product_ids;
+  final dynamic product_quantities;
+  final dynamic address;
 
   Checkout(
       {Key key,
       this.order_id = 0,
       this.manual_payment_from_order_details = false,
+      this.product_ids,
+      this.product_quantities,
+      this.address,
       this.list = "both",
       this.isWalletRecharge = false,
       this.rechargeAmount = 0.0,
@@ -76,6 +83,9 @@ class _CheckoutState extends State<Checkout> {
     print(access_token.value);
     print(user_id.$);
     print(user_name.$);*/
+    print(widget.address);
+    print(widget.product_ids);
+    print(widget.product_quantities);
 
     fetchAll();
   }
@@ -109,6 +119,8 @@ class _CheckoutState extends State<Checkout> {
       _selected_payment_method = _paymentTypeList[0].payment_type;
       _selected_payment_method_key = _paymentTypeList[0].payment_type_key;
     }
+
+   ;
     _isInitial = false;
     setState(() {});
   }
