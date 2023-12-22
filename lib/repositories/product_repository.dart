@@ -119,25 +119,61 @@ class ProductRepository {
     return productMiniResponseFromJson(response.body);
   }
 
-  Future<ProductMiniResponse> getFilteredProducts(
-      {name = "",
-      page = 1,
-      sort_key = "",
-      categories = "",
-      skin_type = "",
-      key_ingredients = "",
-      good_for = "",
-      tag = "",
-      min = "",
-      max = ""}) async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/gigalogy/items/search" +
-        "?page=${page}&order_by=${sort_key}&category=${categories.toLowerCase().replaceAll(' ', '-')}&skin_type=${skin_type.toLowerCase()}&min_price=${int.tryParse(min)}&max_price=${int.tryParse(max)}&gaip_user_id=${null} ");
-    print(url);
-    final response = await http.get(url, headers: {
-      "App-Language": app_language.$,
-    });
-    return productMiniResponseFromJson(response.body);
-  }
+Future<ProductMiniResponse> getFilteredProducts({
+  String name = "",
+  int page = 1,
+  String sort_key = "",
+  String categories = "",
+  String skin_type = "",
+  String tag = "",
+  String min = "",
+  String max = "",
+  String type = "",
+  String key_ingredients = "",
+  String good_for = "",
+}) async {
+  Map<dynamic, dynamic> parameters = {
+    'page': page,
+    'order_by': sort_key,
+  };
+
+  if (name != "") parameters['name'] = name;
+  if (categories != null && categories != "")
+    parameters['category'] = categories.toLowerCase().replaceAll(' ', '-');
+  if (skin_type != null && skin_type != "")
+    parameters['skin_type'] = skin_type.toLowerCase().replaceAll(' ', '-');
+  if (min != null && min != "") parameters['min_price'] = int.tryParse(min);
+  if (max != null && max != "") parameters['max_price'] = int.tryParse(max);
+  if (key_ingredients != null && key_ingredients != "")
+    parameters['key_ingredients'] =
+        key_ingredients.toLowerCase().replaceAll(' ', '-');
+  if (good_for != null && good_for != "")
+    parameters['good_for'] = good_for.toLowerCase().replaceAll(' ', '-');
+  if (tag != null && tag != "") parameters['tag'] = tag.toLowerCase().replaceAll(' ', '-');
+  if (type != null && type != "") parameters['type'] = type.toLowerCase().replaceAll(' ', '-');
+
+  // Constructing the query string manually
+  String queryString = parameters.entries
+      .map((entry) =>
+          '${entry.key}=${Uri.encodeComponent(entry.value.toString())}')
+      .join('&');
+
+  // Append gaip_user_id=null at the end
+  queryString += '&gaip_user_id=null';
+
+  // Construct the final URL
+  Uri url = Uri.parse("${AppConfig.BASE_URL}/gigalogy/items/search?$queryString");
+  print(url);
+
+  final response = await http.get(url, headers: {
+    "App-Language": app_language.$,
+  });
+
+  return productMiniResponseFromJson(response.body.toString());
+}
+
+
+
 
   Future<ProductDetailsResponse> getProductDetails(
       {@required int id = 0}) async {

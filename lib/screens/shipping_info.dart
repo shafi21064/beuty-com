@@ -231,7 +231,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
 
     // Call API
     print(requestBody);
-    var response=await OrderRepository()
+    // var response=await OrderRepository()
 
     // Handle response
     // if (response.success) {

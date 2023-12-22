@@ -47,16 +47,18 @@ class Filter extends StatefulWidget {
       this.selected_skin,
       this.good_for,
       this.tag,
+      this.type,
       this.category,
       this.key_ingredients})
       : super(key: key);
 
-  final String selected_filter;
-  final String selected_skin;
-  final String tag;
-  final String good_for;
-  final String key_ingredients;
-  final String category;
+   String selected_filter;
+   String selected_skin;
+   String tag;
+   String good_for;
+   String key_ingredients;
+   String category;
+   String type;
 
   @override
   _FilterState createState() => _FilterState();
@@ -226,6 +228,7 @@ class _FilterState extends State<Filter> {
             : _selectedBrands.join(",").toString(),
         tag: widget.tag,
         good_for: widget.good_for,
+         type: widget.type,
         key_ingredients: widget.key_ingredients,
         max: _maxPriceController.text.toString(),
         min: _minPriceController.text.toString());
@@ -906,14 +909,13 @@ class _FilterState extends State<Filter> {
                 },
                 textFieldConfiguration: TextFieldConfiguration(
                   onTap: () {},
-                  //autofocus: true,
                   controller: _searchController,
                   onSubmitted: (txt) {
                     _searchKey = txt;
                     setState(() {});
                     _onSearchSubmit();
                   },
-                  autofocus: true,
+                  autofocus: false,
                   decoration: InputDecoration(
                       hintText: AppLocalizations.of(context)
                           .filter_screen_search_here,
@@ -1114,7 +1116,18 @@ class _FilterState extends State<Filter> {
                         _minPriceController.clear();
                         _maxPriceController.clear();
                         setState(() {
-                          // _selectedCategories.clear();
+                          _selectedCategories.clear();
+                          _selectedSkins.clear();
+                                   widget.type="";
+                                   widget.tag="";
+                                   widget.good_for="";
+                                   widget.key_ingredients="";
+                                   widget.category="";
+                                   widget.selected_skin="";
+                          _selectedSort = "default";
+                          _searchKey = "";
+                          _searchController.clear();
+                                        
                           _selectedCategory = "";
                           _selectedBrands.clear();
                         });

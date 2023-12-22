@@ -1076,252 +1076,543 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   }
 
   buildHomeMenuRow(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return Filter();
-            }));
-          },
-          child: Container(
-            height: 100,
-            width: MediaQuery.of(context).size.width / 5 - 4,
-            child: Column(
-              children: [
-                Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color:
-                            Theme.of(context).buttonTheme.colorScheme.primary,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(1.0),
-                            spreadRadius: 0,
-                            blurRadius: 9,
-                            offset: Offset(0, 1),
-                          ),
-                        ]),
-                    child: Padding(
-                        padding: const EdgeInsets.all(0.0),
-                        child: Icon(
-                          Icons.view_list_sharp,
-                          color: Colors.white,
-                        ))),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: Text(
-                    "Shop",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color:
-                            Theme.of(context).buttonTheme.colorScheme.secondary,
-                        fontWeight: FontWeight.w300),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return BeautyTips();
-            }));
-          },
-          child: Container(
-            height: 100,
-            width: MediaQuery.of(context).size.width / 5 - 4,
-            child: Column(
-              children: [
-                Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Theme.of(context).buttonTheme.colorScheme.primary,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(1.0),
-                          spreadRadius: 0,
-                          blurRadius: 9,
-                          offset: Offset(0, 1),
-                        ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(0.0),
-                      child: Image.asset(
-                        "assets/beauty-tips-new.png",
-                        //color: Colors.white,
-                      ),
-                    )),
-                Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Text("Beauty Tips",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .buttonTheme
-                                .colorScheme
-                                .secondary,
-                            fontWeight: FontWeight.w300))),
-              ],
-            ),
-          ),
-        ),
-        // GestureDetector(
-        //   onTap: () {
-        //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-        //       return PersonalRecommendation();
-        //     }));
-        //   },
-        //   child: Container(
-        //     height: 100,
-        //     width: MediaQuery.of(context).size.width / 5 - 4,
-        //     child: Column(
-        //       children: [
-        //         Container(
-        //           height: 50,
-        //           width: 50,
-        //           decoration: BoxDecoration(
-        //               borderRadius: BorderRadius.circular(30),
-        //               color: Theme.of(context).buttonTheme.colorScheme.primary,
-        //               boxShadow: [
-        //                 BoxShadow(
-        //                   color: Colors.grey.withOpacity(1.0),
-        //                   spreadRadius: 0,
-        //                   blurRadius: 9,
-        //                   offset: Offset(0, 1),
-        //                 ),
-        //               ]),
-        //           //<div style="padding:3px">hjgh</div>
-        //           child: ClipOval(
-        //             child: Image.asset(
-        //               "assets/recommended-new.jpeg",
-        //               fit: BoxFit
-        //                   .cover, // You can adjust this based on your needs
-        //               height: 50,
-        //               width: 50,
-        //             ),
-        //           ),
-        //         ),
-        //         Padding(
-        //             padding: const EdgeInsets.only(top: 8),
-        //             child: Text("Recommendation",
-        //                 textAlign: TextAlign.center,
-        //                 style: TextStyle(
-        //                     color: Theme.of(context)
-        //                         .buttonTheme
-        //                         .colorScheme
-        //                         .secondary,
-        //                     fontWeight: FontWeight.w300))),
-        //       ],
-        //     ),
-        //   ),
-        // ),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return FeedList();
-            }));
-          },
-          child: Container(
-            height: 100,
-            width: MediaQuery.of(context).size.width / 5 - 4,
-            child: Column(
-              children: [
-                Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color:
-                            Theme.of(context).buttonTheme.colorScheme.primary,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(1.0),
-                            spreadRadius: 0,
-                            blurRadius: 9,
-                            offset: Offset(0, 1),
-                          ),
-                        ]),
-                    child: Padding(
-                      padding: const EdgeInsets.all(0.0),
-                      child: Image.asset(
-                        "assets/community-new.png",
-                        // color: Colors.white,
-                      ),
-                    )),
-                Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Text("Community",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .buttonTheme
-                                .colorScheme
-                                .secondary,
-                            fontWeight: FontWeight.w300))),
-              ],
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return Appointment();
-            }));
-          },
-          child: Container(
-            height: 100,
-            width: MediaQuery.of(context).size.width / 5 - 4,
-            child: Column(
-              children: [
-                Container(
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Theme.of(context).buttonTheme.colorScheme.primary,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(1.0),
-                          spreadRadius: 0,
-                          blurRadius: 9,
-                          offset: Offset(0, 1),
-                        ),
-                      ]),
-                  //<div style="padding:3px">hjgh</div>
-                  child: ClipOval(
-                    child: Image.asset(
-                      "assets/expert2.jpg",
-                      fit: BoxFit
-                          .cover, // You can adjust this based on your needs
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Filter(
+                            type: "new-arrivals",
+                   );
+              }));
+            },
+            child: Container(
+              padding: EdgeInsets.only(top:8),
+              height: 100,
+              width: MediaQuery.of(context).size.width / 5 - 4,
+              child: Column(
+                children: [
+                  Container(
                       height: 50,
                       width: 50,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color:
+                              Theme.of(context).buttonTheme.colorScheme.primary,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(1.0),
+                              spreadRadius: 0,
+                              blurRadius: 9,
+                              offset: Offset(0, 1),
+                            ),
+                          ]),
+                      child: ClipOval(
+                      child: Image.asset(
+                        "assets/arrivals.jpg",
+                        fit: BoxFit
+                            .cover, // You can adjust this based on your needs
+                        height: 50,
+                        width: 50,
+                      ),
                     ),
-                  ),
-                ),
-                Padding(
+                          ),
+                  Padding(
                     padding: const EdgeInsets.only(top: 8),
-                    child: Text("Appointment",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .buttonTheme
-                                .colorScheme
-                                .secondary,
-                            fontWeight: FontWeight.w300))),
-              ],
+                    child: Text(
+                      "New Arrivals",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color:
+                              Theme.of(context).buttonTheme.colorScheme.secondary,
+                          fontWeight: FontWeight.w300),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-        )
-      ],
+              GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Filter(
+                            category: "skin-care",
+                          );
+              }));
+            },
+            child: Container(
+                            padding: EdgeInsets.only(top:8),
+
+              height: 100,
+              width: MediaQuery.of(context).size.width / 5 - 4,
+              child: Column(
+                children: [
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Theme.of(context).buttonTheme.colorScheme.primary,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(1.0),
+                            spreadRadius: 0,
+                            blurRadius: 9,
+                            offset: Offset(0, 1),
+                          ),
+                        ]),
+                    child: ClipOval(
+                      child: Image.asset(
+                        "assets/skin-care.jpeg",
+                        fit: BoxFit
+                            .cover, // You can adjust this based on your needs
+                        height: 50,
+                        width: 50,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text("Skin Care",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .buttonTheme
+                                  .colorScheme
+                                  .secondary,
+                              fontWeight: FontWeight.w300))),
+                ],
+              ),
+            ),
+          ),
+           GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+               return Filter(
+                            category: "hair-care",
+                          );
+              }));
+            },
+            child: Container(
+                            padding: EdgeInsets.only(top:8),
+
+              height: 100,
+              width: MediaQuery.of(context).size.width / 5 - 4,
+              child: Column(
+                children: [
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Theme.of(context).buttonTheme.colorScheme.primary,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(1.0),
+                            spreadRadius: 0,
+                            blurRadius: 9,
+                            offset: Offset(0, 1),
+                          ),
+                        ]),
+                    //<div style="padding:3px">hjgh</div>
+                    child: ClipOval(
+                      child: Image.asset(
+                        "assets/haircare.jpeg",
+                        fit: BoxFit
+                            .cover, // You can adjust this based on your needs
+                        height: 50,
+                        width: 50,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text("Hair Care",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .buttonTheme
+                                  .colorScheme
+                                  .secondary,
+                              fontWeight: FontWeight.w300))),
+                ],
+              ),
+            ),
+          ),
+           GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Filter(
+                            category: "make-up",
+                          );
+              }));
+            },
+            child: Container(
+                            padding: EdgeInsets.only(top:8),
+
+              height: 100,
+              width: MediaQuery.of(context).size.width / 5 - 4,
+              child: Column(
+                children: [
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Theme.of(context).buttonTheme.colorScheme.primary,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(1.0),
+                            spreadRadius: 0,
+                            blurRadius: 9,
+                            offset: Offset(0, 1),
+                          ),
+                        ]),
+                    child: ClipOval(
+                      child: Image.asset(
+                        "assets/makeup.jpeg",
+                        fit: BoxFit
+                            .cover, // You can adjust this based on your needs
+                        height: 50,
+                        width: 50,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text("Make Up",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .buttonTheme
+                                  .colorScheme
+                                  .secondary,
+                              fontWeight: FontWeight.w300))),
+                ],
+              ),
+            ),
+          ),
+           GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Filter(
+                            category: "supplements",
+                          );
+              }));
+            },
+            child: Container(
+                            padding: EdgeInsets.only(top:8),
+
+              height: 100,
+              width: MediaQuery.of(context).size.width / 5 - 4,
+              child: Column(
+                children: [
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Theme.of(context).buttonTheme.colorScheme.primary,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(1.0),
+                            spreadRadius: 0,
+                            blurRadius: 9,
+                            offset: Offset(0, 1),
+                          ),
+                        ]),
+                    //<div style="padding:3px">hjgh</div>
+                    child: ClipOval(
+                      child: Image.asset(
+                        "assets/Supplements.jpeg",
+                        fit: BoxFit
+                            .cover, // You can adjust this based on your needs
+                        height: 50,
+                        width: 50,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text("Supplements",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .buttonTheme
+                                  .colorScheme
+                                  .secondary,
+                              fontWeight: FontWeight.w300))),
+                ],
+              ),
+            ),
+          ),
+           GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Filter(
+                            category: "daiso-japan",
+                          );
+              }));
+            },
+            child: Container(
+                            padding: EdgeInsets.only(top:8),
+
+              height: 100,
+              width: MediaQuery.of(context).size.width / 5 - 4,
+              child: Column(
+                children: [
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Theme.of(context).buttonTheme.colorScheme.primary,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(1.0),
+                            spreadRadius: 0,
+                            blurRadius: 9,
+                            offset: Offset(0, 1),
+                          ),
+                        ]),
+                    //<div style="padding:3px">hjgh</div>
+                    child: ClipOval(
+                      child: Image.asset(
+                        "assets/daiso-japan.png",
+                        fit: BoxFit
+                            .cover, // You can adjust this based on your needs
+                        height: 50,
+                        width: 50,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text("Daiso Japan",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .buttonTheme
+                                  .colorScheme
+                                  .secondary,
+                              fontWeight: FontWeight.w300))),
+                ],
+              ),
+            ),
+          ),
+           GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Filter(
+                            category: "green-tea",
+                          );
+              }));
+            },
+            child: Container(
+                            padding: EdgeInsets.only(top:8),
+
+              height: 100,
+              width: MediaQuery.of(context).size.width / 5 - 4,
+              child: Column(
+                children: [
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Theme.of(context).buttonTheme.colorScheme.primary,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(1.0),
+                            spreadRadius: 0,
+                            blurRadius: 9,
+                            offset: Offset(0, 1),
+                          ),
+                        ]),
+                    //<div style="padding:3px">hjgh</div>
+                    child: ClipOval(
+                      child: Image.asset(
+                        "assets/green-tea.png",
+                        fit: BoxFit
+                            .cover, // You can adjust this based on your needs
+                        height: 50,
+                        width: 50,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text("Green Tea",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .buttonTheme
+                                  .colorScheme
+                                  .secondary,
+                              fontWeight: FontWeight.w300))),
+                ],
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return BeautyTips();
+              }));
+            },
+            child: Container(
+                            padding: EdgeInsets.only(top:8),
+
+              height: 100,
+              width: MediaQuery.of(context).size.width / 5 - 4,
+              child: Column(
+                children: [
+                  Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Theme.of(context).buttonTheme.colorScheme.primary,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(1.0),
+                            spreadRadius: 0,
+                            blurRadius: 9,
+                            offset: Offset(0, 1),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(0.0),
+                        child: Image.asset(
+                          "assets/beauty-tips-new.png",
+                          //color: Colors.white,
+                        ),
+                      )),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text("Beauty Tips",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .buttonTheme
+                                  .colorScheme
+                                  .secondary,
+                              fontWeight: FontWeight.w300))),
+                ],
+              ),
+            ),
+          ),
+       
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return FeedList();
+              }));
+            },
+            child: Container(
+                            padding: EdgeInsets.only(top:8),
+
+              height: 100,
+              width: MediaQuery.of(context).size.width / 5 - 4,
+              child: Column(
+                children: [
+                  Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color:
+                              Theme.of(context).buttonTheme.colorScheme.primary,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(1.0),
+                              spreadRadius: 0,
+                              blurRadius: 9,
+                              offset: Offset(0, 1),
+                            ),
+                          ]),
+                      child: Padding(
+                        padding: const EdgeInsets.all(0.0),
+                        child: Image.asset(
+                          "assets/community-new.png",
+                          // color: Colors.white,
+                        ),
+                      )),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text("Community",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .buttonTheme
+                                  .colorScheme
+                                  .secondary,
+                              fontWeight: FontWeight.w300))),
+                ],
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Appointment();
+              }));
+            },
+            child: Container(
+                            padding: EdgeInsets.only(top:8),
+
+              height: 100,
+              width: MediaQuery.of(context).size.width / 5 - 4,
+              child: Column(
+                children: [
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Theme.of(context).buttonTheme.colorScheme.primary,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(1.0),
+                            spreadRadius: 0,
+                            blurRadius: 9,
+                            offset: Offset(0, 1),
+                          ),
+                        ]),
+                    //<div style="padding:3px">hjgh</div>
+                    child: ClipOval(
+                      child: Image.asset(
+                        "assets/expert2.jpg",
+                        fit: BoxFit
+                            .cover, // You can adjust this based on your needs
+                        height: 50,
+                        width: 50,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text("Appointment",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .buttonTheme
+                                  .colorScheme
+                                  .secondary,
+                              fontWeight: FontWeight.w300))),
+                ],
+              ),
+            ),
+          ),
+       
+    
+        ],
+      ),
     );
   }
 
