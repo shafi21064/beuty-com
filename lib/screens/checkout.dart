@@ -1,4 +1,11 @@
+import 'dart:convert';
+
+import 'package:active_ecommerce_flutter/data_model/city_response.dart';
+import 'package:active_ecommerce_flutter/data_model/country_response.dart';
+import 'package:active_ecommerce_flutter/data_model/pickup_points_response.dart';
 import 'package:active_ecommerce_flutter/repositories/address_repository.dart';
+import 'package:active_ecommerce_flutter/repositories/pickup_points_repository.dart';
+import 'package:active_ecommerce_flutter/screens/address.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/screens/order_list.dart';
@@ -73,6 +80,25 @@ class _CheckoutState extends State<Checkout> {
   BuildContext loadingcontext;
   String payment_type = "cart_payment";
   String _title;
+  bool _shippingOptionIsAddress = true;
+    List<dynamic> _shippingAddressList = [];
+  String _orderNote = '';
+    int _seleted_shipping_address = 0;
+  int _seleted_shipping_pickup_point = 0;
+  List<PickupPoint> _pickupList = [];
+   List<City> _cityList = [];
+  List<Country> _countryList = [];
+  bool isVisible = true;
+
+  //double variables
+  double mWidth = 0;
+  double mHeight = 0;
+
+
+
+
+
+
 
   @override
   void initState() {
@@ -86,8 +112,11 @@ class _CheckoutState extends State<Checkout> {
     print(widget.address);
     print(widget.product_ids);
     print(widget.product_quantities);
+  // if (is_logged_in.$ == true) {
+  //     fetchAll();
+  //   }
 
-    fetchAll();
+   fetchAll();
   }
 
   @override
@@ -97,6 +126,16 @@ class _CheckoutState extends State<Checkout> {
   }
 
   fetchAll() {
+    if (is_logged_in.$ == true) {
+      fetchShippingAddressList();
+
+      if (pick_up_status.$) {
+        fetchPickupPoints();
+      }
+      //fetchPickupPoints();
+    }
+    setState(() {});
+  
     fetchList();
 
     if (is_logged_in.$ == true) {
@@ -109,11 +148,49 @@ class _CheckoutState extends State<Checkout> {
       }
     }
   }
+    fetchShippingAddressList() async {
+    var addressResponse = await AddressRepository().getAddressList();
+    _shippingAddressList
+        .add(addressResponse.data[addressResponse.data.length - 1]);
+    print(_shippingAddressList);
+    if (_shippingAddressList.length > 0) {
+      _seleted_shipping_address = _shippingAddressList[0].id;
+
+      _shippingAddressList.forEach((address) {
+        if (address.set_default == 1 && _shippingOptionIsAddress) {
+          _seleted_shipping_address = address.id;
+        }
+      });
+    }
+    _isInitial = false;
+    setState(() {});
+
+    //getSetShippingCost();
+  }
+    getSetShippingCost() async {
+    var shippingCostResponse;
+    if (_shippingOptionIsAddress) {
+      // shippingCostResponse = await AddressRepository().getShippingCostResponse(
+      //     user_id: user_id.$, address_id: _seleted_shipping_address);
+    } else {
+      // shippingCostResponse = await AddressRepository().getShippingCostResponse(
+      //     user_id: user_id.$,
+      //     pick_up_id: _seleted_shipping_pickup_point,
+      //     shipping_type: "pickup_point");
+    }
+
+    if (shippingCostResponse.result == true) {
+    // _shipping_cost_string = shippingCostResponse.value_string;
+      setState(() {});
+    }
+  }
+
+
 
   fetchList() async {
     var paymentTypeResponseList =
         await PaymentRepository().getPaymentResponseList(list: widget.list);
-    _paymentTypeList.addAll(paymentTypeResponseList);
+    _paymentTypeList.add(paymentTypeResponseList[paymentTypeResponseList.length - 1]);
     print(_paymentTypeList);
     if (_paymentTypeList.length > 0) {
       _selected_payment_method = _paymentTypeList[0].payment_type;
@@ -124,6 +201,16 @@ class _CheckoutState extends State<Checkout> {
     _isInitial = false;
     setState(() {});
   }
+   fetchPickupPoints() async {
+    var pickupPointsResponse =
+        await PickupPointRepository().getPickupPointListResponse();
+    _pickupList.addAll(pickupPointsResponse.data);
+    if (!_shippingOptionIsAddress) {
+      _seleted_shipping_pickup_point = _pickupList.first.id;
+    }
+   // getSetShippingCost();
+  }
+
 
   fetchSummary() async {
     var cartSummaryResponse = await CartRepository().getCartSummaryResponse();
@@ -163,6 +250,16 @@ class _CheckoutState extends State<Checkout> {
     _used_coupon_code = "";
     _couponController.text = _used_coupon_code;
     _coupon_applied = false;
+    _shippingAddressList.clear();
+    _cityList.clear();
+    _pickupList.clear();
+    _countryList.clear();
+    // _shipping_cost_string = ". . .";
+    // _shipping_cost_string = ". . .";
+    _isInitial = true;
+    _shippingOptionIsAddress = true;
+    _seleted_shipping_pickup_point = 0;
+    _seleted_shipping_address = 0;
 
     setState(() {});
   }
@@ -170,11 +267,120 @@ class _CheckoutState extends State<Checkout> {
   Future<void> _onRefresh() async {
     reset();
     fetchAll();
+    reset();
+    if (is_logged_in.$ == true) {
+      fetchAll();
+    }
+
+  }
+  onAddressSwitch() async {
+    //_shipping_cost_string = ". . .";
+    setState(() {});
+    //getSetShippingCost();
   }
 
   onPopped(value) {
     reset();
     fetchAll();
+  }
+   afterAddingAnAddress() {
+    reset();
+    fetchAll();
+  }
+
+// onAddressSwitch() async {
+//     _shipping_cost_string = ". . .";
+//     setState(() {});
+//     getSetShippingCost();
+//   }
+
+//   changeShippingOption(bool option) {
+//     if (option) {
+//       _seleted_shipping_pickup_point = 0;
+
+//       _shippingAddressList.length > 0
+//           ? _seleted_shipping_address = _shippingAddressList.first.id
+//           : _seleted_shipping_address = 0;
+//     } else {
+//       _seleted_shipping_address = 0;
+//       _pickupList.length > 0
+//           ? _seleted_shipping_pickup_point = _pickupList.first.id
+//           : _seleted_shipping_pickup_point = 0;
+//     }
+//     _shippingOptionIsAddress = option;
+//     getSetShippingCost();
+//     setState(() {});
+//   }
+
+onPressProceed(context) async {
+  
+    if (_shippingOptionIsAddress && _seleted_shipping_address == 0) {
+      ToastComponent.showDialog("Please select a shipping address", context);
+      return;
+    }
+
+    if (!_shippingOptionIsAddress && _seleted_shipping_pickup_point == 0) {
+      ToastComponent.showDialog("Please select a pickup point", context);
+      return;
+    }
+
+print(widget.product_ids);
+    // Prepare request body
+List<String> productIdsStrings = widget.product_ids.split(',');
+List<int> productIds = productIdsStrings.map(int.parse).toList();
+
+List<String> productQuantitiesStrings = widget.product_quantities.split(',');
+List<int> productQuantities = productQuantitiesStrings.map(int.parse).toList();
+
+String productIdsJsonArray = "[${productIds.join(',')}]";
+String productQuantitiesJsonArray = "[${productQuantities.join(',')}]";
+    var coupon_code = _couponController.text.toString();
+
+
+Map<String, dynamic> requestBody = {
+  "api_key": "vXrAne",
+  "api_secret": "k7t2G2j3RFBI",
+  "product_ids_arr": productIdsJsonArray,
+  "product_quantities_arr": productQuantitiesJsonArray,
+};
+    if (_shippingOptionIsAddress) {
+      requestBody["shipping_address"] = _shippingAddressList[0].address;
+    } else {
+      requestBody["shipping_pickup_point"] = _seleted_shipping_pickup_point;
+    }
+
+    requestBody["shipping_name"] = user_name.$??'';
+    requestBody["shipping_phone"] = user_email.$;
+    requestBody["shipping_city"] = _shippingAddressList[0].city;
+    requestBody["shipping_zone"] = _shippingAddressList[0].zone;
+    requestBody["shipping_area"] = _shippingAddressList[0].area;
+    requestBody["is_preorder"] = 0;
+    requestBody["payment_type"] = "cash_on_delivery";
+    if(coupon_code !="")
+    {
+    requestBody["coupon_code"]=coupon_code;
+
+    }
+    
+
+    // Call API
+    print(requestBody);
+
+    var orderCreateResponse = await PaymentRepository()
+        .getOrderCreateResponseFromCod(requestBody);
+    Navigator.of(loadingcontext).pop();
+    if (orderCreateResponse.result == false) {
+      ToastComponent.showDialog(orderCreateResponse.message, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      Navigator.of(context).pop();
+      return;
+    }
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return OrderList(from_checkout: true);
+    }));
+
+  
   }
 
   onCouponApply() async {
@@ -445,19 +651,19 @@ class _CheckoutState extends State<Checkout> {
 
   pay_by_cod() async {
     loading();
-    var orderCreateResponse = await PaymentRepository()
-        .getOrderCreateResponseFromCod(_selected_payment_method_key);
-    Navigator.of(loadingcontext).pop();
-    if (orderCreateResponse.result == false) {
-      ToastComponent.showDialog(orderCreateResponse.message, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-      Navigator.of(context).pop();
-      return;
-    }
+    // var orderCreateResponse = await PaymentRepository()
+    //     .getOrderCreateResponseFromCod(_selected_payment_method_key);
+    // Navigator.of(loadingcontext).pop();
+    // if (orderCreateResponse.result == false) {
+    //   ToastComponent.showDialog(orderCreateResponse.message, context,
+    //       gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    //   Navigator.of(context).pop();
+    //   return;
+    // }
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return OrderList(from_checkout: true);
-    }));
+    // Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //   return OrderList(from_checkout: true);
+    // }));
   }
 
   pay_by_manual_payment() async {
@@ -521,7 +727,7 @@ class _CheckoutState extends State<Checkout> {
                         ),
                         Spacer(),
                         Text(
-                          _subTotalString,
+                          _subTotalString??'',
                           style: TextStyle(
                               color: MyTheme.font_grey,
                               fontSize: 14,
@@ -546,7 +752,7 @@ class _CheckoutState extends State<Checkout> {
                         ),
                         Spacer(),
                         Text(
-                          _taxString,
+                          _taxString??'',
                           style: TextStyle(
                               color: MyTheme.font_grey,
                               fontSize: 14,
@@ -572,7 +778,7 @@ class _CheckoutState extends State<Checkout> {
                         ),
                         Spacer(),
                         Text(
-                          _shippingCostString,
+                          _shippingCostString??'',
                           style: TextStyle(
                               color: MyTheme.font_grey,
                               fontSize: 14,
@@ -598,7 +804,7 @@ class _CheckoutState extends State<Checkout> {
                         ),
                         Spacer(),
                         Text(
-                          _discountString,
+                          _discountString??'',
                           style: TextStyle(
                               color: MyTheme.font_grey,
                               fontSize: 14,
@@ -625,7 +831,7 @@ class _CheckoutState extends State<Checkout> {
                         ),
                         Spacer(),
                         Text(
-                          _totalString,
+                          _totalString??'',
                           style: TextStyle(
                               color: MyTheme.accent_color,
                               fontSize: 14,
@@ -652,78 +858,142 @@ class _CheckoutState extends State<Checkout> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
-      child: Scaffold(
-          backgroundColor: Colors.white,
-          appBar: buildAppBar(context),
-          bottomNavigationBar: buildBottomAppBar(context),
-          body: Stack(
-            children: [
-              RefreshIndicator(
-                color: MyTheme.accent_color,
-                backgroundColor: Colors.white,
-                onRefresh: _onRefresh,
-                displacement: 0,
-                child: CustomScrollView(
-                  controller: _mainScrollController,
-                  physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics()),
-                  slivers: [
-                    SliverList(
-                      delegate: SliverChildListDelegate([
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: buildPaymentMethodList(),
-                        ),
-                        Container(
-                          height: 140,
-                        )
-                      ]),
-                    )
-                  ],
+ @override
+Widget build(BuildContext context) {
+  mHeight = MediaQuery.of(context).size.height;
+  mWidth = MediaQuery.of(context).size.width;
+
+  return Directionality(
+    textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
+    child: Scaffold(
+      backgroundColor: Colors.white,
+      appBar: buildAppBar(context),
+      bottomNavigationBar: buildBottomAppBar(context),
+      body: Stack(
+        children: [
+          RefreshIndicator( 
+            color: MyTheme.accent_color,
+            backgroundColor: Colors.white,
+            onRefresh: _onRefresh,
+            displacement: 0,
+            child: Container(
+              child: CustomScrollView(
+                controller: _mainScrollController,
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
                 ),
+                slivers: [
+                  SliverList(
+                    delegate: SliverChildListDelegate([
+                      Padding(
+                        padding: const EdgeInsets.only(left:16.0,right:16.0,top:16.0),
+                        child: _shippingOptionIsAddress
+                            ? buildShippingInfoList()
+                            : buildPickupPoint(),
+                      ),
+                      _shippingOptionIsAddress
+                          ? Container(
+                              height: 40,
+                              child: Center(
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return Address(
+                                            from_shipping_info: true,
+                                          );
+                                        },
+                                      ),
+                                    ).then((value) {
+                                      onPopped(value);
+                                    });
+                                  },
+                                  child: Visibility(
+                                    visible: _shippingAddressList.length == 0,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        AppLocalizations.of(context)
+                                            .shipping_info_screen_go_to_address,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          decoration: TextDecoration.underline,
+                                          color: MyTheme.accent_color,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Container(),
+                     
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                        child: buildPaymentMethodList(),
+                      ),
+                      
+                      
+                       
+                    ]),
+                  ),
+                ],
               ),
-
-              //Apply Coupon and order details container
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: widget.isWalletRecharge
-                    ? Container()
-                    : Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-
-                          /*border: Border(
+            ),
+          ),
+         // Positioned(top: 0.0, child: customAppBar(context)),
+        
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: widget.isWalletRecharge
+                ? Container()
+                : Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      /*border: Border(
                       top: BorderSide(color: MyTheme.light_grey,width: 1.0),
                     )*/
-                        ),
-                        height:
-                            widget.manual_payment_from_order_details ? 80 : 140,
-                        //color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            children: [
-                              widget.manual_payment_from_order_details == false
-                                  ? Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 16.0),
-                                      child: buildApplyCouponRow(context),
-                                    )
-                                  : Container(),
-                              grandTotalSection(),
-                            ],
+                    ),
+                    height: widget.manual_payment_from_order_details ? 80 : 180,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 16.0,right: 16.0),
+                      child: Column(
+                        children: [
+                              Padding(
+                        padding: const EdgeInsets.
+                        only(left: 16.0, right: 16.0,bottom:10.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Order Note',
+                            hintText: 'Add a note to your order (optional)',
                           ),
+                          onChanged: (value) {
+                            setState(() {
+                              _orderNote = value;
+                            });
+                          },
                         ),
                       ),
-              )
-            ],
-          )),
-    );
-  }
+                          widget.manual_payment_from_order_details == false
+                              ? Padding(
+                                  padding: const EdgeInsets.only(bottom: 0.0),
+                                  child: buildApplyCouponRow(context),
+                                )
+                              : Container(),
+                           
+                          grandTotalSection(),
+                        ],
+                      ),
+                    ),
+                  ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
 
   Row buildApplyCouponRow(BuildContext context) {
     return Row(
@@ -823,7 +1093,7 @@ class _CheckoutState extends State<Checkout> {
         ),
       ),
       title: Text(
-        widget.title,
+        widget.title??'',
         style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
       ),
       elevation: 0.0,
@@ -831,6 +1101,386 @@ class _CheckoutState extends State<Checkout> {
     );
   }
 
+    buildShippingInfoList() {
+    if (is_logged_in.$ == false) {
+      return Container(
+          height: 100,
+          child: Center(
+              child: Text(
+            AppLocalizations.of(context).common_login_warning,
+            style: TextStyle(color: MyTheme.font_grey),
+          )));
+    } else if (_isInitial && _shippingAddressList.length == 0) {
+      return SingleChildScrollView(
+          child: ShimmerHelper()
+              .buildListShimmer(item_count: 5, item_height: 100.0));
+    } else if (_shippingAddressList.length > 0) {
+      return SingleChildScrollView(
+        child: ListView.builder(
+          itemCount: _shippingAddressList.length,
+          scrollDirection: Axis.vertical,
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 4.0),
+              child: buildShippingInfoItemCard(index),
+            );
+          },
+        ),
+      );
+    } else if (!_isInitial && _shippingAddressList.length == 0) {
+      return Container(
+          height: 100,
+          child: Center(
+              child: Text(
+            AppLocalizations.of(context).common_no_address_added,
+            style: TextStyle(color: MyTheme.font_grey),
+          )));
+    }
+  }
+
+
+  GestureDetector buildShippingInfoItemCard(index) {
+    return GestureDetector(
+      onTap: () {
+        if (_seleted_shipping_address != _shippingAddressList[index].id) {
+          _seleted_shipping_address = _shippingAddressList[index].id;
+
+          onAddressSwitch();
+        }
+        //detectShippingOption();
+        setState(() {});
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          side: _seleted_shipping_address == _shippingAddressList[index].id
+              ? BorderSide(color: MyTheme.accent_color, width: 2.0)
+              : BorderSide(color: MyTheme.light_grey, width: 1.0),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        elevation: 0.0,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 75,
+                      child: Text(
+                        AppLocalizations.of(context)
+                            .shipping_info_screen_address,
+                        style: TextStyle(
+                          color: MyTheme.grey_153,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 175,
+                      child: Text(
+                        _shippingAddressList[index].address ?? '',
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: MyTheme.dark_grey,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    Spacer(),
+                    buildShippingOptionsCheckContainer(
+                        _seleted_shipping_address ==
+                            _shippingAddressList[index].id)
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 75,
+                      child: Text(
+                        AppLocalizations.of(context).shipping_info_screen_city,
+                        style: TextStyle(
+                          color: MyTheme.grey_153,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 200,
+                      child: Text(
+                        _shippingAddressList[index].city ?? '',
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: MyTheme.dark_grey,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 75,
+                      child: Text(
+                        "Zone",
+                        style: TextStyle(
+                          color: MyTheme.grey_153,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 200,
+                      child: Text(
+                        _shippingAddressList[index].zone ?? '',
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: MyTheme.dark_grey,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 75,
+                      child: Text(
+                       "Area",
+                        style: TextStyle(
+                          color: MyTheme.grey_153,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 200,
+                      child: Text(
+                        _shippingAddressList[index].area ?? '',
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: MyTheme.dark_grey,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 75,
+                      child: Text(
+                        AppLocalizations.of(context)
+                            .order_details_screen_postal_code,
+                        style: TextStyle(
+                          color: MyTheme.grey_153,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 200,
+                      child: Text(
+                        _shippingAddressList[index].postal_code ?? '',
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: MyTheme.dark_grey,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 75,
+                      child: Text(
+                        AppLocalizations.of(context).shipping_info_screen_phone,
+                        style: TextStyle(
+                          color: MyTheme.grey_153,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 200,
+                      child: Text(
+                        _shippingAddressList[index].phone ?? '',
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: MyTheme.dark_grey,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+Container buildShippingOptionsCheckContainer(bool check) {
+    return check
+        ? Container(
+            height: 16,
+            width: 16,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16.0), color: Colors.green),
+            child: Padding(
+              padding: const EdgeInsets.all(3),
+              child: Icon(FontAwesome.check, color: Colors.white, size: 10),
+            ),
+          )
+        : Container();
+  }
+
+    Widget buildPickupPoint() {
+    if (is_logged_in.$ == false) {
+      return Container(
+          height: 100,
+          child: Center(
+              child: Text(
+            AppLocalizations.of(context).common_login_warning,
+            style: TextStyle(color: MyTheme.font_grey),
+          )));
+    } else if (_isInitial && _pickupList.length == 0) {
+      return SingleChildScrollView(
+          child: ShimmerHelper()
+              .buildListShimmer(item_count: 5, item_height: 100.0));
+    } else if (_pickupList.length > 0) {
+      return SingleChildScrollView(
+        child: ListView.builder(
+          itemCount: _pickupList.length,
+          scrollDirection: Axis.vertical,
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 4.0),
+              child: buildPickupInfoItemCard(index),
+            );
+          },
+        ),
+      );
+    } else if (!_isInitial && _pickupList.length == 0) {
+      return Container(
+          height: 100,
+          child: Center(
+              child: Text(
+            AppLocalizations.of(context).no_pickup_point,
+            style: TextStyle(color: MyTheme.font_grey),
+          )));
+    }
+  }
+
+  GestureDetector buildPickupInfoItemCard(index) {
+    return GestureDetector(
+      onTap: () {
+        if (_seleted_shipping_pickup_point != _pickupList[index].id) {
+          _seleted_shipping_pickup_point = _pickupList[index].id;
+          onAddressSwitch();
+        }
+        //detectShippingOption();
+        setState(() {});
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          side: _seleted_shipping_pickup_point == _pickupList[index].id
+              ? BorderSide(color: MyTheme.accent_color, width: 2.0)
+              : BorderSide(color: MyTheme.light_grey, width: 1.0),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        elevation: 0.0,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 75,
+                      child: Text(
+                        AppLocalizations.of(context)
+                            .shipping_info_screen_address,
+                        style: TextStyle(
+                          color: MyTheme.grey_153,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 175,
+                      child: Text(
+                        _pickupList[index].address,
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: MyTheme.dark_grey,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    Spacer(),
+                    buildShippingOptionsCheckContainer(
+                        _seleted_shipping_pickup_point == _pickupList[index].id)
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 75,
+                      child: Text(
+                        AppLocalizations.of(context).address_screen_phone,
+                        style: TextStyle(
+                          color: MyTheme.grey_153,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 200,
+                      child: Text(
+                        _pickupList[index].phone,
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: MyTheme.dark_grey,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
   buildPaymentMethodList() {
     if (_isInitial && _paymentTypeList.length == 0) {
       return SingleChildScrollView(
@@ -988,7 +1638,8 @@ class _CheckoutState extends State<Checkout> {
                     fontWeight: FontWeight.w600),
               ),
               onPressed: () {
-                onPressPlaceOrderOrProceed();
+                // onPressPlaceOrderOrProceed();
+                onPressProceed(context);
               },
             )
           ],

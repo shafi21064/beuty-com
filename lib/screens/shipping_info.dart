@@ -377,9 +377,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
                                     ),
                                   )))
                               : Container(),
-                          // SizedBox(
-                          //   height: 100,
-                          // ),
+                          
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: TextFormField(
@@ -393,62 +391,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
                                 });
                               },
                             ),
-                          ),
-
-                          // Coupon Code Input Field
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                labelText: 'Coupon Code',
-                                hintText: 'Enter your coupon code (if any)',
-                              ),
-                              onChanged: (value) {
-                                setState(() {
-                                  _couponCode = value;
-                                });
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Select Payment Method',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Radio(
-                                      value: 'bkash',
-                                      groupValue: _selectedPaymentMethod,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _selectedPaymentMethod = value;
-                                        });
-                                      },
-                                    ),
-                                    Text('bKash'),
-                                    Radio(
-                                      value: 'cash_on_delivery',
-                                      groupValue: _selectedPaymentMethod,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _selectedPaymentMethod = value;
-                                        });
-                                      },
-                                    ),
-                                    Text('Cash on Delivery'),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
+                          ),   
                         ]))
                       ],
                     ),

@@ -49,7 +49,7 @@ class ENDP {
       "${AppConfig.BASE_URL}/clubpoint/convert-into-wallet";
   //COUPON
 
-  static const COUPON_APPLY = "${AppConfig.BASE_URL}/coupon-apply";
+  static const COUPON_APPLY = "${AppConfig.BASE_URL}/coupon/apply";
   static const COUPON_REMOVE = "${AppConfig.BASE_URL}/coupon-remove";
   //EXTRA_REPO
   static const GET_BLOGS = "${AppConfig.BASE_URL_1}/blogs";

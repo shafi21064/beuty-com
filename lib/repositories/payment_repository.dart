@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:active_ecommerce_flutter/data_model/order_create_response_cod.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
@@ -96,11 +97,14 @@ class PaymentRepository {
     return orderCreateResponseFromJson(response.body);
   }
 
-  Future<OrderCreateResponse> getOrderCreateResponseFromCod(
-      @required payment_method) async {
-    var post_body = jsonEncode({"payment_type": "${payment_method}"});
+  Future<OrderCreateResponseCOD> getOrderCreateResponseFromCod(
+      @required requestBody) async {
+    var post_body = jsonEncode(requestBody);
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/payments/pay/cod");
+    print(post_body);
+
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/credential/order-store");
+    print(url);
 
     final response = await http.post(url,
         headers: {
@@ -110,7 +114,7 @@ class PaymentRepository {
         body: post_body);
 
     print(response.body.toString());
-    return orderCreateResponseFromJson(response.body);
+    return orderCreateResponseCODFromJson(response.body);
   }
 
   Future<OrderCreateResponse> getOrderCreateResponseFromManualPayment(

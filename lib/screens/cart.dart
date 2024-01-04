@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/screens/checkout.dart';
 import 'package:active_ecommerce_flutter/screens/shipping_info.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
@@ -193,12 +194,14 @@ class _CartState extends State<Cart> {
 
   process({mode}) async {
     var cart_ids = [];
+    var prod_ids=[];
     var cart_quantities = [];
     if (_shopList.length > 0) {
       _shopList.forEach((shop) {
         if (shop.cart_items.length > 0) {
           shop.cart_items.forEach((cart_item) {
             cart_ids.add(cart_item.id);
+            prod_ids.add(cart_item.product_id);
             cart_quantities.add(cart_item.quantity);
           });
         }
@@ -214,6 +217,7 @@ class _CartState extends State<Cart> {
 
     var cart_ids_string = cart_ids.join(',').toString();
     var cart_quantities_string = cart_quantities.join(',').toString();
+    var prod_ids_string = prod_ids.join(',').toString();
 
     print(cart_ids_string);
     print(cart_quantities_string);
@@ -233,10 +237,11 @@ class _CartState extends State<Cart> {
         fetchData();
       } else if (mode == "proceed_to_shipping") {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ShippingInfo(
-            product_ids:cart_ids_string,
-            product_quantities:cart_quantities_string
-          );
+          return Checkout(
+            title:"Checkout",
+              product_ids: prod_ids_string,
+              product_quantities: cart_quantities_string);
+          
         })).then((value) {
           onPopped(value);
         });

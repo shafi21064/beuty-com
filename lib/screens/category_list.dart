@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/screens/filter.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
@@ -257,78 +258,83 @@ class _CategoryListState extends State<CategoryList> {
                       fontWeight: FontWeight.w600),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(15, 8, 8, 4),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        if (categoryResponse.categories[index].children.length >
-                            0) {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return CategoryList(
-                              parent_category_id:
-                                  categoryResponse.categories[index].id,
-                              parent_category_name:
-                                  categoryResponse.categories[index].name,
-                            );
-                          }));
-                        } else {
-                          ToastComponent.showDialog(
-                              AppLocalizations.of(context)
-                                  .category_list_screen_no_subcategories,
-                              context,
-                              gravity: Toast.CENTER,
-                              duration: Toast.LENGTH_LONG);
-                        }
-                      },
-                      child: Visibility(
-                        visible:
-                            categoryResponse.categories[index].children.length >
-                                0,
-                        child: Container(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: Colors.grey.shade200),
-                          child: Text(
-                            AppLocalizations.of(context)
-                                .category_list_screen_view_subcategories,
-                            textAlign: TextAlign.left,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            style: TextStyle(
-                              color: categoryResponse
-                                          .categories[index].children.length >
-                                      0
-                                  ? MyTheme.medium_grey
-                                  : MyTheme.light_grey,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible:
-                          categoryResponse.categories[index].children.length >
-                              0,
-                      child: Text(
-                        " | ",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          color: MyTheme.medium_grey,
-                        ),
-                      ),
-                    ),
+              // Padding(
+              //   padding: EdgeInsets.fromLTRB(15, 8, 8, 4),
+              //   child: Row(
+              //     children: [
+              //       GestureDetector(
+              //         onTap: () {
+              //           if (categoryResponse.categories[index].children.length >
+              //               0) {
+              //             Navigator.push(context,
+              //                 MaterialPageRoute(builder: (context) {
+              //               return CategoryList(
+              //                 parent_category_id:
+              //                     categoryResponse.categories[index].id,
+              //                 parent_category_name:
+              //                     categoryResponse.categories[index].name,
+              //               );
+              //             }));
+              //           } else {
+              //             ToastComponent.showDialog(
+              //                 AppLocalizations.of(context)
+              //                     .category_list_screen_no_subcategories,
+              //                 context,
+              //                 gravity: Toast.CENTER,
+              //                 duration: Toast.LENGTH_LONG);
+              //           }
+              //         },
+                    //   child: Visibility(
+                    //     visible:
+                    //         categoryResponse.categories[index].children.length >
+                    //             0,
+                    //     child: Container(
+                    //       padding:
+                    //           EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                    //       decoration: BoxDecoration(
+                    //           borderRadius: BorderRadius.circular(12),
+                    //           color: Colors.grey.shade200),
+                    //       child: Text(
+                    //         AppLocalizations.of(context)
+                    //             .category_list_screen_view_subcategories,
+                    //         textAlign: TextAlign.left,
+                    //         overflow: TextOverflow.ellipsis,
+                    //         maxLines: 1,
+                    //         style: TextStyle(
+                    //           color: categoryResponse
+                    //                       .categories[index].children.length >
+                    //                   0
+                    //               ? MyTheme.medium_grey
+                    //               : MyTheme.light_grey,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Visibility(
+                    //   visible:
+                    //       categoryResponse.categories[index].children.length >
+                    //           0,
+                    //   child: Text(
+                    //     " | ",
+                    //     textAlign: TextAlign.left,
+                    //     style: TextStyle(
+                    //       color: MyTheme.medium_grey,
+                    //     ),
+                    //   ),
+                    // ),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return CategoryProducts(
-                            //category_id: categoryResponse.categories[index].id,
-                            category_name:
+                          // return CategoryProducts(
+                          //   //category_id: categoryResponse.categories[index].id,
+                          //   category_name:
+                          //       categoryResponse.categories[index].name,
+                          // );
+                          return Filter(
+                            // category_id: categoryResponse.categories[index].id,
+                            category:
                                 categoryResponse.categories[index].name,
                           );
                         }));
@@ -356,8 +362,6 @@ class _CategoryListState extends State<CategoryList> {
               ),
             ],
           ),
-        ),
-      ]),
     );
   }
 

@@ -137,7 +137,7 @@ Future<ProductMiniResponse> getFilteredProducts({
     'order_by': sort_key,
   };
 
-  if (name != "") parameters['name'] = name;
+  if (name != "") parameters['search'] = name;
   if (categories != null && categories != "")
     parameters['category'] = categories.toLowerCase().replaceAll(' ', '-');
   if (skin_type != null && skin_type != "")
