@@ -81,8 +81,9 @@ class _CartState extends State<Cart> {
       });
     }
 
-    setState(() {});
-  }
+if (mounted) {
+      setState(() {});
+    }  }
 
   partialTotalString(index) {
     var partialTotal = 0.00;

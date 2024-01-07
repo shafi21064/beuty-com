@@ -150,9 +150,15 @@ class _CheckoutState extends State<Checkout> {
   }
     fetchShippingAddressList() async {
     var addressResponse = await AddressRepository().getAddressList();
-    _shippingAddressList
-        .add(addressResponse.data[addressResponse.data.length - 1]);
+    print(addressResponse);
+     for (var address in addressResponse.data) {
+    if (address.set_default == 1) {
+      _shippingAddressList.add(address);
+       break;
+  }
+}
     print(_shippingAddressList);
+
     if (_shippingAddressList.length > 0) {
       _seleted_shipping_address = _shippingAddressList[0].id;
 
@@ -312,7 +318,7 @@ class _CheckoutState extends State<Checkout> {
 //     setState(() {});
 //   }
 
-onPressProceed(context) async {
+onPressProceed() async {
   
     if (_shippingOptionIsAddress && _seleted_shipping_address == 0) {
       ToastComponent.showDialog("Please select a shipping address", context);
@@ -363,22 +369,37 @@ Map<String, dynamic> requestBody = {
     }
     
 
+   try {
     // Call API
     print(requestBody);
+    loading();
 
-    var orderCreateResponse = await PaymentRepository()
-        .getOrderCreateResponseFromCod(requestBody);
-    Navigator.of(loadingcontext).pop();
-    if (orderCreateResponse.result == false) {
-      ToastComponent.showDialog(orderCreateResponse.message, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-      Navigator.of(context).pop();
-      return;
+    var orderCreateResponse =
+        await PaymentRepository().getOrderCreateResponseFromCod(requestBody);
+
+    // Check if the widget is mounted before updating the UI
+    if (mounted) {
+      Navigator.of(loadingcontext).pop();
+
+      if (orderCreateResponse.result == false) {
+        ToastComponent.showDialog(
+          orderCreateResponse.message,
+          context,
+          gravity: Toast.CENTER,
+          duration: Toast.LENGTH_LONG,
+        );
+        Navigator.of(context).pop();
+        return;
+      }
+
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return OrderList(from_checkout: true);
+      }));
     }
-
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return OrderList(from_checkout: true);
-    }));
+  } catch (e) {
+    print('Error in onPressProceed: $e');
+    // Handle the error appropriately, e.g., show a dialog or log it.
+  }
 
   
   }
@@ -1144,13 +1165,17 @@ Widget build(BuildContext context) {
   GestureDetector buildShippingInfoItemCard(index) {
     return GestureDetector(
       onTap: () {
-        if (_seleted_shipping_address != _shippingAddressList[index].id) {
-          _seleted_shipping_address = _shippingAddressList[index].id;
+        // if (_seleted_shipping_address != _shippingAddressList[index].id) {
+        //   _seleted_shipping_address = _shippingAddressList[index].id;
 
-          onAddressSwitch();
-        }
-        //detectShippingOption();
-        setState(() {});
+        //   onAddressSwitch();
+        // }
+        // //detectShippingOption();
+        // setState(() {});
+             Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Address()), // Replace AddressScreen with the actual screen you want to navigate to
+    );
       },
       child: Card(
         shape: RoundedRectangleBorder(
@@ -1197,6 +1222,7 @@ Widget build(BuildContext context) {
                   ],
                 ),
               ),
+              
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: Row(
@@ -1341,19 +1367,50 @@ Widget build(BuildContext context) {
   }
 
 Container buildShippingOptionsCheckContainer(bool check) {
-    return check
-        ? Container(
-            height: 16,
-            width: 16,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16.0), color: Colors.green),
+  return Container(
+    height: 16,
+    width: 16,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(16.0),
+      color: Colors.green,
+    ),
+    child: Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(3),
+          child: Icon(
+            FontAwesome.check,
+            color: Colors.white,
+            size: 10,
+          ),
+        ),
+        InkWell(
+            onTap: () {
+               Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Address()), // Replace AddressScreen with the actual screen you want to navigate to
+    );
+            },
             child: Padding(
-              padding: const EdgeInsets.all(3),
-              child: Icon(FontAwesome.check, color: Colors.white, size: 10),
+              padding: const EdgeInsets.only(
+                top: 30.0,
+                left: 0.0,
+                right: 16.0,
+                bottom: 12.0,
+              ),
+              child: Icon(
+                Icons.edit,
+                color: MyTheme.dark_grey,
+                size: 16,
+              ),
             ),
-          )
-        : Container();
-  }
+          ),
+       
+      ],
+    ),
+  );
+}
+
 
     Widget buildPickupPoint() {
     if (is_logged_in.$ == false) {
@@ -1639,7 +1696,7 @@ Container buildShippingOptionsCheckContainer(bool check) {
               ),
               onPressed: () {
                 // onPressPlaceOrderOrProceed();
-                onPressProceed(context);
+                onPressProceed();
               },
             )
           ],

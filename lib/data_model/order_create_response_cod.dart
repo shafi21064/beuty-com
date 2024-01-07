@@ -77,11 +77,11 @@ class Order {
 
   int userId;
   int apiCredentialId;
-  ShippingAddress shippingAddress;
+  String shippingAddress;
   String paymentType;
   String paymentStatus;
   int deliveryStatus;
-  String date;
+  int date;
   dynamic note;
   int isRecurring;
   String couponCode;
@@ -94,7 +94,7 @@ class Order {
   factory Order.fromJson(Map<String, dynamic> json) => Order(
     userId: json["user_id"],
     apiCredentialId: json["api_credential_id"],
-    shippingAddress: ShippingAddress.fromJson(json["shipping_address"]),
+    shippingAddress: json["shipping_address"], // Parse the string here if needed
     paymentType: json["payment_type"],
     paymentStatus: json["payment_status"],
     deliveryStatus: json["delivery_status"],
@@ -112,7 +112,7 @@ class Order {
   Map<String, dynamic> toJson() => {
     "user_id": userId,
     "api_credential_id": apiCredentialId,
-    "shipping_address": shippingAddress.toJson(),
+    "shipping_address": shippingAddress,
     "payment_type": paymentType,
     "payment_status": paymentStatus,
     "delivery_status": deliveryStatus,
@@ -128,38 +128,38 @@ class Order {
   };
 }
 
-class ShippingAddress {
-  ShippingAddress({
-    this.name,
-    this.address,
-    this.state,
-    this.city,
-    this.area,
-    this.phone,
-  });
+// class ShippingAddress {
+//   ShippingAddress({
+//     this.name,
+//     this.address,
+//     this.state,
+//     this.city,
+//     this.area,
+//     this.phone,
+//   });
 
-  String name;
-  String address;
-  String state;
-  String city;
-  dynamic area;
-  String phone;
+//   String name;
+//   String address;
+//   String state;
+//   String city;
+//   dynamic area;
+//   String phone;
 
-  factory ShippingAddress.fromJson(Map<String, dynamic> json) => ShippingAddress(
-    name: json["name"],
-    address: json["address"],
-    state: json["state"],
-    city: json["city"],
-    area: json["area"],
-    phone: json["phone"],
-  );
+//   factory ShippingAddress.fromJson(Map<String, dynamic> json) => ShippingAddress(
+//     name: json["name"],
+//     address: json["address"],
+//     state: json["state"],
+//     city: json["city"],
+//     area: json["area"],
+//     phone: json["phone"],
+//   );
 
-  Map<String, dynamic> toJson() => {
-    "name": name,
-    "address": address,
-    "state": state,
-    "city": city,
-    "area": area,
-    "phone": phone,
-  };
-}
+//   Map<String, dynamic> toJson() => {
+//     "name": name,
+//     "address": address,
+//     "state": state,
+//     "city": city,
+//     "area": area,
+//     "phone": phone,
+//   };
+// }
