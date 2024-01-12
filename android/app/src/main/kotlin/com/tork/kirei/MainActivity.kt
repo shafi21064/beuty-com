@@ -1,4 +1,4 @@
-package com.example.active_ecommerce_flutter
+package com.tork.kirei
 
 import io.flutter.embedding.android.FlutterActivity
 

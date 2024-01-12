@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:620463100599:android:1e52dbe5dcadaf75253332",
         "android_client_info": {
-          "package_name": "com.activeitzone.active_ecommerce_flutter_app"
+          "package_name": "com.tork.kirei"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "620463100599-ncumjpgaqm59govrls95jku9vrmm85ih.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.activeitzone.active_ecommerce_flutter_app",
+            "package_name": "com.tork.kirei",
             "certificate_hash": "8253b5fcc9a81b69352ef11409ae436ad37e5384"
           }
         },
