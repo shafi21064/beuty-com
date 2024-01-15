@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:kirei/my_theme.dart';
 import 'dart:ui';
 import 'package:intl/intl.dart' as intl;
 import 'package:flutter/painting.dart';
@@ -7,10 +7,10 @@ import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'dart:async';
 import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_5.dart';
-import 'package:active_ecommerce_flutter/app_config.dart';
-import 'package:active_ecommerce_flutter/repositories/chat_repository.dart';
-import 'package:active_ecommerce_flutter/helpers/shimmer_helper.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
+import 'package:kirei/app_config.dart';
+import 'package:kirei/repositories/chat_repository.dart';
+import 'package:kirei/helpers/shimmer_helper.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 

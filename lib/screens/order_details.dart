@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:kirei/my_theme.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:timeline_tile/timeline_tile.dart';
-import 'package:active_ecommerce_flutter/repositories/order_repository.dart';
-import 'package:active_ecommerce_flutter/helpers/shimmer_helper.dart';
-import 'package:active_ecommerce_flutter/custom/toast_component.dart';
+import 'package:kirei/repositories/order_repository.dart';
+import 'package:kirei/helpers/shimmer_helper.dart';
+import 'package:kirei/custom/toast_component.dart';
 import 'package:toast/toast.dart';
-import 'package:active_ecommerce_flutter/screens/main.dart';
-import 'package:active_ecommerce_flutter/repositories/refund_request_repository.dart';
-import 'package:active_ecommerce_flutter/screens/refund_request.dart';
+import 'package:kirei/screens/main.dart';
+import 'package:kirei/repositories/refund_request_repository.dart';
+import 'package:kirei/screens/refund_request.dart';
 import 'dart:async';
-import 'package:active_ecommerce_flutter/screens/checkout.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
+import 'package:kirei/screens/checkout.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrderDetails extends StatefulWidget {

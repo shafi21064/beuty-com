@@ -1,5 +1,5 @@
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
-import 'package:active_ecommerce_flutter/repositories/auth_repository.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
+import 'package:kirei/repositories/auth_repository.dart';
 
 class AuthHelper {
   setUserData(loginResponse) {

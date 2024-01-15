@@ -1,6 +1,6 @@
-import 'package:active_ecommerce_flutter/data_model/addons_response.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
-import 'package:active_ecommerce_flutter/repositories/addons_repository.dart';
+import 'package:kirei/data_model/addons_response.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
+import 'package:kirei/repositories/addons_repository.dart';
 
 class AddonsHelper {
   setAddonsData() async {

@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "620463100599",
-    "project_id": "testproject-43",
-    "storage_bucket": "testproject-43.appspot.com"
+    "project_number": "851647099831",
+    "project_id": "kirei-bd",
+    "storage_bucket": "kirei-bd.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:620463100599:android:1e52dbe5dcadaf75253332",
+        "mobilesdk_app_id": "1:851647099831:android:33f28e7a40ab816534ee32",
         "android_client_info": {
           "package_name": "com.tork.kirei"
         }
       },
       "oauth_client": [
         {
-          "client_id": "620463100599-ncumjpgaqm59govrls95jku9vrmm85ih.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tork.kirei",
-            "certificate_hash": "8253b5fcc9a81b69352ef11409ae436ad37e5384"
-          }
-        },
-        {
-          "client_id": "620463100599-ndiqp3rvlvmvlccrkuj5bbi15h8v19p7.apps.googleusercontent.com",
+          "client_id": "851647099831-hk0h401884jkraf1iea2qa2527g0npnn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCfra9clKmJ1pb5CWetGeaQ4rYy_mMPsTM"
+          "current_key": "AIzaSyCrBJ0caJ17EhZ5QoXqG5Rh13jQuektJAo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "620463100599-ndiqp3rvlvmvlccrkuj5bbi15h8v19p7.apps.googleusercontent.com",
+              "client_id": "851647099831-hk0h401884jkraf1iea2qa2527g0npnn.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -1,22 +1,22 @@
-import 'package:active_ecommerce_flutter/app_config.dart';
-import 'package:active_ecommerce_flutter/data_model/order_create_response_cod.dart';
+import 'package:kirei/app_config.dart';
+import 'package:kirei/data_model/order_create_response_cod.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
-import 'package:active_ecommerce_flutter/data_model/payment_type_response.dart';
-import 'package:active_ecommerce_flutter/data_model/order_create_response.dart';
-import 'package:active_ecommerce_flutter/data_model/paypal_url_response.dart';
-import 'package:active_ecommerce_flutter/data_model/flutterwave_url_response.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
-import 'package:active_ecommerce_flutter/data_model/razorpay_payment_success_response.dart';
-import 'package:active_ecommerce_flutter/data_model/paystack_payment_success_response.dart';
-import 'package:active_ecommerce_flutter/data_model/iyzico_payment_success_response.dart';
-import 'package:active_ecommerce_flutter/data_model/bkash_begin_response.dart';
-import 'package:active_ecommerce_flutter/data_model/bkash_payment_process_response.dart';
-import 'package:active_ecommerce_flutter/data_model/nagad_begin_response.dart';
-import 'package:active_ecommerce_flutter/data_model/nagad_payment_process_response.dart';
+import 'package:kirei/data_model/payment_type_response.dart';
+import 'package:kirei/data_model/order_create_response.dart';
+import 'package:kirei/data_model/paypal_url_response.dart';
+import 'package:kirei/data_model/flutterwave_url_response.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
+import 'package:kirei/data_model/razorpay_payment_success_response.dart';
+import 'package:kirei/data_model/paystack_payment_success_response.dart';
+import 'package:kirei/data_model/iyzico_payment_success_response.dart';
+import 'package:kirei/data_model/bkash_begin_response.dart';
+import 'package:kirei/data_model/bkash_payment_process_response.dart';
+import 'package:kirei/data_model/nagad_begin_response.dart';
+import 'package:kirei/data_model/nagad_payment_process_response.dart';
 
-import 'package:active_ecommerce_flutter/data_model/sslcommerz_begin_response.dart';
+import 'package:kirei/data_model/sslcommerz_begin_response.dart';
 
 class PaymentRepository {
   Future<List<PaymentTypeResponse>> getPaymentResponseList(

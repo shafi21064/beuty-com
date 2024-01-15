@@ -1,16 +1,16 @@
-import 'package:active_ecommerce_flutter/screens/filter.dart';
+import 'package:kirei/screens/filter.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:active_ecommerce_flutter/my_theme.dart';
-import 'package:active_ecommerce_flutter/ui_sections/drawer.dart';
-import 'package:active_ecommerce_flutter/custom/toast_component.dart';
+import 'package:kirei/my_theme.dart';
+import 'package:kirei/ui_sections/drawer.dart';
+import 'package:kirei/custom/toast_component.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:toast/toast.dart';
-import 'package:active_ecommerce_flutter/screens/category_products.dart';
-import 'package:active_ecommerce_flutter/repositories/category_repository.dart';
+import 'package:kirei/screens/category_products.dart';
+import 'package:kirei/repositories/category_repository.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:active_ecommerce_flutter/app_config.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
+import 'package:kirei/app_config.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CategoryList extends StatefulWidget {

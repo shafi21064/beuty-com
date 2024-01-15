@@ -1,18 +1,18 @@
-import 'package:active_ecommerce_flutter/data_model/questions_response.dart';
-import 'package:active_ecommerce_flutter/repositories/questions_repository.dart';
+import 'package:kirei/data_model/questions_response.dart';
+import 'package:kirei/repositories/questions_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:kirei/my_theme.dart';
 import 'dart:ui';
 import 'package:flutter/painting.dart';
 import 'dart:async';
 
-import 'package:active_ecommerce_flutter/custom/toast_component.dart';
+import 'package:kirei/custom/toast_component.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter/services.dart';
 import 'package:expandable/expandable.dart';
 
-import 'package:active_ecommerce_flutter/helpers/shimmer_helper.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
+import 'package:kirei/helpers/shimmer_helper.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProductQuestions extends StatefulWidget {

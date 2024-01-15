@@ -1,7 +1,7 @@
-import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:kirei/my_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:active_ecommerce_flutter/screens/product_details.dart';
-import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:kirei/screens/product_details.dart';
+import 'package:kirei/app_config.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 

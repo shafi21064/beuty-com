@@ -1,9 +1,9 @@
-import 'package:active_ecommerce_flutter/app_config.dart';
-import 'package:active_ecommerce_flutter/data_model/skin_type_response.dart';
-import 'package:active_ecommerce_flutter/helpers/endpoints.dart';
+import 'package:kirei/app_config.dart';
+import 'package:kirei/data_model/skin_type_response.dart';
+import 'package:kirei/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
-import 'package:active_ecommerce_flutter/data_model/brand_response.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
+import 'package:kirei/data_model/brand_response.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
 
 class SkinTypesRepository {
   Future<SkinTypesResponse> getFilterPageSkinTypes() async {

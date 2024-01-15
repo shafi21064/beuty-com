@@ -1,11 +1,11 @@
-import 'package:active_ecommerce_flutter/app_config.dart';
-import 'package:active_ecommerce_flutter/dummy_data/products.dart';
+import 'package:kirei/app_config.dart';
+import 'package:kirei/dummy_data/products.dart';
 import 'package:http/http.dart' as http;
-import 'package:active_ecommerce_flutter/data_model/product_mini_response.dart';
-import 'package:active_ecommerce_flutter/data_model/product_details_response_new.dart';
-import 'package:active_ecommerce_flutter/data_model/variant_response.dart';
+import 'package:kirei/data_model/product_mini_response.dart';
+import 'package:kirei/data_model/product_details_response_new.dart';
+import 'package:kirei/data_model/variant_response.dart';
 import 'package:flutter/foundation.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
 
 class ProductRepository {
   Future<ProductMiniResponse> getFeaturedProducts() async {

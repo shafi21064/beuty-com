@@ -1,7 +1,7 @@
-import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:kirei/my_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:active_ecommerce_flutter/app_config.dart';
-import 'package:active_ecommerce_flutter/screens/seller_details.dart';
+import 'package:kirei/app_config.dart';
+import 'package:kirei/screens/seller_details.dart';
 
 class ShopSquareCard extends StatefulWidget {
   int id;

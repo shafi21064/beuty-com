@@ -1,11 +1,11 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:active_ecommerce_flutter/screens/order_details.dart';
-import 'package:active_ecommerce_flutter/screens/login.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
-import 'package:active_ecommerce_flutter/repositories/profile_repository.dart';
+import 'package:kirei/screens/order_details.dart';
+import 'package:kirei/screens/login.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
+import 'package:kirei/repositories/profile_repository.dart';
 import 'package:one_context/one_context.dart';
-import 'package:active_ecommerce_flutter/custom/toast_component.dart';
+import 'package:kirei/custom/toast_component.dart';
 import 'package:toast/toast.dart';
 
 final FirebaseMessaging _fcm = FirebaseMessaging.instance;

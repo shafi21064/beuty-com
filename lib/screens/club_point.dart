@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:active_ecommerce_flutter/my_theme.dart';
-import 'package:active_ecommerce_flutter/app_config.dart';
-import 'package:active_ecommerce_flutter/repositories/clubpoint_repository.dart';
-import 'package:active_ecommerce_flutter/helpers/shimmer_helper.dart';
-import 'package:active_ecommerce_flutter/custom/toast_component.dart';
-import 'package:active_ecommerce_flutter/screens/wallet.dart';
+import 'package:kirei/my_theme.dart';
+import 'package:kirei/app_config.dart';
+import 'package:kirei/repositories/clubpoint_repository.dart';
+import 'package:kirei/helpers/shimmer_helper.dart';
+import 'package:kirei/custom/toast_component.dart';
+import 'package:kirei/screens/wallet.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
 
 
 class Clubpoint extends StatefulWidget {

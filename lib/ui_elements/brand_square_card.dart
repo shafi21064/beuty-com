@@ -1,7 +1,7 @@
-import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:kirei/my_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:active_ecommerce_flutter/app_config.dart';
-import 'package:active_ecommerce_flutter/screens/brand_products.dart';
+import 'package:kirei/app_config.dart';
+import 'package:kirei/screens/brand_products.dart';
 
 class BrandSquareCard extends StatefulWidget {
   int id;

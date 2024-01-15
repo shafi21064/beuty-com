@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:active_ecommerce_flutter/my_theme.dart';
-import 'package:active_ecommerce_flutter/screens/stripe_screen.dart';
-import 'package:active_ecommerce_flutter/screens/paypal_screen.dart';
-import 'package:active_ecommerce_flutter/screens/razorpay_screen.dart';
-import 'package:active_ecommerce_flutter/screens/paystack_screen.dart';
-import 'package:active_ecommerce_flutter/screens/iyzico_screen.dart';
-import 'package:active_ecommerce_flutter/screens/bkash_screen.dart';
-import 'package:active_ecommerce_flutter/screens/nagad_screen.dart';
-import 'package:active_ecommerce_flutter/screens/sslcommerz_screen.dart';
-import 'package:active_ecommerce_flutter/screens/flutterwave_screen.dart';
-import 'package:active_ecommerce_flutter/screens/paytm_screen.dart';
+import 'package:kirei/my_theme.dart';
+import 'package:kirei/screens/stripe_screen.dart';
+import 'package:kirei/screens/paypal_screen.dart';
+import 'package:kirei/screens/razorpay_screen.dart';
+import 'package:kirei/screens/paystack_screen.dart';
+import 'package:kirei/screens/iyzico_screen.dart';
+import 'package:kirei/screens/bkash_screen.dart';
+import 'package:kirei/screens/nagad_screen.dart';
+import 'package:kirei/screens/sslcommerz_screen.dart';
+import 'package:kirei/screens/flutterwave_screen.dart';
+import 'package:kirei/screens/paytm_screen.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:active_ecommerce_flutter/repositories/payment_repository.dart';
+import 'package:kirei/repositories/payment_repository.dart';
 
-import 'package:active_ecommerce_flutter/helpers/shimmer_helper.dart';
-import 'package:active_ecommerce_flutter/custom/toast_component.dart';
+import 'package:kirei/helpers/shimmer_helper.dart';
+import 'package:kirei/custom/toast_component.dart';
 import 'package:toast/toast.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 

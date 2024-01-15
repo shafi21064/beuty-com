@@ -1,13 +1,13 @@
 import 'dart:ui';
 
-import 'package:active_ecommerce_flutter/app_config.dart';
-import 'package:active_ecommerce_flutter/screens/main.dart';
+import 'package:kirei/app_config.dart';
+import 'package:kirei/screens/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:package_info/package_info.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
 
 class Splash extends StatefulWidget {
   @override

@@ -1,10 +1,10 @@
-import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:kirei/app_config.dart';
 import 'package:http/http.dart' as http;
-import 'package:active_ecommerce_flutter/data_model/wishlist_check_response.dart';
-import 'package:active_ecommerce_flutter/data_model/wishlist_delete_response.dart';
-import 'package:active_ecommerce_flutter/data_model/wishlist_response.dart';
+import 'package:kirei/data_model/wishlist_check_response.dart';
+import 'package:kirei/data_model/wishlist_delete_response.dart';
+import 'package:kirei/data_model/wishlist_response.dart';
 import 'package:flutter/foundation.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
 
 class WishListRepository {
   Future<WishlistResponse> getUserWishlist() async {

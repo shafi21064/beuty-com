@@ -1,4 +1,4 @@
-import 'package:active_ecommerce_flutter/theme/appThemes.dart';
+import 'package:kirei/theme/appThemes.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:restart_app/restart_app.dart';

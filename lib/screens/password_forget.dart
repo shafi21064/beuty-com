@@ -1,15 +1,15 @@
-import 'package:active_ecommerce_flutter/my_theme.dart';
-import 'package:active_ecommerce_flutter/screens/reset_otp.dart';
+import 'package:kirei/my_theme.dart';
+import 'package:kirei/screens/reset_otp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:active_ecommerce_flutter/custom/input_decorations.dart';
-import 'package:active_ecommerce_flutter/custom/intl_phone_input.dart';
+import 'package:kirei/custom/input_decorations.dart';
+import 'package:kirei/custom/intl_phone_input.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:active_ecommerce_flutter/screens/password_otp.dart';
-import 'package:active_ecommerce_flutter/custom/toast_component.dart';
+import 'package:kirei/screens/password_otp.dart';
+import 'package:kirei/custom/toast_component.dart';
 import 'package:toast/toast.dart';
-import 'package:active_ecommerce_flutter/repositories/auth_repository.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
+import 'package:kirei/repositories/auth_repository.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PasswordForget extends StatefulWidget {

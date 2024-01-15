@@ -1,4 +1,4 @@
-import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:kirei/app_config.dart';
 import 'package:shared_value/shared_value.dart';
 
 final SharedValue<bool> is_logged_in = SharedValue(

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:kirei/my_theme.dart';
 import 'package:flutter_countdown_timer/index.dart';
-import 'package:active_ecommerce_flutter/custom/toast_component.dart';
+import 'package:kirei/custom/toast_component.dart';
 import 'package:toast/toast.dart';
-import 'package:active_ecommerce_flutter/screens/flash_deal_products.dart';
-import 'package:active_ecommerce_flutter/repositories/flash_deal_repository.dart';
+import 'package:kirei/screens/flash_deal_products.dart';
+import 'package:kirei/repositories/flash_deal_repository.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:active_ecommerce_flutter/app_config.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
+import 'package:kirei/app_config.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FlashDealList extends StatefulWidget {

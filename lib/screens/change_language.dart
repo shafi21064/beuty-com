@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:kirei/my_theme.dart';
 
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:active_ecommerce_flutter/repositories/language_repository.dart';
-import 'package:active_ecommerce_flutter/repositories/coupon_repository.dart';
-import 'package:active_ecommerce_flutter/helpers/shimmer_helper.dart';
-import 'package:active_ecommerce_flutter/custom/toast_component.dart';
+import 'package:kirei/repositories/language_repository.dart';
+import 'package:kirei/repositories/coupon_repository.dart';
+import 'package:kirei/helpers/shimmer_helper.dart';
+import 'package:kirei/custom/toast_component.dart';
 import 'package:toast/toast.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
-import 'package:active_ecommerce_flutter/screens/main.dart';
-import 'package:active_ecommerce_flutter/providers/locale_provider.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
+import 'package:kirei/screens/main.dart';
+import 'package:kirei/providers/locale_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

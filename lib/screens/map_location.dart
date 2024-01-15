@@ -7,15 +7,15 @@
 
 import 'dart:async';
 
-import 'package:active_ecommerce_flutter/other_config.dart';
+import 'package:kirei/other_config.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
-import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:kirei/my_theme.dart';
 import 'package:toast/toast.dart';
-import 'package:active_ecommerce_flutter/custom/toast_component.dart';
-import 'package:active_ecommerce_flutter/repositories/address_repository.dart';
+import 'package:kirei/custom/toast_component.dart';
+import 'package:kirei/repositories/address_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:active_ecommerce_flutter/custom/toast_component.dart';
+import 'package:kirei/custom/toast_component.dart';
 import 'package:toast/toast.dart';
 import 'dart:convert';
-import 'package:active_ecommerce_flutter/repositories/payment_repository.dart';
-import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:kirei/repositories/payment_repository.dart';
+import 'package:kirei/my_theme.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:active_ecommerce_flutter/screens/order_list.dart';
-import 'package:active_ecommerce_flutter/screens/wallet.dart';
-import 'package:active_ecommerce_flutter/repositories/profile_repository.dart';
-import 'package:active_ecommerce_flutter/app_config.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
+import 'package:kirei/screens/order_list.dart';
+import 'package:kirei/screens/wallet.dart';
+import 'package:kirei/repositories/profile_repository.dart';
+import 'package:kirei/app_config.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PaytmScreen extends StatefulWidget {

@@ -1,16 +1,16 @@
 import 'dart:convert';
 
-import 'package:active_ecommerce_flutter/app_config.dart';
-import 'package:active_ecommerce_flutter/data_model/extra/BlogPostResponse.dart';
-import 'package:active_ecommerce_flutter/data_model/extra/CommunityCommentResponse.dart';
-import 'package:active_ecommerce_flutter/data_model/extra/NewCommunityPostResponse.dart';
-import 'package:active_ecommerce_flutter/data_model/extra/addCommunityComment.dart';
-import 'package:active_ecommerce_flutter/data_model/extra/addCommunityLike.dart';
-import 'package:active_ecommerce_flutter/data_model/extra_community_HashTags_response.dart';
-import 'package:active_ecommerce_flutter/data_model/extra_community_response.dart';
-import 'package:active_ecommerce_flutter/helpers/endpoints.dart';
+import 'package:kirei/app_config.dart';
+import 'package:kirei/data_model/extra/BlogPostResponse.dart';
+import 'package:kirei/data_model/extra/CommunityCommentResponse.dart';
+import 'package:kirei/data_model/extra/NewCommunityPostResponse.dart';
+import 'package:kirei/data_model/extra/addCommunityComment.dart';
+import 'package:kirei/data_model/extra/addCommunityLike.dart';
+import 'package:kirei/data_model/extra_community_HashTags_response.dart';
+import 'package:kirei/data_model/extra_community_response.dart';
+import 'package:kirei/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
 
 class ExtraRepository {
 

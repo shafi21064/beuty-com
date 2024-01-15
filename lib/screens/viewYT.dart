@@ -1,11 +1,11 @@
-import 'package:active_ecommerce_flutter/helpers/api.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
-import 'package:active_ecommerce_flutter/screens/video_description_screen.dart';
+import 'package:kirei/helpers/api.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
+import 'package:kirei/screens/video_description_screen.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-import 'package:active_ecommerce_flutter/custom/toast_component.dart';
-import 'package:active_ecommerce_flutter/repositories/extra_repository.dart';
+import 'package:kirei/custom/toast_component.dart';
+import 'package:kirei/repositories/extra_repository.dart';
 import 'package:comment_box/comment/comment.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';

@@ -1,5 +1,5 @@
-import 'package:active_ecommerce_flutter/app_config.dart';
-import 'package:active_ecommerce_flutter/data_model/pickup_points_response.dart';
+import 'package:kirei/app_config.dart';
+import 'package:kirei/data_model/pickup_points_response.dart';
 import 'package:http/http.dart' as http;
 
 class PickupPointRepository{

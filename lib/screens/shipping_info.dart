@@ -1,22 +1,22 @@
 import 'dart:convert';
 
-import 'package:active_ecommerce_flutter/custom/scroll_to_hide_widget.dart';
-import 'package:active_ecommerce_flutter/data_model/pickup_points_response.dart';
-import 'package:active_ecommerce_flutter/repositories/order_repository.dart';
-import 'package:active_ecommerce_flutter/repositories/pickup_points_repository.dart';
-import 'package:active_ecommerce_flutter/screens/checkout.dart';
+import 'package:kirei/custom/scroll_to_hide_widget.dart';
+import 'package:kirei/data_model/pickup_points_response.dart';
+import 'package:kirei/repositories/order_repository.dart';
+import 'package:kirei/repositories/pickup_points_repository.dart';
+import 'package:kirei/screens/checkout.dart';
 
 import 'package:flutter/material.dart';
-import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:kirei/my_theme.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
-import 'package:active_ecommerce_flutter/repositories/address_repository.dart';
-import 'package:active_ecommerce_flutter/helpers/shimmer_helper.dart';
-import 'package:active_ecommerce_flutter/data_model/city_response.dart';
-import 'package:active_ecommerce_flutter/data_model/country_response.dart';
-import 'package:active_ecommerce_flutter/custom/toast_component.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
+import 'package:kirei/repositories/address_repository.dart';
+import 'package:kirei/helpers/shimmer_helper.dart';
+import 'package:kirei/data_model/city_response.dart';
+import 'package:kirei/data_model/country_response.dart';
+import 'package:kirei/custom/toast_component.dart';
 import 'package:toast/toast.dart';
-import 'package:active_ecommerce_flutter/screens/address.dart';
+import 'package:kirei/screens/address.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ShippingInfo extends StatefulWidget {

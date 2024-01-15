@@ -2,7 +2,7 @@ import 'dart:convert' as convert;
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:http/http.dart' as http;
 
 import '../app_config.dart';
