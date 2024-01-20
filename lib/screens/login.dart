@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kirei/custom/input_decorations.dart';
 import 'package:kirei/custom/intl_phone_input.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+// import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -19,13 +19,13 @@ import 'package:kirei/custom/toast_component.dart';
 import 'package:toast/toast.dart';
 import 'package:kirei/repositories/auth_repository.dart';
 import 'package:kirei/helpers/auth_helper.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:kirei/repositories/profile_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:twitter_login/twitter_login.dart';
+// import 'package:twitter_login/twitter_login.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -117,33 +117,33 @@ class _LoginState extends State<Login> {
       AuthHelper().setUserData(loginResponse);
       AuthHelper().fetch_and_set();
       // push notification starts
-      if (OtherConfig.USE_PUSH_NOTIFICATION) {
-        final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+      // if (OtherConfig.USE_PUSH_NOTIFICATION) {
+      //   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
 
-        await _fcm.requestPermission(
-          alert: true,
-          announcement: false,
-          badge: true,
-          carPlay: false,
-          criticalAlert: false,
-          provisional: false,
-          sound: true,
-        );
+      //   await _fcm.requestPermission(
+      //     alert: true,
+      //     announcement: false,
+      //     badge: true,
+      //     carPlay: false,
+      //     criticalAlert: false,
+      //     provisional: false,
+      //     sound: true,
+      //   );
 
-        String fcmToken = await _fcm.getToken();
+      //   String fcmToken = await _fcm.getToken();
 
-        if (fcmToken != null) {
-          print("--fcm token--");
-          print(fcmToken);
-          if (is_logged_in.$ == true) {
-            print("true------------------------");
-            // update device token
-            var deviceTokenUpdateResponse = await ProfileRepository()
-                .getDeviceTokenUpdateResponse(fcmToken);
-            print("hmmmm------------------------");
-          }
-        }
-      }
+      //   if (fcmToken != null) {
+      //     print("--fcm token--");
+      //     print(fcmToken);
+      //     if (is_logged_in.$ == true) {
+      //       print("true------------------------");
+      //       // update device token
+      //       var deviceTokenUpdateResponse = await ProfileRepository()
+      //           .getDeviceTokenUpdateResponse(fcmToken);
+      //       print("hmmmm------------------------");
+      //     }
+      //   }
+      // }
 
       //push norification ends
 
@@ -154,104 +154,104 @@ class _LoginState extends State<Login> {
   }
 
   onPressedFacebookLogin() async {
-    final facebookLogin =
-        await FacebookAuth.instance.login(loginBehavior: LoginBehavior.webOnly);
+    // final facebookLogin =
+    //     await FacebookAuth.instance.login(loginBehavior: LoginBehavior.webOnly);
 
-    if (facebookLogin.status == LoginStatus.success) {
-      // get the user data
-      // by default we get the userId, email,name and picture
-      final userData = await FacebookAuth.instance.getUserData();
-      var loginResponse = await AuthRepository().getSocialLoginResponse(
-          "facebook",
-          userData['name'].toString(),
-          userData['email'].toString(),
-          userData['id'].toString(),
-          access_token: facebookLogin.accessToken.token);
-      print("..........................${loginResponse.toString()}");
-      if (loginResponse.result == false) {
-        ToastComponent.showDialog(loginResponse.message, context,
-            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-      } else {
-        ToastComponent.showDialog(loginResponse.message, context,
-            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-        AuthHelper().setUserData(loginResponse);
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return Main();
-        }));
-        FacebookAuth.instance.logOut();
-      }
-      // final userData = await FacebookAuth.instance.getUserData(fields: "email,birthday,friends,gender,link");
+    // if (facebookLogin.status == LoginStatus.success) {
+    //   // get the user data
+    //   // by default we get the userId, email,name and picture
+    //   final userData = await FacebookAuth.instance.getUserData();
+    //   var loginResponse = await AuthRepository().getSocialLoginResponse(
+    //       "facebook",
+    //       userData['name'].toString(),
+    //       userData['email'].toString(),
+    //       userData['id'].toString(),
+    //       access_token: facebookLogin.accessToken.token);
+    //   print("..........................${loginResponse.toString()}");
+    //   if (loginResponse.result == false) {
+    //     ToastComponent.showDialog(loginResponse.message, context,
+    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    //   } else {
+    //     ToastComponent.showDialog(loginResponse.message, context,
+    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    //     AuthHelper().setUserData(loginResponse);
+    //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //       return Main();
+    //     }));
+    //     FacebookAuth.instance.logOut();
+    //   }
+    //   // final userData = await FacebookAuth.instance.getUserData(fields: "email,birthday,friends,gender,link");
 
-    } else {
-      print("....Facebook auth Failed.........");
-      print(facebookLogin.status);
-      print(facebookLogin.message);
-    }
+    // } else {
+    //   print("....Facebook auth Failed.........");
+    //   print(facebookLogin.status);
+    //   print(facebookLogin.message);
+    // }
   }
 
   onPressedGoogleLogin() async {
-    try {
-      final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    // try {
+    //   final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
 
-      print(googleUser.toString());
+    //   print(googleUser.toString());
 
-      GoogleSignInAuthentication googleSignInAuthentication =
-          await googleUser.authentication;
-      String accessToken = googleSignInAuthentication.accessToken;
+    //   GoogleSignInAuthentication googleSignInAuthentication =
+    //       await googleUser.authentication;
+    //   String accessToken = googleSignInAuthentication.accessToken;
 
-      var loginResponse = await AuthRepository().getSocialLoginResponse(
-          "google", googleUser.displayName, googleUser.email, googleUser.id,
-          access_token: accessToken);
+    //   var loginResponse = await AuthRepository().getSocialLoginResponse(
+    //       "google", googleUser.displayName, googleUser.email, googleUser.id,
+    //       access_token: accessToken);
 
-      if (loginResponse.result == false) {
-        ToastComponent.showDialog(loginResponse.message, context,
-            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-      } else {
-        ToastComponent.showDialog(loginResponse.message, context,
-            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-        AuthHelper().setUserData(loginResponse);
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return Main();
-        }));
-      }
-      GoogleSignIn().disconnect();
-    } on Exception catch (e) {
-      print("error is ....... $e");
-      // TODO
-    }
+    //   if (loginResponse.result == false) {
+    //     ToastComponent.showDialog(loginResponse.message, context,
+    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    //   } else {
+    //     ToastComponent.showDialog(loginResponse.message, context,
+    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    //     AuthHelper().setUserData(loginResponse);
+    //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //       return Main();
+    //     }));
+    //   }
+    //   GoogleSignIn().disconnect();
+    // } on Exception catch (e) {
+    //   print("error is ....... $e");
+    //   // TODO
+    // }
   }
 
   onPressedTwitterLogin() async {
-    try {
-      final twitterLogin = new TwitterLogin(
-          apiKey: SocialConfig().twitter_consumer_key,
-          apiSecretKey: SocialConfig().twitter_consumer_secret,
-          redirectURI: 'activeecommerceflutterapp://');
-      // Trigger the sign-in flow
-      final authResult = await twitterLogin.login();
+    // try {
+    //   final twitterLogin = new TwitterLogin(
+    //       apiKey: SocialConfig().twitter_consumer_key,
+    //       apiSecretKey: SocialConfig().twitter_consumer_secret,
+    //       redirectURI: 'activeecommerceflutterapp://');
+    //   // Trigger the sign-in flow
+    //   final authResult = await twitterLogin.login();
 
-      var loginResponse = await AuthRepository().getSocialLoginResponse(
-          "twitter",
-          authResult.user.name,
-          authResult.user.email,
-          authResult.user.id.toString(),
-          access_token: authResult.authToken);
-      print(loginResponse);
-      if (loginResponse.result == false) {
-        ToastComponent.showDialog(loginResponse.message, context,
-            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-      } else {
-        ToastComponent.showDialog(loginResponse.message, context,
-            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-        AuthHelper().setUserData(loginResponse);
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return Main();
-        }));
-      }
-    } on Exception catch (e) {
-      print("error is ....... $e");
-      // TODO
-    }
+    //   var loginResponse = await AuthRepository().getSocialLoginResponse(
+    //       "twitter",
+    //       authResult.user.name,
+    //       authResult.user.email,
+    //       authResult.user.id.toString(),
+    //       access_token: authResult.authToken);
+    //   print(loginResponse);
+    //   if (loginResponse.result == false) {
+    //     ToastComponent.showDialog(loginResponse.message, context,
+    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    //   } else {
+    //     ToastComponent.showDialog(loginResponse.message, context,
+    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    //     AuthHelper().setUserData(loginResponse);
+    //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //       return Main();
+    //     }));
+    //   }
+    // } on Exception catch (e) {
+    //   print("error is ....... $e");
+    //   // TODO
+    // }
   }
 
   @override
@@ -600,79 +600,79 @@ class _LoginState extends State<Login> {
                                   ),
                                 ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: RaisedButton(
-                            onPressed: onPressedFacebookLogin,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(2.0),
-                            ),
-                            padding: EdgeInsets.all(0.0),
-                            child: Ink(
-                              decoration:
-                                  BoxDecoration(color: MyTheme.facebook_login),
-                              child: Container(
-                                constraints: BoxConstraints(
-                                    maxWidth: 300.0, minHeight: 50.0),
-                                alignment: Alignment.center,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons
-                                          .facebook_outlined, // You can replace this with the Google Icon
-                                      color: Colors.white,
-                                    ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      "LOGIN WITH FACEBOOK",
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.ubuntu(
-                                          color: Colors.white, fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: RaisedButton(
-                            onPressed: onPressedGoogleLogin,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(2.0),
-                            ),
-                            padding: EdgeInsets.all(0.0),
-                            child: Ink(
-                              decoration:
-                                  BoxDecoration(color: MyTheme.google_login),
-                              child: Container(
-                                constraints: BoxConstraints(
-                                    maxWidth: 300.0, minHeight: 50.0),
-                                alignment: Alignment.center,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/icon_google.png', // Replace with the actual path to your Google icon
-                                      // Adjust the width as needed
-                                      color: Colors
-                                          .white, // Set the desired color for the icon
-                                    ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      "LOGIN WITH GOOGLE",
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.ubuntu(
-                                          color: Colors.white, fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: RaisedButton(
+                        //     onPressed: onPressedFacebookLogin,
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(2.0),
+                        //     ),
+                        //     padding: EdgeInsets.all(0.0),
+                        //     child: Ink(
+                        //       decoration:
+                        //           BoxDecoration(color: MyTheme.facebook_login),
+                        //       child: Container(
+                        //         constraints: BoxConstraints(
+                        //             maxWidth: 300.0, minHeight: 50.0),
+                        //         alignment: Alignment.center,
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.center,
+                        //           children: [
+                        //             Icon(
+                        //               Icons
+                        //                   .facebook_outlined, // You can replace this with the Google Icon
+                        //               color: Colors.white,
+                        //             ),
+                        //             SizedBox(width: 10),
+                        //             Text(
+                        //               "LOGIN WITH FACEBOOK",
+                        //               textAlign: TextAlign.center,
+                        //               style: GoogleFonts.ubuntu(
+                        //                   color: Colors.white, fontSize: 16),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: RaisedButton(
+                        //     onPressed: onPressedGoogleLogin,
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(2.0),
+                        //     ),
+                        //     padding: EdgeInsets.all(0.0),
+                        //     child: Ink(
+                        //       decoration:
+                        //           BoxDecoration(color: MyTheme.google_login),
+                        //       child: Container(
+                        //         constraints: BoxConstraints(
+                        //             maxWidth: 300.0, minHeight: 50.0),
+                        //         alignment: Alignment.center,
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.center,
+                        //           children: [
+                        //             Image.asset(
+                        //               'assets/icon_google.png', // Replace with the actual path to your Google icon
+                        //               // Adjust the width as needed
+                        //               color: Colors
+                        //                   .white, // Set the desired color for the icon
+                        //             ),
+                        //             SizedBox(width: 10),
+                        //             Text(
+                        //               "LOGIN WITH GOOGLE",
+                        //               textAlign: TextAlign.center,
+                        //               style: GoogleFonts.ubuntu(
+                        //                   color: Colors.white, fontSize: 16),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(context,

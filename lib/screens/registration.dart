@@ -2,7 +2,7 @@ import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/auth_helper.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/repositories/profile_repository.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kirei/custom/input_decorations.dart';
@@ -527,87 +527,87 @@ class _RegistrationState extends State<Registration> {
                                 ),
                         ),
 
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: RaisedButton(
-                            onPressed: () {
-                              setState(() {
-                                _register_by = "otp";
-                              });
-                            },
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(2.0),
-                            ),
-                            padding: EdgeInsets.all(0.0),
-                            child: Ink(
-                              decoration:
-                                  BoxDecoration(color: MyTheme.facebook_login),
-                              child: Container(
-                                constraints: BoxConstraints(
-                                    maxWidth: 300.0, minHeight: 50.0),
-                                alignment: Alignment.center,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons
-                                          .facebook_outlined, // You can replace this with the Google Icon
-                                      color: Colors.white,
-                                    ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      "REGISTER WITH FACEBOOK",
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.openSans(
-                                          color: Colors.white, fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: RaisedButton(
-                            onPressed: () {
-                              setState(() {
-                                _register_by = "otp";
-                              });
-                            },
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(2.0),
-                            ),
-                            padding: EdgeInsets.all(0.0),
-                            child: Ink(
-                              decoration:
-                                  BoxDecoration(color: MyTheme.google_login),
-                              child: Container(
-                                constraints: BoxConstraints(
-                                    maxWidth: 300.0, minHeight: 50.0),
-                                alignment: Alignment.center,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/icon_google.png', // Replace with the actual path to your Google icon
-                                      // Adjust the width as needed
-                                      color: Colors
-                                          .white, // Set the desired color for the icon
-                                    ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      "REGISTER WITH GOOGLE",
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.openSans(
-                                          color: Colors.white, fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: RaisedButton(
+                        //     onPressed: () {
+                        //       setState(() {
+                        //         _register_by = "otp";
+                        //       });
+                        //     },
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(2.0),
+                        //     ),
+                        //     padding: EdgeInsets.all(0.0),
+                        //     child: Ink(
+                        //       decoration:
+                        //           BoxDecoration(color: MyTheme.facebook_login),
+                        //       child: Container(
+                        //         constraints: BoxConstraints(
+                        //             maxWidth: 300.0, minHeight: 50.0),
+                        //         alignment: Alignment.center,
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.center,
+                        //           children: [
+                        //             Icon(
+                        //               Icons
+                        //                   .facebook_outlined, // You can replace this with the Google Icon
+                        //               color: Colors.white,
+                        //             ),
+                        //             SizedBox(width: 10),
+                        //             Text(
+                        //               "REGISTER WITH FACEBOOK",
+                        //               textAlign: TextAlign.center,
+                        //               style: GoogleFonts.openSans(
+                        //                   color: Colors.white, fontSize: 16),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: RaisedButton(
+                        //     onPressed: () {
+                        //       setState(() {
+                        //         _register_by = "otp";
+                        //       });
+                        //     },
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(2.0),
+                        //     ),
+                        //     padding: EdgeInsets.all(0.0),
+                        //     child: Ink(
+                        //       decoration:
+                        //           BoxDecoration(color: MyTheme.google_login),
+                        //       child: Container(
+                        //         constraints: BoxConstraints(
+                        //             maxWidth: 300.0, minHeight: 50.0),
+                        //         alignment: Alignment.center,
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.center,
+                        //           children: [
+                        //             Image.asset(
+                        //               'assets/icon_google.png', // Replace with the actual path to your Google icon
+                        //               // Adjust the width as needed
+                        //               color: Colors
+                        //                   .white, // Set the desired color for the icon
+                        //             ),
+                        //             SizedBox(width: 10),
+                        //             Text(
+                        //               "REGISTER WITH GOOGLE",
+                        //               textAlign: TextAlign.center,
+                        //               style: GoogleFonts.openSans(
+                        //                   color: Colors.white, fontSize: 16),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
 
                         GestureDetector(
                           onTap: () {

@@ -25,7 +25,7 @@ import 'package:kirei/custom/toast_component.dart';
 import 'package:kirei/repositories/chat_repository.dart';
 import 'package:kirei/screens/chat.dart';
 import 'package:toast/toast.dart';
-import 'package:social_share/social_share.dart';
+// import 'package:social_share/social_share.dart';
 import 'dart:async';
 import 'package:kirei/screens/video_description_screen.dart';
 import 'package:photo_view/photo_view.dart';
@@ -408,114 +408,114 @@ class _ProductDetailsState extends State<ProductDetails> {
     });
   }
 
-  onPressShare(context) {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return StatefulBuilder(builder: (context, StateSetter setState) {
-            return AlertDialog(
-              insetPadding: EdgeInsets.symmetric(horizontal: 10),
-              contentPadding: EdgeInsets.only(
-                  top: 36.0, left: 36.0, right: 36.0, bottom: 2.0),
-              content: Container(
-                width: 400,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: FlatButton(
-                          minWidth: 75,
-                          height: 26,
-                          color: Color.fromRGBO(253, 253, 253, 1),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              side:
-                                  BorderSide(color: Colors.black, width: 1.0)),
-                          child: Text(
-                            AppLocalizations.of(context)
-                                .product_details_screen_copy_product_link,
-                            style: TextStyle(
-                              color: MyTheme.medium_grey,
-                            ),
-                          ),
-                          onPressed: () {
-                            onCopyTap(setState);
-                            SocialShare.copyToClipboard(_productDetails.link);
-                          },
-                        ),
-                      ),
-                      _showCopied
-                          ? Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Text(
-                                AppLocalizations.of(context).common_copied,
-                                style: TextStyle(
-                                    color: MyTheme.medium_grey, fontSize: 12),
-                              ),
-                            )
-                          : Container(),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: FlatButton(
-                          minWidth: 75,
-                          height: 26,
-                          color: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              side:
-                                  BorderSide(color: Colors.black, width: 1.0)),
-                          child: Text(
-                            AppLocalizations.of(context)
-                                .product_details_screen_share_options,
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          onPressed: () {
-                            print("share links ${_productDetails.link}");
-                            SocialShare.shareOptions(_productDetails.link);
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              actions: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Padding(
-                      padding: app_language_rtl.$
-                          ? EdgeInsets.only(left: 8.0)
-                          : EdgeInsets.only(right: 8.0),
-                      child: FlatButton(
-                        minWidth: 75,
-                        height: 30,
-                        color: Color.fromRGBO(253, 253, 253, 1),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            side: BorderSide(
-                                color: MyTheme.font_grey, width: 1.0)),
-                        child: Text(
-                          "CLOSE",
-                          style: TextStyle(
-                            color: MyTheme.font_grey,
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context, rootNavigator: true).pop();
-                        },
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            );
-          });
-        });
-  }
+  // onPressShare(context) {
+  //   return showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return StatefulBuilder(builder: (context, StateSetter setState) {
+  //           return AlertDialog(
+  //             insetPadding: EdgeInsets.symmetric(horizontal: 10),
+  //             contentPadding: EdgeInsets.only(
+  //                 top: 36.0, left: 36.0, right: 36.0, bottom: 2.0),
+  //             content: Container(
+  //               width: 400,
+  //               child: SingleChildScrollView(
+  //                 child: Column(
+  //                   mainAxisSize: MainAxisSize.min,
+  //                   crossAxisAlignment: CrossAxisAlignment.center,
+  //                   children: [
+  //                     Padding(
+  //                       padding: const EdgeInsets.only(bottom: 8.0),
+  //                       child: FlatButton(
+  //                         minWidth: 75,
+  //                         height: 26,
+  //                         color: Color.fromRGBO(253, 253, 253, 1),
+  //                         shape: RoundedRectangleBorder(
+  //                             borderRadius: BorderRadius.circular(8.0),
+  //                             side:
+  //                                 BorderSide(color: Colors.black, width: 1.0)),
+  //                         child: Text(
+  //                           AppLocalizations.of(context)
+  //                               .product_details_screen_copy_product_link,
+  //                           style: TextStyle(
+  //                             color: MyTheme.medium_grey,
+  //                           ),
+  //                         ),
+  //                         onPressed: () {
+  //                           onCopyTap(setState);
+  //                           // SocialShare.copyToClipboard(_productDetails.link);
+  //                         },
+  //                       ),
+  //                     ),
+  //                     _showCopied
+  //                         ? Padding(
+  //                             padding: const EdgeInsets.only(bottom: 8.0),
+  //                             child: Text(
+  //                               AppLocalizations.of(context).common_copied,
+  //                               style: TextStyle(
+  //                                   color: MyTheme.medium_grey, fontSize: 12),
+  //                             ),
+  //                           )
+  //                         : Container(),
+  //                     Padding(
+  //                       padding: const EdgeInsets.only(bottom: 8.0),
+  //                       child: FlatButton(
+  //                         minWidth: 75,
+  //                         height: 26,
+  //                         color: Colors.blue,
+  //                         shape: RoundedRectangleBorder(
+  //                             borderRadius: BorderRadius.circular(8.0),
+  //                             side:
+  //                                 BorderSide(color: Colors.black, width: 1.0)),
+  //                         child: Text(
+  //                           AppLocalizations.of(context)
+  //                               .product_details_screen_share_options,
+  //                           style: TextStyle(color: Colors.white),
+  //                         ),
+  //                         onPressed: () {
+  //                           print("share links ${_productDetails.link}");
+  //                           SocialShare.shareOptions(_productDetails.link);
+  //                         },
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ),
+  //             actions: [
+  //               Row(
+  //                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //                 children: [
+  //                   Padding(
+  //                     padding: app_language_rtl.$
+  //                         ? EdgeInsets.only(left: 8.0)
+  //                         : EdgeInsets.only(right: 8.0),
+  //                     child: FlatButton(
+  //                       minWidth: 75,
+  //                       height: 30,
+  //                       color: Color.fromRGBO(253, 253, 253, 1),
+  //                       shape: RoundedRectangleBorder(
+  //                           borderRadius: BorderRadius.circular(8.0),
+  //                           side: BorderSide(
+  //                               color: MyTheme.font_grey, width: 1.0)),
+  //                       child: Text(
+  //                         "CLOSE",
+  //                         style: TextStyle(
+  //                           color: MyTheme.font_grey,
+  //                         ),
+  //                       ),
+  //                       onPressed: () {
+  //                         Navigator.of(context, rootNavigator: true).pop();
+  //                       },
+  //                     ),
+  //                   ),
+  //                 ],
+  //               )
+  //             ],
+  //           );
+  //         });
+  //       });
+  // }
 
   onTapSellerChat() {
     return showDialog(
@@ -1841,15 +1841,15 @@ class _ProductDetailsState extends State<ProductDetails> {
       elevation: 0.0,
       titleSpacing: 0,
       actions: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
-          child: IconButton(
-            icon: Icon(Icons.share_outlined, color: Colors.white),
-            onPressed: () {
-              onPressShare(context);
-            },
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+        //   child: IconButton(
+        //     icon: Icon(Icons.share_outlined, color: Colors.white),
+        //     onPressed: () {
+        //       onPressShare(context);
+        //     },
+        //   ),
+        // ),
       ],
     );
   }

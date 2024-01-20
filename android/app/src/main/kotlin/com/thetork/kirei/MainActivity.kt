@@ -1,4 +1,4 @@
-package com.tork.kirei
+package com.thetork.kirei
 
 import io.flutter.embedding.android.FlutterActivity
 

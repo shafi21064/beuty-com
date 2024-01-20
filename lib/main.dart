@@ -13,18 +13,18 @@ import 'package:shared_value/shared_value.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'dart:async';
 import 'app_config.dart';
-import 'package:kirei/services/push_notification_service.dart';
+// import 'package:kirei/services/push_notification_service.dart';
 import 'package:one_context/one_context.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:kirei/providers/locale_provider.dart';
 import 'lang_config.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  // Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -64,11 +64,11 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    if (OtherConfig.USE_PUSH_NOTIFICATION) {
-      Future.delayed(Duration(milliseconds: 100), () async {
-        PushNotificationService().initialise();
-      });
-    }
+    // if (OtherConfig.USE_PUSH_NOTIFICATION) {
+    //   Future.delayed(Duration(milliseconds: 100), () async {
+    //     PushNotificationService().initialise();
+    //   });
+    // }
   }
 
   @override
