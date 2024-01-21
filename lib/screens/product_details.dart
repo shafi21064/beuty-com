@@ -31,6 +31,7 @@ import 'package:kirei/screens/video_description_screen.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:kirei/screens/brand_products.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:html/parser.dart' show parse;
 
 class ProductDetails extends StatefulWidget {
   int id;
@@ -71,6 +72,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   var _totalPrice;
   var _singlePrice;
   var _singlePriceString;
+  bool _isDescriptionEmpty = false;
   int _quantity = 1;
   int _stock = 0;
 
@@ -112,7 +114,12 @@ class _ProductDetailsState extends State<ProductDetails> {
         await ProductRepository().getProductDetails(id: widget.id);
 
     _productDetails = productDetailsResponse.detailed_products;
-    print(_productDetails.price);
+    var description = _productDetails.shortDescription;
+    var document = parse(description);
+    var body = document.body;
+    if (body == null && body.text.trim().isEmpty) {
+      _isDescriptionEmpty = true;
+    }
 
     // sellerChatTitleController.text =
     //     productDetailsResponse.detailed_products.name;
@@ -880,23 +887,23 @@ class _ProductDetailsState extends State<ProductDetails> {
                 //       ? buildChoiceOptionList()
                 //       : buildVariantShimmers(),
                 // ])),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      16.0,
-                      16.0,
-                      16.0,
-                      0.0,
-                    ),
-                    // child: _productDetails != null
-                    //     ? (_colorList.length > 0
-                    //         ? buildColorRow()
-                    //         : Container())
-                    //     : ShimmerHelper().buildBasicShimmer(
-                    //         height: 30.0,
-                    //       ),
-                  ),
-                ),
+                // SliverToBoxAdapter(
+                //   child: Padding(
+                //     padding: const EdgeInsets.fromLTRB(
+                //       16.0,
+                //       16.0,
+                //       16.0,
+                //       0.0,
+                //     ),
+                //     // child: _productDetails != null
+                //     //     ? (_colorList.length > 0
+                //     //         ? buildColorRow()
+                //     //         : Container())
+                //     //     : ShimmerHelper().buildBasicShimmer(
+                //     //         height: 30.0,
+                //     //       ),
+                //   ),
+                // ),
                 SliverList(
                     delegate: SliverChildListDelegate([
                   Padding(
@@ -928,111 +935,140 @@ class _ProductDetailsState extends State<ProductDetails> {
                             height: 30.0,
                           ),
                   ),
-                  Divider(
-                    height: 24.0,
-                  ),
-                ])),
-                SliverList(
-                    delegate: SliverChildListDelegate([
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      16.0,
-                      0.0,
-                      16.0,
-                      0.0,
+                  Visibility(
+                    visible: _isDescriptionEmpty,
+                    child: Divider(
+                      height: 24.0,
                     ),
-                    // child: _productDetails != null
-                    //     ? buildSellerRow(context)
-                    //     : ShimmerHelper().buildBasicShimmer(
-                    //         height: 50.0,
-                    //       ),
-                  ),
-                  Divider(
-                    height: 24,
                   ),
                 ])),
+                // SliverList(
+                //     delegate: SliverChildListDelegate([
+                //   Padding(
+                //     padding: const EdgeInsets.fromLTRB(
+                //       16.0,
+                //       0.0,
+                //       16.0,
+                //       0.0,
+                //     ),
+                //     // child: _productDetails != null
+                //     //     ? buildSellerRow(context)
+                //     //     : ShimmerHelper().buildBasicShimmer(
+                //     //         height: 50.0,
+                //     //       ),
+                //   ),
+                //   Divider(
+                //     height: 24,
+                //   ),
+                // ])),
                 SliverList(
                   delegate: SliverChildListDelegate([
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        16.0,
-                        0.0,
-                        16.0,
-                        0.0,
+                    Visibility(
+                      visible: _isDescriptionEmpty,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          16.0,
+                          0.0,
+                          16.0,
+                          0.0,
+                        ),
+                        child: Text(
+                          AppLocalizations.of(context)
+                              .product_details_screen_description,
+                          style: TextStyle(
+                              color: MyTheme.font_grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
+                        ),
                       ),
-                      child: Text(
-                        AppLocalizations.of(context)
-                            .product_details_screen_description,
-                        style: TextStyle(
-                            color: MyTheme.font_grey,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        8.0,
-                        0.0,
-                        8.0,
-                        8.0,
-                      ),
-                      child: _productDetails != null
-                          ? buildExpandableDescription()
-                          : Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8.0, vertical: 8.0),
-                              child: ShimmerHelper().buildBasicShimmer(
-                                height: 60.0,
-                              )),
-                    ),
-                    Divider(
-                      height: 1,
                     ),
 
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        16.0,
-                        16.0,
-                        16.0,
-                        0.0,
+                    Visibility(
+                      visible: _isDescriptionEmpty,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          8.0,
+                          0.0,
+                          8.0,
+                          8.0,
+                        ),
+                        child: _productDetails != null
+                            ? buildExpandableDescription()
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8.0, vertical: 8.0),
+                                child: ShimmerHelper().buildBasicShimmer(
+                                  height: 60.0,
+                                )),
                       ),
-                      child: _productDetails != null
-                          ? buildSkinTypesRow()
-                          : ShimmerHelper().buildBasicShimmer(
-                              height: 50.0,
-                            ),
                     ),
-                    Divider(
-                      height: 24.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        16.0,
-                        16.0,
-                        16.0,
-                        0.0,
+
+                    Visibility(
+                      visible: _skinTypes.length > 0,
+                      child: Divider(
+                        height: 24.0,
                       ),
-                      child: _productDetails != null
-                          ? buildKeyIngredientsRow()
-                          : ShimmerHelper().buildBasicShimmer(
-                              height: 50.0,
-                            ),
                     ),
-                    Divider(
-                      height: 24.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        16.0,
-                        16.0,
-                        16.0,
-                        0.0,
+
+                    Visibility(
+                      visible: _skinTypes.length > 0,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          16.0,
+                          16.0,
+                          16.0,
+                          0.0,
+                        ),
+                        child: _productDetails != null
+                            ? buildSkinTypesRow()
+                            : ShimmerHelper().buildBasicShimmer(
+                                height: 50.0,
+                              ),
                       ),
-                      child: _productDetails != null
-                          ? buildGoodForRow()
-                          : ShimmerHelper().buildBasicShimmer(
-                              height: 50.0,
-                            ),
+                    ),
+                    Visibility(
+                      visible: _keyIngredients.length > 0,
+                      child: Divider(
+                        height: 24.0,
+                      ),
+                    ),
+                    Visibility(
+                      visible: _keyIngredients.length > 0,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          16.0,
+                          16.0,
+                          16.0,
+                          0.0,
+                        ),
+                        child: _productDetails != null
+                            ? buildKeyIngredientsRow()
+                            : ShimmerHelper().buildBasicShimmer(
+                                height: 50.0,
+                              ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: _goodFor.length > 0,
+                      child: Divider(
+                        height: 24.0,
+                      ),
+                    ),
+                    Visibility(
+                      visible: _goodFor.length > 0,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          16.0,
+                          16.0,
+                          16.0,
+                          0.0,
+                        ),
+                        child: _productDetails != null
+                            ? buildGoodForRow()
+                            : ShimmerHelper().buildBasicShimmer(
+                                height: 50.0,
+                              ),
+                      ),
                     ),
                     Divider(
                       height: 24.0,
@@ -1829,14 +1865,27 @@ class _ProductDetailsState extends State<ProductDetails> {
             (MediaQuery.of(context).viewPadding.top > 40 ? 32.0 : 16.0),
         //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
         child: Container(
-            width: 300,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 22.0),
-              child: Text(
+          width: 300,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
                 _productDetails != null ? "৳" + _appbarPriceString : '...',
                 style: TextStyle(fontSize: 16, color: Colors.white),
               ),
-            )),
+              Text(
+                _productDetails != null
+                    ? _productDetails.name.length > 40
+                        ? _productDetails.name.substring(0, 40) + '...'
+                        : _productDetails.name
+                    : '...',
+                style: TextStyle(fontSize: 12, color: Colors.white),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2, // Adjust the number of lines if necessary
+              ),
+            ],
+          ),
+        ),
       ),
       elevation: 0.0,
       titleSpacing: 0,

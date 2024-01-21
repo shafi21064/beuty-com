@@ -33,6 +33,7 @@ dependencies:
   shimmer: ^2.0.0
   bordered_text: ^2.0.0
   flutter_html: ^2.1.5
+  html: ^0.15.1
   flutter_svg: ^0.22.0
   url_launcher: ^6.0.12
   toast: ^0.1.5
