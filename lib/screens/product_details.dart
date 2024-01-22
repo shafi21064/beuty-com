@@ -2127,7 +2127,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     bool isHovered = false;
     return _productDetails.skinTypes.length > 0
         ? Container(
-            child: Row(
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 Padding(
                   padding: app_language_rtl.$

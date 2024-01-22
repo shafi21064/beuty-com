@@ -501,11 +501,11 @@ class _OrderListState extends State<OrderList> {
                       color: MyTheme.font_grey,
                     ),
                   ),
-                  Text(_orderList[index].date,
+                  Text(_orderList[index].date ?? '',
                       style: TextStyle(color: MyTheme.font_grey, fontSize: 13)),
                   Spacer(),
                   Text(
-                    _orderList[index].grandTotal,
+                    _orderList[index].grandTotal ?? '',
                     style: TextStyle(
                         color: MyTheme.accent_color,
                         fontSize: 14,
@@ -533,7 +533,7 @@ class _OrderListState extends State<OrderList> {
                     style: TextStyle(color: MyTheme.font_grey, fontSize: 13),
                   ),
                   Text(
-                    _orderList[index].paymentStatusString,
+                    _orderList[index].paymentStatusString ?? '',
                     style: TextStyle(color: MyTheme.font_grey, fontSize: 13),
                   ),
                   Padding(
@@ -563,7 +563,7 @@ class _OrderListState extends State<OrderList> {
                   style: TextStyle(color: MyTheme.font_grey, fontSize: 13),
                 ),
                 Text(
-                  _orderList[index].deliveryStatus,
+                  _orderList[index].deliveryStatus ?? '',
                   style: TextStyle(color: MyTheme.font_grey, fontSize: 13),
                 ),
               ],

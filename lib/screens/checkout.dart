@@ -81,24 +81,18 @@ class _CheckoutState extends State<Checkout> {
   String payment_type = "cart_payment";
   String _title;
   bool _shippingOptionIsAddress = true;
-    List<dynamic> _shippingAddressList = [];
+  List<dynamic> _shippingAddressList = [];
   String _orderNote = '';
-    int _seleted_shipping_address = 0;
+  int _seleted_shipping_address = 0;
   int _seleted_shipping_pickup_point = 0;
   List<PickupPoint> _pickupList = [];
-   List<City> _cityList = [];
+  List<City> _cityList = [];
   List<Country> _countryList = [];
   bool isVisible = true;
 
   //double variables
   double mWidth = 0;
   double mHeight = 0;
-
-
-
-
-
-
 
   @override
   void initState() {
@@ -112,11 +106,11 @@ class _CheckoutState extends State<Checkout> {
     print(widget.address);
     print(widget.product_ids);
     print(widget.product_quantities);
-  // if (is_logged_in.$ == true) {
-  //     fetchAll();
-  //   }
+    // if (is_logged_in.$ == true) {
+    //   fetchAll();
+    // }
 
-   fetchAll();
+    fetchAll();
   }
 
   @override
@@ -135,7 +129,7 @@ class _CheckoutState extends State<Checkout> {
       //fetchPickupPoints();
     }
     setState(() {});
-  
+
     fetchList();
 
     if (is_logged_in.$ == true) {
@@ -148,15 +142,16 @@ class _CheckoutState extends State<Checkout> {
       }
     }
   }
-    fetchShippingAddressList() async {
+
+  fetchShippingAddressList() async {
     var addressResponse = await AddressRepository().getAddressList();
     print(addressResponse);
-     for (var address in addressResponse.data) {
-    if (address.set_default == 1) {
-      _shippingAddressList.add(address);
-       break;
-  }
-}
+    for (var address in addressResponse.data) {
+      if (address.set_default == 1) {
+        _shippingAddressList.add(address);
+        break;
+      }
+    }
     print(_shippingAddressList);
 
     if (_shippingAddressList.length > 0) {
@@ -173,7 +168,8 @@ class _CheckoutState extends State<Checkout> {
 
     //getSetShippingCost();
   }
-    getSetShippingCost() async {
+
+  getSetShippingCost() async {
     var shippingCostResponse;
     if (_shippingOptionIsAddress) {
       // shippingCostResponse = await AddressRepository().getShippingCostResponse(
@@ -186,37 +182,36 @@ class _CheckoutState extends State<Checkout> {
     }
 
     if (shippingCostResponse.result == true) {
-    // _shipping_cost_string = shippingCostResponse.value_string;
+      // _shipping_cost_string = shippingCostResponse.value_string;
       setState(() {});
     }
   }
 
-
-
   fetchList() async {
     var paymentTypeResponseList =
         await PaymentRepository().getPaymentResponseList(list: widget.list);
-    _paymentTypeList.add(paymentTypeResponseList[paymentTypeResponseList.length - 1]);
+    _paymentTypeList
+        .add(paymentTypeResponseList[paymentTypeResponseList.length - 1]);
     print(_paymentTypeList);
     if (_paymentTypeList.length > 0) {
       _selected_payment_method = _paymentTypeList[0].payment_type;
       _selected_payment_method_key = _paymentTypeList[0].payment_type_key;
     }
 
-   ;
+    ;
     _isInitial = false;
     setState(() {});
   }
-   fetchPickupPoints() async {
+
+  fetchPickupPoints() async {
     var pickupPointsResponse =
         await PickupPointRepository().getPickupPointListResponse();
     _pickupList.addAll(pickupPointsResponse.data);
     if (!_shippingOptionIsAddress) {
       _seleted_shipping_pickup_point = _pickupList.first.id;
     }
-   // getSetShippingCost();
+    // getSetShippingCost();
   }
-
 
   fetchSummary() async {
     var cartSummaryResponse = await CartRepository().getCartSummaryResponse();
@@ -277,8 +272,8 @@ class _CheckoutState extends State<Checkout> {
     if (is_logged_in.$ == true) {
       fetchAll();
     }
-
   }
+
   onAddressSwitch() async {
     //_shipping_cost_string = ". . .";
     setState(() {});
@@ -289,7 +284,8 @@ class _CheckoutState extends State<Checkout> {
     reset();
     fetchAll();
   }
-   afterAddingAnAddress() {
+
+  afterAddingAnAddress() {
     reset();
     fetchAll();
   }
@@ -318,8 +314,7 @@ class _CheckoutState extends State<Checkout> {
 //     setState(() {});
 //   }
 
-onPressProceed() async {
-  
+  onPressProceed() async {
     if (_shippingOptionIsAddress && _seleted_shipping_address == 0) {
       ToastComponent.showDialog("Please select a shipping address", context);
       return;
@@ -329,79 +324,81 @@ onPressProceed() async {
       ToastComponent.showDialog("Please select a pickup point", context);
       return;
     }
-
-print(widget.product_ids);
+    print(_shippingAddressList[0]);
     // Prepare request body
-List<String> productIdsStrings = widget.product_ids.split(',');
-List<int> productIds = productIdsStrings.map(int.parse).toList();
+    List<String> productIdsStrings = widget.product_ids.split(',');
+    List<int> productIds = productIdsStrings.map(int.parse).toList();
 
-List<String> productQuantitiesStrings = widget.product_quantities.split(',');
-List<int> productQuantities = productQuantitiesStrings.map(int.parse).toList();
+    List<String> productQuantitiesStrings =
+        widget.product_quantities.split(',');
+    List<int> productQuantities =
+        productQuantitiesStrings.map(int.parse).toList();
 
-String productIdsJsonArray = "[${productIds.join(',')}]";
-String productQuantitiesJsonArray = "[${productQuantities.join(',')}]";
+    String productIdsJsonArray = "[${productIds.join(',')}]";
+    String productQuantitiesJsonArray = "[${productQuantities.join(',')}]";
     var coupon_code = _couponController.text.toString();
 
-
-Map<String, dynamic> requestBody = {
-  "api_key": "vXrAne",
-  "api_secret": "k7t2G2j3RFBI",
-  "product_ids_arr": productIdsJsonArray,
-  "product_quantities_arr": productQuantitiesJsonArray,
-};
+    Map<String, dynamic> requestBody = {
+      "api_key": "vXrAne",
+      "api_secret": "k7t2G2j3RFBI",
+      "product_ids_arr": productIdsJsonArray,
+      "product_quantities_arr": productQuantitiesJsonArray,
+    };
     if (_shippingOptionIsAddress) {
       requestBody["shipping_address"] = _shippingAddressList[0].address;
     } else {
       requestBody["shipping_pickup_point"] = _seleted_shipping_pickup_point;
     }
 
-    requestBody["shipping_name"] = user_name.$??'';
-    requestBody["shipping_phone"] = user_email.$;
+    requestBody["shipping_name"] = user_name.$ ?? '';
+    requestBody["shipping_phone"] =
+        user_email.$ != null ? user_email.$ : _shippingAddressList[0].phone;
     requestBody["shipping_city"] = _shippingAddressList[0].city;
     requestBody["shipping_zone"] = _shippingAddressList[0].zone;
     requestBody["shipping_area"] = _shippingAddressList[0].area;
     requestBody["is_preorder"] = 0;
     requestBody["payment_type"] = "cash_on_delivery";
-    if(coupon_code !="")
-    {
-    requestBody["coupon_code"]=coupon_code;
-
+    if (coupon_code != "") {
+      requestBody["coupon_code"] = coupon_code;
     }
-    
 
-   try {
-    // Call API
-    print(requestBody);
-    loading();
+    try {
+      // Call API
+      print(requestBody);
+      loading();
 
-    var orderCreateResponse =
-        await PaymentRepository().getOrderCreateResponseFromCod(requestBody);
+      var orderCreateResponse =
+          await PaymentRepository().getOrderCreateResponseFromCod(requestBody);
 
-    // Check if the widget is mounted before updating the UI
-    if (mounted) {
-      Navigator.of(loadingcontext).pop();
+      // Check if the widget is mounted before updating the UI
+      if (mounted) {
+        Navigator.of(loadingcontext).pop();
 
-      if (orderCreateResponse.result == false) {
+        if (orderCreateResponse.result == false) {
+          ToastComponent.showDialog(
+            orderCreateResponse.message,
+            context,
+            gravity: Toast.CENTER,
+            duration: Toast.LENGTH_LONG,
+          );
+          Navigator.of(context).pop();
+          return;
+        }
+
         ToastComponent.showDialog(
           orderCreateResponse.message,
           context,
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG,
         );
-        Navigator.of(context).pop();
-        return;
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return OrderList(from_checkout: true);
+        }));
       }
-
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return OrderList(from_checkout: true);
-      }));
+    } catch (e) {
+      print('Error in onPressProceed: $e');
+      // Handle the error appropriately, e.g., show a dialog or log it.
     }
-  } catch (e) {
-    print('Error in onPressProceed: $e');
-    // Handle the error appropriately, e.g., show a dialog or log it.
-  }
-
-  
   }
 
   onCouponApply() async {
@@ -748,7 +745,7 @@ Map<String, dynamic> requestBody = {
                         ),
                         Spacer(),
                         Text(
-                          _subTotalString??'',
+                          _subTotalString ?? '',
                           style: TextStyle(
                               color: MyTheme.font_grey,
                               fontSize: 14,
@@ -773,7 +770,7 @@ Map<String, dynamic> requestBody = {
                         ),
                         Spacer(),
                         Text(
-                          _taxString??'',
+                          _taxString ?? '',
                           style: TextStyle(
                               color: MyTheme.font_grey,
                               fontSize: 14,
@@ -799,7 +796,7 @@ Map<String, dynamic> requestBody = {
                         ),
                         Spacer(),
                         Text(
-                          _shippingCostString??'',
+                          _shippingCostString ?? '',
                           style: TextStyle(
                               color: MyTheme.font_grey,
                               fontSize: 14,
@@ -825,7 +822,7 @@ Map<String, dynamic> requestBody = {
                         ),
                         Spacer(),
                         Text(
-                          _discountString??'',
+                          _discountString ?? '',
                           style: TextStyle(
                               color: MyTheme.font_grey,
                               fontSize: 14,
@@ -852,7 +849,7 @@ Map<String, dynamic> requestBody = {
                         ),
                         Spacer(),
                         Text(
-                          _totalString??'',
+                          _totalString ?? '',
                           style: TextStyle(
                               color: MyTheme.accent_color,
                               fontSize: 14,
@@ -879,142 +876,142 @@ Map<String, dynamic> requestBody = {
     );
   }
 
- @override
-Widget build(BuildContext context) {
-  mHeight = MediaQuery.of(context).size.height;
-  mWidth = MediaQuery.of(context).size.width;
+  @override
+  Widget build(BuildContext context) {
+    mHeight = MediaQuery.of(context).size.height;
+    mWidth = MediaQuery.of(context).size.width;
 
-  return Directionality(
-    textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
-    child: Scaffold(
-      backgroundColor: Colors.white,
-      appBar: buildAppBar(context),
-      bottomNavigationBar: buildBottomAppBar(context),
-      body: Stack(
-        children: [
-          RefreshIndicator( 
-            color: MyTheme.accent_color,
-            backgroundColor: Colors.white,
-            onRefresh: _onRefresh,
-            displacement: 0,
-            child: Container(
-              child: CustomScrollView(
-                controller: _mainScrollController,
-                physics: const BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics(),
-                ),
-                slivers: [
-                  SliverList(
-                    delegate: SliverChildListDelegate([
-                      Padding(
-                        padding: const EdgeInsets.only(left:16.0,right:16.0,top:16.0),
-                        child: _shippingOptionIsAddress
-                            ? buildShippingInfoList()
-                            : buildPickupPoint(),
-                      ),
-                      _shippingOptionIsAddress
-                          ? Container(
-                              height: 40,
-                              child: Center(
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) {
-                                          return Address(
-                                            from_shipping_info: true,
-                                          );
-                                        },
-                                      ),
-                                    ).then((value) {
-                                      onPopped(value);
-                                    });
-                                  },
-                                  child: Visibility(
-                                    visible: _shippingAddressList.length == 0,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        AppLocalizations.of(context)
-                                            .shipping_info_screen_go_to_address,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          decoration: TextDecoration.underline,
-                                          color: MyTheme.accent_color,
+    return Directionality(
+      textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: buildAppBar(context),
+        bottomNavigationBar: buildBottomAppBar(context),
+        body: Stack(
+          children: [
+            RefreshIndicator(
+              color: MyTheme.accent_color,
+              backgroundColor: Colors.white,
+              onRefresh: _onRefresh,
+              displacement: 0,
+              child: Container(
+                child: CustomScrollView(
+                  controller: _mainScrollController,
+                  physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics(),
+                  ),
+                  slivers: [
+                    SliverList(
+                      delegate: SliverChildListDelegate([
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 16.0, right: 16.0, top: 16.0),
+                          child: _shippingOptionIsAddress
+                              ? buildShippingInfoList()
+                              : buildPickupPoint(),
+                        ),
+                        _shippingOptionIsAddress
+                            ? Container(
+                                height: 40,
+                                child: Center(
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return Address(
+                                              from_shipping_info: true,
+                                            );
+                                          },
+                                        ),
+                                      ).then((value) {
+                                        onPopped(value);
+                                      });
+                                    },
+                                    child: Visibility(
+                                      visible: _shippingAddressList.length == 0,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          AppLocalizations.of(context)
+                                              .shipping_info_screen_go_to_address,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            color: MyTheme.accent_color,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            )
-                          : Container(),
-                     
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                        child: buildPaymentMethodList(),
-                      ),
-                      
-                      
-                       
-                    ]),
-                  ),
-                ],
+                              )
+                            : Container(),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 16.0, right: 16.0),
+                          child: buildPaymentMethodList(),
+                        ),
+                      ]),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-         // Positioned(top: 0.0, child: customAppBar(context)),
-        
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: widget.isWalletRecharge
-                ? Container()
-                : Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      /*border: Border(
+            // Positioned(top: 0.0, child: customAppBar(context)),
+
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: widget.isWalletRecharge
+                  ? Container()
+                  : Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        /*border: Border(
                       top: BorderSide(color: MyTheme.light_grey,width: 1.0),
                     )*/
-                    ),
-                    height: widget.manual_payment_from_order_details ? 80 : 180,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 16.0,right: 16.0),
-                      child: Column(
-                        children: [
-                              Padding(
-                        padding: const EdgeInsets.
-                        only(left: 16.0, right: 16.0,bottom:10.0),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Order Note',
-                            hintText: 'Add a note to your order (optional)',
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              _orderNote = value;
-                            });
-                          },
+                      ),
+                      height:
+                          widget.manual_payment_from_order_details ? 80 : 180,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 16.0, right: 16.0, bottom: 10.0),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: 'Order Note',
+                                  hintText:
+                                      'Add a note to your order (optional)',
+                                ),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _orderNote = value;
+                                  });
+                                },
+                              ),
+                            ),
+                            widget.manual_payment_from_order_details == false
+                                ? Padding(
+                                    padding: const EdgeInsets.only(bottom: 0.0),
+                                    child: buildApplyCouponRow(context),
+                                  )
+                                : Container(),
+                            grandTotalSection(),
+                          ],
                         ),
                       ),
-                          widget.manual_payment_from_order_details == false
-                              ? Padding(
-                                  padding: const EdgeInsets.only(bottom: 0.0),
-                                  child: buildApplyCouponRow(context),
-                                )
-                              : Container(),
-                           
-                          grandTotalSection(),
-                        ],
-                      ),
                     ),
-                  ),
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   Row buildApplyCouponRow(BuildContext context) {
     return Row(
@@ -1114,7 +1111,7 @@ Widget build(BuildContext context) {
         ),
       ),
       title: Text(
-        widget.title??'',
+        widget.title ?? '',
         style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
       ),
       elevation: 0.0,
@@ -1122,7 +1119,7 @@ Widget build(BuildContext context) {
     );
   }
 
-    buildShippingInfoList() {
+  buildShippingInfoList() {
     if (is_logged_in.$ == false) {
       return Container(
           height: 100,
@@ -1161,7 +1158,6 @@ Widget build(BuildContext context) {
     }
   }
 
-
   GestureDetector buildShippingInfoItemCard(index) {
     return GestureDetector(
       onTap: () {
@@ -1172,10 +1168,12 @@ Widget build(BuildContext context) {
         // }
         // //detectShippingOption();
         // setState(() {});
-             Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Address()), // Replace AddressScreen with the actual screen you want to navigate to
-    );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  Address()), // Replace AddressScreen with the actual screen you want to navigate to
+        );
       },
       child: Card(
         shape: RoundedRectangleBorder(
@@ -1222,7 +1220,6 @@ Widget build(BuildContext context) {
                   ],
                 ),
               ),
-              
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: Row(
@@ -1285,7 +1282,7 @@ Widget build(BuildContext context) {
                     Container(
                       width: 75,
                       child: Text(
-                       "Area",
+                        "Area",
                         style: TextStyle(
                           color: MyTheme.grey_153,
                         ),
@@ -1366,30 +1363,32 @@ Widget build(BuildContext context) {
     );
   }
 
-Container buildShippingOptionsCheckContainer(bool check) {
-  return Container(
-    height: 16,
-    width: 16,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(16.0),
-      color: Colors.green,
-    ),
-    child: Stack(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(3),
-          child: Icon(
-            FontAwesome.check,
-            color: Colors.white,
-            size: 10,
+  Container buildShippingOptionsCheckContainer(bool check) {
+    return Container(
+      height: 16,
+      width: 16,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16.0),
+        color: Colors.green,
+      ),
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(3),
+            child: Icon(
+              FontAwesome.check,
+              color: Colors.white,
+              size: 10,
+            ),
           ),
-        ),
-        InkWell(
+          InkWell(
             onTap: () {
-               Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Address()), // Replace AddressScreen with the actual screen you want to navigate to
-    );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        Address()), // Replace AddressScreen with the actual screen you want to navigate to
+              );
             },
             child: Padding(
               padding: const EdgeInsets.only(
@@ -1405,14 +1404,12 @@ Container buildShippingOptionsCheckContainer(bool check) {
               ),
             ),
           ),
-       
-      ],
-    ),
-  );
-}
+        ],
+      ),
+    );
+  }
 
-
-    Widget buildPickupPoint() {
+  Widget buildPickupPoint() {
     if (is_logged_in.$ == false) {
       return Container(
           height: 100,
@@ -1538,6 +1535,7 @@ Container buildShippingOptionsCheckContainer(bool check) {
       ),
     );
   }
+
   buildPaymentMethodList() {
     if (_isInitial && _paymentTypeList.length == 0) {
       return SingleChildScrollView(
