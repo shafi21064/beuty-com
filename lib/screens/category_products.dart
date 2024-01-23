@@ -213,6 +213,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
                     ? _productList[index].pictures[0].url
                     : "assets/app_logo.png",
                 slug: _productList[index].slug,
+                reviews: _productList[index].reviews,
               );
               //has_discount: _productList[index].has_discount);
             },

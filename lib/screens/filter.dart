@@ -52,13 +52,13 @@ class Filter extends StatefulWidget {
       this.key_ingredients})
       : super(key: key);
 
-   String selected_filter;
-   String selected_skin;
-   String tag;
-   String good_for;
-   String key_ingredients;
-   String category;
-   String type;
+  String selected_filter;
+  String selected_skin;
+  String tag;
+  String good_for;
+  String key_ingredients;
+  String category;
+  String type;
 
   @override
   _FilterState createState() => _FilterState();
@@ -228,12 +228,13 @@ class _FilterState extends State<Filter> {
             : _selectedBrands.join(",").toString(),
         tag: widget.tag,
         good_for: widget.good_for,
-         type: widget.type,
+        type: widget.type,
         key_ingredients: widget.key_ingredients,
         max: _maxPriceController.text.toString(),
         min: _minPriceController.text.toString());
 
     _productList.addAll(productResponse.products);
+    print(_productList);
     _isProductInitial = false;
     _totalProductData = productResponse.meta.total;
     _showProductLoadingContainer = false;
@@ -1118,16 +1119,16 @@ class _FilterState extends State<Filter> {
                         setState(() {
                           _selectedCategories.clear();
                           _selectedSkins.clear();
-                                   widget.type="";
-                                   widget.tag="";
-                                   widget.good_for="";
-                                   widget.key_ingredients="";
-                                   widget.category="";
-                                   widget.selected_skin="";
+                          widget.type = "";
+                          widget.tag = "";
+                          widget.good_for = "";
+                          widget.key_ingredients = "";
+                          widget.category = "";
+                          widget.selected_skin = "";
                           _selectedSort = "default";
                           _searchKey = "";
                           _searchController.clear();
-                                        
+
                           _selectedCategory = "";
                           _selectedBrands.clear();
                         });
@@ -1286,6 +1287,7 @@ class _FilterState extends State<Filter> {
                         ? _productList[index].pictures[0].url
                         : "assets/app_logo.png",
                     slug: _productList[index].slug,
+                    reviews: _productList[index].reviews,
                   );
                 },
               )

@@ -14,6 +14,7 @@ class ProductCard extends StatefulWidget {
   dynamic ratings;
   String image;
   String slug;
+  dynamic reviews;
   //bool has_discount;
 
   ProductCard({
@@ -24,6 +25,7 @@ class ProductCard extends StatefulWidget {
     this.price,
     this.sale_price,
     this.ratings,
+    this.reviews,
     this.slug,
     //this.has_discount
   }) : super(key: key);
@@ -41,7 +43,7 @@ class _ProductCardState extends State<ProductCard> {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return ProductDetails(
             id: widget.id,
-            slug:widget.slug,
+            slug: widget.slug,
           );
         }));
       },
@@ -99,25 +101,44 @@ class _ProductCardState extends State<ProductCard> {
                             fontWeight: FontWeight.w400),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(16, 0, 16, 5),
-                      child: RatingBar(
-                        itemSize: 18.0,
-                        ignoreGestures: true,
-                        initialRating: double.parse(widget.ratings.toString()),
-                        direction: Axis.horizontal,
-                        allowHalfRating: false,
-                        itemCount: 5,
-                        ratingWidget: RatingWidget(
-                          full: Icon(FontAwesome.star, color: Colors.amber),
-                          empty: Icon(FontAwesome.star,
-                              color: Color.fromRGBO(224, 224, 225, 1)),
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(16, 0, 16, 5),
+                          child: RatingBar(
+                            itemSize: 18.0,
+                            ignoreGestures: true,
+                            initialRating:
+                                double.parse(widget.ratings.toString()),
+                            direction: Axis.horizontal,
+                            allowHalfRating: false,
+                            itemCount: 5,
+                            ratingWidget: RatingWidget(
+                              full: Icon(FontAwesome.star, color: Colors.amber),
+                              empty: Icon(FontAwesome.star,
+                                  color: Color.fromRGBO(224, 224, 225, 1)),
+                            ),
+                            itemPadding: EdgeInsets.only(right: 1.0),
+                            onRatingUpdate: (rating) {
+                              //print(rating);
+                            },
+                          ),
                         ),
-                        itemPadding: EdgeInsets.only(right: 1.0),
-                        onRatingUpdate: (rating) {
-                          //print(rating);
-                        },
-                      ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                          child: Text(
+                            "(${widget.reviews})",
+                            textAlign: TextAlign.left,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: TextStyle(
+                                color: MyTheme.accent_color,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
                     ),
                     Row(
                       children: [

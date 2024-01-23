@@ -48,6 +48,7 @@ class DetailedProduct {
       this.photos,
       this.thumbnail_image,
       this.tags,
+      this.reviews,
       this.price_high_low,
       this.choice_options,
       this.colors,
@@ -89,6 +90,7 @@ class DetailedProduct {
   int rating;
   int rating_count;
   int earn_point;
+  int reviews;
   String description;
   String video_link;
   String link;
@@ -121,6 +123,7 @@ class DetailedProduct {
         unit: json["unit"],
         rating: json["rating"].toInt(),
         rating_count: json["rating_count"],
+        reviews: json["reviews"],
         earn_point: json["earn_point"].toInt(),
         description: json["description"] == null || json["description"] == ""
             ? "No Description is available"
@@ -153,6 +156,7 @@ class DetailedProduct {
         "current_stock": current_stock,
         "unit": unit,
         "rating": rating,
+        "reviews":reviews,
         "rating_count": rating_count,
         "earn_point": earn_point,
         "description": description,

@@ -57,6 +57,7 @@ class Product {
     this.productCategories,
     this.pictures,
     this.slug,
+    this.reviews,
     // this.sales,
     // this.links,
   });
@@ -69,6 +70,7 @@ class Product {
   // bool has_discount;
   dynamic ratings;
   String slug;
+  int reviews;
   // int sales;
   // Links links;
   List<ProductCategory> productCategories;
@@ -82,6 +84,7 @@ class Product {
       sale_price: json["sale_price"],
       // has_discount: json["has_discount"],
       ratings: json["ratings"],
+      reviews: json["reviews"],
       productCategories: List<ProductCategory>.from(
           json["product_categories"].map((x) => ProductCategory.fromJson(x))),
       pictures:
@@ -99,6 +102,7 @@ class Product {
         "sale_price": sale_price,
         // "has_discount": has_discount,
         "ratings": ratings,
+        "reviews": reviews,
         "slug": slug,
         "product_categories": List<ProductCategory>.from(
             productCategories.map((x) => x.toJson())),

@@ -37,9 +37,9 @@ class _MainState extends State<Main> {
   int _currentIndex = 0;
   var _children = [
     Home(),
-    CategoryList(
-      is_base_category: true,
-    ),
+    // CategoryList(
+    //   is_base_category: true,
+    // ),
     Filter(),
     Cart(has_bottomnav: true),
     Profile(),
@@ -113,10 +113,10 @@ class _MainState extends State<Main> {
                 title: AppLocalizations.of(context)
                     .main_screen_bottom_navigation_home,
               ),
-              TabItem(
-                icon: Icons.category,
-                title: "Categories",
-              ),
+              // TabItem(
+              //   icon: Icons.category,
+              //   title: "Categories",
+              // ),
               TabItem(icon: Icons.view_list_sharp, title: 'Shop'),
               TabItem(
                 icon: Icons.shopping_cart,

@@ -76,12 +76,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   var _trendingProductList = [];
   var _bestSellingProductList = [];
   var _hotDealsProductList = [];
+  var _newArrivalProductList = [];
   bool _isFeaturedProuctInitial = true;
   bool _isRecommendedProuctInitial = true;
   bool _isPopularSearchProductInital = true;
   bool _isTrendingProductInitial = true;
   bool _isBestSellingProductInitial = true;
   bool _isHotDealsProductInitial = true;
+  bool _isNewArrivalsProductInitial = true;
   bool _isCategoryInitial = true;
   bool _isCarouselInitial = true;
   int _totalFeaturedProductData = 0;
@@ -90,6 +92,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   int _totalTrendingProductData = 0;
   int _totalBestSellingProductData = 0;
   int _totalHotDealsProductData = 0;
+  int _totalNewArrivalsProductData = 0;
   int _productPage = 1;
   bool _showProductLoadingContainer = false;
 
@@ -124,6 +127,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         fetchTrendingProducts();
         fetchBestSellingProducts();
         fetchHotDealsProducts();
+        fetchNewArrivalsProducts();
       }
     });
   }
@@ -137,6 +141,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     fetchTrendingProducts();
     fetchBestSellingProducts();
     fetchHotDealsProducts();
+    fetchNewArrivalsProducts();
 
     // AddonsHelper().setAddonsData();
     // BusinessSettingHelper().setBusinessSettingData();
@@ -227,6 +232,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     resetProductList();
   }
 
+  fetchNewArrivalsProducts() async {
+    var productResponse = await ProductRepository().getNewArrivalsProducts();
+    _newArrivalProductList.addAll(productResponse.products);
+    _isNewArrivalsProductInitial = false;
+    _totalNewArrivalsProductData = productResponse.products.length;
+    _showProductLoadingContainer = false;
+    setState(() {});
+  }
+
   Future<void> _onRefresh() async {
     reset();
     fetchAll();
@@ -237,12 +251,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     _isFeaturedProuctInitial = true;
     _isRecommendedProuctInitial = true;
     _isPopularSearchProductInital = true;
+    _isBestSellingProductInitial = true;
+    _isHotDealsProductInitial = true;
+    _isNewArrivalsProductInitial = true;
     _totalFeaturedProductData = 0;
     _totalRecommendedProductData = 0;
     _totalPopularSearchProductData = 0;
     _totalHotDealsProductData = 0;
     _totalTrendingProductData = 0;
     _totalBestSellingProductData = 0;
+    _totalNewArrivalsProductData = 0;
     _productPage = 1;
     _showProductLoadingContainer = false;
     setState(() {});
@@ -678,7 +696,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                               8.0,
                                               0.0,
                                             ),
-                                            child: buildHomeFeaturedProducts(
+                                            child: buildNewArrivalsProducts(
                                                 context),
                                           ),
                                         ],
@@ -743,21 +761,23 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 },
                 child: Card(
                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                  shape: RoundedRectangleBorder(
-                    side: new BorderSide(color: MyTheme.light_grey, width: 0.0),
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  elevation: 77,
+                  // shape: RoundedRectangleBorder(
+                  //   side: new BorderSide(color: MyTheme.light_grey, width: 0.0),
+                  //   borderRadius: BorderRadius.circular(16.0),
+                  // ),
+                  // elevation: 77,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
                           //width: 100,
+
                           height: 100,
                           child: ClipRRect(
-                              borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(16),
-                                  bottom: Radius.zero),
+                              // borderRadius: BorderRadius.vertical(
+                              //     top: Radius.circular(16),
+                              //     bottom: Radius.zero),
+
                               child: _featuredCategoryList[index].banner == ''
                                   ? Image.asset(
                                       'assets/app_logo.png',
@@ -767,7 +787,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                       placeholder: 'assets/placeholder.png',
                                       image:
                                           _featuredCategoryList[index].banner,
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.fitWidth,
                                     ))),
                       Padding(
                         padding: EdgeInsets.fromLTRB(8, 8, 8, 4),
@@ -831,6 +851,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   sale_price:
                       _bestSellingProductList[index].sale_price.toString(),
                   slug: _bestSellingProductList[index].slug,
+                  reviews: _bestSellingProductList[index].reviews,
                 ),
               );
             },
@@ -871,6 +892,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   price: _featuredProductList[index].price.toString(),
                   sale_price: _featuredProductList[index].sale_price.toString(),
                   slug: _featuredProductList[index].slug,
+                  reviews: _featuredCategoryList[index].reviews,
                 ),
               );
             },
@@ -930,15 +952,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               return Padding(
                 padding: const EdgeInsets.only(right: 1),
                 child: MiniProductCard(
-                  id: _recommendedProductList[index].id,
-                  image: _recommendedProductList[index].pictures[0].url,
-                  ratings: _recommendedProductList[index].ratings,
-                  name: _recommendedProductList[index].name,
-                  price: _recommendedProductList[index].price.toString(),
-                  sale_price:
-                      _recommendedProductList[index].sale_price.toString(),
-                  slug: _recommendedProductList[index].slug,
-                ),
+                    id: _recommendedProductList[index].id,
+                    image: _recommendedProductList[index].pictures[0].url,
+                    ratings: _recommendedProductList[index].ratings,
+                    name: _recommendedProductList[index].name,
+                    price: _recommendedProductList[index].price.toString(),
+                    sale_price:
+                        _recommendedProductList[index].sale_price.toString(),
+                    slug: _recommendedProductList[index].slug,
+                    reviews: _recommendedProductList[index].reviews),
               );
             },
           ),
@@ -980,6 +1002,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   sale_price:
                       _popularSearchProductList[index].sale_price.toString(),
                   slug: _popularSearchProductList[index].slug,
+                  reviews: _popularSearchProductList[index].reviews,
                 ),
               );
             },
@@ -1020,6 +1043,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   price: _trendingProductList[index].price.toString(),
                   sale_price: _trendingProductList[index].sale_price.toString(),
                   slug: _trendingProductList[index].slug,
+                  reviews: _trendingProductList[index].reviews,
                 ),
               );
             },
@@ -1060,6 +1084,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   price: _hotDealsProductList[index].price.toString(),
                   sale_price: _hotDealsProductList[index].sale_price.toString(),
                   slug: _hotDealsProductList[index].slug,
+                  reviews: _hotDealsProductList[index].reviews,
                 ),
               );
             },
@@ -1067,6 +1092,48 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         ),
       );
     } else if (_totalTrendingProductData == 0) {
+      return Center(
+          child: Text(
+              AppLocalizations.of(context).common_no_product_is_available));
+    } else {
+      return Container(); // should never be happening
+    }
+  }
+
+  buildNewArrivalsProducts(context) {
+    if (_isNewArrivalsProductInitial && _newArrivalProductList.length == 0) {
+      return SingleChildScrollView(
+          child: ShimmerHelper()
+              .buildProductGridShimmer(scontroller: _productScrollController));
+    } else if (_newArrivalProductList.length > 0) {
+      //snapshot.hasData
+      return SingleChildScrollView(
+        child: SizedBox(
+          height: 200,
+          child: ListView.builder(
+            itemCount: _newArrivalProductList.length,
+            scrollDirection: Axis.horizontal,
+            itemExtent: 120,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 1),
+                child: MiniProductCard(
+                  id: _newArrivalProductList[index].id,
+                  image: _newArrivalProductList[index].pictures[0].url,
+                  ratings: _newArrivalProductList[index].ratings,
+                  name: _newArrivalProductList[index].name,
+                  price: _newArrivalProductList[index].price.toString(),
+                  sale_price:
+                      _newArrivalProductList[index].sale_price.toString(),
+                  slug: _newArrivalProductList[index].slug,
+                  reviews: _newArrivalProductList[index].reviews,
+                ),
+              );
+            },
+          ),
+        ),
+      );
+    } else if (_newArrivalProductList == 0) {
       return Center(
           child: Text(
               AppLocalizations.of(context).common_no_product_is_available));
@@ -1086,67 +1153,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return Filter(
-                            type: "new-arrivals",
-                   );
+                  type: "new-arrivals",
+                );
               }));
             },
             child: Container(
-              padding: EdgeInsets.only(top:8),
-              height: 100,
-              width: MediaQuery.of(context).size.width / 5 - 4,
-              child: Column(
-                children: [
-                  Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color:
-                              Theme.of(context).buttonTheme.colorScheme.primary,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(1.0),
-                              spreadRadius: 0,
-                              blurRadius: 9,
-                              offset: Offset(0, 1),
-                            ),
-                          ]),
-                      child: ClipOval(
-                      child: Image.asset(
-                        "assets/arrivals.jpg",
-                        fit: BoxFit
-                            .cover, // You can adjust this based on your needs
-                        height: 50,
-                        width: 50,
-                      ),
-                    ),
-                          ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Text(
-                      "New Arrivals",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color:
-                              Theme.of(context).buttonTheme.colorScheme.secondary,
-                          fontWeight: FontWeight.w300),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-              GestureDetector(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return Filter(
-                            category: "skin-care",
-                          );
-              }));
-            },
-            child: Container(
-                            padding: EdgeInsets.only(top:8),
-
+              padding: EdgeInsets.only(top: 8),
               height: 100,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
@@ -1156,7 +1168,64 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     width: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: Theme.of(context).buttonTheme.colorScheme.primary,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.primary,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(1.0),
+                            spreadRadius: 0,
+                            blurRadius: 9,
+                            offset: Offset(0, 1),
+                          ),
+                        ]),
+                    child: ClipOval(
+                      child: Image.asset(
+                        "assets/arrivals.jpg",
+                        fit: BoxFit
+                            .cover, // You can adjust this based on your needs
+                        height: 50,
+                        width: 50,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text(
+                      "New Arrivals",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Theme.of(context)
+                              .buttonTheme
+                              .colorScheme
+                              .secondary,
+                          fontWeight: FontWeight.w300),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Filter(
+                  category: "skin-care",
+                );
+              }));
+            },
+            child: Container(
+              padding: EdgeInsets.only(top: 8),
+              height: 100,
+              width: MediaQuery.of(context).size.width / 5 - 4,
+              child: Column(
+                children: [
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(1.0),
@@ -1189,17 +1258,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               ),
             ),
           ),
-           GestureDetector(
+          GestureDetector(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-               return Filter(
-                            category: "hair-care",
-                          );
+                return Filter(
+                  category: "hair-care",
+                );
               }));
             },
             child: Container(
-                            padding: EdgeInsets.only(top:8),
-
+              padding: EdgeInsets.only(top: 8),
               height: 100,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
@@ -1209,7 +1277,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     width: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: Theme.of(context).buttonTheme.colorScheme.primary,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(1.0),
@@ -1243,17 +1312,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               ),
             ),
           ),
-           GestureDetector(
+          GestureDetector(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return Filter(
-                            category: "make-up",
-                          );
+                  category: "make-up",
+                );
               }));
             },
             child: Container(
-                            padding: EdgeInsets.only(top:8),
-
+              padding: EdgeInsets.only(top: 8),
               height: 100,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
@@ -1263,7 +1331,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     width: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: Theme.of(context).buttonTheme.colorScheme.primary,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(1.0),
@@ -1296,17 +1365,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               ),
             ),
           ),
-           GestureDetector(
+          GestureDetector(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return Filter(
-                            category: "supplements",
-                          );
+                  category: "supplements",
+                );
               }));
             },
             child: Container(
-                            padding: EdgeInsets.only(top:8),
-
+              padding: EdgeInsets.only(top: 8),
               height: 100,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
@@ -1316,7 +1384,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     width: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: Theme.of(context).buttonTheme.colorScheme.primary,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(1.0),
@@ -1350,17 +1419,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               ),
             ),
           ),
-           GestureDetector(
+          GestureDetector(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return Filter(
-                            category: "daiso-japan",
-                          );
+                  category: "daiso-japan",
+                );
               }));
             },
             child: Container(
-                            padding: EdgeInsets.only(top:8),
-
+              padding: EdgeInsets.only(top: 8),
               height: 100,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
@@ -1370,7 +1438,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     width: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: Theme.of(context).buttonTheme.colorScheme.primary,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(1.0),
@@ -1404,17 +1473,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               ),
             ),
           ),
-           GestureDetector(
+          GestureDetector(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return Filter(
-                            category: "green-tea",
-                          );
+                  category: "green-tea",
+                );
               }));
             },
             child: Container(
-                            padding: EdgeInsets.only(top:8),
-
+              padding: EdgeInsets.only(top: 8),
               height: 100,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
@@ -1424,7 +1492,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     width: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: Theme.of(context).buttonTheme.colorScheme.primary,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(1.0),
@@ -1465,8 +1534,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               }));
             },
             child: Container(
-                            padding: EdgeInsets.only(top:8),
-
+              padding: EdgeInsets.only(top: 8),
               height: 100,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
@@ -1476,7 +1544,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       width: 50,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: Theme.of(context).buttonTheme.colorScheme.primary,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(1.0),
@@ -1507,7 +1576,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               ),
             ),
           ),
-       
           GestureDetector(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -1515,8 +1583,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               }));
             },
             child: Container(
-                            padding: EdgeInsets.only(top:8),
-
+              padding: EdgeInsets.only(top: 8),
               height: 100,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
@@ -1564,8 +1631,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               }));
             },
             child: Container(
-                            padding: EdgeInsets.only(top:8),
-
+              padding: EdgeInsets.only(top: 8),
               height: 100,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
@@ -1575,7 +1641,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     width: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: Theme.of(context).buttonTheme.colorScheme.primary,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(1.0),
@@ -1609,8 +1676,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               ),
             ),
           ),
-       
-    
         ],
       ),
     );

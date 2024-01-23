@@ -114,11 +114,13 @@ class _ProductDetailsState extends State<ProductDetails> {
         await ProductRepository().getProductDetails(id: widget.id);
 
     _productDetails = productDetailsResponse.detailed_products;
+    print(productDetailsResponse);
     var description = _productDetails.shortDescription;
     var document = parse(description);
     var body = document.body;
     if (body == null && body.text.trim().isEmpty) {
       _isDescriptionEmpty = true;
+      print(_isDescriptionEmpty);
     }
 
     // sellerChatTitleController.text =
@@ -936,7 +938,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ),
                   ),
                   Visibility(
-                    visible: _isDescriptionEmpty,
+                    visible: !_isDescriptionEmpty,
                     child: Divider(
                       height: 24.0,
                     ),
@@ -964,7 +966,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 SliverList(
                   delegate: SliverChildListDelegate([
                     Visibility(
-                      visible: _isDescriptionEmpty,
+                      visible: !_isDescriptionEmpty,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(
                           16.0,
@@ -984,7 +986,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
 
                     Visibility(
-                      visible: _isDescriptionEmpty,
+                      visible: !_isDescriptionEmpty,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(
                           8.0,
@@ -2451,6 +2453,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   price: _topProducts[index].price.toString(),
                   sale_price: _topProducts[index].sale_price.toString(),
                   slug: _topProducts[index].slug,
+                  reviews: _topProducts[index].reviews,
                 ),
               );
             },
@@ -2513,6 +2516,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   price: _relatedProducts[index].price.toString(),
                   sale_price: _relatedProducts[index].sale_price.toString(),
                   slug: _relatedProducts[index].slug,
+                  reviews: _relatedProducts[index].reviews,
                 ),
               );
             },
@@ -2575,6 +2579,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   price: _recommendedProducts[index].price.toString(),
                   sale_price: _recommendedProducts[index].sale_price.toString(),
                   slug: _recommendedProducts[index].slug,
+                  reviews: _recommendedProducts[index].reviews,
                 ),
               );
             },
