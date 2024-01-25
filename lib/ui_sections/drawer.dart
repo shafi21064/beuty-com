@@ -1,3 +1,5 @@
+import 'package:kirei/data_model/category_response.dart';
+import 'package:kirei/repositories/category_repository.dart';
 import 'package:kirei/screens/BeautyBooks.dart';
 import 'package:kirei/screens/blogs.dart';
 import 'package:kirei/screens/change_language.dart';
@@ -31,6 +33,27 @@ class MainDrawer extends StatefulWidget {
 }
 
 class _MainDrawerState extends State<MainDrawer> {
+  List<Category> categories = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    try {
+      CategoryRepository categoryRepository = CategoryRepository();
+      var categoryResponse = await categoryRepository.getCategories();
+      setState(() {
+        categories = categoryResponse.categories ?? [];
+      });
+    } catch (error) {
+      print('Error fetching data: $error');
+      // Handle error as needed
+    }
+  }
+
   onTapLogout(context) async {
     AuthHelper().clearUserData();
 
@@ -120,6 +143,36 @@ class _MainDrawerState extends State<MainDrawer> {
                         return DynamicThemesExampleApp();
                       }));
                     }),
+                ExpansionTile(
+                  leading: Icon(Icons.category,
+                      color: Theme.of(context).buttonTheme.colorScheme.primary),
+                  title: Text(
+                    "Categories",
+                    style: TextStyle(
+                      color: Theme.of(context).buttonTheme.colorScheme.primary,
+                      fontSize: 14,
+                    ),
+                  ),
+                  children: categories.map((category) {
+                    return category.children != null &&
+                            category.children.isNotEmpty
+                        ? ExpansionTile(
+                            title: Text(category.name),
+                            children: category.children.map((child) {
+                              return ListTile(
+                                visualDensity:
+                                    VisualDensity(horizontal: -4, vertical: -4),
+                                title: Text(child.name),
+                              );
+                            }).toList(),
+                          )
+                        : ListTile(
+                            visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
+                            title: Text(category.name),
+                          );
+                  }).toList(),
+                ),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     leading: Image.asset("assets/blog.jpg",

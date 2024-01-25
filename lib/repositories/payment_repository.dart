@@ -103,7 +103,7 @@ class PaymentRepository {
 
     print(post_body);
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/credential/order-store");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/credential/order-store/v2");
     print(url);
 
     final response = await http.post(url,
