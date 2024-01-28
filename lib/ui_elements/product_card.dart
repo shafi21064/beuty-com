@@ -50,7 +50,7 @@ class _ProductCardState extends State<ProductCard> {
       child: Container(
         //clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(0),
             color: Colors.white,
             boxShadow: [
               BoxShadow(

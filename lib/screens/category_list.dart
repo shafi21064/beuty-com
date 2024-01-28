@@ -100,7 +100,7 @@ class _CategoryListState extends State<CategoryList> {
         getAppBarTitle(),
         style: GoogleFonts.ubuntu(
           fontSize: 18,
-          color: Theme.of(context).colorScheme.primary,
+          color: MyTheme.primary,
         ),
       ),
       elevation: 0.0,
@@ -220,148 +220,146 @@ class _CategoryListState extends State<CategoryList> {
         borderRadius: BorderRadius.circular(16.0),
       ),
       elevation: 0,
-      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-        Container(
-            width: 80,
-            height: 110,
-            child: ClipRRect(
-                borderRadius: BorderRadius.horizontal(
-                    left: Radius.circular(10), right: Radius.zero),
-                child: categoryResponse.categories[index].banner != null
-                    ? FadeInImage.assetNetwork(
-                        placeholder: 'assets/placeholder.png',
-                        image: categoryResponse.categories[index].banner,
-                        fit: BoxFit.cover,
-                      )
-                    : Image.asset(
-                        'assets/app_logo.png',
-                        fit: BoxFit.fitWidth,
-                      ))),
-        Container(
-          height: 80,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(16, 8, 8, 0),
-                child: Text(
-                  categoryResponse.categories[index].name,
-                  textAlign: TextAlign.left,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: TextStyle(
-                      color: MyTheme.font_grey,
-                      fontSize: 14,
-                      height: 1.6,
-                      fontWeight: FontWeight.w600),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Container(
+              width: 80,
+              height: 110,
+              child: ClipRRect(
+                  borderRadius: BorderRadius.horizontal(
+                      left: Radius.circular(10), right: Radius.zero),
+                  child: categoryResponse.categories[index].banner != null
+                      ? FadeInImage.assetNetwork(
+                          placeholder: 'assets/placeholder.png',
+                          image: categoryResponse.categories[index].banner,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset(
+                          'assets/app_logo.png',
+                          fit: BoxFit.fitWidth,
+                        ))),
+          Container(
+            height: 80,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(16, 8, 8, 0),
+                  child: Text(
+                    categoryResponse.categories[index].name,
+                    textAlign: TextAlign.left,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: TextStyle(
+                        color: MyTheme.font_grey,
+                        fontSize: 14,
+                        height: 1.6,
+                        fontWeight: FontWeight.w600),
+                  ),
                 ),
-              ),
-              // Padding(
-              //   padding: EdgeInsets.fromLTRB(15, 8, 8, 4),
-              //   child: Row(
-              //     children: [
-              //       GestureDetector(
-              //         onTap: () {
-              //           if (categoryResponse.categories[index].children.length >
-              //               0) {
-              //             Navigator.push(context,
-              //                 MaterialPageRoute(builder: (context) {
-              //               return CategoryList(
-              //                 parent_category_id:
-              //                     categoryResponse.categories[index].id,
-              //                 parent_category_name:
-              //                     categoryResponse.categories[index].name,
-              //               );
-              //             }));
-              //           } else {
-              //             ToastComponent.showDialog(
-              //                 AppLocalizations.of(context)
-              //                     .category_list_screen_no_subcategories,
-              //                 context,
-              //                 gravity: Toast.CENTER,
-              //                 duration: Toast.LENGTH_LONG);
-              //           }
-              //         },
-                    //   child: Visibility(
-                    //     visible:
-                    //         categoryResponse.categories[index].children.length >
-                    //             0,
-                    //     child: Container(
-                    //       padding:
-                    //           EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-                    //       decoration: BoxDecoration(
-                    //           borderRadius: BorderRadius.circular(12),
-                    //           color: Colors.grey.shade200),
-                    //       child: Text(
-                    //         AppLocalizations.of(context)
-                    //             .category_list_screen_view_subcategories,
-                    //         textAlign: TextAlign.left,
-                    //         overflow: TextOverflow.ellipsis,
-                    //         maxLines: 1,
-                    //         style: TextStyle(
-                    //           color: categoryResponse
-                    //                       .categories[index].children.length >
-                    //                   0
-                    //               ? MyTheme.medium_grey
-                    //               : MyTheme.light_grey,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // Visibility(
-                    //   visible:
-                    //       categoryResponse.categories[index].children.length >
-                    //           0,
-                    //   child: Text(
-                    //     " | ",
-                    //     textAlign: TextAlign.left,
-                    //     style: TextStyle(
-                    //       color: MyTheme.medium_grey,
-                    //     ),
-                    //   ),
-                    // ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          // return CategoryProducts(
-                          //   //category_id: categoryResponse.categories[index].id,
-                          //   category_name:
-                          //       categoryResponse.categories[index].name,
-                          // );
-                          return Filter(
-                            // category_id: categoryResponse.categories[index].id,
-                            category:
-                                categoryResponse.categories[index].name,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color:
-                                Color(int.parse("0xffff0000")).withAlpha(20)),
-                        child: Text(
-                          AppLocalizations.of(context)
-                              .category_list_screen_view_products,
-                          textAlign: TextAlign.left,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style:
-                              TextStyle(color: Color(int.parse("0xffff0000"))),
-                        ),
-                      ),
+                // Padding(
+                //   padding: EdgeInsets.fromLTRB(15, 8, 8, 4),
+                //   child: Row(
+                //     children: [
+                //       GestureDetector(
+                //         onTap: () {
+                //           if (categoryResponse.categories[index].children.length >
+                //               0) {
+                //             Navigator.push(context,
+                //                 MaterialPageRoute(builder: (context) {
+                //               return CategoryList(
+                //                 parent_category_id:
+                //                     categoryResponse.categories[index].id,
+                //                 parent_category_name:
+                //                     categoryResponse.categories[index].name,
+                //               );
+                //             }));
+                //           } else {
+                //             ToastComponent.showDialog(
+                //                 AppLocalizations.of(context)
+                //                     .category_list_screen_no_subcategories,
+                //                 context,
+                //                 gravity: Toast.CENTER,
+                //                 duration: Toast.LENGTH_LONG);
+                //           }
+                //         },
+                //   child: Visibility(
+                //     visible:
+                //         categoryResponse.categories[index].children.length >
+                //             0,
+                //     child: Container(
+                //       padding:
+                //           EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                //       decoration: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(12),
+                //           color: Colors.grey.shade200),
+                //       child: Text(
+                //         AppLocalizations.of(context)
+                //             .category_list_screen_view_subcategories,
+                //         textAlign: TextAlign.left,
+                //         overflow: TextOverflow.ellipsis,
+                //         maxLines: 1,
+                //         style: TextStyle(
+                //           color: categoryResponse
+                //                       .categories[index].children.length >
+                //                   0
+                //               ? MyTheme.medium_grey
+                //               : MyTheme.light_grey,
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                // Visibility(
+                //   visible:
+                //       categoryResponse.categories[index].children.length >
+                //           0,
+                //   child: Text(
+                //     " | ",
+                //     textAlign: TextAlign.left,
+                //     style: TextStyle(
+                //       color: MyTheme.medium_grey,
+                //     ),
+                //   ),
+                // ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      // return CategoryProducts(
+                      //   //category_id: categoryResponse.categories[index].id,
+                      //   category_name:
+                      //       categoryResponse.categories[index].name,
+                      // );
+                      return Filter(
+                        // category_id: categoryResponse.categories[index].id,
+                        category: categoryResponse.categories[index].name,
+                      );
+                    }));
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Color(int.parse("0xffff0000")).withAlpha(20)),
+                    child: Text(
+                      AppLocalizations.of(context)
+                          .category_list_screen_view_products,
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(color: Color(int.parse("0xffff0000"))),
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
+        ],
+      ),
     );
   }
 

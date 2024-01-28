@@ -25,6 +25,7 @@ class MyTheme {
   static Color sign_up_with_password = Color.fromRGBO(37, 72, 73, 1);
   static Color send_otp = Color.fromRGBO(111, 113, 116, 1);
   static Color dont_have_account = Color.fromRGBO(33, 37, 41, 1);
+  static Color primary = Color.fromRGBO(208, 33, 40, 1);
 
   //testing shimmer
   /*static Color shimmer_base = Colors.redAccent;

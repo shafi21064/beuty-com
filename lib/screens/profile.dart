@@ -688,7 +688,7 @@ class _ProfileState extends State<Profile> {
                   height: 215, //150
                   decoration: BoxDecoration(
                     gradient: LinearGradient(colors: [
-                      Theme.of(context).colorScheme.primary,
+                      MyTheme.primary,
                       Theme.of(context).colorScheme.secondary,
                     ]),
                   ),
@@ -738,7 +738,7 @@ class _ProfileState extends State<Profile> {
               height: 24,
               decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [
-                  Theme.of(context).colorScheme.primary,
+                  MyTheme.primary,
                   Theme.of(context).colorScheme.secondary,
                 ]),
               ),
@@ -778,7 +778,7 @@ class _ProfileState extends State<Profile> {
       flexibleSpace: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(colors: [
-            Theme.of(context).colorScheme.primary,
+            MyTheme.primary,
             Theme.of(context).colorScheme.secondary,
           ]),
         ),

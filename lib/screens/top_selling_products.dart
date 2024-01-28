@@ -32,7 +32,7 @@ class _TopSellingProductsState extends State<TopSellingProducts> {
       flexibleSpace: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(colors: [
-            Theme.of(context).colorScheme.primary,
+            MyTheme.primary,
             Theme.of(context).colorScheme.secondary,
           ]),
         ),

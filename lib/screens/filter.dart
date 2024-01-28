@@ -453,10 +453,11 @@ class _FilterState extends State<Filter> {
         centerTitle: false,
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [
-              Theme.of(context).colorScheme.primary,
-              Theme.of(context).colorScheme.secondary,
-            ]),
+            color: MyTheme.primary,
+            // gradient: LinearGradient(colors: [
+            //   MyTheme.primary,
+            //   Theme.of(context).colorScheme.secondary,
+            // ]),
           ),
           padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
           child: Column(
@@ -471,7 +472,7 @@ class _FilterState extends State<Filter> {
   //     flexibleSpace: Container(
   //       decoration: BoxDecoration(
   //         gradient: LinearGradient(colors: [
-  //           Theme.of(context).colorScheme.primary,
+  //           MyTheme.primary,
   //           Theme.of(context).colorScheme.secondary,
   //         ]),
   //       ),
@@ -502,52 +503,53 @@ class _FilterState extends State<Filter> {
 
   Row buildBottomAppBar(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [
-              Theme.of(context).colorScheme.primary,
-              Theme.of(context).colorScheme.secondary,
-            ]),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          height: 36,
-          width: MediaQuery.of(context).size.width * .33,
-          child: new DropdownButton<WhichFilter>(
-            dropdownColor: Theme.of(context).colorScheme.primary,
-            style: new TextStyle(
-              color: Colors.white,
-            ),
-            icon: Padding(
-              padding: app_language_rtl.$
-                  ? const EdgeInsets.only(right: 16.0)
-                  : const EdgeInsets.only(left: 16.0),
-              // child: Icon(
-              //   Icons.expand_more,
-              //   color: Colors.white,
-              // ),
-            ),
-            hint: Text(
-              AppLocalizations.of(context).filter_screen_products,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 13,
-              ),
-            ),
-            iconSize: 14,
-            underline: SizedBox(),
-            value: _selectedFilter,
-            //items: _dropdownWhichFilterItems,
-            onChanged: (WhichFilter selectedFilter) {
-              setState(() {
-                _selectedFilter = selectedFilter;
-              });
+        // Container(
+        //   decoration: BoxDecoration(
+        //     color: Colors.white,
+        //     // gradient: LinearGradient(colors: [
+        //     //   MyTheme.primary,
+        //     //   Theme.of(context).colorScheme.secondary,
+        //     // ]),
+        //   ),
+        //   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        //   height: 36,
+        //   width: MediaQuery.of(context).size.width * .33,
+        //   child: new DropdownButton<WhichFilter>(
+        //     dropdownColor: MyTheme.primary,
+        //     style: new TextStyle(
+        //       color: Colors.white,
+        //     ),
+        //     icon: Padding(
+        //       padding: app_language_rtl.$
+        //           ? const EdgeInsets.only(right: 16.0)
+        //           : const EdgeInsets.only(left: 16.0),
+        //       // child: Icon(
+        //       //   Icons.expand_more,
+        //       //   color: Colors.white,
+        //       // ),
+        //     ),
+        //     hint: Text(
+        //       AppLocalizations.of(context).filter_screen_products,
+        //       style: TextStyle(
+        //         color: Colors.black,
+        //         fontSize: 13,
+        //       ),
+        //     ),
+        //     iconSize: 14,
+        //     underline: SizedBox(),
+        //     value: _selectedFilter,
+        //     //items: _dropdownWhichFilterItems,
+        //     onChanged: (WhichFilter selectedFilter) {
+        //       setState(() {
+        //         _selectedFilter = selectedFilter;
+        //       });
 
-              //  _onWhichFilterChange();
-            },
-          ),
-        ),
+        //       //  _onWhichFilterChange();
+        //     },
+        //   ),
+        // ),
         GestureDetector(
           onTap: () {
             _selectedFilter.option_key == "product"
@@ -559,14 +561,14 @@ class _FilterState extends State<Filter> {
                     duration: Toast.LENGTH_LONG);
           },
           child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [
-                Theme.of(context).colorScheme.primary,
-                Theme.of(context).colorScheme.secondary,
-              ]),
-            ),
-            height: 36,
-            width: MediaQuery.of(context).size.width * .33,
+            decoration: BoxDecoration(color: Colors.white
+                // gradient: LinearGradient(colors: [
+                //   MyTheme.primary,
+                //   Theme.of(context).colorScheme.secondary,
+                // ]),
+                ),
+            height: 48,
+            width: MediaQuery.of(context).size.width * .50,
             child: Center(
                 child: Container(
               width: 50,
@@ -575,13 +577,13 @@ class _FilterState extends State<Filter> {
                   Icon(
                     Icons.filter_alt_outlined,
                     size: 13,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   SizedBox(width: 2),
                   Text(
                     AppLocalizations.of(context).filter_screen_filter,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 13,
                     ),
                   ),
@@ -759,14 +761,14 @@ class _FilterState extends State<Filter> {
                     duration: Toast.LENGTH_LONG);
           },
           child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [
-                Theme.of(context).colorScheme.primary,
-                Theme.of(context).colorScheme.secondary,
-              ]),
-            ),
-            height: 36,
-            width: MediaQuery.of(context).size.width * .33,
+            decoration: BoxDecoration(color: Colors.white
+                // gradient: LinearGradient(colors: [
+                //   MyTheme.primary,
+                //   Theme.of(context).colorScheme.secondary,
+                // ]),
+                ),
+            height: 48,
+            width: MediaQuery.of(context).size.width * .50,
             child: Center(
                 child: Container(
               width: 50,
@@ -774,14 +776,14 @@ class _FilterState extends State<Filter> {
                 children: [
                   Icon(
                     Icons.swap_vert,
-                    color: Colors.white,
+                    color: Colors.black,
                     size: 13,
                   ),
                   SizedBox(width: 2),
                   Text(
                     "Sort",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 13,
                     ),
                   ),

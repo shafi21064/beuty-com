@@ -1850,7 +1850,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       flexibleSpace: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(colors: [
-            Theme.of(context).colorScheme.primary,
+            MyTheme.primary,
             Theme.of(context).colorScheme.secondary,
           ]),
         ),
@@ -1927,7 +1927,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   child: Ink(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(colors: [
-                        Theme.of(context).colorScheme.primary,
+                        MyTheme.primary,
                         Theme.of(context).colorScheme.secondary,
                       ]),
                     ),
@@ -1964,7 +1964,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(colors: [
                         Theme.of(context).colorScheme.secondary,
-                        Theme.of(context).colorScheme.primary,
+                        MyTheme.primary,
                       ]),
                     ),
                     child: Container(

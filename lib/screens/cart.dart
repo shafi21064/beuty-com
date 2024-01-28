@@ -81,9 +81,10 @@ class _CartState extends State<Cart> {
       });
     }
 
-if (mounted) {
+    if (mounted) {
       setState(() {});
-    }  }
+    }
+  }
 
   partialTotalString(index) {
     var partialTotal = 0.00;
@@ -195,7 +196,7 @@ if (mounted) {
 
   process({mode}) async {
     var cart_ids = [];
-    var prod_ids=[];
+    var prod_ids = [];
     var cart_quantities = [];
     if (_shopList.length > 0) {
       _shopList.forEach((shop) {
@@ -239,10 +240,9 @@ if (mounted) {
       } else if (mode == "proceed_to_shipping") {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return Checkout(
-            title:"Checkout",
+              title: "Checkout",
               product_ids: prod_ids_string,
               product_quantities: cart_quantities_string);
-          
         })).then((value) {
           onPopped(value);
         });
@@ -335,7 +335,7 @@ if (mounted) {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.0),
                 gradient: LinearGradient(colors: [
-                  Theme.of(context).colorScheme.primary,
+                  MyTheme.primary,
                   Theme.of(context).colorScheme.secondary,
                 ]),
               ),
@@ -485,7 +485,7 @@ if (mounted) {
       flexibleSpace: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(colors: [
-            Theme.of(context).colorScheme.primary,
+            MyTheme.primary,
             Theme.of(context).colorScheme.secondary,
           ]),
         ),

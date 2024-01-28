@@ -7,7 +7,6 @@ import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
 
-
 class TodaysDealProducts extends StatefulWidget {
   @override
   _TodaysDealProductsState createState() => _TodaysDealProductsState();
@@ -21,7 +20,6 @@ class _TodaysDealProductsState extends State<TodaysDealProducts> {
     return Directionality(
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
-
         backgroundColor: Colors.grey[100],
         appBar: buildAppBar(context),
         body: buildProductList(context),
@@ -33,11 +31,10 @@ class _TodaysDealProductsState extends State<TodaysDealProducts> {
     return AppBar(
       flexibleSpace: Container(
         decoration: BoxDecoration(
-          gradient:  LinearGradient(
-              colors: [
-                Theme.of(context).colorScheme.primary,
-                Theme.of(context).colorScheme.secondary,
-              ]),
+          gradient: LinearGradient(colors: [
+            MyTheme.primary,
+            Theme.of(context).colorScheme.secondary,
+          ]),
         ),
       ),
       centerTitle: true,
@@ -50,7 +47,6 @@ class _TodaysDealProductsState extends State<TodaysDealProducts> {
       title: Text(
         AppLocalizations.of(context).todays_deal_products_screen_todays_deal,
         style: TextStyle(fontSize: 18, color: Colors.white),
-
       ),
       elevation: 0.0,
       titleSpacing: 0,

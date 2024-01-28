@@ -185,7 +185,7 @@ class _ProfileEditState extends State<ProfileEdit> {
       flexibleSpace: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(colors: [
-            Theme.of(context).colorScheme.primary,
+            MyTheme.primary,
             Theme.of(context).colorScheme.secondary,
           ]),
         ),
@@ -418,7 +418,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     child: Ink(
                       decoration: BoxDecoration(
                           gradient: LinearGradient(colors: [
-                            Theme.of(context).colorScheme.primary,
+                            MyTheme.primary,
                             Theme.of(context).colorScheme.secondary,
                           ]),
                           borderRadius: BorderRadius.circular(30.0)),
