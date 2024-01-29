@@ -86,24 +86,42 @@ class _MyAppState extends State<MyApp> {
               defaultThemeId: AppThemes.Default,
               builder: (context, theme) {
                 return Container(
-                  child:  MaterialApp(
-                    builder: OneContext().builder,
-                    navigatorKey: OneContext().navigator.key,
-                    title: AppConfig.app_name,
-                    debugShowCheckedModeBanner: false,
-                    theme: theme, 
-                    localizationsDelegates: [
-                      GlobalMaterialLocalizations.delegate,
-                      GlobalWidgetsLocalizations.delegate,
-                      GlobalCupertinoLocalizations.delegate,
-                      AppLocalizations.delegate,
-                    ],
-                    locale: provider.locale,
-                    supportedLocales: LangConfig().supportedLocales(),
-                    home: Splash(),
-                    //home: Main(),
-                  )
-                );
+                    child: MaterialApp(
+                  builder: OneContext().builder,
+                  navigatorKey: OneContext().navigator.key,
+                  title: AppConfig.app_name,
+
+                  debugShowCheckedModeBanner: false,
+                  theme: ThemeData(
+                    primaryIconTheme: IconThemeData(color: Colors.white),
+                    colorScheme: ColorScheme.light(
+                      background: Colors.grey[100],
+                      primary: Colors.pink,
+                      secondary: Colors.deepOrangeAccent,
+                    ),
+
+                    buttonTheme: ButtonThemeData(
+                        colorScheme: ColorScheme.light(
+                      primary: Colors.red[900],
+                      background: Colors.red[600],
+                      secondaryVariant: Colors.pink,
+                      secondary: Colors.black,
+                    )),
+                    // Set your global font family here
+                    textTheme: GoogleFonts.openSansTextTheme(),
+                    // Other theme configurations...
+                  ),
+                  localizationsDelegates: [
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                    AppLocalizations.delegate,
+                  ],
+                  locale: provider.locale,
+                  supportedLocales: LangConfig().supportedLocales(),
+                  home: Splash(),
+                  //home: Main(),
+                ));
               });
         }));
   }

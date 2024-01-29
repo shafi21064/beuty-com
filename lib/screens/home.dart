@@ -753,9 +753,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: GestureDetector(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return CategoryProducts(
+                    return Filter(
                       // category_id: _featuredCategoryList[index].id,
-                      category_name: _featuredCategoryList[index].name,
+                      category: _featuredCategoryList[index].name,
                     );
                   }));
                 },
@@ -1727,7 +1727,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           child: FadeInImage.assetNetwork(
                             placeholder: 'assets/placeholder_rectangle.png',
                             image: i,
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                           ))),
                   Align(
                     alignment: Alignment.bottomCenter,

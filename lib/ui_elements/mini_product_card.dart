@@ -55,8 +55,6 @@ class _MiniProductCardState extends State<MiniProductCard> {
                 width: double.infinity,
                 height: (MediaQuery.of(context).size.width - 36) / 3.5,
                 child: ClipRRect(
-                    // borderRadius: BorderRadius.vertical(
-                    //     top: Radius.circular(16), bottom: Radius.zero),
                     child: widget.image == ''
                         ? Image.asset(
                             'assets/app_logo.png',
@@ -65,7 +63,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
                         : FadeInImage.assetNetwork(
                             placeholder: 'assets/placeholder.png',
                             image: widget.image,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fitWidth,
                           )),
               ),
               Padding(

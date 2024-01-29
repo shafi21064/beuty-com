@@ -1,6 +1,7 @@
 import 'package:kirei/data_model/category_response.dart';
 import 'package:kirei/repositories/category_repository.dart';
 import 'package:kirei/screens/BeautyBooks.dart';
+import 'package:kirei/screens/beauty_tips.dart';
 import 'package:kirei/screens/blogs.dart';
 import 'package:kirei/screens/change_language.dart';
 import 'package:kirei/screens/common_webview_screen.dart';
@@ -98,58 +99,31 @@ class _MainDrawerState extends State<MainDrawer> {
                         ))
                     : Text(
                         AppLocalizations.of(context).main_drawer_not_logged_in,
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .buttonTheme
-                                .colorScheme
-                                .primary,
-                            fontSize: 14)),
+                        style: TextStyle(fontSize: 14)),
                 Divider(),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    leading: Image.asset("assets/home.png",
-                        height: 16,
-                        color:
-                            Theme.of(context).buttonTheme.colorScheme.primary),
-                    title: Text(AppLocalizations.of(context).main_drawer_home,
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .buttonTheme
-                                .colorScheme
-                                .primary,
-                            fontSize: 14)),
+                    // leading: Image.asset("assets/home.png",
+                    //     height: 16,
+                    //     color:
+                    //         Theme.of(context).buttonTheme.colorScheme.primary),
+                    title: Text(
+                        AppLocalizations.of(context)
+                            .main_drawer_home
+                            .toUpperCase(),
+                        style: TextStyle(fontSize: 14)),
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return Main();
                       }));
                     }),
-                ListTile(
-                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    leading: Image.asset("assets/theme.png",
-                        height: 16,
-                        color:
-                            Theme.of(context).buttonTheme.colorScheme.primary),
-                    title: Text('Theme',
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .buttonTheme
-                                .colorScheme
-                                .primary,
-                            fontSize: 14)),
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return DynamicThemesExampleApp();
-                      }));
-                    }),
                 ExpansionTile(
-                  leading: Icon(Icons.category,
-                      color: Theme.of(context).buttonTheme.colorScheme.primary),
+                  // leading: Icon(Icons.category,
+                  //     color: Theme.of(context).buttonTheme.colorScheme.primary),
                   title: Text(
-                    "Categories",
+                    "Categories".toUpperCase(),
                     style: TextStyle(
-                      color: Theme.of(context).buttonTheme.colorScheme.primary,
                       fontSize: 14,
                     ),
                   ),
@@ -175,17 +149,30 @@ class _MainDrawerState extends State<MainDrawer> {
                 ),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    leading: Image.asset("assets/blog.jpg",
-                        height: 22,
-                        color:
-                            Theme.of(context).buttonTheme.colorScheme.primary),
-                    title: Text('Kirei Blogs',
+                    // leading: Image.asset("assets/blog.jpg",
+                    //     height: 22,
+                    //     color:
+                    //         Theme.of(context).buttonTheme.colorScheme.primary),
+                    title: Text('beauty tips'.toUpperCase(),
                         style: TextStyle(
-                            color: Theme.of(context)
-                                .buttonTheme
-                                .colorScheme
-                                .primary,
-                            fontSize: 14)),
+                          fontSize: 14,
+                        )),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return BeautyTips();
+                      }));
+                    }),
+                ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    // leading: Image.asset("assets/blog.jpg",
+                    //     height: 22,
+                    //     color:
+                    //         Theme.of(context).buttonTheme.colorScheme.primary),
+                    title: Text('Blogs'.toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 14,
+                        )),
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
@@ -194,17 +181,28 @@ class _MainDrawerState extends State<MainDrawer> {
                     }),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    leading: Image.asset(
-                      "assets/community.png",
-                      height: 25,
-                    ),
-                    title: Text('Kirei Community',
+                    // leading: Image.asset("assets/blog.jpg",
+                    //     height: 22,
+                    //     color:
+                    //         Theme.of(context).buttonTheme.colorScheme.primary),
+                    title: Text('Personal Recommendation'.toUpperCase(),
                         style: TextStyle(
-                            color: Theme.of(context)
-                                .buttonTheme
-                                .colorScheme
-                                .primary,
-                            fontSize: 14)),
+                          fontSize: 14,
+                        )),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return Blogs();
+                      }));
+                    }),
+                ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    // leading: Image.asset(
+                    //   "assets/community.png",
+                    //   height: 25,
+                    // ),
+                    title: Text('Kirei Community'.toUpperCase(),
+                        style: TextStyle(fontSize: 14)),
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
@@ -213,14 +211,9 @@ class _MainDrawerState extends State<MainDrawer> {
                     }),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    leading: Image.asset("assets/kyt.png", height: 22),
-                    title: Text('Kirei Youtube',
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .buttonTheme
-                                .colorScheme
-                                .primary,
-                            fontSize: 14)),
+                    // leading: Image.asset("assets/kyt.png", height: 22),
+                    title:
+                        Text('Kirei Youtube', style: TextStyle(fontSize: 14)),
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
@@ -229,14 +222,8 @@ class _MainDrawerState extends State<MainDrawer> {
                     }),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    leading: Image.asset("assets/bb.png", height: 24),
-                    title: Text('Beauty Books',
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .buttonTheme
-                                .colorScheme
-                                .primary,
-                            fontSize: 14)),
+                    // leading: Image.asset("assets/bb.png", height: 24),
+                    title: Text('Beauty Books', style: TextStyle(fontSize: 14)),
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
@@ -245,14 +232,9 @@ class _MainDrawerState extends State<MainDrawer> {
                     }),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    leading: Image.asset("assets/app_logo.png", height: 24),
-                    title: Text('Support Policy',
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .buttonTheme
-                                .colorScheme
-                                .primary,
-                            fontSize: 14)),
+                    // leading: Image.asset("assets/app_logo.png", height: 24),
+                    title:
+                        Text('Support Policy', style: TextStyle(fontSize: 14)),
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
@@ -265,14 +247,9 @@ class _MainDrawerState extends State<MainDrawer> {
                     }),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    leading: Image.asset("assets/app_logo.png", height: 24),
-                    title: Text('Return Policy',
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .buttonTheme
-                                .colorScheme
-                                .primary,
-                            fontSize: 14)),
+                    // leading: Image.asset("assets/app_logo.png", height: 24),
+                    title:
+                        Text('Return Policy', style: TextStyle(fontSize: 14)),
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
@@ -371,12 +348,7 @@ class _MainDrawerState extends State<MainDrawer> {
                                   title: Text(
                                       AppLocalizations.of(context)
                                           .main_drawer_wallet,
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .buttonTheme
-                                              .colorScheme
-                                              .primary,
-                                          fontSize: 14)),
+                                      style: TextStyle(fontSize: 14)),
                                   onTap: () {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
@@ -392,20 +364,15 @@ class _MainDrawerState extends State<MainDrawer> {
                     ? ListTile(
                         visualDensity:
                             VisualDensity(horizontal: -4, vertical: -4),
-                        leading: Image.asset("assets/login.png",
-                            height: 16,
-                            color: Theme.of(context)
-                                .buttonTheme
-                                .colorScheme
-                                .primary),
+                        // leading: Image.asset("assets/login.png",
+                        //     height: 16,
+                        //     color: Theme.of(context)
+                        //         .buttonTheme
+                        //         .colorScheme
+                        //         .primary),
                         title: Text(
                             AppLocalizations.of(context).main_drawer_login,
-                            style: TextStyle(
-                                color: Theme.of(context)
-                                    .buttonTheme
-                                    .colorScheme
-                                    .primary,
-                                fontSize: 14)),
+                            style: TextStyle(fontSize: 14)),
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {

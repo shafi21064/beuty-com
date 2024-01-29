@@ -461,7 +461,10 @@ class _FilterState extends State<Filter> {
           ),
           padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
           child: Column(
-            children: [buildTopAppbar(context), buildBottomAppBar(context)],
+            children: [
+              buildTopAppbar(context),
+              buildBottomAppBar(context),
+            ],
           ),
         ));
   }
@@ -1372,6 +1375,74 @@ class _FilterState extends State<Filter> {
     } else {
       return Container(); // should never be happening
     }
+  }
+
+  buildSubCategoryList(BuildContext context) {
+    return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return Filter(
+                      type: "new-arrivals",
+                    );
+                  }));
+                },
+                child: Container(
+                  padding: EdgeInsets.only(top: 8),
+                  height: 100,
+                  width: MediaQuery.of(context).size.width / 5 - 4,
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: Theme.of(context)
+                                .buttonTheme
+                                .colorScheme
+                                .primary,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(1.0),
+                                spreadRadius: 0,
+                                blurRadius: 9,
+                                offset: Offset(0, 1),
+                              ),
+                            ]),
+                        child: ClipOval(
+                          child: Image.asset(
+                            "assets/arrivals.jpg",
+                            fit: BoxFit
+                                .cover, // You can adjust this based on your needs
+                            height: 50,
+                            width: 50,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Text(
+                          "New Arrivals",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .buttonTheme
+                                  .colorScheme
+                                  .secondary,
+                              fontWeight: FontWeight.w300),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ]));
   }
 
   Container buildShopList() {
