@@ -30,12 +30,7 @@ class _TopSellingProductsState extends State<TopSellingProducts> {
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
       flexibleSpace: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            MyTheme.primary,
-            Theme.of(context).colorScheme.secondary,
-          ]),
-        ),
+        decoration: BoxDecoration(color: MyTheme.primary),
       ),
       centerTitle: true,
       leading: Builder(
@@ -90,6 +85,7 @@ class _TopSellingProductsState extends State<TopSellingProducts> {
                     ratings: productResponse.products[index].ratings,
                     image: productResponse.products[index].pictures[0].url,
                     slug: productResponse.products[index].slug,
+                    stock: productResponse.products[index].stock,
 
                     //image: productResponse.products[index].thumbnail_image,
                     //name: productResponse.products[index].name,

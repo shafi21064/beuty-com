@@ -11,7 +11,6 @@ import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class PaystackScreen extends StatefulWidget {
   double amount;
   String payment_type;
@@ -38,8 +37,6 @@ class _PaystackScreenState extends State<PaystackScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-
 
     if (widget.payment_type == "cart_payment") {
       createOrder();
@@ -96,12 +93,14 @@ class _PaystackScreenState extends State<PaystackScreen> {
     });
   }
 
-  onPaymentSuccess(payment_details) async{
+  onPaymentSuccess(payment_details) async {
     print("b");
 
-    var paystackPaymentSuccessResponse = await PaymentRepository().getPaystackPaymentSuccessResponse(widget.payment_type, widget.amount,_combined_order_id, payment_details);
+    var paystackPaymentSuccessResponse = await PaymentRepository()
+        .getPaystackPaymentSuccessResponse(widget.payment_type, widget.amount,
+            _combined_order_id, payment_details);
 
-    if(paystackPaymentSuccessResponse.result == false ){
+    if (paystackPaymentSuccessResponse.result == false) {
       print("c");
       Toast.show(paystackPaymentSuccessResponse.message, context,
           duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
@@ -121,13 +120,9 @@ class _PaystackScreenState extends State<PaystackScreen> {
         return Wallet(from_recharge: true);
       }));
     }
-
-
   }
 
-
   buildBody() {
-
     String initial_url =
         "${AppConfig.BASE_URL}/paystack/init?payment_type=${widget.payment_type}&combined_order_id=${_combined_order_id}&amount=${widget.amount}&user_id=${user_id.$}";
 
@@ -155,7 +150,7 @@ class _PaystackScreenState extends State<PaystackScreen> {
             onWebResourceError: (error) {},
             onPageFinished: (page) {
               print(page.toString());
-                getData();
+              getData();
             },
           ),
         ),
@@ -165,7 +160,7 @@ class _PaystackScreenState extends State<PaystackScreen> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       centerTitle: true,
       leading: Builder(
         builder: (context) => IconButton(
@@ -175,7 +170,7 @@ backgroundColor: Colors.white,
       ),
       title: Text(
         AppLocalizations.of(context).paystack_screen_pay_with_paystack,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(fontSize: 16, color: MyTheme.primary),
       ),
       elevation: 0.0,
       titleSpacing: 0,

@@ -30,12 +30,7 @@ class _TodaysDealProductsState extends State<TodaysDealProducts> {
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
       flexibleSpace: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            MyTheme.primary,
-            Theme.of(context).colorScheme.secondary,
-          ]),
-        ),
+        decoration: BoxDecoration(color: MyTheme.primary),
       ),
       centerTitle: true,
       leading: Builder(

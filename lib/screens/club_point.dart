@@ -9,7 +9,6 @@ import 'package:toast/toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 
-
 class Clubpoint extends StatefulWidget {
   @override
   _ClubpointState createState() => _ClubpointState();
@@ -72,12 +71,9 @@ class _ClubpointState extends State<Clubpoint> {
     fetchData();
   }
 
-  onPressConvert(item_id,_convertedSnackbar) async{
-
+  onPressConvert(item_id, _convertedSnackbar) async {
     var clubpointToWalletResponse =
-    await ClubpointRepository().getClubpointToWalletResponse(
-      item_id
-    );
+        await ClubpointRepository().getClubpointToWalletResponse(item_id);
 
     if (clubpointToWalletResponse.result == false) {
       ToastComponent.showDialog(clubpointToWalletResponse.message, context,
@@ -88,31 +84,28 @@ class _ClubpointState extends State<Clubpoint> {
       Scaffold.of(context).showSnackBar(_convertedSnackbar);
 
       _converted_ids.add(item_id);
-      setState(() {
-
-      });
+      setState(() {});
     }
-
-
   }
 
   onPopped(value) async {
-     reset();
-     fetchData();
+    reset();
+    fetchData();
   }
 
   @override
   Widget build(BuildContext context) {
-
     SnackBar _convertedSnackbar = SnackBar(
       content: Text(
-        AppLocalizations.of(context).club_point_screen_snackbar_points_converted,
-        style: TextStyle(color: MyTheme.font_grey),
+        AppLocalizations.of(context)
+            .club_point_screen_snackbar_points_converted,
+        style: TextStyle(color: MyTheme.secondary),
       ),
-      backgroundColor: MyTheme.soft_accent_color,
+      backgroundColor: MyTheme.primary,
       duration: const Duration(seconds: 3),
       action: SnackBarAction(
-        label: AppLocalizations.of(context).club_point_screen_snackbar_show_wallet,
+        label:
+            AppLocalizations.of(context).club_point_screen_snackbar_show_wallet,
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return Wallet();
@@ -120,7 +113,7 @@ class _ClubpointState extends State<Clubpoint> {
             onPopped(value);
           });
         },
-        textColor: MyTheme.accent_color,
+        textColor: MyTheme.primary,
         disabledTextColor: Colors.grey,
       ),
     );
@@ -133,7 +126,7 @@ class _ClubpointState extends State<Clubpoint> {
         body: Stack(
           children: [
             RefreshIndicator(
-              color: MyTheme.accent_color,
+              color: MyTheme.primary,
               backgroundColor: Colors.white,
               onRefresh: _onRefresh,
               displacement: 0,
@@ -154,7 +147,8 @@ class _ClubpointState extends State<Clubpoint> {
               ),
             ),
             Align(
-                alignment: Alignment.bottomCenter, child: buildLoadingContainer())
+                alignment: Alignment.bottomCenter,
+                child: buildLoadingContainer())
           ],
         ),
       ),
@@ -176,7 +170,7 @@ class _ClubpointState extends State<Clubpoint> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       centerTitle: true,
       leading: Builder(
         builder: (context) => IconButton(
@@ -186,7 +180,7 @@ backgroundColor: Colors.white,
       ),
       title: Text(
         AppLocalizations.of(context).club_point_screen_earned_points,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(fontSize: 16, color: MyTheme.primary),
       ),
       elevation: 0.0,
       titleSpacing: 0,
@@ -207,18 +201,19 @@ backgroundColor: Colors.white,
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            return buildItemCard(index,_convertedSnackbar);
+            return buildItemCard(index, _convertedSnackbar);
           },
         ),
       );
     } else if (_totalData == 0) {
-      return Center(child: Text(AppLocalizations.of(context).common_no_data_available));
+      return Center(
+          child: Text(AppLocalizations.of(context).common_no_data_available));
     } else {
       return Container(); // should never be happening
     }
   }
 
-  buildItemCard(index,_convertedSnackbar) {
+  buildItemCard(index, _convertedSnackbar) {
     return Card(
       shape: RoundedRectangleBorder(
         side: new BorderSide(color: MyTheme.light_grey, width: 1.0),
@@ -230,7 +225,6 @@ backgroundColor: Colors.white,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
             Container(
                 width: 100,
                 child: Column(
@@ -246,15 +240,21 @@ backgroundColor: Colors.white,
                       height: 10,
                     ),
                     Text(
-                      AppLocalizations.of(context).club_point_screen_converted_question,
+                      AppLocalizations.of(context)
+                          .club_point_screen_converted_question,
                       style: TextStyle(
                         color: MyTheme.dark_grey,
                       ),
                     ),
                     Text(
-                      _list[index].convert_status == 1 || _converted_ids.contains(_list[index].id) ? "Yes" : "No",
+                      _list[index].convert_status == 1 ||
+                              _converted_ids.contains(_list[index].id)
+                          ? "Yes"
+                          : "No",
                       style: TextStyle(
-                        color: _list[index].convert_status == 1? Colors.green: Colors.blue,
+                        color: _list[index].convert_status == 1
+                            ? Colors.green
+                            : Colors.blue,
                       ),
                     ),
                   ],
@@ -268,33 +268,37 @@ backgroundColor: Colors.white,
                     Text(
                       _list[index].points.toString(),
                       style: TextStyle(
-                          color: MyTheme.accent_color,
+                          color: MyTheme.primary,
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    _list[index].convert_status == 1 || _converted_ids.contains(_list[index].id) ? Text(
-                      AppLocalizations.of(context).club_point_screen_done,
-                      style: TextStyle(
-                        color: Colors.green,
-                      ),
-                    ):SizedBox(
-                      height: 24,
-                      width: 80,
-
-                      child: FlatButton(
-                        color: MyTheme.accent_color,
-                        child: Text(
-                          AppLocalizations.of(context).club_point_screen_convert,
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () {
-                          onPressConvert(_list[index].id,_convertedSnackbar);
-                        },
-                      ),
-                    ),
+                    _list[index].convert_status == 1 ||
+                            _converted_ids.contains(_list[index].id)
+                        ? Text(
+                            AppLocalizations.of(context).club_point_screen_done,
+                            style: TextStyle(
+                              color: Colors.green,
+                            ),
+                          )
+                        : SizedBox(
+                            height: 24,
+                            width: 80,
+                            child: FlatButton(
+                              color: MyTheme.primary,
+                              child: Text(
+                                AppLocalizations.of(context)
+                                    .club_point_screen_convert,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: () {
+                                onPressConvert(
+                                    _list[index].id, _convertedSnackbar);
+                              },
+                            ),
+                          ),
                   ],
                 ))
           ],

@@ -48,9 +48,8 @@ class _BeautyBooksState extends State<BeautyBooks> {
               slivers: [
                 SliverList(
                     delegate: SliverChildListDelegate([
-
-                      buildFeedList(),
-                    ]))
+                  buildFeedList(),
+                ]))
               ],
             ),
           ])),
@@ -68,7 +67,7 @@ class _BeautyBooksState extends State<BeautyBooks> {
         child: Builder(
           builder: (context) => Padding(
             padding:
-            const EdgeInsets.symmetric(vertical: 18.0, horizontal: 0.0),
+                const EdgeInsets.symmetric(vertical: 18.0, horizontal: 0.0),
             child: Container(
               child: Image.asset(
                 'assets/hamburger.png',
@@ -93,7 +92,6 @@ class _BeautyBooksState extends State<BeautyBooks> {
 
     return name;
   }
-
 
   buildFeedList() {
     var future = ExtraRepository().getBeautyBlogPosts();
@@ -124,7 +122,8 @@ class _BeautyBooksState extends State<BeautyBooks> {
                   return Padding(
                     padding: const EdgeInsets.only(
                         top: 4.0, bottom: 4.0, left: 10.0, right: 10.0),
-                    child: buildFeedItemCard(compostResponse.data.recentPosts, index),
+                    child: buildFeedItemCard(
+                        compostResponse.data.recentPosts, index),
                   );
                 },
               ),
@@ -143,8 +142,8 @@ class _BeautyBooksState extends State<BeautyBooks> {
                     child: Row(
                       children: [
                         Shimmer.fromColors(
-                          baseColor: MyTheme.shimmer_base,
-                          highlightColor: MyTheme.shimmer_highlighted,
+                          baseColor: MyTheme.light_grey,
+                          highlightColor: MyTheme.light_grey,
                           child: Container(
                             height: 60,
                             width: 60,
@@ -159,8 +158,8 @@ class _BeautyBooksState extends State<BeautyBooks> {
                               padding: const EdgeInsets.only(
                                   left: 16.0, bottom: 8.0),
                               child: Shimmer.fromColors(
-                                baseColor: MyTheme.shimmer_base,
-                                highlightColor: MyTheme.shimmer_highlighted,
+                                baseColor: MyTheme.light_grey,
+                                highlightColor: MyTheme.light_grey,
                                 child: Container(
                                   height: 20,
                                   width: MediaQuery.of(context).size.width * .7,
@@ -171,8 +170,8 @@ class _BeautyBooksState extends State<BeautyBooks> {
                             Padding(
                               padding: const EdgeInsets.only(left: 16.0),
                               child: Shimmer.fromColors(
-                                baseColor: MyTheme.shimmer_base,
-                                highlightColor: MyTheme.shimmer_highlighted,
+                                baseColor: MyTheme.light_grey,
+                                highlightColor: MyTheme.light_grey,
                                 child: Container(
                                   height: 20,
                                   width: MediaQuery.of(context).size.width * .5,
@@ -192,7 +191,6 @@ class _BeautyBooksState extends State<BeautyBooks> {
         });
   }
 
-
   Card buildFeedItemCard(compostResponse, index) {
     return Card(
       shape: RoundedRectangleBorder(
@@ -200,24 +198,20 @@ class _BeautyBooksState extends State<BeautyBooks> {
         borderRadius: BorderRadius.circular(16.0),
       ),
       elevation: 0,
-      child:
-      InkWell(onTap: (){
-        Navigator.push(context,
-            MaterialPageRoute(
-                builder: (context) {
-                  return ViewBlog(
-                    author: compostResponse[index].author,
-                    date: compostResponse[index].date.toString(),
-                    title: compostResponse[index].title,
-                    content: compostResponse[index].content,
-                    picture: compostResponse[index].picture[0].url,
-                  );
-                }));
-
-
-
-      },
-        child: Column(mainAxisAlignment: MainAxisAlignment.start,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return ViewBlog(
+              author: compostResponse[index].author,
+              date: compostResponse[index].date.toString(),
+              title: compostResponse[index].title,
+              content: compostResponse[index].content,
+              picture: compostResponse[index].picture[0].url,
+            );
+          }));
+        },
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
@@ -271,10 +265,11 @@ class _BeautyBooksState extends State<BeautyBooks> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 10.0, bottom: 10, right: 10),
+                padding:
+                    const EdgeInsets.only(left: 10.0, bottom: 10, right: 10),
                 child:
-                //text widget to display long text
-                InkWell(
+                    //text widget to display long text
+                    InkWell(
                   onTap: () {
                     setState(() {
                       // toggle the bool variable true or false
@@ -283,7 +278,6 @@ class _BeautyBooksState extends State<BeautyBooks> {
                   },
                   child: Text(
                     compostResponse[index].title,
-
                   ),
                 ),
               ),
@@ -292,18 +286,20 @@ class _BeautyBooksState extends State<BeautyBooks> {
                   height: 210,
                   child: ClipRRect(
                       borderRadius: BorderRadius.horizontal(
-                          left: Radius.circular(10), right: Radius.circular(10)),
+                          left: Radius.circular(10),
+                          right: Radius.circular(10)),
                       child: compostResponse[index].picture.length == 0
-  ? Image.asset('assets/no_pic.png',fit:BoxFit.cover)
-  : compostResponse[index].picture[0].url == null
-    ? Image.asset('assets/no_pic.png',fit:BoxFit.cover,):
-
-                      FadeInImage.assetNetwork(
-                        placeholder: 'assets/placeholder.png',
-                        image: compostResponse[index].picture[0].url,
-                        fit: BoxFit.cover,
-                      ))),
-
+                          ? Image.asset('assets/no_pic.png', fit: BoxFit.cover)
+                          : compostResponse[index].picture[0].url == null
+                              ? Image.asset(
+                                  'assets/no_pic.png',
+                                  fit: BoxFit.cover,
+                                )
+                              : FadeInImage.assetNetwork(
+                                  placeholder: 'assets/placeholder.png',
+                                  image: compostResponse[index].picture[0].url,
+                                  fit: BoxFit.cover,
+                                ))),
             ]),
       ),
     );
@@ -329,13 +325,13 @@ class _BeautyBooksState extends State<BeautyBooks> {
                 child: FlatButton(
                   minWidth: MediaQuery.of(context).size.width,
                   //height: 50,
-                  color: MyTheme.accent_color,
+                  color: MyTheme.primary,
                   shape: RoundedRectangleBorder(
                       borderRadius:
-                      const BorderRadius.all(Radius.circular(8.0))),
+                          const BorderRadius.all(Radius.circular(8.0))),
                   child: Text(
                     AppLocalizations.of(context)
-                        .category_list_screen_all_products_of +
+                            .category_list_screen_all_products_of +
                         " ",
                     style: TextStyle(
                         color: Colors.white,

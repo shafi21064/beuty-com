@@ -83,7 +83,7 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
       toolbarHeight: 75,
       /*bottom: PreferredSize(
           child: Container(
-            color: MyTheme.textfield_grey,
+            color: MyTheme.light_grey,
             height: 1.0,
           ),
           preferredSize: Size.fromHeight(4.0)),*/
@@ -109,8 +109,7 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
                 hintText:
                     "${AppLocalizations.of(context).flash_deal_products_screen_search_products_from} : " +
                         widget.flash_deal_name,
-                hintStyle:
-                    TextStyle(fontSize: 14.0, color: MyTheme.textfield_grey),
+                hintStyle: TextStyle(fontSize: 14.0, color: MyTheme.light_grey),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: MyTheme.white, width: 0.0),
                 ),

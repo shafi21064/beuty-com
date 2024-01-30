@@ -155,7 +155,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
                       AppLocalizations.of(context)
                           .password_otp_screen_enter_the_code_sent,
                       style: TextStyle(
-                          color: MyTheme.accent_color,
+                          color: MyTheme.primary,
                           fontSize: 18,
                           fontWeight: FontWeight.w600),
                     ),
@@ -200,7 +200,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
                             AppLocalizations.of(context)
                                 .password_otp_screen_password,
                             style: TextStyle(
-                                color: MyTheme.accent_color,
+                                color: MyTheme.primary,
                                 fontWeight: FontWeight.w600),
                           ),
                         ),
@@ -226,7 +226,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
                                 AppLocalizations.of(context)
                                     .password_otp_screen_password_length_recommendation,
                                 style: TextStyle(
-                                    color: MyTheme.textfield_grey,
+                                    color: MyTheme.light_grey,
                                     fontStyle: FontStyle.italic),
                               )
                             ],
@@ -238,7 +238,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
                             AppLocalizations.of(context)
                                 .password_otp_screen_retype_password,
                             style: TextStyle(
-                                color: MyTheme.accent_color,
+                                color: MyTheme.primary,
                                 fontWeight: FontWeight.w600),
                           ),
                         ),
@@ -264,13 +264,13 @@ class _PasswordOtpState extends State<PasswordOtp> {
                             height: 45,
                             decoration: BoxDecoration(
                                 border: Border.all(
-                                    color: MyTheme.textfield_grey, width: 1),
+                                    color: MyTheme.light_grey, width: 1),
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(12.0))),
                             child: FlatButton(
                               minWidth: MediaQuery.of(context).size.width,
                               //height: 50,
-                              color: MyTheme.accent_color,
+                              color: MyTheme.primary,
                               shape: RoundedRectangleBorder(
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(12.0))),
@@ -300,7 +300,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
                   //     child: Text(AppLocalizations.of(context).password_otp_screen_resend_code,
                   //         textAlign: TextAlign.center,
                   //         style: TextStyle(
-                  //             color: MyTheme.accent_color,
+                  //             color: MyTheme.primary,
                   //             decoration: TextDecoration.underline,
                   //             fontSize: 13)),
                   //   ),

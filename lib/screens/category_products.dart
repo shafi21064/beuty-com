@@ -6,8 +6,7 @@ import 'package:kirei/helpers/shimmer_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CategoryProducts extends StatefulWidget {
-  CategoryProducts({Key key, this.category_name})
-      : super(key: key);
+  CategoryProducts({Key key, this.category_name}) : super(key: key);
   final String category_name;
 
   @override
@@ -57,8 +56,9 @@ class _CategoryProductsState extends State<CategoryProducts> {
   }
 
   fetchData() async {
-    var productResponse = await ProductRepository()
-        .getCategoryProducts(page: _page, name: _searchKey==""?widget.category_name:_searchKey);
+    var productResponse = await ProductRepository().getCategoryProducts(
+        page: _page,
+        name: _searchKey == "" ? widget.category_name : _searchKey);
     _productList.addAll(productResponse.products);
     //  print(_productList[0].);
     _isInitial = false;
@@ -115,7 +115,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
       toolbarHeight: 75,
       /*bottom: PreferredSize(
           child: Container(
-            color: MyTheme.textfield_grey,
+            color: MyTheme.light_grey,
             height: 1.0,
           ),
           preferredSize: Size.fromHeight(4.0)),*/
@@ -145,8 +145,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
                 hintText:
                     "${AppLocalizations.of(context).category_products_screen_search_products_from} : " +
                         widget.category_name,
-                hintStyle:
-                    TextStyle(fontSize: 14.0, color: MyTheme.textfield_grey),
+                hintStyle: TextStyle(fontSize: 14.0, color: MyTheme.light_grey),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: MyTheme.white, width: 0.0),
                 ),
@@ -180,7 +179,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
               .buildProductGridShimmer(scontroller: _scrollController));
     } else if (_productList.length > 0) {
       return RefreshIndicator(
-        color: MyTheme.accent_color,
+        color: MyTheme.primary,
         backgroundColor: Colors.white,
         displacement: 0,
         onRefresh: _onRefresh,
@@ -214,6 +213,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
                     : "assets/app_logo.png",
                 slug: _productList[index].slug,
                 reviews: _productList[index].reviews,
+                stock: _productList[index].stock,
               );
               //has_discount: _productList[index].has_discount);
             },

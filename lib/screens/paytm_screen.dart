@@ -172,7 +172,7 @@ class _PaytmScreenState extends State<PaytmScreen> {
       ),
       title: Text(
         AppLocalizations.of(context).paytm_screen_pay_with_paytm,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(fontSize: 16, color: MyTheme.primary),
       ),
       elevation: 0.0,
       titleSpacing: 0,

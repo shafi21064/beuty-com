@@ -738,7 +738,7 @@ class _CheckoutState extends State<Checkout> {
                                 .checkout_screen_subtotal,
                             textAlign: TextAlign.end,
                             style: TextStyle(
-                                color: MyTheme.font_grey,
+                                color: MyTheme.secondary,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -747,7 +747,7 @@ class _CheckoutState extends State<Checkout> {
                         Text(
                           _subTotalString ?? '',
                           style: TextStyle(
-                              color: MyTheme.font_grey,
+                              color: MyTheme.secondary,
                               fontSize: 14,
                               fontWeight: FontWeight.w600),
                         ),
@@ -763,7 +763,7 @@ class _CheckoutState extends State<Checkout> {
                             AppLocalizations.of(context).checkout_screen_tax,
                             textAlign: TextAlign.end,
                             style: TextStyle(
-                                color: MyTheme.font_grey,
+                                color: MyTheme.secondary,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -772,7 +772,7 @@ class _CheckoutState extends State<Checkout> {
                         Text(
                           _taxString ?? '',
                           style: TextStyle(
-                              color: MyTheme.font_grey,
+                              color: MyTheme.secondary,
                               fontSize: 14,
                               fontWeight: FontWeight.w600),
                         ),
@@ -789,7 +789,7 @@ class _CheckoutState extends State<Checkout> {
                                 .checkout_screen_shipping_cost,
                             textAlign: TextAlign.end,
                             style: TextStyle(
-                                color: MyTheme.font_grey,
+                                color: MyTheme.secondary,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -798,7 +798,7 @@ class _CheckoutState extends State<Checkout> {
                         Text(
                           _shippingCostString ?? '',
                           style: TextStyle(
-                              color: MyTheme.font_grey,
+                              color: MyTheme.secondary,
                               fontSize: 14,
                               fontWeight: FontWeight.w600),
                         ),
@@ -815,7 +815,7 @@ class _CheckoutState extends State<Checkout> {
                                 .checkout_screen_discount,
                             textAlign: TextAlign.end,
                             style: TextStyle(
-                                color: MyTheme.font_grey,
+                                color: MyTheme.secondary,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -824,7 +824,7 @@ class _CheckoutState extends State<Checkout> {
                         Text(
                           _discountString ?? '',
                           style: TextStyle(
-                              color: MyTheme.font_grey,
+                              color: MyTheme.secondary,
                               fontSize: 14,
                               fontWeight: FontWeight.w600),
                         ),
@@ -842,7 +842,7 @@ class _CheckoutState extends State<Checkout> {
                                 .checkout_screen_grand_total,
                             textAlign: TextAlign.end,
                             style: TextStyle(
-                                color: MyTheme.font_grey,
+                                color: MyTheme.secondary,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -851,7 +851,7 @@ class _CheckoutState extends State<Checkout> {
                         Text(
                           _totalString ?? '',
                           style: TextStyle(
-                              color: MyTheme.accent_color,
+                              color: MyTheme.primary,
                               fontSize: 14,
                               fontWeight: FontWeight.w600),
                         ),
@@ -865,7 +865,7 @@ class _CheckoutState extends State<Checkout> {
           FlatButton(
             child: Text(
               AppLocalizations.of(context).common_close_in_all_lower,
-              style: TextStyle(color: MyTheme.medium_grey),
+              style: TextStyle(color: MyTheme.dark_grey),
             ),
             onPressed: () {
               Navigator.of(context, rootNavigator: true).pop();
@@ -890,7 +890,7 @@ class _CheckoutState extends State<Checkout> {
         body: Stack(
           children: [
             RefreshIndicator(
-              color: MyTheme.accent_color,
+              color: MyTheme.primary,
               backgroundColor: Colors.white,
               onRefresh: _onRefresh,
               displacement: 0,
@@ -940,7 +940,7 @@ class _CheckoutState extends State<Checkout> {
                                             fontSize: 14,
                                             decoration:
                                                 TextDecoration.underline,
-                                            color: MyTheme.accent_color,
+                                            color: MyTheme.primary,
                                           ),
                                         ),
                                       ),
@@ -1026,19 +1026,16 @@ class _CheckoutState extends State<Checkout> {
             decoration: InputDecoration(
                 hintText: AppLocalizations.of(context)
                     .checkout_screen_enter_coupon_code,
-                hintStyle:
-                    TextStyle(fontSize: 14.0, color: MyTheme.textfield_grey),
+                hintStyle: TextStyle(fontSize: 14.0, color: MyTheme.light_grey),
                 enabledBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: MyTheme.textfield_grey, width: 0.5),
+                  borderSide: BorderSide(color: MyTheme.light_grey, width: 0.5),
                   borderRadius: const BorderRadius.only(
                     topLeft: const Radius.circular(8.0),
                     bottomLeft: const Radius.circular(8.0),
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: MyTheme.medium_grey, width: 0.5),
+                  borderSide: BorderSide(color: MyTheme.dark_grey, width: 0.5),
                   borderRadius: const BorderRadius.only(
                     topLeft: const Radius.circular(8.0),
                     bottomLeft: const Radius.circular(8.0),
@@ -1054,7 +1051,7 @@ class _CheckoutState extends State<Checkout> {
                 child: FlatButton(
                   minWidth: MediaQuery.of(context).size.width,
                   //height: 50,
-                  color: MyTheme.accent_color,
+                  color: MyTheme.primary,
                   shape: RoundedRectangleBorder(
                       borderRadius: const BorderRadius.only(
                     topRight: const Radius.circular(8.0),
@@ -1078,7 +1075,7 @@ class _CheckoutState extends State<Checkout> {
                 child: FlatButton(
                   minWidth: MediaQuery.of(context).size.width,
                   //height: 50,
-                  color: MyTheme.accent_color,
+                  color: MyTheme.primary,
                   shape: RoundedRectangleBorder(
                       borderRadius: const BorderRadius.only(
                     topRight: const Radius.circular(8.0),
@@ -1112,7 +1109,7 @@ class _CheckoutState extends State<Checkout> {
       ),
       title: Text(
         widget.title ?? '',
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(fontSize: 16, color: MyTheme.primary),
       ),
       elevation: 0.0,
       titleSpacing: 0,
@@ -1126,7 +1123,7 @@ class _CheckoutState extends State<Checkout> {
           child: Center(
               child: Text(
             AppLocalizations.of(context).common_login_warning,
-            style: TextStyle(color: MyTheme.font_grey),
+            style: TextStyle(color: MyTheme.secondary),
           )));
     } else if (_isInitial && _shippingAddressList.length == 0) {
       return SingleChildScrollView(
@@ -1153,7 +1150,7 @@ class _CheckoutState extends State<Checkout> {
           child: Center(
               child: Text(
             AppLocalizations.of(context).common_no_address_added,
-            style: TextStyle(color: MyTheme.font_grey),
+            style: TextStyle(color: MyTheme.secondary),
           )));
     }
   }
@@ -1178,7 +1175,7 @@ class _CheckoutState extends State<Checkout> {
       child: Card(
         shape: RoundedRectangleBorder(
           side: _seleted_shipping_address == _shippingAddressList[index].id
-              ? BorderSide(color: MyTheme.accent_color, width: 2.0)
+              ? BorderSide(color: MyTheme.primary, width: 2.0)
               : BorderSide(color: MyTheme.light_grey, width: 1.0),
           borderRadius: BorderRadius.circular(8.0),
         ),
@@ -1199,7 +1196,7 @@ class _CheckoutState extends State<Checkout> {
                         AppLocalizations.of(context)
                             .shipping_info_screen_address,
                         style: TextStyle(
-                          color: MyTheme.grey_153,
+                          color: MyTheme.secondary,
                         ),
                       ),
                     ),
@@ -1230,7 +1227,7 @@ class _CheckoutState extends State<Checkout> {
                       child: Text(
                         AppLocalizations.of(context).shipping_info_screen_city,
                         style: TextStyle(
-                          color: MyTheme.grey_153,
+                          color: MyTheme.secondary,
                         ),
                       ),
                     ),
@@ -1257,7 +1254,7 @@ class _CheckoutState extends State<Checkout> {
                       child: Text(
                         "Zone",
                         style: TextStyle(
-                          color: MyTheme.grey_153,
+                          color: MyTheme.secondary,
                         ),
                       ),
                     ),
@@ -1284,7 +1281,7 @@ class _CheckoutState extends State<Checkout> {
                       child: Text(
                         "Area",
                         style: TextStyle(
-                          color: MyTheme.grey_153,
+                          color: MyTheme.secondary,
                         ),
                       ),
                     ),
@@ -1312,7 +1309,7 @@ class _CheckoutState extends State<Checkout> {
                         AppLocalizations.of(context)
                             .order_details_screen_postal_code,
                         style: TextStyle(
-                          color: MyTheme.grey_153,
+                          color: MyTheme.secondary,
                         ),
                       ),
                     ),
@@ -1339,7 +1336,7 @@ class _CheckoutState extends State<Checkout> {
                       child: Text(
                         AppLocalizations.of(context).shipping_info_screen_phone,
                         style: TextStyle(
-                          color: MyTheme.grey_153,
+                          color: MyTheme.secondary,
                         ),
                       ),
                     ),
@@ -1416,7 +1413,7 @@ class _CheckoutState extends State<Checkout> {
           child: Center(
               child: Text(
             AppLocalizations.of(context).common_login_warning,
-            style: TextStyle(color: MyTheme.font_grey),
+            style: TextStyle(color: MyTheme.secondary),
           )));
     } else if (_isInitial && _pickupList.length == 0) {
       return SingleChildScrollView(
@@ -1443,7 +1440,7 @@ class _CheckoutState extends State<Checkout> {
           child: Center(
               child: Text(
             AppLocalizations.of(context).no_pickup_point,
-            style: TextStyle(color: MyTheme.font_grey),
+            style: TextStyle(color: MyTheme.secondary),
           )));
     }
   }
@@ -1461,7 +1458,7 @@ class _CheckoutState extends State<Checkout> {
       child: Card(
         shape: RoundedRectangleBorder(
           side: _seleted_shipping_pickup_point == _pickupList[index].id
-              ? BorderSide(color: MyTheme.accent_color, width: 2.0)
+              ? BorderSide(color: MyTheme.primary, width: 2.0)
               : BorderSide(color: MyTheme.light_grey, width: 1.0),
           borderRadius: BorderRadius.circular(8.0),
         ),
@@ -1482,7 +1479,7 @@ class _CheckoutState extends State<Checkout> {
                         AppLocalizations.of(context)
                             .shipping_info_screen_address,
                         style: TextStyle(
-                          color: MyTheme.grey_153,
+                          color: MyTheme.secondary,
                         ),
                       ),
                     ),
@@ -1512,7 +1509,7 @@ class _CheckoutState extends State<Checkout> {
                       child: Text(
                         AppLocalizations.of(context).address_screen_phone,
                         style: TextStyle(
-                          color: MyTheme.grey_153,
+                          color: MyTheme.secondary,
                         ),
                       ),
                     ),
@@ -1562,7 +1559,7 @@ class _CheckoutState extends State<Checkout> {
           child: Center(
               child: Text(
             AppLocalizations.of(context).common_no_payment_method_added,
-            style: TextStyle(color: MyTheme.font_grey),
+            style: TextStyle(color: MyTheme.secondary),
           )));
     }
   }
@@ -1585,7 +1582,7 @@ class _CheckoutState extends State<Checkout> {
                   shape: RoundedRectangleBorder(
                     side: _selected_payment_method_key ==
                             _paymentTypeList[index].payment_type_key
-                        ? BorderSide(color: MyTheme.accent_color, width: 2.0)
+                        ? BorderSide(color: MyTheme.primary, width: 2.0)
                         : BorderSide(color: MyTheme.light_grey, width: 1.0),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -1624,7 +1621,7 @@ class _CheckoutState extends State<Checkout> {
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                   style: TextStyle(
-                                      color: MyTheme.font_grey,
+                                      color: MyTheme.secondary,
                                       fontSize: 14,
                                       height: 1.6,
                                       fontWeight: FontWeight.w400),
@@ -1674,7 +1671,7 @@ class _CheckoutState extends State<Checkout> {
             FlatButton(
               minWidth: MediaQuery.of(context).size.width,
               height: 50,
-              color: MyTheme.accent_color,
+              color: MyTheme.primary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(0.0),
               ),
@@ -1708,8 +1705,7 @@ class _CheckoutState extends State<Checkout> {
       height: 40,
       width: double.infinity,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
-          color: MyTheme.soft_accent_color),
+          borderRadius: BorderRadius.circular(8.0), color: MyTheme.primary),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Row(
@@ -1718,7 +1714,7 @@ class _CheckoutState extends State<Checkout> {
               padding: const EdgeInsets.only(left: 16.0),
               child: Text(
                 AppLocalizations.of(context).checkout_screen_total_amount,
-                style: TextStyle(color: MyTheme.font_grey, fontSize: 14),
+                style: TextStyle(color: MyTheme.secondary, fontSize: 14),
               ),
             ),
             Visibility(
@@ -1732,7 +1728,7 @@ class _CheckoutState extends State<Checkout> {
                   child: Text(
                     AppLocalizations.of(context).common_see_details,
                     style: TextStyle(
-                      color: MyTheme.font_grey,
+                      color: MyTheme.secondary,
                       fontSize: 12,
                       decoration: TextDecoration.underline,
                     ),
@@ -1748,7 +1744,7 @@ class _CheckoutState extends State<Checkout> {
                       ? widget.rechargeAmount.toString()
                       : _totalString,
                   style: TextStyle(
-                      color: MyTheme.accent_color,
+                      color: MyTheme.primary,
                       fontSize: 14,
                       fontWeight: FontWeight.w600)),
             ),

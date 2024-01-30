@@ -9,7 +9,6 @@ import 'package:toast/toast.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class Wishlist extends StatefulWidget {
   @override
   _WishlistState createState() => _WishlistState();
@@ -77,7 +76,7 @@ class _WishlistState extends State<Wishlist> {
           backgroundColor: Colors.white,
           appBar: buildAppBar(context),
           body: RefreshIndicator(
-            color: MyTheme.accent_color,
+            color: MyTheme.primary,
             backgroundColor: Colors.white,
             onRefresh: _onPageRefresh,
             child: CustomScrollView(
@@ -107,7 +106,7 @@ class _WishlistState extends State<Wishlist> {
       ),
       title: Text(
         AppLocalizations.of(context).wishlist_screen_my_wishlist,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(fontSize: 16, color: MyTheme.primary),
       ),
       elevation: 0.0,
       titleSpacing: 0,
@@ -120,8 +119,8 @@ class _WishlistState extends State<Wishlist> {
           height: 100,
           child: Center(
               child: Text(
-                AppLocalizations.of(context).wishlist_screen_login_warning,
-            style: TextStyle(color: MyTheme.font_grey),
+            AppLocalizations.of(context).wishlist_screen_login_warning,
+            style: TextStyle(color: MyTheme.secondary),
           )));
     } else if (_wishlistInit == true && _wishlistItems.length == 0) {
       return SingleChildScrollView(
@@ -146,8 +145,9 @@ class _WishlistState extends State<Wishlist> {
       return Container(
           height: 100,
           child: Center(
-              child: Text(AppLocalizations.of(context).common_no_item_is_available,
-                  style: TextStyle(color: MyTheme.font_grey))));
+              child: Text(
+                  AppLocalizations.of(context).common_no_item_is_available,
+                  style: TextStyle(color: MyTheme.secondary))));
     }
   }
 
@@ -197,7 +197,7 @@ class _WishlistState extends State<Wishlist> {
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                               style: TextStyle(
-                                  color: MyTheme.font_grey,
+                                  color: MyTheme.secondary,
                                   fontSize: 14,
                                   height: 1.6,
                                   fontWeight: FontWeight.w400),
@@ -211,7 +211,7 @@ class _WishlistState extends State<Wishlist> {
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                               style: TextStyle(
-                                  color: MyTheme.accent_color,
+                                  color: MyTheme.primary,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600),
                             ),
@@ -228,7 +228,7 @@ class _WishlistState extends State<Wishlist> {
                   left: 12,
                   child: IconButton(
                     icon: Icon(Icons.delete_forever_outlined,
-                        color: MyTheme.medium_grey),
+                        color: MyTheme.dark_grey),
                     onPressed: () {
                       _onPressRemove(index);
                     },
@@ -239,7 +239,7 @@ class _WishlistState extends State<Wishlist> {
                   right: 12,
                   child: IconButton(
                     icon: Icon(Icons.delete_forever_outlined,
-                        color: MyTheme.medium_grey),
+                        color: MyTheme.dark_grey),
                     onPressed: () {
                       _onPressRemove(index);
                     },

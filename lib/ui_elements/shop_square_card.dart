@@ -8,7 +8,7 @@ class ShopSquareCard extends StatefulWidget {
   String image;
   String name;
 
-  ShopSquareCard({Key key,this.id, this.image, this.name}) : super(key: key);
+  ShopSquareCard({Key key, this.id, this.image, this.name}) : super(key: key);
 
   @override
   _ShopSquareCardState createState() => _ShopSquareCardState();
@@ -18,9 +18,11 @@ class _ShopSquareCardState extends State<ShopSquareCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return SellerDetails(id: widget.id,);
+          return SellerDetails(
+            id: widget.id,
+          );
         }));
       },
       child: Card(
@@ -36,13 +38,13 @@ class _ShopSquareCardState extends State<ShopSquareCard> {
             children: <Widget>[
               Container(
                   width: double.infinity,
-                  height: ((MediaQuery.of(context).size.width - 24) /2) * .45,
+                  height: ((MediaQuery.of(context).size.width - 24) / 2) * .45,
                   child: ClipRRect(
                       borderRadius: BorderRadius.vertical(
                           top: Radius.circular(16), bottom: Radius.zero),
                       child: FadeInImage.assetNetwork(
                         placeholder: 'assets/placeholder.png',
-                        image:  widget.image,
+                        image: widget.image,
                         fit: BoxFit.scaleDown,
                       ))),
               Container(
@@ -55,7 +57,7 @@ class _ShopSquareCardState extends State<ShopSquareCard> {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: TextStyle(
-                        color: MyTheme.font_grey,
+                        color: MyTheme.secondary,
                         fontSize: 14,
                         height: 1.6,
                         fontWeight: FontWeight.bold),

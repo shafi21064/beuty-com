@@ -58,6 +58,7 @@ class Product {
     this.pictures,
     this.slug,
     this.reviews,
+    this.stock,
     // this.sales,
     // this.links,
   });
@@ -71,6 +72,7 @@ class Product {
   dynamic ratings;
   String slug;
   int reviews;
+  int stock;
   // int sales;
   // Links links;
   List<ProductCategory> productCategories;
@@ -82,6 +84,7 @@ class Product {
       //thumbnail_image: json["thumbnail_image"],
       price: json["price"],
       sale_price: json["sale_price"],
+      stock: json["stock"],
       // has_discount: json["has_discount"],
       ratings: json["ratings"],
       reviews: json["reviews"],
@@ -100,6 +103,7 @@ class Product {
         //"thumbnail_image": thumbnail_image,
         "price": price,
         "sale_price": sale_price,
+        "stock": stock,
         // "has_discount": has_discount,
         "ratings": ratings,
         "reviews": reviews,

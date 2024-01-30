@@ -9,7 +9,6 @@ import 'package:kirei/screens/order_list.dart';
 import 'package:kirei/screens/wallet.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class NagadScreen extends StatefulWidget {
   double amount;
   String payment_type;
@@ -51,7 +50,7 @@ class _NagadScreenState extends State<NagadScreen> {
 
   createOrder() async {
     var orderCreateResponse = await PaymentRepository()
-        .getOrderCreateResponse( widget.payment_method_key);
+        .getOrderCreateResponse(widget.payment_method_key);
 
     if (orderCreateResponse.result == false) {
       ToastComponent.showDialog(orderCreateResponse.message, context,
@@ -80,7 +79,6 @@ class _NagadScreenState extends State<NagadScreen> {
 
     _initial_url = nagadUrlResponse.url;
     _initial_url_fetched = true;
-
 
     setState(() {});
 
@@ -115,12 +113,13 @@ class _NagadScreenState extends State<NagadScreen> {
       }
     });
   }
-  onPaymentSuccess(payment_details) async{
 
-    var nagadPaymentProcessResponse = await PaymentRepository().getNagadPaymentProcessResponse(widget.payment_type, widget.amount,_combined_order_id, payment_details);
+  onPaymentSuccess(payment_details) async {
+    var nagadPaymentProcessResponse = await PaymentRepository()
+        .getNagadPaymentProcessResponse(widget.payment_type, widget.amount,
+            _combined_order_id, payment_details);
 
-    if(nagadPaymentProcessResponse.result == false ){
-
+    if (nagadPaymentProcessResponse.result == false) {
       Toast.show(nagadPaymentProcessResponse.message, context,
           duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
       Navigator.pop(context);
@@ -138,10 +137,7 @@ class _NagadScreenState extends State<NagadScreen> {
         return Wallet(from_recharge: true);
       }));
     }
-
-
   }
-  
 
   buildBody() {
     if (_order_init == false &&
@@ -155,7 +151,8 @@ class _NagadScreenState extends State<NagadScreen> {
     } else if (_initial_url_fetched == false) {
       return Container(
         child: Center(
-          child: Text(AppLocalizations.of(context).nagad_screen_fetching_nagad_url),
+          child: Text(
+              AppLocalizations.of(context).nagad_screen_fetching_nagad_url),
         ),
       );
     } else {
@@ -193,7 +190,7 @@ class _NagadScreenState extends State<NagadScreen> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       centerTitle: true,
       leading: Builder(
         builder: (context) => IconButton(
@@ -203,7 +200,7 @@ backgroundColor: Colors.white,
       ),
       title: Text(
         AppLocalizations.of(context).nagad_screen_pay_with_nagad,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(fontSize: 16, color: MyTheme.primary),
       ),
       elevation: 0.0,
       titleSpacing: 0,

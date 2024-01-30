@@ -143,7 +143,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 AppLocalizations.of(context)
                                     .order_details_screen_refund_product_name,
                                 style: TextStyle(
-                                    color: MyTheme.font_grey, fontSize: 12)),
+                                    color: MyTheme.secondary, fontSize: 12)),
                             Container(
                               width: 225,
                               child: Padding(
@@ -152,7 +152,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                     style: TextStyle(
-                                        color: MyTheme.font_grey,
+                                        color: MyTheme.secondary,
                                         fontSize: 13)),
                               ),
                             ),
@@ -167,12 +167,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 AppLocalizations.of(context)
                                     .order_details_screen_refund_order_code,
                                 style: TextStyle(
-                                    color: MyTheme.font_grey, fontSize: 12)),
+                                    color: MyTheme.secondary, fontSize: 12)),
                             Padding(
                               padding: const EdgeInsets.only(left: 8.0),
                               child: Text(order_code,
                                   style: TextStyle(
-                                      color: MyTheme.font_grey, fontSize: 13)),
+                                      color: MyTheme.secondary, fontSize: 13)),
                             ),
                           ],
                         ),
@@ -184,7 +184,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             Text(
                                 "${AppLocalizations.of(context).order_details_screen_refund_reason} *",
                                 style: TextStyle(
-                                    color: MyTheme.font_grey, fontSize: 12)),
+                                    color: MyTheme.secondary, fontSize: 12)),
                             _showReasonWarning
                                 ? Padding(
                                     padding: const EdgeInsets.only(
@@ -213,20 +213,17 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 hintText: AppLocalizations.of(context)
                                     .order_details_screen_refund_enter_reason,
                                 hintStyle: TextStyle(
-                                    fontSize: 12.0,
-                                    color: MyTheme.textfield_grey),
+                                    fontSize: 12.0, color: MyTheme.light_grey),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: MyTheme.textfield_grey,
-                                      width: 0.5),
+                                      color: MyTheme.light_grey, width: 0.5),
                                   borderRadius: const BorderRadius.all(
                                     const Radius.circular(8.0),
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: MyTheme.textfield_grey,
-                                      width: 1.0),
+                                      color: MyTheme.light_grey, width: 1.0),
                                   borderRadius: const BorderRadius.all(
                                     const Radius.circular(8.0),
                                   ),
@@ -258,7 +255,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                           AppLocalizations.of(context)
                               .common_close_in_all_capital,
                           style: TextStyle(
-                            color: MyTheme.font_grey,
+                            color: MyTheme.secondary,
                           ),
                         ),
                         onPressed: () {
@@ -275,7 +272,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                       child: FlatButton(
                         minWidth: 75,
                         height: 30,
-                        color: MyTheme.accent_color,
+                        color: MyTheme.primary,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             side: BorderSide(
@@ -334,9 +331,9 @@ class _OrderDetailsState extends State<OrderDetails> {
     Scaffold.of(context).showSnackBar(SnackBar(
       content: Text(
         refundRequestSendResponse.message,
-        style: TextStyle(color: MyTheme.font_grey),
+        style: TextStyle(color: MyTheme.secondary),
       ),
-      backgroundColor: MyTheme.soft_accent_color,
+      backgroundColor: MyTheme.primary,
       duration: const Duration(seconds: 3),
       action: SnackBarAction(
         label: AppLocalizations.of(context)
@@ -348,7 +345,7 @@ class _OrderDetailsState extends State<OrderDetails> {
             onPopped(value);
           });
         },
-        textColor: MyTheme.accent_color,
+        textColor: MyTheme.primary,
         disabledTextColor: Colors.grey,
       ),
     ));
@@ -380,7 +377,7 @@ class _OrderDetailsState extends State<OrderDetails> {
           backgroundColor: Colors.white,
           appBar: buildAppBar(context),
           body: RefreshIndicator(
-            color: MyTheme.accent_color,
+            color: MyTheme.primary,
             backgroundColor: Colors.white,
             onRefresh: _onPageRefresh,
             child: CustomScrollView(
@@ -411,7 +408,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                       AppLocalizations.of(context)
                           .order_details_screen_ordered_product,
                       style: TextStyle(
-                          color: MyTheme.font_grey,
+                          color: MyTheme.secondary,
                           fontSize: 14,
                           fontWeight: FontWeight.w600),
                     ),
@@ -427,7 +424,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                   child: Text(
                                     AppLocalizations.of(context)
                                         .order_details_screen_ordered_product,
-                                    style: TextStyle(color: MyTheme.font_grey),
+                                    style: TextStyle(color: MyTheme.secondary),
                                   ),
                                 )))
                 ])),
@@ -473,7 +470,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 .order_details_screen_sub_total,
                             textAlign: TextAlign.end,
                             style: TextStyle(
-                                color: MyTheme.font_grey,
+                                color: MyTheme.secondary,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -482,7 +479,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         Text(
                           _orderDetails.subtotal,
                           style: TextStyle(
-                              color: MyTheme.font_grey,
+                              color: MyTheme.secondary,
                               fontSize: 14,
                               fontWeight: FontWeight.w600),
                         ),
@@ -499,7 +496,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 .order_details_screen_tax,
                             textAlign: TextAlign.end,
                             style: TextStyle(
-                                color: MyTheme.font_grey,
+                                color: MyTheme.secondary,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -508,7 +505,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         Text(
                           _orderDetails.tax,
                           style: TextStyle(
-                              color: MyTheme.font_grey,
+                              color: MyTheme.secondary,
                               fontSize: 14,
                               fontWeight: FontWeight.w600),
                         ),
@@ -525,7 +522,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 .order_details_screen_shipping_cost,
                             textAlign: TextAlign.end,
                             style: TextStyle(
-                                color: MyTheme.font_grey,
+                                color: MyTheme.secondary,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -534,7 +531,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         Text(
                           _orderDetails.shipping_cost,
                           style: TextStyle(
-                              color: MyTheme.font_grey,
+                              color: MyTheme.secondary,
                               fontSize: 14,
                               fontWeight: FontWeight.w600),
                         ),
@@ -551,7 +548,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 .order_details_screen_discount,
                             textAlign: TextAlign.end,
                             style: TextStyle(
-                                color: MyTheme.font_grey,
+                                color: MyTheme.secondary,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -560,7 +557,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         Text(
                           _orderDetails.coupon_discount,
                           style: TextStyle(
-                              color: MyTheme.font_grey,
+                              color: MyTheme.secondary,
                               fontSize: 14,
                               fontWeight: FontWeight.w600),
                         ),
@@ -578,7 +575,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 .order_details_screen_grand_total,
                             textAlign: TextAlign.end,
                             style: TextStyle(
-                                color: MyTheme.font_grey,
+                                color: MyTheme.secondary,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -587,7 +584,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         Text(
                           _orderDetails.grand_total,
                           style: TextStyle(
-                              color: MyTheme.accent_color,
+                              color: MyTheme.primary,
                               fontSize: 14,
                               fontWeight: FontWeight.w600),
                         ),
@@ -670,7 +667,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                     child: Container(
                         height: 1.0,
                         width: MediaQuery.of(context).size.width * .4,
-                        color: MyTheme.medium_grey_50),
+                        color: MyTheme.dark_grey),
                   ),
                   Spacer(),
                   Padding(
@@ -679,14 +676,14 @@ class _OrderDetailsState extends State<OrderDetails> {
                       AppLocalizations.of(context)
                           .order_details_screen_timeline_tile_order_placed,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: MyTheme.font_grey, fontSize: 12),
+                      style: TextStyle(color: MyTheme.secondary, fontSize: 12),
                     ),
                   )
                 ],
               ),
             ),
             indicatorStyle: IndicatorStyle(
-              color: _stepIndex >= 0 ? Colors.green : MyTheme.medium_grey,
+              color: _stepIndex >= 0 ? Colors.green : MyTheme.dark_grey,
               padding: const EdgeInsets.all(0),
               iconStyle: _stepIndex >= 0
                   ? IconStyle(
@@ -699,7 +696,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                     thickness: 5,
                   )
                 : LineStyle(
-                    color: MyTheme.medium_grey,
+                    color: MyTheme.dark_grey,
                     thickness: 4,
                   ),
           ),
@@ -734,7 +731,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                     child: Container(
                         height: 1.0,
                         width: MediaQuery.of(context).size.width * .4,
-                        color: MyTheme.medium_grey_50),
+                        color: MyTheme.dark_grey),
                   ),
                   Spacer(),
                   Padding(
@@ -743,14 +740,14 @@ class _OrderDetailsState extends State<OrderDetails> {
                       AppLocalizations.of(context)
                           .order_details_screen_timeline_tile_confirmed,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: MyTheme.font_grey),
+                      style: TextStyle(color: MyTheme.secondary),
                     ),
                   )
                 ],
               ),
             ),
             indicatorStyle: IndicatorStyle(
-              color: _stepIndex >= 1 ? Colors.green : MyTheme.medium_grey,
+              color: _stepIndex >= 1 ? Colors.green : MyTheme.dark_grey,
               padding: const EdgeInsets.all(0),
               iconStyle: _stepIndex >= 1
                   ? IconStyle(
@@ -763,7 +760,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                     thickness: 5,
                   )
                 : LineStyle(
-                    color: MyTheme.medium_grey,
+                    color: MyTheme.dark_grey,
                     thickness: 4,
                   ),
             afterLineStyle: _stepIndex >= 2
@@ -772,7 +769,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                     thickness: 5,
                   )
                 : LineStyle(
-                    color: MyTheme.medium_grey,
+                    color: MyTheme.dark_grey,
                     thickness: 4,
                   ),
           ),
@@ -809,7 +806,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                     child: Container(
                         height: 1.0,
                         width: MediaQuery.of(context).size.width * .4,
-                        color: MyTheme.medium_grey_50),
+                        color: MyTheme.dark_grey),
                   ),
                   Spacer(),
                   Padding(
@@ -818,14 +815,14 @@ class _OrderDetailsState extends State<OrderDetails> {
                       AppLocalizations.of(context)
                           .order_details_screen_timeline_tile_on_delivery,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: MyTheme.font_grey),
+                      style: TextStyle(color: MyTheme.secondary),
                     ),
                   )
                 ],
               ),
             ),
             indicatorStyle: IndicatorStyle(
-              color: _stepIndex >= 2 ? Colors.green : MyTheme.medium_grey,
+              color: _stepIndex >= 2 ? Colors.green : MyTheme.dark_grey,
               padding: const EdgeInsets.all(0),
               iconStyle: _stepIndex >= 2
                   ? IconStyle(
@@ -838,7 +835,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                     thickness: 5,
                   )
                 : LineStyle(
-                    color: MyTheme.medium_grey,
+                    color: MyTheme.dark_grey,
                     thickness: 4,
                   ),
             afterLineStyle: _stepIndex >= 5
@@ -847,7 +844,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                     thickness: 5,
                   )
                 : LineStyle(
-                    color: MyTheme.medium_grey,
+                    color: MyTheme.dark_grey,
                     thickness: 4,
                   ),
           ),
@@ -883,7 +880,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                     child: Container(
                         height: 1.0,
                         width: MediaQuery.of(context).size.width * .4,
-                        color: MyTheme.medium_grey_50),
+                        color: MyTheme.dark_grey),
                   ),
                   Spacer(),
                   Padding(
@@ -892,14 +889,14 @@ class _OrderDetailsState extends State<OrderDetails> {
                       AppLocalizations.of(context)
                           .order_details_screen_timeline_tile_delivered,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: MyTheme.font_grey),
+                      style: TextStyle(color: MyTheme.secondary),
                     ),
                   )
                 ],
               ),
             ),
             indicatorStyle: IndicatorStyle(
-              color: _stepIndex >= 5 ? Colors.green : MyTheme.medium_grey,
+              color: _stepIndex >= 5 ? Colors.green : MyTheme.dark_grey,
               padding: const EdgeInsets.all(0),
               iconStyle: _stepIndex >= 5
                   ? IconStyle(
@@ -912,7 +909,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                     thickness: 5,
                   )
                 : LineStyle(
-                    color: MyTheme.medium_grey,
+                    color: MyTheme.dark_grey,
                     thickness: 4,
                   ),
           ),
@@ -938,7 +935,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                 Text(
                   "Order Code",
                   style: TextStyle(
-                      color: MyTheme.font_grey,
+                      color: MyTheme.secondary,
                       fontSize: 13,
                       fontWeight: FontWeight.w600),
                 ),
@@ -946,7 +943,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                 Text(
                   "Shipping Method",
                   style: TextStyle(
-                      color: MyTheme.font_grey,
+                      color: MyTheme.secondary,
                       fontSize: 13,
                       fontWeight: FontWeight.w600),
                 ),
@@ -959,7 +956,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   Text(
                     _orderDetails.code,
                     style: TextStyle(
-                        color: MyTheme.accent_color,
+                        color: MyTheme.primary,
                         fontSize: 14,
                         fontWeight: FontWeight.w600),
                   ),
@@ -967,7 +964,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   Text(
                     _orderDetails.shipping_type_string,
                     style: TextStyle(
-                      color: MyTheme.grey_153,
+                      color: MyTheme.secondary,
                     ),
                   ),
                 ],
@@ -978,7 +975,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                 Text(
                   "Order Date",
                   style: TextStyle(
-                      color: MyTheme.font_grey,
+                      color: MyTheme.secondary,
                       fontSize: 13,
                       fontWeight: FontWeight.w600),
                 ),
@@ -986,7 +983,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                 Text(
                   "Payment Method",
                   style: TextStyle(
-                      color: MyTheme.font_grey,
+                      color: MyTheme.secondary,
                       fontSize: 13,
                       fontWeight: FontWeight.w600),
                 ),
@@ -999,14 +996,14 @@ class _OrderDetailsState extends State<OrderDetails> {
                   Text(
                     _orderDetails.date,
                     style: TextStyle(
-                      color: MyTheme.grey_153,
+                      color: MyTheme.secondary,
                     ),
                   ),
                   Spacer(),
                   Text(
                     _orderDetails.payment_type,
                     style: TextStyle(
-                      color: MyTheme.grey_153,
+                      color: MyTheme.secondary,
                     ),
                   ),
                 ],
@@ -1017,7 +1014,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                 Text(
                   "Payment Status",
                   style: TextStyle(
-                      color: MyTheme.font_grey,
+                      color: MyTheme.secondary,
                       fontSize: 13,
                       fontWeight: FontWeight.w600),
                 ),
@@ -1025,7 +1022,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                 Text(
                   "Delivery Status",
                   style: TextStyle(
-                      color: MyTheme.font_grey,
+                      color: MyTheme.secondary,
                       fontSize: 13,
                       fontWeight: FontWeight.w600),
                 ),
@@ -1040,7 +1037,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                     child: Text(
                       _orderDetails.payment_status_string,
                       style: TextStyle(
-                        color: MyTheme.grey_153,
+                        color: MyTheme.secondary,
                       ),
                     ),
                   ),
@@ -1050,7 +1047,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   Text(
                     _orderDetails.delivery_status_string,
                     style: TextStyle(
-                      color: MyTheme.grey_153,
+                      color: MyTheme.secondary,
                     ),
                   ),
                 ],
@@ -1063,7 +1060,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                       ? "Shipping Address"
                       : "Pickup Point",
                   style: TextStyle(
-                      color: MyTheme.font_grey,
+                      color: MyTheme.secondary,
                       fontSize: 13,
                       fontWeight: FontWeight.w600),
                 ),
@@ -1071,7 +1068,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                 Text(
                   "Total Amount",
                   style: TextStyle(
-                      color: MyTheme.font_grey,
+                      color: MyTheme.secondary,
                       fontSize: 13,
                       fontWeight: FontWeight.w600),
                 ),
@@ -1093,7 +1090,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                       "${AppLocalizations.of(context).order_details_screen_name}: ${_orderDetails.shipping_address.name}",
                                       maxLines: 3,
                                       style: TextStyle(
-                                        color: MyTheme.grey_153,
+                                        color: MyTheme.secondary,
                                       ),
                                     )
                                   : Container(),
@@ -1102,7 +1099,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                       "${AppLocalizations.of(context).order_details_screen_email}: ${_orderDetails.shipping_address.email}",
                                       maxLines: 3,
                                       style: TextStyle(
-                                        color: MyTheme.grey_153,
+                                        color: MyTheme.secondary,
                                       ),
                                     )
                                   : Container(),
@@ -1110,42 +1107,42 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 "${AppLocalizations.of(context).order_details_screen_address}: ${_orderDetails.shipping_address.address}",
                                 maxLines: 3,
                                 style: TextStyle(
-                                  color: MyTheme.grey_153,
+                                  color: MyTheme.secondary,
                                 ),
                               ),
                               Text(
                                 "${AppLocalizations.of(context).order_details_screen_city}: ${_orderDetails.shipping_address.city}",
                                 maxLines: 3,
                                 style: TextStyle(
-                                  color: MyTheme.grey_153,
+                                  color: MyTheme.secondary,
                                 ),
                               ),
                               Text(
                                 "${AppLocalizations.of(context).order_details_screen_country}: ${_orderDetails.shipping_address.country}",
                                 maxLines: 3,
                                 style: TextStyle(
-                                  color: MyTheme.grey_153,
+                                  color: MyTheme.secondary,
                                 ),
                               ),
                               Text(
                                 "${AppLocalizations.of(context).order_details_screen_state}: ${_orderDetails.shipping_address.state}",
                                 maxLines: 3,
                                 style: TextStyle(
-                                  color: MyTheme.grey_153,
+                                  color: MyTheme.secondary,
                                 ),
                               ),
                               Text(
                                 "${AppLocalizations.of(context).order_details_screen_phone}: ${_orderDetails.shipping_address.phone}",
                                 maxLines: 3,
                                 style: TextStyle(
-                                  color: MyTheme.grey_153,
+                                  color: MyTheme.secondary,
                                 ),
                               ),
                               Text(
                                 "${AppLocalizations.of(context).order_details_screen_postal_code}: ${_orderDetails.shipping_address.postal_code}",
                                 maxLines: 3,
                                 style: TextStyle(
-                                  color: MyTheme.grey_153,
+                                  color: MyTheme.secondary,
                                 ),
                               ),
                             ],
@@ -1158,7 +1155,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                       "${AppLocalizations.of(context).order_details_screen_name}: ${_orderDetails.pickupPoint.name}",
                                       maxLines: 3,
                                       style: TextStyle(
-                                        color: MyTheme.grey_153,
+                                        color: MyTheme.secondary,
                                       ),
                                     )
                                   : Container(),
@@ -1166,14 +1163,14 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 "${AppLocalizations.of(context).order_details_screen_address}: ${_orderDetails.pickupPoint.address}",
                                 maxLines: 3,
                                 style: TextStyle(
-                                  color: MyTheme.grey_153,
+                                  color: MyTheme.secondary,
                                 ),
                               ),
                               Text(
                                 "${AppLocalizations.of(context).address_screen_phone}: ${_orderDetails.pickupPoint.phone}",
                                 maxLines: 3,
                                 style: TextStyle(
-                                  color: MyTheme.grey_153,
+                                  color: MyTheme.secondary,
                                 ),
                               ),
                             ],
@@ -1183,7 +1180,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   Text(
                     _orderDetails.grand_total,
                     style: TextStyle(
-                        color: MyTheme.accent_color,
+                        color: MyTheme.primary,
                         fontSize: 16,
                         fontWeight: FontWeight.w600),
                   ),
@@ -1214,7 +1211,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                 _orderedItemList[index].product_name,
                 maxLines: 2,
                 style: TextStyle(
-                  color: MyTheme.font_grey,
+                  color: MyTheme.secondary,
                 ),
               ),
             ),
@@ -1225,7 +1222,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   Text(
                     _orderedItemList[index].quantity.toString() + " x ",
                     style: TextStyle(
-                        color: MyTheme.font_grey,
+                        color: MyTheme.secondary,
                         fontSize: 13,
                         fontWeight: FontWeight.w600),
                   ),
@@ -1234,14 +1231,14 @@ class _OrderDetailsState extends State<OrderDetails> {
                       ? Text(
                           _orderedItemList[index].variation,
                           style: TextStyle(
-                              color: MyTheme.font_grey,
+                              color: MyTheme.secondary,
                               fontSize: 13,
                               fontWeight: FontWeight.w600),
                         )
                       : Text(
                           "item",
                           style: TextStyle(
-                              color: MyTheme.font_grey,
+                              color: MyTheme.secondary,
                               fontSize: 13,
                               fontWeight: FontWeight.w600),
                         ),
@@ -1249,7 +1246,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   Text(
                     _orderedItemList[index].price,
                     style: TextStyle(
-                        color: MyTheme.accent_color,
+                        color: MyTheme.primary,
                         fontSize: 14,
                         fontWeight: FontWeight.w600),
                   ),
@@ -1274,7 +1271,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             AppLocalizations.of(context)
                                 .order_details_screen_ask_for_refund,
                             style: TextStyle(
-                                color: MyTheme.accent_color,
+                                color: MyTheme.primary,
                                 fontWeight: FontWeight.w600,
                                 decoration: TextDecoration.underline),
                           ),
@@ -1282,7 +1279,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             padding: const EdgeInsets.only(left: 2.0),
                             child: Icon(
                               FontAwesome.rotate_left,
-                              color: MyTheme.accent_color,
+                              color: MyTheme.primary,
                               size: 14,
                             ),
                           )
@@ -1302,7 +1299,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                           Text(
                             AppLocalizations.of(context)
                                 .order_details_screen_refund_status,
-                            style: TextStyle(color: MyTheme.font_grey),
+                            style: TextStyle(color: MyTheme.secondary),
                           ),
                           Text(
                             _orderedItemList[index].refund_label,
@@ -1330,7 +1327,7 @@ class _OrderDetailsState extends State<OrderDetails> {
     } else if (status == 1) {
       return Colors.green;
     } else {
-      return MyTheme.font_grey;
+      return MyTheme.secondary;
     }
   }
 
@@ -1370,7 +1367,7 @@ class _OrderDetailsState extends State<OrderDetails> {
       ),
       title: Text(
         AppLocalizations.of(context).order_details_screen_order_details,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(fontSize: 16, color: MyTheme.primary),
       ),
       elevation: 0.0,
       titleSpacing: 0,
@@ -1385,11 +1382,11 @@ class _OrderDetailsState extends State<OrderDetails> {
         children: [
           _orderDetails != null && _orderDetails.manually_payable
               ? FlatButton(
-                  color: MyTheme.soft_accent_color,
+                  color: MyTheme.primary,
                   child: Text(
                     AppLocalizations.of(context)
                         .order_details_screen_make_offline_payment,
-                    style: TextStyle(color: MyTheme.font_grey),
+                    style: TextStyle(color: MyTheme.secondary),
                   ),
                   onPressed: () {
                     onPressOfflinePaymentButton();

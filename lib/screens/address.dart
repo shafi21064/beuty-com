@@ -110,10 +110,10 @@ class _AddressState extends State<Address> {
       print("fetchShippingAddressList");
     }
 
-if (mounted) {
+    if (mounted) {
       setState(() {});
     }
-}
+  }
 
   reset() {
     _default_shipping_address = 0;
@@ -199,21 +199,21 @@ if (mounted) {
                   AppLocalizations.of(context)
                       .address_screen_address_remove_warning,
                   maxLines: 3,
-                  style: TextStyle(color: MyTheme.font_grey, fontSize: 14),
+                  style: TextStyle(color: MyTheme.secondary, fontSize: 14),
                 ),
               ),
               actions: [
                 FlatButton(
                   child: Text(
                     AppLocalizations.of(context).common_cancel_ucfirst,
-                    style: TextStyle(color: MyTheme.medium_grey),
+                    style: TextStyle(color: MyTheme.dark_grey),
                   ),
                   onPressed: () {
                     Navigator.of(context, rootNavigator: true).pop();
                   },
                 ),
                 FlatButton(
-                  color: MyTheme.soft_accent_color,
+                  color: MyTheme.primary,
                   child: Text(
                     AppLocalizations.of(context).common_confirm_ucfirst,
                     style: TextStyle(color: MyTheme.dark_grey),
@@ -427,7 +427,6 @@ if (mounted) {
   }
 
   onSelectStateDuringUpdate(index, state, setModalState) {
-
     if (_selected_state_list_for_update[index] != null &&
         state.id == _selected_state_list_for_update[index].id) {
       setModalState(() {
@@ -471,7 +470,7 @@ if (mounted) {
         appBar: buildAppBar(context),
         bottomNavigationBar: buildBottomAppBar(context),
         body: RefreshIndicator(
-          color: MyTheme.accent_color,
+          color: MyTheme.primary,
           backgroundColor: Colors.white,
           onRefresh: _onRefresh,
           displacement: 0,
@@ -537,7 +536,7 @@ if (mounted) {
                         child: Text(
                             "${AppLocalizations.of(context).address_screen_address} *",
                             style: TextStyle(
-                                color: MyTheme.font_grey, fontSize: 12)),
+                                color: MyTheme.secondary, fontSize: 12)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 16.0),
@@ -552,20 +551,17 @@ if (mounted) {
                                 hintText: AppLocalizations.of(context)
                                     .address_screen_enter_address,
                                 hintStyle: TextStyle(
-                                    fontSize: 12.0,
-                                    color: MyTheme.textfield_grey),
+                                    fontSize: 12.0, color: MyTheme.light_grey),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: MyTheme.textfield_grey,
-                                      width: 0.5),
+                                      color: MyTheme.light_grey, width: 0.5),
                                   borderRadius: const BorderRadius.all(
                                     const Radius.circular(8.0),
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: MyTheme.textfield_grey,
-                                      width: 1.0),
+                                      color: MyTheme.light_grey, width: 1.0),
                                   borderRadius: const BorderRadius.all(
                                     const Radius.circular(8.0),
                                   ),
@@ -579,7 +575,7 @@ if (mounted) {
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text("City *",
                             style: TextStyle(
-                                color: MyTheme.font_grey, fontSize: 12)),
+                                color: MyTheme.secondary, fontSize: 12)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 16.0),
@@ -600,7 +596,7 @@ if (mounted) {
                                         AppLocalizations.of(context)
                                             .address_screen_loading_states,
                                         style: TextStyle(
-                                            color: MyTheme.medium_grey))),
+                                            color: MyTheme.dark_grey))),
                               );
                             },
                             itemBuilder: (context, state) {
@@ -609,7 +605,7 @@ if (mounted) {
                                 dense: true,
                                 title: Text(
                                   state.name,
-                                  style: TextStyle(color: MyTheme.font_grey),
+                                  style: TextStyle(color: MyTheme.secondary),
                                 ),
                               );
                             },
@@ -621,7 +617,7 @@ if (mounted) {
                                         AppLocalizations.of(context)
                                             .address_screen_no_state_available,
                                         style: TextStyle(
-                                            color: MyTheme.medium_grey))),
+                                            color: MyTheme.dark_grey))),
                               );
                             },
                             onSuggestionSelected: (state) {
@@ -641,19 +637,17 @@ if (mounted) {
                                       .address_screen_enter_state,
                                   hintStyle: TextStyle(
                                       fontSize: 12.0,
-                                      color: MyTheme.textfield_grey),
+                                      color: MyTheme.light_grey),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 0.5),
+                                        color: MyTheme.light_grey, width: 0.5),
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(8.0),
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 1.0),
+                                        color: MyTheme.light_grey, width: 1.0),
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(8.0),
                                     ),
@@ -669,7 +663,7 @@ if (mounted) {
                         child: Text(
                             "${AppLocalizations.of(context).address_screen_city} *",
                             style: TextStyle(
-                                color: MyTheme.font_grey, fontSize: 12)),
+                                color: MyTheme.secondary, fontSize: 12)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 16.0),
@@ -690,7 +684,7 @@ if (mounted) {
                                         AppLocalizations.of(context)
                                             .address_screen_loading_cities,
                                         style: TextStyle(
-                                            color: MyTheme.medium_grey))),
+                                            color: MyTheme.dark_grey))),
                               );
                             },
                             itemBuilder: (context, city) {
@@ -699,7 +693,7 @@ if (mounted) {
                                 dense: true,
                                 title: Text(
                                   city.name,
-                                  style: TextStyle(color: MyTheme.font_grey),
+                                  style: TextStyle(color: MyTheme.secondary),
                                 ),
                               );
                             },
@@ -711,7 +705,7 @@ if (mounted) {
                                         AppLocalizations.of(context)
                                             .address_screen_no_city_available,
                                         style: TextStyle(
-                                            color: MyTheme.medium_grey))),
+                                            color: MyTheme.dark_grey))),
                               );
                             },
                             onSuggestionSelected: (city) {
@@ -729,19 +723,17 @@ if (mounted) {
                                       .address_screen_enter_city,
                                   hintStyle: TextStyle(
                                       fontSize: 12.0,
-                                      color: MyTheme.textfield_grey),
+                                      color: MyTheme.light_grey),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 0.5),
+                                        color: MyTheme.light_grey, width: 0.5),
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(8.0),
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 1.0),
+                                        color: MyTheme.light_grey, width: 1.0),
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(8.0),
                                     ),
@@ -756,7 +748,7 @@ if (mounted) {
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text("Area *",
                             style: TextStyle(
-                                color: MyTheme.font_grey, fontSize: 12)),
+                                color: MyTheme.secondary, fontSize: 12)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 16.0),
@@ -776,7 +768,7 @@ if (mounted) {
                                         AppLocalizations.of(context)
                                             .address_screen_loading_cities,
                                         style: TextStyle(
-                                            color: MyTheme.medium_grey))),
+                                            color: MyTheme.dark_grey))),
                               );
                             },
                             itemBuilder: (context, city) {
@@ -785,7 +777,7 @@ if (mounted) {
                                 dense: true,
                                 title: Text(
                                   city.name,
-                                  style: TextStyle(color: MyTheme.font_grey),
+                                  style: TextStyle(color: MyTheme.secondary),
                                 ),
                               );
                             },
@@ -797,7 +789,7 @@ if (mounted) {
                                         AppLocalizations.of(context)
                                             .address_screen_no_city_available,
                                         style: TextStyle(
-                                            color: MyTheme.medium_grey))),
+                                            color: MyTheme.dark_grey))),
                               );
                             },
                             onSuggestionSelected: (city) {
@@ -815,19 +807,17 @@ if (mounted) {
                                       .address_screen_enter_city,
                                   hintStyle: TextStyle(
                                       fontSize: 12.0,
-                                      color: MyTheme.textfield_grey),
+                                      color: MyTheme.light_grey),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 0.5),
+                                        color: MyTheme.light_grey, width: 0.5),
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(8.0),
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 1.0),
+                                        color: MyTheme.light_grey, width: 1.0),
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(8.0),
                                     ),
@@ -857,7 +847,7 @@ if (mounted) {
                       //                   AppLocalizations.of(context)
                       //                       .address_screen_loading_countries,
                       //                   style: TextStyle(
-                      //                       color: MyTheme.medium_grey))),
+                      //                       color: MyTheme.dark_grey))),
                       //         );
                       //       },
                       //       itemBuilder: (context, country) {
@@ -866,7 +856,7 @@ if (mounted) {
                       //           dense: true,
                       //           title: Text(
                       //             country.name,
-                      //             style: TextStyle(color: MyTheme.font_grey),
+                      //             style: TextStyle(color: MyTheme.secondary),
                       //           ),
                       //         );
                       //       },
@@ -878,7 +868,7 @@ if (mounted) {
                       //                   AppLocalizations.of(context)
                       //                       .address_screen_no_country_available,
                       //                   style: TextStyle(
-                      //                       color: MyTheme.medium_grey))),
+                      //                       color: MyTheme.dark_grey))),
                       //         );
                       //       },
                       //       onSuggestionSelected: (country) {
@@ -896,10 +886,10 @@ if (mounted) {
                       //                 .address_screen_enter_country,
                       //             hintStyle: TextStyle(
                       //                 fontSize: 12.0,
-                      //                 color: MyTheme.textfield_grey),
+                      //                 color: MyTheme.light_grey),
                       //             enabledBorder: OutlineInputBorder(
                       //               borderSide: BorderSide(
-                      //                   color: MyTheme.textfield_grey,
+                      //                   color: MyTheme.light_grey,
                       //                   width: 0.5),
                       //               borderRadius: const BorderRadius.all(
                       //                 const Radius.circular(8.0),
@@ -907,7 +897,7 @@ if (mounted) {
                       //             ),
                       //             focusedBorder: OutlineInputBorder(
                       //               borderSide: BorderSide(
-                      //                   color: MyTheme.textfield_grey,
+                      //                   color: MyTheme.light_grey,
                       //                   width: 1.0),
                       //               borderRadius: const BorderRadius.all(
                       //                 const Radius.circular(8.0),
@@ -925,7 +915,7 @@ if (mounted) {
                             AppLocalizations.of(context)
                                 .address_screen_postal_code,
                             style: TextStyle(
-                                color: MyTheme.font_grey, fontSize: 12)),
+                                color: MyTheme.secondary, fontSize: 12)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 16.0),
@@ -938,20 +928,17 @@ if (mounted) {
                                 hintText: AppLocalizations.of(context)
                                     .address_screen_enter_postal_code,
                                 hintStyle: TextStyle(
-                                    fontSize: 12.0,
-                                    color: MyTheme.textfield_grey),
+                                    fontSize: 12.0, color: MyTheme.light_grey),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: MyTheme.textfield_grey,
-                                      width: 0.5),
+                                      color: MyTheme.light_grey, width: 0.5),
                                   borderRadius: const BorderRadius.all(
                                     const Radius.circular(8.0),
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: MyTheme.textfield_grey,
-                                      width: 1.0),
+                                      color: MyTheme.light_grey, width: 1.0),
                                   borderRadius: const BorderRadius.all(
                                     const Radius.circular(8.0),
                                   ),
@@ -966,7 +953,7 @@ if (mounted) {
                         child: Text(
                             AppLocalizations.of(context).address_screen_phone,
                             style: TextStyle(
-                                color: MyTheme.font_grey, fontSize: 12)),
+                                color: MyTheme.secondary, fontSize: 12)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
@@ -979,20 +966,17 @@ if (mounted) {
                                 hintText: AppLocalizations.of(context)
                                     .address_screen_enter_phone,
                                 hintStyle: TextStyle(
-                                    fontSize: 12.0,
-                                    color: MyTheme.textfield_grey),
+                                    fontSize: 12.0, color: MyTheme.light_grey),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: MyTheme.textfield_grey,
-                                      width: 0.5),
+                                      color: MyTheme.light_grey, width: 0.5),
                                   borderRadius: const BorderRadius.all(
                                     const Radius.circular(8.0),
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: MyTheme.textfield_grey,
-                                      width: 1.0),
+                                      color: MyTheme.light_grey, width: 1.0),
                                   borderRadius: const BorderRadius.all(
                                     const Radius.circular(8.0),
                                   ),
@@ -1023,7 +1007,7 @@ if (mounted) {
                         child: Text(
                           "CLOSE",
                           style: TextStyle(
-                            color: MyTheme.font_grey,
+                            color: MyTheme.secondary,
                           ),
                         ),
                         onPressed: () {
@@ -1039,7 +1023,7 @@ if (mounted) {
                       child: FlatButton(
                         minWidth: 75,
                         height: 30,
-                        color: MyTheme.accent_color,
+                        color: MyTheme.primary,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             side: BorderSide(
@@ -1086,7 +1070,7 @@ if (mounted) {
                         child: Text(
                             "${AppLocalizations.of(context).address_screen_address} *",
                             style: TextStyle(
-                                color: MyTheme.font_grey, fontSize: 12)),
+                                color: MyTheme.secondary, fontSize: 12)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 16.0),
@@ -1101,20 +1085,17 @@ if (mounted) {
                                 hintText: AppLocalizations.of(context)
                                     .address_screen_enter_address,
                                 hintStyle: TextStyle(
-                                    fontSize: 12.0,
-                                    color: MyTheme.textfield_grey),
+                                    fontSize: 12.0, color: MyTheme.light_grey),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: MyTheme.textfield_grey,
-                                      width: 0.5),
+                                      color: MyTheme.light_grey, width: 0.5),
                                   borderRadius: const BorderRadius.all(
                                     const Radius.circular(8.0),
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: MyTheme.textfield_grey,
-                                      width: 1.0),
+                                      color: MyTheme.light_grey, width: 1.0),
                                   borderRadius: const BorderRadius.all(
                                     const Radius.circular(8.0),
                                   ),
@@ -1124,12 +1105,11 @@ if (mounted) {
                           ),
                         ),
                       ),
-                         Padding(
+                      Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text(
-                            "City *",
+                        child: Text("City *",
                             style: TextStyle(
-                                color: MyTheme.font_grey, fontSize: 12)),
+                                color: MyTheme.secondary, fontSize: 12)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 16.0),
@@ -1145,8 +1125,7 @@ if (mounted) {
                               // }
                               var stateResponse = await AddressRepository()
                                   .getStateListByCountry(
-                                country_id:
-                                     "3069",
+                                country_id: "3069",
                               );
                               return stateResponse.states;
                             },
@@ -1158,7 +1137,7 @@ if (mounted) {
                                         AppLocalizations.of(context)
                                             .address_screen_loading_states,
                                         style: TextStyle(
-                                            color: MyTheme.medium_grey))),
+                                            color: MyTheme.dark_grey))),
                               );
                             },
                             itemBuilder: (context, state) {
@@ -1167,7 +1146,7 @@ if (mounted) {
                                 dense: true,
                                 title: Text(
                                   state.name,
-                                  style: TextStyle(color: MyTheme.font_grey),
+                                  style: TextStyle(color: MyTheme.secondary),
                                 ),
                               );
                             },
@@ -1179,7 +1158,7 @@ if (mounted) {
                                         AppLocalizations.of(context)
                                             .address_screen_no_state_available,
                                         style: TextStyle(
-                                            color: MyTheme.medium_grey))),
+                                            color: MyTheme.dark_grey))),
                               );
                             },
                             onSuggestionSelected: (state) {
@@ -1200,19 +1179,17 @@ if (mounted) {
                                       .address_screen_enter_state,
                                   hintStyle: TextStyle(
                                       fontSize: 12.0,
-                                      color: MyTheme.textfield_grey),
+                                      color: MyTheme.light_grey),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 0.5),
+                                        color: MyTheme.light_grey, width: 0.5),
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(8.0),
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 1.0),
+                                        color: MyTheme.light_grey, width: 1.0),
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(8.0),
                                     ),
@@ -1225,10 +1202,9 @@ if (mounted) {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text(
-                            "Zone *",
+                        child: Text("Zone *",
                             style: TextStyle(
-                                color: MyTheme.font_grey, fontSize: 12)),
+                                color: MyTheme.secondary, fontSize: 12)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 16.0),
@@ -1258,7 +1234,7 @@ if (mounted) {
                                         AppLocalizations.of(context)
                                             .address_screen_loading_cities,
                                         style: TextStyle(
-                                            color: MyTheme.medium_grey))),
+                                            color: MyTheme.dark_grey))),
                               );
                             },
                             itemBuilder: (context, city) {
@@ -1267,7 +1243,7 @@ if (mounted) {
                                 dense: true,
                                 title: Text(
                                   city.name,
-                                  style: TextStyle(color: MyTheme.font_grey),
+                                  style: TextStyle(color: MyTheme.secondary),
                                 ),
                               );
                             },
@@ -1279,7 +1255,7 @@ if (mounted) {
                                         AppLocalizations.of(context)
                                             .address_screen_no_city_available,
                                         style: TextStyle(
-                                            color: MyTheme.medium_grey))),
+                                            color: MyTheme.dark_grey))),
                               );
                             },
                             onSuggestionSelected: (city) {
@@ -1298,19 +1274,17 @@ if (mounted) {
                                       .address_screen_enter_city,
                                   hintStyle: TextStyle(
                                       fontSize: 12.0,
-                                      color: MyTheme.textfield_grey),
+                                      color: MyTheme.light_grey),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 0.5),
+                                        color: MyTheme.light_grey, width: 0.5),
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(8.0),
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 1.0),
+                                        color: MyTheme.light_grey, width: 1.0),
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(8.0),
                                     ),
@@ -1321,13 +1295,11 @@ if (mounted) {
                           ),
                         ),
                       ),
-                   
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text(
-                            "Area *",
+                        child: Text("Area *",
                             style: TextStyle(
-                                color: MyTheme.font_grey, fontSize: 12)),
+                                color: MyTheme.secondary, fontSize: 12)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 16.0),
@@ -1347,7 +1319,7 @@ if (mounted) {
                                         AppLocalizations.of(context)
                                             .address_screen_loading_countries,
                                         style: TextStyle(
-                                            color: MyTheme.medium_grey))),
+                                            color: MyTheme.dark_grey))),
                               );
                             },
                             itemBuilder: (context, country) {
@@ -1356,7 +1328,7 @@ if (mounted) {
                                 dense: true,
                                 title: Text(
                                   country.name,
-                                  style: TextStyle(color: MyTheme.font_grey),
+                                  style: TextStyle(color: MyTheme.secondary),
                                 ),
                               );
                             },
@@ -1368,7 +1340,7 @@ if (mounted) {
                                         AppLocalizations.of(context)
                                             .address_screen_no_country_available,
                                         style: TextStyle(
-                                            color: MyTheme.medium_grey))),
+                                            color: MyTheme.dark_grey))),
                               );
                             },
                             onSuggestionSelected: (country) {
@@ -1388,19 +1360,17 @@ if (mounted) {
                                       .address_screen_enter_country,
                                   hintStyle: TextStyle(
                                       fontSize: 12.0,
-                                      color: MyTheme.textfield_grey),
+                                      color: MyTheme.light_grey),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 0.5),
+                                        color: MyTheme.light_grey, width: 0.5),
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(8.0),
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 1.0),
+                                        color: MyTheme.light_grey, width: 1.0),
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(8.0),
                                     ),
@@ -1417,7 +1387,7 @@ if (mounted) {
                             AppLocalizations.of(context)
                                 .address_screen_postal_code,
                             style: TextStyle(
-                                color: MyTheme.font_grey, fontSize: 12)),
+                                color: MyTheme.secondary, fontSize: 12)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 16.0),
@@ -1431,20 +1401,17 @@ if (mounted) {
                                 hintText: AppLocalizations.of(context)
                                     .address_screen_enter_postal_code,
                                 hintStyle: TextStyle(
-                                    fontSize: 12.0,
-                                    color: MyTheme.textfield_grey),
+                                    fontSize: 12.0, color: MyTheme.light_grey),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: MyTheme.textfield_grey,
-                                      width: 0.5),
+                                      color: MyTheme.light_grey, width: 0.5),
                                   borderRadius: const BorderRadius.all(
                                     const Radius.circular(8.0),
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: MyTheme.textfield_grey,
-                                      width: 1.0),
+                                      color: MyTheme.light_grey, width: 1.0),
                                   borderRadius: const BorderRadius.all(
                                     const Radius.circular(8.0),
                                   ),
@@ -1459,7 +1426,7 @@ if (mounted) {
                         child: Text(
                             AppLocalizations.of(context).address_screen_phone,
                             style: TextStyle(
-                                color: MyTheme.font_grey, fontSize: 12)),
+                                color: MyTheme.secondary, fontSize: 12)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
@@ -1474,20 +1441,17 @@ if (mounted) {
                                     : AppLocalizations.of(context)
                                         .address_screen_enter_phone,
                                 hintStyle: TextStyle(
-                                    fontSize: 12.0,
-                                    color: MyTheme.textfield_grey),
+                                    fontSize: 12.0, color: MyTheme.light_grey),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: MyTheme.textfield_grey,
-                                      width: 0.5),
+                                      color: MyTheme.light_grey, width: 0.5),
                                   borderRadius: const BorderRadius.all(
                                     const Radius.circular(8.0),
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: MyTheme.textfield_grey,
-                                      width: 1.0),
+                                      color: MyTheme.light_grey, width: 1.0),
                                   borderRadius: const BorderRadius.all(
                                     const Radius.circular(8.0),
                                   ),
@@ -1519,7 +1483,7 @@ if (mounted) {
                           AppLocalizations.of(context)
                               .common_close_in_all_capital,
                           style: TextStyle(
-                            color: MyTheme.font_grey,
+                            color: MyTheme.secondary,
                           ),
                         ),
                         onPressed: () {
@@ -1535,7 +1499,7 @@ if (mounted) {
                       child: FlatButton(
                         minWidth: 75,
                         height: 30,
-                        color: MyTheme.accent_color,
+                        color: MyTheme.primary,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             side: BorderSide(
@@ -1576,11 +1540,11 @@ if (mounted) {
         children: [
           Text(
             AppLocalizations.of(context).address_screen_addresses_of_user,
-            style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+            style: TextStyle(fontSize: 16, color: MyTheme.primary),
           ),
           Text(
             "* ${AppLocalizations.of(context).address_screen_addresses_to_make_default}",
-            style: TextStyle(fontSize: 10, color: MyTheme.medium_grey),
+            style: TextStyle(fontSize: 10, color: MyTheme.dark_grey),
           ),
         ],
       ),
@@ -1597,7 +1561,7 @@ if (mounted) {
           child: Center(
               child: Text(
             AppLocalizations.of(context).common_login_warning,
-            style: TextStyle(color: MyTheme.font_grey),
+            style: TextStyle(color: MyTheme.secondary),
           )));
     } else if (_isInitial && _shippingAddressList.length == 0) {
       return SingleChildScrollView(
@@ -1624,7 +1588,7 @@ if (mounted) {
           child: Center(
               child: Text(
             AppLocalizations.of(context).common_no_address_added,
-            style: TextStyle(color: MyTheme.font_grey),
+            style: TextStyle(color: MyTheme.secondary),
           )));
     }
   }
@@ -1639,7 +1603,7 @@ if (mounted) {
       child: Card(
         shape: RoundedRectangleBorder(
           side: _default_shipping_address == _shippingAddressList[index].id
-              ? BorderSide(color: MyTheme.accent_color, width: 2.0)
+              ? BorderSide(color: MyTheme.primary, width: 2.0)
               : BorderSide(color: MyTheme.light_grey, width: 1.0),
           borderRadius: BorderRadius.circular(8.0),
         ),
@@ -1661,7 +1625,7 @@ if (mounted) {
                           child: Text(
                             AppLocalizations.of(context).address_screen_address,
                             style: TextStyle(
-                              color: MyTheme.grey_153,
+                              color: MyTheme.secondary,
                             ),
                           ),
                         ),
@@ -1689,7 +1653,7 @@ if (mounted) {
                           child: Text(
                             AppLocalizations.of(context).address_screen_city,
                             style: TextStyle(
-                              color: MyTheme.grey_153,
+                              color: MyTheme.secondary,
                             ),
                           ),
                         ),
@@ -1717,7 +1681,7 @@ if (mounted) {
                           child: Text(
                             AppLocalizations.of(context).address_screen_state,
                             style: TextStyle(
-                              color: MyTheme.grey_153,
+                              color: MyTheme.secondary,
                             ),
                           ),
                         ),
@@ -1745,7 +1709,7 @@ if (mounted) {
                           child: Text(
                             AppLocalizations.of(context).address_screen_country,
                             style: TextStyle(
-                              color: MyTheme.grey_153,
+                              color: MyTheme.secondary,
                             ),
                           ),
                         ),
@@ -1774,7 +1738,7 @@ if (mounted) {
                   //           AppLocalizations.of(context)
                   //               .address_screen_postal_code,
                   //           style: TextStyle(
-                  //             color: MyTheme.grey_153,
+                  //             color: MyTheme.secondary,
                   //           ),
                   //         ),
                   //       ),
@@ -1801,7 +1765,7 @@ if (mounted) {
                           child: Text(
                             AppLocalizations.of(context).address_screen_phone,
                             style: TextStyle(
-                              color: MyTheme.grey_153,
+                              color: MyTheme.secondary,
                             ),
                           ),
                         ),
@@ -1936,7 +1900,7 @@ if (mounted) {
               FlatButton(
                 minWidth: MediaQuery.of(context).size.width,
                 height: 50,
-                color: MyTheme.accent_color,
+                color: MyTheme.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(0.0),
                 ),

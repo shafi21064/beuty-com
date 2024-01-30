@@ -447,7 +447,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   //                           AppLocalizations.of(context)
   //                               .product_details_screen_copy_product_link,
   //                           style: TextStyle(
-  //                             color: MyTheme.medium_grey,
+  //                             color: MyTheme.dark_grey,
   //                           ),
   //                         ),
   //                         onPressed: () {
@@ -462,7 +462,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   //                             child: Text(
   //                               AppLocalizations.of(context).common_copied,
   //                               style: TextStyle(
-  //                                   color: MyTheme.medium_grey, fontSize: 12),
+  //                                   color: MyTheme.dark_grey, fontSize: 12),
   //                             ),
   //                           )
   //                         : Container(),
@@ -506,11 +506,11 @@ class _ProductDetailsState extends State<ProductDetails> {
   //                       shape: RoundedRectangleBorder(
   //                           borderRadius: BorderRadius.circular(8.0),
   //                           side: BorderSide(
-  //                               color: MyTheme.font_grey, width: 1.0)),
+  //                               color: MyTheme.secondary, width: 1.0)),
   //                       child: Text(
   //                         "CLOSE",
   //                         style: TextStyle(
-  //                           color: MyTheme.font_grey,
+  //                           color: MyTheme.secondary,
   //                         ),
   //                       ),
   //                       onPressed: () {
@@ -549,7 +549,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               AppLocalizations.of(context)
                                   .product_details_screen_seller_chat_title,
                               style: TextStyle(
-                                  color: MyTheme.font_grey, fontSize: 12)),
+                                  color: MyTheme.secondary, fontSize: 12)),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 16.0),
@@ -563,19 +563,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       .product_details_screen_seller_chat_enter_title,
                                   hintStyle: TextStyle(
                                       fontSize: 12.0,
-                                      color: MyTheme.textfield_grey),
+                                      color: MyTheme.light_grey),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 0.5),
+                                        color: MyTheme.light_grey, width: 0.5),
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(8.0),
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 1.0),
+                                        color: MyTheme.light_grey, width: 1.0),
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(8.0),
                                     ),
@@ -590,7 +588,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           child: Text(
                               "${AppLocalizations.of(context).product_details_screen_seller_chat_messasge} *",
                               style: TextStyle(
-                                  color: MyTheme.font_grey, fontSize: 12)),
+                                  color: MyTheme.secondary, fontSize: 12)),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 16.0),
@@ -606,19 +604,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       .product_details_screen_seller_chat_enter_messasge,
                                   hintStyle: TextStyle(
                                       fontSize: 12.0,
-                                      color: MyTheme.textfield_grey),
+                                      color: MyTheme.light_grey),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 0.5),
+                                        color: MyTheme.light_grey, width: 0.5),
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(8.0),
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 1.0),
+                                        color: MyTheme.light_grey, width: 1.0),
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(8.0),
                                     ),
@@ -653,7 +649,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             AppLocalizations.of(context)
                                 .common_close_in_all_capital,
                             style: TextStyle(
-                              color: MyTheme.font_grey,
+                              color: MyTheme.secondary,
                             ),
                           ),
                           onPressed: () {
@@ -669,7 +665,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         child: FlatButton(
                           minWidth: 75,
                           height: 30,
-                          color: MyTheme.accent_color,
+                          color: MyTheme.primary,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                               side: BorderSide(
@@ -747,9 +743,9 @@ class _ProductDetailsState extends State<ProductDetails> {
       content: Text(
         AppLocalizations.of(context)
             .product_details_screen_snackbar_added_to_cart,
-        style: TextStyle(color: MyTheme.font_grey),
+        style: TextStyle(color: MyTheme.secondary),
       ),
-      backgroundColor: MyTheme.soft_accent_color,
+      backgroundColor: MyTheme.primary,
       duration: const Duration(seconds: 3),
       action: SnackBarAction(
         label: AppLocalizations.of(context)
@@ -761,7 +757,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             onPopped(value);
           });
         },
-        textColor: MyTheme.accent_color,
+        textColor: MyTheme.primary,
         disabledTextColor: Colors.grey,
       ),
     );
@@ -772,7 +768,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           backgroundColor: Colors.white,
           appBar: buildAppBar(statusBarHeight, context),
           body: RefreshIndicator(
-            color: MyTheme.accent_color,
+            color: MyTheme.primary,
             backgroundColor: Colors.white,
             onRefresh: _onPageRefresh,
             child: CustomScrollView(
@@ -806,7 +802,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               _productDetails.name,
                               style: TextStyle(
                                   fontSize: 16,
-                                  color: MyTheme.font_grey,
+                                  color: MyTheme.secondary,
                                   fontWeight: FontWeight.w600),
                               maxLines: 2,
                             )
@@ -978,7 +974,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           AppLocalizations.of(context)
                               .product_details_screen_description,
                           style: TextStyle(
-                              color: MyTheme.font_grey,
+                              color: MyTheme.secondary,
                               fontSize: 14,
                               fontWeight: FontWeight.w600),
                         ),
@@ -1143,14 +1139,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                     //             AppLocalizations.of(context)
                     //                 .product_details_screen_video,
                     //             style: TextStyle(
-                    //                 color: MyTheme.font_grey,
+                    //                 color: MyTheme.secondary,
                     //                 fontSize: 14,
                     //                 fontWeight: FontWeight.w600),
                     //           ),
                     //           Spacer(),
                     //           Icon(
                     //             Ionicons.ios_add,
-                    //             color: MyTheme.font_grey,
+                    //             color: MyTheme.secondary,
                     //             size: 24,
                     //           )
                     //         ],
@@ -1185,14 +1181,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 AppLocalizations.of(context)
                                     .product_details_screen_reviews,
                                 style: TextStyle(
-                                    color: MyTheme.font_grey,
+                                    color: MyTheme.secondary,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600),
                               ),
                               Spacer(),
                               Icon(
                                 Ionicons.ios_add,
-                                color: MyTheme.font_grey,
+                                color: MyTheme.secondary,
                                 size: 24,
                               )
                             ],
@@ -1227,14 +1223,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 AppLocalizations.of(context)
                                     .product_details_product_questions,
                                 style: TextStyle(
-                                    color: MyTheme.font_grey,
+                                    color: MyTheme.secondary,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600),
                               ),
                               Spacer(),
                               Icon(
                                 Ionicons.ios_add,
-                                color: MyTheme.font_grey,
+                                color: MyTheme.secondary,
                                 size: 24,
                               )
                             ],
@@ -1260,7 +1256,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         AppLocalizations.of(context)
                             .product_details_screen_products_purchased,
                         style: TextStyle(
-                            color: MyTheme.font_grey,
+                            color: MyTheme.secondary,
                             fontSize: 16,
                             fontWeight: FontWeight.w600),
                       ),
@@ -1290,7 +1286,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         AppLocalizations.of(context)
                             .product_details_screen_products_recommended,
                         style: TextStyle(
-                            color: MyTheme.font_grey,
+                            color: MyTheme.secondary,
                             fontSize: 16,
                             fontWeight: FontWeight.w600),
                       ),
@@ -1319,7 +1315,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         AppLocalizations.of(context)
                             .product_details_screen_products_related,
                         style: TextStyle(
-                            color: MyTheme.font_grey,
+                            color: MyTheme.secondary,
                             fontSize: 16,
                             fontWeight: FontWeight.w600),
                       ),
@@ -1379,7 +1375,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               Text(
                 _productDetails.shop_name,
                 style: TextStyle(
-                    color: MyTheme.font_grey,
+                    color: MyTheme.secondary,
                     fontSize: 14,
                     fontWeight: FontWeight.w600),
               )
@@ -1438,7 +1434,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         Text(
           "৳" + _totalPrice.toString(),
           style: TextStyle(
-              color: MyTheme.accent_color,
+              color: MyTheme.primary,
               fontSize: 18.0,
               fontWeight: FontWeight.w600),
         )
@@ -1659,7 +1655,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           decoration: BoxDecoration(
             border: Border.all(
                 color: _selectedChoices[choice_options_index] == option
-                    ? MyTheme.accent_color
+                    ? MyTheme.primary
                     : Color.fromRGBO(224, 224, 225, 1),
                 width: 1.5),
             borderRadius: BorderRadius.circular(3.0),
@@ -1672,7 +1668,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 option,
                 style: TextStyle(
                     color: _selectedChoices[choice_options_index] == option
-                        ? MyTheme.accent_color
+                        ? MyTheme.primary
                         : Color.fromRGBO(224, 224, 225, 1),
                     fontSize: 12.0,
                     fontWeight: FontWeight.w600),
@@ -1790,7 +1786,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         ),
         Container(
           decoration: BoxDecoration(
-              border: Border.all(color: MyTheme.golden, width: 1),
+              border: Border.all(color: MyTheme.primary, width: 1),
               borderRadius: BorderRadius.circular(16.0),
               color: Color.fromRGBO(253, 235, 212, 1)),
           child: Padding(
@@ -1798,7 +1794,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
             child: Text(
               _productDetails.earn_point.toString(),
-              style: TextStyle(color: MyTheme.golden, fontSize: 12.0),
+              style: TextStyle(color: MyTheme.primary, fontSize: 12.0),
             ),
           ),
         )
@@ -1836,7 +1832,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         Text(
           "৳" + _productDetails.salePrice.toString(),
           style: TextStyle(
-              color: MyTheme.accent_color,
+              color: MyTheme.primary,
               fontSize: 18.0,
               fontWeight: FontWeight.w600),
         )
@@ -1849,10 +1845,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       backgroundColor: Colors.transparent,
       flexibleSpace: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            MyTheme.primary,
-            Theme.of(context).colorScheme.secondary,
-          ]),
+          color: MyTheme.primary,
         ),
       ),
       leading: Builder(
@@ -1925,12 +1918,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       borderRadius: BorderRadius.circular(80.0)),
                   padding: EdgeInsets.all(0.0),
                   child: Ink(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                        MyTheme.primary,
-                        Theme.of(context).colorScheme.secondary,
-                      ]),
-                    ),
+                    color: MyTheme.primary,
                     child: Container(
                       constraints:
                           BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
@@ -1961,12 +1949,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       borderRadius: BorderRadius.circular(80.0)),
                   padding: EdgeInsets.all(0.0),
                   child: Ink(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                        Theme.of(context).colorScheme.secondary,
-                        MyTheme.primary,
-                      ]),
-                    ),
+                    color: MyTheme.primary,
                     child: Container(
                       constraints:
                           BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
@@ -2110,7 +2093,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       !controller.expanded
                           ? AppLocalizations.of(context).common_view_more
                           : AppLocalizations.of(context).common_show_less,
-                      style: TextStyle(color: MyTheme.font_grey, fontSize: 11),
+                      style: TextStyle(color: MyTheme.secondary, fontSize: 11),
                     ),
                     onPressed: () {
                       controller.toggle();
@@ -2142,7 +2125,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       AppLocalizations.of(context)
                           .product_details_screen_skin_types,
                       style: TextStyle(
-                          color: MyTheme.font_grey,
+                          color: MyTheme.secondary,
                           fontSize: 14,
                           fontWeight: FontWeight.w600),
                     ),
@@ -2199,7 +2182,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       AppLocalizations.of(context)
                           .product_details_screen_key_ingredients,
                       style: TextStyle(
-                        color: MyTheme.font_grey,
+                        color: MyTheme.secondary,
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
@@ -2257,7 +2240,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       AppLocalizations.of(context)
                           .product_details_screen_good_for,
                       style: TextStyle(
-                        color: MyTheme.font_grey,
+                        color: MyTheme.secondary,
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
@@ -2315,7 +2298,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       AppLocalizations.of(context)
                           .product_details_screen_categories,
                       style: TextStyle(
-                        color: MyTheme.font_grey,
+                        color: MyTheme.secondary,
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
@@ -2372,7 +2355,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     child: Text(
                       AppLocalizations.of(context).product_details_screen_tags,
                       style: TextStyle(
-                        color: MyTheme.font_grey,
+                        color: MyTheme.secondary,
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
@@ -2437,7 +2420,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       print("top: $_topProducts");
       return SingleChildScrollView(
         child: SizedBox(
-          height: 175,
+          height: 250,
           child: ListView.builder(
             itemCount: _topProducts.length,
             scrollDirection: Axis.horizontal,
@@ -2454,6 +2437,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   sale_price: _topProducts[index].sale_price.toString(),
                   slug: _topProducts[index].slug,
                   reviews: _topProducts[index].reviews,
+                  stock: _topProducts[index].stock,
                 ),
               );
             },
@@ -2467,7 +2451,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: Text(
             AppLocalizations.of(context)
                 .product_details_screen_no_related_product,
-            style: TextStyle(color: MyTheme.font_grey),
+            style: TextStyle(color: MyTheme.secondary),
           )));
     }
   }
@@ -2500,7 +2484,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     } else if (_relatedProducts.length > 0) {
       return SingleChildScrollView(
         child: SizedBox(
-          height: 175,
+          height: 250,
           child: ListView.builder(
             itemCount: _relatedProducts.length,
             scrollDirection: Axis.horizontal,
@@ -2517,6 +2501,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   sale_price: _relatedProducts[index].sale_price.toString(),
                   slug: _relatedProducts[index].slug,
                   reviews: _relatedProducts[index].reviews,
+                  stock: _relatedProducts[index].stock,
                 ),
               );
             },
@@ -2530,7 +2515,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: Text(
             AppLocalizations.of(context)
                 .product_details_screen_no_related_product,
-            style: TextStyle(color: MyTheme.font_grey),
+            style: TextStyle(color: MyTheme.secondary),
           )));
     }
   }
@@ -2563,7 +2548,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     } else if (_recommendedProducts.length > 0) {
       return SingleChildScrollView(
         child: SizedBox(
-          height: 175,
+          height: 250,
           child: ListView.builder(
             itemCount: _recommendedProducts.length,
             scrollDirection: Axis.horizontal,
@@ -2580,6 +2565,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   sale_price: _recommendedProducts[index].sale_price.toString(),
                   slug: _recommendedProducts[index].slug,
                   reviews: _recommendedProducts[index].reviews,
+                  stock: _recommendedProducts[index].stock,
                 ),
               );
             },
@@ -2593,7 +2579,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: Text(
             AppLocalizations.of(context)
                 .product_details_screen_no_recommended_product,
-            style: TextStyle(color: MyTheme.font_grey),
+            style: TextStyle(color: MyTheme.secondary),
           )));
     }
   }
@@ -2639,7 +2625,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   alignment: Alignment.topRight,
                   child: Container(
                     decoration: ShapeDecoration(
-                      color: MyTheme.medium_grey_50,
+                      color: MyTheme.dark_grey,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(25),
@@ -2742,7 +2728,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
                                 color: _currentImage == itemIndex
-                                    ? MyTheme.accent_color
+                                    ? MyTheme.primary
                                     : Color.fromRGBO(112, 112, 112, .3),
                                 width: _currentImage == itemIndex ? 2 : 1),
                             //shape: BoxShape.rectangle,

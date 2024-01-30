@@ -125,7 +125,7 @@ class _SellerDetailsState extends State<SellerDetails> {
           appBar: buildAppBar(context),
           bottomNavigationBar: buildBottomAppBar(context),
           body: RefreshIndicator(
-            color: MyTheme.accent_color,
+            color: MyTheme.primary,
             backgroundColor: Colors.white,
             onRefresh: _onPageRefresh,
             child: CustomScrollView(
@@ -155,7 +155,7 @@ class _SellerDetailsState extends State<SellerDetails> {
                         AppLocalizations.of(context)
                             .seller_details_screen_new_arrivals,
                         style: TextStyle(
-                            color: MyTheme.font_grey,
+                            color: MyTheme.secondary,
                             fontSize: 16,
                             fontWeight: FontWeight.w600),
                       ),
@@ -184,7 +184,7 @@ class _SellerDetailsState extends State<SellerDetails> {
                         AppLocalizations.of(context)
                             .seller_details_screen_no_top_selling_products,
                         style: TextStyle(
-                            color: MyTheme.font_grey,
+                            color: MyTheme.secondary,
                             fontSize: 16,
                             fontWeight: FontWeight.w600),
                       ),
@@ -209,7 +209,7 @@ class _SellerDetailsState extends State<SellerDetails> {
                         AppLocalizations.of(context)
                             .seller_details_screen_featured_products,
                         style: TextStyle(
-                            color: MyTheme.font_grey,
+                            color: MyTheme.secondary,
                             fontSize: 16,
                             fontWeight: FontWeight.w600),
                       ),
@@ -266,7 +266,7 @@ class _SellerDetailsState extends State<SellerDetails> {
               child: Text(
                   AppLocalizations.of(context)
                       .seller_details_screen_no_featured_porducts,
-                  style: TextStyle(color: MyTheme.font_grey))));
+                  style: TextStyle(color: MyTheme.secondary))));
     }
   }
 
@@ -362,7 +362,7 @@ class _SellerDetailsState extends State<SellerDetails> {
     return FlatButton(
       minWidth: MediaQuery.of(context).size.width,
       height: 50,
-      color: MyTheme.accent_color,
+      color: MyTheme.primary,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0.0),
       ),
@@ -432,7 +432,7 @@ class _SellerDetailsState extends State<SellerDetails> {
               child: Text(
                   AppLocalizations.of(context)
                       .seller_details_screen_no_top_selling_products,
-                  style: TextStyle(color: MyTheme.font_grey))));
+                  style: TextStyle(color: MyTheme.secondary))));
     }
   }
 
@@ -487,7 +487,7 @@ class _SellerDetailsState extends State<SellerDetails> {
           child: Center(
               child: Text(
             AppLocalizations.of(context).seller_details_screen_no_new_arrival,
-            style: TextStyle(color: MyTheme.font_grey),
+            style: TextStyle(color: MyTheme.secondary),
           )));
     }
   }
@@ -553,7 +553,7 @@ class _SellerDetailsState extends State<SellerDetails> {
                               _shopDetails.address,
                               maxLines: 3,
                               style: TextStyle(
-                                  color: MyTheme.font_grey, fontSize: 14),
+                                  color: MyTheme.secondary, fontSize: 14),
                             ),
                           ),
                           actions: [
@@ -561,7 +561,7 @@ class _SellerDetailsState extends State<SellerDetails> {
                               child: Text(
                                 AppLocalizations.of(context)
                                     .common_close_in_all_capital,
-                                style: TextStyle(color: MyTheme.medium_grey),
+                                style: TextStyle(color: MyTheme.dark_grey),
                               ),
                               onPressed: () {
                                 Navigator.of(context, rootNavigator: true)
@@ -610,7 +610,7 @@ class _SellerDetailsState extends State<SellerDetails> {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 style: TextStyle(
-                    color: MyTheme.font_grey,
+                    color: MyTheme.secondary,
                     fontSize: 14,
                     height: 1.6,
                     fontWeight: FontWeight.w600),

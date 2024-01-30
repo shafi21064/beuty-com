@@ -13,7 +13,6 @@ import 'package:kirei/helpers/shimmer_helper.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class Chat extends StatefulWidget {
   Chat({
     Key key,
@@ -54,7 +53,6 @@ class _ChatState extends State<Chat> {
 
     fetchData();
   }
-
 
   fetchData() async {
     var messageResponse = await ChatRepository().getMessageResponse(
@@ -144,14 +142,13 @@ class _ChatState extends State<Chat> {
     setState(() {});
 
     // if new message comes in
-    if( messageResponse.messages.length > 0){
+    if (messageResponse.messages.length > 0) {
       _xcrollController.animateTo(
         _xcrollController.position.maxScrollExtent + 100,
         curve: Curves.easeOut,
         duration: const Duration(milliseconds: 500),
       );
     }
-
   }
 
   @override
@@ -173,12 +170,13 @@ class _ChatState extends State<Chat> {
                       FlatButton(
                         minWidth: MediaQuery.of(context).size.width,
                         height: 36,
-                        color: MyTheme.accent_color,
+                        color: MyTheme.primary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(0.0),
                         ),
                         child: Text(
-                          AppLocalizations.of(context).home_screen_featured_categories,
+                          AppLocalizations.of(context)
+                              .home_screen_featured_categories,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -199,7 +197,8 @@ class _ChatState extends State<Chat> {
                   )
                 ],
               ),
-              Align(alignment: Alignment.center, child: buildLoadingContainer()),
+              Align(
+                  alignment: Alignment.center, child: buildLoadingContainer()),
               //original
               Align(
                 alignment: Alignment.bottomCenter,
@@ -240,7 +239,7 @@ class _ChatState extends State<Chat> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       toolbarHeight: 75,
       leading: Builder(
         builder: (context) => IconButton(
@@ -269,7 +268,7 @@ backgroundColor: Colors.white,
                         borderRadius: BorderRadius.circular(35),
                         child: FadeInImage.assetNetwork(
                           placeholder: 'assets/placeholder.png',
-                          image:  widget.messenger_image,
+                          image: widget.messenger_image,
                           fit: BoxFit.contain,
                         )),
                   ),
@@ -286,7 +285,7 @@ backgroundColor: Colors.white,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             style: TextStyle(
-                                color: MyTheme.font_grey,
+                                color: MyTheme.secondary,
                                 fontSize: 14,
                                 height: 1.6,
                                 fontWeight: FontWeight.w600),
@@ -297,7 +296,7 @@ backgroundColor: Colors.white,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             style: TextStyle(
-                              color: MyTheme.medium_grey,
+                              color: MyTheme.dark_grey,
                               fontSize: 12,
                               height: 1.6,
                             ),
@@ -315,7 +314,7 @@ backgroundColor: Colors.white,
                       padding: const EdgeInsets.all(8.0),
                       child: Icon(
                         Icons.rotate_left,
-                        color: MyTheme.font_grey,
+                        color: MyTheme.secondary,
                       ),
                     ),
                   )
@@ -350,7 +349,8 @@ backgroundColor: Colors.white,
         ),
       );
     } else if (_totalData == 0) {
-      return Center(child: Text(AppLocalizations.of(context).common_no_data_available));
+      return Center(
+          child: Text(AppLocalizations.of(context).common_no_data_available));
     } else {
       return Container(); // should never be happening
     }
@@ -382,19 +382,17 @@ backgroundColor: Colors.white,
             decoration: InputDecoration(
                 filled: true,
                 fillColor: Color.fromRGBO(251, 251, 251, 1),
-                hintText: AppLocalizations.of(context).chat_screen_type_message_here,
-                hintStyle:
-                    TextStyle(fontSize: 14.0, color: MyTheme.textfield_grey),
+                hintText:
+                    AppLocalizations.of(context).chat_screen_type_message_here,
+                hintStyle: TextStyle(fontSize: 14.0, color: MyTheme.light_grey),
                 enabledBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: MyTheme.textfield_grey, width: 0.5),
+                  borderSide: BorderSide(color: MyTheme.light_grey, width: 0.5),
                   borderRadius: const BorderRadius.all(
                     Radius.circular(35.0),
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: MyTheme.medium_grey, width: 0.5),
+                  borderSide: BorderSide(color: MyTheme.dark_grey, width: 0.5),
                   borderRadius: const BorderRadius.all(
                     Radius.circular(35.0),
                   ),
@@ -413,7 +411,7 @@ backgroundColor: Colors.white,
               height: 40,
               margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 2.0),
               decoration: BoxDecoration(
-                color: MyTheme.accent_color,
+                color: MyTheme.primary,
                 borderRadius: BorderRadius.circular(35),
                 border: Border.all(
                     color: Color.fromRGBO(112, 112, 112, .3), width: 1),
@@ -440,7 +438,7 @@ backgroundColor: Colors.white,
         clipper: clipper,
         alignment: Alignment.topRight,
         margin: EdgeInsets.only(top: 10),
-        backGroundColor: MyTheme.soft_accent_color,
+        backGroundColor: MyTheme.primary,
         child: Container(
           constraints: BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width * 0.6,
@@ -455,11 +453,11 @@ backgroundColor: Colors.white,
                   text,
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                      color: MyTheme.font_grey, fontSize: 13, wordSpacing: 1),
+                      color: MyTheme.secondary, fontSize: 13, wordSpacing: 1),
                 ),
               ),
               Text(date + " " + time,
-                  style: TextStyle(color: MyTheme.medium_grey, fontSize: 10)),
+                  style: TextStyle(color: MyTheme.dark_grey, fontSize: 10)),
             ],
           ),
         ),
@@ -486,11 +484,11 @@ backgroundColor: Colors.white,
                   text,
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                      color: MyTheme.font_grey, fontSize: 13, wordSpacing: 1),
+                      color: MyTheme.secondary, fontSize: 13, wordSpacing: 1),
                 ),
               ),
               Text(date + " " + time,
-                  style: TextStyle(color: MyTheme.medium_grey, fontSize: 10)),
+                  style: TextStyle(color: MyTheme.dark_grey, fontSize: 10)),
             ],
           ),
         ),

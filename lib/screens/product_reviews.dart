@@ -148,7 +148,7 @@ class _ProductReviewsState extends State<ProductReviews> {
           body: Stack(
             children: [
               RefreshIndicator(
-                color: MyTheme.accent_color,
+                color: MyTheme.primary,
                 backgroundColor: Colors.white,
                 onRefresh: _onRefresh,
                 displacement: 0,
@@ -214,7 +214,7 @@ class _ProductReviewsState extends State<ProductReviews> {
       ),
       title: Text(
         AppLocalizations.of(context).product_reviews_screen_reviews,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(fontSize: 16, color: MyTheme.primary),
       ),
       elevation: 0.0,
       titleSpacing: 0,
@@ -276,7 +276,7 @@ class _ProductReviewsState extends State<ProductReviews> {
                   placeholder: 'assets/placeholder.png',
                   image: _reviewList[index].avatar != null
                       ? _reviewList[index].avatar
-                      :  "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png",
+                      : "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png",
                   fit: BoxFit.cover,
                 ),
               ),
@@ -298,7 +298,7 @@ class _ProductReviewsState extends State<ProductReviews> {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
-                              color: MyTheme.font_grey,
+                              color: MyTheme.secondary,
                               fontSize: 13,
                               height: 1.6,
                               fontWeight: FontWeight.w600),
@@ -307,7 +307,7 @@ class _ProductReviewsState extends State<ProductReviews> {
                           padding: const EdgeInsets.only(bottom: 4.0),
                           child: Text(
                             _reviewList[index].time,
-                            style: TextStyle(color: MyTheme.medium_grey),
+                            style: TextStyle(color: MyTheme.dark_grey),
                           ),
                         ),
                       ],
@@ -359,10 +359,10 @@ class _ProductReviewsState extends State<ProductReviews> {
             collapsed: Container(
                 height: _reviewList[index].comment.length > 100 ? 32 : 16,
                 child: Text(_reviewList[index].comment,
-                    style: TextStyle(color: MyTheme.font_grey))),
+                    style: TextStyle(color: MyTheme.secondary))),
             expanded: Container(
                 child: Text(_reviewList[index].comment,
-                    style: TextStyle(color: MyTheme.font_grey))),
+                    style: TextStyle(color: MyTheme.secondary))),
           ),
           _reviewList[index].comment.length > 100
               ? Row(
@@ -377,7 +377,7 @@ class _ProductReviewsState extends State<ProductReviews> {
                                 ? AppLocalizations.of(context).common_view_more
                                 : AppLocalizations.of(context).common_show_less,
                             style: TextStyle(
-                                color: MyTheme.font_grey, fontSize: 11),
+                                color: MyTheme.secondary, fontSize: 11),
                           ),
                           onPressed: () {
                             controller.toggle();
@@ -450,18 +450,18 @@ class _ProductReviewsState extends State<ProductReviews> {
                     fillColor: Color.fromRGBO(251, 251, 251, 1),
                     hintText: AppLocalizations.of(context)
                         .product_reviews_screen_type_your_review_here,
-                    hintStyle: TextStyle(
-                        fontSize: 14.0, color: MyTheme.textfield_grey),
+                    hintStyle:
+                        TextStyle(fontSize: 14.0, color: MyTheme.light_grey),
                     enabledBorder: OutlineInputBorder(
                       borderSide:
-                          BorderSide(color: MyTheme.textfield_grey, width: 0.5),
+                          BorderSide(color: MyTheme.light_grey, width: 0.5),
                       borderRadius: const BorderRadius.all(
                         Radius.circular(35.0),
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide:
-                          BorderSide(color: MyTheme.medium_grey, width: 0.5),
+                          BorderSide(color: MyTheme.dark_grey, width: 0.5),
                       borderRadius: const BorderRadius.all(
                         Radius.circular(35.0),
                       ),
@@ -480,7 +480,7 @@ class _ProductReviewsState extends State<ProductReviews> {
                   height: 40,
                   margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 2.0),
                   decoration: BoxDecoration(
-                    color: MyTheme.accent_color,
+                    color: MyTheme.primary,
                     borderRadius: BorderRadius.circular(35),
                     border: Border.all(
                         color: Color.fromRGBO(112, 112, 112, .3), width: 1),

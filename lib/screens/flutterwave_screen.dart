@@ -9,7 +9,6 @@ import 'package:kirei/screens/order_list.dart';
 import 'package:kirei/screens/wallet.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 
-
 class FlutterwaveScreen extends StatefulWidget {
   double amount;
   String payment_type;
@@ -68,9 +67,9 @@ class _FlutterwaveScreenState extends State<FlutterwaveScreen> {
   }
 
   getSetInitialUrl() async {
-
-    var flutterwaveUrlResponse = await PaymentRepository().getFlutterwaveUrlResponse(
-        widget.payment_type, _combined_order_id, widget.amount);
+    var flutterwaveUrlResponse = await PaymentRepository()
+        .getFlutterwaveUrlResponse(
+            widget.payment_type, _combined_order_id, widget.amount);
 
     if (flutterwaveUrlResponse.result == false) {
       ToastComponent.showDialog(flutterwaveUrlResponse.message, context,
@@ -81,7 +80,6 @@ class _FlutterwaveScreenState extends State<FlutterwaveScreen> {
 
     _initial_url = flutterwaveUrlResponse.url;
     _initial_url_fetched = true;
-
 
     setState(() {});
 
@@ -175,7 +173,7 @@ class _FlutterwaveScreenState extends State<FlutterwaveScreen> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       centerTitle: true,
       leading: Builder(
         builder: (context) => IconButton(
@@ -185,7 +183,7 @@ backgroundColor: Colors.white,
       ),
       title: Text(
         "Pay with Flutterwave",
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(fontSize: 16, color: MyTheme.primary),
       ),
       elevation: 0.0,
       titleSpacing: 0,

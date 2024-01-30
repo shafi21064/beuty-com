@@ -18,7 +18,6 @@ import 'package:kirei/custom/toast_component.dart';
 import 'package:kirei/repositories/address_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class MapLocation extends StatefulWidget {
   MapLocation({Key key, this.address}) : super(key: key);
   var address;
@@ -50,7 +49,7 @@ class MapLocationState extends State<MapLocation>
 
     if (widget.address.location_available) {
       setInitialLocation();
-    }else{
+    } else {
       setDummyInitialLocation();
     }
   }
@@ -67,12 +66,11 @@ class MapLocationState extends State<MapLocation>
   }
 
   onTapPickHere(selectedPlace) async {
-
-    var addressUpdateLocationResponse = await AddressRepository().getAddressUpdateLocationResponse(
-        widget.address.id,
-        selectedPlace.geometry.location.lat,
-        selectedPlace.geometry.location.lng
-        );
+    var addressUpdateLocationResponse = await AddressRepository()
+        .getAddressUpdateLocationResponse(
+            widget.address.id,
+            selectedPlace.geometry.location.lat,
+            selectedPlace.geometry.location.lng);
 
     if (addressUpdateLocationResponse.result == false) {
       ToastComponent.showDialog(addressUpdateLocationResponse.message, context,
@@ -82,13 +80,13 @@ class MapLocationState extends State<MapLocation>
 
     ToastComponent.showDialog(addressUpdateLocationResponse.message, context,
         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-
   }
 
   @override
   Widget build(BuildContext context) {
     return PlacePicker(
-      hintText:  AppLocalizations.of(context).map_location_screen_your_delivery_location,
+      hintText: AppLocalizations.of(context)
+          .map_location_screen_your_delivery_location,
       apiKey: OtherConfig.GOOGLE_MAP_API_KEY,
       initialPosition: kInitialPosition,
       useCurrentLocation: false,
@@ -135,8 +133,9 @@ class MapLocationState extends State<MapLocation>
                 child: state == SearchingState.Searching
                     ? Center(
                         child: Text(
-                          AppLocalizations.of(context).map_location_screen_calculating,
-                        style: TextStyle(color: MyTheme.font_grey),
+                        AppLocalizations.of(context)
+                            .map_location_screen_calculating,
+                        style: TextStyle(color: MyTheme.secondary),
                       ))
                     : Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -153,7 +152,7 @@ class MapLocationState extends State<MapLocation>
                                       selectedPlace.formattedAddress,
                                       maxLines: 2,
                                       style:
-                                          TextStyle(color: MyTheme.medium_grey),
+                                          TextStyle(color: MyTheme.dark_grey),
                                     ),
                                   ),
                                 ),
@@ -162,7 +161,7 @@ class MapLocationState extends State<MapLocation>
                             Expanded(
                               flex: 1,
                               child: FlatButton(
-                                color: MyTheme.accent_color,
+                                color: MyTheme.primary,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: const BorderRadius.only(
                                   topLeft: const Radius.circular(4.0),
@@ -171,7 +170,8 @@ class MapLocationState extends State<MapLocation>
                                   bottomRight: const Radius.circular(4.0),
                                 )),
                                 child: Text(
-                                  AppLocalizations.of(context).map_location_screen_pick_here,
+                                  AppLocalizations.of(context)
+                                      .map_location_screen_pick_here,
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 onPressed: () {

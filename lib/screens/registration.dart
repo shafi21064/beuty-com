@@ -240,7 +240,7 @@ class _RegistrationState extends State<Registration> {
                                   AppLocalizations.of(context)
                                       .registration_screen_name,
                                   style: TextStyle(
-                                    color: MyTheme.accent_color,
+                                    color: MyTheme.primary,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -268,7 +268,7 @@ class _RegistrationState extends State<Registration> {
                             AppLocalizations.of(context)
                                 .registration_screen_phone,
                             style: TextStyle(
-                                color: MyTheme.accent_color,
+                                color: MyTheme.primary,
                                 fontWeight: FontWeight.w600),
                           ),
                         ),
@@ -298,7 +298,7 @@ class _RegistrationState extends State<Registration> {
                         //         //           AppLocalizations.of(context)
                         //         //               .registration_screen_or_register_with_phone,
                         //         //           style: TextStyle(
-                        //         //               color: MyTheme.accent_color,
+                        //         //               color: MyTheme.primary,
                         //         //               fontStyle: FontStyle.italic,
                         //         //               decoration:
                         //         //                   TextDecoration.underline),
@@ -338,7 +338,7 @@ class _RegistrationState extends State<Registration> {
                                   ignoreBlank: false,
                                   autoValidateMode: AutovalidateMode.disabled,
                                   selectorTextStyle:
-                                      TextStyle(color: MyTheme.font_grey),
+                                      TextStyle(color: MyTheme.secondary),
                                   initialValue: phoneCode,
                                   textFieldController: _phoneNumberController,
                                   formatInput: true,
@@ -368,7 +368,7 @@ class _RegistrationState extends State<Registration> {
                                   AppLocalizations.of(context)
                                       .registration_screen_password,
                                   style: TextStyle(
-                                    color: MyTheme.accent_color,
+                                    color: MyTheme.primary,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -396,7 +396,7 @@ class _RegistrationState extends State<Registration> {
                                       AppLocalizations.of(context)
                                           .registration_screen_password_length_recommendation,
                                       style: TextStyle(
-                                        color: MyTheme.textfield_grey,
+                                        color: MyTheme.light_grey,
                                         fontStyle: FontStyle.italic,
                                       ),
                                     ),
@@ -409,7 +409,7 @@ class _RegistrationState extends State<Registration> {
                                   AppLocalizations.of(context)
                                       .registration_screen_retype_password,
                                   style: TextStyle(
-                                    color: MyTheme.accent_color,
+                                    color: MyTheme.primary,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -444,7 +444,7 @@ class _RegistrationState extends State<Registration> {
                             padding: EdgeInsets.all(0.0),
                             child: Ink(
                               decoration:
-                                  BoxDecoration(color: MyTheme.send_otp),
+                                  BoxDecoration(color: MyTheme.dark_grey),
                               child: Container(
                                 constraints: BoxConstraints(
                                     maxWidth: 300.0, minHeight: 50.0),
@@ -467,7 +467,7 @@ class _RegistrationState extends State<Registration> {
                               child: Text(
                             "Or, Register with",
                             style: TextStyle(
-                                color: MyTheme.medium_grey, fontSize: 12),
+                                color: MyTheme.dark_grey, fontSize: 12),
                           )),
                         ),
                         Padding(
@@ -541,7 +541,7 @@ class _RegistrationState extends State<Registration> {
                         //     padding: EdgeInsets.all(0.0),
                         //     child: Ink(
                         //       decoration:
-                        //           BoxDecoration(color: MyTheme.facebook_login),
+                        //           BoxDecoration(color: MyTheme.facebook_bg),
                         //       child: Container(
                         //         constraints: BoxConstraints(
                         //             maxWidth: 300.0, minHeight: 50.0),
@@ -581,7 +581,7 @@ class _RegistrationState extends State<Registration> {
                         //     padding: EdgeInsets.all(0.0),
                         //     child: Ink(
                         //       decoration:
-                        //           BoxDecoration(color: MyTheme.google_login),
+                        //           BoxDecoration(color: MyTheme.google_bg),
                         //       child: Container(
                         //         constraints: BoxConstraints(
                         //             maxWidth: 300.0, minHeight: 50.0),
@@ -622,7 +622,7 @@ class _RegistrationState extends State<Registration> {
                                 child: Text(
                               "Login Now ! ",
                               style: TextStyle(
-                                  color: MyTheme.dont_have_account,
+                                  color: MyTheme.secondary,
                                   fontWeight: FontWeight.bold,
                                   // Add this line for underline
                                   fontSize: 16),

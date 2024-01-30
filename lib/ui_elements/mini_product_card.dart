@@ -15,6 +15,7 @@ class MiniProductCard extends StatefulWidget {
   String image;
   String slug;
   int reviews;
+  int stock;
 
   MiniProductCard({
     Key key,
@@ -26,6 +27,7 @@ class MiniProductCard extends StatefulWidget {
     this.ratings,
     this.slug,
     this.reviews,
+    this.stock,
   }) : super(key: key);
 
   @override
@@ -47,13 +49,14 @@ class _MiniProductCardState extends State<MiniProductCard> {
         //   borderRadius: BorderRadius.circular(16.0),
         // ),
         // elevation: 0.0,
+
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
                 width: double.infinity,
-                height: (MediaQuery.of(context).size.width - 36) / 3.5,
+                height: (MediaQuery.of(context).size.width - 36) / 3,
                 child: ClipRRect(
                     child: widget.image == ''
                         ? Image.asset(
@@ -63,17 +66,52 @@ class _MiniProductCardState extends State<MiniProductCard> {
                         : FadeInImage.assetNetwork(
                             placeholder: 'assets/placeholder.png',
                             image: widget.image,
-                            fit: BoxFit.fitWidth,
+                            fit: BoxFit.fill,
                           )),
               ),
+              Container(
+                width: MediaQuery.of(context).size.width / 2 - .5,
+                height: 36,
+                child: RaisedButton(
+                  onPressed: () {
+                    // onPressAddToCart(context, _addedToCartSnackbar);
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0.0)),
+                  padding: EdgeInsets.all(0.0),
+                  child: Ink(
+                    // color: MyTheme.add_to_cart_button,
+                    // decoration: BoxDecoration(color: MyTheme.add_to_cart_button
+                    //   
+                    //     ),
+                    child: Container(
+                      color: widget.stock > 0
+                          ? MyTheme.add_to_cart_button
+                          : Color.fromRGBO(192, 53, 50, 1),
+                      constraints:
+                          BoxConstraints(maxWidth: 300.0, minHeight: 30.0),
+                      alignment: Alignment.center,
+                      child: Text(
+                        widget.stock > 0
+                            ? "Add to cart".toUpperCase()
+                            : "Out of stock".toUpperCase(),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 11,
+                            fontWeight: FontWeight.w300),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               Padding(
-                padding: EdgeInsets.fromLTRB(8, 4, 8, 0),
+                padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
                 child: Text(
                   widget.name,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   style: TextStyle(
-                      color: MyTheme.font_grey,
+                      color: MyTheme.secondary,
                       fontSize: 11,
                       height: 1.2,
                       fontWeight: FontWeight.w400),
@@ -91,7 +129,8 @@ class _MiniProductCardState extends State<MiniProductCard> {
                       allowHalfRating: false,
                       itemCount: 5,
                       ratingWidget: RatingWidget(
-                        full: Icon(FontAwesome.star, color: Colors.amber),
+                        full: Icon(FontAwesome.star,
+                            color: Color.fromRGBO(192, 53, 50, 1)),
                         empty: Icon(FontAwesome.star,
                             color: Color.fromRGBO(224, 224, 225, 1)),
                       ),
@@ -109,7 +148,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: TextStyle(
-                          color: MyTheme.accent_color,
+                          color: MyTheme.primary,
                           fontSize: 12,
                           fontWeight: FontWeight.w600),
                     ),
@@ -124,7 +163,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: TextStyle(
-                      color: MyTheme.accent_color,
+                      color: MyTheme.primary,
                       fontSize: 11,
                       fontWeight: FontWeight.w600),
                 ),
@@ -140,7 +179,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
                     maxLines: 1,
                     style: TextStyle(
                         decoration: TextDecoration.lineThrough,
-                        color: MyTheme.medium_grey,
+                        color: MyTheme.dark_grey,
                         fontSize: 9,
                         fontWeight: FontWeight.w600),
                   ),

@@ -183,12 +183,7 @@ class _ProfileEditState extends State<ProfileEdit> {
       backgroundColor: Colors.white,
       centerTitle: true,
       flexibleSpace: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            MyTheme.primary,
-            Theme.of(context).colorScheme.secondary,
-          ]),
-        ),
+        decoration: BoxDecoration(color: MyTheme.primary),
       ),
       leading: Builder(
         builder: (context) => IconButton(
@@ -215,11 +210,11 @@ class _ProfileEditState extends State<ProfileEdit> {
           child: Center(
               child: Text(
             AppLocalizations.of(context).profile_edit_screen_login_warning,
-            style: TextStyle(color: MyTheme.font_grey),
+            style: TextStyle(color: MyTheme.secondary),
           )));
     } else {
       return RefreshIndicator(
-        color: MyTheme.accent_color,
+        color: MyTheme.primary,
         backgroundColor: Colors.white,
         onRefresh: _onPageRefresh,
         displacement: 10,
@@ -288,7 +283,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     padding: EdgeInsets.all(0),
                     child: Icon(
                       Icons.edit,
-                      color: MyTheme.font_grey,
+                      color: MyTheme.secondary,
                       size: 14,
                     ),
                     shape: CircleBorder(
@@ -350,7 +345,7 @@ class _ProfileEditState extends State<ProfileEdit> {
               child: Text(
                 AppLocalizations.of(context).profile_edit_screen_password,
                 style: TextStyle(
-                    color: MyTheme.accent_color, fontWeight: FontWeight.w600),
+                    color: MyTheme.primary, fontWeight: FontWeight.w600),
               ),
             ),
             Padding(
@@ -374,8 +369,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     AppLocalizations.of(context)
                         .profile_edit_screen_password_length_recommendation,
                     style: TextStyle(
-                        color: MyTheme.textfield_grey,
-                        fontStyle: FontStyle.italic),
+                        color: MyTheme.light_grey, fontStyle: FontStyle.italic),
                   )
                 ],
               ),
@@ -386,7 +380,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 AppLocalizations.of(context)
                     .profile_edit_screen_retype_password,
                 style: TextStyle(
-                    color: MyTheme.accent_color, fontWeight: FontWeight.w600),
+                    color: MyTheme.primary, fontWeight: FontWeight.w600),
               ),
             ),
             Padding(
@@ -417,11 +411,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                     padding: EdgeInsets.all(0.0),
                     child: Ink(
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(colors: [
-                            MyTheme.primary,
-                            Theme.of(context).colorScheme.secondary,
-                          ]),
-                          borderRadius: BorderRadius.circular(30.0)),
+                          color: MyTheme.primary,
+                          borderRadius: BorderRadius.circular(0.0)),
                       child: Container(
                         constraints:
                             BoxConstraints(maxWidth: 300.0, minHeight: 50.0),

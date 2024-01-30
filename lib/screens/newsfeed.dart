@@ -40,8 +40,8 @@ class _FeedListState extends State<FeedList> {
   //for image uploading
   final ImagePicker _picker = ImagePicker();
   XFile _file;
-  String base64Image='';
-  String fileName='';
+  String base64Image = '';
+  String fileName = '';
 
   pickCommunityImg(context) async {
     var status = await Permission.photos.request();
@@ -82,44 +82,42 @@ class _FeedListState extends State<FeedList> {
       }
 
       //return;
-       base64Image = FileHelper.getBase64FormateFile(_file.path);
-    setState(() {
-      fileName = _file.path.split("/").last;
-
-    });
+      base64Image = FileHelper.getBase64FormateFile(_file.path);
+      setState(() {
+        fileName = _file.path.split("/").last;
+      });
     }
   }
 
   addCommunityPost(context) async {
-    if(_descriptionController.text==''){
+    if (_descriptionController.text == '') {
       ToastComponent.showDialog("Write something...", context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
-    }else{
+    } else {
       ToastComponent.showDialog("Adding post..", context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
     }
 
-      var newCommunityPostResponse =
-          await ExtraRepository().getNewCommunityPostResponse(
-        base64Image,
-        fileName,
-      //  _titleController.text.toString(),
-        _descriptionController.text.toString()
-       // _hashtagsController.text.toString(),
-      );
+    var newCommunityPostResponse =
+        await ExtraRepository().getNewCommunityPostResponse(
+            base64Image,
+            fileName,
+            //  _titleController.text.toString(),
+            _descriptionController.text.toString()
+            // _hashtagsController.text.toString(),
+            );
 
-      if (newCommunityPostResponse.result == false) {
-        ToastComponent.showDialog(newCommunityPostResponse.message, context,
-            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-        return;
-      } else {
-        _descriptionController.clear();
-        ToastComponent.showDialog(newCommunityPostResponse.message, context,
-            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-        setState(() {});
-      }
-
+    if (newCommunityPostResponse.result == false) {
+      ToastComponent.showDialog(newCommunityPostResponse.message, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    } else {
+      _descriptionController.clear();
+      ToastComponent.showDialog(newCommunityPostResponse.message, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      setState(() {});
+    }
   }
 
   Future<void> _onPageRefresh() async {}
@@ -128,7 +126,7 @@ class _FeedListState extends State<FeedList> {
     var addLikeResponse =
         await ExtraRepository().getCommunityLikeCreateResponse(post_id);
 
-  if (addLikeResponse.result == false) {
+    if (addLikeResponse.result == false) {
       ToastComponent.showDialog("Login first!", context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
 
@@ -182,7 +180,8 @@ class _FeedListState extends State<FeedList> {
                                       3, //Normal textInputField will be displayed
                                   maxLines: 5, //
                                   decoration: InputDecoration(
-                                      hintText: 'Share your mind on community..'),
+                                      hintText:
+                                          'Share your mind on community..'),
                                   validator: (v) {
                                     if (v.trim().isEmpty) {
                                       return 'Please enter something';
@@ -199,15 +198,19 @@ class _FeedListState extends State<FeedList> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Container(
-                                     width:50,
+                                      width: 50,
                                       height: 18,
                                       margin: EdgeInsets.only(right: 10),
-                                      child: fileName==''?Text(''):Text(fileName,textAlign: TextAlign.end,)),
+                                      child: fileName == ''
+                                          ? Text('')
+                                          : Text(
+                                              fileName,
+                                              textAlign: TextAlign.end,
+                                            )),
                                   FlatButton(
-                                  onPressed: () async {
-                        await pickCommunityImg(context);
-                        },
-
+                                    onPressed: () async {
+                                      await pickCommunityImg(context);
+                                    },
                                     child: Icon(
                                       Icons.add_photo_alternate_outlined,
                                       color: Colors.white,
@@ -221,7 +224,6 @@ class _FeedListState extends State<FeedList> {
                                     onPressed: () async {
                                       await addCommunityPost(context);
                                     },
-
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(40.0)),
@@ -370,8 +372,8 @@ class _FeedListState extends State<FeedList> {
                     child: Row(
                       children: [
                         Shimmer.fromColors(
-                          baseColor: MyTheme.shimmer_base,
-                          highlightColor: MyTheme.shimmer_highlighted,
+                          baseColor: MyTheme.light_grey,
+                          highlightColor: MyTheme.light_grey,
                           child: Container(
                             height: 60,
                             width: 60,
@@ -386,8 +388,8 @@ class _FeedListState extends State<FeedList> {
                               padding: const EdgeInsets.only(
                                   left: 16.0, bottom: 8.0),
                               child: Shimmer.fromColors(
-                                baseColor: MyTheme.shimmer_base,
-                                highlightColor: MyTheme.shimmer_highlighted,
+                                baseColor: MyTheme.light_grey,
+                                highlightColor: MyTheme.light_grey,
                                 child: Container(
                                   height: 20,
                                   width: MediaQuery.of(context).size.width * .7,
@@ -398,8 +400,8 @@ class _FeedListState extends State<FeedList> {
                             Padding(
                               padding: const EdgeInsets.only(left: 16.0),
                               child: Shimmer.fromColors(
-                                baseColor: MyTheme.shimmer_base,
-                                highlightColor: MyTheme.shimmer_highlighted,
+                                baseColor: MyTheme.light_grey,
+                                highlightColor: MyTheme.light_grey,
                                 child: Container(
                                   height: 20,
                                   width: MediaQuery.of(context).size.width * .5,
@@ -466,8 +468,8 @@ class _FeedListState extends State<FeedList> {
                     child: Row(
                       children: [
                         Shimmer.fromColors(
-                          baseColor: MyTheme.shimmer_base,
-                          highlightColor: MyTheme.shimmer_highlighted,
+                          baseColor: MyTheme.light_grey,
+                          highlightColor: MyTheme.light_grey,
                           child: Container(
                             height: 60,
                             width: 60,
@@ -482,8 +484,8 @@ class _FeedListState extends State<FeedList> {
                               padding: const EdgeInsets.only(
                                   left: 16.0, bottom: 8.0),
                               child: Shimmer.fromColors(
-                                baseColor: MyTheme.shimmer_base,
-                                highlightColor: MyTheme.shimmer_highlighted,
+                                baseColor: MyTheme.light_grey,
+                                highlightColor: MyTheme.light_grey,
                                 child: Container(
                                   height: 20,
                                   width: MediaQuery.of(context).size.width * .7,
@@ -494,8 +496,8 @@ class _FeedListState extends State<FeedList> {
                             Padding(
                               padding: const EdgeInsets.only(left: 16.0),
                               child: Shimmer.fromColors(
-                                baseColor: MyTheme.shimmer_base,
-                                highlightColor: MyTheme.shimmer_highlighted,
+                                baseColor: MyTheme.light_grey,
+                                highlightColor: MyTheme.light_grey,
                                 child: Container(
                                   height: 20,
                                   width: MediaQuery.of(context).size.width * .5,
@@ -518,8 +520,9 @@ class _FeedListState extends State<FeedList> {
   buildFeedHashCard(comHashResponse, index) {
     return Container(
       constraints: const BoxConstraints(
-      maxWidth: 200,
-    ),    child: ElevatedButton(
+        maxWidth: 200,
+      ),
+      child: ElevatedButton(
         onPressed: () {},
         child: Text(comHashResponse.data[index].title,
             style: TextStyle(fontSize: 20)),
@@ -600,7 +603,10 @@ class _FeedListState extends State<FeedList> {
             child: ReadMoreText(
               compostResponse.data[index].title == null
                   ? ''
-                  : compostResponse.data[index].title + '\n' + compostResponse.data[index].description == null
+                  : compostResponse.data[index].title +
+                              '\n' +
+                              compostResponse.data[index].description ==
+                          null
                       ? ''
                       : compostResponse.data[index].description,
               trimLines: 3,
@@ -620,9 +626,11 @@ class _FeedListState extends State<FeedList> {
                     left: Radius.circular(10), right: Radius.circular(10)),
                 child: FadeInImage.assetNetwork(
                   placeholder: 'assets/placeholder.png',
-image: (compostResponse.data[index].banner != null && compostResponse.data[index].banner.isNotEmpty)
-      ? compostResponse.data[index].banner
-      : 'https://picsum.photos/seed/picsum/200/300',                  fit: BoxFit.cover,
+                  image: (compostResponse.data[index].banner != null &&
+                          compostResponse.data[index].banner.isNotEmpty)
+                      ? compostResponse.data[index].banner
+                      : 'https://picsum.photos/seed/picsum/200/300',
+                  fit: BoxFit.cover,
                 ))),
         Container(
           height: 60,
@@ -631,16 +639,20 @@ image: (compostResponse.data[index].banner != null && compostResponse.data[index
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
             children: [
-
               InkWell(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Comments(compostResponse.data[index].id))); },
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              Comments(compostResponse.data[index].id)));
+                },
                 child: Padding(
                   padding: EdgeInsets.only(left: 20, top: 23),
                   child: Text(
                     "${compostResponse.data[index].commentsCount} Comment    ",
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: MyTheme.medium_grey, fontSize: 16),
+                    style: TextStyle(color: MyTheme.dark_grey, fontSize: 16),
                   ),
                 ),
               ),
@@ -660,9 +672,8 @@ image: (compostResponse.data[index].banner != null && compostResponse.data[index
                   },
 
                   size: 56,
-                  isLiked:compostResponse.data[index].isLike ==true
-                      ? true
-                      : false,
+                  isLiked:
+                      compostResponse.data[index].isLike == true ? true : false,
                   circleColor: CircleColor(
                       start: Color(0xff00ddff), end: Color(0xff0099cc)),
                   bubblesColor: BubblesColor(
@@ -698,10 +709,6 @@ image: (compostResponse.data[index].banner != null && compostResponse.data[index
                   },
                 ),
               ),
-
-
-
-
             ],
           ),
         ),
@@ -729,7 +736,7 @@ image: (compostResponse.data[index].banner != null && compostResponse.data[index
                 child: FlatButton(
                   minWidth: MediaQuery.of(context).size.width,
                   //height: 50,
-                  color: MyTheme.accent_color,
+                  color: MyTheme.primary,
                   shape: RoundedRectangleBorder(
                       borderRadius:
                           const BorderRadius.all(Radius.circular(8.0))),

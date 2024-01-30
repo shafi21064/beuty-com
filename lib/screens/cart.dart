@@ -142,21 +142,21 @@ class _CartState extends State<Cart> {
                 child: Text(
                   AppLocalizations.of(context).cart_screen_sure_remove_item,
                   maxLines: 3,
-                  style: TextStyle(color: MyTheme.font_grey, fontSize: 14),
+                  style: TextStyle(color: MyTheme.secondary, fontSize: 14),
                 ),
               ),
               actions: [
                 FlatButton(
                   child: Text(
                     AppLocalizations.of(context).cart_screen_cancel,
-                    style: TextStyle(color: MyTheme.medium_grey),
+                    style: TextStyle(color: MyTheme.dark_grey),
                   ),
                   onPressed: () {
                     Navigator.of(context, rootNavigator: true).pop();
                   },
                 ),
                 FlatButton(
-                  color: MyTheme.soft_accent_color,
+                  color: MyTheme.primary,
                   child: Text(
                     AppLocalizations.of(context).cart_screen_confirm,
                     style: TextStyle(color: MyTheme.dark_grey),
@@ -282,7 +282,7 @@ class _CartState extends State<Cart> {
           body: Stack(
             children: [
               RefreshIndicator(
-                color: MyTheme.accent_color,
+                color: MyTheme.primary,
                 backgroundColor: Colors.white,
                 onRefresh: _onRefresh,
                 displacement: 0,
@@ -333,12 +333,10 @@ class _CartState extends State<Cart> {
               height: 40,
               width: double.infinity,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                gradient: LinearGradient(colors: [
-                  MyTheme.primary,
-                  Theme.of(context).colorScheme.secondary,
-                ]),
-              ),
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: MyTheme.primary
+                  
+                  ),
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Row(
@@ -372,8 +370,7 @@ class _CartState extends State<Cart> {
                     height: 38,
                     decoration: BoxDecoration(
                         color: Colors.white,
-                        border:
-                            Border.all(color: MyTheme.textfield_grey, width: 1),
+                        border: Border.all(color: MyTheme.light_grey, width: 1),
                         borderRadius: app_language_rtl.$
                             ? const BorderRadius.only(
                                 topLeft: const Radius.circular(0.0),
@@ -409,7 +406,7 @@ class _CartState extends State<Cart> {
                       child: Text(
                         AppLocalizations.of(context).cart_screen_update_cart,
                         style: TextStyle(
-                            color: MyTheme.medium_grey,
+                            color: MyTheme.dark_grey,
                             fontSize: 13,
                             fontWeight: FontWeight.w600),
                       ),
@@ -426,8 +423,8 @@ class _CartState extends State<Cart> {
                       height: 40,
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          border: Border.all(
-                              color: MyTheme.textfield_grey, width: 1),
+                          border:
+                              Border.all(color: MyTheme.light_grey, width: 1),
                           borderRadius: app_language_rtl.$
                               ? const BorderRadius.only(
                                   topLeft: const Radius.circular(8.0),
@@ -483,12 +480,9 @@ class _CartState extends State<Cart> {
     return AppBar(
       centerTitle: true,
       flexibleSpace: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            MyTheme.primary,
-            Theme.of(context).colorScheme.secondary,
-          ]),
-        ),
+        decoration: BoxDecoration(color: MyTheme.primary
+            
+            ),
       ),
       leading: GestureDetector(
         onTap: () {
@@ -521,7 +515,7 @@ class _CartState extends State<Cart> {
           child: Center(
               child: Text(
             AppLocalizations.of(context).cart_screen_please_log_in,
-            style: TextStyle(color: MyTheme.font_grey),
+            style: TextStyle(color: MyTheme.secondary),
           )));
     } else if (_isInitial && _shopList.length == 0) {
       return SingleChildScrollView(
@@ -548,7 +542,7 @@ class _CartState extends State<Cart> {
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
                             _shopList[index].name,
-                            style: TextStyle(color: MyTheme.font_grey),
+                            style: TextStyle(color: MyTheme.secondary),
                           ),
                         ),
                         Spacer(),
@@ -556,8 +550,8 @@ class _CartState extends State<Cart> {
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
                             partialTotalString(index),
-                            style: TextStyle(
-                                color: MyTheme.accent_color, fontSize: 14),
+                            style:
+                                TextStyle(color: MyTheme.primary, fontSize: 14),
                           ),
                         ),
                       ],
@@ -576,7 +570,7 @@ class _CartState extends State<Cart> {
           child: Center(
               child: Text(
             AppLocalizations.of(context).cart_screen_cart_empty,
-            style: TextStyle(color: MyTheme.font_grey),
+            style: TextStyle(color: MyTheme.secondary),
           )));
     }
   }
@@ -635,7 +629,7 @@ class _CartState extends State<Cart> {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       style: TextStyle(
-                          color: MyTheme.font_grey,
+                          color: MyTheme.secondary,
                           fontSize: 14,
                           height: 1.6,
                           fontWeight: FontWeight.w400),
@@ -659,7 +653,7 @@ class _CartState extends State<Cart> {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             style: TextStyle(
-                                color: MyTheme.accent_color,
+                                color: MyTheme.primary,
                                 fontSize: 14,
                                 height: 1.6,
                                 fontWeight: FontWeight.w600),
@@ -678,7 +672,7 @@ class _CartState extends State<Cart> {
                               },
                               icon: Icon(
                                 Icons.delete_forever_outlined,
-                                color: MyTheme.medium_grey,
+                                color: MyTheme.dark_grey,
                                 size: 24,
                               ),
                             ),
@@ -704,7 +698,7 @@ class _CartState extends State<Cart> {
                   padding: EdgeInsets.all(0),
                   child: Icon(
                     Icons.add,
-                    color: MyTheme.accent_color,
+                    color: MyTheme.primary,
                     size: 18,
                   ),
                   shape: CircleBorder(
@@ -723,7 +717,7 @@ class _CartState extends State<Cart> {
                       .cart_items[item_index]
                       .quantity
                       .toString(),
-                  style: TextStyle(color: MyTheme.accent_color, fontSize: 16),
+                  style: TextStyle(color: MyTheme.primary, fontSize: 16),
                 ),
               ),
               SizedBox(
@@ -733,7 +727,7 @@ class _CartState extends State<Cart> {
                   padding: EdgeInsets.all(0),
                   child: Icon(
                     Icons.remove,
-                    color: MyTheme.accent_color,
+                    color: MyTheme.primary,
                     size: 18,
                   ),
                   height: 30,

@@ -48,9 +48,8 @@ class _BlogsState extends State<Blogs> {
               slivers: [
                 SliverList(
                     delegate: SliverChildListDelegate([
-
-                      buildFeedList(),
-                    ]))
+                  buildFeedList(),
+                ]))
               ],
             ),
           ])),
@@ -68,7 +67,7 @@ class _BlogsState extends State<Blogs> {
         child: Builder(
           builder: (context) => Padding(
             padding:
-            const EdgeInsets.symmetric(vertical: 18.0, horizontal: 0.0),
+                const EdgeInsets.symmetric(vertical: 18.0, horizontal: 0.0),
             child: Container(
               child: Image.asset(
                 'assets/hamburger.png',
@@ -93,7 +92,6 @@ class _BlogsState extends State<Blogs> {
 
     return name;
   }
-
 
   buildFeedList() {
     var future = ExtraRepository().getBlogPosts();
@@ -124,7 +122,8 @@ class _BlogsState extends State<Blogs> {
                   return Padding(
                     padding: const EdgeInsets.only(
                         top: 4.0, bottom: 4.0, left: 10.0, right: 10.0),
-                    child: buildFeedItemCard(compostResponse.data.recentPosts, index),
+                    child: buildFeedItemCard(
+                        compostResponse.data.recentPosts, index),
                   );
                 },
               ),
@@ -143,8 +142,8 @@ class _BlogsState extends State<Blogs> {
                     child: Row(
                       children: [
                         Shimmer.fromColors(
-                          baseColor: MyTheme.shimmer_base,
-                          highlightColor: MyTheme.shimmer_highlighted,
+                          baseColor: MyTheme.light_grey,
+                          highlightColor: MyTheme.light_grey,
                           child: Container(
                             height: 60,
                             width: 60,
@@ -159,8 +158,8 @@ class _BlogsState extends State<Blogs> {
                               padding: const EdgeInsets.only(
                                   left: 16.0, bottom: 8.0),
                               child: Shimmer.fromColors(
-                                baseColor: MyTheme.shimmer_base,
-                                highlightColor: MyTheme.shimmer_highlighted,
+                                baseColor: MyTheme.light_grey,
+                                highlightColor: MyTheme.light_grey,
                                 child: Container(
                                   height: 20,
                                   width: MediaQuery.of(context).size.width * .7,
@@ -171,8 +170,8 @@ class _BlogsState extends State<Blogs> {
                             Padding(
                               padding: const EdgeInsets.only(left: 16.0),
                               child: Shimmer.fromColors(
-                                baseColor: MyTheme.shimmer_base,
-                                highlightColor: MyTheme.shimmer_highlighted,
+                                baseColor: MyTheme.light_grey,
+                                highlightColor: MyTheme.light_grey,
                                 child: Container(
                                   height: 20,
                                   width: MediaQuery.of(context).size.width * .5,
@@ -192,7 +191,6 @@ class _BlogsState extends State<Blogs> {
         });
   }
 
-
   Card buildFeedItemCard(compostResponse, index) {
     return Card(
       shape: RoundedRectangleBorder(
@@ -200,111 +198,112 @@ class _BlogsState extends State<Blogs> {
         borderRadius: BorderRadius.circular(16.0),
       ),
       elevation: 0,
-      child:
-      InkWell(onTap: (){
-        Navigator.push(context,
-            MaterialPageRoute(
-                builder: (context) {
-                  return ViewBlog(
-                    author: compostResponse[index].author,
-                    date: compostResponse[index].date.toString(),
-                    title: compostResponse[index].title,
-                    content: compostResponse[index].content,
-                    picture: compostResponse[index].picture[0].url,
-                  );
-                }));
-
-
-
-      },
-        child: Column(mainAxisAlignment: MainAxisAlignment.start,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return ViewBlog(
+              author: compostResponse[index].author,
+              date: compostResponse[index].date.toString(),
+              title: compostResponse[index].title,
+              content: compostResponse[index].content,
+              picture: compostResponse[index].picture[0].url,
+            );
+          }));
+        },
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-          Container(
-            height: 70,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                    height: 58,
-                    width: 54,
-                    margin: const EdgeInsets.only(
-                        left: 5.0, right: 0, top: 5, bottom: 0),
-                    padding: const EdgeInsets.all(0),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white, width: 2),
-                        borderRadius: BorderRadius.circular(140)),
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        'https://i.insider.com/5c9a115d8e436a63e42c2883?width=600&format=jpeg&auto=webp',
-                      ),
-                    )),
-                Column(
+              Container(
+                height: 70,
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5.0, top: 15),
-                      child: Text(
-                        compostResponse[index].author,
-                        style: GoogleFonts.lato(
-                            color: Colors.grey[700],
-                            fontSize: 16,
-                            letterSpacing: 1,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5.0, top: 2),
-                      child: Text(
-                        compostResponse[index].date.toString(),
-                        style: GoogleFonts.ubuntu(
-                          color: Colors.grey[700],
-                          fontSize: 14,
+                    Container(
+                        height: 58,
+                        width: 54,
+                        margin: const EdgeInsets.only(
+                            left: 5.0, right: 0, top: 5, bottom: 0),
+                        padding: const EdgeInsets.all(0),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white, width: 2),
+                            borderRadius: BorderRadius.circular(140)),
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            'https://i.insider.com/5c9a115d8e436a63e42c2883?width=600&format=jpeg&auto=webp',
+                          ),
+                        )),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5.0, top: 15),
+                          child: Text(
+                            compostResponse[index].author,
+                            style: GoogleFonts.lato(
+                                color: Colors.grey[700],
+                                fontSize: 16,
+                                letterSpacing: 1,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5.0, top: 2),
+                          child: Text(
+                            compostResponse[index].date.toString(),
+                            style: GoogleFonts.ubuntu(
+                              color: Colors.grey[700],
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0, bottom: 10, right: 10),
-            child:
-            //text widget to display long text
-            InkWell(
-              onTap: () {
-                setState(() {
-                  // toggle the bool variable true or false
-                  isMore[index] = !isMore[index];
-                });
-              },
-              child: Text(
-                compostResponse[index].title,
-
               ),
-            ),
-          ),
-          Container(
-              width: double.infinity,
-              height: 210,
-              child: ClipRRect(
-                  borderRadius: BorderRadius.horizontal(
-                      left: Radius.circular(10), right: Radius.circular(10)),
-                  child: compostResponse[index].picture.length == 0
-                      ? Image.asset('assets/no_pic.png',fit: BoxFit.cover,)
-                      : compostResponse[index].picture[0].url == null
-                     ? Image.asset('assets/no_pic.png',fit: BoxFit.cover,):
-
-                  FadeInImage.assetNetwork(
-                    placeholder: 'assets/placeholder.png',
-                    image: compostResponse[index].picture[0].url,
-                    fit: BoxFit.cover,
-                  ))),
-
-        ]),
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 10.0, bottom: 10, right: 10),
+                child:
+                    //text widget to display long text
+                    InkWell(
+                  onTap: () {
+                    setState(() {
+                      // toggle the bool variable true or false
+                      isMore[index] = !isMore[index];
+                    });
+                  },
+                  child: Text(
+                    compostResponse[index].title,
+                  ),
+                ),
+              ),
+              Container(
+                  width: double.infinity,
+                  height: 210,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.horizontal(
+                          left: Radius.circular(10),
+                          right: Radius.circular(10)),
+                      child: compostResponse[index].picture.length == 0
+                          ? Image.asset(
+                              'assets/no_pic.png',
+                              fit: BoxFit.cover,
+                            )
+                          : compostResponse[index].picture[0].url == null
+                              ? Image.asset(
+                                  'assets/no_pic.png',
+                                  fit: BoxFit.cover,
+                                )
+                              : FadeInImage.assetNetwork(
+                                  placeholder: 'assets/placeholder.png',
+                                  image: compostResponse[index].picture[0].url,
+                                  fit: BoxFit.cover,
+                                ))),
+            ]),
       ),
     );
   }
@@ -329,13 +328,13 @@ class _BlogsState extends State<Blogs> {
                 child: FlatButton(
                   minWidth: MediaQuery.of(context).size.width,
                   //height: 50,
-                  color: MyTheme.accent_color,
+                  color: MyTheme.primary,
                   shape: RoundedRectangleBorder(
                       borderRadius:
-                      const BorderRadius.all(Radius.circular(8.0))),
+                          const BorderRadius.all(Radius.circular(8.0))),
                   child: Text(
                     AppLocalizations.of(context)
-                        .category_list_screen_all_products_of +
+                            .category_list_screen_all_products_of +
                         " ",
                     style: TextStyle(
                         color: Colors.white,

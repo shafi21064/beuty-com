@@ -136,7 +136,7 @@ class _OtpState extends State<Otp> {
                               : AppLocalizations.of(context)
                                   .otp_screen_phone_number),
                       style: TextStyle(
-                          color: MyTheme.accent_color,
+                          color: MyTheme.primary,
                           fontSize: 18,
                           fontWeight: FontWeight.w600),
                     ),
@@ -188,13 +188,13 @@ class _OtpState extends State<Otp> {
                             height: 45,
                             decoration: BoxDecoration(
                                 border: Border.all(
-                                    color: MyTheme.textfield_grey, width: 1),
+                                    color: MyTheme.light_grey, width: 1),
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(12.0))),
                             child: FlatButton(
                               minWidth: MediaQuery.of(context).size.width,
                               //height: 50,
-                              color: MyTheme.accent_color,
+                              color: MyTheme.primary,
                               shape: RoundedRectangleBorder(
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(12.0))),
@@ -224,7 +224,7 @@ class _OtpState extends State<Otp> {
                           AppLocalizations.of(context).otp_screen_resend_code,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: MyTheme.accent_color,
+                              color: MyTheme.primary,
                               decoration: TextDecoration.underline,
                               fontSize: 13)),
                     ),

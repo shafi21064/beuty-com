@@ -14,9 +14,7 @@ import 'package:kirei/screens/main.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class Wallet extends StatefulWidget {
-
   Wallet({Key key, this.from_recharge = false}) : super(key: key);
   final bool from_recharge;
 
@@ -67,8 +65,7 @@ class _WalletState extends State<Wallet> {
   }
 
   fetchBalanceDetails() async {
-    var balanceDetailsResponse =
-        await WalletRepository().getBalance();
+    var balanceDetailsResponse = await WalletRepository().getBalance();
 
     _balanceDetails = balanceDetailsResponse;
 
@@ -76,8 +73,8 @@ class _WalletState extends State<Wallet> {
   }
 
   fetchRechargeList() async {
-    var rechageListResponse = await WalletRepository()
-        .getRechargeList( page: _rechargePage);
+    var rechageListResponse =
+        await WalletRepository().getRechargeList(page: _rechargePage);
     _rechargeList.addAll(rechageListResponse.recharges);
     _totalRechargeData = rechageListResponse.meta.total;
 
@@ -102,11 +99,12 @@ class _WalletState extends State<Wallet> {
     fetchAll();
   }
 
-  onPressProceed(){
+  onPressProceed() {
     var amount_String = _amountController.text.toString();
 
-    if(amount_String == ""){
-      ToastComponent.showDialog( AppLocalizations.of(context).wallet_screen_amount_warning, context,
+    if (amount_String == "") {
+      ToastComponent.showDialog(
+          AppLocalizations.of(context).wallet_screen_amount_warning, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
     }
@@ -115,13 +113,17 @@ class _WalletState extends State<Wallet> {
 
     Navigator.of(context, rootNavigator: true).pop();
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return Checkout(isWalletRecharge: true,rechargeAmount: amount,title: AppLocalizations.of(context).recharge_wallet_screen_recharge_wallet,manual_payment_from_order_details: true
-        ,);
+      return Checkout(
+        isWalletRecharge: true,
+        rechargeAmount: amount,
+        title:
+            AppLocalizations.of(context).recharge_wallet_screen_recharge_wallet,
+        manual_payment_from_order_details: true,
+      );
     }));
     // Navigator.push(context, MaterialPageRoute(builder: (context) {
     //   return RechargeWallet(amount: amount );
     // }));
-    
   }
 
   @override
@@ -135,14 +137,15 @@ class _WalletState extends State<Wallet> {
         }
       },
       child: Directionality(
-        textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
+        textDirection:
+            app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
         child: Scaffold(
             backgroundColor: Colors.white,
             appBar: buildAppBar(context),
             body: Stack(
               children: [
                 RefreshIndicator(
-                  color: MyTheme.accent_color,
+                  color: MyTheme.primary,
                   backgroundColor: Colors.white,
                   onRefresh: _onPageRefresh,
                   displacement: 10,
@@ -158,7 +161,10 @@ class _WalletState extends State<Wallet> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
-                                top: 0.0, left: 16.0, right: 16.0, bottom: 16.0),
+                                top: 0.0,
+                                left: 16.0,
+                                right: 16.0,
+                                bottom: 16.0),
                             child: buildRechargeList(),
                           ),
                         ]),
@@ -199,15 +205,15 @@ class _WalletState extends State<Wallet> {
       color: Colors.white,
       child: Center(
         child: Text(_totalRechargeData == _rechargeList.length
-            ?  AppLocalizations.of(context).common_no_more_histories
-            :  AppLocalizations.of(context).common_loading_more_histories),
+            ? AppLocalizations.of(context).common_no_more_histories
+            : AppLocalizations.of(context).common_loading_more_histories),
       ),
     );
   }
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       centerTitle: true,
       leading: Builder(
         builder: (context) => IconButton(
@@ -225,7 +231,7 @@ backgroundColor: Colors.white,
       ),
       title: Text(
         AppLocalizations.of(context).wallet_screen_my_wallet,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(fontSize: 16, color: MyTheme.primary),
       ),
       elevation: 0.0,
       titleSpacing: 0,
@@ -251,7 +257,9 @@ backgroundColor: Colors.white,
         ),
       );
     } else if (_totalRechargeData == 0) {
-      return Center(child: Text( AppLocalizations.of(context).wallet_screen_no_recharges_yet));
+      return Center(
+          child: Text(
+              AppLocalizations.of(context).wallet_screen_no_recharges_yet));
     } else {
       return Container(); // should never be happening
     }
@@ -316,7 +324,8 @@ backgroundColor: Colors.white,
                       height: 10,
                     ),
                     Text(
-                      AppLocalizations.of(context).order_details_screen_payment_method,
+                      AppLocalizations.of(context)
+                          .order_details_screen_payment_method,
                       style: TextStyle(
                         color: MyTheme.dark_grey,
                       ),
@@ -338,7 +347,7 @@ backgroundColor: Colors.white,
                     Text(
                       _rechargeList[index].amount,
                       style: TextStyle(
-                          color: MyTheme.accent_color,
+                          color: MyTheme.primary,
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
                     ),
@@ -346,7 +355,8 @@ backgroundColor: Colors.white,
                       height: 10,
                     ),
                     Text(
-                      AppLocalizations.of(context).wallet_screen_approval_status,
+                      AppLocalizations.of(context)
+                          .wallet_screen_approval_status,
                       style: TextStyle(
                         color: MyTheme.dark_grey,
                       ),
@@ -381,7 +391,7 @@ backgroundColor: Colors.white,
           width: double.infinity,
           height: 150,
           decoration: BoxDecoration(
-            color: MyTheme.accent_color,
+            color: MyTheme.primary,
             borderRadius: BorderRadius.circular(8),
             border:
                 Border.all(color: Color.fromRGBO(112, 112, 112, .3), width: 1),
@@ -412,7 +422,7 @@ backgroundColor: Colors.white,
               Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: Text(
-                  "${ AppLocalizations.of(context).wallet_screen_last_recharged} : ${_balanceDetails.last_recharged}",
+                  "${AppLocalizations.of(context).wallet_screen_last_recharged} : ${_balanceDetails.last_recharged}",
                   style: TextStyle(
                     color: MyTheme.light_grey,
                     fontSize: 13,
@@ -429,7 +439,7 @@ backgroundColor: Colors.white,
           child: Container(
             height: 50,
             decoration: BoxDecoration(
-                border: Border.all(color: MyTheme.textfield_grey, width: 1),
+                border: Border.all(color: MyTheme.light_grey, width: 1),
                 borderRadius: const BorderRadius.all(Radius.circular(8.0))),
             child: FlatButton(
               minWidth: MediaQuery.of(context).size.width,
@@ -453,7 +463,7 @@ backgroundColor: Colors.white,
           child: Text(
             AppLocalizations.of(context).wallet_screen_wallet_recharge_history,
             style: TextStyle(
-                color: MyTheme.font_grey,
+                color: MyTheme.secondary,
                 fontSize: 14,
                 fontWeight: FontWeight.w600),
           ),
@@ -466,8 +476,9 @@ backgroundColor: Colors.white,
     return showDialog(
         context: context,
         builder: (_) => Directionality(
-          textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
-          child: AlertDialog(
+              textDirection:
+                  app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
+              child: AlertDialog(
                 insetPadding: EdgeInsets.symmetric(horizontal: 10),
                 contentPadding: EdgeInsets.only(
                     top: 36.0, left: 36.0, right: 36.0, bottom: 2.0),
@@ -480,9 +491,10 @@ backgroundColor: Colors.white,
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Text( AppLocalizations.of(context).wallet_screen_amount,
+                          child: Text(
+                              AppLocalizations.of(context).wallet_screen_amount,
                               style: TextStyle(
-                                  color: MyTheme.font_grey, fontSize: 12)),
+                                  color: MyTheme.secondary, fontSize: 12)),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
@@ -491,31 +503,31 @@ backgroundColor: Colors.white,
                             child: TextField(
                               controller: _amountController,
                               autofocus: false,
-                              keyboardType:
-                                  TextInputType.numberWithOptions(decimal: true),
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
                               inputFormatters: [_amountValidator],
                               decoration: InputDecoration(
-                                  hintText:  AppLocalizations.of(context).wallet_screen_enter_amount,
+                                  hintText: AppLocalizations.of(context)
+                                      .wallet_screen_enter_amount,
                                   hintStyle: TextStyle(
                                       fontSize: 12.0,
-                                      color: MyTheme.textfield_grey),
+                                      color: MyTheme.light_grey),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 0.5),
+                                        color: MyTheme.light_grey, width: 0.5),
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(8.0),
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: MyTheme.textfield_grey,
-                                        width: 1.0),
+                                        color: MyTheme.light_grey, width: 1.0),
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(8.0),
                                     ),
                                   ),
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 8.0)),
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 8.0)),
                             ),
                           ),
                         )
@@ -538,9 +550,10 @@ backgroundColor: Colors.white,
                               side: BorderSide(
                                   color: MyTheme.light_grey, width: 1.0)),
                           child: Text(
-                            AppLocalizations.of(context).common_close_in_all_capital,
+                            AppLocalizations.of(context)
+                                .common_close_in_all_capital,
                             style: TextStyle(
-                              color: MyTheme.font_grey,
+                              color: MyTheme.secondary,
                             ),
                           ),
                           onPressed: () {
@@ -556,7 +569,7 @@ backgroundColor: Colors.white,
                         child: FlatButton(
                           minWidth: 75,
                           height: 30,
-                          color: MyTheme.accent_color,
+                          color: MyTheme.primary,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5.0),
                               side: BorderSide(
@@ -577,6 +590,6 @@ backgroundColor: Colors.white,
                   )
                 ],
               ),
-        ));
+            ));
   }
 }

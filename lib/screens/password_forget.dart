@@ -104,7 +104,7 @@ class _PasswordForgetState extends State<PasswordForget> {
                     child: Text(
                       "Forget Password ?",
                       style: TextStyle(
-                          color: MyTheme.accent_color,
+                          color: MyTheme.primary,
                           fontSize: 18,
                           fontWeight: FontWeight.w600),
                     ),
@@ -120,7 +120,7 @@ class _PasswordForgetState extends State<PasswordForget> {
                             AppLocalizations.of(context)
                                 .password_forget_screen_phone,
                             style: TextStyle(
-                                color: MyTheme.accent_color,
+                                color: MyTheme.primary,
                                 fontWeight: FontWeight.w600),
                           ),
                         ),
@@ -147,7 +147,7 @@ class _PasswordForgetState extends State<PasswordForget> {
                                   ignoreBlank: false,
                                   autoValidateMode: AutovalidateMode.disabled,
                                   selectorTextStyle:
-                                      TextStyle(color: MyTheme.font_grey),
+                                      TextStyle(color: MyTheme.secondary),
                                   initialValue: phoneCode,
                                   textFieldController: _phoneNumberController,
                                   formatInput: true,
@@ -170,13 +170,13 @@ class _PasswordForgetState extends State<PasswordForget> {
                             height: 45,
                             decoration: BoxDecoration(
                                 border: Border.all(
-                                    color: MyTheme.textfield_grey, width: 1),
+                                    color: MyTheme.light_grey, width: 1),
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(12.0))),
                             child: FlatButton(
                               minWidth: MediaQuery.of(context).size.width,
                               //height: 50,
-                              color: MyTheme.accent_color,
+                              color: MyTheme.primary,
                               shape: RoundedRectangleBorder(
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(12.0))),

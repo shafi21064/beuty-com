@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> {
                   theme: ThemeData(
                     primaryIconTheme: IconThemeData(color: Colors.white),
                     colorScheme: ColorScheme.light(
-                      background: Colors.grey[100],
+                      background: Colors.white70,
                       primary: Colors.pink,
                       secondary: Colors.deepOrangeAccent,
                     ),
@@ -107,10 +107,10 @@ class _MyAppState extends State<MyApp> {
                       secondaryVariant: Colors.pink,
                       secondary: Colors.black,
                     )),
-                    
+
                     // Set your global font family here
                     textTheme: GoogleFonts.openSansTextTheme(),
-                    
+
                     // Other theme configurations...
                   ),
                   localizationsDelegates: [

@@ -1,31 +1,19 @@
 import 'package:flutter/material.dart';
 
 class MyTheme {
-  /*configurable colors stars*/
-  static Color accent_color = Color.fromRGBO(230, 46, 4, 1);
-  static Color soft_accent_color = Color.fromRGBO(247, 189, 168, 1);
-  static Color splash_screen_color = Color.fromRGBO(
-      230, 46, 4, 1); // if not sure , use the same color as accent color
-  /*configurable colors ends*/
+
 
   /*If you are not a developer, do not change the bottom colors*/
-  static Color white = Color.fromRGBO(255, 255, 255, 1);
-  static Color light_grey = Color.fromRGBO(239, 239, 239, 1);
-  static Color dark_grey = Color.fromRGBO(112, 112, 112, 1);
-  static Color medium_grey = Color.fromRGBO(132, 132, 132, 1);
-  static Color medium_grey_50 = Color.fromRGBO(132, 132, 132, .5);
-  static Color grey_153 = Color.fromRGBO(153, 153, 153, 1);
-  static Color font_grey = Color.fromRGBO(73, 73, 73, 1);
-  static Color textfield_grey = Color.fromRGBO(209, 209, 209, 1);
-  static Color golden = Color.fromRGBO(248, 181, 91, 1);
-  static Color shimmer_base = Colors.grey.shade50;
-  static Color shimmer_highlighted = Colors.grey.shade200;
-  static Color facebook_login = Color.fromRGBO(76, 105, 186, 1);
-  static Color google_login = Color.fromRGBO(221, 75, 57, 1);
-  static Color sign_up_with_password = Color.fromRGBO(37, 72, 73, 1);
-  static Color send_otp = Color.fromRGBO(111, 113, 116, 1);
-  static Color dont_have_account = Color.fromRGBO(33, 37, 41, 1);
   static Color primary = Color.fromRGBO(208, 33, 40, 1);
+  static Color secondary = Color.fromRGBO(34, 37, 41, 1);
+  static Color white = Color.fromRGBO(255, 255, 255, 1);
+  static Color dark_grey = Color.fromRGBO(112, 112, 112, 1);
+  static Color sign_up_with_password = Color.fromRGBO(37, 72, 73, 1);
+  static Color light_grey = Color.fromRGBO(239, 239, 239, 1);
+  static Color add_to_cart_button = Color.fromRGBO(42, 43, 45, 1);
+  static Color facebook_bg = Color.fromRGBO(76, 105, 186, 1);
+  static Color google_bg = Color.fromRGBO(221, 75, 57, 1);
+
 
   //testing shimmer
   /*static Color shimmer_base = Colors.redAccent;

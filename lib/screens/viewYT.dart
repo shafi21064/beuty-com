@@ -30,9 +30,6 @@ class ViewYT extends StatefulWidget {
 }
 
 class _ViewYTState extends State<ViewYT> {
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +39,8 @@ class _ViewYTState extends State<ViewYT> {
       ),
       body: Container(
         child: Container(
-          child: Column(mainAxisAlignment: MainAxisAlignment.start,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
@@ -51,7 +49,6 @@ class _ViewYTState extends State<ViewYT> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     InkWell(
                       onTap: () {
                         if (widget.video == "") {
@@ -73,26 +70,19 @@ class _ViewYTState extends State<ViewYT> {
                       },
                       child: Column(
                         children: [
-
                           Container(
                               width: double.infinity,
                               height: 210,
                               child: ClipRRect(
-                                  borderRadius:
-                                  BorderRadius.horizontal(
-                                      left: Radius
-                                          .circular(
-                                          10),
-                                      right: Radius
-                                          .circular(
-                                          10)),
-                                  child:widget.banner.contains('http')?Image.network(widget.banner):
-                                  Image.asset("assets/ytt.webp",fit: BoxFit.cover,)
-
-
-                              )),
-
-
+                                  borderRadius: BorderRadius.horizontal(
+                                      left: Radius.circular(10),
+                                      right: Radius.circular(10)),
+                                  child: widget.banner.contains('http')
+                                      ? Image.network(widget.banner)
+                                      : Image.asset(
+                                          "assets/ytt.webp",
+                                          fit: BoxFit.cover,
+                                        ))),
                           Container(
                             color: Theme.of(context).colorScheme.secondary,
                             height: 40,
@@ -105,7 +95,8 @@ class _ViewYTState extends State<ViewYT> {
                               ),
                               child: Row(
                                 children: [
-                                  Text("Play video",
+                                  Text(
+                                    "Play video",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 14,
@@ -114,7 +105,7 @@ class _ViewYTState extends State<ViewYT> {
                                   Spacer(),
                                   Icon(
                                     Ionicons.logo_youtube,
-                                    color: MyTheme.font_grey,
+                                    color: MyTheme.secondary,
                                     size: 24,
                                   )
                                 ],
@@ -130,22 +121,18 @@ class _ViewYTState extends State<ViewYT> {
                       children: <Widget>[
                         Container(
                           margin: EdgeInsets.only(top: 20),
-                          width:320,
+                          width: 320,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                               widget.short_description,
-                              style:
-                              GoogleFonts.abel(
-                                color: Colors
-                                    .grey[
-                                700],
+                              style: GoogleFonts.abel(
+                                color: Colors.grey[700],
                                 fontSize: 18,
                               ),
                             ),
                           ),
                         ),
-
                       ],
                     ),
                     SizedBox(

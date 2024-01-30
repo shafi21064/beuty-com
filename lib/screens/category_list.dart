@@ -164,8 +164,8 @@ class _CategoryListState extends State<CategoryList> {
                     child: Row(
                       children: [
                         Shimmer.fromColors(
-                          baseColor: MyTheme.shimmer_base,
-                          highlightColor: MyTheme.shimmer_highlighted,
+                          baseColor: MyTheme.light_grey,
+                          highlightColor: MyTheme.light_grey,
                           child: Container(
                             height: 60,
                             width: 60,
@@ -180,8 +180,8 @@ class _CategoryListState extends State<CategoryList> {
                               padding: const EdgeInsets.only(
                                   left: 16.0, bottom: 8.0),
                               child: Shimmer.fromColors(
-                                baseColor: MyTheme.shimmer_base,
-                                highlightColor: MyTheme.shimmer_highlighted,
+                                baseColor: MyTheme.light_grey,
+                                highlightColor: MyTheme.light_grey,
                                 child: Container(
                                   height: 20,
                                   width: MediaQuery.of(context).size.width * .7,
@@ -192,8 +192,8 @@ class _CategoryListState extends State<CategoryList> {
                             Padding(
                               padding: const EdgeInsets.only(left: 16.0),
                               child: Shimmer.fromColors(
-                                baseColor: MyTheme.shimmer_base,
-                                highlightColor: MyTheme.shimmer_highlighted,
+                                baseColor: MyTheme.light_grey,
+                                highlightColor: MyTheme.light_grey,
                                 child: Container(
                                   height: 20,
                                   width: MediaQuery.of(context).size.width * .5,
@@ -254,7 +254,7 @@ class _CategoryListState extends State<CategoryList> {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: TextStyle(
-                        color: MyTheme.font_grey,
+                        color: MyTheme.secondary,
                         fontSize: 14,
                         height: 1.6,
                         fontWeight: FontWeight.w600),
@@ -306,7 +306,7 @@ class _CategoryListState extends State<CategoryList> {
                 //           color: categoryResponse
                 //                       .categories[index].children.length >
                 //                   0
-                //               ? MyTheme.medium_grey
+                //               ? MyTheme.dark_grey
                 //               : MyTheme.light_grey,
                 //         ),
                 //       ),
@@ -321,7 +321,7 @@ class _CategoryListState extends State<CategoryList> {
                 //     " | ",
                 //     textAlign: TextAlign.left,
                 //     style: TextStyle(
-                //       color: MyTheme.medium_grey,
+                //       color: MyTheme.dark_grey,
                 //     ),
                 //   ),
                 // ),
@@ -383,7 +383,7 @@ class _CategoryListState extends State<CategoryList> {
                 child: FlatButton(
                   minWidth: MediaQuery.of(context).size.width,
                   //height: 50,
-                  color: MyTheme.accent_color,
+                  color: MyTheme.primary,
                   shape: RoundedRectangleBorder(
                       borderRadius:
                           const BorderRadius.all(Radius.circular(8.0))),

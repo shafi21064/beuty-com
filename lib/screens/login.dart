@@ -381,9 +381,9 @@ class _LoginState extends State<Login> {
                                     ignoreBlank: false,
                                     autoValidateMode: AutovalidateMode.disabled,
                                     selectorTextStyle:
-                                        TextStyle(color: MyTheme.font_grey),
+                                        TextStyle(color: MyTheme.secondary),
                                     textStyle:
-                                        TextStyle(color: MyTheme.font_grey),
+                                        TextStyle(color: MyTheme.secondary),
                                     initialValue: phoneCode,
                                     textFieldController: _phoneNumberController,
                                     formatInput: true,
@@ -481,7 +481,7 @@ class _LoginState extends State<Login> {
                                         Text(
                                           "Remember Me",
                                           style: TextStyle(
-                                            color: MyTheme.accent_color,
+                                            color: MyTheme.primary,
                                             fontStyle: FontStyle.italic,
                                           ),
                                         ),
@@ -500,7 +500,7 @@ class _LoginState extends State<Login> {
                                         AppLocalizations.of(context)
                                             .login_screen_forgot_password,
                                         style: TextStyle(
-                                          color: MyTheme.accent_color,
+                                          color: MyTheme.primary,
                                           fontStyle: FontStyle.italic,
                                           decoration: TextDecoration.underline,
                                         ),
@@ -521,7 +521,7 @@ class _LoginState extends State<Login> {
                             padding: EdgeInsets.all(0.0),
                             child: Ink(
                               decoration:
-                                  BoxDecoration(color: MyTheme.send_otp),
+                                  BoxDecoration(color: MyTheme.dark_grey),
                               child: Container(
                                 constraints: BoxConstraints(
                                     maxWidth: 300.0, minHeight: 50.0),
@@ -542,7 +542,7 @@ class _LoginState extends State<Login> {
                               child: Text(
                             "Or, login with",
                             style: TextStyle(
-                                color: MyTheme.medium_grey, fontSize: 12),
+                                color: MyTheme.dark_grey, fontSize: 12),
                           )),
                         ),
                         Padding(
@@ -610,7 +610,7 @@ class _LoginState extends State<Login> {
                         //     padding: EdgeInsets.all(0.0),
                         //     child: Ink(
                         //       decoration:
-                        //           BoxDecoration(color: MyTheme.facebook_login),
+                        //           BoxDecoration(color: MyTheme.facebook_bg),
                         //       child: Container(
                         //         constraints: BoxConstraints(
                         //             maxWidth: 300.0, minHeight: 50.0),
@@ -646,7 +646,7 @@ class _LoginState extends State<Login> {
                         //     padding: EdgeInsets.all(0.0),
                         //     child: Ink(
                         //       decoration:
-                        //           BoxDecoration(color: MyTheme.google_login),
+                        //           BoxDecoration(color: MyTheme.google_bg),
                         //       child: Container(
                         //         constraints: BoxConstraints(
                         //             maxWidth: 300.0, minHeight: 50.0),
@@ -686,7 +686,7 @@ class _LoginState extends State<Login> {
                                 child: Text(
                               "Don't have an account ? ",
                               style: TextStyle(
-                                  color: MyTheme.dont_have_account,
+                                  color: MyTheme.secondary,
                                   fontWeight: FontWeight.bold,
                                   // Add this line for underline
                                   fontSize: 16),
@@ -732,7 +732,7 @@ class _LoginState extends State<Login> {
                               AppLocalizations.of(context)
                                   .login_screen_login_with,
                               style: TextStyle(
-                                  color: MyTheme.medium_grey, fontSize: 14),
+                                  color: MyTheme.dark_grey, fontSize: 14),
                             )),
                           ),
                         ),
@@ -806,10 +806,7 @@ class _LoginState extends State<Login> {
   //     centerTitle: true,
   //     flexibleSpace: Container(
   //       decoration: BoxDecoration(
-  //         gradient: LinearGradient(colors: [
-  //           MyTheme.primary,
-  //           Theme.of(context).colorScheme.secondary,
-  //         ]),
+
   //       ),
   //     ),
   //     leading: GestureDetector(

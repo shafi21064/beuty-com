@@ -76,8 +76,8 @@ class _FlashDealListState extends State<FlashDealList> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Shimmer.fromColors(
-                          baseColor: MyTheme.shimmer_base,
-                          highlightColor: MyTheme.shimmer_highlighted,
+                          baseColor: MyTheme.light_grey,
+                          highlightColor: MyTheme.light_grey,
                           child: Container(
                             height: 120,
                             width: double.infinity,
@@ -87,8 +87,8 @@ class _FlashDealListState extends State<FlashDealList> {
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Shimmer.fromColors(
-                            baseColor: MyTheme.shimmer_base,
-                            highlightColor: MyTheme.shimmer_highlighted,
+                            baseColor: MyTheme.light_grey,
+                            highlightColor: MyTheme.light_grey,
                             child: Container(
                               height: 30,
                               width: 80,
@@ -99,8 +99,8 @@ class _FlashDealListState extends State<FlashDealList> {
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Shimmer.fromColors(
-                            baseColor: MyTheme.shimmer_base,
-                            highlightColor: MyTheme.shimmer_highlighted,
+                            baseColor: MyTheme.light_grey,
+                            highlightColor: MyTheme.light_grey,
                             child: Container(
                               height: 30,
                               width: 100,
@@ -167,8 +167,12 @@ class _FlashDealListState extends State<FlashDealList> {
           return GestureDetector(
             onTap: () {
               if (time == null) {
-                ToastComponent.showDialog(AppLocalizations.of(context).flash_deal_list_screen_flash_deal_has_ended, context,
-                    gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+                ToastComponent.showDialog(
+                    AppLocalizations.of(context)
+                        .flash_deal_list_screen_flash_deal_has_ended,
+                    context,
+                    gravity: Toast.CENTER,
+                    duration: Toast.LENGTH_LONG);
               } else {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return FlashDealProducts(
@@ -194,8 +198,7 @@ class _FlashDealListState extends State<FlashDealList> {
                           borderRadius: BorderRadius.circular(16.0),
                           child: FadeInImage.assetNetwork(
                             placeholder: 'assets/placeholder_rectangle.png',
-                            image:
-                                flashDealResponse.flash_deals[index].banner,
+                            image: flashDealResponse.flash_deals[index].banner,
                             fit: BoxFit.cover,
                           ))),
                 ),
@@ -215,9 +218,10 @@ class _FlashDealListState extends State<FlashDealList> {
                   child: Center(
                       child: time == null
                           ? Text(
-                        AppLocalizations.of(context).flash_deal_list_screen_ended,
+                              AppLocalizations.of(context)
+                                  .flash_deal_list_screen_ended,
                               style: TextStyle(
-                                  color: MyTheme.accent_color,
+                                  color: MyTheme.primary,
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w600),
                             )
@@ -238,7 +242,7 @@ class _FlashDealListState extends State<FlashDealList> {
         Text(
           timeText(time.days.toString(), default_length: 3),
           style: TextStyle(
-              color: MyTheme.accent_color,
+              color: MyTheme.primary,
               fontSize: 16.0,
               fontWeight: FontWeight.w600),
         ),
@@ -247,7 +251,7 @@ class _FlashDealListState extends State<FlashDealList> {
           child: Text(
             ":",
             style: TextStyle(
-                color: MyTheme.accent_color,
+                color: MyTheme.primary,
                 fontSize: 16.0,
                 fontWeight: FontWeight.w600),
           ),
@@ -255,7 +259,7 @@ class _FlashDealListState extends State<FlashDealList> {
         Text(
           timeText(time.hours.toString(), default_length: 2),
           style: TextStyle(
-              color: MyTheme.accent_color,
+              color: MyTheme.primary,
               fontSize: 16.0,
               fontWeight: FontWeight.w600),
         ),
@@ -264,7 +268,7 @@ class _FlashDealListState extends State<FlashDealList> {
           child: Text(
             ":",
             style: TextStyle(
-                color: MyTheme.accent_color,
+                color: MyTheme.primary,
                 fontSize: 16.0,
                 fontWeight: FontWeight.w600),
           ),
@@ -272,7 +276,7 @@ class _FlashDealListState extends State<FlashDealList> {
         Text(
           timeText(time.min.toString(), default_length: 2),
           style: TextStyle(
-              color: MyTheme.accent_color,
+              color: MyTheme.primary,
               fontSize: 16.0,
               fontWeight: FontWeight.w600),
         ),
@@ -281,7 +285,7 @@ class _FlashDealListState extends State<FlashDealList> {
           child: Text(
             ":",
             style: TextStyle(
-                color: MyTheme.accent_color,
+                color: MyTheme.primary,
                 fontSize: 16.0,
                 fontWeight: FontWeight.w600),
           ),
@@ -289,7 +293,7 @@ class _FlashDealListState extends State<FlashDealList> {
         Text(
           timeText(time.sec.toString(), default_length: 2),
           style: TextStyle(
-              color: MyTheme.accent_color,
+              color: MyTheme.primary,
               fontSize: 16.0,
               fontWeight: FontWeight.w600),
         ),
@@ -309,7 +313,7 @@ class _FlashDealListState extends State<FlashDealList> {
       ),
       title: Text(
         AppLocalizations.of(context).flash_deal_list_flash_deals,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(fontSize: 16, color: MyTheme.primary),
       ),
       elevation: 0.0,
       titleSpacing: 0,

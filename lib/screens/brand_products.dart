@@ -137,8 +137,7 @@ class _BrandProductsState extends State<BrandProducts> {
                 hintText:
                     "${AppLocalizations.of(context).brand_products_screen_search_product_of_brand} : " +
                         widget.brand_name,
-                hintStyle:
-                    TextStyle(fontSize: 14.0, color: MyTheme.textfield_grey),
+                hintStyle: TextStyle(fontSize: 14.0, color: MyTheme.light_grey),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: MyTheme.white, width: 0.0),
                 ),
@@ -173,7 +172,7 @@ class _BrandProductsState extends State<BrandProducts> {
               .buildProductGridShimmer(scontroller: _scrollController));
     } else if (_productList.length > 0) {
       return RefreshIndicator(
-        color: MyTheme.accent_color,
+        color: MyTheme.primary,
         backgroundColor: Colors.white,
         displacement: 0,
         onRefresh: _onRefresh,
@@ -197,13 +196,13 @@ class _BrandProductsState extends State<BrandProducts> {
             itemBuilder: (context, index) {
               // 3
               return ProductCard(
-                  id: _productList[index].id,
-                 // image: _productList[index].thumbnail_image,
-                  name: _productList[index].name,
-                  price: _productList[index].main_price,
-                  sale_price: _productList[index].stroked_price,
-                  //has_discount: _productList[index].has_discount
-                  );
+                id: _productList[index].id,
+                // image: _productList[index].thumbnail_image,
+                name: _productList[index].name,
+                price: _productList[index].main_price,
+                sale_price: _productList[index].stroked_price,
+                //has_discount: _productList[index].has_discount
+              );
             },
           ),
         ),

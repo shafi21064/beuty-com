@@ -7,7 +7,6 @@ import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class MessengerList extends StatefulWidget {
   @override
   _MessengerListState createState() => _MessengerListState();
@@ -45,7 +44,8 @@ class _MessengerListState extends State<MessengerList> {
   }
 
   fetchData() async {
-    var conversatonResponse = await ChatRepository().getConversationResponse(page: _page);
+    var conversatonResponse =
+        await ChatRepository().getConversationResponse(page: _page);
     _list.addAll(conversatonResponse.conversation_item_list);
     _isInitial = false;
     _totalData = conversatonResponse.meta.total;
@@ -77,7 +77,7 @@ class _MessengerListState extends State<MessengerList> {
         body: Stack(
           children: [
             RefreshIndicator(
-              color: MyTheme.accent_color,
+              color: MyTheme.primary,
               backgroundColor: Colors.white,
               onRefresh: _onRefresh,
               displacement: 0,
@@ -98,7 +98,8 @@ class _MessengerListState extends State<MessengerList> {
               ),
             ),
             Align(
-                alignment: Alignment.bottomCenter, child: buildLoadingContainer())
+                alignment: Alignment.bottomCenter,
+                child: buildLoadingContainer())
           ],
         ),
       ),
@@ -120,7 +121,7 @@ class _MessengerListState extends State<MessengerList> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       centerTitle: true,
       leading: Builder(
         builder: (context) => IconButton(
@@ -130,7 +131,7 @@ backgroundColor: Colors.white,
       ),
       title: Text(
         AppLocalizations.of(context).messenger_list_screen_messages,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(fontSize: 16, color: MyTheme.primary),
       ),
       elevation: 0.0,
       titleSpacing: 0,
@@ -195,7 +196,7 @@ backgroundColor: Colors.white,
                 borderRadius: BorderRadius.circular(35),
                 child: FadeInImage.assetNetwork(
                   placeholder: 'assets/placeholder.png',
-                  image:  _list[index].shop_logo,
+                  image: _list[index].shop_logo,
                   fit: BoxFit.contain,
                 )),
           ),
@@ -218,7 +219,7 @@ backgroundColor: Colors.white,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: TextStyle(
-                            color: MyTheme.font_grey,
+                            color: MyTheme.secondary,
                             fontSize: 13,
                             height: 1.6,
                             fontWeight: FontWeight.w600),
@@ -229,7 +230,7 @@ backgroundColor: Colors.white,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: TextStyle(
-                            color: MyTheme.medium_grey,
+                            color: MyTheme.dark_grey,
                             height: 1.6,
                             fontWeight: FontWeight.w600),
                       ),
@@ -244,7 +245,7 @@ backgroundColor: Colors.white,
             padding: const EdgeInsets.all(16.0),
             child: Icon(
               Icons.arrow_forward_ios_rounded,
-              color: MyTheme.medium_grey,
+              color: MyTheme.dark_grey,
               size: 14,
             ),
           )

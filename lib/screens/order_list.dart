@@ -298,7 +298,7 @@ class _OrderListState extends State<OrderList> {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Icon(
               Icons.credit_card,
-              color: MyTheme.font_grey,
+              color: MyTheme.secondary,
               size: 16,
             ),
           ),
@@ -307,7 +307,7 @@ class _OrderListState extends State<OrderList> {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Icon(
               Icons.local_shipping_outlined,
-              color: MyTheme.font_grey,
+              color: MyTheme.secondary,
               size: 16,
             ),
           ),
@@ -401,7 +401,7 @@ class _OrderListState extends State<OrderList> {
           ),
           Text(
             AppLocalizations.of(context).profile_screen_purchase_history,
-            style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+            style: TextStyle(fontSize: 16, color: MyTheme.primary),
           ),
         ],
       ),
@@ -422,8 +422,8 @@ class _OrderListState extends State<OrderList> {
             padding:
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Shimmer.fromColors(
-              baseColor: MyTheme.shimmer_base,
-              highlightColor: MyTheme.shimmer_highlighted,
+              baseColor: MyTheme.light_grey,
+              highlightColor: MyTheme.light_grey,
               child: Container(
                 height: 75,
                 width: double.infinity,
@@ -435,7 +435,7 @@ class _OrderListState extends State<OrderList> {
       ));
     } else if (_orderList.length > 0) {
       return RefreshIndicator(
-        color: MyTheme.accent_color,
+        color: MyTheme.primary,
         backgroundColor: Colors.white,
         displacement: 0,
         onRefresh: _onRefresh,
@@ -498,16 +498,16 @@ class _OrderListState extends State<OrderList> {
                     child: Icon(
                       Icons.calendar_today_outlined,
                       size: 16,
-                      color: MyTheme.font_grey,
+                      color: MyTheme.secondary,
                     ),
                   ),
                   Text(_orderList[index].date ?? '',
-                      style: TextStyle(color: MyTheme.font_grey, fontSize: 13)),
+                      style: TextStyle(color: MyTheme.secondary, fontSize: 13)),
                   Spacer(),
                   Text(
                     _orderList[index].grandTotal ?? '',
                     style: TextStyle(
-                        color: MyTheme.accent_color,
+                        color: MyTheme.primary,
                         fontSize: 14,
                         fontWeight: FontWeight.w600),
                   )
@@ -525,16 +525,16 @@ class _OrderListState extends State<OrderList> {
                     child: Icon(
                       Icons.credit_card,
                       size: 16,
-                      color: MyTheme.font_grey,
+                      color: MyTheme.secondary,
                     ),
                   ),
                   Text(
                     "${AppLocalizations.of(context).order_list_screen_payment_status} - ",
-                    style: TextStyle(color: MyTheme.font_grey, fontSize: 13),
+                    style: TextStyle(color: MyTheme.secondary, fontSize: 13),
                   ),
                   Text(
                     _orderList[index].paymentStatusString ?? '',
-                    style: TextStyle(color: MyTheme.font_grey, fontSize: 13),
+                    style: TextStyle(color: MyTheme.secondary, fontSize: 13),
                   ),
                   Padding(
                     padding: app_language_rtl.$
@@ -555,16 +555,16 @@ class _OrderListState extends State<OrderList> {
                   child: Icon(
                     Icons.local_shipping_outlined,
                     size: 16,
-                    color: MyTheme.font_grey,
+                    color: MyTheme.secondary,
                   ),
                 ),
                 Text(
                   "${AppLocalizations.of(context).order_list_screen_delivery_status} -",
-                  style: TextStyle(color: MyTheme.font_grey, fontSize: 13),
+                  style: TextStyle(color: MyTheme.secondary, fontSize: 13),
                 ),
                 Text(
                   _orderList[index].deliveryStatus ?? '',
-                  style: TextStyle(color: MyTheme.font_grey, fontSize: 13),
+                  style: TextStyle(color: MyTheme.secondary, fontSize: 13),
                 ),
               ],
             )

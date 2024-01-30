@@ -12,7 +12,6 @@ import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class IyzicoScreen extends StatefulWidget {
   double amount;
   String payment_type;
@@ -40,8 +39,6 @@ class _IyzicoScreenState extends State<IyzicoScreen> {
     // TODO: implement initState
     super.initState();
 
-
-
     if (widget.payment_type == "cart_payment") {
       createOrder();
     }
@@ -49,7 +46,7 @@ class _IyzicoScreenState extends State<IyzicoScreen> {
 
   createOrder() async {
     var orderCreateResponse = await PaymentRepository()
-        .getOrderCreateResponse( widget.payment_method_key);
+        .getOrderCreateResponse(widget.payment_method_key);
 
     if (orderCreateResponse.result == false) {
       ToastComponent.showDialog(orderCreateResponse.message, context,
@@ -61,7 +58,6 @@ class _IyzicoScreenState extends State<IyzicoScreen> {
     _combined_order_id = orderCreateResponse.combined_order_id;
     _order_init = true;
     setState(() {});
-
   }
 
   @override
@@ -98,12 +94,14 @@ class _IyzicoScreenState extends State<IyzicoScreen> {
     });
   }
 
-  onPaymentSuccess(payment_details) async{
+  onPaymentSuccess(payment_details) async {
     print("b");
 
-    var iyzicoPaymentSuccessResponse = await PaymentRepository().getIyzicoPaymentSuccessResponse(widget.payment_type, widget.amount,_combined_order_id, payment_details);
+    var iyzicoPaymentSuccessResponse = await PaymentRepository()
+        .getIyzicoPaymentSuccessResponse(widget.payment_type, widget.amount,
+            _combined_order_id, payment_details);
 
-    if(iyzicoPaymentSuccessResponse.result == false ){
+    if (iyzicoPaymentSuccessResponse.result == false) {
       print("c");
       Toast.show(iyzicoPaymentSuccessResponse.message, context,
           duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
@@ -123,13 +121,9 @@ class _IyzicoScreenState extends State<IyzicoScreen> {
         return Wallet(from_recharge: true);
       }));
     }
-
-
   }
 
-
   buildBody() {
-
     String initial_url =
         "${AppConfig.BASE_URL}/iyzico/init?payment_type=${widget.payment_type}&combined_order_id=${_combined_order_id}&amount=${widget.amount}&user_id=${user_id.$}";
 
@@ -157,7 +151,7 @@ class _IyzicoScreenState extends State<IyzicoScreen> {
             onWebResourceError: (error) {},
             onPageFinished: (page) {
               print(page.toString());
-                getData();
+              getData();
             },
           ),
         ),
@@ -167,7 +161,7 @@ class _IyzicoScreenState extends State<IyzicoScreen> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       centerTitle: true,
       leading: Builder(
         builder: (context) => IconButton(
@@ -177,7 +171,7 @@ backgroundColor: Colors.white,
       ),
       title: Text(
         AppLocalizations.of(context).iyzico_screen_pay_with_iyzico,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(fontSize: 16, color: MyTheme.primary),
       ),
       elevation: 0.0,
       titleSpacing: 0,

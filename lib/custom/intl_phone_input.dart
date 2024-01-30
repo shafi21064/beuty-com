@@ -504,10 +504,7 @@ class CustomSelectorButton extends StatelessWidget {
             height: 36,
             decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(
-                    color: MyTheme.textfield_grey,
-                    width: .5
-                ),
+                border: Border.all(color: MyTheme.light_grey, width: .5),
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(5.0),
                     bottomLeft: Radius.circular(5.0))),
@@ -547,7 +544,7 @@ class CustomSelectorButton extends StatelessWidget {
                     showFlag: selectorConfig.showFlags,
                     useEmoji: selectorConfig.useEmoji,
                     textStyle: TextStyle(
-                        color: MyTheme.textfield_grey) //selectorTextStyle,
+                        color: MyTheme.light_grey) //selectorTextStyle,
                     ),
               ),
             ),

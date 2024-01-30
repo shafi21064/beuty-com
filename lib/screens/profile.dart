@@ -165,11 +165,11 @@ class _ProfileState extends State<Profile> {
           child: Center(
               child: Text(
             AppLocalizations.of(context).profile_screen_please_log_in,
-            style: TextStyle(color: MyTheme.font_grey),
+            style: TextStyle(color: MyTheme.secondary),
           )));
     } else {
       return RefreshIndicator(
-        color: MyTheme.accent_color,
+        color: MyTheme.primary,
         backgroundColor: Colors.white,
         onRefresh: _onPageRefresh,
         displacement: 10,
@@ -247,7 +247,7 @@ class _ProfileState extends State<Profile> {
                         "Wishlist",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            color: MyTheme.font_grey,
+                            color: MyTheme.secondary,
                             fontWeight: FontWeight.w300,
                             fontSize: 11),
                       ),
@@ -294,7 +294,7 @@ class _ProfileState extends State<Profile> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 11,
-                            color: MyTheme.font_grey,
+                            color: MyTheme.secondary,
                             fontWeight: FontWeight.w300),
                       ),
                     ],
@@ -337,7 +337,7 @@ class _ProfileState extends State<Profile> {
                         "Location",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            color: MyTheme.font_grey,
+                            color: MyTheme.secondary,
                             fontWeight: FontWeight.w300,
                             fontSize: 10),
                       ),
@@ -372,7 +372,7 @@ class _ProfileState extends State<Profile> {
                   "Message",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: MyTheme.font_grey, fontWeight: FontWeight.w300),
+                      color: MyTheme.secondary, fontWeight: FontWeight.w300),
                 ),
               )
             ],
@@ -422,7 +422,7 @@ class _ProfileState extends State<Profile> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 10,
-                            color: MyTheme.font_grey,
+                            color: MyTheme.secondary,
                             fontWeight: FontWeight.w300),
                       ),
                     ],
@@ -465,7 +465,7 @@ class _ProfileState extends State<Profile> {
                         "Inbox",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            color: MyTheme.font_grey,
+                            color: MyTheme.secondary,
                             fontWeight: FontWeight.w300,
                             fontSize: 10),
                       ),
@@ -510,7 +510,7 @@ class _ProfileState extends State<Profile> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 10,
-                            color: MyTheme.font_grey,
+                            color: MyTheme.secondary,
                             fontWeight: FontWeight.w300),
                       ),
                     ],
@@ -544,7 +544,7 @@ class _ProfileState extends State<Profile> {
                   "Message",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: MyTheme.font_grey, fontWeight: FontWeight.w300),
+                      color: MyTheme.secondary, fontWeight: FontWeight.w300),
                 ),
               )
             ],
@@ -589,7 +589,7 @@ class _ProfileState extends State<Profile> {
                     child: Text(
                       "Logout",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: MyTheme.font_grey, fontSize: 18),
+                      style: TextStyle(color: MyTheme.secondary, fontSize: 18),
                     ),
                   )
                 ],
@@ -613,7 +613,7 @@ class _ProfileState extends State<Profile> {
                 _cartCounterString,
                 style: TextStyle(
                     fontSize: 16,
-                    color: MyTheme.font_grey,
+                    color: MyTheme.secondary,
                     fontWeight: FontWeight.w600),
               ),
             ),
@@ -622,7 +622,7 @@ class _ProfileState extends State<Profile> {
                 child: Text(
                   AppLocalizations.of(context).profile_screen_in_your_cart,
                   style: TextStyle(
-                    color: MyTheme.medium_grey,
+                    color: MyTheme.dark_grey,
                   ),
                 )),
           ],
@@ -635,7 +635,7 @@ class _ProfileState extends State<Profile> {
                 _wishlistCounterString,
                 style: TextStyle(
                     fontSize: 16,
-                    color: MyTheme.font_grey,
+                    color: MyTheme.secondary,
                     fontWeight: FontWeight.w600),
               ),
             ),
@@ -644,7 +644,7 @@ class _ProfileState extends State<Profile> {
                 child: Text(
                   AppLocalizations.of(context).profile_screen_in_wishlist,
                   style: TextStyle(
-                    color: MyTheme.medium_grey,
+                    color: MyTheme.dark_grey,
                   ),
                 )),
           ],
@@ -657,7 +657,7 @@ class _ProfileState extends State<Profile> {
                 _orderCounterString,
                 style: TextStyle(
                     fontSize: 16,
-                    color: MyTheme.font_grey,
+                    color: MyTheme.secondary,
                     fontWeight: FontWeight.w600),
               ),
             ),
@@ -666,7 +666,7 @@ class _ProfileState extends State<Profile> {
                 child: Text(
                   AppLocalizations.of(context).profile_screen_in_ordered,
                   style: TextStyle(
-                    color: MyTheme.medium_grey,
+                    color: MyTheme.dark_grey,
                   ),
                 )),
           ],
@@ -687,10 +687,8 @@ class _ProfileState extends State<Profile> {
                 child: Container(
                   height: 215, //150
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [
-                      MyTheme.primary,
-                      Theme.of(context).colorScheme.secondary,
-                    ]),
+                    color: MyTheme.primary,
+                   
                   ),
                 ),
               ),
@@ -710,7 +708,7 @@ class _ProfileState extends State<Profile> {
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           image: NetworkImage("${avatar_original.$}" ??
-                              "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png"),
+                              "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png"), //TODO:change the avatar
                         ),
                       ),
                     ),
@@ -726,7 +724,7 @@ class _ProfileState extends State<Profile> {
             "${user_name.$}",
             style: TextStyle(
                 fontSize: 14,
-                color: MyTheme.font_grey,
+                color: MyTheme.secondary,
                 fontWeight: FontWeight.w600),
           ),
         ),
@@ -736,12 +734,9 @@ class _ProfileState extends State<Profile> {
             padding: const EdgeInsets.only(top: 6.0, bottom: 10),
             child: Container(
               height: 24,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-                  MyTheme.primary,
-                  Theme.of(context).colorScheme.secondary,
-                ]),
-              ),
+              decoration: BoxDecoration(color: MyTheme.primary
+                 
+                  ),
               child: FlatButton(
                 // 	rgb(50,205,50)
                 shape: RoundedRectangleBorder(
@@ -776,12 +771,9 @@ class _ProfileState extends State<Profile> {
       //backgroundColor: Colors.white,
       centerTitle: true,
       flexibleSpace: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            MyTheme.primary,
-            Theme.of(context).colorScheme.secondary,
-          ]),
-        ),
+        decoration: BoxDecoration(color: MyTheme.primary
+            
+            ),
       ),
       leading: GestureDetector(
         child: widget.show_back_button

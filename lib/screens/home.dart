@@ -316,7 +316,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       body: Stack(
                         children: [
                           RefreshIndicator(
-                            color: MyTheme.accent_color,
+                            color: MyTheme.primary,
                             backgroundColor: Colors.white,
                             onRefresh: _onRefresh,
                             displacement: 0,
@@ -799,7 +799,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             style: TextStyle(
-                                fontSize: 11, color: MyTheme.font_grey),
+                                fontSize: 11, color: MyTheme.secondary),
                           ),
                         ),
                       ),
@@ -815,7 +815,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           child: Center(
               child: Text(
             AppLocalizations.of(context).home_screen_no_category_found,
-            style: TextStyle(color: MyTheme.font_grey),
+            style: TextStyle(color: MyTheme.secondary),
           )));
     } else {
       // should not be happening
@@ -834,14 +834,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       //snapshot.hasData
       return SingleChildScrollView(
         child: SizedBox(
-          height: 200,
+          height: 250,
           child: ListView.builder(
             itemCount: _bestSellingProductList.length,
             scrollDirection: Axis.horizontal,
-            itemExtent: 120,
+            itemExtent: MediaQuery.of(context).size.width / 2.5,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.only(right: 1),
+                padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
                   id: _bestSellingProductList[index].id,
                   image: _bestSellingProductList[index].pictures[0].url,
@@ -852,6 +852,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       _bestSellingProductList[index].sale_price.toString(),
                   slug: _bestSellingProductList[index].slug,
                   reviews: _bestSellingProductList[index].reviews,
+                  stock: _bestSellingProductList[index].stock,
                 ),
               );
             },
@@ -876,7 +877,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       //snapshot.hasData
       return SingleChildScrollView(
         child: SizedBox(
-          height: 200,
+          height: 250,
           child: ListView.builder(
             itemCount: _featuredProductList.length,
             scrollDirection: Axis.horizontal,
@@ -893,6 +894,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   sale_price: _featuredProductList[index].sale_price.toString(),
                   slug: _featuredProductList[index].slug,
                   reviews: _featuredCategoryList[index].reviews,
+                  stock: _featuredCategoryList[index].stock,
                 ),
               );
             },
@@ -943,7 +945,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       //snapshot.hasData
       return SingleChildScrollView(
         child: SizedBox(
-          height: 200,
+          height: 250,
           child: ListView.builder(
             itemCount: _recommendedProductList.length,
             scrollDirection: Axis.horizontal,
@@ -952,15 +954,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               return Padding(
                 padding: const EdgeInsets.only(right: 1),
                 child: MiniProductCard(
-                    id: _recommendedProductList[index].id,
-                    image: _recommendedProductList[index].pictures[0].url,
-                    ratings: _recommendedProductList[index].ratings,
-                    name: _recommendedProductList[index].name,
-                    price: _recommendedProductList[index].price.toString(),
-                    sale_price:
-                        _recommendedProductList[index].sale_price.toString(),
-                    slug: _recommendedProductList[index].slug,
-                    reviews: _recommendedProductList[index].reviews),
+                  id: _recommendedProductList[index].id,
+                  image: _recommendedProductList[index].pictures[0].url,
+                  ratings: _recommendedProductList[index].ratings,
+                  name: _recommendedProductList[index].name,
+                  price: _recommendedProductList[index].price.toString(),
+                  sale_price:
+                      _recommendedProductList[index].sale_price.toString(),
+                  slug: _recommendedProductList[index].slug,
+                  reviews: _recommendedProductList[index].reviews,
+                  stock: _recommendedProductList[index].stock,
+                ),
               );
             },
           ),
@@ -985,7 +989,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       //snapshot.hasData
       return SingleChildScrollView(
         child: SizedBox(
-          height: 200,
+          height: 250,
           child: ListView.builder(
             itemCount: _popularSearchProductList.length,
             scrollDirection: Axis.horizontal,
@@ -1003,6 +1007,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       _popularSearchProductList[index].sale_price.toString(),
                   slug: _popularSearchProductList[index].slug,
                   reviews: _popularSearchProductList[index].reviews,
+                  stock: _popularSearchProductList[index].stock,
                 ),
               );
             },
@@ -1027,7 +1032,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       //snapshot.hasData
       return SingleChildScrollView(
         child: SizedBox(
-          height: 200,
+          height: 250,
           child: ListView.builder(
             itemCount: _trendingProductList.length,
             scrollDirection: Axis.horizontal,
@@ -1044,6 +1049,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   sale_price: _trendingProductList[index].sale_price.toString(),
                   slug: _trendingProductList[index].slug,
                   reviews: _trendingProductList[index].reviews,
+                  stock: _trendingProductList[index].stock,
                 ),
               );
             },
@@ -1068,7 +1074,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       //snapshot.hasData
       return SingleChildScrollView(
         child: SizedBox(
-          height: 200,
+          height: 250,
           child: ListView.builder(
             itemCount: _hotDealsProductList.length,
             scrollDirection: Axis.horizontal,
@@ -1085,6 +1091,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   sale_price: _hotDealsProductList[index].sale_price.toString(),
                   slug: _hotDealsProductList[index].slug,
                   reviews: _hotDealsProductList[index].reviews,
+                  stock: _hotDealsProductList[index].stock,
                 ),
               );
             },
@@ -1109,7 +1116,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       //snapshot.hasData
       return SingleChildScrollView(
         child: SizedBox(
-          height: 200,
+          height: 250,
           child: ListView.builder(
             itemCount: _newArrivalProductList.length,
             scrollDirection: Axis.horizontal,
@@ -1127,6 +1134,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       _newArrivalProductList[index].sale_price.toString(),
                   slug: _newArrivalProductList[index].slug,
                   reviews: _newArrivalProductList[index].reviews,
+                  stock: _newArrivalProductList[index].stock,
                 ),
               );
             },
@@ -1686,8 +1694,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       return Padding(
         padding: const EdgeInsets.only(left: 5.0, right: 5.0),
         child: Shimmer.fromColors(
-          baseColor: MyTheme.shimmer_base,
-          highlightColor: MyTheme.shimmer_highlighted,
+          baseColor: MyTheme.light_grey,
+          highlightColor: MyTheme.light_grey,
           child: Container(
             height: 120,
             width: double.infinity,
@@ -1762,7 +1770,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           child: Center(
               child: Text(
             AppLocalizations.of(context).home_screen_no_carousel_image_found,
-            style: TextStyle(color: MyTheme.font_grey),
+            style: TextStyle(color: MyTheme.secondary),
           )));
     } else {
       // should not be happening
@@ -1890,15 +1898,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       autofocus: false,
       decoration: InputDecoration(
           hintText: AppLocalizations.of(context).home_screen_search,
-          hintStyle: TextStyle(fontSize: 12.0, color: MyTheme.textfield_grey),
+          hintStyle: TextStyle(fontSize: 12.0, color: MyTheme.light_grey),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: MyTheme.textfield_grey, width: 0.5),
+            borderSide: BorderSide(color: MyTheme.light_grey, width: 0.5),
             borderRadius: const BorderRadius.all(
               const Radius.circular(16.0),
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: MyTheme.textfield_grey, width: 1.0),
+            borderSide: BorderSide(color: MyTheme.light_grey, width: 1.0),
             borderRadius: const BorderRadius.all(
               const Radius.circular(16.0),
             ),
@@ -1907,7 +1915,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             padding: const EdgeInsets.all(8.0),
             child: Icon(
               Icons.search,
-              color: MyTheme.textfield_grey,
+              color: MyTheme.light_grey,
               size: 20,
             ),
           ),

@@ -47,7 +47,6 @@ class _kireiYTState extends State<kireiYT> {
           youtubes.add(data['data'][i]);
         });
       }
-
     }
   }
 
@@ -72,121 +71,104 @@ class _kireiYTState extends State<kireiYT> {
               slivers: [
                 SliverList(
                     delegate: SliverChildListDelegate([
-                      SizedBox(
-                        //height: 400,
-                        child:  ListView.builder(
-                          itemCount:
-                          youtubes.length,
+                  SizedBox(
+                    //height: 400,
+                    child: ListView.builder(
+                      itemCount: youtubes.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        isMore.add(false);
+                        print(isMore[index]);
 
-                           physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            isMore.add(false);
-                            print(isMore[index]);
-
-                            return Container(
-                              padding: const EdgeInsets.only(
-                                  top: 4.0,
-                                  bottom: 4.0,
-                                  left: 10.0,
-                                  right: 10.0),
-                              child: Container(
-                                width: 300,
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(
-                                            builder: (context) {
-                                              return ViewYT(
-                                                youtubes[index]['id'],
-                                                youtubes[index]['title'],
-                                                youtubes[index]['slug'],
-                                                youtubes[index]['banner'],
-                                                youtubes[index]['video'],
-                                                youtubes[index]['short_description'],
-                                                youtubes[index]['description'],
-                                              );
-                                            }));
-                                  },
-                                  child: Card(
-                                    shape: RoundedRectangleBorder(
-                                      side: new BorderSide(
-                                          color: MyTheme.light_grey,
-                                          width: 0.4),
-                                      borderRadius:
-                                      BorderRadius.circular(16.0),
-                                    ),
-                                    elevation: 0,
-                                    child: Column(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                        children: <Widget>[
-                                          Container(
-                                            // height: 170,
-                                            child: Row(
+                        return Container(
+                          padding: const EdgeInsets.only(
+                              top: 4.0, bottom: 4.0, left: 10.0, right: 10.0),
+                          child: Container(
+                            width: 300,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return ViewYT(
+                                    youtubes[index]['id'],
+                                    youtubes[index]['title'],
+                                    youtubes[index]['slug'],
+                                    youtubes[index]['banner'],
+                                    youtubes[index]['video'],
+                                    youtubes[index]['short_description'],
+                                    youtubes[index]['description'],
+                                  );
+                                }));
+                              },
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  side: new BorderSide(
+                                      color: MyTheme.light_grey, width: 0.4),
+                                  borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                elevation: 0,
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Container(
+                                        // height: 170,
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Column(
                                               crossAxisAlignment:
-                                              CrossAxisAlignment
-                                                  .start,
+                                                  CrossAxisAlignment.start,
                                               mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .start,
+                                                  MainAxisAlignment.start,
                                               children: [
-
-                                                Column(
-                                                  crossAxisAlignment:
-                                                  CrossAxisAlignment
-                                                      .start,
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .start,
-                                                  children: [
-                                                    Container(
-                                                      width:300,
-                                                      margin:
-                                                      const EdgeInsets
-                                                          .all(20),
-                                                      child: Text(
-                                                        youtubes[index]['title'],
-                                                        style:
-                                                        GoogleFonts
-                                                            .ubuntu(
-                                                          color: Colors
-                                                              .black,
-                                                          fontSize: 14,
-                                                        ),
-                                                      ),
+                                                Container(
+                                                  width: 300,
+                                                  margin:
+                                                      const EdgeInsets.all(20),
+                                                  child: Text(
+                                                    youtubes[index]['title'],
+                                                    style: GoogleFonts.ubuntu(
+                                                      color: Colors.black,
+                                                      fontSize: 14,
                                                     ),
-                                                  ],
+                                                  ),
                                                 ),
                                               ],
                                             ),
-                                          ),
-                                          Container(
-                                              width: double.infinity,
-                                              height: 210,
-                                              child: ClipRRect(
-                                                  borderRadius:
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                          width: double.infinity,
+                                          height: 210,
+                                          child: ClipRRect(
+                                              borderRadius:
                                                   BorderRadius.horizontal(
-                                                      left: Radius
-                                                          .circular(
-                                                          10),
-                                                      right: Radius
-                                                          .circular(
-                                                          10)),
-                                                  child:youtubes[index]['banner'].contains('http')?Image.network(youtubes[index]['banner'],):
-                                                  Image.asset("assets/ytt.webp",fit: BoxFit.cover,)
-
-
-                                              )),
-                                        ]),
-                                  ),
-                                ),
+                                                      left: Radius.circular(10),
+                                                      right:
+                                                          Radius.circular(10)),
+                                              child: youtubes[index]['banner']
+                                                      .contains('http')
+                                                  ? Image.network(
+                                                      youtubes[index]['banner'],
+                                                    )
+                                                  : Image.asset(
+                                                      "assets/ytt.webp",
+                                                      fit: BoxFit.cover,
+                                                    ))),
+                                    ]),
                               ),
-                            );
-                          },
-                        ),
-                      ),
-                    ]))
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ]))
               ],
             ),
           ])),
@@ -204,7 +186,7 @@ class _kireiYTState extends State<kireiYT> {
         child: Builder(
           builder: (context) => Padding(
             padding:
-            const EdgeInsets.symmetric(vertical: 18.0, horizontal: 0.0),
+                const EdgeInsets.symmetric(vertical: 18.0, horizontal: 0.0),
             child: Container(
               child: Image.asset(
                 'assets/hamburger.png',
@@ -250,13 +232,13 @@ class _kireiYTState extends State<kireiYT> {
                 child: FlatButton(
                   minWidth: MediaQuery.of(context).size.width,
                   //height: 50,
-                  color: MyTheme.accent_color,
+                  color: MyTheme.primary,
                   shape: RoundedRectangleBorder(
                       borderRadius:
-                      const BorderRadius.all(Radius.circular(8.0))),
+                          const BorderRadius.all(Radius.circular(8.0))),
                   child: Text(
                     AppLocalizations.of(context)
-                        .category_list_screen_all_products_of +
+                            .category_list_screen_all_products_of +
                         " ",
                     style: TextStyle(
                         color: Colors.white,

@@ -35,7 +35,8 @@ class _VideoDescriptionState extends State<VideoDescription> {
         return Future.value(true);
       },
       child: Directionality(
-        textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
+        textDirection:
+            app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
         child: Scaffold(
           backgroundColor: Colors.white,
           body: buildBody(),
@@ -55,7 +56,6 @@ class _VideoDescriptionState extends State<VideoDescription> {
               onWebViewCreated: (controller) {
                 _webViewController = controller;
                 _webViewController.loadUrl(widget.url);
-
               },
               onWebResourceError: (error) {},
               onPageFinished: (page) {
@@ -63,11 +63,12 @@ class _VideoDescriptionState extends State<VideoDescription> {
               },
             ),
             Align(
-              alignment: app_language_rtl.$ ? Alignment.centerRight : Alignment.centerLeft,
+              alignment: app_language_rtl.$
+                  ? Alignment.centerRight
+                  : Alignment.centerLeft,
               child: Container(
-
                 decoration: ShapeDecoration(
-                  color: MyTheme.medium_grey_50,
+                  color: MyTheme.dark_grey,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(25),
@@ -75,14 +76,17 @@ class _VideoDescriptionState extends State<VideoDescription> {
                     ),
                   ),
                 ),
-
                 width: 40,
                 height: 40,
                 child: IconButton(
                   icon: Icon(Icons.arrow_back, color: MyTheme.white),
                   onPressed: () {
-                    if (MediaQuery.of(context).orientation == Orientation.landscape) {
-                      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+                    if (MediaQuery.of(context).orientation ==
+                        Orientation.landscape) {
+                      SystemChrome.setPreferredOrientations([
+                        DeviceOrientation.portraitUp,
+                        DeviceOrientation.portraitDown
+                      ]);
                     }
                     return Navigator.of(context).pop();
                   },

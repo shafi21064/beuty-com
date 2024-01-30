@@ -8,7 +8,7 @@ class BrandSquareCard extends StatefulWidget {
   String image;
   String name;
 
-  BrandSquareCard({Key key, this.id,this.image, this.name}) : super(key: key);
+  BrandSquareCard({Key key, this.id, this.image, this.name}) : super(key: key);
 
   @override
   _BrandSquareCardState createState() => _BrandSquareCardState();
@@ -18,9 +18,12 @@ class _BrandSquareCardState extends State<BrandSquareCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return BrandProducts(id: widget.id,brand_name: widget.name,);
+          return BrandProducts(
+            id: widget.id,
+            brand_name: widget.name,
+          );
         }));
       },
       child: Card(
@@ -36,24 +39,20 @@ class _BrandSquareCardState extends State<BrandSquareCard> {
             children: <Widget>[
               Container(
                   width: double.infinity,
-                  height: ((MediaQuery.of(context).size.width - 24) /2) * .45,
+                  height: ((MediaQuery.of(context).size.width - 24) / 2) * .45,
                   child: ClipRRect(
                       borderRadius: BorderRadius.vertical(
                           top: Radius.circular(16), bottom: Radius.zero),
-                      child: widget.image==''?FadeInImage.assetNetwork(
-                        placeholder: 'assets/placeholder.png',
-                        image:  widget.image,
-                        fit: BoxFit.scaleDown,
-                      ):
-                      Image.asset(
-                        'assets/app_logo.png',
-                        fit: BoxFit.fitWidth,
-                      )
-
-
-
-
-                  )),
+                      child: widget.image == ''
+                          ? FadeInImage.assetNetwork(
+                              placeholder: 'assets/placeholder.png',
+                              image: widget.image,
+                              fit: BoxFit.scaleDown,
+                            )
+                          : Image.asset(
+                              'assets/app_logo.png',
+                              fit: BoxFit.fitWidth,
+                            ))),
               Container(
                 height: 40,
                 child: Padding(
@@ -64,7 +63,7 @@ class _BrandSquareCardState extends State<BrandSquareCard> {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: TextStyle(
-                        color: MyTheme.font_grey,
+                        color: MyTheme.secondary,
                         fontSize: 14,
                         height: 1.6,
                         fontWeight: FontWeight.bold),

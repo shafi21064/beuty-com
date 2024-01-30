@@ -6,8 +6,8 @@ class ShimmerHelper {
   buildBasicShimmer(
       {double height = double.infinity, double width = double.infinity}) {
     return Shimmer.fromColors(
-      baseColor: MyTheme.shimmer_base,
-      highlightColor: MyTheme.shimmer_highlighted,
+      baseColor: MyTheme.light_grey,
+      highlightColor: MyTheme.light_grey,
       child: Container(
         height: height,
         width: width,
@@ -16,7 +16,7 @@ class ShimmerHelper {
     );
   }
 
-  buildListShimmer({item_count = 10,item_height = 100.0}) {
+  buildListShimmer({item_count = 10, item_height = 100.0}) {
     return ListView.builder(
       itemCount: item_count,
       scrollDirection: Axis.vertical,
@@ -48,8 +48,8 @@ class ShimmerHelper {
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Shimmer.fromColors(
-            baseColor: MyTheme.shimmer_base,
-            highlightColor: MyTheme.shimmer_highlighted,
+            baseColor: MyTheme.light_grey,
+            highlightColor: MyTheme.light_grey,
             child: Container(
               height: 120,
               width: double.infinity,
@@ -77,8 +77,8 @@ class ShimmerHelper {
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Shimmer.fromColors(
-            baseColor: MyTheme.shimmer_base,
-            highlightColor: MyTheme.shimmer_highlighted,
+            baseColor: MyTheme.light_grey,
+            highlightColor: MyTheme.light_grey,
             child: Container(
               height: 120,
               width: double.infinity,

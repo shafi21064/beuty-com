@@ -11,7 +11,14 @@ class ListProductCard extends StatefulWidget {
   String stroked_price;
   bool has_discount;
 
-  ListProductCard({Key key, this.id, this.image, this.name, this.main_price,this.stroked_price,this.has_discount})
+  ListProductCard(
+      {Key key,
+      this.id,
+      this.image,
+      this.name,
+      this.main_price,
+      this.stroked_price,
+      this.has_discount})
       : super(key: key);
 
   @override
@@ -45,7 +52,7 @@ class _ListProductCardState extends State<ListProductCard> {
                       left: Radius.circular(16), right: Radius.zero),
                   child: FadeInImage.assetNetwork(
                     placeholder: 'assets/placeholder.png',
-                    image:  widget.image,
+                    image: widget.image,
                     fit: BoxFit.cover,
                   ))),
           Container(
@@ -60,7 +67,7 @@ class _ListProductCardState extends State<ListProductCard> {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: TextStyle(
-                        color: MyTheme.font_grey,
+                        color: MyTheme.secondary,
                         fontSize: 14,
                         height: 1.6,
                         fontWeight: FontWeight.w400),
@@ -74,25 +81,27 @@ class _ListProductCardState extends State<ListProductCard> {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: TextStyle(
-                        color: MyTheme.accent_color,
+                        color: MyTheme.primary,
                         fontSize: 14,
                         fontWeight: FontWeight.w600),
                   ),
                 ),
-                widget.has_discount?Padding(
-                  padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                  child: Text(
-                    widget.stroked_price,
-                    textAlign: TextAlign.left,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: TextStyle(
-                        decoration:TextDecoration.lineThrough,
-                        color: MyTheme.medium_grey,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ):Container(),
+                widget.has_discount
+                    ? Padding(
+                        padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                        child: Text(
+                          widget.stroked_price,
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                              decoration: TextDecoration.lineThrough,
+                              color: MyTheme.dark_grey,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      )
+                    : Container(),
               ],
             ),
           ),

@@ -100,14 +100,7 @@ class _MainState extends State<Main> {
             // cornerRadius: 20,
             curve: Curves.bounceOut,
             color: Colors.white,
-            // gradient: LinearGradient(colors: [
-            //   MyTheme.primary,
-            //   Theme.of(context).colorScheme.secondary,
-            // ]),
-/*            gradient: FlutterGradients.orangeJuice(
-              type: GradientType.linear,
-              center: Alignment.center,
-            ),*/
+           
             items: [
               TabItem(
                 icon: Icons.home_outlined,
