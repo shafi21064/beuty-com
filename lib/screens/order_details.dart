@@ -71,7 +71,7 @@ class _OrderDetailsState extends State<OrderDetails> {
 
     if (orderDetailsResponse.detailed_orders.length > 0) {
       _orderDetails = orderDetailsResponse.detailed_orders[0];
-      setStepIndex(_orderDetails.delivery_status);
+      setStepIndex(_orderDetails?.delivery_status);
     }
 
     setState(() {});
@@ -112,7 +112,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         list: "offline",
         manual_payment_from_order_details: true,
         rechargeAmount: double.parse(
-            _orderDetails.grand_total.toString().replaceAll('\$', '')),
+            _orderDetails?.grand_total.toString().replaceAll('\$', '')),
       );
     })).then((value) {
       onPopped(value);
@@ -477,7 +477,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         ),
                         Spacer(),
                         Text(
-                          _orderDetails.subtotal,
+                          _orderDetails?.subtotal??'',
                           style: TextStyle(
                               color: MyTheme.secondary,
                               fontSize: 14,
@@ -503,7 +503,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         ),
                         Spacer(),
                         Text(
-                          _orderDetails.tax,
+                          _orderDetails?.tax??'',
                           style: TextStyle(
                               color: MyTheme.secondary,
                               fontSize: 14,
@@ -529,7 +529,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         ),
                         Spacer(),
                         Text(
-                          _orderDetails.shipping_cost,
+                          _orderDetails?.shipping_cost??'',
                           style: TextStyle(
                               color: MyTheme.secondary,
                               fontSize: 14,
@@ -555,7 +555,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         ),
                         Spacer(),
                         Text(
-                          _orderDetails.coupon_discount,
+                          _orderDetails?.coupon_discount??'',
                           style: TextStyle(
                               color: MyTheme.secondary,
                               fontSize: 14,
@@ -582,7 +582,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         ),
                         Spacer(),
                         Text(
-                          _orderDetails.grand_total,
+                          _orderDetails?.grand_total??'',
                           style: TextStyle(
                               color: MyTheme.primary,
                               fontSize: 14,
@@ -629,7 +629,7 @@ class _OrderDetailsState extends State<OrderDetails> {
   }
 
   buildTimeLineTiles() {
-    print(_orderDetails.delivery_status);
+    print(_orderDetails?.delivery_status);
     return SizedBox(
       height: 200,
       child: Column(
@@ -647,9 +647,9 @@ class _OrderDetailsState extends State<OrderDetails> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: _orderDetails.delivery_status == "pending" ? 36 : 30,
+                    width: _orderDetails?.delivery_status == "pending" ? 36 : 30,
                     height:
-                        _orderDetails.delivery_status == "pending" ? 36 : 30,
+                        _orderDetails?.delivery_status == "pending" ? 36 : 30,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: Colors.redAccent, width: 2),
@@ -711,9 +711,9 @@ class _OrderDetailsState extends State<OrderDetails> {
                 children: [
                   Container(
                     width:
-                        _orderDetails.delivery_status == "confirmed" ? 36 : 30,
+                        _orderDetails?.delivery_status == "confirmed" ? 36 : 30,
                     height:
-                        _orderDetails.delivery_status == "confirmed" ? 36 : 30,
+                        _orderDetails?.delivery_status == "confirmed" ? 36 : 30,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: Colors.blue, width: 2),
@@ -783,10 +783,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: _orderDetails.delivery_status == "on_delivery"
+                    width: _orderDetails?.delivery_status == "on_delivery"
                         ? 36
                         : 30,
-                    height: _orderDetails.delivery_status == "on_delivery"
+                    height: _orderDetails?.delivery_status == "on_delivery"
                         ? 36
                         : 30,
                     decoration: BoxDecoration(
@@ -860,9 +860,9 @@ class _OrderDetailsState extends State<OrderDetails> {
                 children: [
                   Container(
                     width:
-                        _orderDetails.delivery_status == "delivered" ? 36 : 30,
+                        _orderDetails?.delivery_status == "delivered" ? 36 : 30,
                     height:
-                        _orderDetails.delivery_status == "delivered" ? 36 : 30,
+                        _orderDetails?.delivery_status == "delivered" ? 36 : 30,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: Colors.purple, width: 2),
@@ -954,7 +954,7 @@ class _OrderDetailsState extends State<OrderDetails> {
               child: Row(
                 children: [
                   Text(
-                    _orderDetails.code,
+                    _orderDetails?.code??'',
                     style: TextStyle(
                         color: MyTheme.primary,
                         fontSize: 14,
@@ -962,7 +962,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   ),
                   Spacer(),
                   Text(
-                    _orderDetails.shipping_type_string,
+                    _orderDetails?.shipping_type_string??'',
                     style: TextStyle(
                       color: MyTheme.secondary,
                     ),
@@ -994,14 +994,14 @@ class _OrderDetailsState extends State<OrderDetails> {
               child: Row(
                 children: [
                   Text(
-                    _orderDetails.date,
+                    _orderDetails?.date??'',
                     style: TextStyle(
                       color: MyTheme.secondary,
                     ),
                   ),
                   Spacer(),
                   Text(
-                    _orderDetails.payment_type,
+                    _orderDetails?.payment_type??'',
                     style: TextStyle(
                       color: MyTheme.secondary,
                     ),
@@ -1035,17 +1035,17 @@ class _OrderDetailsState extends State<OrderDetails> {
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: Text(
-                      _orderDetails.payment_status_string,
+                      _orderDetails?.payment_status_string??'',
                       style: TextStyle(
                         color: MyTheme.secondary,
                       ),
                     ),
                   ),
                   buildPaymentStatusCheckContainer(
-                      _orderDetails.payment_status),
+                      _orderDetails?.payment_status??''),
                   Spacer(),
                   Text(
-                    _orderDetails.delivery_status_string,
+                    _orderDetails?.delivery_status_string??'',
                     style: TextStyle(
                       color: MyTheme.secondary,
                     ),
@@ -1056,7 +1056,7 @@ class _OrderDetailsState extends State<OrderDetails> {
             Row(
               children: [
                 Text(
-                  _orderDetails.shipping_address != null
+                  _orderDetails?.shipping_address != null
                       ? "Shipping Address"
                       : "Pickup Point",
                   style: TextStyle(
@@ -1081,22 +1081,22 @@ class _OrderDetailsState extends State<OrderDetails> {
                   Container(
                     width: (MediaQuery.of(context).size.width - (32.0)) / 2,
                     // (total_screen_width - padding)/2
-                    child: _orderDetails.shipping_address != null
+                    child: _orderDetails?.shipping_address != null
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _orderDetails.shipping_address.name != null
+                              _orderDetails?.shipping_address.name != null
                                   ? Text(
-                                      "${AppLocalizations.of(context).order_details_screen_name}: ${_orderDetails.shipping_address.name}",
+                                      "${AppLocalizations.of(context).order_details_screen_name}: ${_orderDetails?.shipping_address.name??''}",
                                       maxLines: 3,
                                       style: TextStyle(
                                         color: MyTheme.secondary,
                                       ),
                                     )
                                   : Container(),
-                              _orderDetails.shipping_address.email != null
+                              _orderDetails?.shipping_address.email != null
                                   ? Text(
-                                      "${AppLocalizations.of(context).order_details_screen_email}: ${_orderDetails.shipping_address.email}",
+                                      "${AppLocalizations.of(context).order_details_screen_email}: ${_orderDetails?.shipping_address.email??''}",
                                       maxLines: 3,
                                       style: TextStyle(
                                         color: MyTheme.secondary,
@@ -1104,42 +1104,42 @@ class _OrderDetailsState extends State<OrderDetails> {
                                     )
                                   : Container(),
                               Text(
-                                "${AppLocalizations.of(context).order_details_screen_address}: ${_orderDetails.shipping_address.address}",
+                                "${AppLocalizations.of(context).order_details_screen_address}: ${_orderDetails?.shipping_address.address??''}",
                                 maxLines: 3,
                                 style: TextStyle(
                                   color: MyTheme.secondary,
                                 ),
                               ),
                               Text(
-                                "${AppLocalizations.of(context).order_details_screen_city}: ${_orderDetails.shipping_address.city}",
+                                "${AppLocalizations.of(context).order_details_screen_city}: ${_orderDetails?.shipping_address.city??''}",
+                                maxLines: 3,
+                                style: TextStyle(
+                                  color: MyTheme.secondary,
+                                ),
+                              ),
+                              // Text(
+                              //   "${AppLocalizations.of(context).order_details_screen_country}: ${_orderDetails?.shipping_address.country??''}",
+                              //   maxLines: 3,
+                              //   style: TextStyle(
+                              //     color: MyTheme.secondary,
+                              //   ),
+                              // ),
+                              Text(
+                                "${AppLocalizations.of(context).order_details_screen_state}: ${_orderDetails?.shipping_address.state??''}",
                                 maxLines: 3,
                                 style: TextStyle(
                                   color: MyTheme.secondary,
                                 ),
                               ),
                               Text(
-                                "${AppLocalizations.of(context).order_details_screen_country}: ${_orderDetails.shipping_address.country}",
+                                "${AppLocalizations.of(context).order_details_screen_phone}: ${_orderDetails?.shipping_address.phone??''}",
                                 maxLines: 3,
                                 style: TextStyle(
                                   color: MyTheme.secondary,
                                 ),
                               ),
                               Text(
-                                "${AppLocalizations.of(context).order_details_screen_state}: ${_orderDetails.shipping_address.state}",
-                                maxLines: 3,
-                                style: TextStyle(
-                                  color: MyTheme.secondary,
-                                ),
-                              ),
-                              Text(
-                                "${AppLocalizations.of(context).order_details_screen_phone}: ${_orderDetails.shipping_address.phone}",
-                                maxLines: 3,
-                                style: TextStyle(
-                                  color: MyTheme.secondary,
-                                ),
-                              ),
-                              Text(
-                                "${AppLocalizations.of(context).order_details_screen_postal_code}: ${_orderDetails.shipping_address.postal_code}",
+                                "${AppLocalizations.of(context).order_details_screen_postal_code}: ${_orderDetails?.shipping_address.postal_code??''}",
                                 maxLines: 3,
                                 style: TextStyle(
                                   color: MyTheme.secondary,
@@ -1150,9 +1150,9 @@ class _OrderDetailsState extends State<OrderDetails> {
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _orderDetails.pickupPoint.name != null
+                              _orderDetails?.pickupPoint.name != null
                                   ? Text(
-                                      "${AppLocalizations.of(context).order_details_screen_name}: ${_orderDetails.pickupPoint.name}",
+                                      "${AppLocalizations.of(context).order_details_screen_name}: ${_orderDetails?.pickupPoint.name??''}",
                                       maxLines: 3,
                                       style: TextStyle(
                                         color: MyTheme.secondary,
@@ -1160,14 +1160,14 @@ class _OrderDetailsState extends State<OrderDetails> {
                                     )
                                   : Container(),
                               Text(
-                                "${AppLocalizations.of(context).order_details_screen_address}: ${_orderDetails.pickupPoint.address}",
+                                "${AppLocalizations.of(context).order_details_screen_address}: ${_orderDetails?.pickupPoint.address??''}",
                                 maxLines: 3,
                                 style: TextStyle(
                                   color: MyTheme.secondary,
                                 ),
                               ),
                               Text(
-                                "${AppLocalizations.of(context).address_screen_phone}: ${_orderDetails.pickupPoint.phone}",
+                                "${AppLocalizations.of(context).address_screen_phone}: ${_orderDetails?.pickupPoint.phone??''}",
                                 maxLines: 3,
                                 style: TextStyle(
                                   color: MyTheme.secondary,
@@ -1178,7 +1178,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   ),
                   Spacer(),
                   Text(
-                    _orderDetails.grand_total,
+                    _orderDetails?.grand_total??'',
                     style: TextStyle(
                         color: MyTheme.primary,
                         fontSize: 16,
@@ -1208,7 +1208,7 @@ class _OrderDetailsState extends State<OrderDetails> {
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Text(
-                _orderedItemList[index].product_name,
+                _orderedItemList[index]?.product_name??'',
                 maxLines: 2,
                 style: TextStyle(
                   color: MyTheme.secondary,
@@ -1220,16 +1220,16 @@ class _OrderDetailsState extends State<OrderDetails> {
               child: Row(
                 children: [
                   Text(
-                    _orderedItemList[index].quantity.toString() + " x ",
+                    _orderedItemList[index]?.quantity.toString()??'' + " x ",
                     style: TextStyle(
                         color: MyTheme.secondary,
                         fontSize: 13,
                         fontWeight: FontWeight.w600),
                   ),
-                  _orderedItemList[index].variation != "" &&
-                          _orderedItemList[index].variation != null
+                  _orderedItemList[index]?.variation != "" &&
+                          _orderedItemList[index]?.variation != null
                       ? Text(
-                          _orderedItemList[index].variation,
+                          _orderedItemList[index]?.variation??'',
                           style: TextStyle(
                               color: MyTheme.secondary,
                               fontSize: 13,
@@ -1244,7 +1244,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         ),
                   Spacer(),
                   Text(
-                    _orderedItemList[index].price,
+                    _orderedItemList[index]?.price??'',
                     style: TextStyle(
                         color: MyTheme.primary,
                         fontSize: 14,
@@ -1253,14 +1253,14 @@ class _OrderDetailsState extends State<OrderDetails> {
                 ],
               ),
             ),
-            _orderedItemList[index].refund_section &&
-                    _orderedItemList[index].refund_button
+            _orderedItemList[index]?.refund_section &&
+                    _orderedItemList[index]?.refund_button
                 ? InkWell(
                     onTap: () {
                       onTapAskRefund(
-                          _orderedItemList[index].id,
-                          _orderedItemList[index].product_name,
-                          _orderDetails.code);
+                          _orderedItemList[index]?.id,
+                          _orderedItemList[index]?.product_name,
+                          _orderDetails?.code);
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
@@ -1288,8 +1288,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                     ),
                   )
                 : Container(),
-            _orderedItemList[index].refund_section &&
-                    _orderedItemList[index].refund_label != ""
+            _orderedItemList[index]?.refund_section &&
+                    _orderedItemList[index]?.refund_label != ""
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -1302,7 +1302,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             style: TextStyle(color: MyTheme.secondary),
                           ),
                           Text(
-                            _orderedItemList[index].refund_label,
+                            _orderedItemList[index]?.refund_label??'',
                             style: TextStyle(
                                 color: getRefundRequestLabelColor(
                                     _orderedItemList[index]
@@ -1380,7 +1380,7 @@ class _OrderDetailsState extends State<OrderDetails> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _orderDetails != null && _orderDetails.manually_payable
+          _orderDetails != null && _orderDetails?.manually_payable
               ? FlatButton(
                   color: MyTheme.primary,
                   child: Text(

@@ -1,9 +1,17 @@
+import 'package:kirei/custom/toast_component.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:kirei/repositories/cart_repository.dart';
+import 'package:kirei/screens/cart.dart';
+import 'package:kirei/screens/login.dart';
 import 'package:kirei/screens/product_details.dart';
 import 'package:kirei/app_config.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:toast/toast.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ProductCard extends StatefulWidget {
   int id;
@@ -38,9 +46,47 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
+   int _quantity = 1;
+  String _variant="";
+
+  onPressAddToCart(context) {
+    addToCart(mode: "add_to_cart", context: context);
+  }
+    addToCart({mode, context = null, snackbar = null}) async {
+    if (is_logged_in.$ == false) {
+      // ToastComponent.showDialog(AppLocalizations.of(context).common_login_warning, context,
+      //     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+      return;
+    }
+
+    // print(widget.id);
+    // print(_variant);
+    // print(user_id.$);
+    //print(_quantity);
+    print(access_token.$);
+    var cartAddResponse = await CartRepository()
+        .getCartAddResponse(widget.id, _variant, user_id.$, _quantity);
+
+    if (cartAddResponse.result == false) {
+      ToastComponent.showDialog(cartAddResponse.message, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    } else {
+      if (mode == "add_to_cart") {
+        // if (snackbar != null && context != null) {
+        //   Scaffold.of(context).showSnackBar(snackbar);
+        // }
+        ToastComponent.showDialog(cartAddResponse.message, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+       
+      } 
+    }
+  }
   @override
   Widget build(BuildContext context) {
     print((MediaQuery.of(context).size.width - 48) / 2);
+  
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -92,7 +138,7 @@ class _ProductCardState extends State<ProductCard> {
                 height: 40,
                 child: RaisedButton(
                   onPressed: () {
-                    // onPressAddToCart(context, _addedToCartSnackbar);
+                     onPressAddToCart(context);
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0.0)),

@@ -111,14 +111,14 @@ class _MainState extends State<Main> {
               //   icon: Icons.category,
               //   title: "Categories",
               // ),
-              TabItem(icon: Icons.view_list_sharp, title: 'Shop'),
+              TabItem(icon: Icons.shopping_bag_outlined, title: 'Shop'),
               TabItem(
-                icon: Icons.shopping_cart,
+                icon: Icons.shopping_cart_outlined,
                 title: AppLocalizations.of(context)
                     .main_screen_bottom_navigation_cart,
               ),
               TabItem(
-                icon: Icons.account_circle_sharp,
+                icon: Icons.account_circle_outlined,
                 title: AppLocalizations.of(context)
                     .main_screen_bottom_navigation_profile,
               ),

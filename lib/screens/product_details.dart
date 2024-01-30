@@ -2424,10 +2424,10 @@ class _ProductDetailsState extends State<ProductDetails> {
           child: ListView.builder(
             itemCount: _topProducts.length,
             scrollDirection: Axis.horizontal,
-            itemExtent: 120,
+            itemExtent: MediaQuery.of(context).size.width / 2.5,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.only(right: 3.0),
+               padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
                   id: _topProducts[index].id,
                   image: _topProducts[index].pictures[0].url,
@@ -2488,10 +2488,10 @@ class _ProductDetailsState extends State<ProductDetails> {
           child: ListView.builder(
             itemCount: _relatedProducts.length,
             scrollDirection: Axis.horizontal,
-            itemExtent: 120,
+            itemExtent: MediaQuery.of(context).size.width / 2.5,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.only(right: 3.0),
+               padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
                   id: _relatedProducts[index].id,
                   image: _relatedProducts[index].pictures[0].url,
@@ -2552,10 +2552,10 @@ class _ProductDetailsState extends State<ProductDetails> {
           child: ListView.builder(
             itemCount: _recommendedProducts.length,
             scrollDirection: Axis.horizontal,
-            itemExtent: 120,
+            itemExtent: MediaQuery.of(context).size.width / 2.5,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.only(right: 3.0),
+               padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
                   id: _recommendedProducts[index].id,
                   image: _recommendedProducts[index].pictures[0].url,

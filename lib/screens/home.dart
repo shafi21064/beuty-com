@@ -389,7 +389,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
                                         8.0,
-                                        16.0,
+                                        0.0,
                                         8.0,
                                         0.0,
                                       ),
@@ -402,7 +402,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
                                         16.0,
-                                        16.0,
+                                        8.0,
                                         16.0,
                                         0.0,
                                       ),
@@ -429,12 +429,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   child: Padding(
                                     padding: const EdgeInsets.fromLTRB(
                                       16.0,
-                                      16.0,
+                                      8.0,
                                       0.0,
                                       0.0,
                                     ),
                                     child: SizedBox(
-                                      height: 154,
+                                      height: 172,
                                       child:
                                           buildHomeFeaturedCategories(context),
                                     ),
@@ -772,7 +772,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       Container(
                           //width: 100,
 
-                          height: 100,
+                          height: 120,
                           child: ClipRRect(
                               // borderRadius: BorderRadius.vertical(
                               //     top: Radius.circular(16),
@@ -811,7 +811,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           });
     } else if (!_isCategoryInitial && _featuredCategoryList.length == 0) {
       return Container(
-          height: 100,
+          height: 120,
           child: Center(
               child: Text(
             AppLocalizations.of(context).home_screen_no_category_found,
@@ -820,7 +820,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     } else {
       // should not be happening
       return Container(
-        height: 100,
+        height: 120,
       );
     }
   }
@@ -881,10 +881,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           child: ListView.builder(
             itemCount: _featuredProductList.length,
             scrollDirection: Axis.horizontal,
-            itemExtent: 120,
+            itemExtent: MediaQuery.of(context).size.width / 2.5,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.only(right: 1),
+                padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
                   id: _featuredProductList[index].id,
                   image: _featuredProductList[index].pictures[0].url,
@@ -949,10 +949,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           child: ListView.builder(
             itemCount: _recommendedProductList.length,
             scrollDirection: Axis.horizontal,
-            itemExtent: 120,
+            itemExtent: MediaQuery.of(context).size.width / 2.5,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.only(right: 1),
+                padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
                   id: _recommendedProductList[index].id,
                   image: _recommendedProductList[index].pictures[0].url,
@@ -993,10 +993,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           child: ListView.builder(
             itemCount: _popularSearchProductList.length,
             scrollDirection: Axis.horizontal,
-            itemExtent: 120,
+            itemExtent: MediaQuery.of(context).size.width / 2.5,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.only(right: 1),
+                padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
                   id: _popularSearchProductList[index].id,
                   image: _popularSearchProductList[index].pictures[0].url,
@@ -1036,10 +1036,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           child: ListView.builder(
             itemCount: _trendingProductList.length,
             scrollDirection: Axis.horizontal,
-            itemExtent: 120,
+            itemExtent: MediaQuery.of(context).size.width / 2.5,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.only(right: 1),
+                padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
                   id: _trendingProductList[index].id,
                   image: _trendingProductList[index].pictures[0].url,
@@ -1078,10 +1078,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           child: ListView.builder(
             itemCount: _hotDealsProductList.length,
             scrollDirection: Axis.horizontal,
-            itemExtent: 120,
+            itemExtent: MediaQuery.of(context).size.width / 2.5,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.only(right: 1),
+                padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
                   id: _hotDealsProductList[index].id,
                   image: _hotDealsProductList[index].pictures[0].url,
@@ -1120,10 +1120,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           child: ListView.builder(
             itemCount: _newArrivalProductList.length,
             scrollDirection: Axis.horizontal,
-            itemExtent: 120,
+            itemExtent: MediaQuery.of(context).size.width / 2.5,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.only(right: 1),
+                padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
                   id: _newArrivalProductList[index].id,
                   image: _newArrivalProductList[index].pictures[0].url,
@@ -1153,6 +1153,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   buildHomeMenuRow(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
+     
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -1167,7 +1168,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             },
             child: Container(
               padding: EdgeInsets.only(top: 8),
-              height: 100,
+              height: 120,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
                 children: [
@@ -1176,16 +1177,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     width: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color:
-                            Theme.of(context).buttonTheme.colorScheme.primary,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(1.0),
-                            spreadRadius: 0,
-                            blurRadius: 9,
-                            offset: Offset(0, 1),
-                          ),
-                        ]),
+                        // color:
+                        //     Theme.of(context).buttonTheme.colorScheme.primary,
+                        // boxShadow: [
+                        //   BoxShadow(
+                        //     color: Colors.grey.withOpacity(1.0),
+                        //     spreadRadius: 0,
+                        //     blurRadius: 9,
+                        //     offset: Offset(0, 1),
+                        //   ),
+                        // ]
+                        ),
                     child: ClipOval(
                       child: Image.asset(
                         "assets/arrivals.jpg",
@@ -1223,7 +1225,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             },
             child: Container(
               padding: EdgeInsets.only(top: 8),
-              height: 100,
+              height: 120,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
                 children: [
@@ -1276,7 +1278,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             },
             child: Container(
               padding: EdgeInsets.only(top: 8),
-              height: 100,
+              height: 120,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
                 children: [
@@ -1330,7 +1332,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             },
             child: Container(
               padding: EdgeInsets.only(top: 8),
-              height: 100,
+              height: 120,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
                 children: [
@@ -1383,7 +1385,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             },
             child: Container(
               padding: EdgeInsets.only(top: 8),
-              height: 100,
+              height: 120,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
                 children: [
@@ -1437,7 +1439,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             },
             child: Container(
               padding: EdgeInsets.only(top: 8),
-              height: 100,
+              height: 120,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
                 children: [
@@ -1491,7 +1493,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             },
             child: Container(
               padding: EdgeInsets.only(top: 8),
-              height: 100,
+              height: 120,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
                 children: [
@@ -1543,7 +1545,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             },
             child: Container(
               padding: EdgeInsets.only(top: 8),
-              height: 100,
+              height: 120,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
                 children: [
@@ -1592,7 +1594,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             },
             child: Container(
               padding: EdgeInsets.only(top: 8),
-              height: 100,
+              height: 120,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
                 children: [
@@ -1640,7 +1642,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             },
             child: Container(
               padding: EdgeInsets.only(top: 8),
-              height: 100,
+              height: 120,
               width: MediaQuery.of(context).size.width / 5 - 4,
               child: Column(
                 children: [
@@ -1766,7 +1768,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       );
     } else if (!_isCarouselInitial && _carouselImageList.length == 0) {
       return Container(
-          height: 100,
+          height: 120,
           child: Center(
               child: Text(
             AppLocalizations.of(context).home_screen_no_carousel_image_found,
@@ -1775,7 +1777,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     } else {
       // should not be happening
       return Container(
-        height: 100,
+        height: 120,
       );
     }
   }

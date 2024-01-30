@@ -1,9 +1,17 @@
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:kirei/custom/toast_component.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:kirei/repositories/cart_repository.dart';
+import 'package:kirei/screens/cart.dart';
+import 'package:kirei/screens/login.dart';
 import 'package:kirei/screens/product_details.dart';
 import 'package:kirei/app_config.dart';
+import 'package:toast/toast.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class MiniProductCard extends StatefulWidget {
   int id;
@@ -35,8 +43,68 @@ class MiniProductCard extends StatefulWidget {
 }
 
 class _MiniProductCardState extends State<MiniProductCard> {
+  int _quantity = 1;
+  String _variant="";
+
+  onPressAddToCart(context) {
+    addToCart(mode: "add_to_cart", context: context);
+  }
+    addToCart({mode, context = null, snackbar = null}) async {
+    if (is_logged_in.$ == false) {
+      // ToastComponent.showDialog(AppLocalizations.of(context).common_login_warning, context,
+      //     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+      return;
+    }
+
+    // print(widget.id);
+    // print(_variant);
+    // print(user_id.$);
+    //print(_quantity);
+    print(access_token.$);
+    var cartAddResponse = await CartRepository()
+        .getCartAddResponse(widget.id, _variant, user_id.$, _quantity);
+
+    if (cartAddResponse.result == false) {
+      ToastComponent.showDialog(cartAddResponse.message, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    } else {
+      if (mode == "add_to_cart") {
+        // if (snackbar != null && context != null) {
+        //   Scaffold.of(context).showSnackBar(snackbar);
+        // }
+         ToastComponent.showDialog(cartAddResponse.message, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+       
+      } 
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    //   SnackBar _addedToCartSnackbar = SnackBar(
+        
+    //   content: Text(
+    //     AppLocalizations.of(context)
+    //         .product_details_screen_snackbar_added_to_cart,
+    //     style: TextStyle(color: MyTheme.secondary),
+    //   ),
+    //   backgroundColor: MyTheme.primary,
+    //   duration: const Duration(seconds: 3),
+    //   action: SnackBarAction(
+    //     label: AppLocalizations.of(context)
+    //         .product_details_screen_snackbar_show_cart,
+    //     onPressed: () {
+    //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //         return Cart(has_bottomnav: false);
+    //       })).then((value) {
+    //         // onPopped(value);
+    //       });
+    //     },
+    //     textColor: MyTheme.secondary,
+    //     disabledTextColor: Colors.grey,
+    //   ),
+    // );
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -74,7 +142,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
                 height: 36,
                 child: RaisedButton(
                   onPressed: () {
-                    // onPressAddToCart(context, _addedToCartSnackbar);
+                    onPressAddToCart(context);
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0.0)),
@@ -91,14 +159,31 @@ class _MiniProductCardState extends State<MiniProductCard> {
                       constraints:
                           BoxConstraints(maxWidth: 300.0, minHeight: 30.0),
                       alignment: Alignment.center,
-                      child: Text(
-                        widget.stock > 0
-                            ? "Add to cart".toUpperCase()
-                            : "Out of stock".toUpperCase(),
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w300),
+                        child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Visibility(
+                            visible: widget.stock > 0,
+                            child: Icon(
+                              Icons.shopping_bag_outlined,
+                              size: 15,
+                              color: Colors.white, // Set the icon color
+                            ),
+                          ),
+                          SizedBox(
+                              width:
+                                  2), // Adjust the spacing between the icon and text
+                          Text(
+                            widget.stock > 0
+                                ? "Add to cart".toUpperCase()
+                                : "Out of stock".toUpperCase(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
