@@ -1,6 +1,7 @@
 import 'package:kirei/data_model/category_response.dart';
 import 'package:kirei/repositories/category_repository.dart';
 import 'package:kirei/screens/BeautyBooks.dart';
+import 'package:kirei/screens/appointment.dart';
 import 'package:kirei/screens/beauty_tips.dart';
 import 'package:kirei/screens/blogs.dart';
 import 'package:kirei/screens/change_language.dart';
@@ -147,6 +148,22 @@ class _MainDrawerState extends State<MainDrawer> {
                           );
                   }).toList(),
                 ),
+                  ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    // leading: Image.asset("assets/blog.jpg",
+                    //     height: 22,
+                    //     color:
+                    //         Theme.of(context).buttonTheme.colorScheme.primary),
+                    title: Text('brands'.toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 14,
+                        )),
+                    onTap: () {
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) {
+                      //   return BeautyTips();
+                      // }));
+                    }),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     // leading: Image.asset("assets/blog.jpg",
@@ -163,13 +180,45 @@ class _MainDrawerState extends State<MainDrawer> {
                         return BeautyTips();
                       }));
                     }),
+                      ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    // leading: Image.asset("assets/blog.jpg",
+                    //     height: 22,
+                    //     color:
+                    //         Theme.of(context).buttonTheme.colorScheme.primary),
+                    title: Text('personal recommendation'.toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 14,
+                        )),
+                    onTap: () {
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) {
+                      //   return BeautyTips();
+                      // }));
+                    }),
+                      ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    // leading: Image.asset("assets/blog.jpg",
+                    //     height: 22,
+                    //     color:
+                    //         Theme.of(context).buttonTheme.colorScheme.primary),
+                    title: Text('consult doctor'.toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 14,
+                        )),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return Appointment();
+                      }));
+                    }),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     // leading: Image.asset("assets/blog.jpg",
                     //     height: 22,
                     //     color:
                     //         Theme.of(context).buttonTheme.colorScheme.primary),
-                    title: Text('Blogs'.toUpperCase(),
+                    title: Text('Blog'.toUpperCase(),
                         style: TextStyle(
                           fontSize: 14,
                         )),
@@ -179,22 +228,7 @@ class _MainDrawerState extends State<MainDrawer> {
                         return Blogs();
                       }));
                     }),
-                ListTile(
-                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    // leading: Image.asset("assets/blog.jpg",
-                    //     height: 22,
-                    //     color:
-                    //         Theme.of(context).buttonTheme.colorScheme.primary),
-                    title: Text('Personal Recommendation'.toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 14,
-                        )),
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Blogs();
-                      }));
-                    }),
+               
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     // leading: Image.asset(
@@ -209,32 +243,49 @@ class _MainDrawerState extends State<MainDrawer> {
                         return FeedList();
                       }));
                     }),
-                ListTile(
-                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    // leading: Image.asset("assets/kyt.png", height: 22),
-                    title:
-                        Text('Kirei Youtube', style: TextStyle(fontSize: 14)),
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return kireiYT();
-                      }));
-                    }),
-                ListTile(
-                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    // leading: Image.asset("assets/bb.png", height: 24),
-                    title: Text('Beauty Books', style: TextStyle(fontSize: 14)),
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return BeautyBooks();
-                      }));
-                    }),
-                ListTile(
+                 ExpansionTile(
+                  // leading: Icon(Icons.category,
+                  //     color: Theme.of(context).buttonTheme.colorScheme.primary),
+                  title: Text(
+                    "kirebd".toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                  children:[
+                    ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     // leading: Image.asset("assets/app_logo.png", height: 24),
                     title:
-                        Text('Support Policy', style: TextStyle(fontSize: 14)),
+                        Text('Who We Are?', style: TextStyle(fontSize: 14)),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return CommonWebviewScreen(
+                          url: "https://kireibd.com/about-us",
+                          page_name: AppLocalizations.of(context)
+                              .product_details_screen_support_policy,
+                        );
+                      }));
+                    }),ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    // leading: Image.asset("assets/app_logo.png", height: 24),
+                    title:
+                        Text('FAQs', style: TextStyle(fontSize: 14)),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return CommonWebviewScreen(
+                          url: "https://kireibd.com/faq",
+                          page_name: AppLocalizations.of(context)
+                              .product_details_screen_support_policy,
+                        );
+                      }));
+                    }),ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    // leading: Image.asset("assets/app_logo.png", height: 24),
+                    title:
+                        Text('Contact us', style: TextStyle(fontSize: 14)),
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
@@ -244,7 +295,87 @@ class _MainDrawerState extends State<MainDrawer> {
                               .product_details_screen_support_policy,
                         );
                       }));
+                    }),ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    // leading: Image.asset("assets/app_logo.png", height: 24),
+                    title:
+                        Text('Testimonials', style: TextStyle(fontSize: 14)),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return CommonWebviewScreen(
+                          url: "https://kireibd.com/testimonial",
+                          page_name: AppLocalizations.of(context)
+                              .product_details_screen_support_policy,
+                        );
+                      }));
                     }),
+                    ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    // leading: Image.asset("assets/app_logo.png", height: 24),
+                    title:
+                        Text('Privacy & Policy', style: TextStyle(fontSize: 14)),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return CommonWebviewScreen(
+                          url: "https://kireibd.com/privacy-policy",
+                          page_name: AppLocalizations.of(context)
+                              .product_details_screen_support_policy,
+                        );
+                      }));
+                    }),
+                    ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    // leading: Image.asset("assets/app_logo.png", height: 24),
+                    title:
+                        Text('Terms & Conditions', style: TextStyle(fontSize: 14)),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return CommonWebviewScreen(
+                          url: "https://kireibd.com/term-condition",
+                          page_name: AppLocalizations.of(context)
+                              .product_details_screen_support_policy,
+                        );
+                      }));
+                    }),
+                     ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    // leading: Image.asset("assets/app_logo.png", height: 24),
+                    title:
+                        Text('Returns & Refunds', style: TextStyle(fontSize: 14)),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return CommonWebviewScreen(
+                          url: "hhttps://kireibd.com/return-refund",
+                          page_name: AppLocalizations.of(context)
+                              .product_details_screen_support_policy,
+                        );
+                      }));
+                    }),
+                     ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    // leading: Image.asset("assets/app_logo.png", height: 24),
+                    title:
+                        Text('Responsible Disclosure', style: TextStyle(fontSize: 14)),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return CommonWebviewScreen(
+                          url: "https://kireibd.com/responsible-disclosure",
+                          page_name: AppLocalizations.of(context)
+                              .product_details_screen_support_policy,
+                        );
+                      }));
+                    })
+                    
+                  ]
+                  
+                ),
+                
+                
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     // leading: Image.asset("assets/app_logo.png", height: 24),

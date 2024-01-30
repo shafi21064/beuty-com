@@ -107,8 +107,10 @@ class _MyAppState extends State<MyApp> {
                       secondaryVariant: Colors.pink,
                       secondary: Colors.black,
                     )),
+                    
                     // Set your global font family here
                     textTheme: GoogleFonts.openSansTextTheme(),
+                    
                     // Other theme configurations...
                   ),
                   localizationsDelegates: [
