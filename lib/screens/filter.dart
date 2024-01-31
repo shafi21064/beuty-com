@@ -806,14 +806,18 @@ class _FilterState extends State<Filter> {
                   ? const EdgeInsets.symmetric(vertical: 36.0, horizontal: 0.0)
                   : const EdgeInsets.symmetric(vertical: 14.0, horizontal: 0.0),
               child: TypeAheadField(
+                // ignore: missing_return
                 suggestionsCallback: (pattern) async {
                   //return await BackendService.getSuggestions(pattern);
-                  var suggestions =
-                      await SearchRepository().getSearchSuggestionListResponse(
-                    query_key: pattern,
-                  );
-                  print(suggestions.products.toString());
-                  return suggestions.products;
+                  if (pattern != "") {
+                    var suggestions = await SearchRepository()
+                        .getSearchSuggestionListResponse(
+                      query_key: pattern,
+                    );
+
+                    print(suggestions.products.toString());
+                    return suggestions.products;
+                  }
                 },
                 loadingBuilder: (context) {
                   return Container(
@@ -833,47 +837,50 @@ class _FilterState extends State<Filter> {
                   // subtitle =
                   //     "${suggestion.type_string} ${AppLocalizations.of(context).filter_screen_found}";
                   // // }
-                  return ListTile(
-                    dense: true,
-                    leading: Image.network(
-                      suggestion.pictures[0]
-                          .url, // Replace with the actual URL of your image
-                      width: 40, // Adjust the width as needed
-                      height: 40, // Adjust the height as needed
-                      fit: BoxFit.cover,
-                    ),
-                    title: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: suggestion.name,
-                            style: TextStyle(color: MyTheme.primary),
-                          ),
-                        ],
+                  return Visibility(
+                    visible: _searchController.text != "",
+                    child: ListTile(
+                      dense: true,
+                      leading: Image.network(
+                        suggestion.pictures[0]
+                            .url, // Replace with the actual URL of your image
+                        width: 40, // Adjust the width as needed
+                        height: 40, // Adjust the height as needed
+                        fit: BoxFit.cover,
                       ),
-                    ),
-                    subtitle: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: suggestion.sale_price != suggestion.price
-                                ? "৳" + suggestion.price.toString()
-                                : '',
-                            style: TextStyle(
-                              color: MyTheme.dark_grey,
-                              decoration:
-                                  suggestion.sale_price != suggestion.price
-                                      ? TextDecoration.lineThrough
-                                      : TextDecoration.none,
+                      title: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: suggestion.name,
+                              style: TextStyle(color: MyTheme.primary),
                             ),
-                          ),
-                          TextSpan(
-                            text: suggestion.sale_price != suggestion.price
-                                ? ' ৳${suggestion.sale_price.toString()}'
-                                : "৳" + suggestion.price.toString(),
-                            style: TextStyle(color: MyTheme.dark_grey),
-                          ),
-                        ],
+                          ],
+                        ),
+                      ),
+                      subtitle: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: suggestion.sale_price != suggestion.price
+                                  ? "৳" + suggestion.price.toString()
+                                  : '',
+                              style: TextStyle(
+                                color: MyTheme.dark_grey,
+                                decoration:
+                                    suggestion.sale_price != suggestion.price
+                                        ? TextDecoration.lineThrough
+                                        : TextDecoration.none,
+                              ),
+                            ),
+                            TextSpan(
+                              text: suggestion.sale_price != suggestion.price
+                                  ? ' ৳${suggestion.sale_price.toString()}'
+                                  : "৳" + suggestion.price.toString(),
+                              style: TextStyle(color: MyTheme.dark_grey),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -911,8 +918,7 @@ class _FilterState extends State<Filter> {
                       //   borderSide:
                       //       BorderSide(color: MyTheme.white, width: 0.0),
                       // ),
-                      contentPadding: EdgeInsets.all(0.0)
-                      ),
+                      contentPadding: EdgeInsets.all(0.0)),
                 ),
               )),
         ),

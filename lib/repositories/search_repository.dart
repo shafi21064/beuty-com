@@ -8,6 +8,7 @@ import 'package:kirei/helpers/shared_value_helper.dart';
 class SearchRepository {
   Future<ProductMiniResponse> getSearchSuggestionListResponse(
       {query_key = ""}) async {
+        
     Uri url = Uri.parse(
         "${AppConfig.BASE_URL}/gigalogy/items/search?search=$query_key&gaip_user_id=${null}");
     final response = await http.get(

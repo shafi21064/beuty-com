@@ -157,9 +157,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   }
 
   fetchFeaturedCategories() async {
-    var categoryResponse = await CategoryRepository().getFeturedCategories();
-    print("featuredCategory-------->" + categoryResponse.categories.toString());
-    _featuredCategoryList.addAll(categoryResponse.categories);
+    var categoryResponse =
+        await CategoryRepository().getHomeFeaturedCategories();
+    print(categoryResponse);
+    // print("featuredCategory-------->" + categoryResponse.categories.toString());
+
+    // _featuredCategoryList.addAll(categoryResponse.categories);
     _isCategoryInitial = false;
     setState(() {});
   }
@@ -384,6 +387,57 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                         8.0,
                                         0.0,
                                       ),
+                                      child: SizedBox(
+                                        height: 45,
+                                        child: TextField(
+                                          textAlign: TextAlign
+                                              .start, // Center align the text
+                                          decoration: InputDecoration(
+                                            filled: true,
+                                            fillColor: MyTheme
+                                                .white, // Set the background color to white
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              borderSide: BorderSide(
+                                                  color: MyTheme
+                                                      .light_grey), // Set the border color
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              borderSide: BorderSide(
+                                                  color: MyTheme
+                                                      .light_grey), // Set the border color for focused state
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              borderSide: BorderSide(
+                                                  color: MyTheme
+                                                      .light_grey), // Set the border color for enabled state
+                                            ),
+                                            contentPadding: EdgeInsets.only(
+                                                top: 12,
+                                                left:
+                                                    12), // Add padding to the top
+                                            hintText: "Search with AI & Images",
+
+                                            suffixIcon: const Icon(
+                                                Icons.search_outlined),
+                                            alignLabelWithHint:
+                                                true, // Center align the placeholder
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                        8.0,
+                                        16.0,
+                                        8.0,
+                                        0.0,
+                                      ),
                                       child: buildHomeCarouselSlider(context),
                                     ),
                                     Padding(
@@ -393,53 +447,55 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                         8.0,
                                         0.0,
                                       ),
-                                      child: buildHomeMenuRow(context),
-                                    ),
-                                  ]),
-                                ),
-                                SliverList(
-                                  delegate: SliverChildListDelegate([
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                        16.0,
-                                        8.0,
-                                        16.0,
-                                        0.0,
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            AppLocalizations.of(context)
-                                                .home_screen_featured_categories,
-                                            style: GoogleFonts.ubuntu(
-                                                fontSize: 16,
-                                                color: Theme.of(context)
-                                                    .buttonTheme
-                                                    .colorScheme
-                                                    .primary),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ]),
-                                ),
-                                SliverToBoxAdapter(
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                      16.0,
-                                      8.0,
-                                      0.0,
-                                      0.0,
-                                    ),
-                                    child: SizedBox(
-                                      height: 172,
                                       child:
                                           buildHomeFeaturedCategories(context),
+                                      // child: buildHomeMenuRow(context),
                                     ),
-                                  ),
+                                  ]),
                                 ),
+                                // SliverList(
+                                //   delegate: SliverChildListDelegate([
+                                //     Padding(
+                                //       padding: const EdgeInsets.fromLTRB(
+                                //         16.0,
+                                //         8.0,
+                                //         16.0,
+                                //         0.0,
+                                //       ),
+                                //       child: Column(
+                                //         crossAxisAlignment:
+                                //             CrossAxisAlignment.start,
+                                //         children: [
+                                //           Text(
+                                //             AppLocalizations.of(context)
+                                //                 .home_screen_featured_categories,
+                                //             style: GoogleFonts.ubuntu(
+                                //                 fontSize: 16,
+                                //                 color: Theme.of(context)
+                                //                     .buttonTheme
+                                //                     .colorScheme
+                                //                     .primary),
+                                //           ),
+                                //         ],
+                                //       ),
+                                //     ),
+                                //   ]),
+                                // ),
+                                // SliverToBoxAdapter(
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.fromLTRB(
+                                //       16.0,
+                                //       8.0,
+                                //       0.0,
+                                //       0.0,
+                                //     ),
+                                //     child: SizedBox(
+                                //       height: 172,
+                                //       child:
+                                //           buildHomeFeaturedCategories(context),
+                                //     ),
+                                //   ),
+                                // ),
                                 SliverList(
                                   delegate: SliverChildListDelegate([
                                     Padding(
@@ -456,12 +512,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                           Text(
                                             AppLocalizations.of(context)
                                                 .home_screen_best_selling_products,
-                                            style: GoogleFonts.ubuntu(
+                                            style: TextStyle(
                                                 fontSize: 16,
-                                                color: Theme.of(context)
-                                                    .buttonTheme
-                                                    .colorScheme
-                                                    .primary),
+                                                fontWeight: FontWeight.w600,
+                                                color: MyTheme.secondary),
                                           ),
                                         ],
                                       ),
@@ -500,12 +554,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                           Text(
                                             AppLocalizations.of(context)
                                                 .home_screen_recommended_products,
-                                            style: GoogleFonts.ubuntu(
+                                            style: TextStyle(
                                                 fontSize: 16,
-                                                color: Theme.of(context)
-                                                    .buttonTheme
-                                                    .colorScheme
-                                                    .primary),
+                                                fontWeight: FontWeight.w600,
+                                                color: MyTheme.secondary),
                                           ),
                                         ],
                                       ),
@@ -544,12 +596,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                           Text(
                                             AppLocalizations.of(context)
                                                 .home_screen_searched_products,
-                                            style: GoogleFonts.ubuntu(
+                                            style: TextStyle(
                                                 fontSize: 16,
-                                                color: Theme.of(context)
-                                                    .buttonTheme
-                                                    .colorScheme
-                                                    .primary),
+                                                fontWeight: FontWeight.w600,
+                                                color: MyTheme.secondary),
                                           ),
                                         ],
                                       ),
@@ -588,12 +638,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                           Text(
                                             AppLocalizations.of(context)
                                                 .home_screen_trending_products,
-                                            style: GoogleFonts.ubuntu(
+                                            style: TextStyle(
                                                 fontSize: 16,
-                                                color: Theme.of(context)
-                                                    .buttonTheme
-                                                    .colorScheme
-                                                    .primary),
+                                                fontWeight: FontWeight.w600,
+                                                color: MyTheme.secondary),
                                           ),
                                         ],
                                       ),
@@ -632,12 +680,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                           Text(
                                             AppLocalizations.of(context)
                                                 .home_screen_hot_deals_products,
-                                            style: GoogleFonts.ubuntu(
+                                            style: TextStyle(
                                                 fontSize: 16,
-                                                color: Theme.of(context)
-                                                    .buttonTheme
-                                                    .colorScheme
-                                                    .primary),
+                                                fontWeight: FontWeight.w600,
+                                                color: MyTheme.secondary),
                                           ),
                                         ],
                                       ),
@@ -676,12 +722,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                           Text(
                                             AppLocalizations.of(context)
                                                 .home_screen_featured_products,
-                                            style: GoogleFonts.ubuntu(
+                                            style: TextStyle(
                                                 fontSize: 16,
-                                                color: Theme.of(context)
-                                                    .buttonTheme
-                                                    .colorScheme
-                                                    .primary),
+                                                fontWeight: FontWeight.w600,
+                                                color: MyTheme.secondary),
                                           ),
                                         ],
                                       ),
@@ -720,110 +764,110 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     );
   }
 
-  buildHomeFeaturedCategories(context) {
-    if (_isCategoryInitial && _featuredCategoryList.length == 0) {
-      return Row(
-        children: [
-          Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: ShimmerHelper().buildBasicShimmer(
-                  height: 120.0,
-                  width: (MediaQuery.of(context).size.width - 32) / 3)),
-          Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: ShimmerHelper().buildBasicShimmer(
-                  height: 120.0,
-                  width: (MediaQuery.of(context).size.width - 32) / 3)),
-          Padding(
-              padding: const EdgeInsets.only(right: 0.0),
-              child: ShimmerHelper().buildBasicShimmer(
-                  height: 120.0,
-                  width: (MediaQuery.of(context).size.width - 32) / 3)),
-        ],
-      );
-    } else if (_featuredCategoryList.length > 0) {
-      //snapshot.hasData
-      return ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: _featuredCategoryList.length,
-          itemExtent: 120,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 3),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return Filter(
-                      // category_id: _featuredCategoryList[index].id,
-                      category: _featuredCategoryList[index].name,
-                    );
-                  }));
-                },
-                child: Card(
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  // shape: RoundedRectangleBorder(
-                  //   side: new BorderSide(color: MyTheme.light_grey, width: 0.0),
-                  //   borderRadius: BorderRadius.circular(16.0),
-                  // ),
-                  // elevation: 77,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                          //width: 100,
+  // buildHomeFeaturedCategories(context) {
+  //   if (_isCategoryInitial && _featuredCategoryList.length == 0) {
+  //     return Row(
+  //       children: [
+  //         Padding(
+  //             padding: const EdgeInsets.only(right: 8.0),
+  //             child: ShimmerHelper().buildBasicShimmer(
+  //                 height: 120.0,
+  //                 width: (MediaQuery.of(context).size.width - 32) / 3)),
+  //         Padding(
+  //             padding: const EdgeInsets.only(right: 8.0),
+  //             child: ShimmerHelper().buildBasicShimmer(
+  //                 height: 120.0,
+  //                 width: (MediaQuery.of(context).size.width - 32) / 3)),
+  //         Padding(
+  //             padding: const EdgeInsets.only(right: 0.0),
+  //             child: ShimmerHelper().buildBasicShimmer(
+  //                 height: 120.0,
+  //                 width: (MediaQuery.of(context).size.width - 32) / 3)),
+  //       ],
+  //     );
+  //   } else if (_featuredCategoryList.length > 0) {
+  //     //snapshot.hasData
+  //     return ListView.builder(
+  //         scrollDirection: Axis.horizontal,
+  //         itemCount: _featuredCategoryList.length,
+  //         itemExtent: 120,
+  //         itemBuilder: (context, index) {
+  //           return Padding(
+  //             padding: const EdgeInsets.symmetric(horizontal: 3),
+  //             child: GestureDetector(
+  //               onTap: () {
+  //                 Navigator.push(context, MaterialPageRoute(builder: (context) {
+  //                   return Filter(
+  //                     // category_id: _featuredCategoryList[index].id,
+  //                     category: _featuredCategoryList[index].name,
+  //                   );
+  //                 }));
+  //               },
+  //               child: Card(
+  //                 clipBehavior: Clip.antiAliasWithSaveLayer,
+  //                 // shape: RoundedRectangleBorder(
+  //                 //   side: new BorderSide(color: MyTheme.light_grey, width: 0.0),
+  //                 //   borderRadius: BorderRadius.circular(16.0),
+  //                 // ),
+  //                 // elevation: 77,
+  //                 child: Column(
+  //                   mainAxisAlignment: MainAxisAlignment.center,
+  //                   children: <Widget>[
+  //                     Container(
+  //                         //width: 100,
 
-                          height: 120,
-                          child: ClipRRect(
-                              // borderRadius: BorderRadius.vertical(
-                              //     top: Radius.circular(16),
-                              //     bottom: Radius.zero),
+  //                         height: 120,
+  //                         child: ClipRRect(
+  //                             // borderRadius: BorderRadius.vertical(
+  //                             //     top: Radius.circular(16),
+  //                             //     bottom: Radius.zero),
 
-                              child: _featuredCategoryList[index].banner == ''
-                                  ? Image.asset(
-                                      'assets/app_logo.png',
-                                      fit: BoxFit.fitWidth,
-                                    )
-                                  : FadeInImage.assetNetwork(
-                                      placeholder: 'assets/placeholder.png',
-                                      image:
-                                          _featuredCategoryList[index].banner,
-                                      fit: BoxFit.fitWidth,
-                                    ))),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(8, 8, 8, 4),
-                        child: Container(
-                          height: 32,
-                          child: Text(
-                            _featuredCategoryList[index].name,
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            style: TextStyle(
-                                fontSize: 11, color: MyTheme.secondary),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          });
-    } else if (!_isCategoryInitial && _featuredCategoryList.length == 0) {
-      return Container(
-          height: 120,
-          child: Center(
-              child: Text(
-            AppLocalizations.of(context).home_screen_no_category_found,
-            style: TextStyle(color: MyTheme.secondary),
-          )));
-    } else {
-      // should not be happening
-      return Container(
-        height: 120,
-      );
-    }
-  }
+  //                             child: _featuredCategoryList[index].banner == ''
+  //                                 ? Image.asset(
+  //                                     'assets/app_logo.png',
+  //                                     fit: BoxFit.fitWidth,
+  //                                   )
+  //                                 : FadeInImage.assetNetwork(
+  //                                     placeholder: 'assets/placeholder.png',
+  //                                     image:
+  //                                         _featuredCategoryList[index].banner,
+  //                                     fit: BoxFit.fitWidth,
+  //                                   ))),
+  //                     Padding(
+  //                       padding: EdgeInsets.fromLTRB(8, 8, 8, 4),
+  //                       child: Container(
+  //                         height: 32,
+  //                         child: Text(
+  //                           _featuredCategoryList[index].name,
+  //                           textAlign: TextAlign.center,
+  //                           overflow: TextOverflow.ellipsis,
+  //                           maxLines: 2,
+  //                           style: TextStyle(
+  //                               fontSize: 11, color: MyTheme.secondary),
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ),
+  //           );
+  //         });
+  //   } else if (!_isCategoryInitial && _featuredCategoryList.length == 0) {
+  //     return Container(
+  //         height: 120,
+  //         child: Center(
+  //             child: Text(
+  //           AppLocalizations.of(context).home_screen_no_category_found,
+  //           style: TextStyle(color: MyTheme.secondary),
+  //         )));
+  //   } else {
+  //     // should not be happening
+  //     return Container(
+  //       height: 120,
+  //     );
+  //   }
+  // }
 
   buildHomeBestSellingProducts(context) {
     if (_isBestSellingProductInitial && _bestSellingProductList.length == 0) {
@@ -1150,10 +1194,116 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     }
   }
 
+  buildHomeFeaturedCategories(context) {
+    if (_isCategoryInitial && _featuredCategoryList.length == 0) {
+      return Row(
+        children: [
+          Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: ShimmerHelper().buildBasicShimmer(
+                  height: 120.0,
+                  width: (MediaQuery.of(context).size.width - 32) / 3)),
+          Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: ShimmerHelper().buildBasicShimmer(
+                  height: 120.0,
+                  width: (MediaQuery.of(context).size.width - 32) / 3)),
+          Padding(
+              padding: const EdgeInsets.only(right: 0.0),
+              child: ShimmerHelper().buildBasicShimmer(
+                  height: 120.0,
+                  width: (MediaQuery.of(context).size.width - 32) / 3)),
+        ],
+      );
+    } else if (_featuredCategoryList.length > 0) {
+      //snapshot.hasData
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: List.generate(_featuredCategoryList.length, (index) {
+            return GestureDetector(
+              onTap: () {
+                if (_featuredCategoryList[index].type == "type") {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return Filter(
+                      type: _featuredCategoryList[index]?.slug,
+                    );
+                  }));
+                } else if (_featuredCategoryList[index].type == "category") {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return Filter(
+                      category: _featuredCategoryList[index]?.slug,
+                    );
+                  }));
+                } else {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return _featuredCategoryList[index]?.slug;
+                  }));
+                }
+              },
+              child: Container(
+                padding: EdgeInsets.only(top: 8),
+                height: 120,
+                width: MediaQuery.of(context).size.width / 5 - 4,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 56,
+                      width: 56,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: ClipOval(
+                        child: FadeInImage.assetNetwork(
+                          image: _featuredCategoryList[index]?.icon,
+                          placeholder: 'assets/placeholder.png',
+                          fit: BoxFit.cover,
+                          height: 56,
+                          width: 56,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text(
+                        _featuredCategoryList[index]?.name,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Theme.of(context)
+                              .buttonTheme
+                              .colorScheme
+                              .secondary,
+                          fontWeight: FontWeight.w300,
+                          fontSize: 13,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          }),
+        ),
+      );
+    } else if (!_isCategoryInitial && _featuredCategoryList.length == 0) {
+      return Container(
+          height: 120,
+          child: Center(
+              child: Text(
+            AppLocalizations.of(context).home_screen_no_category_found,
+            style: TextStyle(color: MyTheme.secondary),
+          )));
+    } else {
+      // should not be happening
+      return Container(
+        height: 120,
+      );
+    }
+  }
+
   buildHomeMenuRow(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-     
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -1173,28 +1323,28 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: Column(
                 children: [
                   Container(
-                    height: 50,
-                    width: 50,
+                    height: 56,
+                    width: 56,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        // color:
-                        //     Theme.of(context).buttonTheme.colorScheme.primary,
-                        // boxShadow: [
-                        //   BoxShadow(
-                        //     color: Colors.grey.withOpacity(1.0),
-                        //     spreadRadius: 0,
-                        //     blurRadius: 9,
-                        //     offset: Offset(0, 1),
-                        //   ),
-                        // ]
-                        ),
+                      borderRadius: BorderRadius.circular(30),
+                      // color:
+                      //     Theme.of(context).buttonTheme.colorScheme.primary,
+                      // boxShadow: [
+                      //   BoxShadow(
+                      //     color: Colors.grey.withOpacity(1.0),
+                      //     spreadRadius: 0,
+                      //     blurRadius: 9,
+                      //     offset: Offset(0, 1),
+                      //   ),
+                      // ]
+                    ),
                     child: ClipOval(
                       child: Image.asset(
                         "assets/arrivals.jpg",
                         fit: BoxFit
                             .cover, // You can adjust this based on your needs
-                        height: 50,
-                        width: 50,
+                        height: 56,
+                        width: 56,
                       ),
                     ),
                   ),
@@ -1208,7 +1358,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                               .buttonTheme
                               .colorScheme
                               .secondary,
-                          fontWeight: FontWeight.w300),
+                          fontWeight: FontWeight.w300,
+                          fontSize: 13),
                     ),
                   )
                 ],
@@ -1230,27 +1381,18 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: Column(
                 children: [
                   Container(
-                    height: 50,
-                    width: 50,
+                    height: 56,
+                    width: 56,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color:
-                            Theme.of(context).buttonTheme.colorScheme.primary,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(1.0),
-                            spreadRadius: 0,
-                            blurRadius: 9,
-                            offset: Offset(0, 1),
-                          ),
-                        ]),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                     child: ClipOval(
                       child: Image.asset(
                         "assets/skin-care.jpeg",
                         fit: BoxFit
                             .cover, // You can adjust this based on your needs
-                        height: 50,
-                        width: 50,
+                        height: 56,
+                        width: 56,
                       ),
                     ),
                   ),
@@ -1259,11 +1401,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       child: Text("Skin Care",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: Theme.of(context)
-                                  .buttonTheme
-                                  .colorScheme
-                                  .secondary,
-                              fontWeight: FontWeight.w300))),
+                              color: MyTheme.secondary,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 13))),
                 ],
               ),
             ),
@@ -1283,8 +1423,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: Column(
                 children: [
                   Container(
-                    height: 50,
-                    width: 50,
+                    height: 56,
+                    width: 56,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
                         color:
@@ -1303,8 +1443,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         "assets/haircare.jpeg",
                         fit: BoxFit
                             .cover, // You can adjust this based on your needs
-                        height: 50,
-                        width: 50,
+                        height: 56,
+                        width: 56,
                       ),
                     ),
                   ),
@@ -1313,11 +1453,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       child: Text("Hair Care",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: Theme.of(context)
-                                  .buttonTheme
-                                  .colorScheme
-                                  .secondary,
-                              fontWeight: FontWeight.w300))),
+                              color: MyTheme.secondary,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 13))),
                 ],
               ),
             ),
@@ -1337,8 +1475,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: Column(
                 children: [
                   Container(
-                    height: 50,
-                    width: 50,
+                    height: 56,
+                    width: 56,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
                         color:
@@ -1356,8 +1494,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         "assets/makeup.jpeg",
                         fit: BoxFit
                             .cover, // You can adjust this based on your needs
-                        height: 50,
-                        width: 50,
+                        height: 56,
+                        width: 56,
                       ),
                     ),
                   ),
@@ -1366,11 +1504,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       child: Text("Make Up",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: Theme.of(context)
-                                  .buttonTheme
-                                  .colorScheme
-                                  .secondary,
-                              fontWeight: FontWeight.w300))),
+                              color: MyTheme.secondary,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 13))),
                 ],
               ),
             ),
@@ -1390,8 +1526,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: Column(
                 children: [
                   Container(
-                    height: 50,
-                    width: 50,
+                    height: 56,
+                    width: 56,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
                         color:
@@ -1410,8 +1546,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         "assets/Supplements.jpeg",
                         fit: BoxFit
                             .cover, // You can adjust this based on your needs
-                        height: 50,
-                        width: 50,
+                        height: 56,
+                        width: 56,
                       ),
                     ),
                   ),
@@ -1420,11 +1556,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       child: Text("Supplements",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: Theme.of(context)
-                                  .buttonTheme
-                                  .colorScheme
-                                  .secondary,
-                              fontWeight: FontWeight.w300))),
+                              color: MyTheme.secondary,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 13))),
                 ],
               ),
             ),
@@ -1444,8 +1578,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: Column(
                 children: [
                   Container(
-                    height: 50,
-                    width: 50,
+                    height: 56,
+                    width: 56,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
                         color:
@@ -1464,21 +1598,19 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         "assets/daiso-japan.png",
                         fit: BoxFit
                             .cover, // You can adjust this based on your needs
-                        height: 50,
-                        width: 50,
+                        height: 56,
+                        width: 56,
                       ),
                     ),
                   ),
                   Padding(
-                      padding: const EdgeInsets.only(top: 8),
+                      padding: const EdgeInsets.only(top: 8, right: 5, left: 5),
                       child: Text("Daiso Japan",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: Theme.of(context)
-                                  .buttonTheme
-                                  .colorScheme
-                                  .secondary,
-                              fontWeight: FontWeight.w300))),
+                              color: MyTheme.secondary,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 13))),
                 ],
               ),
             ),
@@ -1498,8 +1630,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: Column(
                 children: [
                   Container(
-                    height: 50,
-                    width: 50,
+                    height: 56,
+                    width: 56,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
                         color:
@@ -1518,8 +1650,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         "assets/green-tea.png",
                         fit: BoxFit
                             .cover, // You can adjust this based on your needs
-                        height: 50,
-                        width: 50,
+                        height: 56,
+                        width: 56,
                       ),
                     ),
                   ),
@@ -1528,11 +1660,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       child: Text("Green Tea",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: Theme.of(context)
-                                  .buttonTheme
-                                  .colorScheme
-                                  .secondary,
-                              fontWeight: FontWeight.w300))),
+                              color: MyTheme.secondary,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 13))),
                 ],
               ),
             ),
@@ -1550,20 +1680,20 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: Column(
                 children: [
                   Container(
-                      height: 50,
-                      width: 50,
+                      height: 56,
+                      width: 56,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color:
-                            Theme.of(context).buttonTheme.colorScheme.primary,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(1.0),
-                            spreadRadius: 0,
-                            blurRadius: 9,
-                            offset: Offset(0, 1),
-                          ),
-                        ],
+                        // color:
+                        //     Theme.of(context).buttonTheme.colorScheme.primary,
+                        // boxShadow: [
+                        //   BoxShadow(
+                        //     color: Colors.grey.withOpacity(1.0),
+                        //     spreadRadius: 0,
+                        //     blurRadius: 9,
+                        //     offset: Offset(0, 1),
+                        //   ),
+                        // ],
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(0.0),
@@ -1577,11 +1707,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       child: Text("Beauty Tips",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: Theme.of(context)
-                                  .buttonTheme
-                                  .colorScheme
-                                  .secondary,
-                              fontWeight: FontWeight.w300))),
+                              color: MyTheme.secondary,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 13))),
                 ],
               ),
             ),
@@ -1599,20 +1727,21 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: Column(
                 children: [
                   Container(
-                      height: 50,
-                      width: 50,
+                      height: 56,
+                      width: 56,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color:
-                              Theme.of(context).buttonTheme.colorScheme.primary,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(1.0),
-                              spreadRadius: 0,
-                              blurRadius: 9,
-                              offset: Offset(0, 1),
-                            ),
-                          ]),
+                        borderRadius: BorderRadius.circular(30),
+                        // color:
+                        //     Theme.of(context).buttonTheme.colorScheme.primary,
+                        // boxShadow: [
+                        //   BoxShadow(
+                        //     color: Colors.grey.withOpacity(1.0),
+                        //     spreadRadius: 0,
+                        //     blurRadius: 9,
+                        //     offset: Offset(0, 1),
+                        //   ),
+                        // ]
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(0.0),
                         child: Image.asset(
@@ -1625,11 +1754,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       child: Text("Community",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: Theme.of(context)
-                                  .buttonTheme
-                                  .colorScheme
-                                  .secondary,
-                              fontWeight: FontWeight.w300))),
+                              color: MyTheme.secondary,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 13))),
                 ],
               ),
             ),
@@ -1647,28 +1774,29 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: Column(
                 children: [
                   Container(
-                    height: 50,
-                    width: 50,
+                    height: 56,
+                    width: 56,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color:
-                            Theme.of(context).buttonTheme.colorScheme.primary,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(1.0),
-                            spreadRadius: 0,
-                            blurRadius: 9,
-                            offset: Offset(0, 1),
-                          ),
-                        ]),
+                      borderRadius: BorderRadius.circular(30),
+                      // color:
+                      //     Theme.of(context).buttonTheme.colorScheme.primary,
+                      // boxShadow: [
+                      //   BoxShadow(
+                      //     color: Colors.grey.withOpacity(1.0),
+                      //     spreadRadius: 0,
+                      //     blurRadius: 9,
+                      //     offset: Offset(0, 1),
+                      //   ),
+                      // ]
+                    ),
                     //<div style="padding:3px">hjgh</div>
                     child: ClipOval(
                       child: Image.asset(
                         "assets/expert2.jpg",
                         fit: BoxFit
                             .cover, // You can adjust this based on your needs
-                        height: 50,
-                        width: 50,
+                        height: 56,
+                        width: 56,
                       ),
                     ),
                   ),
@@ -1677,11 +1805,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       child: Text("Appointment",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: Theme.of(context)
-                                  .buttonTheme
-                                  .colorScheme
-                                  .secondary,
-                              fontWeight: FontWeight.w300))),
+                              color: MyTheme.secondary,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 13))),
                 ],
               ),
             ),

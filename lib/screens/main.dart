@@ -100,7 +100,7 @@ class _MainState extends State<Main> {
             // cornerRadius: 20,
             curve: Curves.bounceOut,
             color: Colors.white,
-           
+
             items: [
               TabItem(
                 icon: Icons.home_outlined,
@@ -111,17 +111,16 @@ class _MainState extends State<Main> {
               //   icon: Icons.category,
               //   title: "Categories",
               // ),
-              TabItem(icon: Icons.shopping_bag_outlined, title: 'Shop'),
+              TabItem(icon: Icons.storefront_outlined, title: 'Shop'),
               TabItem(
-                icon: Icons.shopping_cart_outlined,
+                icon: Icons.shopping_bag_outlined,
                 title: AppLocalizations.of(context)
                     .main_screen_bottom_navigation_cart,
               ),
               TabItem(
-                icon: Icons.account_circle_outlined,
-                title: AppLocalizations.of(context)
-                    .main_screen_bottom_navigation_profile,
-              ),
+                  icon: Icons.account_circle_rounded,
+                  title: AppLocalizations.of(context)
+                      .main_screen_bottom_navigation_profile),
             ],
           ),
         ),
