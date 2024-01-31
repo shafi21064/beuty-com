@@ -42,14 +42,7 @@ class Home extends StatefulWidget {
   Home({Key key, this.title, this.show_back_button = false, go_back = true})
       : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
 
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
   bool show_back_button;
@@ -162,7 +155,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     print(categoryResponse);
     // print("featuredCategory-------->" + categoryResponse.categories.toString());
 
-    // _featuredCategoryList.addAll(categoryResponse.categories);
+     _featuredCategoryList.addAll(categoryResponse);
+     print(_featuredCategoryList);
     _isCategoryInitial = false;
     setState(() {});
   }
@@ -453,49 +447,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                     ),
                                   ]),
                                 ),
-                                // SliverList(
-                                //   delegate: SliverChildListDelegate([
-                                //     Padding(
-                                //       padding: const EdgeInsets.fromLTRB(
-                                //         16.0,
-                                //         8.0,
-                                //         16.0,
-                                //         0.0,
-                                //       ),
-                                //       child: Column(
-                                //         crossAxisAlignment:
-                                //             CrossAxisAlignment.start,
-                                //         children: [
-                                //           Text(
-                                //             AppLocalizations.of(context)
-                                //                 .home_screen_featured_categories,
-                                //             style: GoogleFonts.ubuntu(
-                                //                 fontSize: 16,
-                                //                 color: Theme.of(context)
-                                //                     .buttonTheme
-                                //                     .colorScheme
-                                //                     .primary),
-                                //           ),
-                                //         ],
-                                //       ),
-                                //     ),
-                                //   ]),
-                                // ),
-                                // SliverToBoxAdapter(
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.fromLTRB(
-                                //       16.0,
-                                //       8.0,
-                                //       0.0,
-                                //       0.0,
-                                //     ),
-                                //     child: SizedBox(
-                                //       height: 172,
-                                //       child:
-                                //           buildHomeFeaturedCategories(context),
-                                //     ),
-                                //   ),
-                                // ),
+                           
                                 SliverList(
                                   delegate: SliverChildListDelegate([
                                     Padding(
@@ -1198,21 +1150,36 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     if (_isCategoryInitial && _featuredCategoryList.length == 0) {
       return Row(
         children: [
+             Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: ClipOval(
+              child:ShimmerHelper().buildBasicShimmer(
+                  height: 56.0,
+                  width: 56.0))),
           Padding(
               padding: const EdgeInsets.only(right: 8.0),
-              child: ShimmerHelper().buildBasicShimmer(
-                  height: 120.0,
-                  width: (MediaQuery.of(context).size.width - 32) / 3)),
-          Padding(
+              child: ClipOval(
+              child:ShimmerHelper().buildBasicShimmer(
+                  height: 56.0,
+                  width: 56.0))),
+             Padding(
               padding: const EdgeInsets.only(right: 8.0),
-              child: ShimmerHelper().buildBasicShimmer(
-                  height: 120.0,
-                  width: (MediaQuery.of(context).size.width - 32) / 3)),
-          Padding(
-              padding: const EdgeInsets.only(right: 0.0),
-              child: ShimmerHelper().buildBasicShimmer(
-                  height: 120.0,
-                  width: (MediaQuery.of(context).size.width - 32) / 3)),
+              child: ClipOval(
+              child:ShimmerHelper().buildBasicShimmer(
+                  height: 56.0,
+                  width: 56.0))),
+                    Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: ClipOval(
+              child:ShimmerHelper().buildBasicShimmer(
+                  height: 56.0,
+                  width: 56.0))),
+             Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: ClipOval(
+              child:ShimmerHelper().buildBasicShimmer(
+                  height: 56.0,
+                  width: 56.0))),
         ],
       );
     } else if (_featuredCategoryList.length > 0) {
@@ -1223,22 +1190,35 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           children: List.generate(_featuredCategoryList.length, (index) {
             return GestureDetector(
               onTap: () {
-                if (_featuredCategoryList[index].type == "type") {
+                if (_featuredCategoryList[index]?.itemType == "type") {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return Filter(
                       type: _featuredCategoryList[index]?.slug,
                     );
                   }));
-                } else if (_featuredCategoryList[index].type == "category") {
+                } else if (_featuredCategoryList[index]?.itemType == "category") {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return Filter(
                       category: _featuredCategoryList[index]?.slug,
                     );
                   }));
                 } else {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return _featuredCategoryList[index]?.slug;
-                  }));
+                  Navigator.push(context,MaterialPageRoute(builder: (context) {
+    String slug = _featuredCategoryList[index]?.slug;
+
+    switch (slug) {
+      case 'BeautyTips()':
+        return BeautyTips();
+      case 'FeedList()':
+        return FeedList();
+      case 'Appointment()':
+        return Appointment();
+      default:
+        return Container(); 
+    }
+  }),
+);
+
                 }
               },
               child: Container(
@@ -1247,32 +1227,37 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 width: MediaQuery.of(context).size.width / 5 - 4,
                 child: Column(
                   children: [
-                    Container(
-                      height: 56,
-                      width: 56,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: ClipOval(
-                        child: FadeInImage.assetNetwork(
-                          image: _featuredCategoryList[index]?.icon,
-                          placeholder: 'assets/placeholder.png',
-                          fit: BoxFit.cover,
-                          height: 56,
-                          width: 56,
-                        ),
-                      ),
-                    ),
+                  Container(
+  height: 56,
+  width: 56,
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(30),
+  ),
+  child: ClipOval(
+    child: _featuredCategoryList[index]?.icon != null
+        ? FadeInImage.assetNetwork(
+            image: _featuredCategoryList[index]?.icon,
+            placeholder: 'assets/placeholder.png',
+            fit: BoxFit.cover,
+            height: 56,
+            width: 56,
+          )
+        : Image.asset(
+            'assets/placeholder.png',
+            fit: BoxFit.cover,
+            height: 56,
+            width: 56,
+          ),
+  ),
+),
+              
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(
                         _featuredCategoryList[index]?.name,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Theme.of(context)
-                              .buttonTheme
-                              .colorScheme
-                              .secondary,
+                          color: MyTheme.secondary,
                           fontWeight: FontWeight.w300,
                           fontSize: 13,
                         ),

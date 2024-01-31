@@ -82,29 +82,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
   }
   @override
   Widget build(BuildContext context) {
-    //   SnackBar _addedToCartSnackbar = SnackBar(
-        
-    //   content: Text(
-    //     AppLocalizations.of(context)
-    //         .product_details_screen_snackbar_added_to_cart,
-    //     style: TextStyle(color: MyTheme.secondary),
-    //   ),
-    //   backgroundColor: MyTheme.primary,
-    //   duration: const Duration(seconds: 3),
-    //   action: SnackBarAction(
-    //     label: AppLocalizations.of(context)
-    //         .product_details_screen_snackbar_show_cart,
-    //     onPressed: () {
-    //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //         return Cart(has_bottomnav: false);
-    //       })).then((value) {
-    //         // onPopped(value);
-    //       });
-    //     },
-    //     textColor: MyTheme.secondary,
-    //     disabledTextColor: Colors.grey,
-    //   ),
-    // );
+    
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -112,12 +90,9 @@ class _MiniProductCardState extends State<MiniProductCard> {
         }));
       },
       child: Card(
-        // shape: RoundedRectangleBorder(
-        //   side: new BorderSide(color: MyTheme.light_grey, width: 1.0),
-        //   borderRadius: BorderRadius.circular(16.0),
-        // ),
-        // elevation: 0.0,
-
+      
+elevation: 0, // Set the elevation to 0 for no shadow
+  
         child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,10 +123,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
                       borderRadius: BorderRadius.circular(0.0)),
                   padding: EdgeInsets.all(0.0),
                   child: Ink(
-                    // color: MyTheme.add_to_cart_button,
-                    // decoration: BoxDecoration(color: MyTheme.add_to_cart_button
-                    //   
-                    //     ),
+                 
                     child: Container(
                       color: widget.stock > 0
                           ? MyTheme.add_to_cart_button

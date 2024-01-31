@@ -4,11 +4,11 @@ class FeaturedCategory {
   int id;
   String icon;
   String banner;
-  bool isTop;
-  bool isFeatured;
+  dynamic isTop;
+  dynamic isFeatured;
   String name;
   String slug;
-  bool disabled;
+  dynamic disabled;
   String itemType;
 
   FeaturedCategory(
