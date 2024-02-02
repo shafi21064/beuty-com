@@ -670,7 +670,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         child: FlatButton(
                           minWidth: 75,
                           height: 30,
-                          color: MyTheme.primary,
+                          color: MyTheme.secondary,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                               side: BorderSide(
@@ -750,7 +750,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             .product_details_screen_snackbar_added_to_cart,
         style: TextStyle(color: MyTheme.secondary),
       ),
-      backgroundColor: MyTheme.primary,
+      backgroundColor: MyTheme.secondary,
       duration: const Duration(seconds: 3),
       action: SnackBarAction(
         label: AppLocalizations.of(context)
@@ -762,7 +762,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             onPopped(value);
           });
         },
-        textColor: MyTheme.primary,
+        textColor: MyTheme.secondary,
         disabledTextColor: Colors.grey,
       ),
     );
@@ -966,25 +966,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                 // ])),
                 SliverList(
                   delegate: SliverChildListDelegate([
-                    Visibility(
-                      visible: !_isDescriptionEmpty,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(
-                          16.0,
-                          0.0,
-                          16.0,
-                          0.0,
-                        ),
-                        child: Text(
-                          AppLocalizations.of(context)
-                              .product_details_screen_description,
-                          style: TextStyle(
-                              color: MyTheme.secondary,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ),
+                    // Visibility(
+                    //   visible: !_isDescriptionEmpty,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.fromLTRB(
+                    //       16.0,
+                    //       0.0,
+                    //       16.0,
+                    //       0.0,
+                    //     ),
+                    //     child: Text(
+                    //       AppLocalizations.of(context)
+                    //           .product_details_screen_description,
+                    //       style: TextStyle(
+                    //           color: MyTheme.secondary,
+                    //           fontSize: 14,
+                    //           fontWeight: FontWeight.w600),
+                    //     ),
+                    //   ),
+                    // ),
 
                     Visibility(
                       visible: !_isDescriptionEmpty,
@@ -993,15 +993,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                           8.0,
                           0.0,
                           8.0,
-                          8.0,
+                          0.0,
                         ),
                         child: _productDetails != null
                             ? buildExpandableDescription()
                             : Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 8.0, vertical: 8.0),
+                                    horizontal: 8.0, vertical: 0.0),
                                 child: ShimmerHelper().buildBasicShimmer(
-                                  height: 60.0,
+                                   height: 60.0,
                                 )),
                       ),
                     ),
@@ -1162,6 +1162,42 @@ class _ProductDetailsState extends State<ProductDetails> {
                     // Divider(
                     //   height: 1,
                     // ),
+            ExpansionTile(
+      title: Text(
+        AppLocalizations.of(context)
+            .product_details_screen_description
+            .toUpperCase(),
+        style: TextStyle(
+          color: MyTheme.secondary,
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      trailing: Icon(
+        
+        Icons.keyboard_arrow_down,
+        color: MyTheme.secondary,
+      ),
+      
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(
+            16.0,
+            0.0,
+            8.0,
+            0.0,
+          ),
+          child: Html(
+            data: _productDetails.description, // Replace with your actual HTML content
+            
+          
+          ),
+        ),
+      ],
+    ),
+                     Divider(
+                      height: 1,
+                    ),
                     InkWell(
                       onTap: () {
                         Navigator.push(context,
@@ -1181,6 +1217,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             0.0,
                           ),
                           child: Row(
+                            
                             children: [
                               Text(
                                 AppLocalizations.of(context)
@@ -1444,7 +1481,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         Text(
           "৳" + _totalPrice.toString(),
           style: TextStyle(
-              color: MyTheme.primary,
+              color: MyTheme.secondary,
               fontSize: 18.0,
               fontWeight: FontWeight.w600),
         )
@@ -1471,9 +1508,9 @@ class _ProductDetailsState extends State<ProductDetails> {
           height: 36,
           width: 120,
           decoration: BoxDecoration(
-              border:
-                  Border.all(color: Color.fromRGBO(222, 222, 222, 1), width: 1),
-              borderRadius: BorderRadius.circular(36.0),
+              // border:
+              //     Border.all(color: Color.fromRGBO(222, 222, 222, 1), width: 1),
+              // borderRadius: BorderRadius.circular(36.0),
               color: Colors.white),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1481,11 +1518,18 @@ class _ProductDetailsState extends State<ProductDetails> {
             children: [
               buildQuantityDownButton(),
               Container(
-                  width: 36,
+                  height: 33,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: MyTheme.dark_grey, // Set border color
+                      width: 1.0, // Set border width
+                    ),
+                  ),
+                  width: 33,
                   child: Center(
                       child: Text(
                     _quantity.toString(),
-                    style: TextStyle(fontSize: 18, color: MyTheme.dark_grey),
+                    style: TextStyle(fontSize: 18, color: MyTheme.secondary),
                   ))),
               buildQuantityUpButton()
             ],
@@ -1665,7 +1709,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           decoration: BoxDecoration(
             border: Border.all(
                 color: _selectedChoices[choice_options_index] == option
-                    ? MyTheme.primary
+                    ? MyTheme.secondary
                     : Color.fromRGBO(224, 224, 225, 1),
                 width: 1.5),
             borderRadius: BorderRadius.circular(3.0),
@@ -1678,7 +1722,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 option,
                 style: TextStyle(
                     color: _selectedChoices[choice_options_index] == option
-                        ? MyTheme.primary
+                        ? MyTheme.secondary
                         : Color.fromRGBO(224, 224, 225, 1),
                     fontSize: 12.0,
                     fontWeight: FontWeight.w600),
@@ -1796,7 +1840,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         ),
         Container(
           decoration: BoxDecoration(
-              border: Border.all(color: MyTheme.primary, width: 1),
+              border: Border.all(color: MyTheme.secondary, width: 1),
               borderRadius: BorderRadius.circular(16.0),
               color: Color.fromRGBO(253, 235, 212, 1)),
           child: Padding(
@@ -1804,7 +1848,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
             child: Text(
               _productDetails.earn_point.toString(),
-              style: TextStyle(color: MyTheme.primary, fontSize: 12.0),
+              style: TextStyle(color: MyTheme.secondary, fontSize: 12.0),
             ),
           ),
         )
@@ -1842,7 +1886,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         Text(
           "৳" + _productDetails.salePrice.toString(),
           style: TextStyle(
-              color: MyTheme.primary,
+              color: MyTheme.secondary,
               fontSize: 18.0,
               fontWeight: FontWeight.w600),
         )
@@ -1998,23 +2042,34 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   buildRatingAndWishButtonRow() {
     return Row(
+      
       children: [
-        RatingBar(
-          itemSize: 18.0,
-          ignoreGestures: true,
-          initialRating: double.parse(_productDetails.ratings.toString()),
-          direction: Axis.horizontal,
-          allowHalfRating: false,
-          itemCount: 5,
-          ratingWidget: RatingWidget(
-            full: Icon(FontAwesome.star, color: Colors.amber),
-            empty:
-                Icon(FontAwesome.star, color: Color.fromRGBO(224, 224, 225, 1)),
-          ),
-          itemPadding: EdgeInsets.only(right: 1.0),
-          onRatingUpdate: (rating) {
-            //print(rating);
+        GestureDetector(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return ProductReviews(id: widget.id);
+            })).then((value) {
+              onPopped(value);
+            });
           },
+          child: RatingBar(
+            
+            itemSize: 18.0,
+            ignoreGestures: true,
+            initialRating: double.parse(_productDetails.ratings.toString()),
+            direction: Axis.horizontal,
+            allowHalfRating: false,
+            itemCount: 5,
+            ratingWidget: RatingWidget(
+              full: Icon(FontAwesome.star, color: Colors.amber),
+              empty:
+                  Icon(FontAwesome.star, color: Color.fromRGBO(224, 224, 225, 1)),
+            ),
+            itemPadding: EdgeInsets.only(right: 1.0),
+            onRatingUpdate: (rating) {
+              //print(rating);
+            },
+          ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -2032,7 +2087,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 },
                 child: Icon(
                   FontAwesome.heart,
-                  color: Color.fromRGBO(230, 46, 4, 1),
+                  color: MyTheme.secondary,
                   size: 20,
                 ),
               )
@@ -2106,21 +2161,24 @@ class _ProductDetailsState extends State<ProductDetails> {
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               Builder(
                 builder: (context) {
                   var controller = ExpandableController.of(context);
-                  return FlatButton(
-                    child: Text(
-                      !controller.expanded
-                          ? AppLocalizations.of(context).common_view_more
-                          : AppLocalizations.of(context).common_show_less,
-                      style: TextStyle(color: MyTheme.secondary, fontSize: 11),
+                  return Padding(
+                    padding: const EdgeInsets.only(right:10.0,top:8.0),
+                    child: GestureDetector(
+                      child: Text(
+                        !controller.expanded
+                            ? AppLocalizations.of(context).common_view_more
+                            : AppLocalizations.of(context).common_show_less,
+                        style: TextStyle(color: MyTheme.secondary, fontSize: 11),
+                      ),
+                      onTap: () {
+                        controller.toggle();
+                      },
                     ),
-                    onPressed: () {
-                      controller.toggle();
-                    },
                   );
                 },
               ),
@@ -2132,7 +2190,6 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   buildSkinTypesRow() {
-    bool isHovered = false;
     return _productDetails.skinTypes.length > 0
         ? Container(
             child: Wrap(
@@ -2141,7 +2198,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 Padding(
                   padding: app_language_rtl.$
                       ? EdgeInsets.only(left: 8.0)
-                      : EdgeInsets.only(right: 8.0),
+                      : EdgeInsets.only(right: 0.0),
                   child: Container(
                     width: 75,
                     child: Text(
@@ -2156,11 +2213,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
                 ...List.generate(_skinTypes.length, (index) {
                   final skinType = _skinTypes[index];
-                  return MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: InkWell(
+                  
+                    return InkWell(
                       onTap: () {
-                        // Handle the click on the ingredients (add your logic here)
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return Filter(
@@ -2169,17 +2224,27 @@ class _ProductDetailsState extends State<ProductDetails> {
                         }));
                       },
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: Text(
-                          "${skinType.substring(0, 1).toUpperCase()}${skinType.substring(1)}${index == skinType.length - 1 ? '' : ','}",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
+                        padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                        child: Container(
+                          padding: ,
+                          decoration: BoxDecoration(
+          border:  Border.all(
+            color: MyTheme.secondary,
+            width: 1.0,
+          ),
+         
+        ),
+                          child: Text(
+                            "${skinType.substring(0, 1).toUpperCase()}${skinType.substring(1)}",
+                            style: TextStyle(
+                              color: MyTheme.secondary,
+                              fontSize: 13,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
+                    );
+               
                 }),
                 Spacer(),
               ],
@@ -2609,7 +2674,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   buildQuantityUpButton() => SizedBox(
         width: 36,
         child: IconButton(
-            icon: Icon(FontAwesome.plus, size: 16, color: MyTheme.dark_grey),
+            icon: Icon(FontAwesome.plus, size: 16, color: MyTheme.secondary),
             onPressed: () {
               if (_quantity < _stock) {
                 _quantity++;
@@ -2622,7 +2687,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   buildQuantityDownButton() => SizedBox(
       width: 36,
       child: IconButton(
-          icon: Icon(FontAwesome.minus, size: 16, color: MyTheme.dark_grey),
+          icon: Icon(FontAwesome.minus, size: 16, color: MyTheme.secondary),
           onPressed: () {
             if (_quantity > 1) {
               _quantity--;
@@ -2750,7 +2815,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
                                 color: _currentImage == itemIndex
-                                    ? MyTheme.primary
+                                    ? MyTheme.secondary
                                     : Color.fromRGBO(112, 112, 112, .3),
                                 width: _currentImage == itemIndex ? 2 : 1),
                             //shape: BoxShape.rectangle,

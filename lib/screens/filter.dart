@@ -1,5 +1,6 @@
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/repositories/skin_types_repository.dart';
+import 'package:kirei/screens/product_details.dart';
 import 'package:kirei/screens/seller_details.dart';
 import 'package:kirei/ui_sections/drawer.dart';
 import 'package:flutter/material.dart';
@@ -152,6 +153,9 @@ class _FilterState extends State<Filter> {
     _shopScrollController.dispose();
     super.dispose();
   }
+onPopped(value) async {
+    reset();
+  }
 
   init() {
     _givenSelectedFilterOptionKey = widget.selected_filter;
@@ -177,6 +181,9 @@ class _FilterState extends State<Filter> {
     } else {
       fetchProductData();
     }
+
+    
+  
 
     //set scroll listeners
 
@@ -815,7 +822,6 @@ class _FilterState extends State<Filter> {
                       query_key: pattern,
                     );
 
-                    print(suggestions.products.toString());
                     return suggestions.products;
                   }
                 },
@@ -834,6 +840,14 @@ class _FilterState extends State<Filter> {
                   return Visibility(
                     visible: _searchController.text != "",
                     child: ListTile(
+                      onTap:(){
+                         Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return ProductDetails(id: suggestion.id);
+        })).then((value) {
+          onPopped(value);
+        });
+
+                      },
                       contentPadding: EdgeInsets.only(top: 5),
                       dense: true,
                       leading: Image.network(
