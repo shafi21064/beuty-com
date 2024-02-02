@@ -313,6 +313,11 @@ class _ProductDetailsState extends State<ProductDetails> {
     _selectedChoices.clear();
     _relatedProducts.clear();
     _recommendedProducts.clear();
+    _skinTypes.clear();
+    _keyIngredients.clear();
+    _categories.clear();
+    _goodFor.clear();
+    _tags.clear();
     _topProducts.clear();
     _choiceString = "";
     _variant = "";
@@ -1179,7 +1184,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                             children: [
                               Text(
                                 AppLocalizations.of(context)
-                                    .product_details_screen_reviews,
+                                    .product_details_screen_reviews
+                                    .toUpperCase(),
                                 style: TextStyle(
                                     color: MyTheme.secondary,
                                     fontSize: 14,
@@ -1221,7 +1227,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                             children: [
                               Text(
                                 AppLocalizations.of(context)
-                                    .product_details_product_questions,
+                                    .product_details_product_questions
+                                    .toUpperCase(),
                                 style: TextStyle(
                                     color: MyTheme.secondary,
                                     fontSize: 14,
@@ -1248,13 +1255,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(
                         16.0,
-                        16.0,
+                        36.0,
                         16.0,
                         0.0,
                       ),
                       child: Text(
                         AppLocalizations.of(context)
-                            .product_details_screen_products_purchased,
+                            .product_details_screen_products_purchased
+                            .toUpperCase(),
                         style: TextStyle(
                             color: MyTheme.secondary,
                             fontSize: 16,
@@ -1284,7 +1292,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
                       child: Text(
                         AppLocalizations.of(context)
-                            .product_details_screen_products_recommended,
+                            .product_details_screen_products_recommended
+                            .toUpperCase(),
                         style: TextStyle(
                             color: MyTheme.secondary,
                             fontSize: 16,
@@ -1313,7 +1322,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
                       child: Text(
                         AppLocalizations.of(context)
-                            .product_details_screen_products_related,
+                            .product_details_screen_products_related
+                            .toUpperCase(),
                         style: TextStyle(
                             color: MyTheme.secondary,
                             fontSize: 16,
@@ -1864,17 +1874,17 @@ class _ProductDetailsState extends State<ProductDetails> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                _productDetails != null ? "৳" + _appbarPriceString : '...',
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
+              // Text(
+              //   _productDetails != null ? "৳" + _appbarPriceString : '...',
+              //   style: TextStyle(fontSize: 16, color: Colors.white),
+              // ),
               Text(
                 _productDetails != null
                     ? _productDetails.name.length > 40
                         ? _productDetails.name.substring(0, 40) + '...'
                         : _productDetails.name
                     : '...',
-                style: TextStyle(fontSize: 12, color: Colors.white),
+                style: TextStyle(fontSize: 13, color: MyTheme.white),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2, // Adjust the number of lines if necessary
               ),
@@ -1903,50 +1913,63 @@ class _ProductDetailsState extends State<ProductDetails> {
       return BottomAppBar(
         child: Container(
           color: Colors.transparent,
-          height: 50,
+          height: 44,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                width: MediaQuery.of(context).size.width / 2 - .5,
-                height: 50,
+                width: MediaQuery.of(context).size.width / 2,
+                height: 44,
                 child: RaisedButton(
                   onPressed: () {
                     onPressAddToCart(context, _addedToCartSnackbar);
                   },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(80.0)),
+                  // shape: RoundedRectangleBorder(
+                  //     borderRadius: BorderRadius.circular(80.0)),
                   padding: EdgeInsets.all(0.0),
                   child: Ink(
-                    color: MyTheme.primary,
+                    color: MyTheme.secondary,
                     child: Container(
-                      constraints:
-                          BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        AppLocalizations.of(context)
-                            .product_details_screen_button_add_to_cart,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
+                        constraints:
+                            BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+                        alignment: Alignment.center,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons
+                                  .shopping_bag_outlined, // Use the appropriate cart icon
+                              color: Colors.white,
+                              size: 17,
+                            ),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            // Add some space between the icon and text
+                            Text(
+                              AppLocalizations.of(context)
+                                  .product_details_screen_button_add_to_cart,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        )),
                   ),
                 ),
               ),
-              SizedBox(
-                width: 1,
-              ),
+              // SizedBox(
+              //   width: 1,
+              // ),
               Container(
-                width: MediaQuery.of(context).size.width / 2 - .5,
-                height: 50,
+                width: MediaQuery.of(context).size.width / 2,
+                height: 44,
                 child: RaisedButton(
                   onPressed: () {
                     onPressBuyNow(context);
                   },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(80.0)),
                   padding: EdgeInsets.all(0.0),
                   child: Ink(
                     color: MyTheme.primary,
@@ -1959,7 +1982,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             .product_details_screen_button_buy_now,
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.w600),
                       ),
                     ),
@@ -2177,7 +2200,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ? EdgeInsets.only(left: 8.0)
                       : EdgeInsets.only(right: 8.0),
                   child: Container(
-                    width: 75,
                     child: Text(
                       AppLocalizations.of(context)
                           .product_details_screen_key_ingredients,
@@ -2427,7 +2449,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             itemExtent: MediaQuery.of(context).size.width / 2.5,
             itemBuilder: (context, index) {
               return Padding(
-               padding: const EdgeInsets.only(right: 5, left: 5),
+                padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
                   id: _topProducts[index].id,
                   image: _topProducts[index].pictures[0].url,
@@ -2491,7 +2513,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             itemExtent: MediaQuery.of(context).size.width / 2.5,
             itemBuilder: (context, index) {
               return Padding(
-               padding: const EdgeInsets.only(right: 5, left: 5),
+                padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
                   id: _relatedProducts[index].id,
                   image: _relatedProducts[index].pictures[0].url,
@@ -2555,7 +2577,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             itemExtent: MediaQuery.of(context).size.width / 2.5,
             itemBuilder: (context, index) {
               return Padding(
-               padding: const EdgeInsets.only(right: 5, left: 5),
+                padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
                   id: _recommendedProducts[index].id,
                   image: _recommendedProducts[index].pictures[0].url,

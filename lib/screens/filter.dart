@@ -798,7 +798,7 @@ class _FilterState extends State<Filter> {
         ),
       ),
       Container(
-        width: MediaQuery.of(context).size.width * .6,
+        width: MediaQuery.of(context).size.width * .78,
         child: Container(
           child: Padding(
               padding: MediaQuery.of(context).viewPadding.top >
@@ -824,22 +824,17 @@ class _FilterState extends State<Filter> {
                     height: 50,
                     child: Center(
                         child: Text(
-                            AppLocalizations.of(context)
-                                .filter_screen_loading_suggestions,
-                            style: TextStyle(color: MyTheme.dark_grey))),
+                      AppLocalizations.of(context)
+                          .filter_screen_loading_suggestions,
+                      style: TextStyle(color: MyTheme.dark_grey),
+                    )),
                   );
                 },
                 itemBuilder: (context, suggestion) {
-                  //print(suggestion.toString());
-                  // var subtitle = "";
-                  // // "${AppLocalizations.of(context).filter_screen_searched_for} ${suggestion.stock} ${AppLocalizations.of(context).filter_screen_times}";
-                  // // if (suggestion.type != "search") {
-                  // subtitle =
-                  //     "${suggestion.type_string} ${AppLocalizations.of(context).filter_screen_found}";
-                  // // }
                   return Visibility(
                     visible: _searchController.text != "",
                     child: ListTile(
+                      contentPadding: EdgeInsets.only(top: 5),
                       dense: true,
                       leading: Image.network(
                         suggestion.pictures[0]
@@ -853,7 +848,7 @@ class _FilterState extends State<Filter> {
                           children: [
                             TextSpan(
                               text: suggestion.name,
-                              style: TextStyle(color: MyTheme.primary),
+                              style: TextStyle(color: MyTheme.secondary),
                             ),
                           ],
                         ),
@@ -909,16 +904,21 @@ class _FilterState extends State<Filter> {
                     setState(() {});
                     _onSearchSubmit();
                   },
+                  style: TextStyle(color: MyTheme.white),
                   autofocus: false,
+                  cursorColor: MyTheme.white,
                   decoration: InputDecoration(
                       hintText: AppLocalizations.of(context)
                           .filter_screen_search_here,
-                      hintStyle: TextStyle(fontSize: 14.0, color: Colors.white),
+                      border: InputBorder.none,
+                      hintStyle:
+                          TextStyle(fontSize: 14.0, color: MyTheme.light_grey),
+                      alignLabelWithHint: true,
                       // focusedBorder: OutlineInputBorder(
                       //   borderSide:
                       //       BorderSide(color: MyTheme.white, width: 0.0),
                       // ),
-                      contentPadding: EdgeInsets.all(0.0)),
+                      contentPadding: EdgeInsets.only(left: 30)),
                 ),
               )),
         ),

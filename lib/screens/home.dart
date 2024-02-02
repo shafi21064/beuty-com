@@ -42,8 +42,6 @@ class Home extends StatefulWidget {
   Home({Key key, this.title, this.show_back_button = false, go_back = true})
       : super(key: key);
 
-
-
   final String title;
   bool show_back_button;
   bool go_back;
@@ -155,8 +153,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     print(categoryResponse);
     // print("featuredCategory-------->" + categoryResponse.categories.toString());
 
-     _featuredCategoryList.addAll(categoryResponse);
-     print(_featuredCategoryList);
+    _featuredCategoryList.addAll(categoryResponse);
+    print(_featuredCategoryList);
     _isCategoryInitial = false;
     setState(() {});
   }
@@ -324,56 +322,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                               slivers: <Widget>[
                                 SliverList(
                                   delegate: SliverChildListDelegate([
-                                    AppConfig.purchase_code == ""
-                                        ? Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                              8.0,
-                                              16.0,
-                                              8.0,
-                                              0.0,
-                                            ),
-                                            child: Container(
-                                              height: 140,
-                                              color: Colors.black,
-                                              child: Stack(
-                                                children: [
-                                                  Positioned(
-                                                      left: 20,
-                                                      top: 0,
-                                                      child: AnimatedBuilder(
-                                                          animation:
-                                                              pirated_logo_animation,
-                                                          builder:
-                                                              (context, child) {
-                                                            return Image.asset(
-                                                              "assets/pirated_square.png",
-                                                              height:
-                                                                  pirated_logo_animation
-                                                                      .value,
-                                                              color:
-                                                                  Colors.white,
-                                                            );
-                                                          })),
-                                                  Center(
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 24.0,
-                                                              left: 24,
-                                                              right: 24),
-                                                      child: Text(
-                                                        "This is a pirated app. Do not use this. It may have security issues.",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 18),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                        : Container(),
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
                                         8.0,
@@ -443,11 +391,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                       ),
                                       child:
                                           buildHomeFeaturedCategories(context),
-                                      // child: buildHomeMenuRow(context),
                                     ),
                                   ]),
                                 ),
-                           
                                 SliverList(
                                   delegate: SliverChildListDelegate([
                                     Padding(
@@ -1150,36 +1096,31 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     if (_isCategoryInitial && _featuredCategoryList.length == 0) {
       return Row(
         children: [
-             Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: ClipOval(
-              child:ShimmerHelper().buildBasicShimmer(
-                  height: 56.0,
-                  width: 56.0))),
           Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: ClipOval(
-              child:ShimmerHelper().buildBasicShimmer(
-                  height: 56.0,
-                  width: 56.0))),
-             Padding(
+                  child: ShimmerHelper()
+                      .buildBasicShimmer(height: 56.0, width: 56.0))),
+          Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: ClipOval(
-              child:ShimmerHelper().buildBasicShimmer(
-                  height: 56.0,
-                  width: 56.0))),
-                    Padding(
+                  child: ShimmerHelper()
+                      .buildBasicShimmer(height: 56.0, width: 56.0))),
+          Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: ClipOval(
-              child:ShimmerHelper().buildBasicShimmer(
-                  height: 56.0,
-                  width: 56.0))),
-             Padding(
+                  child: ShimmerHelper()
+                      .buildBasicShimmer(height: 56.0, width: 56.0))),
+          Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: ClipOval(
-              child:ShimmerHelper().buildBasicShimmer(
-                  height: 56.0,
-                  width: 56.0))),
+                  child: ShimmerHelper()
+                      .buildBasicShimmer(height: 56.0, width: 56.0))),
+          Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: ClipOval(
+                  child: ShimmerHelper()
+                      .buildBasicShimmer(height: 56.0, width: 56.0))),
         ],
       );
     } else if (_featuredCategoryList.length > 0) {
@@ -1196,29 +1137,31 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       type: _featuredCategoryList[index]?.slug,
                     );
                   }));
-                } else if (_featuredCategoryList[index]?.itemType == "category") {
+                } else if (_featuredCategoryList[index]?.itemType ==
+                    "category") {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return Filter(
                       category: _featuredCategoryList[index]?.slug,
                     );
                   }));
                 } else {
-                  Navigator.push(context,MaterialPageRoute(builder: (context) {
-    String slug = _featuredCategoryList[index]?.slug;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      String slug = _featuredCategoryList[index]?.slug;
 
-    switch (slug) {
-      case 'BeautyTips()':
-        return BeautyTips();
-      case 'FeedList()':
-        return FeedList();
-      case 'Appointment()':
-        return Appointment();
-      default:
-        return Container(); 
-    }
-  }),
-);
-
+                      switch (slug) {
+                        case 'BeautyTips()':
+                          return BeautyTips();
+                        case 'FeedList()':
+                          return FeedList();
+                        case 'Appointment()':
+                          return Appointment();
+                        default:
+                          return Container();
+                      }
+                    }),
+                  );
                 }
               },
               child: Container(
@@ -1227,30 +1170,29 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 width: MediaQuery.of(context).size.width / 5 - 4,
                 child: Column(
                   children: [
-                  Container(
-  height: 56,
-  width: 56,
-  decoration: BoxDecoration(
-    borderRadius: BorderRadius.circular(30),
-  ),
-  child: ClipOval(
-    child: _featuredCategoryList[index]?.icon != null
-        ? FadeInImage.assetNetwork(
-            image: _featuredCategoryList[index]?.icon,
-            placeholder: 'assets/placeholder.png',
-            fit: BoxFit.cover,
-            height: 56,
-            width: 56,
-          )
-        : Image.asset(
-            'assets/placeholder.png',
-            fit: BoxFit.cover,
-            height: 56,
-            width: 56,
-          ),
-  ),
-),
-              
+                    Container(
+                      height: 56,
+                      width: 56,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: ClipOval(
+                        child: _featuredCategoryList[index]?.icon != null
+                            ? FadeInImage.assetNetwork(
+                                image: _featuredCategoryList[index]?.icon,
+                                placeholder: 'assets/placeholder.png',
+                                fit: BoxFit.cover,
+                                height: 56,
+                                width: 56,
+                              )
+                            : Image.asset(
+                                'assets/placeholder.png',
+                                fit: BoxFit.cover,
+                                height: 56,
+                                width: 56,
+                              ),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(

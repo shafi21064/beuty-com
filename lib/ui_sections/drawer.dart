@@ -81,7 +81,7 @@ class _MainDrawerState extends State<MainDrawer> {
         textDirection:
             app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
         child: Container(
-          padding: EdgeInsets.only(top: 50),
+          padding: EdgeInsets.only(top: 50, left: 5),
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
@@ -100,7 +100,7 @@ class _MainDrawerState extends State<MainDrawer> {
                         ))
                     : Text(
                         AppLocalizations.of(context).main_drawer_not_logged_in,
-                        style: TextStyle(fontSize: 14)),
+                        style: TextStyle(fontSize: 13)),
                 Divider(),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
@@ -112,7 +112,7 @@ class _MainDrawerState extends State<MainDrawer> {
                         AppLocalizations.of(context)
                             .main_drawer_home
                             .toUpperCase(),
-                        style: TextStyle(fontSize: 14)),
+                        style: TextStyle(fontSize: 13)),
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
@@ -125,7 +125,7 @@ class _MainDrawerState extends State<MainDrawer> {
                   title: Text(
                     "Categories".toUpperCase(),
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 13,
                     ),
                   ),
                   children: categories.map((category) {
@@ -156,7 +156,7 @@ class _MainDrawerState extends State<MainDrawer> {
                 //     //         Theme.of(context).buttonTheme.colorScheme.primary),
                 //     title: Text('brands'.toUpperCase(),
                 //         style: TextStyle(
-                //           fontSize: 14,
+                //           fontSize: 13,
                 //         )),
                 //     onTap: () {
                 //       // Navigator.push(context,
@@ -172,7 +172,7 @@ class _MainDrawerState extends State<MainDrawer> {
                     //         Theme.of(context).buttonTheme.colorScheme.primary),
                     title: Text('beauty tips'.toUpperCase(),
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 13,
                         )),
                     onTap: () {
                       Navigator.push(context,
@@ -188,7 +188,7 @@ class _MainDrawerState extends State<MainDrawer> {
                 //     //         Theme.of(context).buttonTheme.colorScheme.primary),
                 //     title: Text('personal recommendation'.toUpperCase(),
                 //         style: TextStyle(
-                //           fontSize: 14,
+                //           fontSize: 13,
                 //         )),
                 //     onTap: () {
                 //       // Navigator.push(context,
@@ -204,7 +204,7 @@ class _MainDrawerState extends State<MainDrawer> {
                     //         Theme.of(context).buttonTheme.colorScheme.primary),
                     title: Text('consult doctor'.toUpperCase(),
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 13,
                         )),
                     onTap: () {
                       Navigator.push(context,
@@ -220,7 +220,7 @@ class _MainDrawerState extends State<MainDrawer> {
                     //         Theme.of(context).buttonTheme.colorScheme.primary),
                     title: Text('Blog'.toUpperCase(),
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 13,
                         )),
                     onTap: () {
                       Navigator.push(context,
@@ -235,7 +235,7 @@ class _MainDrawerState extends State<MainDrawer> {
                     //   height: 25,
                     // ),
                     title: Text('Kirei Community'.toUpperCase(),
-                        style: TextStyle(fontSize: 14)),
+                        style: TextStyle(fontSize: 13)),
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
@@ -248,7 +248,7 @@ class _MainDrawerState extends State<MainDrawer> {
                     title: Text(
                       "kirebd".toUpperCase(),
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 13,
                       ),
                     ),
                     children: [
@@ -257,7 +257,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               VisualDensity(horizontal: -4, vertical: -4),
                           // leading: Image.asset("assets/app_logo.png", height: 24),
                           title: Text('Who We Are?',
-                              style: TextStyle(fontSize: 14)),
+                              style: TextStyle(fontSize: 13)),
                           onTap: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
@@ -271,7 +271,7 @@ class _MainDrawerState extends State<MainDrawer> {
                           visualDensity:
                               VisualDensity(horizontal: -4, vertical: -4),
                           // leading: Image.asset("assets/app_logo.png", height: 24),
-                          title: Text('FAQs', style: TextStyle(fontSize: 14)),
+                          title: Text('FAQs', style: TextStyle(fontSize: 13)),
                           onTap: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
@@ -286,7 +286,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               VisualDensity(horizontal: -4, vertical: -4),
                           // leading: Image.asset("assets/app_logo.png", height: 24),
                           title: Text('Contact us',
-                              style: TextStyle(fontSize: 14)),
+                              style: TextStyle(fontSize: 13)),
                           onTap: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
@@ -301,7 +301,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               VisualDensity(horizontal: -4, vertical: -4),
                           // leading: Image.asset("assets/app_logo.png", height: 24),
                           title: Text('Testimonials',
-                              style: TextStyle(fontSize: 14)),
+                              style: TextStyle(fontSize: 13)),
                           onTap: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
@@ -316,7 +316,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               VisualDensity(horizontal: -4, vertical: -4),
                           // leading: Image.asset("assets/app_logo.png", height: 24),
                           title: Text('Privacy & Policy',
-                              style: TextStyle(fontSize: 14)),
+                              style: TextStyle(fontSize: 13)),
                           onTap: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
@@ -332,7 +332,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               VisualDensity(horizontal: -4, vertical: -4),
                           // leading: Image.asset("assets/app_logo.png", height: 24),
                           title: Text('Terms & Conditions',
-                              style: TextStyle(fontSize: 14)),
+                              style: TextStyle(fontSize: 13)),
                           onTap: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
@@ -348,7 +348,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               VisualDensity(horizontal: -4, vertical: -4),
                           // leading: Image.asset("assets/app_logo.png", height: 24),
                           title: Text('Returns & Refunds',
-                              style: TextStyle(fontSize: 14)),
+                              style: TextStyle(fontSize: 13)),
                           onTap: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
@@ -364,7 +364,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               VisualDensity(horizontal: -4, vertical: -4),
                           // leading: Image.asset("assets/app_logo.png", height: 24),
                           title: Text('Responsible Disclosure',
-                              style: TextStyle(fontSize: 14)),
+                              style: TextStyle(fontSize: 13)),
                           onTap: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
@@ -380,7 +380,7 @@ class _MainDrawerState extends State<MainDrawer> {
                 //     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                 //     // leading: Image.asset("assets/app_logo.png", height: 24),
                 //     title:
-                //         Text('Return Policy', style: TextStyle(fontSize: 14)),
+                //         Text('Return Policy', style: TextStyle(fontSize: 13)),
                 //     onTap: () {
                 //       Navigator.push(context,
                 //           MaterialPageRoute(builder: (context) {
@@ -406,7 +406,7 @@ class _MainDrawerState extends State<MainDrawer> {
                                 //         .buttonTheme
                                 //         .colorScheme
                                 //         .primary,
-                                //     fontSize: 14)
+                                //     fontSize: 13)
                               ),
                               onTap: () {
                                 Navigator.push(context,
@@ -439,7 +439,7 @@ class _MainDrawerState extends State<MainDrawer> {
                           //                 .buttonTheme
                           //                 .colorScheme
                           //                 .primary,
-                          //             fontSize: 14)),
+                          //             fontSize: 13)),
                           //     onTap: () {
                           //       Navigator.push(context,
                           //           MaterialPageRoute(builder: (context) {
@@ -459,7 +459,7 @@ class _MainDrawerState extends State<MainDrawer> {
                                   title: Text(
                                       AppLocalizations.of(context)
                                           .main_drawer_wallet,
-                                      style: TextStyle(fontSize: 14)),
+                                      style: TextStyle(fontSize: 13)),
                                   onTap: () {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
@@ -483,7 +483,7 @@ class _MainDrawerState extends State<MainDrawer> {
                         //         .primary),
                         title: Text(
                             AppLocalizations.of(context).main_drawer_login,
-                            style: TextStyle(fontSize: 14)),
+                            style: TextStyle(fontSize: 13)),
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
