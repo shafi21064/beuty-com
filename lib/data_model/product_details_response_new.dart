@@ -83,7 +83,7 @@ class DetailedProduct {
   String sku;
   int stock;
   String shortDescription;
-  String description;
+  dynamic description;
   String guide;
   List<SkinType> skinTypes;
   List<KeyIngredient> keyIngredients;

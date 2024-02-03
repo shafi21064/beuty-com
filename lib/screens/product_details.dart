@@ -115,6 +115,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     _productDetails = productDetailsResponse.detailed_products;
     print(productDetailsResponse);
+    
     var description = _productDetails.shortDescription;
     var document = parse(description);
     var body = document.body;
@@ -1162,40 +1163,38 @@ class _ProductDetailsState extends State<ProductDetails> {
                     // Divider(
                     //   height: 1,
                     // ),
-            ExpansionTile(
-      title: Text(
-        AppLocalizations.of(context)
-            .product_details_screen_description
-            .toUpperCase(),
-        style: TextStyle(
-          color: MyTheme.secondary,
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-      trailing: Icon(
-        
-        Icons.keyboard_arrow_down,
-        color: MyTheme.secondary,
-      ),
-      
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(
-            16.0,
-            0.0,
-            8.0,
-            0.0,
-          ),
-          child: Html(
-            data: _productDetails.description, // Replace with your actual HTML content
-            
-          
-          ),
-        ),
-      ],
+    ExpansionTile(
+  title: Text(
+    AppLocalizations.of(context)
+        .product_details_screen_description
+        .toUpperCase(),
+    style: TextStyle(
+      color: MyTheme.secondary,
+      fontSize: 14,
+      fontWeight: FontWeight.w600,
     ),
-                     Divider(
+  ),
+  trailing: Icon(
+    Icons.keyboard_arrow_down,
+    color: MyTheme.secondary,
+  ),
+  children: [
+    Padding(
+      padding: const EdgeInsets.fromLTRB(
+        16.0,
+        0.0,
+        8.0,
+        0.0,
+      ),
+      child: _productDetails.description != null
+          ? Html(
+              data: _productDetails.description,
+            )
+          : Container(), // You can replace this with a placeholder or customize as needed
+    ),
+  ],
+),
+              Divider(
                       height: 1,
                     ),
                     InkWell(
@@ -2224,9 +2223,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                         }));
                       },
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 2.0,vertical:2.0),
                         child: Container(
-                          padding: ,
+                           padding: EdgeInsets.all(0.5),
                           decoration: BoxDecoration(
           border:  Border.all(
             color: MyTheme.secondary,
@@ -2238,7 +2237,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             "${skinType.substring(0, 1).toUpperCase()}${skinType.substring(1)}",
                             style: TextStyle(
                               color: MyTheme.secondary,
-                              fontSize: 13,
+                              fontSize: 14,
                             ),
                           ),
                         ),
@@ -2263,7 +2262,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 Padding(
                   padding: app_language_rtl.$
                       ? EdgeInsets.only(left: 8.0)
-                      : EdgeInsets.only(right: 8.0),
+                      : EdgeInsets.only(right: 2.0),
                   child: Container(
                     child: Text(
                       AppLocalizations.of(context)
@@ -2278,9 +2277,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
                 ...List.generate(_keyIngredients.length, (index) {
                   final ingredients = _keyIngredients[index];
-                  return MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: InkWell(
+                  
+                    return InkWell(
                       onTap: () {
                         // Handle the click on the ingredients (add your logic here)
                         Navigator.push(context,
@@ -2291,17 +2289,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                         }));
                       },
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        padding: const EdgeInsets.only(right: 2.0),
                         child: Text(
-                          "${ingredients.substring(0, 1).toUpperCase()}${ingredients.substring(1)}${index == _keyIngredients.length - 1 ? '' : ','}",
+                          "${ingredients.substring(0, 1).toUpperCase()}${ingredients.substring(1)}${index == _keyIngredients.length - 1 ? '' : '  '}",
                           style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
+                            color: MyTheme.secondary,
+                            decoration:TextDecoration.underline,
+                            fontSize: 14,
                           ),
                         ),
                       ),
-                    ),
-                  );
+                    );
+                 
                 }),
                 Spacer(),
               ],
@@ -2320,7 +2319,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 Padding(
                   padding: app_language_rtl.$
                       ? EdgeInsets.only(left: 8.0)
-                      : EdgeInsets.only(right: 8.0),
+                      : EdgeInsets.only(right: 0.0),
                   child: Container(
                     width: 75,
                     child: Text(
@@ -2336,9 +2335,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
                 ...List.generate(_goodFor.length, (index) {
                   final good_for = _goodFor[index];
-                  return MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: InkWell(
+                
+                    return InkWell(
                       onTap: () {
                         // Handle the click on the ingredients (add your logic here)
                         Navigator.push(context,
@@ -2349,16 +2347,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                         }));
                       },
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: Text(
-                          "${good_for.substring(0, 1).toUpperCase()}${good_for.substring(1)}${index == good_for.length - 1 ? '' : ','}",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
+                        padding: const EdgeInsets.symmetric(horizontal: 2.0,vertical: 2.0),
+                        child: Container(
+                          padding: const EdgeInsets.all(0.5),
+                          decoration:BoxDecoration(
+          border:  Border.all(
+            color: MyTheme.secondary,
+            width: 1.0,
+          ),
+                          ),
+                          child: Text(
+                            "${good_for.substring(0, 1).toUpperCase()}${good_for.substring(1)}${index == good_for.length - 1 ? '' : ''}",
+                            style: TextStyle(
+                              color: MyTheme.secondary,
+                              fontSize: 14,
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                 
                   );
                 }),
                 Spacer(),
@@ -2411,8 +2418,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                         child: Text(
                           "${category.substring(0, 1).toUpperCase()}${category.substring(1)}${index == _categories.length - 1 ? '' : ','}",
                           style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
+                            color: MyTheme.primary,
+                            fontSize: 14,
+                            fontWeight:FontWeight.bold,
                           ),
                         ),
                       ),
@@ -2436,7 +2444,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 Padding(
                   padding: app_language_rtl.$
                       ? EdgeInsets.only(left: 8.0)
-                      : EdgeInsets.only(right: 8.0),
+                      : EdgeInsets.only(right: 0.0),
                   child: Container(
                     width: 75,
                     child: Text(
@@ -2451,9 +2459,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
                 ...List.generate(_tags.length, (index) {
                   final tag = _tags[index];
-                  return MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: InkWell(
+                 
+                   return InkWell(
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
@@ -2463,16 +2470,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                         }));
                       },
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        padding: const EdgeInsets.only(right: 2.0),
                         child: Text(
                           "${tag.substring(0, 1).toUpperCase()}${tag.substring(1)}${index == _tags.length - 1 ? '' : ','}",
                           style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
+                            color: MyTheme.secondary,
+                            decoration:TextDecoration.underline,
+                            fontSize: 14,
                           ),
                         ),
                       ),
-                    ),
+                  
                   );
                 }),
                 Spacer(),
