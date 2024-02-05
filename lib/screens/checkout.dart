@@ -432,9 +432,9 @@ class _CheckoutState extends State<Checkout> {
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
     }
-
-    reset_summary();
-    fetchSummary();
+ 
+    // reset_summary();
+    // fetchSummary();
   }
 
   onPressPlaceOrderOrProceed() {

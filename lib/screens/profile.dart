@@ -222,8 +222,8 @@ class _ProfileState extends State<Profile> {
             children: [
               Container(
                   padding: EdgeInsets.all(8),
-                  height: 55,
-                  width: 55,
+                  height: 60,
+                  width: 60,
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -268,8 +268,8 @@ class _ProfileState extends State<Profile> {
             children: [
               Container(
                   padding: EdgeInsets.all(8),
-                  height: 55,
-                  width: 55,
+                  height: 60,
+                  width: 60,
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -312,8 +312,8 @@ class _ProfileState extends State<Profile> {
             children: [
               Container(
                   padding: EdgeInsets.all(8),
-                  height: 55,
-                  width: 55,
+                  height: 60,
+                  width: 60,
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -396,8 +396,8 @@ class _ProfileState extends State<Profile> {
             children: [
               Container(
                   padding: EdgeInsets.all(8),
-                  height: 55,
-                  width: 55,
+                  height: 60,
+                  width: 60,
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -440,8 +440,8 @@ class _ProfileState extends State<Profile> {
             children: [
               Container(
                   padding: EdgeInsets.all(8),
-                  height: 55,
-                  width: 55,
+                  height: 60,
+                  width: 60,
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -484,8 +484,8 @@ class _ProfileState extends State<Profile> {
             children: [
               Container(
                   padding: EdgeInsets.all(8),
-                  height: 55,
-                  width: 55,
+                  height: 60,
+                  width: 60,
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -688,7 +688,6 @@ class _ProfileState extends State<Profile> {
                   height: 215, //150
                   decoration: BoxDecoration(
                     color: MyTheme.primary,
-                   
                   ),
                 ),
               ),
@@ -734,9 +733,7 @@ class _ProfileState extends State<Profile> {
             padding: const EdgeInsets.only(top: 6.0, bottom: 10),
             child: Container(
               height: 24,
-              decoration: BoxDecoration(color: MyTheme.primary
-                 
-                  ),
+              decoration: BoxDecoration(color: MyTheme.primary),
               child: FlatButton(
                 // 	rgb(50,205,50)
                 shape: RoundedRectangleBorder(
@@ -771,9 +768,7 @@ class _ProfileState extends State<Profile> {
       //backgroundColor: Colors.white,
       centerTitle: true,
       flexibleSpace: Container(
-        decoration: BoxDecoration(color: MyTheme.primary
-            
-            ),
+        decoration: BoxDecoration(color: MyTheme.primary),
       ),
       leading: GestureDetector(
         child: widget.show_back_button
