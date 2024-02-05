@@ -266,8 +266,8 @@ class _CheckoutState extends State<Checkout> {
   }
 
   Future<void> _onRefresh() async {
-    reset();
-    fetchAll();
+    // reset();
+    // fetchAll();
     reset();
     if (is_logged_in.$ == true) {
       fetchAll();
@@ -420,8 +420,7 @@ class _CheckoutState extends State<Checkout> {
       return;
     }
 
-    reset_summary();
-    fetchSummary();
+    // reset_summary();
   }
 
   onCouponRemove() async {
@@ -981,12 +980,11 @@ class _CheckoutState extends State<Checkout> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(
-                                  left: 16.0, right: 16.0, bottom: 10.0),
+                                  left: 8.0, right: 8.0, bottom: 10.0),
                               child: TextFormField(
                                 decoration: InputDecoration(
-                                  labelText: 'Order Note',
-                                  hintText:
-                                      'Add a note to your order (optional)',
+                                  // labelText: 'Order Note',
+                                  hintText: 'Add a note to your order',
                                 ),
                                 onChanged: (value) {
                                   setState(() {
@@ -1001,6 +999,9 @@ class _CheckoutState extends State<Checkout> {
                                     child: buildApplyCouponRow(context),
                                   )
                                 : Container(),
+                            SizedBox(
+                              height: 10,
+                            ),
                             grandTotalSection(),
                           ],
                         ),
@@ -1026,9 +1027,9 @@ class _CheckoutState extends State<Checkout> {
             decoration: InputDecoration(
                 hintText: AppLocalizations.of(context)
                     .checkout_screen_enter_coupon_code,
-                hintStyle: TextStyle(fontSize: 14.0, color: MyTheme.light_grey),
+                hintStyle: TextStyle(fontSize: 14.0, color: MyTheme.secondary),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: MyTheme.light_grey, width: 0.5),
+                  borderSide: BorderSide(color: MyTheme.dark_grey, width: 0.5),
                   borderRadius: const BorderRadius.only(
                     topLeft: const Radius.circular(8.0),
                     bottomLeft: const Radius.circular(8.0),
@@ -1714,7 +1715,7 @@ class _CheckoutState extends State<Checkout> {
               padding: const EdgeInsets.only(left: 16.0),
               child: Text(
                 AppLocalizations.of(context).checkout_screen_total_amount,
-                style: TextStyle(color: MyTheme.secondary, fontSize: 14),
+                style: TextStyle(color: MyTheme.white, fontSize: 14),
               ),
             ),
             Visibility(
@@ -1728,7 +1729,7 @@ class _CheckoutState extends State<Checkout> {
                   child: Text(
                     AppLocalizations.of(context).common_see_details,
                     style: TextStyle(
-                      color: MyTheme.secondary,
+                      color: MyTheme.white,
                       fontSize: 12,
                       decoration: TextDecoration.underline,
                     ),

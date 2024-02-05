@@ -108,8 +108,8 @@ class _MainState extends State<Main> {
                     .main_screen_bottom_navigation_home,
               ),
               // TabItem(
-              //   icon: Icons.category,
-              //   title: "Categories",
+              //   icon: Icons.favorite_border_outlined,
+              //   title: "Wishlist",
               // ),
               TabItem(icon: Icons.storefront_outlined, title: 'Shop'),
               TabItem(

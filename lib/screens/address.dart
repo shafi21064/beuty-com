@@ -216,7 +216,7 @@ class _AddressState extends State<Address> {
                   color: MyTheme.primary,
                   child: Text(
                     AppLocalizations.of(context).common_confirm_ucfirst,
-                    style: TextStyle(color: MyTheme.dark_grey),
+                    style: TextStyle(color: MyTheme.white),
                   ),
                   onPressed: () {
                     Navigator.of(context, rootNavigator: true).pop();

@@ -1,15 +1,18 @@
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:kirei/custom/CommonFunctoins.dart';
 import 'package:kirei/data_model/shop_details_response.dart';
 import 'package:kirei/helpers/addons_helper.dart';
 import 'package:kirei/helpers/business_setting_helper.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/providers/locale_provider.dart';
+import 'package:kirei/repositories/search_repository.dart';
 import 'package:kirei/screens/appointment.dart';
 import 'package:kirei/screens/beauty_tips.dart';
 import 'package:kirei/screens/filter.dart';
 import 'package:kirei/screens/flash_deal_list.dart';
 import 'package:kirei/screens/newsfeed.dart';
 import 'package:kirei/screens/personal_recommendation.dart';
+import 'package:kirei/screens/product_details.dart';
 import 'package:kirei/screens/todays_deal_products.dart';
 import 'package:kirei/screens/top_selling_products.dart';
 import 'package:kirei/screens/category_products.dart';
@@ -55,6 +58,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   int _current_slider = 0;
   ScrollController _productScrollController;
   ScrollController _mainScrollController = ScrollController();
+  final TextEditingController _searchController = new TextEditingController();
+
+  String _searchKey = "";
+  List<dynamic> _searchSuggestionList = List();
 
   AnimationController pirated_logo_controller;
   Animation pirated_logo_animation;
@@ -121,6 +128,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         fetchNewArrivalsProducts();
       }
     });
+  }
+
+  onPopped(value) async {
+    reset();
   }
 
   fetchAll() {
@@ -324,52 +335,205 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   delegate: SliverChildListDelegate([
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
-                                        8.0,
+                                        13.0,
                                         16.0,
-                                        8.0,
+                                        13.0,
                                         0.0,
                                       ),
-                                      child: SizedBox(
-                                        height: 45,
-                                        child: TextField(
-                                          textAlign: TextAlign
-                                              .start, // Center align the text
-                                          decoration: InputDecoration(
-                                            filled: true,
-                                            fillColor: MyTheme
-                                                .white, // Set the background color to white
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: BorderSide(
-                                                  color: MyTheme
-                                                      .light_grey), // Set the border color
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: BorderSide(
-                                                  color: MyTheme
-                                                      .light_grey), // Set the border color for focused state
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: BorderSide(
-                                                  color: MyTheme
-                                                      .light_grey), // Set the border color for enabled state
-                                            ),
-                                            contentPadding: EdgeInsets.only(
-                                                top: 12,
-                                                left:
-                                                    12), // Add padding to the top
-                                            hintText: "Search with AI & Images",
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: MyTheme
+                                              .light_grey, // Set your desired background color here
+                                          borderRadius: BorderRadius.circular(
+                                              10.0), // Set the border radius
+                                        ),
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .78,
+                                        child: Container(
+                                          child: Padding(
+                                              padding: EdgeInsets.all(0),
+                                              child: TypeAheadField(
+                                                // ignore: missing_return
+                                                suggestionsCallback:
+                                                    // ignore: missing_return
+                                                    (pattern) async {
+                                                  //return await BackendService.getSuggestions(pattern);
+                                                  if (pattern != "") {
+                                                    var suggestions =
+                                                        await SearchRepository()
+                                                            .getSearchSuggestionListResponse(
+                                                      query_key: pattern,
+                                                    );
 
-                                            suffixIcon: const Icon(
-                                                Icons.search_outlined),
-                                            alignLabelWithHint:
-                                                true, // Center align the placeholder
-                                          ),
+                                                    return suggestions.products;
+                                                  }
+                                                },
+                                                loadingBuilder: (context) {
+                                                  return Container(
+                                                    height: 50,
+                                                    child: Center(
+                                                        child: Text(
+                                                      AppLocalizations.of(
+                                                              context)
+                                                          .filter_screen_loading_suggestions,
+                                                      style: TextStyle(
+                                                          color: MyTheme
+                                                              .dark_grey),
+                                                    )),
+                                                  );
+                                                },
+                                                itemBuilder:
+                                                    (context, suggestion) {
+                                                  return Visibility(
+                                                    visible: _searchController
+                                                            .text !=
+                                                        "",
+                                                    child: ListTile(
+                                                      onTap: () {
+                                                        Navigator.push(context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) {
+                                                          return ProductDetails(
+                                                              id: suggestion
+                                                                  .id);
+                                                        })).then((value) {
+                                                          onPopped(value);
+                                                        });
+                                                      },
+                                                      contentPadding:
+                                                          EdgeInsets.only(
+                                                              top: 5),
+                                                      dense: true,
+                                                      leading: Image.network(
+                                                        suggestion.pictures[0]
+                                                            .url, // Replace with the actual URL of your image
+                                                        width:
+                                                            40, // Adjust the width as needed
+                                                        height:
+                                                            40, // Adjust the height as needed
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                      title: RichText(
+                                                        text: TextSpan(
+                                                          children: [
+                                                            TextSpan(
+                                                              text: suggestion
+                                                                  .name,
+                                                              style: TextStyle(
+                                                                  color: MyTheme
+                                                                      .secondary),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      subtitle: RichText(
+                                                        text: TextSpan(
+                                                          children: [
+                                                            TextSpan(
+                                                              text: suggestion
+                                                                          .sale_price !=
+                                                                      suggestion
+                                                                          .price
+                                                                  ? "৳" +
+                                                                      suggestion
+                                                                          .price
+                                                                          .toString()
+                                                                  : '',
+                                                              style: TextStyle(
+                                                                color: MyTheme
+                                                                    .dark_grey,
+                                                                decoration: suggestion
+                                                                            .sale_price !=
+                                                                        suggestion
+                                                                            .price
+                                                                    ? TextDecoration
+                                                                        .lineThrough
+                                                                    : TextDecoration
+                                                                        .none,
+                                                              ),
+                                                            ),
+                                                            TextSpan(
+                                                              text: suggestion
+                                                                          .sale_price !=
+                                                                      suggestion
+                                                                          .price
+                                                                  ? ' ৳${suggestion.sale_price.toString()}'
+                                                                  : "৳" +
+                                                                      suggestion
+                                                                          .price
+                                                                          .toString(),
+                                                              style: TextStyle(
+                                                                  color: MyTheme
+                                                                      .dark_grey),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                noItemsFoundBuilder: (context) {
+                                                  return Container(
+                                                    height: 50,
+                                                    child: Center(
+                                                        child: Text(
+                                                            AppLocalizations.of(
+                                                                    context)
+                                                                .filter_screen_no_suggestion_available,
+                                                            style: TextStyle(
+                                                                color: MyTheme
+                                                                    .dark_grey))),
+                                                  );
+                                                },
+                                                onSuggestionSelected:
+                                                    (suggestion) {
+                                                  _searchController.text =
+                                                      suggestion.name;
+                                                  _searchKey = suggestion.name;
+                                                  setState(() {});
+                                                  // _onSearchSubmit();
+                                                },
+                                                textFieldConfiguration:
+                                                    TextFieldConfiguration(
+                                                  onTap: () {},
+                                                  controller: _searchController,
+                                                  onSubmitted: (txt) {
+                                                    _searchKey = txt;
+                                                    setState(() {});
+                                                    // _onSearchSubmit();
+                                                  },
+                                                  style: TextStyle(
+                                                      color: MyTheme.secondary),
+                                                  autofocus: false,
+                                                  cursorColor:
+                                                      MyTheme.secondary,
+                                                  decoration: InputDecoration(
+                                                      prefixIcon: Icon(
+                                                        Icons.search,
+                                                        color:
+                                                            MyTheme.secondary,
+                                                      ),
+                                                      hintText: AppLocalizations
+                                                              .of(context)
+                                                          .filter_screen_search_here,
+                                                      border: InputBorder.none,
+                                                      hintStyle: TextStyle(
+                                                          fontSize: 14.0,
+                                                          color: MyTheme
+                                                              .secondary),
+                                                      alignLabelWithHint: true,
+                                                      // focusedBorder: OutlineInputBorder(
+                                                      //   borderSide:
+                                                      //       BorderSide(color: MyTheme.white, width: 0.0),
+                                                      // ),
+                                                      contentPadding:
+                                                          EdgeInsets.only(
+                                                              left: 30,
+                                                              top: 10)),
+                                                ),
+                                              )),
                                         ),
                                       ),
                                     ),

@@ -197,6 +197,7 @@
   "product_details_screen_available" : "available",
   "product_details_screen_button_add_to_cart" : "Add to Cart",
   "product_details_screen_button_buy_now" : "Buy Now",
+  "product_details_screen_button_out_of_stock" : "Out of Stock",
   "product_details_screen_button_checkout" : "Proceed to Checkout",
   "product_details_screen_no_top_selling_product" : "No top selling products from this seller",
   "product_details_screen_no_related_product" : "No related products",

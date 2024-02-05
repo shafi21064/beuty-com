@@ -18,7 +18,7 @@ class CouponApplyResponse {
   String message;
 
   factory CouponApplyResponse.fromJson(Map<String, dynamic> json) => CouponApplyResponse(
-    result: json["result"],
+    result: json["success"],
     message: json["message"],
   );
 
