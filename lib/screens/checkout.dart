@@ -1706,7 +1706,7 @@ class _CheckoutState extends State<Checkout> {
       height: 40,
       width: double.infinity,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0), color: MyTheme.primary),
+          borderRadius: BorderRadius.circular(2.0), color: MyTheme.primary),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Row(

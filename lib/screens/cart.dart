@@ -28,6 +28,8 @@ class _CartState extends State<Cart> {
   bool _isInitial = true;
   var _cartTotal = 0.00;
   var _cartTotalString = ". . .";
+    bool _termsChecked = false;
+
 
   @override
   void initState() {
@@ -190,7 +192,13 @@ class _CartState extends State<Cart> {
   }
 
   onPressProceedToShipping() {
-    process(mode: "proceed_to_shipping");
+    if(_termsChecked) {
+      process(mode: "proceed_to_shipping");
+    } else {
+      ToastComponent.showDialog("Please accept terms and conditions", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    }
+    // process(mode: "proceed_to_shipping");
   }
 
   process({mode}) async {
@@ -305,6 +313,7 @@ class _CartState extends State<Cart> {
                 ),
               ),
               Align(
+              
                 alignment: Alignment.bottomCenter,
                 child: buildBottomContainer(),
               )
@@ -322,7 +331,7 @@ class _CartState extends State<Cart> {
                 )*/
       ),
 
-      height: widget.has_bottomnav ? 200 : 120,
+      height: widget.has_bottomnav ? 250 : 120,
       //color: Colors.white,
       child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -417,7 +426,29 @@ class _CartState extends State<Cart> {
               //     ),
               //   ),
               // ),
-              Padding(
+            Padding(
+  padding: const EdgeInsets.only(top: 0.0),
+  child: Row(
+    children: [
+      Checkbox(
+        value: _termsChecked,
+        onChanged: (value) {
+          setState(() {
+            _termsChecked = value;
+          });
+        },
+      ),
+      Flexible(
+        child: Text(
+          "I HAVE READ AND AGREE TO THE WEBSITE'S TERMS AND CONDITIONS, PRIVACY POLICY, AND REFUND POLICY.",
+          maxLines: 2,
+        ),
+      ),
+    ],
+  ),
+),
+
+        Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Container(
                     width: MediaQuery.of(context).size.width,
@@ -467,8 +498,7 @@ class _CartState extends State<Cart> {
               ),
             ],
           )
-          // ],
-          // ),
+         
           ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:kirei/screens/beauty_tips.dart';
 import 'package:kirei/screens/blogs.dart';
 import 'package:kirei/screens/change_language.dart';
 import 'package:kirei/screens/common_webview_screen.dart';
+import 'package:kirei/screens/filter.dart';
 import 'package:kirei/screens/kireiYT.dart';
 import 'package:kirei/screens/newsfeed.dart';
 import 'package:kirei/screens/theme.dart';
@@ -118,7 +119,8 @@ class _MainDrawerState extends State<MainDrawer> {
                           MaterialPageRoute(builder: (context) {
                         return Main();
                       }));
-                    }),
+                    }
+                    ),
                 ExpansionTile(
                   // leading: Icon(Icons.category,
                   //     color: Theme.of(context).buttonTheme.colorScheme.primary),
@@ -135,6 +137,12 @@ class _MainDrawerState extends State<MainDrawer> {
                             title: Text(category.name),
                             children: category.children.map((child) {
                               return ListTile(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return Filter(category:child.name);
+                                  }));
+                                },
                                 visualDensity:
                                     VisualDensity(horizontal: -4, vertical: -4),
                                 title: Text(child.name),
@@ -142,6 +150,12 @@ class _MainDrawerState extends State<MainDrawer> {
                             }).toList(),
                           )
                         : ListTile(
+                          onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return Filter(category:category.name);
+                      }));
+                    },
                             visualDensity:
                                 VisualDensity(horizontal: -4, vertical: -4),
                             title: Text(category.name),

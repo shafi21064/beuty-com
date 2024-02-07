@@ -103,7 +103,7 @@ class _ProductQuestionsState extends State<ProductQuestions> {
     if (myQuestionText == "") {
       ToastComponent.showDialog(
           AppLocalizations.of(context)
-              .product_reviews_screen_review_empty_warning,
+              .product_reviews_screen_question_empty_warning,
           context,
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
@@ -111,7 +111,7 @@ class _ProductQuestionsState extends State<ProductQuestions> {
     }
     if (myNameText == "") {
       ToastComponent.showDialog(
-          AppLocalizations.of(context).product_reviews_screen_star_warning,
+          AppLocalizations.of(context).product_questions_screen_name_empty_warning,
           context,
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
@@ -250,7 +250,7 @@ class _ProductQuestionsState extends State<ProductQuestions> {
         height: 300,
         child: Center(
             child: Text(AppLocalizations.of(context)
-                .product_reviews_screen_no_reviews_yet)),
+                .product_questions_screen_no_questions_yet)),
       );
     } else {
       return Container(); // should never be happening
@@ -512,9 +512,9 @@ class _ProductQuestionsState extends State<ProductQuestions> {
       child: Center(
         child: Text(_totalData == _questionsList.length
             ? AppLocalizations.of(context)
-                .product_reviews_screen_no_more_reviews
+                .product_questions_screen_no_more_questions
             : AppLocalizations.of(context)
-                .product_reviews_screen_loading_more_reviews),
+                .product_questions_screen_loading_more_questions),
       ),
     );
   }
@@ -533,22 +533,24 @@ class _ProductQuestionsState extends State<ProductQuestions> {
               LengthLimitingTextInputFormatter(125),
             ],
             controller: _myNameTextController,
+                              cursorColor: MyTheme.secondary, // Set the cursor color to black
+    style: TextStyle(color: MyTheme.secondary),
             decoration: InputDecoration(
                 filled: true,
-                fillColor: Color.fromRGBO(251, 251, 251, 1),
+                fillColor: MyTheme.light_grey,
                 hintText: AppLocalizations.of(context)
                     .product_questions_screen_type_your_name,
-                hintStyle: TextStyle(fontSize: 14.0, color: MyTheme.light_grey),
+                hintStyle: TextStyle(fontSize: 14.0, color: MyTheme.dark_grey),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: MyTheme.light_grey, width: 0.5),
                   borderRadius: const BorderRadius.all(
-                    Radius.circular(35.0),
+                    Radius.circular(2.0),
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: MyTheme.dark_grey, width: 0.5),
                   borderRadius: const BorderRadius.all(
-                    Radius.circular(35.0),
+                    Radius.circular(2.0),
                   ),
                 ),
                 contentPadding: EdgeInsets.symmetric(horizontal: 16.0)),
@@ -566,26 +568,28 @@ class _ProductQuestionsState extends State<ProductQuestions> {
                 inputFormatters: [
                   LengthLimitingTextInputFormatter(125),
                 ],
+                  cursorColor: MyTheme.secondary, // Set the cursor color to black
+    style: TextStyle(color: MyTheme.secondary),
                 controller: _myQuestionTextController,
                 decoration: InputDecoration(
                     filled: true,
-                    fillColor: Color.fromRGBO(251, 251, 251, 1),
+                    fillColor: MyTheme.light_grey,
                     hintText: AppLocalizations.of(context)
                         .product_questions_screen_type_your_question,
                     hintStyle:
-                        TextStyle(fontSize: 14.0, color: MyTheme.light_grey),
+                        TextStyle(fontSize: 14.0, color: MyTheme.dark_grey),
                     enabledBorder: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: MyTheme.light_grey, width: 0.5),
                       borderRadius: const BorderRadius.all(
-                        Radius.circular(35.0),
+                        Radius.circular(2.0),
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: MyTheme.dark_grey, width: 0.5),
                       borderRadius: const BorderRadius.all(
-                        Radius.circular(35.0),
+                        Radius.circular(2.0),
                       ),
                     ),
                     contentPadding: EdgeInsets.symmetric(horizontal: 16.0)),

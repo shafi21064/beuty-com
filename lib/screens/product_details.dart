@@ -753,7 +753,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             .product_details_screen_snackbar_added_to_cart,
         style: TextStyle(color: MyTheme.secondary),
       ),
-      backgroundColor: MyTheme.secondary,
+      backgroundColor: MyTheme.light_grey,
       duration: const Duration(seconds: 3),
       action: SnackBarAction(
         label: AppLocalizations.of(context)
@@ -1300,36 +1300,36 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ]),
                 ),
-                SliverList(
-                  delegate: SliverChildListDelegate([
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        16.0,
-                        36.0,
-                        16.0,
-                        0.0,
-                      ),
-                      child: Text(
-                        AppLocalizations.of(context)
-                            .product_details_screen_products_purchased
-                            .toUpperCase(),
-                        style: TextStyle(
-                            color: MyTheme.secondary,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        16.0,
-                        16.0,
-                        16.0,
-                        0.0,
-                      ),
-                      child: buildTopSellingProductList(),
-                    )
-                  ]),
-                ),
+                // SliverList(
+                //   delegate: SliverChildListDelegate([
+                //     Padding(
+                //       padding: const EdgeInsets.fromLTRB(
+                //         16.0,
+                //         36.0,
+                //         16.0,
+                //         0.0,
+                //       ),
+                //       child: Text(
+                //         AppLocalizations.of(context)
+                //             .product_details_screen_products_purchased
+                //             .toUpperCase(),
+                //         style: TextStyle(
+                //             color: MyTheme.secondary,
+                //             fontSize: 16,
+                //             fontWeight: FontWeight.w600),
+                //       ),
+                //     ),
+                //     Padding(
+                //       padding: const EdgeInsets.fromLTRB(
+                //         16.0,
+                //         16.0,
+                //         16.0,
+                //         0.0,
+                //       ),
+                //       child: buildTopSellingProductList(),
+                //     )
+                //   ]),
+                // ),
 
                 SliverList(
                   delegate: SliverChildListDelegate([
