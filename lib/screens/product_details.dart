@@ -163,7 +163,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     if (_productDetails != null) {
       _appbarPriceString = _productDetails.salePrice.toString();
       // _singlePrice = _productDetails.calculable_price;
-      _singlePriceString = _productDetails.price;
+      _singlePriceString = _productDetails.salePrice;
       _description = _productDetails.description;
       calculateTotalPrice();
       _stock = _productDetails.stock;
@@ -1885,10 +1885,10 @@ class _ProductDetailsState extends State<ProductDetails> {
           ),
         ),
         Visibility(
-          visible: _productDetails.salePrice != _singlePriceString,
+          visible: _productDetails.salePrice != _productDetails.price,
           child: Padding(
             padding: EdgeInsets.only(right: 8.0),
-            child: Text(_singlePriceString.toString(),
+            child: Text("৳" + _productDetails.price.toString(),
                 style: TextStyle(
                     decoration: TextDecoration.lineThrough,
                     color: Color.fromRGBO(224, 224, 225, 1),

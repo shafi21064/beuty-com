@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:kirei/app_config.dart';
+import 'package:kirei/my_theme.dart';
 import 'package:kirei/screens/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
@@ -46,10 +47,9 @@ class _SplashState extends State<Splash> {
   }
 
   Future<Widget> loadFromFuture() async {
-
     // <fetch data from server. ex. login>
 
-    return Future.value( Main());
+    return Future.value(Main());
   }
 
   @override
@@ -58,10 +58,8 @@ class _SplashState extends State<Splash> {
       //comment this
       seconds: 3,
 
-
       //comment this
       navigateAfterSeconds: Main(),
-
 
       //navigateAfterFuture: loadFromFuture(), //uncomment this
       title: Text(
@@ -79,12 +77,13 @@ class _SplashState extends State<Splash> {
         ),
       ),
       image: Image.asset("assets/splash_screen_logo.png"),
-      backgroundImage:
-          Image.asset("assets/image_02.png"),
-      gradientBackground: FlutterGradients.happyMemories(
-        type: GradientType.linear,
-        center: Alignment.center,
-      ),
+      backgroundColor: MyTheme.primary,
+      // backgroundImage:
+      //     Image.asset("assets/image_02.png"),
+      // gradientBackground: FlutterGradients.happyMemories(
+      //   type: GradientType.linear,
+      //   center: Alignment.center,
+      // ),
       photoSize: 60.0,
       backgroundPhotoSize: 140.0,
     );
