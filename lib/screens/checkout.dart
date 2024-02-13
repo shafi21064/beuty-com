@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:kirei/data_model/city_response.dart';
 import 'package:kirei/data_model/country_response.dart';
+import 'package:kirei/data_model/login_response.dart';
 import 'package:kirei/data_model/pickup_points_response.dart';
 import 'package:kirei/repositories/address_repository.dart';
+import 'package:kirei/repositories/auth_repository.dart';
 import 'package:kirei/repositories/pickup_points_repository.dart';
 import 'package:kirei/screens/address.dart';
 import 'package:flutter/material.dart';
@@ -927,6 +929,11 @@ class _CheckoutState extends State<Checkout> {
                                       ).then((value) {
                                         onPopped(value);
                                       });
+
+                                      // Address().getDialog(context);
+                                      // Address().foysal;
+                                      //print("User info: ${LoginResponse().access_token}");
+
                                     },
                                     child: Visibility(
                                       visible: _shippingAddressList.length == 0,
@@ -1172,6 +1179,8 @@ class _CheckoutState extends State<Checkout> {
               builder: (context) =>
                   Address()), // Replace AddressScreen with the actual screen you want to navigate to
         );
+
+        //Address().foysal;
       },
       child: Card(
         shape: RoundedRectangleBorder(

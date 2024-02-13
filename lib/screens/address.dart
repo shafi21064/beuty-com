@@ -17,6 +17,15 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 class Address extends StatefulWidget {
   Address({Key key, this.from_shipping_info = false}) : super(key: key);
   bool from_shipping_info;
+
+   dynamic _foysal;
+
+  dynamic get foysal => _foysal;
+
+    getDialog(BuildContext context){
+      _foysal = _AddressState().buildShowAddFormDialog(context);
+  }
+
   @override
   _AddressState createState() => _AddressState();
 }
@@ -31,6 +40,8 @@ class _AddressState extends State<Address> {
 
   bool _isInitial = true;
   List<dynamic> _shippingAddressList = [];
+
+
 
   //controllers for add purpose
   TextEditingController _addressController = TextEditingController();
@@ -465,6 +476,7 @@ class _AddressState extends State<Address> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: buildAppBar(context),
