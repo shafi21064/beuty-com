@@ -327,6 +327,10 @@ class _CheckoutState extends State<Checkout> {
       ToastComponent.showDialog("Please select a pickup point", context);
       return;
     }
+    if(!_termsChecked){
+      ToastComponent.showDialog("Please agree to the terms and conditions", context,   gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    };
     print(_shippingAddressList[0]);
     // Prepare request body
     List<String> productIdsStrings = widget.product_ids.split(',');
