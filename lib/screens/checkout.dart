@@ -91,6 +91,7 @@ class _CheckoutState extends State<Checkout> {
   List<City> _cityList = [];
   List<Country> _countryList = [];
   bool isVisible = true;
+  bool _termsChecked = false;
 
   //double variables
   double mWidth = 0;
@@ -980,7 +981,7 @@ class _CheckoutState extends State<Checkout> {
                     )*/
                       ),
                       height:
-                          widget.manual_payment_from_order_details ? 80 : 180,
+                          widget.manual_payment_from_order_details ? 80 : 210,
                       child: Padding(
                         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                         child: Column(
@@ -1010,6 +1011,35 @@ class _CheckoutState extends State<Checkout> {
                               height: 10,
                             ),
                             grandTotalSection(),
+
+                            SizedBox(
+                              height: 5,
+                            ),
+
+                            Padding(
+                              padding: const EdgeInsets.only(top: 0.0),
+                              child: Row(
+                                children: [
+                                  Checkbox(
+                                    value: _termsChecked,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _termsChecked = value;
+                                      });
+                                    },
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      "I HAVE READ AND AGREE TO THE WEBSITE'S TERMS AND CONDITIONS, PRIVACY POLICY, AND REFUND POLICY.",
+                                      maxLines: 2,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+
+
                           ],
                         ),
                       ),

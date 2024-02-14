@@ -376,6 +376,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar: buildAppBar(context),
+
           body: RefreshIndicator(
             color: MyTheme.primary,
             backgroundColor: Colors.white,
@@ -385,13 +386,15 @@ class _OrderDetailsState extends State<OrderDetails> {
               physics: const BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics()),
               slivers: [
-                SliverToBoxAdapter(
-                  child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: _orderDetails != null
-                          ? buildTimeLineTiles()
-                          : buildTimeLineShimmer()),
-                ),
+
+                // SliverToBoxAdapter(
+                //   child: Padding(
+                //       padding: const EdgeInsets.all(16.0),
+                //       child: _orderDetails != null
+                //           ? buildTimeLineTiles()
+                //           : buildTimeLineShimmer()),
+                // ),
+
                 SliverList(
                     delegate: SliverChildListDelegate([
                   Padding(
@@ -401,6 +404,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         : ShimmerHelper().buildBasicShimmer(height: 150.0),
                   ),
                 ])),
+
                 SliverList(
                     delegate: SliverChildListDelegate([
                   Center(
@@ -428,6 +432,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                   ),
                                 )))
                 ])),
+
                 SliverList(
                     delegate: SliverChildListDelegate([
                   Padding(
@@ -932,12 +937,17 @@ class _OrderDetailsState extends State<OrderDetails> {
           children: [
             Row(
               children: [
-                Text(
-                  "Order Code",
-                  style: TextStyle(
-                      color: MyTheme.secondary,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600),
+                Column(
+                  children: [
+                    Text(
+                      "Order Number",
+                      style: TextStyle(
+                          color: MyTheme.secondary,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600),
+                    ),
+
+                  ],
                 ),
                 Spacer(),
                 Text(
@@ -954,7 +964,7 @@ class _OrderDetailsState extends State<OrderDetails> {
               child: Row(
                 children: [
                   Text(
-                    _orderDetails?.code??'',
+                    _orderDetails?.id.toString()??'',
                     style: TextStyle(
                         color: MyTheme.primary,
                         fontSize: 14,

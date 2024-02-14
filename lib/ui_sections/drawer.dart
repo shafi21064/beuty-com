@@ -1,4 +1,5 @@
 import 'package:kirei/data_model/category_response.dart';
+import 'package:kirei/my_theme.dart';
 import 'package:kirei/repositories/category_repository.dart';
 import 'package:kirei/screens/BeautyBooks.dart';
 import 'package:kirei/screens/appointment.dart';
@@ -259,11 +260,36 @@ class _MainDrawerState extends State<MainDrawer> {
                 ExpansionTile(
                     // leading: Icon(Icons.category,
                     //     color: Theme.of(context).buttonTheme.colorScheme.primary),
-                    title: Text(
-                      "kirei".toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 13,
-                      ),
+                    title: Row(
+                      children: [
+                        Text(
+                          "kirei".toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 13,
+                          ),
+                        ),
+
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.05,
+                        ),
+
+                        Container(
+                          height: 22,
+                          width: 45,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Color(0xff05ABE0),
+                            borderRadius: BorderRadius.circular(5)
+                          ),
+                          child: Text("INFO",
+                          style: TextStyle(
+                            color: MyTheme.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500
+                          ),
+                          ),
+                        )
+                      ],
                     ),
                     children: [
                       ListTile(

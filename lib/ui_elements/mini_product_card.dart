@@ -212,36 +212,42 @@ elevation: 0, // Set the elevation to 0 for no shadow
                   ),
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                child: Text(
-                  "৳" + widget.sale_price,
-                  textAlign: TextAlign.left,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: TextStyle(
-                      color: MyTheme.primary,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-              Visibility(
-                visible: widget.sale_price != widget.price,
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                  child: Text(
-                    "৳" + widget.price,
-                    textAlign: TextAlign.left,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: TextStyle(
-                        decoration: TextDecoration.lineThrough,
-                        color: MyTheme.dark_grey,
-                        fontSize: 9,
-                        fontWeight: FontWeight.w600),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Visibility(
+                    visible: widget.sale_price != widget.price,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(8, 0, 1, 0),
+                      child: Text(
+                        "৳" + widget.price,
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(
+                            decoration: TextDecoration.lineThrough,
+                            color: MyTheme.dark_grey,
+                            fontSize: 9,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
                   ),
-                ),
-              ),
+
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                    child: Text(
+                      "৳" + widget.sale_price,
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                          color: MyTheme.primary,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ],
+              )
             ]),
       ),
     );

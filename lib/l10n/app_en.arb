@@ -105,7 +105,7 @@
   "cart_screen_sure_remove_item": "Are you sure to remove this item ?",
   "cart_screen_cancel": "Cancel",
   "cart_screen_confirm": "Confirm",
-  "cart_screen_cart_empty": "Cart is empty",
+  "cart_screen_cart_empty": "No products added to the cart",
   "cart_screen_total_amount": "Subtotal",
   "cart_screen_update_cart": "UPDATE CART",
   "cart_screen_go_shop": "Go Shop",

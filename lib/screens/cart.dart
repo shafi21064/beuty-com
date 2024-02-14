@@ -1,4 +1,5 @@
 import 'package:kirei/screens/checkout.dart';
+import 'package:kirei/screens/filter.dart';
 import 'package:kirei/screens/shipping_info.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
@@ -29,6 +30,8 @@ class _CartState extends State<Cart> {
   var _cartTotal = 0.00;
   var _cartTotalString = ". . .";
     bool _termsChecked = false;
+
+    bool _hasItem = false;
 
 
   @override
@@ -192,13 +195,13 @@ class _CartState extends State<Cart> {
   }
 
   onPressProceedToShipping() {
-    if(_termsChecked) {
-      process(mode: "proceed_to_shipping");
-    } else {
-      ToastComponent.showDialog("Please accept terms and conditions", context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-    }
-    // process(mode: "proceed_to_shipping");
+    // if(_termsChecked) {
+    //   process(mode: "proceed_to_shipping");
+    // } else {
+    //   ToastComponent.showDialog("Please accept terms and conditions", context,
+    //       gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    // }
+     process(mode: "proceed_to_shipping");
   }
 
   process({mode}) async {
@@ -218,9 +221,9 @@ class _CartState extends State<Cart> {
     }
 
     if (cart_ids.length == 0) {
-      ToastComponent.showDialog(
-          AppLocalizations.of(context).cart_screen_cart_empty, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      // ToastComponent.showDialog(
+      //     AppLocalizations.of(context).cart_screen_cart_empty, context,
+      //     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
     }
 
@@ -276,9 +279,11 @@ class _CartState extends State<Cart> {
     fetchData();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
-    //print(widget.has_bottomnav);
+    print(widget.has_bottomnav);
     return Directionality(
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
@@ -313,9 +318,9 @@ class _CartState extends State<Cart> {
                 ),
               ),
               Align(
-              
+
                 alignment: Alignment.bottomCenter,
-                child: buildBottomContainer(),
+                child: _shopList.length != 0 ? buildBottomContainer() : Container(),
               )
             ],
           )),
@@ -331,7 +336,7 @@ class _CartState extends State<Cart> {
                 )*/
       ),
 
-      height: widget.has_bottomnav ? 250 : 120,
+      height: widget.has_bottomnav ? 200 : 120,
       //color: Colors.white,
       child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -426,27 +431,28 @@ class _CartState extends State<Cart> {
               //     ),
               //   ),
               // ),
-            Padding(
-  padding: const EdgeInsets.only(top: 0.0),
-  child: Row(
-    children: [
-      Checkbox(
-        value: _termsChecked,
-        onChanged: (value) {
-          setState(() {
-            _termsChecked = value;
-          });
-        },
-      ),
-      Flexible(
-        child: Text(
-          "I HAVE READ AND AGREE TO THE WEBSITE'S TERMS AND CONDITIONS, PRIVACY POLICY, AND REFUND POLICY.",
-          maxLines: 2,
-        ),
-      ),
-    ],
-  ),
-),
+
+    //             Padding(
+    //   padding: const EdgeInsets.only(top: 0.0),
+    //   child: Row(
+    //     children: [
+    //       Checkbox(
+    //         value: _termsChecked,
+    //         onChanged: (value) {
+    //           setState(() {
+    //             _termsChecked = value;
+    //           });
+    //         },
+    //       ),
+    //       Flexible(
+    //         child: Text(
+    //           "I HAVE READ AND AGREE TO THE WEBSITE'S TERMS AND CONDITIONS, PRIVACY POLICY, AND REFUND POLICY.",
+    //           maxLines: 2,
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // ),
 
         Padding(
                 padding: const EdgeInsets.only(top: 8.0),
@@ -498,7 +504,7 @@ class _CartState extends State<Cart> {
               ),
             ],
           )
-         
+
           ),
     );
   }
@@ -590,13 +596,49 @@ class _CartState extends State<Cart> {
         ),
       );
     } else if (!_isInitial && _shopList.length == 0) {
-      return Container(
-          height: 100,
-          child: Center(
-              child: Text(
-            AppLocalizations.of(context).cart_screen_cart_empty,
-            style: TextStyle(color: MyTheme.secondary),
-          )));
+      return Align(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+
+            Image.asset("assets/cart_empty_bag.png"),
+
+            Container(
+                height: 100,
+                child: Center(
+                    child: Text(
+                  AppLocalizations.of(context).cart_screen_cart_empty,
+                  style: TextStyle(color: MyTheme.secondary),
+                ))),
+
+            GestureDetector(
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Filter()));
+              },
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.06,
+                width: MediaQuery.of(context).size.width * 0.5,
+                color: MyTheme.secondary,
+                // constraints:
+                //     BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+                alignment: Alignment.center,
+                child: Text(
+                  // AppLocalizations.of(context)
+                  //     .product_details_screen_button_checkout
+                  //     .toUpperCase(),
+                  "GO SHOP",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+            )
+          ],
+        ),
+      );
     }
   }
 

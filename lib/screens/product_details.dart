@@ -928,19 +928,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ])),
                 SliverList(
                     delegate: SliverChildListDelegate([
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      16.0,
-                      16.0,
-                      16.0,
-                      0.0,
-                    ),
-                    child: _productDetails != null
-                        ? buildTotalPriceRow()
-                        : ShimmerHelper().buildBasicShimmer(
-                            height: 30.0,
-                          ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.fromLTRB(
+                  //     16.0,
+                  //     16.0,
+                  //     16.0,
+                  //     0.0,
+                  //   ),
+                  //   child: _productDetails != null
+                  //       ? buildTotalPriceRow()
+                  //       : ShimmerHelper().buildBasicShimmer(
+                  //           height: 30.0,
+                  //         ),
+                  // ),
                   Visibility(
                     visible: !_isDescriptionEmpty,
                     child: Divider(
@@ -1208,6 +1208,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                       ],
                     ),
+
                     Divider(
                       height: 1,
                     ),
@@ -2252,7 +2253,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       AppLocalizations.of(context)
                           .product_details_screen_skin_types,
                       style: TextStyle(
-                          color: MyTheme.secondary,
+                          color: MyTheme.dark_grey,
                           fontSize: 14,
                           fontWeight: FontWeight.w600),
                     ),
@@ -2287,6 +2288,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           style: TextStyle(
                             color: MyTheme.secondary,
                             fontSize: 14,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
@@ -2315,7 +2317,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       AppLocalizations.of(context)
                           .product_details_screen_key_ingredients,
                       style: TextStyle(
-                        color: MyTheme.secondary,
+                        color: MyTheme.dark_grey,
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
@@ -2353,7 +2355,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                           style: TextStyle(
                               color: MyTheme.secondary,
                               fontSize: 14,
-                              height: 1.6),
+                              height: 1.6,
+                          fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
@@ -2382,7 +2386,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       AppLocalizations.of(context)
                           .product_details_screen_good_for,
                       style: TextStyle(
-                        color: MyTheme.secondary,
+                        color: MyTheme.dark_grey,
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
@@ -2419,6 +2423,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           style: TextStyle(
                             color: MyTheme.secondary,
                             fontSize: 14,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
@@ -2505,7 +2510,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     child: Text(
                       AppLocalizations.of(context).product_details_screen_tags,
                       style: TextStyle(
-                        color: MyTheme.secondary,
+                        color: MyTheme.dark_grey,
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
@@ -2542,7 +2547,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                           style: TextStyle(
                               color: MyTheme.secondary,
                               fontSize: 14,
-                              height: 1.6),
+                              height: 1.6,
+                          fontWeight: FontWeight.w600
+                          ),
                         ),
                       ),
                     ),

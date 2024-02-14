@@ -353,7 +353,8 @@ class _OrderListState extends State<OrderList> {
 
   buildAppBar(BuildContext context) {
     return PreferredSize(
-      preferredSize: Size.fromHeight(104.0),
+      preferredSize: Size.fromHeight(60.0),
+
       child: AppBar(
           centerTitle: false,
           backgroundColor: Colors.white,
@@ -374,7 +375,7 @@ class _OrderListState extends State<OrderList> {
                       : const EdgeInsets.only(top: 14.0),
                   child: buildTopAppBarContainer(),
                 ),
-                buildBottomAppBar(context)
+                //buildBottomAppBar(context)
               ],
             ),
           )),
@@ -491,17 +492,19 @@ class _OrderListState extends State<OrderList> {
               padding: const EdgeInsets.only(bottom: 4.0),
               child: Row(
                 children: [
-                  Padding(
-                    padding: app_language_rtl.$
-                        ? const EdgeInsets.only(left: 8.0)
-                        : const EdgeInsets.only(right: 8.0),
-                    child: Icon(
-                      Icons.calendar_today_outlined,
-                      size: 16,
-                      color: MyTheme.secondary,
-                    ),
-                  ),
-                  Text('Order Id:' + _orderList[index].id.toString()?? '',
+
+                  // Padding(
+                  //   padding: app_language_rtl.$
+                  //       ? const EdgeInsets.only(left: 8.0)
+                  //       : const EdgeInsets.only(right: 8.0),
+                  //   child: Icon(
+                  //     Icons.calendar_today_outlined,
+                  //     size: 16,
+                  //     color: MyTheme.secondary,
+                  //   ),
+                  // ),
+
+                  Text('Order Number: ' + _orderList[index].id.toString()?? '',
                       style: TextStyle(color: MyTheme.secondary, fontSize: 13)),
                   Spacer(),
                   Column(
@@ -523,16 +526,18 @@ class _OrderListState extends State<OrderList> {
               padding: const EdgeInsets.only(bottom: 4.0),
               child: Row(
                 children: [
-                  Padding(
-                    padding: app_language_rtl.$
-                        ? const EdgeInsets.only(left: 8.0)
-                        : const EdgeInsets.only(right: 8.0),
-                    child: Icon(
-                      Icons.credit_card,
-                      size: 16,
-                      color: MyTheme.secondary,
-                    ),
-                  ),
+
+                  // Padding(
+                  //   padding: app_language_rtl.$
+                  //       ? const EdgeInsets.only(left: 8.0)
+                  //       : const EdgeInsets.only(right: 8.0),
+                  //   child: Icon(
+                  //     Icons.credit_card,
+                  //     size: 16,
+                  //     color: MyTheme.secondary,
+                  //   ),
+                  // ),
+
                   Text(
                     "${AppLocalizations.of(context).order_list_screen_payment_status} - ",
                     style: TextStyle(color: MyTheme.secondary, fontSize: 13),
@@ -552,24 +557,38 @@ class _OrderListState extends State<OrderList> {
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
-                  padding: app_language_rtl.$
-                      ? const EdgeInsets.only(left: 8.0)
-                      : const EdgeInsets.only(right: 8.0),
-                  child: Icon(
-                    Icons.local_shipping_outlined,
-                    size: 16,
-                    color: MyTheme.secondary,
-                  ),
+
+                // Padding(
+                //   padding: app_language_rtl.$
+                //       ? const EdgeInsets.only(left: 8.0)
+                //       : const EdgeInsets.only(right: 8.0),
+                //   child: Icon(
+                //     Icons.local_shipping_outlined,
+                //     size: 16,
+                //     color: MyTheme.secondary,
+                //   ),
+                // ),
+
+                Row(
+                  children: [
+
+                    Text(
+                      "${AppLocalizations.of(context).order_list_screen_delivery_status} -",
+                      style: TextStyle(color: MyTheme.secondary, fontSize: 13),
+                    ),
+
+                    Text(
+                      _orderList[index].deliveryStatusString ?? '',
+                      style: TextStyle(color: MyTheme.secondary, fontSize: 13),
+                    ),
+                  ],
                 ),
+
                 Text(
-                  "${AppLocalizations.of(context).order_list_screen_delivery_status} -",
-                  style: TextStyle(color: MyTheme.secondary, fontSize: 13),
-                ),
-                Text(
-                  _orderList[index].deliveryStatusString ?? '',
-                  style: TextStyle(color: MyTheme.secondary, fontSize: 13),
+                  _orderList[index].date ?? '',
+                  style: TextStyle(color: MyTheme.secondary, fontSize: 13, fontWeight: FontWeight.w600),
                 ),
               ],
             )
