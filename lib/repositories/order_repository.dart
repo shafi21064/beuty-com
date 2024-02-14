@@ -11,15 +11,15 @@ class OrderRepository {
   Future<OrderMiniResponse> getOrderList(
       {page = 1, payment_status = "", delivery_status = ""}) async {
     String baseUrl = ENDP.PURCHASE_HISTORY;
-    if (payment_status != null && payment_status.isNotEmpty) {
-      baseUrl += "?payment_status=$payment_status";
-    }
-
-    if (delivery_status != null && delivery_status.isNotEmpty) {
-      baseUrl += (baseUrl.contains("?") ? "&" : "?") +
-          "delivery_status=$delivery_status";
-    }
-    baseUrl += (baseUrl.contains("?") ? "&" : "?") + "page=$page";
+    // if (payment_status != null && payment_status.isNotEmpty) {
+    //   baseUrl += "?payment_status=$payment_status";
+    // }
+    //
+    // if (delivery_status != null && delivery_status.isNotEmpty) {
+    //   baseUrl += (baseUrl.contains("?") ? "&" : "?") +
+    //       "delivery_status=$delivery_status";
+    // }
+   // baseUrl += (baseUrl.contains("?") ? "&" : "?") + "page=$page";
     Uri url = Uri.parse(baseUrl);
     print("url: ${url.toString()}");
     print("token: ${access_token.$}");

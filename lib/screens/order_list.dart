@@ -501,15 +501,20 @@ class _OrderListState extends State<OrderList> {
                       color: MyTheme.secondary,
                     ),
                   ),
-                  Text(_orderList[index].date ?? '',
+                  Text('Order Id:' + _orderList[index].id.toString()?? '',
                       style: TextStyle(color: MyTheme.secondary, fontSize: 13)),
                   Spacer(),
-                  Text(
-                    _orderList[index].grandTotal ?? '',
-                    style: TextStyle(
-                        color: MyTheme.primary,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600),
+                  Column(
+                    children: [
+                      Text(
+                        _orderList[index].grandTotal ?? '',
+                        style: TextStyle(
+                            color: MyTheme.primary,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600),
+                      ),
+
+                    ],
                   )
                 ],
               ),
@@ -563,7 +568,7 @@ class _OrderListState extends State<OrderList> {
                   style: TextStyle(color: MyTheme.secondary, fontSize: 13),
                 ),
                 Text(
-                  _orderList[index].deliveryStatus ?? '',
+                  _orderList[index].deliveryStatusString ?? '',
                   style: TextStyle(color: MyTheme.secondary, fontSize: 13),
                 ),
               ],

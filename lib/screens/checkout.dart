@@ -725,7 +725,7 @@ class _CheckoutState extends State<Checkout> {
         content: Padding(
           padding: const EdgeInsets.only(left: 8.0, right: 16.0),
           child: Container(
-            height: 150,
+            height: 162,
             child: Column(
               children: [
                 Padding(
@@ -930,7 +930,7 @@ class _CheckoutState extends State<Checkout> {
                                         onPopped(value);
                                       });
 
-                                      // Address().getDialog(context);
+                                       //Address().getDialog(context);
                                       // Address().foysal;
                                       //print("User info: ${LoginResponse().access_token}");
 
@@ -1720,13 +1720,33 @@ class _CheckoutState extends State<Checkout> {
         padding: const EdgeInsets.all(4.0),
         child: Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0),
-              child: Text(
-                AppLocalizations.of(context).checkout_screen_total_amount,
-                style: TextStyle(color: MyTheme.white, fontSize: 14),
-              ),
+
+            Row(
+              children: [
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Text(
+                    "${AppLocalizations.of(context).checkout_screen_total_amount} : ",
+                    style: TextStyle(color: MyTheme.white, fontSize: 14),
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Text(
+                    _totalString,
+                    style: TextStyle(color: MyTheme.white, fontSize: 14),
+                  ),
+                ),
+
+              ],
             ),
+
+            SizedBox(
+              height: mWidth * 0.05,
+            ),
+
             Visibility(
               visible: !widget.manual_payment_from_order_details,
               child: Padding(

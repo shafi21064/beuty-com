@@ -94,7 +94,7 @@ class _MainState extends State<Main> {
             onTap: onTapped,
             initialActiveIndex: 0,
             backgroundColor: MyTheme.primary,
-            style: TabStyle.flip,
+            style: TabStyle.react,
             elevation: 1,
             height: 50,
             // cornerRadius: 20,

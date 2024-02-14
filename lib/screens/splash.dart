@@ -76,8 +76,10 @@ class _SplashState extends State<Splash> {
           color: Colors.white,
         ),
       ),
-      image: Image.asset("assets/splash_screen_logo.png"),
-      backgroundColor: MyTheme.primary,
+      //image: Image.asset("assets/splash_screen_logo.png",alignment: Alignment.center),
+      image: Image.asset("assets/splash_screen_logo_new.png",alignment: Alignment.center),
+      //backgroundColor: MyTheme.primary,
+      backgroundColor: MyTheme.white,
       // backgroundImage:
       //     Image.asset("assets/image_02.png"),
       // gradientBackground: FlutterGradients.happyMemories(

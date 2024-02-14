@@ -376,6 +376,8 @@
   "address_screen_select_state": "Select a state",
   "address_screen_enter_state": "Enter State",
   "address_screen_phone": "Phone",
+  "address_screen_name" : "Name",
+  "address_screen_email" : "Email",
   "address_screen_enter_phone": "Enter Phone",
   "address_screen_address_remove_warning": "Are you sure to remove this address ?",
   "address_screen_addresses_of_user": "Addresses of user",

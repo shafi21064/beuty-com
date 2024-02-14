@@ -355,6 +355,8 @@
   "address_screen_select_state": "S\u00e9lectionner un \u00e9tat",
   "address_screen_enter_state": "Entrer l'\u00e9tat",
   "address_screen_phone": "T\u00e9l\u00e9phoner",
+    "address_screen_name" : "Name",
+    "address_screen_email" : "Email",
   "address_screen_enter_phone": "Entrez le t\u00e9l\u00e9phone",
   "address_screen_address_remove_warning": "Voulez-vous vraiment supprimer cette adresse\u00a0?",
   "address_screen_addresses_of_user": "Adresses de l'utilisateur",

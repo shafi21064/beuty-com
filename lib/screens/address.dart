@@ -18,13 +18,13 @@ class Address extends StatefulWidget {
   Address({Key key, this.from_shipping_info = false}) : super(key: key);
   bool from_shipping_info;
 
-   dynamic _foysal;
-
-  dynamic get foysal => _foysal;
-
-    getDialog(BuildContext context){
-      _foysal = _AddressState().buildShowAddFormDialog(context);
-  }
+  //  dynamic _foysal;
+  //
+  // dynamic get foysal => _foysal;
+  //
+  //   getDialog(BuildContext context){
+  //     _foysal = _AddressState().buildShowAddFormDialog(context);
+  // }
 
   @override
   _AddressState createState() => _AddressState();
@@ -543,6 +543,126 @@ class _AddressState extends State<Address> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+
+                      // Padding(
+                      //   padding: const EdgeInsets.only(bottom: 8.0),
+                      //   child: Text(
+                      //       AppLocalizations.of(context).address_screen_name,
+                      //       style: TextStyle(
+                      //           color: MyTheme.secondary, fontSize: 12)),
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(bottom: 8.0),
+                      //   child: Container(
+                      //     height: 40,
+                      //     child: TextField(
+                      //       controller: _phoneController,
+                      //       autofocus: false,
+                      //       decoration: InputDecoration(
+                      //           hintText: AppLocalizations.of(context)
+                      //               .address_screen_enter_phone,
+                      //           hintStyle: TextStyle(
+                      //               fontSize: 12.0, color: MyTheme.light_grey),
+                      //           enabledBorder: OutlineInputBorder(
+                      //             borderSide: BorderSide(
+                      //                 color: MyTheme.light_grey, width: 0.5),
+                      //             borderRadius: const BorderRadius.all(
+                      //               const Radius.circular(8.0),
+                      //             ),
+                      //           ),
+                      //           focusedBorder: OutlineInputBorder(
+                      //             borderSide: BorderSide(
+                      //                 color: MyTheme.light_grey, width: 1.0),
+                      //             borderRadius: const BorderRadius.all(
+                      //               const Radius.circular(8.0),
+                      //             ),
+                      //           ),
+                      //           contentPadding:
+                      //           EdgeInsets.symmetric(horizontal: 8.0)),
+                      //     ),
+                      //   ),
+                      // ),
+                      //
+                      //
+                      //
+                      // Padding(
+                      //   padding: const EdgeInsets.only(bottom: 8.0),
+                      //   child: Text(
+                      //       AppLocalizations.of(context).address_screen_phone,
+                      //       style: TextStyle(
+                      //           color: MyTheme.secondary, fontSize: 12)),
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(bottom: 8.0),
+                      //   child: Container(
+                      //     height: 40,
+                      //     child: TextField(
+                      //       controller: _phoneController,
+                      //       autofocus: false,
+                      //       decoration: InputDecoration(
+                      //           hintText: AppLocalizations.of(context)
+                      //               .address_screen_enter_phone,
+                      //           hintStyle: TextStyle(
+                      //               fontSize: 12.0, color: MyTheme.light_grey),
+                      //           enabledBorder: OutlineInputBorder(
+                      //             borderSide: BorderSide(
+                      //                 color: MyTheme.light_grey, width: 0.5),
+                      //             borderRadius: const BorderRadius.all(
+                      //               const Radius.circular(8.0),
+                      //             ),
+                      //           ),
+                      //           focusedBorder: OutlineInputBorder(
+                      //             borderSide: BorderSide(
+                      //                 color: MyTheme.light_grey, width: 1.0),
+                      //             borderRadius: const BorderRadius.all(
+                      //               const Radius.circular(8.0),
+                      //             ),
+                      //           ),
+                      //           contentPadding:
+                      //           EdgeInsets.symmetric(horizontal: 8.0)),
+                      //     ),
+                      //   ),
+                      // ),
+                      //
+                      // Padding(
+                      //   padding: const EdgeInsets.only(bottom: 8.0),
+                      //   child: Text(
+                      //       AppLocalizations.of(context).address_screen_email,
+                      //       style: TextStyle(
+                      //           color: MyTheme.secondary, fontSize: 12)),
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(bottom: 8.0),
+                      //   child: Container(
+                      //     height: 40,
+                      //     child: TextField(
+                      //       controller: _phoneController,
+                      //       autofocus: false,
+                      //       decoration: InputDecoration(
+                      //           hintText: AppLocalizations.of(context)
+                      //               .address_screen_enter_phone,
+                      //           hintStyle: TextStyle(
+                      //               fontSize: 12.0, color: MyTheme.light_grey),
+                      //           enabledBorder: OutlineInputBorder(
+                      //             borderSide: BorderSide(
+                      //                 color: MyTheme.light_grey, width: 0.5),
+                      //             borderRadius: const BorderRadius.all(
+                      //               const Radius.circular(8.0),
+                      //             ),
+                      //           ),
+                      //           focusedBorder: OutlineInputBorder(
+                      //             borderSide: BorderSide(
+                      //                 color: MyTheme.light_grey, width: 1.0),
+                      //             borderRadius: const BorderRadius.all(
+                      //               const Radius.circular(8.0),
+                      //             ),
+                      //           ),
+                      //           contentPadding:
+                      //           EdgeInsets.symmetric(horizontal: 8.0)),
+                      //     ),
+                      //   ),
+                      // ),
+
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text(
@@ -583,6 +703,7 @@ class _AddressState extends State<Address> {
                           ),
                         ),
                       ),
+
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text("City *",
@@ -597,7 +718,7 @@ class _AddressState extends State<Address> {
                             suggestionsCallback: (name) async {
                               var stateResponse = await AddressRepository()
                                   .getStateListByCountry(
-                                      country_id: "3069"); // blank response
+                                  country_id: "3069"); // blank response
                               return stateResponse.states;
                             },
                             loadingBuilder: (context) {
@@ -665,11 +786,12 @@ class _AddressState extends State<Address> {
                                     ),
                                   ),
                                   contentPadding:
-                                      EdgeInsets.symmetric(horizontal: 8.0)),
+                                  EdgeInsets.symmetric(horizontal: 8.0)),
                             ),
                           ),
                         ),
                       ),
+
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text(
@@ -685,7 +807,7 @@ class _AddressState extends State<Address> {
                             suggestionsCallback: (name) async {
                               var cityResponse = await AddressRepository()
                                   .getCityListByState(
-                                      state_id: _selected_state.id);
+                                  state_id: _selected_state.id);
                               return cityResponse.cities;
                             },
                             loadingBuilder: (context) {
@@ -751,11 +873,12 @@ class _AddressState extends State<Address> {
                                     ),
                                   ),
                                   contentPadding:
-                                      EdgeInsets.symmetric(horizontal: 8.0)),
+                                  EdgeInsets.symmetric(horizontal: 8.0)),
                             ),
                           ),
                         ),
                       ),
+
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text("Area *",
@@ -835,11 +958,14 @@ class _AddressState extends State<Address> {
                                     ),
                                   ),
                                   contentPadding:
-                                      EdgeInsets.symmetric(horizontal: 8.0)),
+                                  EdgeInsets.symmetric(horizontal: 8.0)),
                             ),
                           ),
                         ),
                       ),
+
+
+
 
                       // Padding(
                       //   padding: const EdgeInsets.only(bottom: 16.0),
@@ -960,6 +1086,7 @@ class _AddressState extends State<Address> {
                           ),
                         ),
                       ),
+
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text(
@@ -994,10 +1121,11 @@ class _AddressState extends State<Address> {
                                   ),
                                 ),
                                 contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 8.0)),
+                                EdgeInsets.symmetric(horizontal: 8.0)),
                           ),
                         ),
-                      )
+                      ),
+
                     ],
                   ),
                 ),
@@ -1077,6 +1205,48 @@ class _AddressState extends State<Address> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Text(
+                            AppLocalizations.of(context).address_screen_phone,
+                            style: TextStyle(
+                                color: MyTheme.secondary, fontSize: 12)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Container(
+                          height: 40,
+                          child: TextField(
+                            controller: _phoneControllerListForUpdate[index],
+                            autofocus: false,
+                            decoration: InputDecoration(
+                                hintText: user_phone.$ != null
+                                    ? user_phone.$
+                                    : AppLocalizations.of(context)
+                                    .address_screen_enter_phone,
+                                hintStyle: TextStyle(
+                                    fontSize: 12.0, color: MyTheme.light_grey),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: MyTheme.light_grey, width: 0.5),
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(8.0),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: MyTheme.light_grey, width: 1.0),
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(8.0),
+                                  ),
+                                ),
+                                contentPadding:
+                                EdgeInsets.symmetric(horizontal: 8.0)),
+                          ),
+                        ),
+                      ),
+
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text(
@@ -1472,7 +1642,7 @@ class _AddressState extends State<Address> {
                                     EdgeInsets.symmetric(horizontal: 8.0)),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

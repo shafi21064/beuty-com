@@ -10,6 +10,7 @@ import 'package:kirei/screens/appointment.dart';
 import 'package:kirei/screens/beauty_tips.dart';
 import 'package:kirei/screens/filter.dart';
 import 'package:kirei/screens/flash_deal_list.dart';
+import 'package:kirei/screens/login.dart';
 import 'package:kirei/screens/newsfeed.dart';
 import 'package:kirei/screens/personal_recommendation.dart';
 import 'package:kirei/screens/product_details.dart';
@@ -2002,6 +2003,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   AppBar buildAppBar(double statusBarHeight, BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
+
       leading: GestureDetector(
         onTap: () {
           _scaffoldKey.currentState.openDrawer();
@@ -2032,6 +2034,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 ),
               ),
       ),
+
       title: Container(
         height: kToolbarHeight +
             statusBarHeight -
@@ -2048,7 +2051,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 children: [
                   Container(
                       margin: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width / 3.7),
+                          //left: MediaQuery.of(context).size.width / 3.7),
+                          left: 15),
                       child: Image.asset(
                         "assets/logo.png",
                       )),
@@ -2081,28 +2085,95 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               )),
         ),
       ),
+
+
+
       elevation: 0.0,
       titleSpacing: 0,
+
+      // actions: <Widget>[
+      //   InkWell(
+      //     onTap: () {
+      //       ToastComponent.showDialog(
+      //           AppLocalizations.of(context).common_coming_soon, context,
+      //           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      //     },
+      //     child: Visibility(
+      //       visible: true,
+      //       child: Padding(
+      //         padding:
+      //             const EdgeInsets.symmetric(vertical: 18.0, horizontal: 12.0),
+      //         child: Image.asset(
+      //           'assets/bell.png',
+      //           height: 16,
+      //           color: MyTheme.dark_grey,
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // ],
+
       actions: <Widget>[
-        InkWell(
-          onTap: () {
-            ToastComponent.showDialog(
-                AppLocalizations.of(context).common_coming_soon, context,
-                gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-          },
-          child: Visibility(
-            visible: false,
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 18.0, horizontal: 12.0),
-              child: Image.asset(
-                'assets/bell.png',
-                height: 16,
-                color: MyTheme.dark_grey,
+
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+          child:
+          is_logged_in.$ == false ?
+
+          GestureDetector(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+            },
+            child: Text("Login",
+              style: TextStyle(
+                color: MyTheme.primary,
+                fontWeight: FontWeight.w600,
               ),
             ),
+          )
+              :
+          Row(
+
+            children: [
+              Text("Hi, ",
+                style: TextStyle(
+                  color: MyTheme.secondary,
+                  fontWeight: FontWeight.w600,
+                ),
+
+              ),
+              Text("${user_name.$}",
+                style: TextStyle(
+                    color: MyTheme.secondary,
+                    fontWeight: FontWeight.w600
+                ),
+              ),
+
+
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: MyTheme.secondary,
+                    width: 2 * 0.8, //8
+                  ),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage("${avatar_original.$}" ??
+                        "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png"), //TODO:change the avatar
+                  ),
+                ),
+
+              ),
+            ],
           ),
         ),
+
+
+
+
       ],
     );
   }

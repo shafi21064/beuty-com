@@ -260,7 +260,7 @@ class _MainDrawerState extends State<MainDrawer> {
                     // leading: Icon(Icons.category,
                     //     color: Theme.of(context).buttonTheme.colorScheme.primary),
                     title: Text(
-                      "kirebd".toUpperCase(),
+                      "kirei".toUpperCase(),
                       style: TextStyle(
                         fontSize: 13,
                       ),

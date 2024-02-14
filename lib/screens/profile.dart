@@ -727,6 +727,7 @@ class _ProfileState extends State<Profile> {
                 fontWeight: FontWeight.w600),
           ),
         ),
+
         Visibility(
           visible: wallet_system_status.$,
           child: Padding(
