@@ -1549,14 +1549,40 @@ class _ProductDetailsState extends State<ProductDetails> {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Text(
-            "(${_stock} ${AppLocalizations.of(context).product_details_screen_available})",
-            style: TextStyle(
-                color: Color.fromRGBO(152, 152, 153, 1), fontSize: 14),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        //   child: Container(
+        //
+        //   ),
+        //   // child: Text(
+        //   //   //"(${_stock} ${AppLocalizations.of(context).product_details_screen_available})",
+        //   //   _stock != null ? 'In Stock' : 'out of stock',
+        //   //   style: TextStyle(
+        //   //       //color: Color.fromRGBO(152, 152, 153, 1),
+        //   //     color: MyTheme.primary,
+        //   //       fontWeight: FontWeight.w600,
+        //   //       fontSize: 14),
+        //   // ),
+        // ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 8),
+          height: 30,
+          width: 80,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: _stock != 0? Colors.green : MyTheme.primary,
+            borderRadius: BorderRadius.circular(5)
           ),
-        ),
+          child:  Text(
+      //   //"(${_stock} ${AppLocalizations.of(context).product_details_screen_available})",
+        _stock != 0 ? 'In Stock' : 'Stock Out',
+        style: TextStyle(
+            //color: Color.fromRGBO(152, 152, 153, 1),
+          color: MyTheme.white,
+            fontWeight: FontWeight.w600,
+            fontSize: 14),
+        )
+        )
       ],
     );
   }

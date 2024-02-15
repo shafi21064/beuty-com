@@ -419,6 +419,7 @@ onPopped(value) async {
     /*print(_appBar.preferredSize.height.toString()+" Appbar height");
     print(kToolbarHeight.toString()+" kToolbarHeight height");
     print(MediaQuery.of(context).padding.top.toString() +" MediaQuery.of(context).padding.top");*/
+   // var discountPercentage = ((((int.parse(widget.price) - int.parse(widget.sale_price))/(int.parse(widget.price)))*100 ).toStringAsFixed(0).toString());
     return Directionality(
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
@@ -1250,7 +1251,9 @@ onPopped(value) async {
 
   buildProductScrollableList() {
     if (_isProductInitial && _productList.length == 0) {
-      return SingleChildScrollView(
+      return Container(
+        margin: EdgeInsets.only(top: 40),
+        padding: EdgeInsets.only(top: 100),
           child: ShimmerHelper()
               .buildProductGridShimmer(scontroller: _scrollController));
     } else if (_productList.length > 0) {
@@ -1296,6 +1299,7 @@ onPopped(value) async {
                     slug: _productList[index].slug,
                     reviews: _productList[index].reviews,
                     stock: _productList[index].stock,
+                    discount: _productList[index].discount,
                   );
                 },
               )
@@ -1326,9 +1330,8 @@ onPopped(value) async {
 
   buildBrandScrollableList() {
     if (_isBrandInitial && _brandList.length == 0) {
-      return SingleChildScrollView(
-          child: ShimmerHelper()
-              .buildSquareGridShimmer(scontroller: _scrollController));
+      return ShimmerHelper()
+          .buildSquareGridShimmer(scontroller: _scrollController);
     } else if (_brandList.length > 0) {
       return RefreshIndicator(
         color: Colors.white,

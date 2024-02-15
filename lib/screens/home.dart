@@ -1,5 +1,6 @@
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:kirei/custom/CommonFunctoins.dart';
+import 'package:kirei/data_model/category_response.dart';
 import 'package:kirei/data_model/shop_details_response.dart';
 import 'package:kirei/helpers/addons_helper.dart';
 import 'package:kirei/helpers/business_setting_helper.dart';
@@ -69,6 +70,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   var _carouselImageList = [];
   var _featuredCategoryList = [];
+  var _allCategories = [];
   var _featuredProductList = [];
   var _recommendedProductList = [];
   var _popularSearchProductList = [];
@@ -84,6 +86,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   bool _isHotDealsProductInitial = true;
   bool _isNewArrivalsProductInitial = true;
   bool _isCategoryInitial = true;
+  bool _isAllCategoryIntial = true;
   bool _isCarouselInitial = true;
   int _totalFeaturedProductData = 0;
   int _totalRecommendedProductData = 0;
@@ -153,7 +156,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   fetchCarouselImages() async {
     var carouselResponse = await SlidersRepository().getSliders();
     carouselResponse.sliders.forEach((slider) {
-      _carouselImageList.add(slider.photo);
+      if(slider.photo != null) {
+        _carouselImageList.add(slider.photo);
+      }
     });
     _isCarouselInitial = false;
     setState(() {});
@@ -168,6 +173,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     _featuredCategoryList.addAll(categoryResponse);
     print(_featuredCategoryList);
     _isCategoryInitial = false;
+    setState(() {});
+  }
+
+  fetchAllCategory() async {
+    var allCategory = await CategoryRepository().getCategories();
+    //print(allCategory);
+    _allCategories.addAll(allCategory.categories);
+    print('shafi ${_allCategories.length}');
+    _isAllCategoryIntial = false;
     setState(() {});
   }
 
@@ -960,6 +974,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   slug: _bestSellingProductList[index].slug,
                   reviews: _bestSellingProductList[index].reviews,
                   stock: _bestSellingProductList[index].stock,
+                  discount: _bestSellingProductList[index].discount,
                 ),
               );
             },
@@ -1002,6 +1017,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   slug: _featuredProductList[index].slug,
                   reviews: _featuredCategoryList[index].reviews,
                   stock: _featuredCategoryList[index].stock,
+                  discount: _featuredCategoryList[index].discount,
                 ),
               );
             },
@@ -1071,6 +1087,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   slug: _recommendedProductList[index].slug,
                   reviews: _recommendedProductList[index].reviews,
                   stock: _recommendedProductList[index].stock,
+                    discount:  _recommendedProductList[index].discount
                 ),
               );
             },
@@ -1115,6 +1132,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   slug: _popularSearchProductList[index].slug,
                   reviews: _popularSearchProductList[index].reviews,
                   stock: _popularSearchProductList[index].stock,
+                  discount: _popularSearchProductList[index].discount,
                 ),
               );
             },
@@ -1157,6 +1175,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   slug: _trendingProductList[index].slug,
                   reviews: _trendingProductList[index].reviews,
                   stock: _trendingProductList[index].stock,
+                  discount: _trendingProductList[index].discount,
                 ),
               );
             },
@@ -1199,6 +1218,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   slug: _hotDealsProductList[index].slug,
                   reviews: _hotDealsProductList[index].reviews,
                   stock: _hotDealsProductList[index].stock,
+                  discount: _hotDealsProductList[index].discount,
                 ),
               );
             },
@@ -1242,6 +1262,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   slug: _newArrivalProductList[index].slug,
                   reviews: _newArrivalProductList[index].reviews,
                   stock: _newArrivalProductList[index].stock,
+                  discount: _newArrivalProductList[index].discount,
                 ),
               );
             },
@@ -1259,34 +1280,42 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   buildHomeFeaturedCategories(context) {
     if (_isCategoryInitial && _featuredCategoryList.length == 0) {
-      return Row(
-        children: [
-          Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: ClipOval(
-                  child: ShimmerHelper()
-                      .buildBasicShimmer(height: 56.0, width: 56.0))),
-          Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: ClipOval(
-                  child: ShimmerHelper()
-                      .buildBasicShimmer(height: 56.0, width: 56.0))),
-          Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: ClipOval(
-                  child: ShimmerHelper()
-                      .buildBasicShimmer(height: 56.0, width: 56.0))),
-          Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: ClipOval(
-                  child: ShimmerHelper()
-                      .buildBasicShimmer(height: 56.0, width: 56.0))),
-          Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: ClipOval(
-                  child: ShimmerHelper()
-                      .buildBasicShimmer(height: 56.0, width: 56.0))),
-        ],
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            Padding(
+                padding: const EdgeInsets.only(right: 8.0, top: 8),
+                child: ClipOval(
+                    child: ShimmerHelper()
+                        .buildBasicShimmer(height: 58.0, width: 58.0))),
+            Padding(
+                padding: const EdgeInsets.only(right: 8.0, top: 8),
+                child: ClipOval(
+                    child: ShimmerHelper()
+                        .buildBasicShimmer(height: 58.0, width: 58.0))),
+            Padding(
+                padding: const EdgeInsets.only(right: 8.0, top: 8),
+                child: ClipOval(
+                    child: ShimmerHelper()
+                        .buildBasicShimmer(height: 58.0, width: 58.0))),
+            Padding(
+                padding: const EdgeInsets.only(right: 8.0, top: 8),
+                child: ClipOval(
+                    child: ShimmerHelper()
+                        .buildBasicShimmer(height: 58.0, width: 58.0))),
+            Padding(
+                padding: const EdgeInsets.only(right: 8.0, top: 8),
+                child: ClipOval(
+                    child: ShimmerHelper()
+                        .buildBasicShimmer(height: 58.0, width: 58.0))),
+            Padding(
+                padding: const EdgeInsets.only(right: 8.0, top: 8),
+                child: ClipOval(
+                    child: ShimmerHelper()
+                        .buildBasicShimmer(height: 58.0, width: 58.0))),
+          ],
+        ),
       );
     } else if (_featuredCategoryList.length > 0) {
       //snapshot.hasData
@@ -1304,6 +1333,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   }));
                 } else if (_featuredCategoryList[index]?.itemType ==
                     "category") {
+                  fetchAllCategory();
+                  print('My catagory ${_allCategories}');
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return Filter(
                       category: _featuredCategoryList[index]?.slug,
@@ -1330,6 +1361,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 }
               },
               child: Container(
+                margin: EdgeInsets.only(right: 5),
                 padding: EdgeInsets.only(top: 8),
                 height: 120,
                 width: MediaQuery.of(context).size.width / 5 - 4,
@@ -1366,7 +1398,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         style: TextStyle(
                           color: MyTheme.secondary,
                           fontWeight: FontWeight.w300,
-                          fontSize: 13,
+                          fontSize: 12,
                         ),
                       ),
                     )
@@ -1954,7 +1986,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                           child: FadeInImage.assetNetwork(
                             placeholder: 'assets/placeholder_rectangle.png',
-                            image: i,
+                            image: i ?? '',
                             fit: BoxFit.cover,
                           ))),
                   Align(

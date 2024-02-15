@@ -12,7 +12,7 @@ class CategoryRepository {
       "App-Language": app_language.$,
     });
     print("${ENDP.GET_CATEGORIES}");
-    print("categoriesssss: $response.body.toString()");
+    print("All categoriesssss: ${response.body.toString()}");
     return categoryResponseFromJson(response.body);
   }
 
@@ -22,7 +22,7 @@ class CategoryRepository {
       "App-Language": app_language.$,
     });
     print("${ENDP.GET_CATEGORIES}");
-    print("categoriesssss: $response.body.toString()");
+    print("categoriesssss: ${response.body.toString()}");
     return featuredCategoryListFromJson(response.body);
   }
 

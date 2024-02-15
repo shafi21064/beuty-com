@@ -24,6 +24,7 @@ class ProductCard extends StatefulWidget {
   String image;
   String slug;
   dynamic reviews;
+  int discount;
   //bool has_discount;
 
   ProductCard(
@@ -36,7 +37,8 @@ class ProductCard extends StatefulWidget {
       this.ratings,
       this.reviews,
       this.slug,
-      this.stock
+      this.stock,
+        this.discount
       //this.has_discount
       })
       : super(key: key);
@@ -86,7 +88,7 @@ class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
     print((MediaQuery.of(context).size.width - 48) / 2);
-  
+    var discountPercentage = ((((int.parse(widget.price) - int.parse(widget.sale_price))/(int.parse(widget.price)))*100 ).toStringAsFixed(0).toString());
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -117,22 +119,54 @@ class _ProductCardState extends State<ProductCard> {
                   padding: EdgeInsets.only(bottom: 8),
                   //height: 158,
                   height: ((MediaQuery.of(context).size.width - 32) / 2.5),
-                  child: ClipRRect(
-                      clipBehavior: Clip.hardEdge,
-                      borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(0), bottom: Radius.zero),
-                      child: Container(
-                          color: MyTheme.light_grey,
-                          child: widget.image != null
-                              ? FadeInImage.assetNetwork(
-                                  placeholder: 'assets/app_logo.png',
-                                  image: widget.image,
-                                  fit: BoxFit.fill,
-                                )
-                              : Image.asset(
-                                  'assets/app_logo.png',
-                                  fit: BoxFit.fitWidth,
-                                )))),
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: ClipRRect(
+                            clipBehavior: Clip.hardEdge,
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(0), bottom: Radius.zero),
+                            child: Container(
+                                color: MyTheme.light_grey,
+                                child: widget.image != null
+                                    ? FadeInImage.assetNetwork(
+                                        placeholder: 'assets/app_logo.png',
+                                        image: widget.image,
+                                        fit: BoxFit.fill,
+                                      )
+                                    : Image.asset(
+                                        'assets/app_logo.png',
+                                        fit: BoxFit.fitWidth,
+                                      ))),
+                      ),
+                      Visibility(
+                        visible: widget.sale_price != widget.price,
+                        child: Positioned(
+                          left: 5,
+                          top: 5,
+                          child: Container(
+                            height: 33,
+                            width: 33,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: MyTheme.primary,
+                                shape: BoxShape.circle
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Text('${widget.discount}%',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: MyTheme.white,
+                                    fontSize: 11
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
               Container(
                 width: MediaQuery.of(context).size.width / 2 - .5,
                 height: 40,

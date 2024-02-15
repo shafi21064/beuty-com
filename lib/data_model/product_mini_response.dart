@@ -59,6 +59,7 @@ class Product {
     this.slug,
     this.reviews,
     this.stock,
+    this.discount
     // this.sales,
     // this.links,
   });
@@ -73,6 +74,7 @@ class Product {
   String slug;
   int reviews;
   int stock;
+  int discount;
   // int sales;
   // Links links;
   List<ProductCategory> productCategories;
@@ -92,7 +94,8 @@ class Product {
           json["product_categories"].map((x) => ProductCategory.fromJson(x))),
       pictures:
           List<Picture>.from(json["pictures"].map((x) => Picture.fromJson(x))),
-      slug: json["slug"]
+      slug: json["slug"],
+      discount: json["discount"]
       // sales: json["sales"],
       // links: Links.fromJson(json["links"]),
       );
@@ -108,6 +111,7 @@ class Product {
         "ratings": ratings,
         "reviews": reviews,
         "slug": slug,
+        "discount": discount,
         "product_categories": List<ProductCategory>.from(
             productCategories.map((x) => x.toJson())),
         "pictures": List<Picture>.from(pictures.map((x) => x.toJson())),

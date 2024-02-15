@@ -684,10 +684,11 @@ class _LoginState extends State<Login> {
                             padding: const EdgeInsets.only(top: 20.0),
                             child: Center(
                                 child: Text(
-                              "Don't have an account ? ",
+                              "Register here ",
                               style: TextStyle(
                                   color: MyTheme.secondary,
                                   fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline,
                                   // Add this line for underline
                                   fontSize: 16),
                             )),

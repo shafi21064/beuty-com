@@ -69,7 +69,8 @@ class ShimmerHelper {
           crossAxisCount: 2,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
-          childAspectRatio: 1),
+          childAspectRatio: 1
+      ),
       padding: EdgeInsets.all(8),
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,

@@ -72,6 +72,7 @@ class _CheckoutState extends State<Checkout> {
   var _paymentTypeList = [];
   bool _isInitial = true;
   var _totalString = ". . .";
+  var _discountedPrice = '';
   var _grandTotalValue = 0.00;
   var _subTotalString = ". . .";
   var _taxString = ". . .";
@@ -145,6 +146,10 @@ class _CheckoutState extends State<Checkout> {
       }
     }
   }
+  
+  // applyCouponCode(){
+  //   var discount = int.parse(_totalString) - int.parse(_totalString * ())
+  // }
 
   fetchShippingAddressList() async {
     var addressResponse = await AddressRepository().getAddressList();
@@ -425,7 +430,19 @@ class _CheckoutState extends State<Checkout> {
       ToastComponent.showDialog(couponApplyResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
+    }else if(couponApplyResponse.result == true){
+      //_discountedPrice = ('${double.parse('${_totalString.replaceAll('৳', '')}') - (double.parse(_totalString.replaceAll('৳', '')) * ((couponApplyResponse.copon['discount']) / 100))}');
+      //_discountedPrice = ('${int.parse('${_totalString.replaceAll('৳', '')}')}');
+      var stringTk = '${_totalString.replaceAll('৳', '')}';
+      var stringC= {double.parse(stringTk.replaceAll(',', ''))} ;
+      //_discountedPrice = ('${}');
+      print(_discountedPrice);
+      print(couponApplyResponse.copon['discount']);
+      ToastComponent.showDialog(couponApplyResponse.message, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
     }
+    print(couponApplyResponse);
 
     // reset_summary();
   }
@@ -1759,7 +1776,7 @@ class _CheckoutState extends State<Checkout> {
               children: [
 
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
+                  padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
                     "${AppLocalizations.of(context).checkout_screen_total_amount} : ",
                     style: TextStyle(color: MyTheme.white, fontSize: 14),
@@ -1767,7 +1784,7 @@ class _CheckoutState extends State<Checkout> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
+                  padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
                     _totalString,
                     style: TextStyle(color: MyTheme.white, fontSize: 14),
@@ -1777,9 +1794,9 @@ class _CheckoutState extends State<Checkout> {
               ],
             ),
 
-            SizedBox(
-              height: mWidth * 0.05,
-            ),
+            // SizedBox(
+            //   height: mWidth * 0.005,
+            // ),
 
             Visibility(
               visible: !widget.manual_payment_from_order_details,

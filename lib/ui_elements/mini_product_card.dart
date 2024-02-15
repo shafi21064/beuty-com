@@ -24,6 +24,7 @@ class MiniProductCard extends StatefulWidget {
   String slug;
   int reviews;
   int stock;
+  int discount;
 
   MiniProductCard({
     Key key,
@@ -36,6 +37,8 @@ class MiniProductCard extends StatefulWidget {
     this.slug,
     this.reviews,
     this.stock,
+    this.discount
+
   }) : super(key: key);
 
   @override
@@ -45,6 +48,8 @@ class MiniProductCard extends StatefulWidget {
 class _MiniProductCardState extends State<MiniProductCard> {
   int _quantity = 1;
   String _variant="";
+
+
 
   onPressAddToCart(context) {
     addToCart(mode: "add_to_cart", context: context);
@@ -82,7 +87,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
   }
   @override
   Widget build(BuildContext context) {
-    
+   // var discountPercentage = ((((int.parse(widget.price) - int.parse(widget.sale_price))/(int.parse(widget.price)))*100 ).toStringAsFixed(0).toString());
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -100,17 +105,49 @@ elevation: 0, // Set the elevation to 0 for no shadow
               Container(
                 width: double.infinity,
                 height: (MediaQuery.of(context).size.width - 36) / 3,
-                child: ClipRRect(
-                    child: widget.image == ''
-                        ? Image.asset(
-                            'assets/app_logo.png',
-                            fit: BoxFit.fitWidth,
-                          )
-                        : FadeInImage.assetNetwork(
-                            placeholder: 'assets/placeholder.png',
-                            image: widget.image,
-                            fit: BoxFit.fill,
-                          )),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    ClipRRect(
+                        child: widget.image == ''
+                            ? Image.asset(
+                          'assets/app_logo.png',
+                          fit: BoxFit.fitWidth,
+                        )
+                            : FadeInImage.assetNetwork(
+                          placeholder: 'assets/placeholder.png',
+                          image: widget.image,
+                          fit: BoxFit.fill,
+                        )),
+                    Visibility(
+                      visible: widget.sale_price != widget.price,
+                      child: Positioned(
+                        left: 5,
+                        top: 5,
+                        child: Container(
+                          height: 33,
+                          width: 33,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: MyTheme.primary,
+                              shape: BoxShape.circle
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(2),
+                            child: Text('${widget.discount}%',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: MyTheme.white,
+                              fontSize: 11
+                            ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  ],
+                ),
               ),
               Container(
                 width: MediaQuery.of(context).size.width / 2 - .5,
@@ -123,7 +160,6 @@ elevation: 0, // Set the elevation to 0 for no shadow
                       borderRadius: BorderRadius.circular(0.0)),
                   padding: EdgeInsets.all(0.0),
                   child: Ink(
-                 
                     child: Container(
                       color: widget.stock > 0
                           ? MyTheme.add_to_cart_button
