@@ -86,6 +86,7 @@ dependencies:
   flutter_tags: ^0.4.9+1
   comment_box: ^0.0.17
   back_button_interceptor: 5.0.0
+  badges: ^2.0.3
 
 
 

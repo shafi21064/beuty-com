@@ -11,8 +11,9 @@ class CategoryRepository {
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
-    print("${ENDP.GET_CATEGORIES}");
-    print("All categoriesssss: ${response.body.toString()}");
+    // print("${ENDP.GET_CATEGORIES}");
+    // print("All categoriesssss: ${response.body.toString()}");
+    print('category' +categoryResponseFromJson(response.body).toString());
     return categoryResponseFromJson(response.body);
   }
 
@@ -21,8 +22,8 @@ class CategoryRepository {
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
-    print("${ENDP.GET_CATEGORIES}");
-    print("categoriesssss: ${response.body.toString()}");
+    // print("${ENDP.GET_CATEGORIES}");
+    // print("categoriesssss: ${response.body.toString()}");
     return featuredCategoryListFromJson(response.body);
   }
 
@@ -33,7 +34,7 @@ class CategoryRepository {
     });
     //print(response.body.toString());
     //print("--featured cat--");
-    print(response.body);
+    // print(response.body);
     return categoryResponseFromJson(response.body);
   }
 

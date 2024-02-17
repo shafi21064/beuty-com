@@ -103,8 +103,7 @@ final themeCollection = ThemeCollection(themes: {
 
 
   // Light_Blue theme
-  AppThemes.LightBlue: ThemeData(primarySwatch: Colors.blue,   accentColor: Colors.blue,
-      buttonTheme: ButtonThemeData(
+  AppThemes.LightBlue: ThemeData(buttonTheme: ButtonThemeData(
           colorScheme: ColorScheme.light(
             secondary: Colors.white,
           )),
@@ -112,11 +111,10 @@ final themeCollection = ThemeCollection(themes: {
       textTheme:TextTheme(
         bodyText1: TextStyle( color: Colors.white),
         bodyText2: TextStyle( color: Colors.white),
-      )),
+      ), colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue).copyWith(secondary: Colors.blue)),
 
   // Light_Red theme
-  AppThemes.LightRed: ThemeData(primarySwatch: Colors.red,   accentColor: Colors.red,
-      buttonTheme: ButtonThemeData(
+  AppThemes.LightRed: ThemeData(buttonTheme: ButtonThemeData(
           colorScheme: ColorScheme.light(
             secondary: Colors.white,
           )),
@@ -124,7 +122,7 @@ final themeCollection = ThemeCollection(themes: {
       textTheme:TextTheme(
         bodyText1: TextStyle( color: Colors.white),
         bodyText2: TextStyle( color: Colors.white),
-      )),
+      ), colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red).copyWith(secondary: Colors.red)),
 
 
 /*  AppThemes.DarkBlue: dark.copyWith(

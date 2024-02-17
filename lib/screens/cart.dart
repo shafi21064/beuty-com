@@ -18,11 +18,12 @@ class Cart extends StatefulWidget {
   Cart({Key key, this.has_bottomnav}) : super(key: key);
   final bool has_bottomnav;
 
+
   @override
-  _CartState createState() => _CartState();
+  CartState createState() => CartState();
 }
 
-class _CartState extends State<Cart> {
+class CartState extends State<Cart> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   ScrollController _mainScrollController = ScrollController();
   var _shopList = [];
@@ -32,6 +33,10 @@ class _CartState extends State<Cart> {
     bool _termsChecked = false;
 
     bool _hasItem = false;
+
+     //var _badgeValue = 0;
+    // get badgeValue => _badgeValue;
+
 
 
   @override
@@ -278,7 +283,6 @@ class _CartState extends State<Cart> {
     reset();
     fetchData();
   }
-
 
 
   @override
@@ -539,6 +543,7 @@ class _CartState extends State<Cart> {
     );
   }
 
+
   buildCartSellerList() {
     if (is_logged_in.$ == false) {
       return Container(
@@ -642,7 +647,16 @@ class _CartState extends State<Cart> {
     }
   }
 
+
   SingleChildScrollView buildCartSellerItemList(seller_index) {
+    var total_a = 0;
+    var demolist = _shopList[seller_index].cart_items;
+
+    demolist.forEach((val1){
+      total_a += val1.quantity;
+    });
+
+    print("show2: ${total_a.toString()}");
     return SingleChildScrollView(
       child: ListView.builder(
         itemCount: _shopList[seller_index].cart_items.length,
@@ -650,6 +664,9 @@ class _CartState extends State<Cart> {
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemBuilder: (context, index) {
+
+
+
           return Padding(
             padding: const EdgeInsets.only(bottom: 2.0),
             child: buildCartSellerItemCard(seller_index, index),

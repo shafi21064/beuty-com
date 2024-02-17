@@ -72,7 +72,7 @@ class _CheckoutState extends State<Checkout> {
   var _paymentTypeList = [];
   bool _isInitial = true;
   var _totalString = ". . .";
-  var _discountedPrice = '';
+  var _discountedPrice  ;
   var _grandTotalValue = 0.00;
   var _subTotalString = ". . .";
   var _taxString = ". . .";
@@ -434,9 +434,17 @@ class _CheckoutState extends State<Checkout> {
       //_discountedPrice = ('${double.parse('${_totalString.replaceAll('৳', '')}') - (double.parse(_totalString.replaceAll('৳', '')) * ((couponApplyResponse.copon['discount']) / 100))}');
       //_discountedPrice = ('${int.parse('${_totalString.replaceAll('৳', '')}')}');
       var stringTk = '${_totalString.replaceAll('৳', '')}';
-      var stringC= {double.parse(stringTk.replaceAll(',', ''))} ;
-      //_discountedPrice = ('${}');
-      print(_discountedPrice);
+      var stringC= stringTk.replaceAll(',', '') ;
+      //_discountedPrice = ('${int.parse(stringC.toString())-int.parse((stringC.toString()*(couponApplyResponse.copon['discount']/100)))}');
+      //_discountedPrice = int.parse(stringC.toString())-14;
+      var dis = couponApplyResponse.copon['discount'];
+      _discountedPrice = double.parse(stringC) - (double.parse(stringC)*(double.parse(dis)/100.00));
+      setState(() {
+
+      });
+      print("discountPrice: ${stringC}");
+      print("updatePrice: ${_discountedPrice}");
+      print("updatePrice: ${couponApplyResponse.copon['discount']}");
       print(couponApplyResponse.copon['discount']);
       ToastComponent.showDialog(couponApplyResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
@@ -1786,6 +1794,7 @@ class _CheckoutState extends State<Checkout> {
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
+                    //_discountedPrice ?? _totalString,
                     _totalString,
                     style: TextStyle(color: MyTheme.white, fontSize: 14),
                   ),

@@ -1,3 +1,5 @@
+import 'package:kirei/app_config.dart';
+import 'package:kirei/data_model/feature_category_response.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/repositories/skin_types_repository.dart';
 import 'package:kirei/screens/product_details.dart';
@@ -22,6 +24,7 @@ import 'package:kirei/repositories/search_repository.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:one_context/one_context.dart';
+import 'package:http/http.dart' as http;
 
 class WhichFilter {
   String option_key;
@@ -50,6 +53,7 @@ class Filter extends StatefulWidget {
       this.tag,
       this.type,
       this.category,
+        this.categoryIndex,
       this.key_ingredients})
       : super(key: key);
 
@@ -60,6 +64,14 @@ class Filter extends StatefulWidget {
   String key_ingredients;
   String category;
   String type;
+  int categoryIndex;
+
+  // dynamic _searchBar;
+  // get searchBar => _searchBar;
+  //
+  // get searchBarTwo(BuildContext context){
+  //   _searchBar = _FilterState().buildTopAppbar(context);
+  // }
 
   @override
   _FilterState createState() => _FilterState();
@@ -97,6 +109,10 @@ class _FilterState extends State<Filter> {
   bool _filteredCategoriesCalled = false;
 
   List<dynamic> _searchSuggestionList = List();
+
+  var _allSubCategories =[];
+  bool _isAllCategoryInitial = true;
+
 
   //----------------------------------------
   String _searchKey = "";
@@ -139,9 +155,57 @@ class _FilterState extends State<Filter> {
     setState(() {});
   }
 
+  // fetchAllCategory() async {
+  //   var allCategory = await CategoryRepository().getCategories();
+  //   //print(allCategory);
+  //   _allSubCategories.addAll(allCategory.categories);
+  //   print('sub category ${_allSubCategories.toString()}');
+  //   // for()
+  //   //print('_allSubCategories: ${_allSubCategories.toString()}');
+  //   _isAllCategoryInitial = false;
+  //   setState(() {});
+  // }
+  var _featuredCategoryList = [];
+  bool _isCategoryInitial = true;
+
+  // fetchFeaturedCategories() async {
+  //   var categoryResponse =
+  //   await CategoryRepository().getHomeFeaturedCategories();
+  //
+  //   //print(categoryResponse);
+  //   // print("featuredCategory-------->" + categoryResponse.categories.toString());
+  //
+  //   _featuredCategoryList.addAll(categoryResponse);
+  //   //print(_featuredCategoryList);
+  //   //print(''_featuredCategoryList);
+  //   _isCategoryInitial = false;
+  //   setState(() {});
+  // }
+  Future<List<FeaturedCategory>> getSubCategories() async {
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/home-featured-categories");
+    final response = await http.get(url, headers: {
+      "App-Language": app_language.$,
+    });
+    // print("${ENDP.GET_CATEGORIES}");
+    //  print("categoriesssss1: ${response.body.toString()}");
+    // print(featuredCategoryListFromJson(response.body).toString()) ;
+    List<FeaturedCategory> categories = featuredCategoryListFromJson(response.body);
+    // print("Categories:");
+    // categories.forEach((category) {
+    //   print(category); // This will implicitly call toString() method of FeaturedCategory
+    // });
+    _allSubCategories = categories;
+    return categories;
+  }
+
   @override
   void initState() {
     init();
+   getSubCategories();
+    //fetchFeaturedCategories();
+    //fetchAllCategory();
+    //print(_allSubCategories);
+    // print(widget.categoryIndex);
     super.initState();
   }
 
@@ -427,7 +491,10 @@ onPopped(value) async {
         drawer: MainDrawer(),
         endDrawer: buildFilterDrawer(),
         backgroundColor: MyTheme.white,
-        body: Stack(overflow: Overflow.visible, children: [
+        body: Stack(clipBehavior: Clip.none, children: [
+
+
+
           _selectedFilter.option_key == 'product'
               ? buildProductList()
               : (_selectedFilter.option_key == 'brands'
@@ -439,13 +506,14 @@ onPopped(value) async {
             right: 0.0,
             child: buildAppBar(context),
           ),
+
           Align(
-              alignment: Alignment.bottomCenter,
+              //alignment: Alignment.bottomCenter,
               child: _selectedFilter.option_key == 'product'
                   ? buildProductLoadingContainer()
                   : (_selectedFilter.option_key == 'brands'
                       ? buildBrandLoadingContainer()
-                      : buildShopLoadingContainer()))
+                      : buildShopLoadingContainer())),
         ]),
       ),
     );
@@ -468,6 +536,7 @@ onPopped(value) async {
             children: [
               buildTopAppbar(context),
               buildBottomAppBar(context),
+              buildScrollableSubCategory(),
               //buildSubCategoryList(context)
             ],
           ),
@@ -1252,58 +1321,62 @@ onPopped(value) async {
   buildProductScrollableList() {
     if (_isProductInitial && _productList.length == 0) {
       return Container(
-        margin: EdgeInsets.only(top: 40),
-        padding: EdgeInsets.only(top: 100),
+        margin: EdgeInsets.only(top: 50),
+        padding: EdgeInsets.only(top: 150),
           child: ShimmerHelper()
               .buildProductGridShimmer(scontroller: _scrollController));
     } else if (_productList.length > 0) {
-      return RefreshIndicator(
-        color: Colors.white,
-        backgroundColor: MyTheme.primary,
-        onRefresh: _onProductListRefresh,
-        child: SingleChildScrollView(
-          controller: _productScrollController,
-          physics: const BouncingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics()),
-          child: Column(
-            children: [
-              SizedBox(
-                  height:
-                      MediaQuery.of(context).viewPadding.top > 40 ? 180 : 135
-                  //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
-                  ),
-              GridView.builder(
-                // 2
-                //addAutomaticKeepAlives: true,
-                itemCount: _productList.length,
-                controller: _scrollController,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 15,
-                    mainAxisSpacing: 30,
-                    childAspectRatio: 0.618),
-                padding: EdgeInsets.all(16),
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  // 3
-                  return ProductCard(
-                    id: _productList[index].id,
-                    name: _productList[index].name,
-                    price: _productList[index].price.toString(),
-                    sale_price: _productList[index].sale_price.toString(),
-                    ratings: _productList[index].ratings,
-                    image: _productList[index].pictures.length > 0
-                        ? _productList[index].pictures[0].url
-                        : "assets/app_logo.png",
-                    slug: _productList[index].slug,
-                    reviews: _productList[index].reviews,
-                    stock: _productList[index].stock,
-                    discount: _productList[index].discount,
-                  );
-                },
-              )
-            ],
+      return Container(
+        margin: EdgeInsets.only(top: 40),
+        padding: EdgeInsets.only(top: 40),
+        child: RefreshIndicator(
+          color: Colors.white,
+          backgroundColor: MyTheme.primary,
+          onRefresh: _onProductListRefresh,
+          child: SingleChildScrollView(
+            controller: _productScrollController,
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+            child: Column(
+              children: [
+                SizedBox(
+                    height:
+                        MediaQuery.of(context).viewPadding.top > 40 ? 180 : 135
+                    //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
+                    ),
+                GridView.builder(
+                  // 2
+                  //addAutomaticKeepAlives: true,
+                  itemCount: _productList.length,
+                  controller: _scrollController,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 15,
+                      mainAxisSpacing: 30,
+                      childAspectRatio: 0.618),
+                  padding: EdgeInsets.all(16),
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    // 3
+                    return ProductCard(
+                      id: _productList[index].id,
+                      name: _productList[index].name,
+                      price: _productList[index].price.toString(),
+                      sale_price: _productList[index].sale_price.toString(),
+                      ratings: _productList[index].ratings,
+                      image: _productList[index].pictures.length > 0
+                          ? _productList[index].pictures[0].url
+                          : "assets/app_logo.png",
+                      slug: _productList[index].slug,
+                      reviews: _productList[index].reviews,
+                      stock: _productList[index].stock,
+                      discount: _productList[index].discount,
+                    );
+                  },
+                )
+              ],
+            ),
           ),
         ),
       );
@@ -1525,6 +1598,112 @@ onPopped(value) async {
               Text(AppLocalizations.of(context).common_no_shop_is_available));
     } else {
       return Container(); // should never be happening
+    }
+  }
+
+  buildScrollableSubCategory(){
+    if (_allSubCategories.length == 0) {
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Container(
+          color: MyTheme.white,
+            child: Row(
+            children: [
+              Padding(
+                  padding: const EdgeInsets.only(right: 8.0, top: 8),
+                  child: ClipOval(
+                      child: ShimmerHelper()
+                          .buildBasicShimmer(height: 58.0, width: 58.0))),
+              Padding(
+                  padding: const EdgeInsets.only(right: 8.0, top: 8),
+                  child: ClipOval(
+                      child: ShimmerHelper()
+                          .buildBasicShimmer(height: 58.0, width: 58.0))),
+              Padding(
+                  padding: const EdgeInsets.only(right: 8.0, top: 8),
+                  child: ClipOval(
+                      child: ShimmerHelper()
+                          .buildBasicShimmer(height: 58.0, width: 58.0))),
+              Padding(
+                  padding: const EdgeInsets.only(right: 8.0, top: 8),
+                  child: ClipOval(
+                      child: ShimmerHelper()
+                          .buildBasicShimmer(height: 58.0, width: 58.0))),
+              Padding(
+                  padding: const EdgeInsets.only(right: 8.0, top: 8),
+                  child: ClipOval(
+                      child: ShimmerHelper()
+                          .buildBasicShimmer(height: 58.0, width: 58.0))),
+              Padding(
+                  padding: const EdgeInsets.only(right: 8.0, top: 8),
+                  child: ClipOval(
+                      child: ShimmerHelper()
+                          .buildBasicShimmer(height: 58.0, width: 58.0))),
+            ],
+          ),
+        ),
+      );
+    }else if (_allSubCategories.length > 0){
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 8),
+        color: MyTheme.white,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: List.generate(_allSubCategories.length, (index) {
+              return GestureDetector(
+                onTap: () {},
+                child: Container(
+                  margin: EdgeInsets.only(right: 5),
+                  padding: EdgeInsets.only(bottom: 8,),
+                  //height: 120,
+                  width: MediaQuery.of(context).size.width / 5 - 4,
+                  color: MyTheme.white,
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 56,
+                        width: 56,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: ClipOval(
+                          child: _allSubCategories[index]?.icon != null
+                              ? FadeInImage.assetNetwork(
+                            image: _allSubCategories[index]?.icon,
+                            placeholder: 'assets/placeholder.png',
+                            fit: BoxFit.cover,
+                            height: 56,
+                            width: 56,
+                          )
+                              : Image.asset(
+                            'assets/placeholder.png',
+                            fit: BoxFit.cover,
+                            height: 56,
+                            width: 56,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Text(
+                          _allSubCategories[index]?.name,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: MyTheme.secondary,
+                            fontWeight: FontWeight.w300,
+                            fontSize: 12,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            }),
+          ),
+        ),
+      );
     }
   }
 }

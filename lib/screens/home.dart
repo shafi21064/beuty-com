@@ -51,6 +51,7 @@ class Home extends StatefulWidget {
   bool show_back_button;
   bool go_back;
 
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -166,7 +167,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   fetchFeaturedCategories() async {
     var categoryResponse =
-        await CategoryRepository().getHomeFeaturedCategories();
+    await CategoryRepository().getHomeFeaturedCategories();
     print(categoryResponse);
     // print("featuredCategory-------->" + categoryResponse.categories.toString());
 
@@ -176,14 +177,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     setState(() {});
   }
 
-  fetchAllCategory() async {
-    var allCategory = await CategoryRepository().getCategories();
-    //print(allCategory);
-    _allCategories.addAll(allCategory.categories);
-    print('shafi ${_allCategories.length}');
-    _isAllCategoryIntial = false;
-    setState(() {});
-  }
+  // fetchAllCategory(int index) async {
+  //   var allCategory = await CategoryRepository().getCategories();
+  //   //print(allCategory);
+  //   _allCategories.addAll(allCategory.categories[index].children);
+  //   print(' ${_allCategories[index].id}');
+  //   _isAllCategoryIntial = false;
+  //   setState(() {});
+  // }
 
   fetchBestSellingProducts() async {
     var productResponse = await ProductRepository().getBestSellingProducts();
@@ -323,7 +324,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       },
       child: Directionality(
           textDirection:
-              app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
+          app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
           child: DynamicTheme(
               themeCollection: themeCollection,
               defaultThemeId: AppThemes.Default,
@@ -363,21 +364,21 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                               10.0), // Set the border radius
                                         ),
                                         width:
-                                            MediaQuery.of(context).size.width *
-                                                .78,
+                                        MediaQuery.of(context).size.width *
+                                            .78,
                                         child: Container(
                                           child: Padding(
                                               padding: EdgeInsets.all(0),
                                               child: TypeAheadField(
                                                 // ignore: missing_return
                                                 suggestionsCallback:
-                                                    // ignore: missing_return
+                                                // ignore: missing_return
                                                     (pattern) async {
                                                   //return await BackendService.getSuggestions(pattern);
                                                   if (pattern != "") {
                                                     var suggestions =
-                                                        await SearchRepository()
-                                                            .getSearchSuggestionListResponse(
+                                                    await SearchRepository()
+                                                        .getSearchSuggestionListResponse(
                                                       query_key: pattern,
                                                     );
 
@@ -389,20 +390,20 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                     height: 50,
                                                     child: Center(
                                                         child: Text(
-                                                      AppLocalizations.of(
+                                                          AppLocalizations.of(
                                                               context)
-                                                          .filter_screen_loading_suggestions,
-                                                      style: TextStyle(
-                                                          color: MyTheme
-                                                              .dark_grey),
-                                                    )),
+                                                              .filter_screen_loading_suggestions,
+                                                          style: TextStyle(
+                                                              color: MyTheme
+                                                                  .dark_grey),
+                                                        )),
                                                   );
                                                 },
                                                 itemBuilder:
                                                     (context, suggestion) {
                                                   return Visibility(
                                                     visible: _searchController
-                                                            .text !=
+                                                        .text !=
                                                         "",
                                                     child: ListTile(
                                                       onTap: () {
@@ -410,24 +411,24 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                             MaterialPageRoute(
                                                                 builder:
                                                                     (context) {
-                                                          return ProductDetails(
-                                                              id: suggestion
-                                                                  .id);
-                                                        })).then((value) {
+                                                                  return ProductDetails(
+                                                                      id: suggestion
+                                                                          .id);
+                                                                })).then((value) {
                                                           onPopped(value);
                                                         });
                                                       },
                                                       contentPadding:
-                                                          EdgeInsets.only(
-                                                              top: 5),
+                                                      EdgeInsets.only(
+                                                          top: 5),
                                                       dense: true,
                                                       leading: Image.network(
                                                         suggestion.pictures[0]
                                                             .url, // Replace with the actual URL of your image
                                                         width:
-                                                            40, // Adjust the width as needed
+                                                        40, // Adjust the width as needed
                                                         height:
-                                                            40, // Adjust the height as needed
+                                                        40, // Adjust the height as needed
                                                         fit: BoxFit.cover,
                                                       ),
                                                       title: RichText(
@@ -448,37 +449,37 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                           children: [
                                                             TextSpan(
                                                               text: suggestion
-                                                                          .sale_price !=
-                                                                      suggestion
-                                                                          .price
+                                                                  .sale_price !=
+                                                                  suggestion
+                                                                      .price
                                                                   ? "৳" +
-                                                                      suggestion
-                                                                          .price
-                                                                          .toString()
+                                                                  suggestion
+                                                                      .price
+                                                                      .toString()
                                                                   : '',
                                                               style: TextStyle(
                                                                 color: MyTheme
                                                                     .dark_grey,
                                                                 decoration: suggestion
-                                                                            .sale_price !=
-                                                                        suggestion
-                                                                            .price
+                                                                    .sale_price !=
+                                                                    suggestion
+                                                                        .price
                                                                     ? TextDecoration
-                                                                        .lineThrough
+                                                                    .lineThrough
                                                                     : TextDecoration
-                                                                        .none,
+                                                                    .none,
                                                               ),
                                                             ),
                                                             TextSpan(
                                                               text: suggestion
-                                                                          .sale_price !=
-                                                                      suggestion
-                                                                          .price
+                                                                  .sale_price !=
+                                                                  suggestion
+                                                                      .price
                                                                   ? ' ৳${suggestion.sale_price.toString()}'
                                                                   : "৳" +
-                                                                      suggestion
-                                                                          .price
-                                                                          .toString(),
+                                                                  suggestion
+                                                                      .price
+                                                                      .toString(),
                                                               style: TextStyle(
                                                                   color: MyTheme
                                                                       .dark_grey),
@@ -495,7 +496,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                     child: Center(
                                                         child: Text(
                                                             AppLocalizations.of(
-                                                                    context)
+                                                                context)
                                                                 .filter_screen_no_suggestion_available,
                                                             style: TextStyle(
                                                                 color: MyTheme
@@ -511,7 +512,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                   // _onSearchSubmit();
                                                 },
                                                 textFieldConfiguration:
-                                                    TextFieldConfiguration(
+                                                TextFieldConfiguration(
                                                   onTap: () {},
                                                   controller: _searchController,
                                                   onSubmitted: (txt) {
@@ -523,15 +524,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                       color: MyTheme.secondary),
                                                   autofocus: false,
                                                   cursorColor:
-                                                      MyTheme.secondary,
+                                                  MyTheme.secondary,
                                                   decoration: InputDecoration(
                                                       prefixIcon: Icon(
                                                         Icons.search,
                                                         color:
-                                                            MyTheme.secondary,
+                                                        MyTheme.secondary,
                                                       ),
                                                       hintText: AppLocalizations
-                                                              .of(context)
+                                                          .of(context)
                                                           .filter_screen_search_here,
                                                       border: InputBorder.none,
                                                       hintStyle: TextStyle(
@@ -544,9 +545,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                       //       BorderSide(color: MyTheme.white, width: 0.0),
                                                       // ),
                                                       contentPadding:
-                                                          EdgeInsets.only(
-                                                              left: 30,
-                                                              top: 10)),
+                                                      EdgeInsets.only(
+                                                          left: 30,
+                                                          top: 10)),
                                                 ),
                                               )),
                                         ),
@@ -569,7 +570,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                         0.0,
                                       ),
                                       child:
-                                          buildHomeFeaturedCategories(context),
+                                      buildHomeFeaturedCategories(context),
                                     ),
                                   ]),
                                 ),
@@ -584,7 +585,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                       ),
                                       child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             AppLocalizations.of(context)
@@ -626,7 +627,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                       ),
                                       child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             AppLocalizations.of(context)
@@ -668,7 +669,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                       ),
                                       child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             AppLocalizations.of(context)
@@ -710,7 +711,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                       ),
                                       child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             AppLocalizations.of(context)
@@ -734,7 +735,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                               0.0,
                                             ),
                                             child:
-                                                buildTrendingProducts(context),
+                                            buildTrendingProducts(context),
                                           ),
                                         ],
                                       ),
@@ -752,7 +753,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                       ),
                                       child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             AppLocalizations.of(context)
@@ -776,7 +777,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                               0.0,
                                             ),
                                             child:
-                                                buildHotDealsProducts(context),
+                                            buildHotDealsProducts(context),
                                           ),
                                         ],
                                       ),
@@ -794,7 +795,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                       ),
                                       child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             AppLocalizations.of(context)
@@ -970,7 +971,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   name: _bestSellingProductList[index].name,
                   price: _bestSellingProductList[index].price.toString(),
                   sale_price:
-                      _bestSellingProductList[index].sale_price.toString(),
+                  _bestSellingProductList[index].sale_price.toString(),
                   slug: _bestSellingProductList[index].slug,
                   reviews: _bestSellingProductList[index].reviews,
                   stock: _bestSellingProductList[index].stock,
@@ -1077,16 +1078,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               return Padding(
                 padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
-                  id: _recommendedProductList[index].id,
-                  image: _recommendedProductList[index].pictures[0].url,
-                  ratings: _recommendedProductList[index].ratings,
-                  name: _recommendedProductList[index].name,
-                  price: _recommendedProductList[index].price.toString(),
-                  sale_price:
-                      _recommendedProductList[index].sale_price.toString(),
-                  slug: _recommendedProductList[index].slug,
-                  reviews: _recommendedProductList[index].reviews,
-                  stock: _recommendedProductList[index].stock,
+                    id: _recommendedProductList[index].id,
+                    image: _recommendedProductList[index].pictures[0].url,
+                    ratings: _recommendedProductList[index].ratings,
+                    name: _recommendedProductList[index].name,
+                    price: _recommendedProductList[index].price.toString(),
+                    sale_price:
+                    _recommendedProductList[index].sale_price.toString(),
+                    slug: _recommendedProductList[index].slug,
+                    reviews: _recommendedProductList[index].reviews,
+                    stock: _recommendedProductList[index].stock,
                     discount:  _recommendedProductList[index].discount
                 ),
               );
@@ -1128,7 +1129,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   name: _popularSearchProductList[index].name,
                   price: _popularSearchProductList[index].price.toString(),
                   sale_price:
-                      _popularSearchProductList[index].sale_price.toString(),
+                  _popularSearchProductList[index].sale_price.toString(),
                   slug: _popularSearchProductList[index].slug,
                   reviews: _popularSearchProductList[index].reviews,
                   stock: _popularSearchProductList[index].stock,
@@ -1258,7 +1259,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   name: _newArrivalProductList[index].name,
                   price: _newArrivalProductList[index].price.toString(),
                   sale_price:
-                      _newArrivalProductList[index].sale_price.toString(),
+                  _newArrivalProductList[index].sale_price.toString(),
                   slug: _newArrivalProductList[index].slug,
                   reviews: _newArrivalProductList[index].reviews,
                   stock: _newArrivalProductList[index].stock,
@@ -1329,15 +1330,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return Filter(
                       type: _featuredCategoryList[index]?.slug,
+                      //categoryIndex: index,
                     );
                   }));
                 } else if (_featuredCategoryList[index]?.itemType ==
                     "category") {
-                  fetchAllCategory();
-                  print('My catagory ${_allCategories}');
+                  //fetchAllCategory(index);
+                  // print('My catagory ${_allCategories}');
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return Filter(
                       category: _featuredCategoryList[index]?.slug,
+                      //categoryIndex: index,
                     );
                   }));
                 } else {
@@ -1376,18 +1379,18 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       child: ClipOval(
                         child: _featuredCategoryList[index]?.icon != null
                             ? FadeInImage.assetNetwork(
-                                image: _featuredCategoryList[index]?.icon,
-                                placeholder: 'assets/placeholder.png',
-                                fit: BoxFit.cover,
-                                height: 56,
-                                width: 56,
-                              )
+                          image: _featuredCategoryList[index]?.icon,
+                          placeholder: 'assets/placeholder.png',
+                          fit: BoxFit.cover,
+                          height: 56,
+                          width: 56,
+                        )
                             : Image.asset(
-                                'assets/placeholder.png',
-                                fit: BoxFit.cover,
-                                height: 56,
-                                width: 56,
-                              ),
+                          'assets/placeholder.png',
+                          fit: BoxFit.cover,
+                          height: 56,
+                          width: 56,
+                        ),
                       ),
                     ),
                     Padding(
@@ -1414,9 +1417,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           height: 120,
           child: Center(
               child: Text(
-            AppLocalizations.of(context).home_screen_no_category_found,
-            style: TextStyle(color: MyTheme.secondary),
-          )));
+                AppLocalizations.of(context).home_screen_no_category_found,
+                style: TextStyle(color: MyTheme.secondary),
+              )));
     } else {
       // should not be happening
       return Container(
@@ -1552,7 +1555,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
                         color:
-                            Theme.of(context).buttonTheme.colorScheme.primary,
+                        Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(1.0),
@@ -1604,7 +1607,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
                         color:
-                            Theme.of(context).buttonTheme.colorScheme.primary,
+                        Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(1.0),
@@ -1655,7 +1658,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
                         color:
-                            Theme.of(context).buttonTheme.colorScheme.primary,
+                        Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(1.0),
@@ -1707,7 +1710,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
                         color:
-                            Theme.of(context).buttonTheme.colorScheme.primary,
+                        Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(1.0),
@@ -1759,7 +1762,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
                         color:
-                            Theme.of(context).buttonTheme.colorScheme.primary,
+                        Theme.of(context).buttonTheme.colorScheme.primary,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(1.0),
@@ -2021,9 +2024,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           height: 120,
           child: Center(
               child: Text(
-            AppLocalizations.of(context).home_screen_no_carousel_image_found,
-            style: TextStyle(color: MyTheme.secondary),
-          )));
+                AppLocalizations.of(context).home_screen_no_carousel_image_found,
+                style: TextStyle(color: MyTheme.secondary),
+              )));
     } else {
       // should not be happening
       return Container(
@@ -2042,29 +2045,29 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         },
         child: widget.show_back_button
             ? Builder(
-                builder: (context) => IconButton(
-                    icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
-                    onPressed: () {
-                      if (!widget.go_back) {
-                        return;
-                      }
-                      return Navigator.of(context).pop();
-                    }),
-              )
+          builder: (context) => IconButton(
+              icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
+              onPressed: () {
+                if (!widget.go_back) {
+                  return;
+                }
+                return Navigator.of(context).pop();
+              }),
+        )
             : Builder(
-                builder: (context) => Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 18.0, horizontal: 0.0),
-                  child: Container(
-                    child: Image.asset(
-                      'assets/hamburger.png',
-                      height: 16,
-                      //color: MyTheme.dark_grey,
-                      color: MyTheme.dark_grey,
-                    ),
-                  ),
-                ),
+          builder: (context) => Padding(
+            padding: const EdgeInsets.symmetric(
+                vertical: 18.0, horizontal: 0.0),
+            child: Container(
+              child: Image.asset(
+                'assets/hamburger.png',
+                height: 16,
+                //color: MyTheme.dark_grey,
+                color: MyTheme.dark_grey,
               ),
+            ),
+          ),
+        ),
       ),
 
       title: Container(
@@ -2083,7 +2086,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 children: [
                   Container(
                       margin: EdgeInsets.only(
-                          //left: MediaQuery.of(context).size.width / 3.7),
+                        //left: MediaQuery.of(context).size.width / 3.7),
                           left: 15),
                       child: Image.asset(
                         "assets/logo.png",
@@ -2092,12 +2095,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return Filter();
-                        }));
+                              return Filter();
+                            }));
                       },
                       child: Container(
                           padding:
-                              EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
                               color: Colors.blueGrey[50]),
@@ -2153,19 +2156,30 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           is_logged_in.$ == false ?
 
           GestureDetector(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
-            },
-            child: Text("Login",
-              style: TextStyle(
-                color: MyTheme.primary,
-                fontWeight: FontWeight.w600,
-              ),
+            onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (_)=> Login())),
+            child: Row(
+              children: [
+                Text("Hi, ",
+                  style: TextStyle(
+                    color: MyTheme.secondary,
+                    fontWeight: FontWeight.w600,
+                  ),
+
+                ),
+                Text("User",
+                  style: TextStyle(
+                      color: MyTheme.secondary,
+                      fontWeight: FontWeight.w600
+                  ),
+                ),
+                SizedBox(width: 5,),
+                Icon(Icons.account_circle_outlined, color: MyTheme.secondary,),
+
+              ],
             ),
           )
               :
           Row(
-
             children: [
               Text("Hi, ",
                 style: TextStyle(

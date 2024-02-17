@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:kirei/custom/CommonFunctoins.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:kirei/my_theme.dart';
+import 'package:kirei/repositories/cart_repository.dart';
 import 'package:kirei/screens/cart.dart';
 import 'package:kirei/screens/category_list.dart';
 import 'package:kirei/screens/home.dart';
@@ -19,6 +20,7 @@ import 'dart:ui';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
+import 'package:badges/badges.dart' as badges;
 
 import 'newsfeed.dart';
 
@@ -59,11 +61,50 @@ class _MainState extends State<Main> {
   void initState() {
     // TODO: implement initState
     //re appear statusbar in case it was not there in the previous page
-    SystemChrome.setEnabledSystemUIOverlays(
-        [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(
+        SystemUiMode.manual, overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    // fetchCartData();
+    // print("Taka: ${_cartTotal}");
+    // CartState().buildCartSellerItemList();
+
     super.initState();
     // print(user_id.$);
   }
+
+  // var _shopList = [];
+  // bool _isInitial = true;
+  // var _cartTotal = 0.00;
+  // var _cartTotalString = ". . .";
+
+  // fetchCartData() async{
+  //   var cartDataResponse = await CartRepository().getCartResponseList(user_id.$);
+  //   if (cartDataResponse != null && cartDataResponse.length > 0) {
+  //     _shopList = cartDataResponse;
+  //   }
+  //   _isInitial = false;
+  //   coutTotalItem();
+  // }
+  //
+  // coutTotalItem(){
+  //   _cartTotal = 0.00;
+  //   if (_shopList.length > 0) {
+  //     _shopList.forEach((shop) {
+  //       if (shop.cart_items.length > 0) {
+  //         shop.cart_items.forEach((cart_item) {
+  //           _cartTotal += double.parse(
+  //               ((cart_item.price + cart_item.tax) * cart_item.quantity)
+  //                   .toStringAsFixed(2));
+  //           _cartTotalString =
+  //           "${cart_item.currency_symbol}${_cartTotal.toStringAsFixed(2)}";
+  //         });
+  //       }
+  //     });
+  //   }
+  //
+  //   if (mounted) {
+  //     setState(() {});
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +154,16 @@ class _MainState extends State<Main> {
               // ),
               TabItem(icon: Icons.storefront_outlined, title: 'Shop'),
               TabItem(
-                icon: Icons.shopping_bag_outlined,
+                //icon: Icons.shopping_bag_outlined,
+                icon:     badges.Badge(
+                  badgeContent: Text('3',
+                  style: TextStyle(
+                    color: MyTheme.white
+                  ),
+                  ),
+                  badgeColor: MyTheme.secondary,
+                  child: Icon(Icons.shopping_bag_outlined, color: MyTheme.white,),
+                ),
                 title: AppLocalizations.of(context)
                     .main_screen_bottom_navigation_cart,
               ),

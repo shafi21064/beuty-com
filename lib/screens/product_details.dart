@@ -1,3 +1,5 @@
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:kirei/repositories/search_repository.dart';
 import 'package:kirei/screens/cart.dart';
 import 'package:kirei/screens/common_webview_screen.dart';
 import 'package:kirei/screens/filter.dart';
@@ -36,8 +38,10 @@ import 'package:html/parser.dart' show parse;
 class ProductDetails extends StatefulWidget {
   int id;
   String slug;
-
-  ProductDetails({Key key, this.id, this.slug}) : super(key: key);
+  int discount;
+  String sale_price;
+  String price;
+  ProductDetails({Key key, this.id, this.slug, this.discount, this.sale_price, this.price}) : super(key: key);
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
@@ -53,6 +57,10 @@ class _ProductDetailsState extends State<ProductDetails> {
   ScrollController _imageScrollController = ScrollController();
   TextEditingController sellerChatTitleController = TextEditingController();
   TextEditingController sellerChatMessageController = TextEditingController();
+
+  final TextEditingController _searchController = new TextEditingController();
+  String _searchKey = "";
+  WhichFilter _selectedFilter;
 
   //init values
   bool _isInWishList = false;
@@ -1953,44 +1961,192 @@ class _ProductDetailsState extends State<ProductDetails> {
             statusBarHeight -
             (MediaQuery.of(context).viewPadding.top > 40 ? 32.0 : 16.0),
         //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
-        child: Container(
-          width: 300,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Text(
-              //   _productDetails != null ? "৳" + _appbarPriceString : '...',
-              //   style: TextStyle(fontSize: 16, color: Colors.white),
-              // ),
-              Text(
-                _productDetails != null
-                    ? _productDetails.name.length > 40
-                        ? _productDetails.name.substring(0, 40) + '...'
-                        : _productDetails.name
-                    : '...',
-                style: TextStyle(fontSize: 13, color: MyTheme.white),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2, // Adjust the number of lines if necessary
-              ),
-            ],
+        child:Container(
+          width: MediaQuery.of(context).size.width * .78,
+          child: Container(
+            child: Padding(
+                padding: MediaQuery.of(context).viewPadding.top >
+                    30 //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
+                    ? const EdgeInsets.symmetric(vertical: 36.0, horizontal: 0.0)
+                    : const EdgeInsets.symmetric(vertical: 14.0, horizontal: 0.0),
+                child: TypeAheadField(
+                  // ignore: missing_return
+                  suggestionsCallback: (pattern) async {
+                    //return await BackendService.getSuggestions(pattern);
+                    if (pattern != "") {
+                      var suggestions = await SearchRepository()
+                          .getSearchSuggestionListResponse(
+                        query_key: pattern,
+                      );
+
+                      return suggestions.products;
+                    }
+                  },
+                  loadingBuilder: (context) {
+                    return Container(
+                      height: 50,
+                      child: Center(
+                          child: Text(
+                            AppLocalizations.of(context)
+                                .filter_screen_loading_suggestions,
+                            style: TextStyle(color: MyTheme.dark_grey),
+                          )),
+                    );
+                  },
+                  itemBuilder: (context, suggestion) {
+                    return Visibility(
+                      visible: _searchController.text != "",
+                      child: ListTile(
+                        onTap:(){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return ProductDetails(id: suggestion.id);
+                          })).then((value) {
+                            onPopped(value);
+                          });
+
+                        },
+                        contentPadding: EdgeInsets.only(top: 5),
+                        dense: true,
+                        leading: Image.network(
+                          suggestion.pictures[0]
+                              .url, // Replace with the actual URL of your image
+                          width: 40, // Adjust the width as needed
+                          height: 40, // Adjust the height as needed
+                          fit: BoxFit.cover,
+                        ),
+                        title: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: suggestion.name,
+                                style: TextStyle(color: MyTheme.secondary),
+                              ),
+                            ],
+                          ),
+                        ),
+                        subtitle: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: suggestion.sale_price != suggestion.price
+                                    ? "৳" + suggestion.price.toString()
+                                    : '',
+                                style: TextStyle(
+                                  color: MyTheme.dark_grey,
+                                  decoration:
+                                  suggestion.sale_price != suggestion.price
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                ),
+                              ),
+                              TextSpan(
+                                text: suggestion.sale_price != suggestion.price
+                                    ? ' ৳${suggestion.sale_price.toString()}'
+                                    : "৳" + suggestion.price.toString(),
+                                style: TextStyle(color: MyTheme.dark_grey),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  noItemsFoundBuilder: (context) {
+                    return Container(
+                      height: 50,
+                      child: Center(
+                          child: Text(
+                              AppLocalizations.of(context)
+                                  .filter_screen_no_suggestion_available,
+                              style: TextStyle(color: MyTheme.dark_grey))),
+                    );
+                  },
+                  onSuggestionSelected: (suggestion) {
+                    _searchController.text = suggestion.name;
+                    _searchKey = suggestion.name;
+                    setState(() {});
+                    _onSearchSubmit();
+                  },
+                  textFieldConfiguration: TextFieldConfiguration(
+                    onTap: () {},
+                    controller: _searchController,
+                    onSubmitted: (txt) {
+                      _searchKey = txt;
+                      setState(() {});
+                      _onSearchSubmit();
+                    },
+                    style: TextStyle(color: MyTheme.white),
+                    autofocus: false,
+                    cursorColor: MyTheme.white,
+                    decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)
+                            .filter_screen_search_here,
+                        border: InputBorder.none,
+                        hintStyle:
+                        TextStyle(fontSize: 14.0, color: MyTheme.light_grey),
+                        alignLabelWithHint: true,
+                        // focusedBorder: OutlineInputBorder(
+                        //   borderSide:
+                        //       BorderSide(color: MyTheme.white, width: 0.0),
+                        // ),
+                        contentPadding: EdgeInsets.only(left: 30)),
+                  ),
+                )),
           ),
         ),
       ),
       elevation: 0.0,
       titleSpacing: 0,
       actions: <Widget>[
-        // Padding(
-        //   padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
-        //   child: IconButton(
-        //     icon: Icon(Icons.share_outlined, color: Colors.white),
-        //     onPressed: () {
-        //       onPressShare(context);
-        //     },
-        //   ),
-        // ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+          child: IconButton(
+            icon: Icon(Icons.search, color: Colors.white),
+            onPressed: () {
+              // onPressShare(context);
+            },
+          ),
+        ),
       ],
     );
   }
+  //
+  // init() {
+  //   _givenSelectedFilterOptionKey = widget.selected_filter;
+  //
+  //   _dropdownWhichFilterItems =
+  //       buildDropdownWhichFilterItems(_which_filter_list);
+  //   _selectedFilter = _dropdownWhichFilterItems[0].value;
+  //
+  //   for (int x = 0; x < _dropdownWhichFilterItems.length; x++) {
+  //     if (_dropdownWhichFilterItems[x].value.option_key ==
+  //         _givenSelectedFilterOptionKey) {
+  //       _selectedFilter = _dropdownWhichFilterItems[x].value;
+  //     }
+  //   }
+
+  _onSearchSubmit() {
+    // reset();
+    // if (_selectedFilter.option_key == "sellers") {
+    //   resetShopList();
+    //   fetchShopData();
+    // } else if (_selectedFilter.option_key == "brands") {
+    //   resetBrandList();
+    //   fetchBrandData();
+    // } else {
+    //   resetProductList();
+    //   fetchProductData();
+    // }
+  }
+  // resetShopList() {
+  //   _shopList.clear();
+  //   _isShopInitial = true;
+  //   _totalShopData = 0;
+  //   _shopPage = 1;
+  //   _showShopLoadingContainer = false;
+  //   setState(() {});
+  // }
+
 
   buildBottomAppBar(BuildContext context, _addedToCartSnackbar) {
     return Builder(builder: (BuildContext context) {
@@ -2695,6 +2851,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   slug: _relatedProducts[index].slug,
                   reviews: _relatedProducts[index].reviews,
                   stock: _relatedProducts[index].stock,
+                  discount: _relatedProducts[index].discount,
                 ),
               );
             },
@@ -2759,6 +2916,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   slug: _recommendedProducts[index].slug,
                   reviews: _recommendedProducts[index].reviews,
                   stock: _recommendedProducts[index].stock,
+                  discount: _recommendedProducts[index].discount,
                 ),
               );
             },
@@ -2951,15 +3109,45 @@ class _ProductDetailsState extends State<ProductDetails> {
             onTap: () {
               openPhotoDialog(context, _productImageList[_currentImage]);
             },
-            child: Container(
-              height: 250,
-              width: MediaQuery.of(context).size.width - 96,
-              child: Container(
-                  child: FadeInImage.assetNetwork(
-                placeholder: 'assets/placeholder_rectangle.png',
-                image: _productImageList[_currentImage],
-                fit: BoxFit.scaleDown,
-              )),
+            child: Stack(
+              children: [
+                Container(
+                  height: 250,
+                  width: MediaQuery.of(context).size.width - 96,
+                  child: Container(
+                      child: FadeInImage.assetNetwork(
+                    placeholder: 'assets/placeholder_rectangle.png',
+                    image: _productImageList[_currentImage],
+                    fit: BoxFit.scaleDown,
+                  )),
+                ),
+                Visibility(
+                  visible: widget.sale_price != widget.price,
+                  child: Positioned(
+                    left: 30,
+                    top:15,
+                    child: Container(
+                      height: 33,
+                      width: 33,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: MyTheme.primary,
+                          shape: BoxShape.circle
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(2),
+                        child: Text('${widget.discount}%',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: MyTheme.white,
+                              fontSize: 11
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

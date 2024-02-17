@@ -49,6 +49,9 @@ class _MiniProductCardState extends State<MiniProductCard> {
   int _quantity = 1;
   String _variant="";
 
+  var _shopList =[];
+  bool _isInitial = true;
+
 
 
   onPressAddToCart(context) {
@@ -85,13 +88,34 @@ class _MiniProductCardState extends State<MiniProductCard> {
       } 
     }
   }
+
+  fetchData() async {
+    print(user_id.$);
+
+    var cartResponseList =
+    await CartRepository().getCartResponseList(user_id.$);
+
+    if (cartResponseList != null && cartResponseList.length > 0) {
+      _shopList = cartResponseList;
+    }
+    _isInitial = false;
+    //getSetCartTotal();
+    setState(() {});
+  }
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+
   @override
   Widget build(BuildContext context) {
    // var discountPercentage = ((((int.parse(widget.price) - int.parse(widget.sale_price))/(int.parse(widget.price)))*100 ).toStringAsFixed(0).toString());
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ProductDetails(id: widget.id, slug: widget.slug);
+          return ProductDetails(id: widget.id, slug: widget.slug,discount: widget.discount, sale_price: widget.sale_price, price: widget.price,);
         }));
       },
       child: Card(
@@ -155,6 +179,8 @@ elevation: 0, // Set the elevation to 0 for no shadow
                 child: RaisedButton(
                   onPressed: () {
                     onPressAddToCart(context);
+                    print(_shopList.length.toString());
+
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0.0)),

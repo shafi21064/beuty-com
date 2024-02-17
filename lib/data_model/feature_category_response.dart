@@ -35,9 +35,16 @@ class FeaturedCategory {
       disabled: json['disabled'],
     );
   }
+
+  @override
+  String toString() {
+    return 'FeaturedCategory{id: $id, name: $name}';
+  }
 }
 
-List<FeaturedCategory> featuredCategoryListFromJson(String jsonString) {
+List<FeaturedCategory> featuredCategoryListFromJson(String jsonString){
   final List<dynamic> jsonList = json.decode(jsonString);
   return jsonList.map((json) => FeaturedCategory.fromJson(json)).toList();
 }
+
+
