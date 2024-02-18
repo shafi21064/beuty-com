@@ -182,7 +182,7 @@ class _FilterState extends State<Filter> {
   //   setState(() {});
   // }
   Future<List<FeaturedCategory>> getSubCategories() async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/home-featured-categories");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/sub-categories/${widget.category}");
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
@@ -536,7 +536,9 @@ onPopped(value) async {
             children: [
               buildTopAppbar(context),
               buildBottomAppBar(context),
-              buildScrollableSubCategory(),
+              widget.category != null ? buildScrollableSubCategory() : Container()
+              //buildScrollableSubCategory()
+
               //buildSubCategoryList(context)
             ],
           ),
@@ -1321,8 +1323,8 @@ onPopped(value) async {
   buildProductScrollableList() {
     if (_isProductInitial && _productList.length == 0) {
       return Container(
-        margin: EdgeInsets.only(top: 50),
-        padding: EdgeInsets.only(top: 150),
+        margin: widget.category!= null? EdgeInsets.only(top: 50) : EdgeInsets.only(top: 0),
+        padding: widget.category!= null? EdgeInsets.only(top: 100) : EdgeInsets.only(top: 0),
           child: ShimmerHelper()
               .buildProductGridShimmer(scontroller: _scrollController));
     } else if (_productList.length > 0) {
@@ -1606,36 +1608,37 @@ onPopped(value) async {
       return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 8,),
           color: MyTheme.white,
             child: Row(
             children: [
               Padding(
-                  padding: const EdgeInsets.only(right: 8.0, top: 8),
+                  padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8,),
                   child: ClipOval(
                       child: ShimmerHelper()
                           .buildBasicShimmer(height: 58.0, width: 58.0))),
               Padding(
-                  padding: const EdgeInsets.only(right: 8.0, top: 8),
+                  padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
                   child: ClipOval(
                       child: ShimmerHelper()
                           .buildBasicShimmer(height: 58.0, width: 58.0))),
               Padding(
-                  padding: const EdgeInsets.only(right: 8.0, top: 8),
+                  padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
                   child: ClipOval(
                       child: ShimmerHelper()
                           .buildBasicShimmer(height: 58.0, width: 58.0))),
               Padding(
-                  padding: const EdgeInsets.only(right: 8.0, top: 8),
+                  padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
                   child: ClipOval(
                       child: ShimmerHelper()
                           .buildBasicShimmer(height: 58.0, width: 58.0))),
               Padding(
-                  padding: const EdgeInsets.only(right: 8.0, top: 8),
+                  padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
                   child: ClipOval(
                       child: ShimmerHelper()
                           .buildBasicShimmer(height: 58.0, width: 58.0))),
               Padding(
-                  padding: const EdgeInsets.only(right: 8.0, top: 8),
+                  padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
                   child: ClipOval(
                       child: ShimmerHelper()
                           .buildBasicShimmer(height: 58.0, width: 58.0))),

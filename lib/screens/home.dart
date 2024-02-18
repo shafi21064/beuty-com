@@ -1365,7 +1365,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               },
               child: Container(
                 margin: EdgeInsets.only(right: 5),
-                padding: EdgeInsets.only(top: 8),
+                padding: EdgeInsets.only(top: 16),
                 height: 120,
                 width: MediaQuery.of(context).size.width / 5 - 4,
                 child: Column(

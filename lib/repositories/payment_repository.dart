@@ -26,7 +26,9 @@ class PaymentRepository {
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
-    print(response.body);
+   // print('payment ${response.body}');
+
+    print('returns : ${paymentTypeResponseFromJson(response.body)}');
 
     return paymentTypeResponseFromJson(response.body);
   }
@@ -227,7 +229,7 @@ class PaymentRepository {
       headers: {"Authorization": "Bearer ${access_token.$}"},
     );
 
-    print(response.body.toString());
+    print('link ${response.body.toString()}');
     return bkashBeginResponseFromJson(response.body);
   }
 

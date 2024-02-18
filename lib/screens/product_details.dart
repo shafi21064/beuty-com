@@ -4,6 +4,7 @@ import 'package:kirei/screens/cart.dart';
 import 'package:kirei/screens/common_webview_screen.dart';
 import 'package:kirei/screens/filter.dart';
 import 'package:kirei/screens/login.dart';
+import 'package:kirei/screens/main.dart';
 import 'package:kirei/screens/product_questions.dart';
 import 'package:kirei/screens/product_reviews.dart';
 import 'package:kirei/ui_elements/list_product_card.dart';
@@ -1956,6 +1957,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
+      centerTitle: true,
       title: Container(
         height: kToolbarHeight +
             statusBarHeight -
@@ -1967,8 +1969,8 @@ class _ProductDetailsState extends State<ProductDetails> {
             child: Padding(
                 padding: MediaQuery.of(context).viewPadding.top >
                     30 //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
-                    ? const EdgeInsets.symmetric(vertical: 36.0, horizontal: 0.0)
-                    : const EdgeInsets.symmetric(vertical: 14.0, horizontal: 0.0),
+                    ? const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0)
+                    : const EdgeInsets.symmetric(vertical: 6.0, horizontal: 0.0),
                 child: TypeAheadField(
                   // ignore: missing_return
                   suggestionsCallback: (pattern) async {
@@ -2099,14 +2101,28 @@ class _ProductDetailsState extends State<ProductDetails> {
       titleSpacing: 0,
       actions: <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
-          child: IconButton(
-            icon: Icon(Icons.search, color: Colors.white),
-            onPressed: () {
-              // onPressShare(context);
-            },
-          ),
+          padding: const EdgeInsets.only(right: 2.0),
+          child: Icon(Icons.search, color: Colors.white),
         ),
+        Padding(
+          padding: const EdgeInsets.only(right: 2.0),
+          child: InkWell(
+            onTap: (){
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=> Main()), (route) => false);
+            },
+              child: Icon(Icons.home_outlined, color: Colors.white)),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 2.0),
+          child: InkWell(
+              onTap: (){
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=> Main(
+                  pageIndex: 2,
+                )), (route) => false);
+              },
+              child: Icon(Icons.shopping_bag_outlined, color: Colors.white)),
+        ),
+
       ],
     );
   }

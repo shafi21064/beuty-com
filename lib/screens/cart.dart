@@ -67,8 +67,11 @@ class CartState extends State<Cart> {
     var cartResponseList =
         await CartRepository().getCartResponseList(user_id.$);
 
+print('cartResponse list ${cartResponseList}');
     if (cartResponseList != null && cartResponseList.length > 0) {
-      _shopList = cartResponseList;
+     // _shopList = cartResponseList;
+
+      _shopList.addAll(cartResponseList);
     }
     _isInitial = false;
     getSetCartTotal();
@@ -77,6 +80,8 @@ class CartState extends State<Cart> {
 
   getSetCartTotal() {
     _cartTotal = 0.00;
+
+
     if (_shopList.length > 0) {
       _shopList.forEach((shop) {
         if (shop.cart_items.length > 0) {
@@ -88,6 +93,7 @@ class CartState extends State<Cart> {
                 "${cart_item.currency_symbol}${_cartTotal.toStringAsFixed(2)}";
           });
         }
+
       });
     }
 
@@ -253,11 +259,14 @@ class CartState extends State<Cart> {
         reset();
         fetchData();
       } else if (mode == "proceed_to_shipping") {
+        print("L: ${_shopList.length}");
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return Checkout(
               title: "Checkout",
               product_ids: prod_ids_string,
-              product_quantities: cart_quantities_string);
+              product_quantities: cart_quantities_string,
+          allCartProductList: _shopList,
+          );
         })).then((value) {
           onPopped(value);
         });
@@ -664,9 +673,6 @@ class CartState extends State<Cart> {
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemBuilder: (context, index) {
-
-
-
           return Padding(
             padding: const EdgeInsets.only(bottom: 2.0),
             child: buildCartSellerItemCard(seller_index, index),

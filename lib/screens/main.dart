@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:kirei/custom/CommonFunctoins.dart';
+import 'package:kirei/data_model/cart_response.dart';
+import 'package:kirei/helpers/endpoints.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/repositories/cart_repository.dart';
@@ -21,12 +23,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:badges/badges.dart' as badges;
-
+import 'package:http/http.dart' as http;
 import 'newsfeed.dart';
 
 // ignore: must_be_immutable
 class Main extends StatefulWidget {
-  Main({Key key, go_back = true}) : super(key: key);
+  int pageIndex;
+  Main({Key key, go_back = true, this.pageIndex}) : super(key: key);
 
   // ignore: non_constant_identifier_names
   bool go_back;
@@ -37,6 +40,7 @@ class Main extends StatefulWidget {
 
 class _MainState extends State<Main> {
   int _currentIndex = 0;
+
   var _children = [
     Home(),
     // CategoryList(
@@ -54,6 +58,7 @@ class _MainState extends State<Main> {
     }
     setState(() {
       _currentIndex = i;
+      widget.pageIndex = _currentIndex ;
     });
     print("i$i");
   }
@@ -68,7 +73,17 @@ class _MainState extends State<Main> {
     // CartState().buildCartSellerItemList();
 
     super.initState();
+
     // print(user_id.$);
+     //getCartResponseList(user_id.$);
+    //countCartItem();
+    //print('this is shop ${shopList}');
+
+    if (is_logged_in.$ == true) {
+      fetchData();
+    }
+    print('init');
+
   }
 
   // var _shopList = [];
@@ -106,6 +121,82 @@ class _MainState extends State<Main> {
   //   }
   // }
 
+
+
+
+  var cartItemCount = 0;
+  var _shopList;
+  var _isInitial = true;
+
+  fetchData() async {
+    print(user_id.$);
+
+    var cartResponseList =
+    await CartRepository().getCartResponseList(user_id.$);
+
+    print('cartResponse list ${cartResponseList}');
+    if (cartResponseList != null && cartResponseList.length > 0) {
+      // _shopList = cartResponseList;
+
+      _shopList.addAll(cartResponseList);
+    }
+    _isInitial = false;
+    print('_shopList.length' +_shopList.length);
+    //getSetCartTotal();
+    setState(() {});
+  }
+
+  // Future<List<CartResponse>> getCartResponseList(
+  //     @required int user_id,
+  //     ) async {
+  //   Uri url = Uri.parse("${ENDP.GET_CARTS}");
+  //   final response = await http.post(
+  //     url,
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Authorization": "Bearer ${access_token.$}",
+  //       "App-Language": app_language.$,
+  //     },
+  //   );
+  //
+  //   print('my url ${url}');
+  //   //print(response.body.toString());
+  //   List<CartResponse>data1 = cartResponseFromJson(response.body);
+  //   shopList = data1;
+  //   print('shop Len' +shopList.length);
+  //   // shopList.forEach((shop) {
+  //   //   print('shop Len' +shop.length);
+  //   //   shop.cart_items.forEach((cart_item) {
+  //   //     cartItemCount += cart_item.quantity;
+  //   //   });
+  //   // });
+  //   return data1;
+  //
+  // }
+
+
+
+
+  // countCartItem(){
+  //   print('header '+ shopList.length);
+  //   shopList.forEach((shop) {
+  //     print('shop Len' +shop.length);
+  //     shop.cart_items.forEach((cart_item) {
+  //       cartItemCount += cart_item.quantity;
+  //     });
+  //   });
+  // }
+
+
+  // Future<List<>>
+
+
+  // Future <List<CartResponse>> getCartData() async{
+  //   List<CartResponse> cartResponse = await CartRepository().getCartResponseList(user_id.$);
+  //   shopList = cartResponse;
+  // }
+
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -123,17 +214,17 @@ class _MainState extends State<Main> {
       },
       child: Directionality(
         textDirection:
-            app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
+        app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
         child: Scaffold(
           extendBody: true,
-          body: _children[_currentIndex],
+          body: _children[widget.pageIndex ?? _currentIndex],
           floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
+          FloatingActionButtonLocation.centerDocked,
           //specify the location of the FAB
 
           bottomNavigationBar: ConvexAppBar(
             onTap: onTapped,
-            initialActiveIndex: 0,
+            initialActiveIndex: widget.pageIndex ?? 0,
             backgroundColor: MyTheme.primary,
             style: TabStyle.react,
             elevation: 1,
@@ -156,10 +247,12 @@ class _MainState extends State<Main> {
               TabItem(
                 //icon: Icons.shopping_bag_outlined,
                 icon:     badges.Badge(
-                  badgeContent: Text('3',
-                  style: TextStyle(
-                    color: MyTheme.white
-                  ),
+                  badgeContent: Text(
+
+                    cartItemCount.toString(),
+                    style: TextStyle(
+                        color: MyTheme.white
+                    ),
                   ),
                   badgeColor: MyTheme.secondary,
                   child: Icon(Icons.shopping_bag_outlined, color: MyTheme.white,),

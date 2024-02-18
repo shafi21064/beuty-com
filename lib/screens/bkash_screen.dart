@@ -140,6 +140,8 @@ class _BkashScreenState extends State<BkashScreen> {
   }
 
   buildBody() {
+    print('bkash link: ${_initial_url}');
+
     if (_order_init == false &&
         _combined_order_id == 0 &&
         widget.payment_type == "cart_payment") {
