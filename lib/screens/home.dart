@@ -44,12 +44,13 @@ import 'BeautyBooks.dart';
 import 'kireiYT.dart';
 
 class Home extends StatefulWidget {
-  Home({Key key, this.title, this.show_back_button = false, go_back = true})
+  Home({Key key, this.title, this.show_back_button = false, go_back = true, this.cartItemCount})
       : super(key: key);
 
   final String title;
   bool show_back_button;
   bool go_back;
+  dynamic cartItemCount;
 
 
   @override

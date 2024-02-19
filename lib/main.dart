@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/screens/splash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_value/shared_value.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'dart:async';
@@ -22,6 +23,8 @@ import 'package:kirei/providers/locale_provider.dart';
 import 'lang_config.dart';
 // import 'package:firebase_core/firebase_core.dart';
 
+SharedPreferences sharedPreferences;
+
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Firebase.initializeApp();
@@ -29,6 +32,7 @@ main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  sharedPreferences = await SharedPreferences.getInstance();
 
   print("app_mobile_language.1isEmpty${app_mobile_language.$.isEmpty}");
   AddonsHelper().setAddonsData();

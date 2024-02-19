@@ -9,6 +9,7 @@ import 'package:kirei/screens/cart.dart';
 import 'package:kirei/screens/login.dart';
 import 'package:kirei/screens/product_details.dart';
 import 'package:kirei/app_config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -58,6 +59,8 @@ class _MiniProductCardState extends State<MiniProductCard> {
     addToCart(mode: "add_to_cart", context: context);
   }
     addToCart({mode, context = null, snackbar = null}) async {
+
+
     if (is_logged_in.$ == false) {
       // ToastComponent.showDialog(AppLocalizations.of(context).common_login_warning, context,
       //     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
@@ -79,15 +82,26 @@ class _MiniProductCardState extends State<MiniProductCard> {
       return;
     } else {
       if (mode == "add_to_cart") {
+        //fetchData();
         // if (snackbar != null && context != null) {
         //   Scaffold.of(context).showSnackBar(snackbar);
         // }
+
+        SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+        var cartItem = sharedPreferences.getInt("cartItemCount");
+        cartItem++;
+        sharedPreferences.setInt("cartItemCount", cartItem);
+        print("kirei vai3: + ${sharedPreferences.getInt("cartItemCount")}" );
+
+        setState(() {});
+
          ToastComponent.showDialog(cartAddResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
        
       } 
     }
   }
+
 
   fetchData() async {
     print(user_id.$);
@@ -96,7 +110,12 @@ class _MiniProductCardState extends State<MiniProductCard> {
     await CartRepository().getCartResponseList(user_id.$);
 
     if (cartResponseList != null && cartResponseList.length > 0) {
-      _shopList = cartResponseList;
+      // _shopList = cartResponseList;
+      // for (var shop in _shopList) {
+      //   for (var item in shop.cart_items) {
+      //     cartItemCount+= item.quantity;
+      //   }
+      // }
     }
     _isInitial = false;
     //getSetCartTotal();

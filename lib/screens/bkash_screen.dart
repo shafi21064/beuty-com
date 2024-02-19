@@ -96,13 +96,14 @@ class _BkashScreenState extends State<BkashScreen> {
   }
 
   void getData() {
+    print('bkash');
     var payment_details = '';
     _webViewController
         .evaluateJavascript("document.body.innerText")
         .then((data) {
       var decodedJSON = jsonDecode(data);
       Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
-      //print(data.toString());
+      print('Bkash data' +data.toString());
       if (responseJSON["result"] == false) {
         Toast.show(responseJSON["message"], context,
             duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);

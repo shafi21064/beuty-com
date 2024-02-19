@@ -3,6 +3,7 @@ import 'package:kirei/custom/CommonFunctoins.dart';
 import 'package:kirei/data_model/cart_response.dart';
 import 'package:kirei/helpers/endpoints.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
+import 'package:kirei/main.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/repositories/cart_repository.dart';
 import 'package:kirei/screens/cart.dart';
@@ -24,6 +25,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'newsfeed.dart';
 
 // ignore: must_be_immutable
@@ -128,6 +130,7 @@ class _MainState extends State<Main> {
   var _shopList;
   var _isInitial = true;
 
+
   fetchData() async {
     print(user_id.$);
 
@@ -136,65 +139,23 @@ class _MainState extends State<Main> {
 
     print('cartResponse list ${cartResponseList}');
     if (cartResponseList != null && cartResponseList.length > 0) {
-      // _shopList = cartResponseList;
-
-      _shopList.addAll(cartResponseList);
+       _shopList = cartResponseList;
+       for (var shop in _shopList) {
+         for (var item in shop.cart_items) {
+           cartItemCount+= item.quantity;
+           setState(() {});
+         }
+       }
     }
+
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setInt("cartItemCount", cartItemCount);
+    print("kirei vai: + ${sharedPreferences.getInt("cartItemCount")}" );
+
     _isInitial = false;
-    print('_shopList.length' +_shopList.length);
-    //getSetCartTotal();
     setState(() {});
   }
 
-  // Future<List<CartResponse>> getCartResponseList(
-  //     @required int user_id,
-  //     ) async {
-  //   Uri url = Uri.parse("${ENDP.GET_CARTS}");
-  //   final response = await http.post(
-  //     url,
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "Authorization": "Bearer ${access_token.$}",
-  //       "App-Language": app_language.$,
-  //     },
-  //   );
-  //
-  //   print('my url ${url}');
-  //   //print(response.body.toString());
-  //   List<CartResponse>data1 = cartResponseFromJson(response.body);
-  //   shopList = data1;
-  //   print('shop Len' +shopList.length);
-  //   // shopList.forEach((shop) {
-  //   //   print('shop Len' +shop.length);
-  //   //   shop.cart_items.forEach((cart_item) {
-  //   //     cartItemCount += cart_item.quantity;
-  //   //   });
-  //   // });
-  //   return data1;
-  //
-  // }
-
-
-
-
-  // countCartItem(){
-  //   print('header '+ shopList.length);
-  //   shopList.forEach((shop) {
-  //     print('shop Len' +shop.length);
-  //     shop.cart_items.forEach((cart_item) {
-  //       cartItemCount += cart_item.quantity;
-  //     });
-  //   });
-  // }
-
-
-  // Future<List<>>
-
-
-  // Future <List<CartResponse>> getCartData() async{
-  //   List<CartResponse> cartResponse = await CartRepository().getCartResponseList(user_id.$);
-  //   shopList = cartResponse;
-  // }
 
 
   @override
@@ -248,8 +209,8 @@ class _MainState extends State<Main> {
                 //icon: Icons.shopping_bag_outlined,
                 icon:     badges.Badge(
                   badgeContent: Text(
-
-                    cartItemCount.toString(),
+                    "${sharedPreferences.getInt("cartItemCount")}",
+                    //cartItemCount.toString(),
                     style: TextStyle(
                         color: MyTheme.white
                     ),

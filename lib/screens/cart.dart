@@ -11,6 +11,7 @@ import 'package:kirei/helpers/shimmer_helper.dart';
 import 'package:kirei/app_config.dart';
 import 'package:kirei/custom/toast_component.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -61,6 +62,19 @@ class CartState extends State<Cart> {
     _mainScrollController.dispose();
   }
 
+  // fetchCartCount()async{
+  //   var total_a = 0;
+  //   var demolist = _shopList[0].cart_items;
+  //
+  //   demolist.forEach((val1){
+  //     total_a += val1.quantity;
+  //     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  //     sharedPreferences.setInt("cartItemCount", cartItem);
+  //
+  //   });
+  //
+  //   print("show2: ${total_a.toString()}");  }
+
   fetchData() async {
     print(user_id.$);
 
@@ -69,11 +83,13 @@ class CartState extends State<Cart> {
 
 print('cartResponse list ${cartResponseList}');
     if (cartResponseList != null && cartResponseList.length > 0) {
-     // _shopList = cartResponseList;
+      _shopList = cartResponseList;
 
-      _shopList.addAll(cartResponseList);
+      //_shopList.addAll(cartResponseList);
+      print('_shopList.length' +_shopList.length.toString());
     }
     _isInitial = false;
+
     getSetCartTotal();
     setState(() {});
   }
@@ -116,11 +132,17 @@ print('cartResponse list ${cartResponseList}');
     return partialTotalString;
   }
 
-  onQuantityIncrease(seller_index, item_index) {
+  onQuantityIncrease(seller_index, item_index) async{
     if (_shopList[seller_index].cart_items[item_index].quantity <
         _shopList[seller_index].cart_items[item_index].upper_limit) {
       _shopList[seller_index].cart_items[item_index].quantity++;
       getSetCartTotal();
+
+      // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      // var cartItem = sharedPreferences.getInt("cartItemCount");
+      // cartItem++;
+      // sharedPreferences.setInt("cartItemCount", cartItem);
+
       setState(() {});
     } else {
       ToastComponent.showDialog(
@@ -136,7 +158,9 @@ print('cartResponse list ${cartResponseList}');
         _shopList[seller_index].cart_items[item_index].lower_limit) {
       _shopList[seller_index].cart_items[item_index].quantity--;
       getSetCartTotal();
+
       setState(() {});
+
     } else {
       ToastComponent.showDialog(
           "${AppLocalizations.of(context).cart_screen_cannot_order_less_than} ${_shopList[seller_index].cart_items[item_index].lower_limit} ${AppLocalizations.of(context).cart_screen_items_of_this}",
@@ -265,7 +289,7 @@ print('cartResponse list ${cartResponseList}');
               title: "Checkout",
               product_ids: prod_ids_string,
               product_quantities: cart_quantities_string,
-          allCartProductList: _shopList,
+          allCartProductList: _shopList[0].cart_items,
           );
         })).then((value) {
           onPopped(value);
@@ -658,14 +682,6 @@ print('cartResponse list ${cartResponseList}');
 
 
   SingleChildScrollView buildCartSellerItemList(seller_index) {
-    var total_a = 0;
-    var demolist = _shopList[seller_index].cart_items;
-
-    demolist.forEach((val1){
-      total_a += val1.quantity;
-    });
-
-    print("show2: ${total_a.toString()}");
     return SingleChildScrollView(
       child: ListView.builder(
         itemCount: _shopList[seller_index].cart_items.length,
