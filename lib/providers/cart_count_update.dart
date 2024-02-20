@@ -1,49 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
+import 'package:kirei/repositories/cart_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartCountUpdate extends ChangeNotifier {
-
-
   int _cartCount = 0;
-  get cartCount => _cartCount;
-  int _productQuantity;
-  get productQuantity => _productQuantity;
+  int get cartCount => _cartCount;
 
-  getIncrease()async{
-    print('cart provider ' +_cartCount.toString());
+  getIncrease() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    _cartCount= sharedPreferences.getInt("cartItemCount");
+    _cartCount = sharedPreferences.getInt("cartItemCount") ?? 0;
     _cartCount++;
     sharedPreferences.setInt("cartItemCount", _cartCount);
-    print("update value: "+ sharedPreferences.getInt("cartCount").toString());
     notifyListeners();
   }
 
-  getDecrease()async{
-    _cartCount--;
+  getDecrease() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setInt("cartItemCount", _cartCount);
-    print("update value: "+ sharedPreferences.getInt("cartCount").toString());
-    notifyListeners();
+    _cartCount = sharedPreferences.getInt("cartItemCount") ?? 0;
+    if (_cartCount > 0) {
+      _cartCount--;
+      sharedPreferences.setInt("cartItemCount", _cartCount);
+      notifyListeners();
+    }
   }
 
-  getReset()async{
+  getReset() async {
     _cartCount = 0;
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setInt("cartItemCount", _cartCount);
-    print("update value: "+ sharedPreferences.getInt("cartCount").toString());
     notifyListeners();
   }
 
-  getDelete()async{
+ getDelete() async {
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    _cartCount= sharedPreferences.getInt("cartItemCount");
-    sharedPreferences.setInt("cartItemCount", _cartCount);
-    // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    // sharedPreferences.setInt("cartItemCount", _cartCount);
-    // print("update value: "+ sharedPreferences.getInt("cartCount").toString());
-    notifyListeners();
+  var cartResponseList =
+      await CartRepository().getCartResponseList(user_id.$);
+
+  print('cartResponse list ${cartResponseList}');
+  
+  int updateCartCount = 0;
+
+  if (cartResponseList != null && cartResponseList.length > 0) {
+    var demolist = cartResponseList[0].cart_items;
+
+    demolist.forEach((val1) {
+      updateCartCount += val1.quantity;
+    });
   }
+
+  sharedPreferences.setInt("cartItemCount", updateCartCount);
+  notifyListeners();
+}
 
 }

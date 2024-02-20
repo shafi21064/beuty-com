@@ -64,37 +64,40 @@ class CartState extends State<Cart> {
     _mainScrollController.dispose();
   }
 
-  fetchCartCount()async{
-    var total_a = 0;
-    var demolist = _shopList[0].cart_items;
+fetchCartCount() async {
+  var total_a = 0;
+  var demolist = _shopList[0].cart_items;
 
-    demolist.forEach((val1) async {
-      total_a += val1.quantity;
-      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-      sharedPreferences.setInt("cartItemCount", total_a);
-    });
+  demolist.forEach((val1) {
+    total_a += val1.quantity;
+  });
 
-    print("show2: ${total_a.toString()}");  }
+  print("show2: ${total_a.toString()}");
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-  fetchData() async {
-    print(user_id.$);
+  sharedPreferences.setInt("cartItemCount", total_a);
+  print(sharedPreferences.getInt("cartItemCount"));
+  setState(() {});
+}
 
-    var cartResponseList =
-        await CartRepository().getCartResponseList(user_id.$);
+fetchData() async {
+  print(user_id.$);
 
-print('cartResponse list ${cartResponseList}');
-    if (cartResponseList != null && cartResponseList.length > 0) {
-      _shopList = cartResponseList;
+  var cartResponseList =
+      await CartRepository().getCartResponseList(user_id.$);
 
-      //_shopList.addAll(cartResponseList);
-      print('_shopList.length' +_shopList.length.toString());
-    }
-    _isInitial = false;
-
-    fetchCartCount();
-    getSetCartTotal();
-    setState(() {});
+  print('cartResponse list ${cartResponseList}');
+  if (cartResponseList != null && cartResponseList.length > 0) {
+    _shopList.clear(); // Clear the existing list before adding new items
+    _shopList.addAll(cartResponseList);
+    print(_shopList);
   }
+  _isInitial = false;
+
+  // await fetchCartCount(); // Wait for fetchCartCount to complete
+  getSetCartTotal();
+  setState(() {});
+}
 
   getSetCartTotal() {
     _cartTotal = 0.00;
@@ -169,7 +172,7 @@ print('cartResponse list ${cartResponseList}');
     }
   }
 
-  onPressDelete(cart_id) {
+  onPressDelete(cart_id,VoidCallback deleteCartItem) {
     showDialog(
         context: context,
         builder: (_) => AlertDialog(
@@ -201,30 +204,29 @@ print('cartResponse list ${cartResponseList}');
                   ),
                   onPressed: () {
                     Navigator.of(context, rootNavigator: true).pop();
-                    confirmDelete(cart_id);
+                    confirmDelete(cart_id,deleteCartItem);
                   },
                 ),
               ],
             ));
   }
 
-  confirmDelete(cart_id) async {
-    var cartDeleteResponse =
-        await CartRepository().getCartDeleteResponse(cart_id);
+confirmDelete(cart_id,VoidCallback deleteCartItem) async {
+  var cartDeleteResponse =
+      await CartRepository().getCartDeleteResponse(cart_id);
 
-    if (cartDeleteResponse.result == true) {
+  if (cartDeleteResponse.result == true) {
+    ToastComponent.showDialog(cartDeleteResponse.message, context,
+        gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    deleteCartItem();
+    await reset(); // Wait for reset to complete
+    await fetchData(); // Wait for fetchData to complete
 
-
-      ToastComponent.showDialog(cartDeleteResponse.message, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-
-      reset();
-      fetchData();
-    } else {
-      ToastComponent.showDialog(cartDeleteResponse.message, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-    }
+  } else {
+    ToastComponent.showDialog(cartDeleteResponse.message, context,
+        gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
   }
+}
 
   onPressUpdate() {
     process(mode: "update");
@@ -304,8 +306,8 @@ print('cartResponse list ${cartResponseList}');
     _isInitial = true;
     _cartTotal = 0.00;
     _cartTotalString = ". . .";
-
     setState(() {});
+
   }
 
   Future<void> _onRefresh() async {
@@ -352,6 +354,7 @@ print('cartResponse list ${cartResponseList}');
                             () => addCartProduct.getDecrease(),
                             () => addCartProduct.getIncrease(),
                             () => addCartProduct.getDelete(),
+                            ()=>{},
 
                           ),
                         ),
@@ -586,7 +589,7 @@ print('cartResponse list ${cartResponseList}');
   }
 
 
-  buildCartSellerList(VoidCallback decreaseCartItem, VoidCallback increaseItem, VoidCallback setCartCount) {
+  buildCartSellerList(VoidCallback decreaseCartItem, VoidCallback increaseItem,VoidCallback deleteCartItem, VoidCallback setCartCount) {
     if (is_logged_in.$ == false) {
       return Container(
           height: 100,
@@ -635,7 +638,7 @@ print('cartResponse list ${cartResponseList}');
                       ],
                     ),
                   ),
-                  buildCartSellerItemList(index, decreaseCartItem, increaseItem,setCartCount),
+                  buildCartSellerItemList(index, decreaseCartItem, increaseItem,deleteCartItem, setCartCount),
                 ],
               ),
             );
@@ -690,7 +693,7 @@ print('cartResponse list ${cartResponseList}');
   }
 
 
-  SingleChildScrollView buildCartSellerItemList(seller_index, VoidCallback decreaseCartItem, VoidCallback increaseItem, VoidCallback setCartCount ) {
+  SingleChildScrollView buildCartSellerItemList(seller_index, VoidCallback decreaseCartItem, VoidCallback increaseItem,VoidCallback deleteCartItem, VoidCallback setCartCount ) {
     return SingleChildScrollView(
       child: ListView.builder(
         itemCount: _shopList[seller_index].cart_items.length,
@@ -700,14 +703,14 @@ print('cartResponse list ${cartResponseList}');
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 2.0),
-            child: buildCartSellerItemCard(seller_index, index, decreaseCartItem, increaseItem, setCartCount),
+            child: buildCartSellerItemCard(seller_index, index, decreaseCartItem, increaseItem,deleteCartItem, setCartCount),
           );
         },
       ),
     );
   }
 
-  buildCartSellerItemCard(seller_index, item_index, VoidCallback decreaseCartItem, VoidCallback increaseItem, VoidCallback setCartCount) {
+  buildCartSellerItemCard(seller_index, item_index, VoidCallback decreaseCartItem, VoidCallback increaseItem,VoidCallback deleteCartItem, VoidCallback setCartCount) {
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(color: MyTheme.light_grey, width: 1.0),
@@ -783,8 +786,9 @@ print('cartResponse list ${cartResponseList}');
                               onPressed: () {
                                 onPressDelete(_shopList[seller_index]
                                     .cart_items[item_index]
-                                    .id);
+                                    .id,deleteCartItem);
                                 setCartCount();
+
                               },
                               icon: Icon(
                                 Icons.delete_forever_outlined,

@@ -86,7 +86,7 @@ class _MainState extends State<Main> {
       fetchData();
     }
     // fetchData();
-    //saveCountData();
+    saveCountData();
 
     print('init');
 
@@ -140,30 +140,35 @@ class _MainState extends State<Main> {
   print("kirei vai: + ${sharedPreferences.getInt("cartItemCount")}" );
   }
 
-  fetchData() async {
-    print(user_id.$);
+fetchData() async {
+  print(user_id.$);
 
-    var cartResponseList =
-    await CartRepository().getCartResponseList(user_id.$);
+  var cartResponseList =
+      await CartRepository().getCartResponseList(user_id.$);
 
-    print('cartResponse list ${cartResponseList}');
-    if (cartResponseList != null && cartResponseList.length > 0) {
-       _shopList = cartResponseList;
-       for (var shop in _shopList) {
-         for (var item in shop.cart_items) {
-           cartItemCount+= item.quantity;
-           setState(() {});
-         }
-       }
+  print('cartResponse list ${cartResponseList}');
+  if (cartResponseList != null && cartResponseList.length > 0) {
+    _shopList = cartResponseList;
+    int updatedCartItemCount = 0;
+
+    for (var shop in _shopList) {
+      for (var item in shop.cart_items) {
+        updatedCartItemCount += item.quantity;
+      }
     }
 
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setInt("cartItemCount", cartItemCount);
-    print("kirei vai: + ${sharedPreferences.getInt("cartItemCount")}" );
-
-    _isInitial = false;
-    setState(() {});
+    setState(() {
+      cartItemCount = updatedCartItemCount;
+    });
   }
+
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  sharedPreferences.setInt("cartItemCount", cartItemCount);
+  print("kirei vai: + ${sharedPreferences.getInt("cartItemCount")}");
+
+  _isInitial = false;
+}
+
 
 
 
