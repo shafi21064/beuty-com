@@ -13,7 +13,9 @@ import 'package:kirei/repositories/pickup_points_repository.dart';
 import 'package:kirei/screens/address.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
+import 'package:kirei/screens/order_failed_page.dart';
 import 'package:kirei/screens/order_list.dart';
+import 'package:kirei/screens/order_success_page.dart';
 import 'package:kirei/screens/stripe_screen.dart';
 import 'package:kirei/screens/paypal_screen.dart';
 import 'package:kirei/screens/razorpay_screen.dart';
@@ -246,6 +248,7 @@ class _CheckoutState extends State<Checkout> {
   }
 
   fetchSummary() async {
+    print('fetch Summary');
     var cartSummaryResponse = await CartRepository().getCartSummaryResponse();
 
     if (cartSummaryResponse != null) {
@@ -375,8 +378,6 @@ class _CheckoutState extends State<Checkout> {
     var coupon_code = _couponController.text.toString();
 
     Map<String, dynamic> requestBody = {
-      "api_key": "vXrAne",
-      "api_secret": "k7t2G2j3RFBI",
       "product_ids_arr": productIdsJsonArray,
       "product_quantities_arr": productQuantitiesJsonArray,
     };
@@ -418,25 +419,37 @@ class _CheckoutState extends State<Checkout> {
             gravity: Toast.CENTER,
             duration: Toast.LENGTH_LONG,
           );
-          Navigator.of(context).pop();
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (_)=> OrderFailedPage()), (route) => false);
           return;
-        }
+        } else{
+          ToastComponent.showDialog(
+              orderCreateResponse.message,
+              context,
+              gravity: Toast.CENTER,
+              duration: Toast.LENGTH_LONG,
+            );
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (_)=> OrderSuccessPage()), (route) => false);
 
-        ToastComponent.showDialog(
-          orderCreateResponse.message,
-          context,
-          gravity: Toast.CENTER,
-          duration: Toast.LENGTH_LONG,
-        );
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return OrderList(from_checkout: true);
-        }));
+        }
+        // ToastComponent.showDialog(
+        //   orderCreateResponse.message,
+        //   context,
+        //   gravity: Toast.CENTER,
+        //   duration: Toast.LENGTH_LONG,
+        // );
+
+        //if(_selected_payment_method == );
+        // Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //   return OrderList(from_checkout: true);
+        // }));
       }
     } catch (e) {
       print('Error in onPressProceed: $e');
       // Handle the error appropriately, e.g., show a dialog or log it.
     }
-  }
+   }
 
   onCouponApply() async {
     var coupon_code = _couponController.text.toString();
@@ -451,38 +464,32 @@ class _CheckoutState extends State<Checkout> {
 
     var couponApplyResponse =
     await CouponRepository().getCouponApplyResponse(coupon_code);
-    if (couponApplyResponse.result == false) {
+
+    // ToastComponent.showDialog(couponApplyResponse.message, context,
+    //     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    fetchSummary();
+
+    if (couponApplyResponse.result == true) {
+
       ToastComponent.showDialog(couponApplyResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      setState(() {});
       return;
-    }else if(couponApplyResponse.result == true){
-      //_discountedPrice = ('${double.parse('${_totalString.replaceAll('৳', '')}') - (double.parse(_totalString.replaceAll('৳', '')) * ((couponApplyResponse.copon['discount']) / 100))}');
-      //_discountedPrice = ('${int.parse('${_totalString.replaceAll('৳', '')}')}');
-      var stringTk = '${_totalString.replaceAll('৳', '')}';
-      var stringC= stringTk.replaceAll(',', '') ;
-      //_discountedPrice = ('${int.parse(stringC.toString())-int.parse((stringC.toString()*(couponApplyResponse.copon['discount']/100)))}');
-      //_discountedPrice = int.parse(stringC.toString())-14;
-      var dis = couponApplyResponse.copon['discount'];
-      _discountedPrice = double.parse(stringC) - (double.parse(stringC)*(double.parse(dis)/100.00));
-      setState(() {
-
-      });
-      print("discountPrice: ${stringC}");
-      print("updatePrice: ${_discountedPrice}");
-      print("updatePrice: ${couponApplyResponse.copon['discount']}");
-      print(couponApplyResponse.copon['discount']);
+    }else{
       ToastComponent.showDialog(couponApplyResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
     }
     print(couponApplyResponse);
 
-    // reset_summary();
+     reset_summary();
   }
 
   onCouponRemove() async {
     var couponRemoveResponse =
     await CouponRepository().getCouponRemoveResponse();
+    reset_summary();
+    fetchSummary();
 
     if (couponRemoveResponse.result == false) {
       ToastComponent.showDialog(couponRemoveResponse.message, context,
@@ -490,8 +497,7 @@ class _CheckoutState extends State<Checkout> {
       return;
     }
 
-    // reset_summary();
-    // fetchSummary();
+
   }
 
   onPressPlaceOrderOrProceed() {
@@ -1129,6 +1135,7 @@ class _CheckoutState extends State<Checkout> {
     return StatefulBuilder(builder: (BuildContext context,
         StateSetter setModalState /*You can rename this!*/) {
       return Container(
+        padding: EdgeInsets.symmetric(horizontal: 8),
         color: MyTheme.white,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -1140,7 +1147,7 @@ class _CheckoutState extends State<Checkout> {
               child: Text(
                   AppLocalizations
                       .of(context)
-                      .address_screen_name,
+                      .address_screen_name + ' *',
                   style: TextStyle(
                       color: MyTheme.secondary, fontSize: 12)),
             ),
@@ -1152,9 +1159,10 @@ class _CheckoutState extends State<Checkout> {
                   controller: _nameController,
                   autofocus: false,
                   decoration: InputDecoration(
-                      hintText: AppLocalizations
-                          .of(context)
-                          .address_screen_enter_phone,
+                      // hintText: AppLocalizations
+                      //     .of(context)
+                      //     .address_screen_enter_name,
+                    hintText: "Enter Name",
                       hintStyle: TextStyle(
                           fontSize: 12.0, color: MyTheme.light_grey),
                       enabledBorder: OutlineInputBorder(
@@ -1180,7 +1188,7 @@ class _CheckoutState extends State<Checkout> {
               child: Text(
                   AppLocalizations
                       .of(context)
-                      .address_screen_phone,
+                      .address_screen_phone +' *',
                   style: TextStyle(
                       color: MyTheme.secondary, fontSize: 12)),
             ),
@@ -1194,7 +1202,7 @@ class _CheckoutState extends State<Checkout> {
                   decoration: InputDecoration(
                       hintText: AppLocalizations
                           .of(context)
-                          .address_screen_enter_phone,
+                          .address_screen_enter_phone ,
                       hintStyle: TextStyle(
                           fontSize: 12.0, color: MyTheme.light_grey),
                       enabledBorder: OutlineInputBorder(
@@ -1231,9 +1239,10 @@ class _CheckoutState extends State<Checkout> {
                   controller: _emailController,
                   autofocus: false,
                   decoration: InputDecoration(
-                      hintText: AppLocalizations
-                          .of(context)
-                          .address_screen_enter_phone,
+                      // hintText: AppLocalizations
+                      //     .of(context)
+                      //     .address_screen_enter_phone + '*',
+                      hintText: "Enter Email",
                       hintStyle: TextStyle(
                           fontSize: 12.0, color: MyTheme.light_grey),
                       enabledBorder: OutlineInputBorder(
@@ -1469,7 +1478,7 @@ class _CheckoutState extends State<Checkout> {
 
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text("Area *",
+              child: Text("Area ",
                   style: TextStyle(
                       color: MyTheme.secondary, fontSize: 12)),
             ),
@@ -1558,16 +1567,19 @@ class _CheckoutState extends State<Checkout> {
                       color: MyTheme.secondary, fontSize: 12)),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
+              padding: const EdgeInsets.only(bottom: 16.0),
               child: Container(
-                height: 40,
+                height: 55,
                 child: TextField(
                   controller: _orderNoteController,
                   autofocus: false,
+                  maxLines: null,
+                  keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
-                      hintText: AppLocalizations
-                          .of(context)
-                          .address_screen_enter_phone,
+                      // hintText: AppLocalizations
+                      //     .of(context)
+                      //     .address_screen_enter_address,
+                      hintText: "Enter Order Notes",
                       hintStyle: TextStyle(
                           fontSize: 12.0, color: MyTheme.light_grey),
                       enabledBorder: OutlineInputBorder(
@@ -1580,8 +1592,8 @@ class _CheckoutState extends State<Checkout> {
                         borderSide: BorderSide(
                             color: MyTheme.light_grey, width: 2.0),
                       ),
-                      contentPadding:
-                      EdgeInsets.symmetric(horizontal: 8.0)),
+                      contentPadding: EdgeInsets.only(
+                          left: 8.0, top: 16.0, bottom: 16.0)),
                 ),
               ),
             ),
@@ -2095,12 +2107,15 @@ class _CheckoutState extends State<Checkout> {
                   physics: ScrollPhysics(),
                   children: [
 
-                    Text("Shipping Details",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: MyTheme.secondary,
-                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text("Shipping Details",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: MyTheme.secondary,
+                      ),
+                      ),
                     ),
 
                     SizedBox(
@@ -2268,6 +2283,10 @@ class _CheckoutState extends State<Checkout> {
                   borderSide: BorderSide(color: Colors.black), // Set border color
                   borderRadius: BorderRadius.circular(0), // Set border radius
                 ),
+                focusedBorder: OutlineInputBorder( // Add border
+                  borderSide: BorderSide(color: Colors.black), // Set border color
+                  borderRadius: BorderRadius.circular(0), // Set border radius
+                ),
                 contentPadding: EdgeInsets.only(left: 16),
                 hintText: AppLocalizations.of(context)
                     .checkout_screen_enter_coupon_code,
@@ -2303,17 +2322,18 @@ class _CheckoutState extends State<Checkout> {
             ),
           )
               : Container(
-            width: (MediaQuery.of(context).size.width - 32) * (1 / 3),
+            width: MediaQuery.of(context).size.width * 0.366,
             height: 42,
             child: FlatButton(
-              minWidth: MediaQuery.of(context).size.width,
+
               //height: 50,
               color: MyTheme.primary,
               shape: RoundedRectangleBorder(
                   borderRadius: const BorderRadius.only(
-                    topRight: const Radius.circular(8.0),
-                    bottomRight: const Radius.circular(8.0),
-                  )),
+                    topRight: const Radius.circular(0),
+                    bottomRight: const Radius.circular(0),
+                  )
+              ),
               child: Text(
                 AppLocalizations.of(context).checkout_screen_remove,
                 style: TextStyle(
@@ -2424,6 +2444,7 @@ class _CheckoutState extends State<Checkout> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: Row(
+
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(

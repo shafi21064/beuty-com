@@ -103,7 +103,7 @@ class PaymentRepository {
       @required requestBody) async {
     var post_body = jsonEncode(requestBody);
 
-    print(post_body);
+    print('cod response 6' +post_body);
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/credential/order-store/v2");
     print(url);
@@ -115,7 +115,7 @@ class PaymentRepository {
         },
         body: post_body);
 
-    print(response.body.toString());
+    print('res#' +response.body.toString());
     return orderCreateResponseCODFromJson(response.body);
   }
 

@@ -5,6 +5,7 @@ import 'package:kirei/helpers/endpoints.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:kirei/main.dart';
 import 'package:kirei/my_theme.dart';
+import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/repositories/cart_repository.dart';
 import 'package:kirei/screens/cart.dart';
 import 'package:kirei/screens/category_list.dart';
@@ -25,6 +26,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'newsfeed.dart';
 
@@ -80,10 +82,12 @@ class _MainState extends State<Main> {
      //getCartResponseList(user_id.$);
     //countCartItem();
     //print('this is shop ${shopList}');
-
     if (is_logged_in.$ == true) {
       fetchData();
     }
+    // fetchData();
+    //saveCountData();
+
     print('init');
 
   }
@@ -130,6 +134,11 @@ class _MainState extends State<Main> {
   var _shopList;
   var _isInitial = true;
 
+  saveCountData()async{
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  sharedPreferences.setInt("cartItemCount", cartItemCount);
+  print("kirei vai: + ${sharedPreferences.getInt("cartItemCount")}" );
+  }
 
   fetchData() async {
     print(user_id.$);
@@ -208,13 +217,16 @@ class _MainState extends State<Main> {
               TabItem(
                 //icon: Icons.shopping_bag_outlined,
                 icon:     badges.Badge(
-                  badgeContent: Text(
-                    "${sharedPreferences.getInt("cartItemCount")}",
-                    //cartItemCount.toString(),
-                    style: TextStyle(
-                        color: MyTheme.white
-                    ),
-                  ),
+                  badgeContent: Consumer<CartCountUpdate>(builder: (widget, value, child){
+                    return Text(
+                      //"${value.cartCount}",
+                      "${sharedPreferences.getInt("cartItemCount") ?? 0}",
+                      //cartItemCount.toString(),
+                      style: TextStyle(
+                          color: MyTheme.white
+                      ),
+                    );
+                  }),
                   badgeColor: MyTheme.secondary,
                   child: Icon(Icons.shopping_bag_outlined, color: MyTheme.white,),
                 ),

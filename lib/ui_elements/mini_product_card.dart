@@ -4,11 +4,13 @@ import 'package:kirei/custom/toast_component.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/repositories/cart_repository.dart';
 import 'package:kirei/screens/cart.dart';
 import 'package:kirei/screens/login.dart';
 import 'package:kirei/screens/product_details.dart';
 import 'package:kirei/app_config.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -47,6 +49,7 @@ class MiniProductCard extends StatefulWidget {
 }
 
 class _MiniProductCardState extends State<MiniProductCard> {
+
   int _quantity = 1;
   String _variant="";
 
@@ -87,11 +90,13 @@ class _MiniProductCardState extends State<MiniProductCard> {
         //   Scaffold.of(context).showSnackBar(snackbar);
         // }
 
-        SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-        var cartItem = sharedPreferences.getInt("cartItemCount");
-        cartItem++;
-        sharedPreferences.setInt("cartItemCount", cartItem);
-        print("kirei vai3: + ${sharedPreferences.getInt("cartItemCount")}" );
+        // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+        // var cartItem = sharedPreferences.getInt("cartItemCount");
+        // cartItem++;
+        // sharedPreferences.setInt("cartItemCount", cartItem);
+        // print("kirei vai3: + ${sharedPreferences.getInt("cartItemCount")}" );
+
+
 
         setState(() {});
 
@@ -130,6 +135,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
 
   @override
   Widget build(BuildContext context) {
+    var addCartCount = Provider.of<CartCountUpdate>(context, listen: true);
    // var discountPercentage = ((((int.parse(widget.price) - int.parse(widget.sale_price))/(int.parse(widget.price)))*100 ).toStringAsFixed(0).toString());
     return InkWell(
       onTap: () {
@@ -197,6 +203,7 @@ elevation: 0, // Set the elevation to 0 for no shadow
                 height: 36,
                 child: RaisedButton(
                   onPressed: () {
+                    addCartCount.getIncrease();
                     onPressAddToCart(context);
                     print(_shopList.length.toString());
 

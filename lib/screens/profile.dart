@@ -1,4 +1,5 @@
 import 'package:kirei/helpers/auth_helper.dart';
+import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/screens/theme.dart';
 import 'package:kirei/screens/wishlist.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,8 @@ import 'package:kirei/repositories/profile_repository.dart';
 import 'package:kirei/custom/toast_component.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -47,6 +50,9 @@ class _ProfileState extends State<Profile> {
     //     return Login();
     //   }));
     // }
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setInt("cartItemCount", 0) ;
+
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
       return Main();
     }), (route) => false);
@@ -146,6 +152,9 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+
+    var resetCartProductCount = Provider.of<CartCountUpdate>(context);
+
     return Directionality(
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
@@ -153,12 +162,14 @@ class _ProfileState extends State<Profile> {
         drawer: MainDrawer(),
         backgroundColor: Colors.grey[200],
         appBar: buildAppBar(context),
-        body: buildBody(context),
+        body: buildBody(context, (){
+
+        }),
       ),
     );
   }
 
-  buildBody(context) {
+  buildBody(context, VoidCallback logout) {
     if (is_logged_in.$ == false) {
       return Container(
           height: 100,
@@ -181,31 +192,142 @@ class _ProfileState extends State<Profile> {
             SliverList(
               delegate: SliverChildListDelegate([
                 buildTopSection(),
-                buildCountersRow(),
+                //buildCountersRow(),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Divider(
                     height: 24,
                   ),
                 ),
-                buildHorizontalMenu(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                ),
-                buildHorizontalMenu2(),
+                //buildHorizontalMenu(),
+                buildDetailsMenu(),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(vertical: 16.0),
+                // ),
+                //buildHorizontalMenu2(),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Divider(
                     height: 24,
                   ),
                 ),
-                buildVerticalMenu()
+                buildVerticalMenu(logout)
               ]),
             )
           ],
         ),
       );
     }
+  }
+
+  buildDetailsMenu(){
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 100),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return OrderList();
+              }));
+            },
+            child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Orders",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: MyTheme.dark_grey
+                    ),),
+                  Divider(
+                    thickness:1 ,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return ProfileEdit();
+              })).then((value) {
+                onPopped(value);
+              });
+            },
+            child: Container(
+              margin: EdgeInsets.only(top: 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Account Details",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: MyTheme.dark_grey
+                    ),),
+                  Divider(
+                    thickness:1 ,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Wishlist();
+              }));
+            },
+            child: Container(
+              margin: EdgeInsets.only(top: 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Wishlist",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: MyTheme.dark_grey
+                    ),),
+                  Divider(
+                    thickness:1 ,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+    return Address();
+    }));},
+            child: Container(margin: EdgeInsets.only(top: 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Address",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: MyTheme.dark_grey
+                    ),),
+                  Divider(
+                    thickness:1 ,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   buildHorizontalMenu() {
@@ -554,7 +676,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  buildVerticalMenu() {
+  buildVerticalMenu(VoidCallback logout) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
@@ -564,6 +686,7 @@ class _ProfileState extends State<Profile> {
           InkWell(
             onTap: () {
               onTapLogout(context);
+              logout();
             },
             child: Padding(
               padding: const EdgeInsets.only(bottom: 16.0, top: 50),

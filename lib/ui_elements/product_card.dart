@@ -2,6 +2,7 @@ import 'package:kirei/custom/toast_component.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/repositories/cart_repository.dart';
 import 'package:kirei/screens/cart.dart';
 import 'package:kirei/screens/login.dart';
@@ -9,6 +10,7 @@ import 'package:kirei/screens/product_details.dart';
 import 'package:kirei/app_config.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -87,6 +89,9 @@ class _ProductCardState extends State<ProductCard> {
   }
   @override
   Widget build(BuildContext context) {
+
+    var addCartProduct = Provider.of<CartCountUpdate>(context, listen: true);
+
     print((MediaQuery.of(context).size.width - 48) / 2);
     var discountPercentage = ((((int.parse(widget.price) - int.parse(widget.sale_price))/(int.parse(widget.price)))*100 ).toStringAsFixed(0).toString());
     return InkWell(
@@ -173,6 +178,7 @@ class _ProductCardState extends State<ProductCard> {
                 child: RaisedButton(
                   onPressed: () {
                      onPressAddToCart(context);
+                     addCartProduct.getIncrease();
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0.0)),

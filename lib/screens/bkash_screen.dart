@@ -96,20 +96,21 @@ class _BkashScreenState extends State<BkashScreen> {
   }
 
   void getData() {
-    print('bkash');
+    print('bkash 00');
     var payment_details = '';
     _webViewController
         .evaluateJavascript("document.body.innerText")
         .then((data) {
       var decodedJSON = jsonDecode(data);
       Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
-      print('Bkash data' +data.toString());
+      print('Bkash data' +decodedJSON.toString());
       if (responseJSON["result"] == false) {
         Toast.show(responseJSON["message"], context,
             duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
         Navigator.pop(context);
       } else if (responseJSON["result"] == true) {
         payment_details = responseJSON['payment_details'];
+        print('payment success');
         onPaymentSuccess(payment_details);
       }
     });
@@ -173,8 +174,9 @@ class _BkashScreenState extends State<BkashScreen> {
             onWebResourceError: (error) {},
             onPageFinished: (page) {
               //print(page.toString());
-
-              if (page.contains("/bkash/api/success")) {
+              //getData();
+              print("page link: + ${page.toString()}");
+              if (page.contains("/bkash/api/callback")) {
                 getData();
               } else if (page.contains("/bkash/api/fail")) {
                 ToastComponent.showDialog("Payment cancelled", context,

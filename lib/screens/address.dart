@@ -497,26 +497,26 @@ class _AddressState extends State<Address> {
                   padding: const EdgeInsets.all(16.0),
                   child: buildAddressList(),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: FlatButton(
-                    minWidth: MediaQuery.of(context).size.width - 16,
-                    height: 60,
-                    color: Color.fromRGBO(252, 252, 252, 1),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        side:
-                            BorderSide(color: MyTheme.light_grey, width: 1.0)),
-                    child: Icon(
-                      FontAwesome.plus,
-                      color: MyTheme.dark_grey,
-                      size: 16,
-                    ),
-                    onPressed: () {
-                      buildShowAddFormDialog(context);
-                    },
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(16.0),
+                //   child: FlatButton(
+                //     minWidth: MediaQuery.of(context).size.width - 16,
+                //     height: 60,
+                //     color: Color.fromRGBO(252, 252, 252, 1),
+                //     shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(8.0),
+                //         side:
+                //             BorderSide(color: MyTheme.light_grey, width: 1.0)),
+                //     child: Icon(
+                //       FontAwesome.plus,
+                //       color: MyTheme.dark_grey,
+                //       size: 16,
+                //     ),
+                //     onPressed: () {
+                //       buildShowAddFormDialog(context);
+                //     },
+                //   ),
+                // ),
                 SizedBox(
                   height: 100,
                 )
@@ -1158,28 +1158,28 @@ class _AddressState extends State<Address> {
                     SizedBox(
                       width: 1,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 28.0),
-                      child: FlatButton(
-                        minWidth: 75,
-                        height: 30,
-                        color: MyTheme.primary,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            side: BorderSide(
-                                color: MyTheme.light_grey, width: 1.0)),
-                        child: Text(
-                          "ADD",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        onPressed: () {
-                          onAddressAdd(context);
-                        },
-                      ),
-                    )
+                    // Padding(
+                    //   padding: const EdgeInsets.only(right: 28.0),
+                    //   child: FlatButton(
+                    //     minWidth: 75,
+                    //     height: 30,
+                    //     color: MyTheme.primary,
+                    //     shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.circular(8.0),
+                    //         side: BorderSide(
+                    //             color: MyTheme.light_grey, width: 1.0)),
+                    //     child: Text(
+                    //       "ADD",
+                    //       style: TextStyle(
+                    //           color: Colors.white,
+                    //           fontSize: 16,
+                    //           fontWeight: FontWeight.w600),
+                    //     ),
+                    //     onPressed: () {
+                    //       onAddressAdd(context);
+                    //     },
+                    //   ),
+                    // )
                   ],
                 )
               ],
@@ -2038,31 +2038,31 @@ class _AddressState extends State<Address> {
                         ),
                       ),
                     )),
-            OtherConfig.USE_GOOGLE_MAP
-                ? Positioned(
-                    right: 0,
-                    top: 80.0,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return MapLocation(
-                              address: _shippingAddressList[index]);
-                        })).then((value) {
-                          onPopped(value);
-                        });
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 12.0, left: 16.0, right: 16.0, bottom: 16.0),
-                        child: Icon(
-                          Icons.location_on,
-                          color: MyTheme.dark_grey,
-                          size: 16,
-                        ),
-                      ),
-                    ))
-                : Container()
+            // OtherConfig.USE_GOOGLE_MAP
+            //     ? Positioned(
+            //         right: 0,
+            //         top: 80.0,
+            //         child: InkWell(
+            //           onTap: () {
+            //             Navigator.push(context,
+            //                 MaterialPageRoute(builder: (context) {
+            //               return MapLocation(
+            //                   address: _shippingAddressList[index]);
+            //             })).then((value) {
+            //               onPopped(value);
+            //             });
+            //           },
+            //           child: Padding(
+            //             padding: const EdgeInsets.only(
+            //                 top: 12.0, left: 16.0, right: 16.0, bottom: 16.0),
+            //             child: Icon(
+            //               Icons.location_on,
+            //               color: MyTheme.dark_grey,
+            //               size: 16,
+            //             ),
+            //           ),
+            //         ))
+            //     : Container()
           ],
         ),
       ),

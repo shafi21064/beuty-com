@@ -1531,9 +1531,9 @@ class _ProductDetailsState extends State<ProductDetails> {
           height: 36,
           width: 120,
           decoration: BoxDecoration(
-              // border:
-              //     Border.all(color: Color.fromRGBO(222, 222, 222, 1), width: 1),
-              // borderRadius: BorderRadius.circular(36.0),
+            // border:
+            //     Border.all(color: Color.fromRGBO(222, 222, 222, 1), width: 1),
+            // borderRadius: BorderRadius.circular(36.0),
               color: Colors.white),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1551,9 +1551,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                   width: 33,
                   child: Center(
                       child: Text(
-                    _quantity.toString(),
-                    style: TextStyle(fontSize: 18, color: MyTheme.secondary),
-                  ))),
+                        _quantity.toString(),
+                        style: TextStyle(fontSize: 18, color: MyTheme.secondary),
+                      ))),
               buildQuantityUpButton()
             ],
           ),
@@ -1573,24 +1573,18 @@ class _ProductDetailsState extends State<ProductDetails> {
         //   //       fontSize: 14),
         //   // ),
         // ),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 8),
-          height: 30,
-          width: 80,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: _stock != 0? Colors.green : MyTheme.primary,
-            borderRadius: BorderRadius.circular(5)
-          ),
-          child:  Text(
-      //   //"(${_stock} ${AppLocalizations.of(context).product_details_screen_available})",
-        _stock != 0 ? 'In Stock' : 'Stock Out',
-        style: TextStyle(
+
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.15,),
+
+        Text(
+          //   //"(${_stock} ${AppLocalizations.of(context).product_details_screen_available})",
+          _stock != 0 ? 'In Stock' : 'Stock Out',
+          style: TextStyle(
             //color: Color.fromRGBO(152, 152, 153, 1),
-          color: MyTheme.white,
-            fontWeight: FontWeight.w600,
-            fontSize: 14),
-        )
+              color: _stock != 0? Colors.green : MyTheme.primary,
+              fontWeight: FontWeight.bold,
+              fontSize: 14),
         )
       ],
     );

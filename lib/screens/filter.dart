@@ -1692,6 +1692,7 @@ onPopped(value) async {
                         child: Text(
                           _allSubCategories[index]?.name,
                           textAlign: TextAlign.center,
+                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: MyTheme.secondary,
                             fontWeight: FontWeight.w300,

@@ -12,7 +12,10 @@ class CouponRepository {
   Future<CouponApplyResponse> getCouponApplyResponse(
       @required String coupon_code) async {
     var post_body =
-        jsonEncode({"phone": "${user_email.$}", "coupon_code": "$coupon_code"});
+        jsonEncode({
+          //"phone": "${user_email.$}",
+          "coupon_code": "$coupon_code"
+        });
 
     Uri url = Uri.parse("${ENDP.COUPON_APPLY}");
     final response = await http.post(url,

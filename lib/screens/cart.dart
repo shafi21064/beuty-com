@@ -1,3 +1,4 @@
+import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/screens/checkout.dart';
 import 'package:kirei/screens/filter.dart';
 import 'package:kirei/screens/shipping_info.dart';
@@ -11,6 +12,7 @@ import 'package:kirei/helpers/shimmer_helper.dart';
 import 'package:kirei/app_config.dart';
 import 'package:kirei/custom/toast_component.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -62,18 +64,17 @@ class CartState extends State<Cart> {
     _mainScrollController.dispose();
   }
 
-  // fetchCartCount()async{
-  //   var total_a = 0;
-  //   var demolist = _shopList[0].cart_items;
-  //
-  //   demolist.forEach((val1){
-  //     total_a += val1.quantity;
-  //     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  //     sharedPreferences.setInt("cartItemCount", cartItem);
-  //
-  //   });
-  //
-  //   print("show2: ${total_a.toString()}");  }
+  fetchCartCount()async{
+    var total_a = 0;
+    var demolist = _shopList[0].cart_items;
+
+    demolist.forEach((val1) async {
+      total_a += val1.quantity;
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      sharedPreferences.setInt("cartItemCount", total_a);
+    });
+
+    print("show2: ${total_a.toString()}");  }
 
   fetchData() async {
     print(user_id.$);
@@ -90,6 +91,7 @@ print('cartResponse list ${cartResponseList}');
     }
     _isInitial = false;
 
+    fetchCartCount();
     getSetCartTotal();
     setState(() {});
   }
@@ -132,17 +134,13 @@ print('cartResponse list ${cartResponseList}');
     return partialTotalString;
   }
 
-  onQuantityIncrease(seller_index, item_index) async{
+  onQuantityIncrease(seller_index, item_index, VoidCallback increaseItem) async{
     if (_shopList[seller_index].cart_items[item_index].quantity <
         _shopList[seller_index].cart_items[item_index].upper_limit) {
       _shopList[seller_index].cart_items[item_index].quantity++;
       getSetCartTotal();
 
-      // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-      // var cartItem = sharedPreferences.getInt("cartItemCount");
-      // cartItem++;
-      // sharedPreferences.setInt("cartItemCount", cartItem);
-
+      increaseItem();
       setState(() {});
     } else {
       ToastComponent.showDialog(
@@ -153,13 +151,14 @@ print('cartResponse list ${cartResponseList}');
     }
   }
 
-  onQuantityDecrease(seller_index, item_index) {
+  onQuantityDecrease(seller_index, item_index, VoidCallback decreaseCartItem) {
     if (_shopList[seller_index].cart_items[item_index].quantity >
         _shopList[seller_index].cart_items[item_index].lower_limit) {
       _shopList[seller_index].cart_items[item_index].quantity--;
       getSetCartTotal();
 
       setState(() {});
+      decreaseCartItem();
 
     } else {
       ToastComponent.showDialog(
@@ -214,6 +213,8 @@ print('cartResponse list ${cartResponseList}');
         await CartRepository().getCartDeleteResponse(cart_id);
 
     if (cartDeleteResponse.result == true) {
+
+
       ToastComponent.showDialog(cartDeleteResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
 
@@ -320,6 +321,9 @@ print('cartResponse list ${cartResponseList}');
 
   @override
   Widget build(BuildContext context) {
+
+    var addCartProduct = Provider.of<CartCountUpdate>(context, listen: true);
+
     print(widget.has_bottomnav);
     return Directionality(
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
@@ -344,7 +348,12 @@ print('cartResponse list ${cartResponseList}');
                       delegate: SliverChildListDelegate([
                         Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: buildCartSellerList(),
+                          child: buildCartSellerList(
+                            () => addCartProduct.getDecrease(),
+                            () => addCartProduct.getIncrease(),
+                            () => addCartProduct.getDelete(),
+
+                          ),
                         ),
                         Container(
                           height: widget.has_bottomnav ? 140 : 100,
@@ -577,7 +586,7 @@ print('cartResponse list ${cartResponseList}');
   }
 
 
-  buildCartSellerList() {
+  buildCartSellerList(VoidCallback decreaseCartItem, VoidCallback increaseItem, VoidCallback setCartCount) {
     if (is_logged_in.$ == false) {
       return Container(
           height: 100,
@@ -626,7 +635,7 @@ print('cartResponse list ${cartResponseList}');
                       ],
                     ),
                   ),
-                  buildCartSellerItemList(index),
+                  buildCartSellerItemList(index, decreaseCartItem, increaseItem,setCartCount),
                 ],
               ),
             );
@@ -681,7 +690,7 @@ print('cartResponse list ${cartResponseList}');
   }
 
 
-  SingleChildScrollView buildCartSellerItemList(seller_index) {
+  SingleChildScrollView buildCartSellerItemList(seller_index, VoidCallback decreaseCartItem, VoidCallback increaseItem, VoidCallback setCartCount ) {
     return SingleChildScrollView(
       child: ListView.builder(
         itemCount: _shopList[seller_index].cart_items.length,
@@ -691,14 +700,14 @@ print('cartResponse list ${cartResponseList}');
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 2.0),
-            child: buildCartSellerItemCard(seller_index, index),
+            child: buildCartSellerItemCard(seller_index, index, decreaseCartItem, increaseItem, setCartCount),
           );
         },
       ),
     );
   }
 
-  buildCartSellerItemCard(seller_index, item_index) {
+  buildCartSellerItemCard(seller_index, item_index, VoidCallback decreaseCartItem, VoidCallback increaseItem, VoidCallback setCartCount) {
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(color: MyTheme.light_grey, width: 1.0),
@@ -775,6 +784,7 @@ print('cartResponse list ${cartResponseList}');
                                 onPressDelete(_shopList[seller_index]
                                     .cart_items[item_index]
                                     .id);
+                                setCartCount();
                               },
                               icon: Icon(
                                 Icons.delete_forever_outlined,
@@ -812,7 +822,7 @@ print('cartResponse list ${cartResponseList}');
                   // ),
                   color: Colors.white,
                   onPressed: () {
-                    onQuantityIncrease(seller_index, item_index);
+                    onQuantityIncrease(seller_index, item_index, increaseItem);
                   },
                 ),
               ),
@@ -861,7 +871,8 @@ print('cartResponse list ${cartResponseList}');
                   // ),
                   color: Colors.white,
                   onPressed: () {
-                    onQuantityDecrease(seller_index, item_index);
+                    onQuantityDecrease(seller_index, item_index, decreaseCartItem);
+
                   },
                 ),
               )

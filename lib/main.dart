@@ -2,6 +2,9 @@ import 'package:kirei/helpers/addons_helper.dart';
 import 'package:kirei/helpers/auth_helper.dart';
 import 'package:kirei/helpers/business_setting_helper.dart';
 import 'package:kirei/other_config.dart';
+import 'package:kirei/providers/cart_count_update.dart';
+import 'package:kirei/screens/order_failed_page.dart';
+import 'package:kirei/screens/order_success_page.dart';
 import 'package:kirei/theme/appThemes.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
@@ -83,6 +86,7 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => LocaleProvider()),
+          ChangeNotifierProvider(create: (_) => CartCountUpdate()),
         ],
         child: Consumer<LocaleProvider>(builder: (context, provider, snapshot) {
           return DynamicTheme(
@@ -126,6 +130,7 @@ class _MyAppState extends State<MyApp> {
                   locale: provider.locale,
                   supportedLocales: LangConfig().supportedLocales(),
                   home: Splash(),
+                  //home: OrderFailedPage(),
                   //home: Main(),
                 ));
               });
