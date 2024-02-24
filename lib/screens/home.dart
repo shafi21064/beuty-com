@@ -12,9 +12,11 @@ import 'package:kirei/screens/beauty_tips.dart';
 import 'package:kirei/screens/filter.dart';
 import 'package:kirei/screens/flash_deal_list.dart';
 import 'package:kirei/screens/login.dart';
+import 'package:kirei/screens/main.dart';
 import 'package:kirei/screens/newsfeed.dart';
 import 'package:kirei/screens/personal_recommendation.dart';
 import 'package:kirei/screens/product_details.dart';
+import 'package:kirei/screens/profile.dart';
 import 'package:kirei/screens/todays_deal_products.dart';
 import 'package:kirei/screens/top_selling_products.dart';
 import 'package:kirei/screens/category_products.dart';
@@ -2180,41 +2182,49 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             ),
           )
               :
-          Row(
-            children: [
-              Text("Hi, ",
-                style: TextStyle(
-                  color: MyTheme.secondary,
-                  fontWeight: FontWeight.w600,
-                ),
-
-              ),
-              Text("${user_name.$}",
-                style: TextStyle(
+          GestureDetector(
+            onTap: (){
+              //Navigator.push(context, MaterialPageRoute(builder: (_)=> Profile()));
+              Navigator.push(context, MaterialPageRoute(builder: (_)=> Main(
+                pageIndex: 3,
+              )));
+            },
+            child: Row(
+              children: [
+                Text("Hi, ",
+                  style: TextStyle(
                     color: MyTheme.secondary,
-                    fontWeight: FontWeight.w600
-                ),
-              ),
-
-
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: MyTheme.secondary,
-                    width: 2 * 0.8, //8
+                    fontWeight: FontWeight.w600,
                   ),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage("${avatar_original.$}" ??
-                        "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png"), //TODO:change the avatar
+
+                ),
+                Text("${user_name.$}",
+                  style: TextStyle(
+                      color: MyTheme.secondary,
+                      fontWeight: FontWeight.w600
                   ),
                 ),
 
-              ),
-            ],
+
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: MyTheme.secondary,
+                      width: 2 * 0.8, //8
+                    ),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage("${avatar_original.$}" ??
+                          "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png"), //TODO:change the avatar
+                    ),
+                  ),
+
+                ),
+              ],
+            ),
           ),
         ),
 

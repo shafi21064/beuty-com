@@ -79,6 +79,7 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.google.firebase:firebase-messaging:20.1.0'
     implementation 'com.android.support:multidex:1.0.3'
     // Import the Firebase BoM

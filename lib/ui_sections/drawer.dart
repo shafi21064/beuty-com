@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:kirei/data_model/category_response.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/repositories/category_repository.dart';
@@ -10,6 +12,7 @@ import 'package:kirei/screens/common_webview_screen.dart';
 import 'package:kirei/screens/filter.dart';
 import 'package:kirei/screens/kireiYT.dart';
 import 'package:kirei/screens/newsfeed.dart';
+import 'package:kirei/screens/registration.dart';
 import 'package:kirei/screens/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -85,6 +88,8 @@ class _MainDrawerState extends State<MainDrawer> {
         child: Container(
           padding: EdgeInsets.only(top: 50, left: 5),
           child: SingleChildScrollView(
+            //scrollDirection: Axis.vertical,
+            physics: ClampingScrollPhysics(),
             child: Column(
               children: <Widget>[
                 is_logged_in.$ == true
@@ -122,14 +127,73 @@ class _MainDrawerState extends State<MainDrawer> {
                       }));
                     }
                     ),
+                ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    // leading: Image.asset("assets/blog.jpg",
+                    //     height: 22,
+                    //     color:
+                    //         Theme.of(context).buttonTheme.colorScheme.primary),
+                    title: Text('New Arrivals'.toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 13,
+                        )),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                            return Filter();
+                          }));
+                    }),
                 ExpansionTile(
                   // leading: Icon(Icons.category,
                   //     color: Theme.of(context).buttonTheme.colorScheme.primary),
-                  title: Text(
-                    "Categories".toUpperCase(),
-                    style: TextStyle(
-                      fontSize: 13,
-                    ),
+                  title: Row(
+                    children: [
+                      Text(
+                        "Categories".toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 13,
+                        ),
+                      ),
+
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.05,
+                      ),
+
+                      Stack(
+                        children: [
+                          Transform.rotate(
+                            angle: pi/5,
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                top: 3
+                              ),
+                              height: 15,
+                              width: 15,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: Colors.pinkAccent,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 22,
+                            width: 45,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: Colors.pinkAccent,
+                                borderRadius: BorderRadius.circular(2)
+                            ),
+                            child: Text("New!",
+                              style: TextStyle(
+                                  color: MyTheme.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
                   ),
                   children: categories.map((category) {
                     return category.children != null &&
@@ -213,11 +277,25 @@ class _MainDrawerState extends State<MainDrawer> {
                 //     }),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    // leading: Image.asset(
+                    //   "assets/community.png",
+                    //   height: 25,
+                    // ),
+                    title: Text('Community'.toUpperCase(),
+                        style: TextStyle(fontSize: 13)),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                            return FeedList();
+                          }));
+                    }),
+                ListTile(
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     // leading: Image.asset("assets/blog.jpg",
                     //     height: 22,
                     //     color:
                     //         Theme.of(context).buttonTheme.colorScheme.primary),
-                    title: Text('consult doctor'.toUpperCase(),
+                    title: Text('Appointment'.toUpperCase(),
                         style: TextStyle(
                           fontSize: 13,
                         )),
@@ -241,20 +319,6 @@ class _MainDrawerState extends State<MainDrawer> {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return Blogs();
-                      }));
-                    }),
-                ListTile(
-                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    // leading: Image.asset(
-                    //   "assets/community.png",
-                    //   height: 25,
-                    // ),
-                    title: Text('Kirei Community'.toUpperCase(),
-                        style: TextStyle(fontSize: 13)),
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return FeedList();
                       }));
                     }),
                 ExpansionTile(
@@ -489,7 +553,9 @@ class _MainDrawerState extends State<MainDrawer> {
                           wallet_system_status.$
                               ? ListTile(
                                   visualDensity: VisualDensity(
-                                      horizontal: -4, vertical: -4),
+                                      horizontal: -4,
+                                      vertical: -4
+                                  ),
                                   leading: Image.asset("assets/wallet.png",
                                       height: 16,
                                       color: Theme.of(context)
@@ -510,32 +576,99 @@ class _MainDrawerState extends State<MainDrawer> {
                         ],
                       )
                     : Container(),
-                Divider(height: 24),
+                //Divider(height: 24),
+
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.0005,
+                ),
+
                 is_logged_in.$ == false
-                    ? ListTile(
-                        visualDensity:
-                            VisualDensity(horizontal: -4, vertical: -4),
-                        // leading: Image.asset("assets/login.png",
-                        //     height: 16,
-                        //     color: Theme.of(context)
-                        //         .buttonTheme
-                        //         .colorScheme
-                        //         .primary),
-                        title: Text(
-                            AppLocalizations.of(context).main_drawer_login,
-                            style: TextStyle(fontSize: 13)),
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return Login();
-                          }));
-                        },
-                      )
+                    // ? ListTile(
+                    //     visualDensity:
+                    //         VisualDensity(horizontal: -4, vertical: -4),
+                    //     // leading: Image.asset("assets/login.png",
+                    //     //     height: 16,
+                    //     //     color: Theme.of(context)
+                    //     //         .buttonTheme
+                    //     //         .colorScheme
+                    //     //         .primary),
+                    //     title: Text(
+                    //         AppLocalizations.of(context).main_drawer_login,
+                    //         style: TextStyle(fontSize: 13)),
+                    //     onTap: () {
+                    //       Navigator.push(context,
+                    //           MaterialPageRoute(builder: (context) {
+                    //         return Login();
+                    //       }));
+                    //     },
+                    //   )
+                ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+                    GestureDetector(
+                      onTap:(){
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
+                      },
+                      child: Container(
+                        height: 42,
+                        width: 80,
+                        decoration: BoxDecoration(
+                          color: MyTheme.secondary,
+                          borderRadius: BorderRadius.circular(2.5),
+                        ),
+                        child:Center(
+                          child: Text(
+                           AppLocalizations.of(context).main_drawer_login,
+                           style: TextStyle(
+                               fontSize: 13,
+                             color: MyTheme.white,
+                               fontWeight: FontWeight.w600
+
+                           )
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.04,
+                    ),
+
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Registration()));
+                      },
+                      child: Container(
+                        height: 42,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: MyTheme.secondary,
+                          borderRadius: BorderRadius.circular(2.5),
+                        ),
+                        child:Center(
+                          child: Text(
+                              "Register",
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: MyTheme.white,
+                                fontWeight: FontWeight.w600
+                              )
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  ],
+                )
                     : Container(),
                 is_logged_in.$ == true
                     ? ListTile(
                         visualDensity:
-                            VisualDensity(horizontal: -4, vertical: -4),
+                            VisualDensity(
+                                horizontal: -4,
+                                vertical: -4
+                            ),
                         // leading: Image.asset("assets/logout.png",
                         //     height: 16,
                         //     color: Color.fromRGBO(153, 153, 153, 1)),
@@ -548,6 +681,69 @@ class _MainDrawerState extends State<MainDrawer> {
                           onTapLogout(context);
                         })
                     : Container(),
+
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.006,
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+                    GestureDetector(
+                      onTap: (){
+
+                      },
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.05,
+                        width: MediaQuery.of(context).size.width * 0.1,
+                        decoration: BoxDecoration(
+                          //image: DecorationImage(image: AssetImage("assets/youtube.png"))
+                        ),
+                        child: Image.asset("assets/facebook.png", fit: BoxFit.cover,),
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.02,
+                    ),
+
+                    GestureDetector(
+                      onTap: (){
+
+                      },
+                   child: Container(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.width * 0.1,
+                      decoration: BoxDecoration(
+                          //image: DecorationImage(image: AssetImage("assets/youtube.png"))
+                      ),
+                      child: Image.asset("assets/youtube.png", fit: BoxFit.cover,),
+                    ),),
+
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.02,
+                    ),
+
+                    GestureDetector(
+                      onTap: (){
+
+                      },
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.05,
+                        width: MediaQuery.of(context).size.width * 0.1,
+                        decoration: BoxDecoration(
+                          //image: DecorationImage(image: AssetImage("assets/youtube.png"))
+                        ),
+                        child: Image.asset("assets/instagram.png", fit: BoxFit.cover,),
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.1,
+                ),
               ],
             ),
           ),

@@ -8,11 +8,14 @@ class CartCountUpdate extends ChangeNotifier {
   int get cartCount => _cartCount;
 
   getIncrease() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    _cartCount = sharedPreferences.getInt("cartItemCount") ?? 0;
-    _cartCount++;
-    sharedPreferences.setInt("cartItemCount", _cartCount);
-    notifyListeners();
+    if(user_name.$ != null ) {
+      SharedPreferences sharedPreferences = await SharedPreferences
+          .getInstance();
+      _cartCount = sharedPreferences.getInt("cartItemCount") ?? 0;
+      _cartCount++;
+      sharedPreferences.setInt("cartItemCount", _cartCount);
+      notifyListeners();
+    }
   }
 
   getDecrease() async {

@@ -198,6 +198,18 @@ class _FilterState extends State<Filter> {
     return categories;
   }
 
+  bool isTrue = false;
+
+  visibileMethod(){
+
+    if(widget.category == "skin-care" || widget.category == "hair-care" || widget.category == "make-up" || widget.category == "body-care"){
+       isTrue = true;
+    } else {
+       isTrue = false;
+
+    }
+  }
+
   @override
   void initState() {
     init();
@@ -206,6 +218,7 @@ class _FilterState extends State<Filter> {
     //fetchAllCategory();
     //print(_allSubCategories);
     // print(widget.categoryIndex);
+    visibileMethod();
     super.initState();
   }
 
@@ -536,7 +549,11 @@ onPopped(value) async {
             children: [
               buildTopAppbar(context),
               buildBottomAppBar(context),
-              widget.category != null ? buildScrollableSubCategory() : Container()
+              Visibility(
+                  visible: isTrue,
+                  child: buildScrollableSubCategory(),
+              ),
+              //widget.category != null ? buildScrollableSubCategory() : Container()
               //buildScrollableSubCategory()
 
               //buildSubCategoryList(context)
@@ -1220,29 +1237,34 @@ onPopped(value) async {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
-                        var min = _minPriceController.text.toString();
-                        var max = _maxPriceController.text.toString();
+                        var min = _minPriceController.text;
+                        var max = _maxPriceController.text;
                         bool apply = true;
                         if (min != "" && max != "") {
-                          if (max.compareTo(min) < 0) {
-                            ToastComponent.showDialog(
-                                AppLocalizations.of(context)
-                                    .filter_screen_min_max_warning,
-                                context,
-                                gravity: Toast.CENTER,
-                                duration: Toast.LENGTH_LONG);
-                            apply = false;
+                            if (int.parse(max).compareTo(int.parse(min)) < 0) {
+                              ToastComponent.showDialog(
+                                  AppLocalizations.of(context)
+                                      .filter_screen_min_max_warning,
+                                  context,
+                                  gravity: Toast.CENTER,
+                                  duration: Toast.LENGTH_LONG);
+                              apply = false;
                           }
                         }
 
                         if (apply) {
                           _applyProductFilter();
                         }
+                        Navigator.of(context).pop();
                       },
                     )
                   ],
                 ),
               ),
+
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.065,
+              )
             ],
           ),
         ),
@@ -1323,14 +1345,16 @@ onPopped(value) async {
   buildProductScrollableList() {
     if (_isProductInitial && _productList.length == 0) {
       return Container(
-        margin: widget.category!= null? EdgeInsets.only(top: 50) : EdgeInsets.only(top: 0),
-        padding: widget.category!= null? EdgeInsets.only(top: 100) : EdgeInsets.only(top: 0),
+        //margin: widget.category!= null? EdgeInsets.only(top: 150) : EdgeInsets.only(top: 0),
+        //padding: widget.category!= null? EdgeInsets.only(top: 200) : EdgeInsets.only(top: 0),
+          margin: isTrue ? EdgeInsets.only(top: 150) : EdgeInsets.only(top: 100),
+        padding: isTrue ? EdgeInsets.only(top: 62) : EdgeInsets.only(top: 35),
           child: ShimmerHelper()
               .buildProductGridShimmer(scontroller: _scrollController));
     } else if (_productList.length > 0) {
       return Container(
-        margin: EdgeInsets.only(top: 40),
-        padding: EdgeInsets.only(top: 40),
+        margin: isTrue ? EdgeInsets.only(top: 51) : EdgeInsets.only(top: 0),
+        padding: isTrue ? EdgeInsets.only(top: 30) : EdgeInsets.only(top: 0),
         child: RefreshIndicator(
           color: Colors.white,
           backgroundColor: MyTheme.primary,

@@ -497,26 +497,26 @@ class _AddressState extends State<Address> {
                   padding: const EdgeInsets.all(16.0),
                   child: buildAddressList(),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.all(16.0),
-                //   child: FlatButton(
-                //     minWidth: MediaQuery.of(context).size.width - 16,
-                //     height: 60,
-                //     color: Color.fromRGBO(252, 252, 252, 1),
-                //     shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(8.0),
-                //         side:
-                //             BorderSide(color: MyTheme.light_grey, width: 1.0)),
-                //     child: Icon(
-                //       FontAwesome.plus,
-                //       color: MyTheme.dark_grey,
-                //       size: 16,
-                //     ),
-                //     onPressed: () {
-                //       buildShowAddFormDialog(context);
-                //     },
-                //   ),
-                // ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: FlatButton(
+                    minWidth: MediaQuery.of(context).size.width - 16,
+                    height: 60,
+                    color: Color.fromRGBO(252, 252, 252, 1),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        side:
+                            BorderSide(color: MyTheme.light_grey, width: 1.0)),
+                    child: Icon(
+                      FontAwesome.plus,
+                      color: MyTheme.dark_grey,
+                      size: 16,
+                    ),
+                    onPressed: () {
+                      buildShowAddFormDialog(context);
+                    },
+                  ),
+                ),
                 SizedBox(
                   height: 100,
                 )
@@ -967,86 +967,86 @@ class _AddressState extends State<Address> {
 
 
 
-                      // Padding(
-                      //   padding: const EdgeInsets.only(bottom: 16.0),
-                      //   child: Container(
-                      //     height: 40,
-                      //     child: TypeAheadField(
-                      //       suggestionsCallback: (name) async {
-                      //         var countryResponse = await AddressRepository()
-                      //             .getCountryList(id: _selected_city.id);
-                      //         return countryResponse.countries;
-                      //       },
-                      //       loadingBuilder: (context) {
-                      //         return Container(
-                      //           height: 50,
-                      //           child: Center(
-                      //               child: Text(
-                      //                   AppLocalizations.of(context)
-                      //                       .address_screen_loading_countries,
-                      //                   style: TextStyle(
-                      //                       color: MyTheme.dark_grey))),
-                      //         );
-                      //       },
-                      //       itemBuilder: (context, country) {
-                      //         //print(suggestion.toString());
-                      //         return ListTile(
-                      //           dense: true,
-                      //           title: Text(
-                      //             country.name,
-                      //             style: TextStyle(color: MyTheme.secondary),
-                      //           ),
-                      //         );
-                      //       },
-                      //       noItemsFoundBuilder: (context) {
-                      //         return Container(
-                      //           height: 50,
-                      //           child: Center(
-                      //               child: Text(
-                      //                   AppLocalizations.of(context)
-                      //                       .address_screen_no_country_available,
-                      //                   style: TextStyle(
-                      //                       color: MyTheme.dark_grey))),
-                      //         );
-                      //       },
-                      //       onSuggestionSelected: (country) {
-                      //         onSelectCountryDuringAdd(country, setModalState);
-                      //       },
-                      //       textFieldConfiguration: TextFieldConfiguration(
-                      //         onTap: () {},
-                      //         //autofocus: true,
-                      //         controller: _countryController,
-                      //         onSubmitted: (txt) {
-                      //           // keep this blank
-                      //         },
-                      //         decoration: InputDecoration(
-                      //             hintText: AppLocalizations.of(context)
-                      //                 .address_screen_enter_country,
-                      //             hintStyle: TextStyle(
-                      //                 fontSize: 12.0,
-                      //                 color: MyTheme.light_grey),
-                      //             enabledBorder: OutlineInputBorder(
-                      //               borderSide: BorderSide(
-                      //                   color: MyTheme.light_grey,
-                      //                   width: 0.5),
-                      //               borderRadius: const BorderRadius.all(
-                      //                 const Radius.circular(8.0),
-                      //               ),
-                      //             ),
-                      //             focusedBorder: OutlineInputBorder(
-                      //               borderSide: BorderSide(
-                      //                   color: MyTheme.light_grey,
-                      //                   width: 1.0),
-                      //               borderRadius: const BorderRadius.all(
-                      //                 const Radius.circular(8.0),
-                      //               ),
-                      //             ),
-                      //             contentPadding:
-                      //                 EdgeInsets.symmetric(horizontal: 8.0)),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: Container(
+                          height: 40,
+                          child: TypeAheadField(
+                            suggestionsCallback: (name) async {
+                              var countryResponse = await AddressRepository()
+                                  .getCountryList(id: _selected_city.id);
+                              return countryResponse.countries;
+                            },
+                            loadingBuilder: (context) {
+                              return Container(
+                                height: 50,
+                                child: Center(
+                                    child: Text(
+                                        AppLocalizations.of(context)
+                                            .address_screen_loading_countries,
+                                        style: TextStyle(
+                                            color: MyTheme.dark_grey))),
+                              );
+                            },
+                            itemBuilder: (context, country) {
+                              //print(suggestion.toString());
+                              return ListTile(
+                                dense: true,
+                                title: Text(
+                                  country.name,
+                                  style: TextStyle(color: MyTheme.secondary),
+                                ),
+                              );
+                            },
+                            noItemsFoundBuilder: (context) {
+                              return Container(
+                                height: 50,
+                                child: Center(
+                                    child: Text(
+                                        AppLocalizations.of(context)
+                                            .address_screen_no_country_available,
+                                        style: TextStyle(
+                                            color: MyTheme.dark_grey))),
+                              );
+                            },
+                            onSuggestionSelected: (country) {
+                              onSelectCountryDuringAdd(country, setModalState);
+                            },
+                            textFieldConfiguration: TextFieldConfiguration(
+                              onTap: () {},
+                              //autofocus: true,
+                              controller: _countryController,
+                              onSubmitted: (txt) {
+                                // keep this blank
+                              },
+                              decoration: InputDecoration(
+                                  hintText: AppLocalizations.of(context)
+                                      .address_screen_enter_country,
+                                  hintStyle: TextStyle(
+                                      fontSize: 12.0,
+                                      color: MyTheme.light_grey),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: MyTheme.light_grey,
+                                        width: 0.5),
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(8.0),
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: MyTheme.light_grey,
+                                        width: 1.0),
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(8.0),
+                                    ),
+                                  ),
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 8.0)),
+                            ),
+                          ),
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text(
@@ -1158,28 +1158,28 @@ class _AddressState extends State<Address> {
                     SizedBox(
                       width: 1,
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(right: 28.0),
-                    //   child: FlatButton(
-                    //     minWidth: 75,
-                    //     height: 30,
-                    //     color: MyTheme.primary,
-                    //     shape: RoundedRectangleBorder(
-                    //         borderRadius: BorderRadius.circular(8.0),
-                    //         side: BorderSide(
-                    //             color: MyTheme.light_grey, width: 1.0)),
-                    //     child: Text(
-                    //       "ADD",
-                    //       style: TextStyle(
-                    //           color: Colors.white,
-                    //           fontSize: 16,
-                    //           fontWeight: FontWeight.w600),
-                    //     ),
-                    //     onPressed: () {
-                    //       onAddressAdd(context);
-                    //     },
-                    //   ),
-                    // )
+                    Padding(
+                      padding: const EdgeInsets.only(right: 28.0),
+                      child: FlatButton(
+                        minWidth: 75,
+                        height: 30,
+                        color: MyTheme.primary,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(
+                                color: MyTheme.light_grey, width: 1.0)),
+                        child: Text(
+                          "ADD",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        onPressed: () {
+                          onAddressAdd(context);
+                        },
+                      ),
+                    )
                   ],
                 )
               ],

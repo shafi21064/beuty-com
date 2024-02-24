@@ -140,6 +140,7 @@ class _CheckoutState extends State<Checkout> {
     // }
 
     fetchAll();
+    buildAddressList();
   }
 
   @override
@@ -178,6 +179,8 @@ class _CheckoutState extends State<Checkout> {
 
   fetchShippingAddressList() async {
     var addressResponse = await AddressRepository().getAddressList();
+    //print( "foysal012");
+    //print(addressResponse.data.map((e) => print(e.phone)));
     print(addressResponse);
     for (var address in addressResponse.data) {
       if (address.set_default == 1) {
@@ -350,10 +353,13 @@ class _CheckoutState extends State<Checkout> {
 //   }
 
   onPressProceed() async {
-    if (_shippingOptionIsAddress && _seleted_shipping_address == 0) {
-      ToastComponent.showDialog("Please select a shipping address", context);
-      return;
-    }
+
+    //print("shippingaddress111" + _shippingAddressList[0].address);
+
+    // if (_shippingOptionIsAddress && _seleted_shipping_address == 0) {
+    //   ToastComponent.showDialog("Please select a shipping address", context);
+    //   return;
+    // }
 
     if (!_shippingOptionIsAddress && _seleted_shipping_pickup_point == 0) {
       ToastComponent.showDialog("Please select a pickup point", context);
@@ -1079,6 +1085,9 @@ class _CheckoutState extends State<Checkout> {
     var city = _stateController.text.toString();
     var area = _countryController.text.toString();
     var zone = _cityController.text.toString();
+    var name = _nameController.text.toString();
+    var email = _emailController.text.toString();
+    var note = _orderNoteController.text.toString();
 
     //print(city + zone + area);
 
@@ -1116,7 +1125,11 @@ class _CheckoutState extends State<Checkout> {
         zone: zone,
         city: city,
         postal_code: postal_code,
-        phone: phone);
+        phone: phone,
+        name: name,
+        email: email,
+        note: note,
+    );
 
     if (addressAddResponse.result == false) {
       ToastComponent.showDialog(addressAddResponse.message, context,
@@ -1131,7 +1144,354 @@ class _CheckoutState extends State<Checkout> {
     afterAddingAnAddress();
   }
 
-  buildShowAddFormDialog(BuildContext context) {
+  buildAddressList() {
+    print("is Initial: ${_isInitial}");
+    if (is_logged_in == false) {
+      return Container(
+          height: 100,
+          child: Center(
+              child: Text(
+                AppLocalizations.of(context).common_login_warning,
+                style: TextStyle(color: MyTheme.secondary),
+              )));
+    } else if (_isInitial && _shippingAddressList.length == 0) {
+      return SingleChildScrollView(
+          child: ShimmerHelper()
+              .buildListShimmer(item_count: 5, item_height: 100.0));
+    } else if (_shippingAddressList.length > 0) {
+      return SingleChildScrollView(
+        child: ListView.builder(
+          itemCount: _shippingAddressList.length,
+          scrollDirection: Axis.vertical,
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+             //_nameController.text = _shippingAddressList[index].name;
+             _nameController.text = user_name.$;
+            _phoneController.text = _shippingAddressList[index].phone;
+            // _emailController.text = _shippingAddressList[index].email;
+            _addressController.text = _shippingAddressList[index].address;
+            _cityController.text = _shippingAddressList[index].zone;
+            _stateController.text = _shippingAddressList[index].city;
+            _countryController.text = _shippingAddressList[index].area;
+
+            // print("foysal: ${_phoneController.text}");
+            // print("foysal: ${_shippingAddressList[index].phone}");
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 4.0),
+              //child: buildAddressItemCard(index),
+              //child: fetchPreviousData(index),
+            );
+          },
+        ),
+      );
+    } else if (!_isInitial && _shippingAddressList.length == 0) {
+      return Container(
+          height: 100,
+          child: Center(
+              child: Text(
+                AppLocalizations.of(context).common_no_address_added,
+                style: TextStyle(color: MyTheme.secondary),
+              )));
+    }
+  }
+
+  GestureDetector buildAddressItemCard(index){
+    return GestureDetector(
+      onDoubleTap: () {
+        // if (_default_shipping_address != _shippingAddressList[index].id) {
+        //   onAddressSwitch(index);
+        // }
+      },
+      child: Card(
+        // shape: RoundedRectangleBorder(
+        //   side: _default_shipping_address == _shippingAddressList[index].id
+        //       ? BorderSide(color: MyTheme.primary, width: 2.0)
+        //       : BorderSide(color: MyTheme.light_grey, width: 1.0),
+        //   borderRadius: BorderRadius.circular(8.0),
+        // ),
+        elevation: 0.0,
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 75,
+                          child: Text(
+                            AppLocalizations.of(context).address_screen_address,
+                            style: TextStyle(
+                              color: MyTheme.secondary,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 175,
+                          child: Text(
+                            _shippingAddressList[index].address ?? '',
+                            maxLines: 2,
+                            style: TextStyle(
+                                color: MyTheme.dark_grey,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 75,
+                          child: Text(
+                            AppLocalizations.of(context).address_screen_city,
+                            style: TextStyle(
+                              color: MyTheme.secondary,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 200,
+                          child: Text(
+                            _shippingAddressList[index].city ?? '',
+                            maxLines: 2,
+                            style: TextStyle(
+                                color: MyTheme.dark_grey,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 75,
+                          child: Text(
+                            AppLocalizations.of(context).address_screen_state,
+                            style: TextStyle(
+                              color: MyTheme.secondary,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 200,
+                          child: Text(
+                            _shippingAddressList[index].zone ?? '',
+                            maxLines: 2,
+                            style: TextStyle(
+                                color: MyTheme.dark_grey,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 75,
+                          child: Text(
+                            AppLocalizations.of(context).address_screen_country,
+                            style: TextStyle(
+                              color: MyTheme.secondary,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 200,
+                          child: Text(
+                            _shippingAddressList[index].area ?? '',
+                            maxLines: 2,
+                            style: TextStyle(
+                                color: MyTheme.dark_grey,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Padding(
+                  //   padding: const EdgeInsets.only(bottom: 8.0),
+                  //   child: Row(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       Container(
+                  //         width: 75,
+                  //         child: Text(
+                  //           AppLocalizations.of(context)
+                  //               .address_screen_postal_code,
+                  //           style: TextStyle(
+                  //             color: MyTheme.secondary,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       Container(
+                  //         width: 200,
+                  //         child: Text(
+                  //           _shippingAddressList[index].postal_code,
+                  //           maxLines: 2,
+                  //           style: TextStyle(
+                  //               color: MyTheme.dark_grey,
+                  //               fontWeight: FontWeight.w600),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 75,
+                          child: Text(
+                            AppLocalizations.of(context).address_screen_phone,
+                            style: TextStyle(
+                              color: MyTheme.secondary,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 200,
+                          child: Text(
+                            _shippingAddressList[index].phone ?? '',
+                            maxLines: 2,
+                            style: TextStyle(
+                                color: MyTheme.dark_grey,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                ],
+              ),
+            ),
+            // app_language_rtl.$
+            //     ? Positioned(
+            //         left: 0.0,
+            //         top: 0.0,
+            //         child: InkWell(
+            //           onTap: () {
+            //             buildShowUpdateFormDialog(context, index);
+            //           },
+            //           child: Padding(
+            //             padding: const EdgeInsets.only(
+            //                 top: 16.0, left: 16.0, right: 16.0, bottom: 12.0),
+            //             child: Icon(
+            //               Icons.edit,
+            //               color: MyTheme.dark_grey,
+            //               size: 16,
+            //             ),
+            //           ),
+            //         )
+            //         )
+            //     : Positioned(
+            //         right: 0.0,
+            //         top: 0.0,
+            //         child: InkWell(
+            //           onTap: () {
+            //             buildShowUpdateFormDialog(context, index);
+            //           },
+            //           child: Padding(
+            //             padding: const EdgeInsets.only(
+            //                 top: 16.0, left: 16.0, right: 16.0, bottom: 12.0),
+            //             child: Icon(
+            //               Icons.edit,
+            //               color: MyTheme.dark_grey,
+            //               size: 16,
+            //             ),
+            //           ),
+            //         )),
+            app_language_rtl.$
+                ? Positioned(
+                left: 0,
+                top: 0.0,
+                child: InkWell(
+                  onTap: () {
+                    //onPressDelete(_shippingAddressList[index].id);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 12.0, left: 16.0, right: 16.0, bottom: 16.0),
+                    child: Icon(
+                      Icons.delete_forever_outlined,
+                      color: MyTheme.dark_grey,
+                      size: 16,
+                    ),
+                  ),
+                ))
+                : Positioned(
+                right: 0,
+                top: 40.0,
+                child: InkWell(
+                  onTap: () {
+                   // onPressDelete(_shippingAddressList[index].id);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 12.0, left: 16.0, right: 16.0, bottom: 16.0),
+                    child: Icon(
+                      Icons.delete_forever_outlined,
+                      color: MyTheme.dark_grey,
+                      size: 16,
+                    ),
+                  ),
+                )),
+            // OtherConfig.USE_GOOGLE_MAP
+            //     ? Positioned(
+            //         right: 0,
+            //         top: 80.0,
+            //         child: InkWell(
+            //           onTap: () {
+            //             Navigator.push(context,
+            //                 MaterialPageRoute(builder: (context) {
+            //               return MapLocation(
+            //                   address: _shippingAddressList[index]);
+            //             })).then((value) {
+            //               onPopped(value);
+            //             });
+            //           },
+            //           child: Padding(
+            //             padding: const EdgeInsets.only(
+            //                 top: 12.0, left: 16.0, right: 16.0, bottom: 16.0),
+            //             child: Icon(
+            //               Icons.location_on,
+            //               color: MyTheme.dark_grey,
+            //               size: 16,
+            //             ),
+            //           ),
+            //         ))
+            //     : Container()
+          ],
+        ),
+      ),
+    );
+  }
+
+  buildShowAddFormDialog(BuildContext context,) {
     return StatefulBuilder(builder: (BuildContext context,
         StateSetter setModalState /*You can rename this!*/) {
       return Container(
@@ -1598,58 +1958,60 @@ class _CheckoutState extends State<Checkout> {
               ),
             ),
 
-            //add button
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //   children: [
-            //     Padding(
-            //       padding: const EdgeInsets.only(right: 8.0),
-            //       child: FlatButton(
-            //         minWidth: 75,
-            //         height: 30,
-            //         color: Color.fromRGBO(253, 253, 253, 1),
-            //         shape: RoundedRectangleBorder(
-            //             borderRadius: BorderRadius.circular(8.0),
-            //             side: BorderSide(
-            //                 color: MyTheme.light_grey, width: 1.0)),
-            //         child: Text(
-            //           "CLOSE",
-            //           style: TextStyle(
-            //             color: MyTheme.secondary,
-            //           ),
-            //         ),
-            //         onPressed: () {
-            //           //Navigator.of(context, rootNavigator: true).pop();
-            //         },
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: 1,
-            //     ),
-            //     Padding(
-            //       padding: const EdgeInsets.only(right: 28.0),
-            //       child: FlatButton(
-            //         minWidth: 75,
-            //         height: 30,
-            //         color: MyTheme.primary,
-            //         shape: RoundedRectangleBorder(
-            //             borderRadius: BorderRadius.circular(8.0),
-            //             side: BorderSide(
-            //                 color: MyTheme.light_grey, width: 1.0)),
-            //         child: Text(
-            //           "ADD",
-            //           style: TextStyle(
-            //               color: Colors.white,
-            //               fontSize: 16,
-            //               fontWeight: FontWeight.w600),
-            //         ),
-            //         onPressed: () {
-            //           onAddressAdd(context);
-            //         },
-            //       ),
-            //     )
-            //   ],
-            // )
+           /// add button
+           //  Row(
+           //    mainAxisAlignment: MainAxisAlignment.spaceAround,
+           //    children: [
+           //
+           //      Padding(
+           //        padding: const EdgeInsets.only(right: 8.0),
+           //        child: FlatButton(
+           //          minWidth: 75,
+           //          height: 30,
+           //          color: Color.fromRGBO(253, 253, 253, 1),
+           //          shape: RoundedRectangleBorder(
+           //              borderRadius: BorderRadius.circular(8.0),
+           //              side: BorderSide(
+           //                  color: MyTheme.light_grey, width: 1.0)),
+           //          child: Text(
+           //            "CLOSE",
+           //            style: TextStyle(
+           //              color: MyTheme.secondary,
+           //            ),
+           //          ),
+           //          onPressed: () {
+           //            //Navigator.of(context, rootNavigator: true).pop();
+           //          },
+           //        ),
+           //      ),
+           //
+           //      SizedBox(
+           //        width: 1,
+           //      ),
+           //      Padding(
+           //        padding: const EdgeInsets.only(right: 28.0),
+           //        child: FlatButton(
+           //          minWidth: 75,
+           //          height: 30,
+           //          color: MyTheme.primary,
+           //          shape: RoundedRectangleBorder(
+           //              borderRadius: BorderRadius.circular(8.0),
+           //              side: BorderSide(
+           //                  color: MyTheme.light_grey, width: 1.0)),
+           //          child: Text(
+           //            "ADD",
+           //            style: TextStyle(
+           //                color: Colors.white,
+           //                fontSize: 16,
+           //                fontWeight: FontWeight.w600),
+           //          ),
+           //          onPressed: () {
+           //            onAddressAdd(context);
+           //          },
+           //        ),
+           //      )
+           //    ],
+           //  )
 
 
             ///extra order note code
@@ -2101,7 +2463,7 @@ class _CheckoutState extends State<Checkout> {
               // ),
               Container(
                 padding: EdgeInsets.all(8),
-                height: 450,
+                height: 550,
                 child: ListView(
                   shrinkWrap: true,
                   physics: ScrollPhysics(),
@@ -2127,6 +2489,13 @@ class _CheckoutState extends State<Checkout> {
                       // width: 100,
                       color: MyTheme.primary,
                       child: buildShowAddFormDialog(context),
+                    ),
+
+                    Container(
+                      // height: 200,
+                      // width: 100,
+                      color: MyTheme.primary,
+                      child: buildAddressList(),
                     ),
 
 
@@ -2162,6 +2531,7 @@ class _CheckoutState extends State<Checkout> {
                   ],
                 ),
               ),
+
               Container(
                 margin: EdgeInsets.only(
                     top: 20
@@ -2799,13 +3169,18 @@ class _CheckoutState extends State<Checkout> {
     } else if (_paymentTypeList.length > 0) {
 
       return Container(
-        height: 120,
+        height: 50,
+        width: double.infinity,
         // color: Colors.grey,
         child: GridView.builder(
+          physics: NeverScrollableScrollPhysics(),
           itemCount: _paymentTypeList.length,
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3,
-              childAspectRatio: 2),
+              childAspectRatio: 2.3,
+           mainAxisSpacing: 0,
+             crossAxisSpacing: 0,
+          ),
           itemBuilder: (context, index){
             return Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
@@ -2911,7 +3286,7 @@ class _CheckoutState extends State<Checkout> {
           ),
           Positioned(
             left: 0,
-            top: 17,
+            top: 13,
             child: buildPaymentMethodCheckContainer(
                 _selected_payment_method_key ==
                     _paymentTypeList[index].payment_type_key),
@@ -2979,6 +3354,7 @@ class _CheckoutState extends State<Checkout> {
                     fontWeight: FontWeight.w600),
               ),
               onPressed: () {
+                _shippingAddressList == null ? onAddressAdd(context) : Container();
                 onPressPlaceOrderOrProceed();
                 onPressProceed();
               },

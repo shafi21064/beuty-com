@@ -40,14 +40,21 @@ class AddressRepository {
       @required String zone,
       @required String city,
       @required String postal_code,
-      @required String phone}) async {
+      @required String phone,
+      @required String name,
+      @required String email,
+      @required String note,
+      }) async {
     var post_body = jsonEncode({
       "address": "$address",
       "area": "$area",
       "zone": "$zone",
       "city": "$city",
       "postal_code": "$postal_code",
-      "phone": "$phone"
+      "phone": "$phone",
+      "name" : "$name",
+      "email" : "$email",
+      "note" : "$note",
     });
     print(post_body);
 

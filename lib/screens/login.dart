@@ -1,3 +1,4 @@
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kirei/app_config.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/other_config.dart';
@@ -191,22 +192,25 @@ class _LoginState extends State<Login> {
 
   onPressedGoogleLogin() async {
     // try {
+    //   print("Kireiapp");
     //   final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
-
+    //
     //   print(googleUser.toString());
-
+    //
     //   GoogleSignInAuthentication googleSignInAuthentication =
     //       await googleUser.authentication;
     //   String accessToken = googleSignInAuthentication.accessToken;
-
+    //
     //   var loginResponse = await AuthRepository().getSocialLoginResponse(
     //       "google", googleUser.displayName, googleUser.email, googleUser.id,
     //       access_token: accessToken);
-
+    //   print("Kireiapp5");
     //   if (loginResponse.result == false) {
+    //     print("Kireiapp5");
     //     ToastComponent.showDialog(loginResponse.message, context,
     //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
     //   } else {
+    //     print("Kireiapp6");
     //     ToastComponent.showDialog(loginResponse.message, context,
     //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
     //     AuthHelper().setUserData(loginResponse);
