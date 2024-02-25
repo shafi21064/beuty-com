@@ -550,9 +550,19 @@ onPopped(value) async {
               buildTopAppbar(context),
               buildBottomAppBar(context),
               Visibility(
+                visible: isTrue,
+                child: Divider(
+                  color: MyTheme.dark_grey,
+                  thickness: 1,
+                  height: 1,
+                ),
+              ),
+
+              Visibility(
                   visible: isTrue,
                   child: buildScrollableSubCategory(),
               ),
+
               //widget.category != null ? buildScrollableSubCategory() : Container()
               //buildScrollableSubCategory()
 
@@ -931,7 +941,8 @@ onPopped(value) async {
                     child: ListTile(
                       onTap:(){
                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ProductDetails(id: suggestion.id);
+          return ProductDetails(id: suggestion.id,
+          );
         })).then((value) {
           onPopped(value);
         });
@@ -1348,7 +1359,7 @@ onPopped(value) async {
         //margin: widget.category!= null? EdgeInsets.only(top: 150) : EdgeInsets.only(top: 0),
         //padding: widget.category!= null? EdgeInsets.only(top: 200) : EdgeInsets.only(top: 0),
           margin: isTrue ? EdgeInsets.only(top: 150) : EdgeInsets.only(top: 100),
-        padding: isTrue ? EdgeInsets.only(top: 62) : EdgeInsets.only(top: 35),
+        padding: isTrue ? EdgeInsets.only(top: 65) : EdgeInsets.only(top: 35),
           child: ShimmerHelper()
               .buildProductGridShimmer(scontroller: _scrollController));
     } else if (_productList.length > 0) {
@@ -1681,8 +1692,8 @@ onPopped(value) async {
               return GestureDetector(
                 onTap: () {},
                 child: Container(
-                  margin: EdgeInsets.only(right: 5),
-                  padding: EdgeInsets.only(bottom: 8,),
+                  margin: EdgeInsets.only(right: 5, top: 3),
+                  padding: EdgeInsets.only(bottom: 6,),
                   //height: 120,
                   width: MediaQuery.of(context).size.width / 5 - 4,
                   color: MyTheme.white,

@@ -385,7 +385,7 @@ confirmDelete(cart_id,VoidCallback deleteCartItem) async {
                 )*/
       ),
 
-      height: widget.has_bottomnav ? 200 : 120,
+      height: widget.has_bottomnav ? 188 : 150,
       //color: Colors.white,
       child: Padding(
           padding: const EdgeInsets.all(16.0),

@@ -441,7 +441,7 @@ class _OrderListState extends State<OrderList> {
         displacement: 0,
         onRefresh: _onRefresh,
         child: SingleChildScrollView(
-          controller: _xcrollController,
+          //controller: _xcrollController,
           physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics()),
           child: ListView.builder(

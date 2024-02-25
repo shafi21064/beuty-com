@@ -40,9 +40,10 @@ class ProductDetails extends StatefulWidget {
   int id;
   String slug;
   int discount;
+  int stock;
   String sale_price;
   String price;
-  ProductDetails({Key key, this.id, this.slug, this.discount, this.sale_price, this.price}) : super(key: key);
+  ProductDetails({Key key, this.id, this.slug, this.discount, this.sale_price, this.price, this.stock}) : super(key: key);
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
@@ -96,6 +97,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   void initState() {
+    print("HowMuch${widget.stock}");
     fetchAll();
     super.initState();
   }
@@ -240,7 +242,9 @@ class _ProductDetailsState extends State<ProductDetails> {
   addToWishList() async {
     var wishListCheckResponse =
         await WishListRepository().add(product_id: widget.id);
-
+    ToastComponent.showDialog(
+        "Added to Wishlist", context,
+        gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
     //print("p&u:" + widget.id.toString() + " | " + _user_id.toString());
     _isInWishList = wishListCheckResponse.is_in_wishlist;
     setState(() {});
@@ -249,7 +253,9 @@ class _ProductDetailsState extends State<ProductDetails> {
   removeFromWishList() async {
     var wishListCheckResponse =
         await WishListRepository().remove(product_id: widget.id);
-
+    ToastComponent.showDialog(
+        "Remove from Wishlist", context,
+        gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
     //print("p&u:" + widget.id.toString() + " | " + _user_id.toString());
     _isInWishList = wishListCheckResponse.is_in_wishlist;
     setState(() {});
@@ -2168,7 +2174,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Visibility(
-                visible: _stock > 0,
+                visible: widget.stock > 0,
                 child: Container(
                   width: MediaQuery.of(context).size.width / 2,
                   height: 44,
@@ -2217,7 +2223,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               //   width: 1,
               // ),
               Visibility(
-                visible: _stock > 0,
+                visible: widget.stock > 0,
                 child: Container(
                   width: MediaQuery.of(context).size.width / 2,
                   height: 44,
@@ -2245,8 +2251,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                 ),
               ),
+
               Visibility(
-                visible: _stock == 0,
+                visible: widget.stock == 0,
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: 44,
@@ -3133,6 +3140,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
                 Visibility(
                   visible: widget.sale_price != widget.price,
+                  //visible: true,
                   child: Positioned(
                     left: 30,
                     top:15,
@@ -3146,11 +3154,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(2),
-                        child: Text('${widget.discount}%',
+                        child: Text('-${widget.discount}%',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: MyTheme.white,
-                              fontSize: 11
+                              fontSize: 10
                           ),
                         ),
                       ),

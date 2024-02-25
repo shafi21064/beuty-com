@@ -153,7 +153,7 @@ class _ProductReviewsState extends State<ProductReviews> {
                 onRefresh: _onRefresh,
                 displacement: 0,
                 child: CustomScrollView(
-                  controller: _xcrollController,
+                  //controller: _xcrollController,
                   physics: const BouncingScrollPhysics(
                       parent: AlwaysScrollableScrollPhysics()),
                   slivers: [
@@ -171,7 +171,6 @@ class _ProductReviewsState extends State<ProductReviews> {
                   ],
                 ),
               ), //original
-
               Align(
                 alignment: Alignment.bottomCenter,
                 child: buildBottomBar(context),

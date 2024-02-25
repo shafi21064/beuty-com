@@ -259,6 +259,7 @@ class _CheckoutState extends State<Checkout> {
       _taxString = cartSummaryResponse.tax;
       _shippingCostString = cartSummaryResponse.shipping_cost;
       _discountString = cartSummaryResponse.discount;
+      _discountedPrice = cartSummaryResponse.discount;
       _totalString = cartSummaryResponse.grand_total;
       _grandTotalValue = cartSummaryResponse.grand_total_value;
       _used_coupon_code = cartSummaryResponse.coupon_code;
@@ -414,6 +415,7 @@ class _CheckoutState extends State<Checkout> {
       var orderCreateResponse =
           await PaymentRepository().getOrderCreateResponseFromCod(requestBody);
 
+      print("orderCreateResponse${orderCreateResponse}");
       // Check if the widget is mounted before updating the UI
       if (mounted) {
         Navigator.of(loadingcontext).pop();
@@ -436,7 +438,9 @@ class _CheckoutState extends State<Checkout> {
               duration: Toast.LENGTH_LONG,
             );
           Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (_)=> OrderSuccessPage()), (route) => false);
+              MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+                orderId: orderCreateResponse.data.order.id,
+              )), (route) => false);
 
         }
         // ToastComponent.showDialog(
@@ -476,7 +480,6 @@ class _CheckoutState extends State<Checkout> {
     fetchSummary();
 
     if (couponApplyResponse.result == true) {
-
       ToastComponent.showDialog(couponApplyResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       setState(() {});
@@ -2159,8 +2162,8 @@ class _CheckoutState extends State<Checkout> {
                 ],
               )),
 
-          _discountedPrice == 0 ?
-          Padding(
+          _discountedPrice == '৳0.00' ?
+           Container() : Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Row(
                 children: [
@@ -2177,14 +2180,14 @@ class _CheckoutState extends State<Checkout> {
                   Spacer(),
 
                   Text(
-                    _discountString ?? '',
+                    _discountedPrice ?? '',
                     style: TextStyle(
                         color: MyTheme.secondary,
                         fontSize: 14,
                         fontWeight: FontWeight.bold),
                   ),
                 ],
-              )) : Container(),
+              )) ,
 
           Padding(
               padding: const EdgeInsets.only(bottom: 8),
@@ -2491,12 +2494,12 @@ class _CheckoutState extends State<Checkout> {
                       child: buildShowAddFormDialog(context),
                     ),
 
-                    Container(
-                      // height: 200,
-                      // width: 100,
-                      color: MyTheme.primary,
-                      child: buildAddressList(),
-                    ),
+                    // Container(
+                    //   // height: 200,
+                    //   // width: 100,
+                    //   color: MyTheme.primary,
+                    //   child: buildAddressList(),
+                    // ),
 
 
                     Container(

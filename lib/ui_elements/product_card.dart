@@ -100,6 +100,10 @@ class _ProductCardState extends State<ProductCard> {
           return ProductDetails(
             id: widget.id,
             slug: widget.slug,
+            discount: widget.discount,
+            price:widget.price,
+            sale_price: widget.sale_price,
+            stock: widget.stock,
           );
         }));
       },
@@ -159,11 +163,11 @@ class _ProductCardState extends State<ProductCard> {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(5),
-                              child: Text('${widget.discount}%',
+                              child: Text('-${widget.discount}%',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: MyTheme.white,
-                                    fontSize: 11
+                                    fontSize: 10
                                 ),
                               ),
                             ),

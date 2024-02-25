@@ -140,7 +140,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ProductDetails(id: widget.id, slug: widget.slug,discount: widget.discount, sale_price: widget.sale_price, price: widget.price,);
+          return ProductDetails(id: widget.id, slug: widget.slug,discount: widget.discount, sale_price: widget.sale_price, price: widget.price, stock: widget.stock,);
         }));
       },
       child: Card(
@@ -183,11 +183,11 @@ elevation: 0, // Set the elevation to 0 for no shadow
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(2),
-                            child: Text('${widget.discount}%',
+                            child: Text('-${widget.discount}%',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: MyTheme.white,
-                              fontSize: 11
+                              fontSize: 10
                             ),
                             ),
                           ),

@@ -1148,13 +1148,13 @@ class _OrderDetailsState extends State<OrderDetails> {
                                   color: MyTheme.secondary,
                                 ),
                               ),
-                              Text(
-                                "${AppLocalizations.of(context).order_details_screen_postal_code}: ${_orderDetails?.shipping_address.postal_code??''}",
-                                maxLines: 3,
-                                style: TextStyle(
-                                  color: MyTheme.secondary,
-                                ),
-                              ),
+                              // Text(
+                              //   "${AppLocalizations.of(context).order_details_screen_postal_code}: ${_orderDetails?.shipping_address.postal_code??''}",
+                              //   maxLines: 3,
+                              //   style: TextStyle(
+                              //     color: MyTheme.secondary,
+                              //   ),
+                              // ),
                             ],
                           )
                         : Column(
@@ -1246,7 +1246,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                               fontWeight: FontWeight.w600),
                         )
                       : Text(
-                          "item",
+                    _orderedItemList[index]?.quantity == 1 ? " item" : " items",
                           style: TextStyle(
                               color: MyTheme.secondary,
                               fontSize: 13,
