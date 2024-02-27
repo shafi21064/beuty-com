@@ -57,4 +57,12 @@ class CartCountUpdate extends ChangeNotifier {
   notifyListeners();
 }
 
+ setCartValue(int currentValue)async{
+   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    _cartCount = sharedPreferences.getInt("cartItemCount");
+    _cartCount += currentValue;
+    sharedPreferences.setInt("cartItemCount", _cartCount);
+    notifyListeners();
+ }
+
 }

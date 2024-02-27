@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:kirei/data_model/city_response.dart';
@@ -123,6 +122,13 @@ class _CheckoutState extends State<Checkout> {
   double mWidth = 0;
   double mHeight = 0;
 
+  bool viseVersaValue = true;
+  changeValue(){
+    viseVersaValue = !viseVersaValue;
+    setState(() {
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -132,15 +138,14 @@ class _CheckoutState extends State<Checkout> {
     print(access_token.value);
     print(user_id.$);
     print(user_name.$);*/
-    print(widget.address);
+   //r print(widget.address);
     print(widget.product_ids);
     print(widget.product_quantities);
     // if (is_logged_in.$ == true) {
     //   fetchAll();
     // }
-
     fetchAll();
-    buildAddressList();
+    //buildAddressList();
   }
 
   @override
@@ -179,8 +184,6 @@ class _CheckoutState extends State<Checkout> {
 
   fetchShippingAddressList() async {
     var addressResponse = await AddressRepository().getAddressList();
-    //print( "foysal012");
-    //print(addressResponse.data.map((e) => print(e.phone)));
     print(addressResponse);
     for (var address in addressResponse.data) {
       if (address.set_default == 1) {
@@ -188,10 +191,13 @@ class _CheckoutState extends State<Checkout> {
         break;
       }
     }
-    print(_shippingAddressList);
+    print("_shippingAddressList"+ _shippingAddressList.toString());
 
     if (_shippingAddressList.length > 0) {
+      _phoneController.text = _shippingAddressList[0].phone;
+      _nameController.text = user_name.$;
       _seleted_shipping_address = _shippingAddressList[0].id;
+      _addressController.text = _shippingAddressList[0].address;
 
       _shippingAddressList.forEach((address) {
         if (address.set_default == 1 && _shippingOptionIsAddress) {
@@ -362,10 +368,10 @@ class _CheckoutState extends State<Checkout> {
     //   return;
     // }
 
-    if (!_shippingOptionIsAddress && _seleted_shipping_pickup_point == 0) {
-      ToastComponent.showDialog("Please select a pickup point", context);
-      return;
-    }
+    // if (!_shippingOptionIsAddress && _seleted_shipping_pickup_point == 0) {
+    //   ToastComponent.showDialog("Please select a pickup point", context);
+    //   return;
+    // }
     if(!_termsChecked){
       ToastComponent.showDialog("Please agree to the terms and conditions", context,   gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
@@ -402,6 +408,7 @@ class _CheckoutState extends State<Checkout> {
     requestBody["shipping_area"] = _shippingAddressList[0].area;
     requestBody["is_preorder"] = 0;
     requestBody["payment_type"] = _selected_payment_method;
+    requestBody["type"] = 'app';
 
     if (coupon_code != "") {
       requestBody["coupon_code"] = coupon_code;
@@ -1147,57 +1154,57 @@ class _CheckoutState extends State<Checkout> {
     afterAddingAnAddress();
   }
 
-  buildAddressList() {
-    print("is Initial: ${_isInitial}");
-    if (is_logged_in == false) {
-      return Container(
-          height: 100,
-          child: Center(
-              child: Text(
-                AppLocalizations.of(context).common_login_warning,
-                style: TextStyle(color: MyTheme.secondary),
-              )));
-    } else if (_isInitial && _shippingAddressList.length == 0) {
-      return SingleChildScrollView(
-          child: ShimmerHelper()
-              .buildListShimmer(item_count: 5, item_height: 100.0));
-    } else if (_shippingAddressList.length > 0) {
-      return SingleChildScrollView(
-        child: ListView.builder(
-          itemCount: _shippingAddressList.length,
-          scrollDirection: Axis.vertical,
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-             //_nameController.text = _shippingAddressList[index].name;
-             _nameController.text = user_name.$;
-            _phoneController.text = _shippingAddressList[index].phone;
-            // _emailController.text = _shippingAddressList[index].email;
-            _addressController.text = _shippingAddressList[index].address;
-            _cityController.text = _shippingAddressList[index].zone;
-            _stateController.text = _shippingAddressList[index].city;
-            _countryController.text = _shippingAddressList[index].area;
-
-            // print("foysal: ${_phoneController.text}");
-            // print("foysal: ${_shippingAddressList[index].phone}");
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 4.0),
-              //child: buildAddressItemCard(index),
-              //child: fetchPreviousData(index),
-            );
-          },
-        ),
-      );
-    } else if (!_isInitial && _shippingAddressList.length == 0) {
-      return Container(
-          height: 100,
-          child: Center(
-              child: Text(
-                AppLocalizations.of(context).common_no_address_added,
-                style: TextStyle(color: MyTheme.secondary),
-              )));
-    }
-  }
+  // buildAddressList() {
+  //   print("is Initial: ${_isInitial}");
+  //   if (is_logged_in == false) {
+  //     return Container(
+  //         height: 100,
+  //         child: Center(
+  //             child: Text(
+  //               AppLocalizations.of(context).common_login_warning,
+  //               style: TextStyle(color: MyTheme.secondary),
+  //             )));
+  //   } else if (_isInitial && _shippingAddressList.length == 0) {
+  //     return SingleChildScrollView(
+  //         child: ShimmerHelper()
+  //             .buildListShimmer(item_count: 5, item_height: 100.0));
+  //   } else if (_shippingAddressList.length > 0) {
+  //     return SingleChildScrollView(
+  //       child: ListView.builder(
+  //         itemCount: _shippingAddressList.length,
+  //         scrollDirection: Axis.vertical,
+  //         physics: NeverScrollableScrollPhysics(),
+  //         shrinkWrap: true,
+  //         itemBuilder: (context, index) {
+  //            //_nameController.text = _shippingAddressList[index].name;
+  //            _nameController.text = user_name.$;
+  //           _phoneController.text = _shippingAddressList[index].phone;
+  //           // _emailController.text = _shippingAddressList[index].email;
+  //           _addressController.text = _shippingAddressList[index].address;
+  //           _cityController.text = _shippingAddressList[index].zone;
+  //           _stateController.text = _shippingAddressList[index].city;
+  //           _countryController.text = _shippingAddressList[index].area;
+  //
+  //           // print("foysal: ${_phoneController.text}");
+  //           // print("foysal: ${_shippingAddressList[index].phone}");
+  //           return Padding(
+  //             padding: const EdgeInsets.only(bottom: 4.0),
+  //             //child: buildAddressItemCard(index),
+  //             //child: fetchPreviousData(index),
+  //           );
+  //         },
+  //       ),
+  //     );
+  //   } else if (!_isInitial && _shippingAddressList.length == 0) {
+  //     return Container(
+  //         height: 100,
+  //         child: Center(
+  //             child: Text(
+  //               AppLocalizations.of(context).common_no_address_added,
+  //               style: TextStyle(color: MyTheme.secondary),
+  //             )));
+  //   }
+  // }
 
   GestureDetector buildAddressItemCard(index){
     return GestureDetector(
@@ -1497,117 +1504,243 @@ class _CheckoutState extends State<Checkout> {
   buildShowAddFormDialog(BuildContext context,) {
     return StatefulBuilder(builder: (BuildContext context,
         StateSetter setModalState /*You can rename this!*/) {
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 8),
-        color: MyTheme.white,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+      return ListView(
+        // mainAxisSize: MainAxisSize.min,
+        // crossAxisAlignment: CrossAxisAlignment.start,
+        shrinkWrap: true,
 
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                  AppLocalizations
-                      .of(context)
-                      .address_screen_name + ' *',
-                  style: TextStyle(
-                      color: MyTheme.secondary, fontSize: 12)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Container(
-                height: 40,
-                child: TextField(
-                  controller: _nameController,
-                  autofocus: false,
-                  decoration: InputDecoration(
-                      // hintText: AppLocalizations
-                      //     .of(context)
-                      //     .address_screen_enter_name,
-                    hintText: "Enter Name",
-                      hintStyle: TextStyle(
-                          fontSize: 12.0, color: MyTheme.light_grey),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(0),
-                        borderSide: BorderSide(
-                            color: MyTheme.light_grey, width: 2),
+        physics: NeverScrollableScrollPhysics(),
+        children: [
 
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(0),
-                        borderSide: BorderSide(
-                            color: MyTheme.light_grey, width: 2.0),
-                      ),
-                      contentPadding:
-                      EdgeInsets.symmetric(horizontal: 8.0)),
-                ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text(
+                AppLocalizations
+                    .of(context)
+                    .address_screen_name + ' *',
+                style: TextStyle(
+                    color: MyTheme.secondary, fontSize: 12)),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Container(
+              height: 40,
+              child: TextField(
+                controller: _nameController,
+                autofocus: false,
+                decoration: InputDecoration(
+                    // hintText: AppLocalizations
+                    //     .of(context)
+                    //     .address_screen_enter_name,
+                  hintText: "Enter Name",
+                    hintStyle: TextStyle(
+                        fontSize: 12.0, color: MyTheme.light_grey),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(0),
+                      borderSide: BorderSide(
+                          color: MyTheme.light_grey, width: 2),
+
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(0),
+                      borderSide: BorderSide(
+                          color: MyTheme.light_grey, width: 2.0),
+                    ),
+                    contentPadding:
+                    EdgeInsets.symmetric(horizontal: 8.0)),
               ),
             ),
+          ),
 
 
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                  AppLocalizations
-                      .of(context)
-                      .address_screen_phone +' *',
-                  style: TextStyle(
-                      color: MyTheme.secondary, fontSize: 12)),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text(
+                AppLocalizations
+                    .of(context)
+                    .address_screen_phone +' *',
+                style: TextStyle(
+                    color: MyTheme.secondary, fontSize: 12)),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Container(
+              height: 40,
+              child: TextField(
+                controller: _phoneController,
+                autofocus: false,
+                decoration: InputDecoration(
+                    hintText: AppLocalizations
+                        .of(context)
+                        .address_screen_enter_phone ,
+                    hintStyle: TextStyle(
+                        fontSize: 12.0, color: MyTheme.light_grey),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(0),
+                      borderSide: BorderSide(
+                          color: MyTheme.light_grey, width: 2.0),
+
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(0),
+                      borderSide: BorderSide(
+                          color: MyTheme.light_grey, width: 2.0),
+                    ),
+                    contentPadding:
+                    EdgeInsets.symmetric(horizontal: 8.0)),
+              ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Container(
-                height: 40,
-                child: TextField(
-                  controller: _phoneController,
-                  autofocus: false,
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text(
+                AppLocalizations
+                    .of(context)
+                    .address_screen_email,
+                style: TextStyle(
+                    color: MyTheme.secondary, fontSize: 12)),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Container(
+              height: 40,
+              child: TextField(
+                controller: _emailController,
+                autofocus: false,
+                decoration: InputDecoration(
+                    // hintText: AppLocalizations
+                    //     .of(context)
+                    //     .address_screen_enter_phone + '*',
+                    hintText: "Enter Email",
+                    hintStyle: TextStyle(
+                        fontSize: 12.0, color: MyTheme.light_grey),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(0),
+                      borderSide: BorderSide(
+                          color: MyTheme.light_grey, width: 2.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(0),
+                      borderSide: BorderSide(
+                          color: MyTheme.light_grey, width: 2.0),
+                    ),
+                    contentPadding:
+                    EdgeInsets.symmetric(horizontal: 8.0)),
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text(
+                "${AppLocalizations
+                    .of(context)
+                    .address_screen_address} *",
+                style: TextStyle(
+                    color: MyTheme.secondary, fontSize: 12)),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: Container(
+              height: 55,
+              child: TextField(
+                controller: _addressController,
+                autofocus: false,
+                maxLines: null,
+                keyboardType: TextInputType.multiline,
+                decoration: InputDecoration(
+                    hintText: AppLocalizations
+                        .of(context)
+                        .address_screen_enter_address,
+                    hintStyle: TextStyle(
+                        fontSize: 12.0, color: MyTheme.light_grey),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(0),
+                      borderSide: BorderSide(
+                          color: MyTheme.light_grey, width: 2.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(0),
+                      borderSide: BorderSide(
+                          color: MyTheme.light_grey, width: 2.0),
+                    ),
+                    contentPadding: EdgeInsets.only(
+                        left: 8.0, top: 16.0, bottom: 16.0)),
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text("City *",
+                style: TextStyle(
+                    color: MyTheme.secondary, fontSize: 12)),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: Container(
+              height: 40,
+              child: TypeAheadField(
+                suggestionsCallback: (name) async {
+                  var stateResponse = await AddressRepository()
+                      .getStateListByCountry(
+                      country_id: "3069"); // blank response
+                  return stateResponse.states;
+                },
+                loadingBuilder: (context) {
+                  return Container(
+                    height: 50,
+                    child: Center(
+                        child: Text(
+                            AppLocalizations
+                                .of(context)
+                                .address_screen_loading_states,
+                            style: TextStyle(
+                                color: MyTheme.dark_grey))),
+                  );
+                },
+                itemBuilder: (context, state) {
+                  //print(suggestion.toString());
+                  return ListTile(
+                    dense: true,
+                    title: Text(
+                      state.name,
+                      style: TextStyle(color: MyTheme.secondary),
+                    ),
+                  );
+                },
+                noItemsFoundBuilder: (context) {
+                  return Container(
+                    height: 50,
+                    child: Center(
+                        child: Text(
+                            AppLocalizations
+                                .of(context)
+                                .address_screen_no_state_available,
+                            style: TextStyle(
+                                color: MyTheme.dark_grey))),
+                  );
+                },
+                onSuggestionSelected: (state) {
+                  onSelectStateDuringAdd(state, setModalState);
+                },
+                textFieldConfiguration: TextFieldConfiguration(
+                  onTap: () {},
+                  // autofocus: true,
+                  controller: _stateController,
+                  onSubmitted: (txt) {
+                    // _searchKey = txt;
+                    // setState(() {});
+                    // _onSearchSubmit();
+                  },
                   decoration: InputDecoration(
                       hintText: AppLocalizations
                           .of(context)
-                          .address_screen_enter_phone ,
+                          .address_screen_enter_state,
                       hintStyle: TextStyle(
-                          fontSize: 12.0, color: MyTheme.light_grey),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(0),
-                        borderSide: BorderSide(
-                            color: MyTheme.light_grey, width: 2.0),
-
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(0),
-                        borderSide: BorderSide(
-                            color: MyTheme.light_grey, width: 2.0),
-                      ),
-                      contentPadding:
-                      EdgeInsets.symmetric(horizontal: 8.0)),
-                ),
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                  AppLocalizations
-                      .of(context)
-                      .address_screen_email,
-                  style: TextStyle(
-                      color: MyTheme.secondary, fontSize: 12)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Container(
-                height: 40,
-                child: TextField(
-                  controller: _emailController,
-                  autofocus: false,
-                  decoration: InputDecoration(
-                      // hintText: AppLocalizations
-                      //     .of(context)
-                      //     .address_screen_enter_phone + '*',
-                      hintText: "Enter Email",
-                      hintStyle: TextStyle(
-                          fontSize: 12.0, color: MyTheme.light_grey),
+                          fontSize: 12.0,
+                          color: MyTheme.light_grey),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(0),
                         borderSide: BorderSide(
@@ -1623,31 +1756,79 @@ class _CheckoutState extends State<Checkout> {
                 ),
               ),
             ),
+          ),
 
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                  "${AppLocalizations
-                      .of(context)
-                      .address_screen_address} *",
-                  style: TextStyle(
-                      color: MyTheme.secondary, fontSize: 12)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: Container(
-                height: 55,
-                child: TextField(
-                  controller: _addressController,
-                  autofocus: false,
-                  maxLines: null,
-                  keyboardType: TextInputType.multiline,
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text(
+                "${AppLocalizations
+                    .of(context)
+                    .address_screen_city} *",
+                style: TextStyle(
+                    color: MyTheme.secondary, fontSize: 12)),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: Container(
+              height: 40,
+              child: TypeAheadField(
+                suggestionsCallback: (name) async {
+                  var cityResponse = await AddressRepository()
+                      .getCityListByState(
+                      state_id: _selected_state.id);
+                  return cityResponse.cities;
+                },
+                loadingBuilder: (context) {
+                  return Container(
+                    height: 50,
+                    child: Center(
+                        child: Text(
+                            AppLocalizations
+                                .of(context)
+                                .address_screen_loading_cities,
+                            style: TextStyle(
+                                color: MyTheme.dark_grey))),
+                  );
+                },
+                itemBuilder: (context, city) {
+                  //print(suggestion.toString());
+                  return ListTile(
+                    dense: true,
+                    title: Text(
+                      city.name,
+                      style: TextStyle(color: MyTheme.secondary),
+                    ),
+                  );
+                },
+                noItemsFoundBuilder: (context) {
+                  return Container(
+                    height: 50,
+                    child: Center(
+                        child: Text(
+                            AppLocalizations
+                                .of(context)
+                                .address_screen_no_city_available,
+                            style: TextStyle(
+                                color: MyTheme.dark_grey))),
+                  );
+                },
+                onSuggestionSelected: (city) {
+                  onSelectCityDuringAdd(city, setModalState);
+                },
+                textFieldConfiguration: TextFieldConfiguration(
+                  onTap: () {},
+                  //autofocus: true,
+                  controller: _cityController,
+                  onSubmitted: (txt) {
+                    // keep blank
+                  },
                   decoration: InputDecoration(
                       hintText: AppLocalizations
                           .of(context)
-                          .address_screen_enter_address,
+                          .address_screen_enter_city,
                       hintStyle: TextStyle(
-                          fontSize: 12.0, color: MyTheme.light_grey),
+                          fontSize: 12.0,
+                          color: MyTheme.light_grey),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(0),
                         borderSide: BorderSide(
@@ -1658,293 +1839,80 @@ class _CheckoutState extends State<Checkout> {
                         borderSide: BorderSide(
                             color: MyTheme.light_grey, width: 2.0),
                       ),
-                      contentPadding: EdgeInsets.only(
-                          left: 8.0, top: 16.0, bottom: 16.0)),
+                      contentPadding:
+                      EdgeInsets.symmetric(horizontal: 8.0)),
                 ),
               ),
             ),
+          ),
 
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text("City *",
-                  style: TextStyle(
-                      color: MyTheme.secondary, fontSize: 12)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: Container(
-                height: 40,
-                child: TypeAheadField(
-                  suggestionsCallback: (name) async {
-                    var stateResponse = await AddressRepository()
-                        .getStateListByCountry(
-                        country_id: "3069"); // blank response
-                    return stateResponse.states;
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text("Area ",
+                style: TextStyle(
+                    color: MyTheme.secondary, fontSize: 12)),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: Container(
+              height: 40,
+              child: TypeAheadField(
+                suggestionsCallback: (name) async {
+                  var countryResponse = await AddressRepository()
+                      .getCountryList(id: _selected_city.id);
+                  return countryResponse.countries;
+                },
+                loadingBuilder: (context) {
+                  return Container(
+                    height: 50,
+                    child: Center(
+                        child: Text(
+                            AppLocalizations
+                                .of(context)
+                                .address_screen_loading_cities,
+                            style: TextStyle(
+                                color: MyTheme.dark_grey))),
+                  );
+                },
+                itemBuilder: (context, city) {
+                  //print(suggestion.toString());
+                  return ListTile(
+                    dense: true,
+                    title: Text(
+                      city.name,
+                      style: TextStyle(color: MyTheme.secondary),
+                    ),
+                  );
+                },
+                noItemsFoundBuilder: (context) {
+                  return Container(
+                    height: 50,
+                    child: Center(
+                        child: Text(
+                            AppLocalizations
+                                .of(context)
+                                .address_screen_no_city_available,
+                            style: TextStyle(
+                                color: MyTheme.dark_grey))),
+                  );
+                },
+                onSuggestionSelected: (city) {
+                  onSelectCountryDuringAdd(city, setModalState);
+                },
+                textFieldConfiguration: TextFieldConfiguration(
+                  onTap: () {},
+                  //autofocus: true,
+                  controller: _countryController,
+                  onSubmitted: (txt) {
+                    // keep blank
                   },
-                  loadingBuilder: (context) {
-                    return Container(
-                      height: 50,
-                      child: Center(
-                          child: Text(
-                              AppLocalizations
-                                  .of(context)
-                                  .address_screen_loading_states,
-                              style: TextStyle(
-                                  color: MyTheme.dark_grey))),
-                    );
-                  },
-                  itemBuilder: (context, state) {
-                    //print(suggestion.toString());
-                    return ListTile(
-                      dense: true,
-                      title: Text(
-                        state.name,
-                        style: TextStyle(color: MyTheme.secondary),
-                      ),
-                    );
-                  },
-                  noItemsFoundBuilder: (context) {
-                    return Container(
-                      height: 50,
-                      child: Center(
-                          child: Text(
-                              AppLocalizations
-                                  .of(context)
-                                  .address_screen_no_state_available,
-                              style: TextStyle(
-                                  color: MyTheme.dark_grey))),
-                    );
-                  },
-                  onSuggestionSelected: (state) {
-                    onSelectStateDuringAdd(state, setModalState);
-                  },
-                  textFieldConfiguration: TextFieldConfiguration(
-                    onTap: () {},
-                    // autofocus: true,
-                    controller: _stateController,
-                    onSubmitted: (txt) {
-                      // _searchKey = txt;
-                      // setState(() {});
-                      // _onSearchSubmit();
-                    },
-                    decoration: InputDecoration(
-                        hintText: AppLocalizations
-                            .of(context)
-                            .address_screen_enter_state,
-                        hintStyle: TextStyle(
-                            fontSize: 12.0,
-                            color: MyTheme.light_grey),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(0),
-                          borderSide: BorderSide(
-                              color: MyTheme.light_grey, width: 2.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(0),
-                          borderSide: BorderSide(
-                              color: MyTheme.light_grey, width: 2.0),
-                        ),
-                        contentPadding:
-                        EdgeInsets.symmetric(horizontal: 8.0)),
-                  ),
-                ),
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                  "${AppLocalizations
-                      .of(context)
-                      .address_screen_city} *",
-                  style: TextStyle(
-                      color: MyTheme.secondary, fontSize: 12)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: Container(
-                height: 40,
-                child: TypeAheadField(
-                  suggestionsCallback: (name) async {
-                    var cityResponse = await AddressRepository()
-                        .getCityListByState(
-                        state_id: _selected_state.id);
-                    return cityResponse.cities;
-                  },
-                  loadingBuilder: (context) {
-                    return Container(
-                      height: 50,
-                      child: Center(
-                          child: Text(
-                              AppLocalizations
-                                  .of(context)
-                                  .address_screen_loading_cities,
-                              style: TextStyle(
-                                  color: MyTheme.dark_grey))),
-                    );
-                  },
-                  itemBuilder: (context, city) {
-                    //print(suggestion.toString());
-                    return ListTile(
-                      dense: true,
-                      title: Text(
-                        city.name,
-                        style: TextStyle(color: MyTheme.secondary),
-                      ),
-                    );
-                  },
-                  noItemsFoundBuilder: (context) {
-                    return Container(
-                      height: 50,
-                      child: Center(
-                          child: Text(
-                              AppLocalizations
-                                  .of(context)
-                                  .address_screen_no_city_available,
-                              style: TextStyle(
-                                  color: MyTheme.dark_grey))),
-                    );
-                  },
-                  onSuggestionSelected: (city) {
-                    onSelectCityDuringAdd(city, setModalState);
-                  },
-                  textFieldConfiguration: TextFieldConfiguration(
-                    onTap: () {},
-                    //autofocus: true,
-                    controller: _cityController,
-                    onSubmitted: (txt) {
-                      // keep blank
-                    },
-                    decoration: InputDecoration(
-                        hintText: AppLocalizations
-                            .of(context)
-                            .address_screen_enter_city,
-                        hintStyle: TextStyle(
-                            fontSize: 12.0,
-                            color: MyTheme.light_grey),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(0),
-                          borderSide: BorderSide(
-                              color: MyTheme.light_grey, width: 2.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(0),
-                          borderSide: BorderSide(
-                              color: MyTheme.light_grey, width: 2.0),
-                        ),
-                        contentPadding:
-                        EdgeInsets.symmetric(horizontal: 8.0)),
-                  ),
-                ),
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text("Area ",
-                  style: TextStyle(
-                      color: MyTheme.secondary, fontSize: 12)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: Container(
-                height: 40,
-                child: TypeAheadField(
-                  suggestionsCallback: (name) async {
-                    var countryResponse = await AddressRepository()
-                        .getCountryList(id: _selected_city.id);
-                    return countryResponse.countries;
-                  },
-                  loadingBuilder: (context) {
-                    return Container(
-                      height: 50,
-                      child: Center(
-                          child: Text(
-                              AppLocalizations
-                                  .of(context)
-                                  .address_screen_loading_cities,
-                              style: TextStyle(
-                                  color: MyTheme.dark_grey))),
-                    );
-                  },
-                  itemBuilder: (context, city) {
-                    //print(suggestion.toString());
-                    return ListTile(
-                      dense: true,
-                      title: Text(
-                        city.name,
-                        style: TextStyle(color: MyTheme.secondary),
-                      ),
-                    );
-                  },
-                  noItemsFoundBuilder: (context) {
-                    return Container(
-                      height: 50,
-                      child: Center(
-                          child: Text(
-                              AppLocalizations
-                                  .of(context)
-                                  .address_screen_no_city_available,
-                              style: TextStyle(
-                                  color: MyTheme.dark_grey))),
-                    );
-                  },
-                  onSuggestionSelected: (city) {
-                    onSelectCountryDuringAdd(city, setModalState);
-                  },
-                  textFieldConfiguration: TextFieldConfiguration(
-                    onTap: () {},
-                    //autofocus: true,
-                    controller: _countryController,
-                    onSubmitted: (txt) {
-                      // keep blank
-                    },
-                    decoration: InputDecoration(
-                        hintText: AppLocalizations
-                            .of(context)
-                            .address_screen_enter_city,
-                        hintStyle: TextStyle(
-                            fontSize: 12.0,
-                            color: MyTheme.light_grey),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(0),
-                          borderSide: BorderSide(
-                              color: MyTheme.light_grey, width: 2.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(0),
-                          borderSide: BorderSide(
-                              color: MyTheme.light_grey, width: 2.0),
-                        ),
-                        contentPadding:
-                        EdgeInsets.symmetric(horizontal: 8.0)),
-                  ),
-                ),
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text("Order Notes",
-                  style: TextStyle(
-                      color: MyTheme.secondary, fontSize: 12)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: Container(
-                height: 55,
-                child: TextField(
-                  controller: _orderNoteController,
-                  autofocus: false,
-                  maxLines: null,
-                  keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
-                      // hintText: AppLocalizations
-                      //     .of(context)
-                      //     .address_screen_enter_address,
-                      hintText: "Enter Order Notes",
+                      hintText: AppLocalizations
+                          .of(context)
+                          .address_screen_enter_city,
                       hintStyle: TextStyle(
-                          fontSize: 12.0, color: MyTheme.light_grey),
+                          fontSize: 12.0,
+                          color: MyTheme.light_grey),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(0),
                         borderSide: BorderSide(
@@ -1955,125 +1923,56 @@ class _CheckoutState extends State<Checkout> {
                         borderSide: BorderSide(
                             color: MyTheme.light_grey, width: 2.0),
                       ),
-                      contentPadding: EdgeInsets.only(
-                          left: 8.0, top: 16.0, bottom: 16.0)),
+                      contentPadding:
+                      EdgeInsets.symmetric(horizontal: 8.0)),
                 ),
               ),
             ),
+          ),
 
-           /// add button
-           //  Row(
-           //    mainAxisAlignment: MainAxisAlignment.spaceAround,
-           //    children: [
-           //
-           //      Padding(
-           //        padding: const EdgeInsets.only(right: 8.0),
-           //        child: FlatButton(
-           //          minWidth: 75,
-           //          height: 30,
-           //          color: Color.fromRGBO(253, 253, 253, 1),
-           //          shape: RoundedRectangleBorder(
-           //              borderRadius: BorderRadius.circular(8.0),
-           //              side: BorderSide(
-           //                  color: MyTheme.light_grey, width: 1.0)),
-           //          child: Text(
-           //            "CLOSE",
-           //            style: TextStyle(
-           //              color: MyTheme.secondary,
-           //            ),
-           //          ),
-           //          onPressed: () {
-           //            //Navigator.of(context, rootNavigator: true).pop();
-           //          },
-           //        ),
-           //      ),
-           //
-           //      SizedBox(
-           //        width: 1,
-           //      ),
-           //      Padding(
-           //        padding: const EdgeInsets.only(right: 28.0),
-           //        child: FlatButton(
-           //          minWidth: 75,
-           //          height: 30,
-           //          color: MyTheme.primary,
-           //          shape: RoundedRectangleBorder(
-           //              borderRadius: BorderRadius.circular(8.0),
-           //              side: BorderSide(
-           //                  color: MyTheme.light_grey, width: 1.0)),
-           //          child: Text(
-           //            "ADD",
-           //            style: TextStyle(
-           //                color: Colors.white,
-           //                fontSize: 16,
-           //                fontWeight: FontWeight.w600),
-           //          ),
-           //          onPressed: () {
-           //            onAddressAdd(context);
-           //          },
-           //        ),
-           //      )
-           //    ],
-           //  )
+          // Align(
+          //   alignment: Alignment.centerRight,
+          //   child: InkWell(
+          //     onTap: (){
+          //       AddressRepository().getAddressUpdateAddResponse(
+          //           address: _addressController.text,
+          //           area: _countryController.text,
+          //           zone: _cityController.text,
+          //           city: _stateController.text,
+          //           phone: _phoneController.text,
+          //           name: _nameController.text,
+          //           email: _emailController.text,
+          //           note: _orderNoteController.text,
+          //       ).then((value) {
+          //         ToastComponent.showDialog("Address Updated Successfully", context,
+          //             gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+          //       });
+          //       print(_addressController.text.toString());
+          //       print(_countryController.text.toString());
+          //       print(_cityController.text.toString());
+          //       print(_addressController.text.toString());
+          //       print(_stateController.text.toString());
+          //       print(_phoneController.text.toString());
+          //       print(_nameController.text.toString());
+          //       print(_orderNoteController.text.toString());
+          //     },
+          //     child: Container(
+          //       margin: EdgeInsets.only(bottom: 10, right: 6),
+          //       height: 40,
+          //       width: 100,
+          //       color: MyTheme.secondary,
+          //       child: Center(child: Text("UPDATE",
+          //         style: TextStyle(
+          //             fontSize: 16,
+          //             color: MyTheme.white,
+          //             fontWeight: FontWeight.w500
+          //         ),
+          //       )),
+          //     ),
+          //   )
+          // )
 
-
-            ///extra order note code
-            // Padding(
-            //   padding: const EdgeInsets.only(top: 20.0),
-            //   child: widget.isWalletRecharge
-            //       ? Container()
-            //       : Container(
-            //     decoration: BoxDecoration(
-            //       color: Colors.white,
-            //       /*border: Border(
-            //           top: BorderSide(color: MyTheme.light_grey,width: 1.0),
-            //         )*/
-            //     ),
-            //     height:
-            //     widget.manual_payment_from_order_details ? 80 : 210,
-            //     child: Padding(
-            //       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            //       child: Column(
-            //         children: [
-            //           Padding(
-            //             padding: const EdgeInsets.only(
-            //                 left: 8.0, right: 8.0, bottom: 10.0),
-            //             child: TextFormField(
-            //               decoration: InputDecoration(
-            //                 // labelText: 'Order Note',
-            //                 hintText: 'Add a note to your order',
-            //               ),
-            //               onChanged: (value) {
-            //                 setState(() {
-            //                   _orderNote = value;
-            //                 });
-            //               },
-            //             ),
-            //           ),
-            //           // SizedBox(
-            //           //   height: 10,
-            //           // ),
-            //           //
-            //           // grandTotalSection(),
-            //           //
-            //           // SizedBox(
-            //           //   height: 10,
-            //           // ),
-            //           //
-            //           // widget.manual_payment_from_order_details == false
-            //           //     ? Padding(
-            //           //   padding: const EdgeInsets.only(bottom: 0.0),
-            //           //   child: buildApplyCouponRow(context),
-            //           // )
-            //           //     : Container(),
-            //
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
-          ],
-        ),
+        ],
       );
     });
   }
@@ -2219,98 +2118,159 @@ class _CheckoutState extends State<Checkout> {
 
   buildCartSellerItemCard() {
     return ListView.builder(
-      physics: NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: widget.allCartProductList.length,
-      itemBuilder: (context, index) {
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: widget.allCartProductList.length,
+        itemBuilder: (context, index) {
+          return Card(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: MyTheme.light_grey, width: 1.0),
+              borderRadius: BorderRadius.circular(0.0),
+            ),
+            elevation: 0.0,
+            child: Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+              Container(
+                  width: 90,
+                  height: 100,
+                  child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: FadeInImage.assetNetwork(
+                        placeholder: 'assets/placeholder.png',
+                        image: widget.allCartProductList[index]
+                            .product_thumbnail_image,
+                        fit: BoxFit.fitWidth,
+                      ))),
+              Container(
+                width: 200,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.allCartProductList[index]
+                                .product_name,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: TextStyle(
+                                color: MyTheme.secondary,
+                                fontSize: 14,
+                                height: 1.6,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Text(
+                                  '${widget.allCartProductList[index].quantity}'
+                                      ' x ${widget.allCartProductList[index].currency_symbol}'
+                                      '${widget.allCartProductList[index].price}',
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                      color: MyTheme.dark_grey,
+                                      fontSize: 14,
+                                      height: 1.6,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                              Spacer(),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Spacer(),
+
+              Padding(
+                padding: const EdgeInsets.only(right: 15.0),
+                child: Container(
+                  child: Text(
+
+                    '${widget.allCartProductList[index].currency_symbol}'
+                        '${widget.allCartProductList[index].quantity *
+                        widget.allCartProductList[index].price}',
+                    style: TextStyle(
+                        color: MyTheme.secondary,
+                        fontSize: 14,
+                        height: 1.6,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ),
+              )
+            ]),
+          );
+        }
+    );
+  }
+
+   buildAddressExpandedTile() {
         return Card(
           shape: RoundedRectangleBorder(
             side: BorderSide(color: MyTheme.light_grey, width: 1.0),
             borderRadius: BorderRadius.circular(0.0),
           ),
           elevation: 0.0,
-          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-            Container(
-                width: 90,
-                height: 100,
-                child: Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: FadeInImage.assetNetwork(
-                      placeholder: 'assets/placeholder.png',
-                      image: widget.allCartProductList[index]
-                          .product_thumbnail_image,
-                      fit: BoxFit.fitWidth,
-                    ))),
-            Container(
-              width: 200,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.allCartProductList[index]
-                              .product_name,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          style: TextStyle(
-                              color: MyTheme.secondary,
-                              fontSize: 14,
-                              height: 1.6,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: Text(
-                                '${widget.allCartProductList[index].quantity}'
-                                    ' x ${widget.allCartProductList[index].currency_symbol}'
-                                    '${widget.allCartProductList[index].price}',
-                                textAlign: TextAlign.left,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                                style: TextStyle(
-                                    color: MyTheme.dark_grey,
-                                    fontSize: 14,
-                                    height: 1.6,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ),
-                            Spacer(),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+          child: ExpansionTile(
+            title: _shippingAddressList != 0 ? Text(user_name.$,
+              style: TextStyle(
+                color: MyTheme.secondary,
               ),
-            ),
-            Spacer(),
-
-            Padding(
-                padding: const EdgeInsets.only(right: 15.0),
-              child: Container(
-                child: Text(
-
-                  '${widget.allCartProductList[index].currency_symbol}'
-                      '${widget.allCartProductList[index].quantity *
-                      widget.allCartProductList[index].price}',
+            ) :
+            Text("No Name"),
+            subtitle: Row(
+              children: [
+                _shippingAddressList != 0 ?  Text(_shippingAddressList[0].address,
                   style: TextStyle(
-                      color: MyTheme.secondary,
-                      fontSize: 14,
-                      height: 1.6,
-                      fontWeight: FontWeight.w600),
+                    color: MyTheme.secondary,
+                  ),
+                ) : Text(""),
+                SizedBox(
+                  width: mWidth * 0.05,
                 ),
+                Text("|",
+                  style: TextStyle(
+                    color: MyTheme.secondary,
+                  ),
+                ),
+                SizedBox(
+                  width: mWidth * 0.05,
+                ),
+                _shippingAddressList != 0 ?  Text(_shippingAddressList[0].phone,
+                  style: TextStyle(
+                    color: MyTheme.secondary,
+                  ),
+                ) :
+                Text("..."),
+              ],
+            ),
+
+            trailing: Container(
+              height: 35,
+              width: 35,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: MyTheme.dark_grey,
               ),
-            )
-          ]),
+              child: Icon(Icons.edit, color: MyTheme.white, size: 20),
+            ),
+
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: buildShowAddFormDialog(context),
+              )
+            ],
+          )
         );
-      }
-    );
   }
 
   @override
@@ -2466,7 +2426,7 @@ class _CheckoutState extends State<Checkout> {
               // ),
               Container(
                 padding: EdgeInsets.all(8),
-                height: 550,
+                //height: 550,
                 child: ListView(
                   shrinkWrap: true,
                   physics: ScrollPhysics(),
@@ -2487,20 +2447,25 @@ class _CheckoutState extends State<Checkout> {
                       height: 10,
                     ),
 
+                    // Accordion(
+                    //
+                    //   scrollIntoViewOfItems: ScrollIntoViewOfItems.none,
+                    //   //header: ,
+                    //   children: [
+                    //     AccordionSection(
+                    //
+                    //         header: Text('test'),
+                    //         content: buildShowAddFormDialog(context)
+                    //     ),
+                    //   ],
+                    // ),
                     Container(
-                      // height: 200,
-                      // width: 100,
-                      color: MyTheme.primary,
-                      child: buildShowAddFormDialog(context),
+                      child: _shippingAddressList == 0 ? Container() : buildAddressExpandedTile(),
                     ),
 
-                    // Container(
-                    //   // height: 200,
-                    //   // width: 100,
-                    //   color: MyTheme.primary,
-                    //   child: buildAddressList(),
-                    // ),
-
+                    SizedBox(
+                      height: 10,
+                    ),
 
                     Container(
                       //height: 300,
@@ -2529,100 +2494,143 @@ class _CheckoutState extends State<Checkout> {
                         : Container(),
 
                     SizedBox(
-                      height: 10,
-                    )
-                  ],
-                ),
-              ),
-
-              Container(
-                margin: EdgeInsets.only(
-                    top: 20
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-
-                    ///address related code
-                    // Padding(
-                    //   padding: const EdgeInsets.only(
-                    //       left: 16.0, right: 16.0, top: 16.0),
-                    //   child: _shippingOptionIsAddress
-                    //       ? buildShippingInfoList()
-                    //       : buildPickupPoint(),
-                    // ),
-                    // _shippingOptionIsAddress
-                    //     ? Container(
-                    //   height: 40,
-                    //   child: Center(
-                    //     child: InkWell(
-                    //       onTap: () {
-                    //         Navigator.push(
-                    //           context,
-                    //           MaterialPageRoute(
-                    //             builder: (context) {
-                    //               return Address(
-                    //                 from_shipping_info: true,
-                    //               );
-                    //             },
-                    //           ),
-                    //         ).then((value) {
-                    //           onPopped(value);
-                    //         });
-                    //
-                    //         //Address().getDialog(context);
-                    //         // Address().foysal;
-                    //         //print("User info: ${LoginResponse().access_token}");
-                    //
-                    //       },
-                    //       child: Visibility(
-                    //         visible: _shippingAddressList.length == 0,
-                    //         child: Padding(
-                    //           padding: const EdgeInsets.all(8.0),
-                    //           child: Text(
-                    //             AppLocalizations.of(context)
-                    //                 .shipping_info_screen_go_to_address,
-                    //             style: TextStyle(
-                    //               fontSize: 14,
-                    //               decoration:
-                    //               TextDecoration.underline,
-                    //               color: MyTheme.primary,
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // )
-                    //     : Container(),
-
-                    Padding(
-                      padding:
-                      const EdgeInsets.only(left: 16.0, right: 16.0),
-                      child: buildPaymentMethodList(),
+                      height: 14,
                     ),
-
-                    Padding(
-                      padding: const EdgeInsets.only(top: 0.0, bottom:10),
-                      child: Row(
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Checkbox(
-                            value: _termsChecked,
-                            onChanged: (value) {
-                              setState(() {
-                                _termsChecked = value;
-                              });
-                            },
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0, left: 8),
+                            child: Text("Order Notes",
+                                style: TextStyle(
+                                    color: MyTheme.secondary, fontSize: 12)),
                           ),
-                          Flexible(
-                            child: Text(
-                              "I HAVE READ AND AGREE TO THE KIREI'S TERMS AND CONDITIONS, PRIVACY POLICY, AND REFUND POLICY.",
-                              maxLines: 2,
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0, left: 8, right: 8),
+                            child: Container(
+                              height: 55,
+                              child: TextField(
+                                controller: _orderNoteController,
+                                autofocus: false,
+                                maxLines: null,
+                                keyboardType: TextInputType.multiline,
+                                decoration: InputDecoration(
+                                    // hintText: AppLocalizations
+                                    //     .of(context)
+                                    //     .address_screen_enter_address,
+                                    hintText: "Enter Order Notes",
+                                    hintStyle: TextStyle(
+                                        fontSize: 12.0, color: MyTheme.light_grey),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(0),
+                                      borderSide: BorderSide(
+                                          color: MyTheme.light_grey, width: 2.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(0),
+                                      borderSide: BorderSide(
+                                          color: MyTheme.light_grey, width: 2.0),
+                                    ),
+                                    contentPadding: EdgeInsets.only(
+                                        left: 8.0, top: 16.0, bottom: 16.0)),
                               ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: 8
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+
+                          ///address related code
+                          // Padding(
+                          //   padding: const EdgeInsets.only(
+                          //       left: 16.0, right: 16.0, top: 16.0),
+                          //   child: _shippingOptionIsAddress
+                          //       ? buildShippingInfoList()
+                          //       : buildPickupPoint(),
+                          // ),
+                          // _shippingOptionIsAddress
+                          //     ? Container(
+                          //   height: 40,
+                          //   child: Center(
+                          //     child: InkWell(
+                          //       onTap: () {
+                          //         Navigator.push(
+                          //           context,
+                          //           MaterialPageRoute(
+                          //             builder: (context) {
+                          //               return Address(
+                          //                 from_shipping_info: true,
+                          //               );
+                          //             },
+                          //           ),
+                          //         ).then((value) {
+                          //           onPopped(value);
+                          //         });
+                          //
+                          //         //Address().getDialog(context);
+                          //         // Address().foysal;
+                          //         //print("User info: ${LoginResponse().access_token}");
+                          //
+                          //       },
+                          //       child: Visibility(
+                          //         visible: _shippingAddressList.length == 0,
+                          //         child: Padding(
+                          //           padding: const EdgeInsets.all(8.0),
+                          //           child: Text(
+                          //             AppLocalizations.of(context)
+                          //                 .shipping_info_screen_go_to_address,
+                          //             style: TextStyle(
+                          //               fontSize: 14,
+                          //               decoration:
+                          //               TextDecoration.underline,
+                          //               color: MyTheme.primary,
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // )
+                          //     : Container(),
+
+                          Padding(
+                            padding:
+                            const EdgeInsets.only(left: 16.0, right: 16.0),
+                            child: buildPaymentMethodList(),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.only(top: 0.0, bottom:10),
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                  value: _termsChecked,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _termsChecked = value;
+                                    });
+                                  },
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    "I HAVE READ AND AGREE TO THE KIREI'S TERMS AND CONDITIONS, PRIVACY POLICY, AND REFUND POLICY.",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -2631,6 +2639,103 @@ class _CheckoutState extends State<Checkout> {
                   ],
                 ),
               ),
+
+              // Container(
+              //   margin: EdgeInsets.only(
+              //       top: 20
+              //   ),
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.end,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children: [
+              //
+              //       ///address related code
+              //       // Padding(
+              //       //   padding: const EdgeInsets.only(
+              //       //       left: 16.0, right: 16.0, top: 16.0),
+              //       //   child: _shippingOptionIsAddress
+              //       //       ? buildShippingInfoList()
+              //       //       : buildPickupPoint(),
+              //       // ),
+              //       // _shippingOptionIsAddress
+              //       //     ? Container(
+              //       //   height: 40,
+              //       //   child: Center(
+              //       //     child: InkWell(
+              //       //       onTap: () {
+              //       //         Navigator.push(
+              //       //           context,
+              //       //           MaterialPageRoute(
+              //       //             builder: (context) {
+              //       //               return Address(
+              //       //                 from_shipping_info: true,
+              //       //               );
+              //       //             },
+              //       //           ),
+              //       //         ).then((value) {
+              //       //           onPopped(value);
+              //       //         });
+              //       //
+              //       //         //Address().getDialog(context);
+              //       //         // Address().foysal;
+              //       //         //print("User info: ${LoginResponse().access_token}");
+              //       //
+              //       //       },
+              //       //       child: Visibility(
+              //       //         visible: _shippingAddressList.length == 0,
+              //       //         child: Padding(
+              //       //           padding: const EdgeInsets.all(8.0),
+              //       //           child: Text(
+              //       //             AppLocalizations.of(context)
+              //       //                 .shipping_info_screen_go_to_address,
+              //       //             style: TextStyle(
+              //       //               fontSize: 14,
+              //       //               decoration:
+              //       //               TextDecoration.underline,
+              //       //               color: MyTheme.primary,
+              //       //             ),
+              //       //           ),
+              //       //         ),
+              //       //       ),
+              //       //     ),
+              //       //   ),
+              //       // )
+              //       //     : Container(),
+              //
+              //       Padding(
+              //         padding:
+              //         const EdgeInsets.only(left: 16.0, right: 16.0),
+              //         child: buildPaymentMethodList(),
+              //       ),
+              //
+              //       Padding(
+              //         padding: const EdgeInsets.only(top: 0.0, bottom:10),
+              //         child: Row(
+              //           children: [
+              //             Checkbox(
+              //               value: _termsChecked,
+              //               onChanged: (value) {
+              //                 setState(() {
+              //                   _termsChecked = value;
+              //                 });
+              //               },
+              //             ),
+              //             Flexible(
+              //               child: Text(
+              //                 "I HAVE READ AND AGREE TO THE KIREI'S TERMS AND CONDITIONS, PRIVACY POLICY, AND REFUND POLICY.",
+              //                 maxLines: 2,
+              //                 style: TextStyle(
+              //                   fontSize: 14,
+              //                   fontWeight: FontWeight.w500,
+              //                 ),
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -3358,6 +3463,19 @@ class _CheckoutState extends State<Checkout> {
               ),
               onPressed: () {
                 _shippingAddressList == null ? onAddressAdd(context) : Container();
+                // AddressRepository().getAddressUpdateAddResponse(
+                //   address: _addressController.text,
+                //   area: _countryController.text,
+                //   zone: _cityController.text,
+                //   city: _stateController.text,
+                //   phone: _phoneController.text,
+                //   name: _nameController.text,
+                //   email: _emailController.text,
+                //   note: _orderNoteController.text,
+                // ).then((value) {
+                //   ToastComponent.showDialog("Address Updated Successfully", context,
+                //       gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+                // });
                 onPressPlaceOrderOrProceed();
                 onPressProceed();
               },

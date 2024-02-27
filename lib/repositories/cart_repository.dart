@@ -108,4 +108,31 @@ class CartRepository {
     print("cart summary res ${response.body}");
     return cartSummaryResponseFromJson(response.body);
   }
+
+  Future getCartQuantityResponse( productId, int ProductQuantity) async {
+    Uri url = Uri.parse("${ENDP.CART_QUANTITY}");
+    print("cart Change Quantity");
+
+    var post_body = jsonEncode({
+      "id": "${productId}",
+      "quantity": "${ProductQuantity}",
+    });
+
+    final response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ${access_token.$}",
+        "App-Language": app_language.$
+      },
+      body: post_body,
+    );
+    print("access token ${access_token.$}");
+
+    print("cart Quantity res ${response.body}");
+    
+    //return cartSummaryResponseFromJson(response.body);
+    
+    return jsonDecode(response.body);
+  }
 }

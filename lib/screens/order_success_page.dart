@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
+import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/repositories/order_repository.dart';
 import 'package:kirei/screens/main.dart';
 import 'package:kirei/screens/order_details.dart';
 import 'package:kirei/screens/order_list.dart';
+import 'package:provider/provider.dart';
 
 class OrderSuccessPage extends StatefulWidget {
    OrderSuccessPage({Key key, this.orderId}): super(key: key);
@@ -66,6 +68,7 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width * 1;
+    final cartCountUpdate = Provider.of<CartCountUpdate>(context);
     return Scaffold(
 
       appBar: buildAppBar(context),
@@ -351,8 +354,10 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
             ),
 
             InkWell(
-              onTap: ()=> Navigator.pushAndRemoveUntil(
-                  context, MaterialPageRoute(builder: (_)=> Main()), (route) => false),
+              onTap: (){ Navigator.pushAndRemoveUntil(
+                  context, MaterialPageRoute(builder: (_)=> Main()), (route) => false);
+                cartCountUpdate.getReset();
+              },
               child: Container(
                 height: 50,
                 width: 160,

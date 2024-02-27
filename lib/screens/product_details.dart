@@ -1,4 +1,5 @@
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/repositories/search_repository.dart';
 import 'package:kirei/screens/cart.dart';
 import 'package:kirei/screens/common_webview_screen.dart';
@@ -27,6 +28,7 @@ import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:kirei/custom/toast_component.dart';
 import 'package:kirei/repositories/chat_repository.dart';
 import 'package:kirei/screens/chat.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 // import 'package:social_share/social_share.dart';
 import 'dart:async';
@@ -2178,44 +2180,49 @@ class _ProductDetailsState extends State<ProductDetails> {
                 child: Container(
                   width: MediaQuery.of(context).size.width / 2,
                   height: 44,
-                  child: RaisedButton(
-                    onPressed: () {
-                      onPressAddToCart(context, _addedToCartSnackbar);
-                    },
-                    // shape: RoundedRectangleBorder(
-                    //     borderRadius: BorderRadius.circular(80.0)),
-                    padding: EdgeInsets.all(0.0),
-                    child: Ink(
-                      color: MyTheme.secondary,
-                      child: Container(
-                          constraints:
-                              BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
-                          alignment: Alignment.center,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons
-                                    .shopping_bag_outlined, // Use the appropriate cart icon
-                                color: Colors.white,
-                                size: 17,
-                              ),
-                              SizedBox(
-                                width: 2,
-                              ),
-                              // Add some space between the icon and text
-                              Text(
-                                AppLocalizations.of(context)
-                                    .product_details_screen_button_add_to_cart,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          )),
-                    ),
+                  child: Consumer<CartCountUpdate>(
+                    builder: (widget, value, child) {
+                      return RaisedButton(
+                        onPressed: () {
+                          onPressAddToCart(context, _addedToCartSnackbar);
+                          value.setCartValue(_quantity);
+                        },
+                        // shape: RoundedRectangleBorder(
+                        //     borderRadius: BorderRadius.circular(80.0)),
+                        padding: EdgeInsets.all(0.0),
+                        child: Ink(
+                          color: MyTheme.secondary,
+                          child: Container(
+                              constraints:
+                                  BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+                              alignment: Alignment.center,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons
+                                        .shopping_bag_outlined, // Use the appropriate cart icon
+                                    color: Colors.white,
+                                    size: 17,
+                                  ),
+                                  SizedBox(
+                                    width: 2,
+                                  ),
+                                  // Add some space between the icon and text
+                                  Text(
+                                    AppLocalizations.of(context)
+                                        .product_details_screen_button_add_to_cart,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              )),
+                        ),
+                      );
+                    }
                   ),
                 ),
               ),
@@ -2227,27 +2234,32 @@ class _ProductDetailsState extends State<ProductDetails> {
                 child: Container(
                   width: MediaQuery.of(context).size.width / 2,
                   height: 44,
-                  child: RaisedButton(
-                    onPressed: () {
-                      onPressBuyNow(context);
-                    },
-                    padding: EdgeInsets.all(0.0),
-                    child: Ink(
-                      color: MyTheme.primary,
-                      child: Container(
-                        constraints:
-                            BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
-                        alignment: Alignment.center,
-                        child: Text(
-                          AppLocalizations.of(context)
-                              .product_details_screen_button_buy_now,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600),
+                  child: Consumer<CartCountUpdate>(
+                    builder: (widget, value, child) {
+                      return RaisedButton(
+                        onPressed: () {
+                          onPressBuyNow(context);
+                          value.setCartValue(_quantity);
+                        },
+                        padding: EdgeInsets.all(0.0),
+                        child: Ink(
+                          color: MyTheme.primary,
+                          child: Container(
+                            constraints:
+                                BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+                            alignment: Alignment.center,
+                            child: Text(
+                              AppLocalizations.of(context)
+                                  .product_details_screen_button_buy_now,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    }
                   ),
                 ),
               ),
@@ -2954,6 +2966,15 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   buildQuantityUpButton() => SizedBox(
         width: 36,
+        // child: IconButton(
+        //     icon: Icon(FontAwesome.plus, size: 16, color: MyTheme.secondary),
+        //     onPressed: () {
+        //       if (_quantity < _stock) {
+        //         _quantity++;
+        //         setState(() {});
+        //         calculateTotalPrice();
+        //       }
+        //     }),
         child: IconButton(
             icon: Icon(FontAwesome.plus, size: 16, color: MyTheme.secondary),
             onPressed: () {
@@ -2975,7 +2996,8 @@ class _ProductDetailsState extends State<ProductDetails> {
               setState(() {});
               calculateTotalPrice();
             }
-          }));
+          })
+  );
 
   openPhotoDialog(BuildContext context, path) => showDialog(
         context: context,

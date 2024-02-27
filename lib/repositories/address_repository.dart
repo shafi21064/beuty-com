@@ -50,11 +50,10 @@ class AddressRepository {
       "area": "$area",
       "zone": "$zone",
       "city": "$city",
-      "postal_code": "$postal_code",
       "phone": "$phone",
       "name" : "$name",
       "email" : "$email",
-      "note" : "$note",
+      "note" : "$note"
     });
     print(post_body);
 
@@ -71,6 +70,42 @@ class AddressRepository {
     print(response.body.toString());
     return addressAddResponseFromJson(response.body);
   }
+
+  // Future<AddressAddResponse> getAddressUpdateAddResponse(
+  //     {@required String address,
+  //       @required String area,
+  //       @required String zone,
+  //       @required String city,
+  //       @required String phone,
+  //       @required String name,
+  //       @required String email,
+  //       @required String note,
+  //     }) async {
+  //   var post_body = jsonEncode({
+  //     "address": "$address",
+  //     "area": "$area",
+  //     "zone": "$zone",
+  //     "city": "$city",
+  //     "phone": "$phone",
+  //     "name" : "$name",
+  //     "email" : "$email",
+  //     "note" : "$note"
+  //   });
+  //   print('my address data2' +post_body);
+  //
+  //   Uri url = Uri.parse("${ENDP.UpdateAddrNew}");
+  //   final response = await http.post(url,
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "Authorization": "Bearer ${access_token.$}",
+  //         "App-Language": app_language.$
+  //       },
+  //       body: post_body);
+  //
+  //   print(url);
+  //   print(response.body.toString());
+  //   return addressAddResponseFromJson(response.body);
+  // }
 
   Future<AddressUpdateResponse> getAddressUpdateResponse(
       {@required int id,

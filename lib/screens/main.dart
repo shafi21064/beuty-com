@@ -86,7 +86,7 @@ class _MainState extends State<Main> {
       fetchData();
     }
     // fetchData();
-    saveCountData();
+    //saveCountData();
 
     print('init');
 
@@ -134,11 +134,11 @@ class _MainState extends State<Main> {
   var _shopList;
   var _isInitial = true;
 
-  saveCountData()async{
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  sharedPreferences.setInt("cartItemCount", cartItemCount);
-  print("kirei vai: + ${sharedPreferences.getInt("cartItemCount")}" );
-  }
+  // saveCountData()async{
+  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  // sharedPreferences.setInt("cartItemCount", cartItemCount);
+  // print("kirei vai: + ${sharedPreferences.getInt("cartItemCount")}" );
+  // }
 
 fetchData() async {
   print(user_id.$);

@@ -6,6 +6,7 @@ class ENDP {
   static const AddrList = "${AppConfig.BASE_URL}/user/shipping/address";
   static const AddAddr = "${AppConfig.BASE_URL}/user/shipping/create";
   static const UpdateAddr = "${AppConfig.BASE_URL}/user/shipping/update";
+  //static const UpdateAddrNew = "${AppConfig.BASE_URL}/user/shipping/create-or-update";
   static const UpdateShipAddr =
       "${AppConfig.BASE_URL}/user/shipping/update-location";
   static const ShipDefault = "${AppConfig.BASE_URL}/user/shipping/make_default";
@@ -27,6 +28,7 @@ class ENDP {
   static const GET_PROCESS = "${AppConfig.BASE_URL}/carts/process";
   static const ADD_CART = "${AppConfig.BASE_URL}/carts/add";
   static const CART_SUMMARY = "${AppConfig.BASE_URL}/cart-summary";
+  static const CART_QUANTITY = "${AppConfig.BASE_URL}/carts/change-quantity";
   //CATEGORY REPO..
   static const GET_CATEGORIES = "${AppConfig.BASE_URL}/all-categories";
   static const GET_FEATURED_CATEGORIES =

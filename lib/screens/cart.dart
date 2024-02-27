@@ -21,7 +21,6 @@ class Cart extends StatefulWidget {
   Cart({Key key, this.has_bottomnav}) : super(key: key);
   final bool has_bottomnav;
 
-
   @override
   CartState createState() => CartState();
 }
@@ -33,14 +32,12 @@ class CartState extends State<Cart> {
   bool _isInitial = true;
   var _cartTotal = 0.00;
   var _cartTotalString = ". . .";
-    bool _termsChecked = false;
+  bool _termsChecked = false;
 
-    bool _hasItem = false;
+  bool _hasItem = false;
 
-     //var _badgeValue = 0;
-    // get badgeValue => _badgeValue;
-
-
+  //var _badgeValue = 0;
+  // get badgeValue => _badgeValue;
 
   @override
   void initState() {
@@ -58,50 +55,53 @@ class CartState extends State<Cart> {
     }
   }
 
+  // getCartQuantity(int productId, int ProductQuantity) async{
+  //   var cartQuantityResponse = await CartRepository().getCartQuantityResponse(productId, ProductQuantity);
+  // }
+
   @override
   void dispose() {
     super.dispose();
     _mainScrollController.dispose();
   }
 
-fetchCartCount() async {
-  var total_a = 0;
-  var demolist = _shopList[0].cart_items;
+  fetchCartCount() async {
+    var total_a = 0;
+    var demolist = _shopList[0].cart_items;
 
-  demolist.forEach((val1) {
-    total_a += val1.quantity;
-  });
+    demolist.forEach((val1) {
+      total_a += val1.quantity;
+    });
 
-  print("show2: ${total_a.toString()}");
-  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    print("show2: ${total_a.toString()}");
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-  sharedPreferences.setInt("cartItemCount", total_a);
-  print(sharedPreferences.getInt("cartItemCount"));
-  setState(() {});
-}
-
-fetchData() async {
-  print(user_id.$);
-
-  var cartResponseList =
-      await CartRepository().getCartResponseList(user_id.$);
-
-  print('cartResponse list ${cartResponseList}');
-  if (cartResponseList != null && cartResponseList.length > 0) {
-    _shopList.clear(); // Clear the existing list before adding new items
-    _shopList.addAll(cartResponseList);
-    print(_shopList);
+    sharedPreferences.setInt("cartItemCount", total_a);
+    print(sharedPreferences.getInt("cartItemCount"));
+    setState(() {});
   }
-  _isInitial = false;
 
-  // await fetchCartCount(); // Wait for fetchCartCount to complete
-  getSetCartTotal();
-  setState(() {});
-}
+  fetchData() async {
+    print(user_id.$);
+
+    var cartResponseList =
+        await CartRepository().getCartResponseList(user_id.$);
+
+    print('cartResponse list ${cartResponseList}');
+    if (cartResponseList != null && cartResponseList.length > 0) {
+      _shopList.clear(); // Clear the existing list before adding new items
+      _shopList.addAll(cartResponseList);
+      print(_shopList);
+    }
+    _isInitial = false;
+
+    // await fetchCartCount(); // Wait for fetchCartCount to complete
+    getSetCartTotal();
+    setState(() {});
+  }
 
   getSetCartTotal() {
     _cartTotal = 0.00;
-
 
     if (_shopList.length > 0) {
       _shopList.forEach((shop) {
@@ -114,7 +114,6 @@ fetchData() async {
                 "${cart_item.currency_symbol}${_cartTotal.toStringAsFixed(2)}";
           });
         }
-
       });
     }
 
@@ -137,11 +136,19 @@ fetchData() async {
     return partialTotalString;
   }
 
-  onQuantityIncrease(seller_index, item_index, VoidCallback increaseItem) async{
+  onQuantityIncrease(
+      seller_index, item_index, VoidCallback increaseItem) async {
     if (_shopList[seller_index].cart_items[item_index].quantity <
         _shopList[seller_index].cart_items[item_index].upper_limit) {
       _shopList[seller_index].cart_items[item_index].quantity++;
       getSetCartTotal();
+      print('product id ${_shopList[seller_index].cart_items[item_index].id}');
+      print(
+          'product quantity ${_shopList[seller_index].cart_items[item_index].quantity}');
+
+      CartRepository().getCartQuantityResponse(
+          _shopList[seller_index].cart_items[item_index].id,
+          _shopList[seller_index].cart_items[item_index].quantity);
 
       increaseItem();
       setState(() {});
@@ -160,9 +167,12 @@ fetchData() async {
       _shopList[seller_index].cart_items[item_index].quantity--;
       getSetCartTotal();
 
+      CartRepository().getCartQuantityResponse(
+          _shopList[seller_index].cart_items[item_index].id,
+          _shopList[seller_index].cart_items[item_index].quantity);
+
       setState(() {});
       decreaseCartItem();
-
     } else {
       ToastComponent.showDialog(
           "${AppLocalizations.of(context).cart_screen_cannot_order_less_than} ${_shopList[seller_index].cart_items[item_index].lower_limit} ${AppLocalizations.of(context).cart_screen_items_of_this}",
@@ -172,7 +182,7 @@ fetchData() async {
     }
   }
 
-  onPressDelete(cart_id,VoidCallback deleteCartItem) {
+  onPressDelete(cart_id, VoidCallback deleteCartItem) {
     showDialog(
         context: context,
         builder: (_) => AlertDialog(
@@ -204,29 +214,28 @@ fetchData() async {
                   ),
                   onPressed: () {
                     Navigator.of(context, rootNavigator: true).pop();
-                    confirmDelete(cart_id,deleteCartItem);
+                    confirmDelete(cart_id, deleteCartItem);
                   },
                 ),
               ],
             ));
   }
 
-confirmDelete(cart_id,VoidCallback deleteCartItem) async {
-  var cartDeleteResponse =
-      await CartRepository().getCartDeleteResponse(cart_id);
+  confirmDelete(cart_id, VoidCallback deleteCartItem) async {
+    var cartDeleteResponse =
+        await CartRepository().getCartDeleteResponse(cart_id);
 
-  if (cartDeleteResponse.result == true) {
-    ToastComponent.showDialog(cartDeleteResponse.message, context,
-        gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-    deleteCartItem();
-    await reset(); // Wait for reset to complete
-    await fetchData(); // Wait for fetchData to complete
-
-  } else {
-    ToastComponent.showDialog(cartDeleteResponse.message, context,
-        gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    if (cartDeleteResponse.result == true) {
+      ToastComponent.showDialog(cartDeleteResponse.message, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      deleteCartItem();
+      await reset(); // Wait for reset to complete
+      await fetchData(); // Wait for fetchData to complete
+    } else {
+      ToastComponent.showDialog(cartDeleteResponse.message, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    }
   }
-}
 
   onPressUpdate() {
     process(mode: "update");
@@ -239,7 +248,7 @@ confirmDelete(cart_id,VoidCallback deleteCartItem) async {
     //   ToastComponent.showDialog("Please accept terms and conditions", context,
     //       gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
     // }
-     process(mode: "proceed_to_shipping");
+    process(mode: "proceed_to_shipping");
   }
 
   process({mode}) async {
@@ -289,10 +298,10 @@ confirmDelete(cart_id,VoidCallback deleteCartItem) async {
         print("L: ${_shopList.length}");
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return Checkout(
-              title: "Checkout",
-              product_ids: prod_ids_string,
-              product_quantities: cart_quantities_string,
-          allCartProductList: _shopList[0].cart_items,
+            title: "Checkout",
+            product_ids: prod_ids_string,
+            product_quantities: cart_quantities_string,
+            allCartProductList: _shopList[0].cart_items,
           );
         })).then((value) {
           onPopped(value);
@@ -307,7 +316,6 @@ confirmDelete(cart_id,VoidCallback deleteCartItem) async {
     _cartTotal = 0.00;
     _cartTotalString = ". . .";
     setState(() {});
-
   }
 
   Future<void> _onRefresh() async {
@@ -320,10 +328,8 @@ confirmDelete(cart_id,VoidCallback deleteCartItem) async {
     fetchData();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     var addCartProduct = Provider.of<CartCountUpdate>(context, listen: true);
 
     print(widget.has_bottomnav);
@@ -354,8 +360,7 @@ confirmDelete(cart_id,VoidCallback deleteCartItem) async {
                             () => addCartProduct.getDecrease(),
                             () => addCartProduct.getIncrease(),
                             () => addCartProduct.getDelete(),
-                            ()=>{},
-
+                            () => {},
                           ),
                         ),
                         Container(
@@ -367,9 +372,10 @@ confirmDelete(cart_id,VoidCallback deleteCartItem) async {
                 ),
               ),
               Align(
-
                 alignment: Alignment.bottomCenter,
-                child: _shopList.length != 0 ? buildBottomContainer() : Container(),
+                child: _shopList.length != 0
+                    ? buildBottomContainer()
+                    : Container(),
               )
             ],
           )),
@@ -481,29 +487,29 @@ confirmDelete(cart_id,VoidCallback deleteCartItem) async {
               //   ),
               // ),
 
-    //             Padding(
-    //   padding: const EdgeInsets.only(top: 0.0),
-    //   child: Row(
-    //     children: [
-    //       Checkbox(
-    //         value: _termsChecked,
-    //         onChanged: (value) {
-    //           setState(() {
-    //             _termsChecked = value;
-    //           });
-    //         },
-    //       ),
-    //       Flexible(
-    //         child: Text(
-    //           "I HAVE READ AND AGREE TO THE WEBSITE'S TERMS AND CONDITIONS, PRIVACY POLICY, AND REFUND POLICY.",
-    //           maxLines: 2,
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // ),
+              //             Padding(
+              //   padding: const EdgeInsets.only(top: 0.0),
+              //   child: Row(
+              //     children: [
+              //       Checkbox(
+              //         value: _termsChecked,
+              //         onChanged: (value) {
+              //           setState(() {
+              //             _termsChecked = value;
+              //           });
+              //         },
+              //       ),
+              //       Flexible(
+              //         child: Text(
+              //           "I HAVE READ AND AGREE TO THE WEBSITE'S TERMS AND CONDITIONS, PRIVACY POLICY, AND REFUND POLICY.",
+              //           maxLines: 2,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
 
-        Padding(
+              Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Container(
                     width: MediaQuery.of(context).size.width,
@@ -552,9 +558,7 @@ confirmDelete(cart_id,VoidCallback deleteCartItem) async {
                     )),
               ),
             ],
-          )
-
-          ),
+          )),
     );
   }
 
@@ -588,8 +592,8 @@ confirmDelete(cart_id,VoidCallback deleteCartItem) async {
     );
   }
 
-
-  buildCartSellerList(VoidCallback decreaseCartItem, VoidCallback increaseItem,VoidCallback deleteCartItem, VoidCallback setCartCount) {
+  buildCartSellerList(VoidCallback decreaseCartItem, VoidCallback increaseItem,
+      VoidCallback deleteCartItem, VoidCallback setCartCount) {
     if (is_logged_in.$ == false) {
       return Container(
           height: 100,
@@ -638,7 +642,8 @@ confirmDelete(cart_id,VoidCallback deleteCartItem) async {
                       ],
                     ),
                   ),
-                  buildCartSellerItemList(index, decreaseCartItem, increaseItem,deleteCartItem, setCartCount),
+                  buildCartSellerItemList(index, decreaseCartItem, increaseItem,
+                      deleteCartItem, setCartCount),
                 ],
               ),
             );
@@ -652,9 +657,7 @@ confirmDelete(cart_id,VoidCallback deleteCartItem) async {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             Image.asset("assets/cart_empty_bag.png"),
-
             Container(
                 height: 100,
                 child: Center(
@@ -662,10 +665,10 @@ confirmDelete(cart_id,VoidCallback deleteCartItem) async {
                   AppLocalizations.of(context).cart_screen_cart_empty,
                   style: TextStyle(color: MyTheme.secondary),
                 ))),
-
             GestureDetector(
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Filter()));
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Filter()));
               },
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.06,
@@ -692,8 +695,12 @@ confirmDelete(cart_id,VoidCallback deleteCartItem) async {
     }
   }
 
-
-  SingleChildScrollView buildCartSellerItemList(seller_index, VoidCallback decreaseCartItem, VoidCallback increaseItem,VoidCallback deleteCartItem, VoidCallback setCartCount ) {
+  SingleChildScrollView buildCartSellerItemList(
+      seller_index,
+      VoidCallback decreaseCartItem,
+      VoidCallback increaseItem,
+      VoidCallback deleteCartItem,
+      VoidCallback setCartCount) {
     return SingleChildScrollView(
       child: ListView.builder(
         itemCount: _shopList[seller_index].cart_items.length,
@@ -703,14 +710,21 @@ confirmDelete(cart_id,VoidCallback deleteCartItem) async {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 2.0),
-            child: buildCartSellerItemCard(seller_index, index, decreaseCartItem, increaseItem,deleteCartItem, setCartCount),
+            child: buildCartSellerItemCard(seller_index, index,
+                decreaseCartItem, increaseItem, deleteCartItem, setCartCount),
           );
         },
       ),
     );
   }
 
-  buildCartSellerItemCard(seller_index, item_index, VoidCallback decreaseCartItem, VoidCallback increaseItem,VoidCallback deleteCartItem, VoidCallback setCartCount) {
+  buildCartSellerItemCard(
+      seller_index,
+      item_index,
+      VoidCallback decreaseCartItem,
+      VoidCallback increaseItem,
+      VoidCallback deleteCartItem,
+      VoidCallback setCartCount) {
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(color: MyTheme.light_grey, width: 1.0),
@@ -784,11 +798,12 @@ confirmDelete(cart_id,VoidCallback deleteCartItem) async {
                             onTap: () {},
                             child: IconButton(
                               onPressed: () {
-                                onPressDelete(_shopList[seller_index]
-                                    .cart_items[item_index]
-                                    .id,deleteCartItem);
+                                onPressDelete(
+                                    _shopList[seller_index]
+                                        .cart_items[item_index]
+                                        .id,
+                                    deleteCartItem);
                                 setCartCount();
-
                               },
                               icon: Icon(
                                 Icons.delete_forever_outlined,
@@ -875,8 +890,8 @@ confirmDelete(cart_id,VoidCallback deleteCartItem) async {
                   // ),
                   color: Colors.white,
                   onPressed: () {
-                    onQuantityDecrease(seller_index, item_index, decreaseCartItem);
-
+                    onQuantityDecrease(
+                        seller_index, item_index, decreaseCartItem);
                   },
                 ),
               )
