@@ -497,26 +497,26 @@ class _AddressState extends State<Address> {
                   padding: const EdgeInsets.all(16.0),
                   child: buildAddressList(),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: FlatButton(
-                    minWidth: MediaQuery.of(context).size.width - 16,
-                    height: 60,
-                    color: Color.fromRGBO(252, 252, 252, 1),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        side:
-                            BorderSide(color: MyTheme.light_grey, width: 1.0)),
-                    child: Icon(
-                      FontAwesome.plus,
-                      color: MyTheme.dark_grey,
-                      size: 16,
-                    ),
-                    onPressed: () {
-                      buildShowAddFormDialog(context);
-                    },
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(16.0),
+                //   child: FlatButton(
+                //     minWidth: MediaQuery.of(context).size.width - 16,
+                //     height: 60,
+                //     color: Color.fromRGBO(252, 252, 252, 1),
+                //     shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(8.0),
+                //         side:
+                //             BorderSide(color: MyTheme.light_grey, width: 1.0)),
+                //     child: Icon(
+                //       FontAwesome.plus,
+                //       color: MyTheme.dark_grey,
+                //       size: 16,
+                //     ),
+                //     onPressed: () {
+                //       buildShowAddFormDialog(context);
+                //     },
+                //   ),
+                // ),
                 SizedBox(
                   height: 100,
                 )

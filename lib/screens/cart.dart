@@ -146,12 +146,22 @@ class CartState extends State<Cart> {
       print(
           'product quantity ${_shopList[seller_index].cart_items[item_index].quantity}');
 
-      CartRepository().getCartQuantityResponse(
+      var responseData = await CartRepository().getCartQuantityResponse(
           _shopList[seller_index].cart_items[item_index].id,
           _shopList[seller_index].cart_items[item_index].quantity);
+      print("responseData"+ responseData["result"].toString());
 
-      increaseItem();
-      setState(() {});
+      if(responseData["result"].toString() == "false"){
+        ToastComponent.showDialog(
+            "${responseData["message"].toString()}",
+            context,
+            gravity: Toast.CENTER,
+            duration: Toast.LENGTH_LONG);
+      } else {
+        increaseItem();
+        setState(() {});
+      }
+
     } else {
       ToastComponent.showDialog(
           "${AppLocalizations.of(context).cart_screen_cannot_order_more_than} ${_shopList[seller_index].cart_items[item_index].upper_limit} ${AppLocalizations.of(context).cart_screen_items_of_this}",

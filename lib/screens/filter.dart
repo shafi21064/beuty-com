@@ -1690,7 +1690,11 @@ onPopped(value) async {
           child: Row(
             children: List.generate(_allSubCategories.length, (index) {
               return GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_)=> Filter(
+                      type: _allSubCategories[index]?.slug
+                  )));
+                },
                 child: Container(
                   margin: EdgeInsets.only(right: 5, top: 3),
                   padding: EdgeInsets.only(bottom: 6,),

@@ -198,6 +198,9 @@ class _CheckoutState extends State<Checkout> {
       _nameController.text = user_name.$;
       _seleted_shipping_address = _shippingAddressList[0].id;
       _addressController.text = _shippingAddressList[0].address;
+      _stateController.text = _shippingAddressList[0].city;
+      _cityController.text = _shippingAddressList[0].zone;
+      _countryController.text = _shippingAddressList[0].area;
 
       _shippingAddressList.forEach((address) {
         if (address.set_default == 1 && _shippingOptionIsAddress) {
@@ -395,19 +398,21 @@ class _CheckoutState extends State<Checkout> {
       "product_quantities_arr": productQuantitiesJsonArray,
     };
     if (_shippingOptionIsAddress) {
-      requestBody["shipping_address"] = _shippingAddressList[0].address;
+      //requestBody["shipping_address"] = _shippingAddressList[0].address;
+      requestBody["shipping_address"] = _addressController.text;
     } else {
       requestBody["shipping_pickup_point"] = _seleted_shipping_pickup_point;
     }
 
     requestBody["shipping_name"] = user_name.$ ?? '';
-    requestBody["shipping_phone"] =
-    user_email.$ != null ? user_email.$ : _shippingAddressList[0].phone;
-    requestBody["shipping_city"] = _shippingAddressList[0].city;
-    requestBody["shipping_zone"] = _shippingAddressList[0].zone;
-    requestBody["shipping_area"] = _shippingAddressList[0].area;
+    requestBody["shipping_phone"] = _phoneController.text;
+    //user_email.$ != null ? user_email.$ : _phoneController.text;
+    requestBody["shipping_city"] = _stateController.text;
+    requestBody["shipping_zone"] = _cityController.text;
+    requestBody["shipping_area"] = _countryController.text;
     requestBody["is_preorder"] = 0;
     requestBody["payment_type"] = _selected_payment_method;
+    requestBody["note"] = _orderNoteController.text;
     requestBody["type"] = 'app';
 
     if (coupon_code != "") {
@@ -446,7 +451,7 @@ class _CheckoutState extends State<Checkout> {
             );
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (_)=> OrderSuccessPage(
-                orderId: orderCreateResponse.data.order.id,
+                //orderId: orderCreateResponse.data.order.id,
               )), (route) => false);
 
         }
@@ -1681,27 +1686,101 @@ class _CheckoutState extends State<Checkout> {
             padding: const EdgeInsets.only(bottom: 16.0),
             child: Container(
               height: 40,
+              // child: TypeAheadField(
+              //   suggestionsCallback: (name) async {
+              //     var stateResponse = await AddressRepository()
+              //         .getStateListByCountry(
+              //         country_id: "3069"); // blank response
+              //     return stateResponse.states;
+              //   },
+              //   loadingBuilder: (context) {
+              //     return Container(
+              //       height: 50,
+              //       child: Center(
+              //           child: Text(
+              //               AppLocalizations
+              //                   .of(context)
+              //                   .address_screen_loading_states,
+              //               style: TextStyle(
+              //                   color: MyTheme.dark_grey))),
+              //     );
+              //   },
+              //   itemBuilder: (context, state) {
+              //     //print(suggestion.toString());
+              //     return ListTile(
+              //       dense: true,
+              //       title: Text(
+              //         state.name,
+              //         style: TextStyle(color: MyTheme.secondary),
+              //       ),
+              //     );
+              //   },
+              //   noItemsFoundBuilder: (context) {
+              //     return Container(
+              //       height: 50,
+              //       child: Center(
+              //           child: Text(
+              //               AppLocalizations
+              //                   .of(context)
+              //                   .address_screen_no_state_available,
+              //               style: TextStyle(
+              //                   color: MyTheme.dark_grey))),
+              //     );
+              //   },
+              //   onSuggestionSelected: (state) {
+              //     onSelectStateDuringAdd(state, setModalState);
+              //   },
+              //   textFieldConfiguration: TextFieldConfiguration(
+              //     onTap: () {},
+              //     // autofocus: true,
+              //     controller: _stateController,
+              //     onSubmitted: (txt) {
+              //       // _searchKey = txt;
+              //       // setState(() {});
+              //       // _onSearchSubmit();
+              //     },
+              //     decoration: InputDecoration(
+              //         hintText: AppLocalizations
+              //             .of(context)
+              //             .address_screen_enter_state,
+              //         hintStyle: TextStyle(
+              //             fontSize: 12.0,
+              //             color: MyTheme.light_grey),
+              //         suffixIcon: Icon(Icons.arrow_drop_down_sharp),
+              //         enabledBorder: OutlineInputBorder(
+              //           borderRadius: BorderRadius.circular(0),
+              //           borderSide: BorderSide(
+              //               color: MyTheme.light_grey, width: 2.0),
+              //         ),
+              //         focusedBorder: OutlineInputBorder(
+              //           borderRadius: BorderRadius.circular(0),
+              //           borderSide: BorderSide(
+              //               color: MyTheme.light_grey, width: 2.0),
+              //         ),
+              //         contentPadding:
+              //         EdgeInsets.symmetric(horizontal: 8.0)),
+              //   ),
+              // ),
               child: TypeAheadField(
-                suggestionsCallback: (name) async {
+                suggestionsCallback: (pattern) async {
                   var stateResponse = await AddressRepository()
-                      .getStateListByCountry(
-                      country_id: "3069"); // blank response
-                  return stateResponse.states;
+                      .getStateListByCountry(country_id: "3069");
+                  return stateResponse.states.where((state) =>
+                      state.name.toLowerCase().contains(pattern.toLowerCase())
+                  );
                 },
                 loadingBuilder: (context) {
                   return Container(
                     height: 50,
                     child: Center(
-                        child: Text(
-                            AppLocalizations
-                                .of(context)
-                                .address_screen_loading_states,
-                            style: TextStyle(
-                                color: MyTheme.dark_grey))),
+                      child: Text(
+                        AppLocalizations.of(context).address_screen_loading_states,
+                        style: TextStyle(color: MyTheme.dark_grey),
+                      ),
+                    ),
                   );
                 },
                 itemBuilder: (context, state) {
-                  //print(suggestion.toString());
                   return ListTile(
                     dense: true,
                     title: Text(
@@ -1714,12 +1793,11 @@ class _CheckoutState extends State<Checkout> {
                   return Container(
                     height: 50,
                     child: Center(
-                        child: Text(
-                            AppLocalizations
-                                .of(context)
-                                .address_screen_no_state_available,
-                            style: TextStyle(
-                                color: MyTheme.dark_grey))),
+                      child: Text(
+                        AppLocalizations.of(context).address_screen_no_state_available,
+                        style: TextStyle(color: MyTheme.dark_grey),
+                      ),
+                    ),
                   );
                 },
                 onSuggestionSelected: (state) {
@@ -1727,32 +1805,21 @@ class _CheckoutState extends State<Checkout> {
                 },
                 textFieldConfiguration: TextFieldConfiguration(
                   onTap: () {},
-                  // autofocus: true,
                   controller: _stateController,
-                  onSubmitted: (txt) {
-                    // _searchKey = txt;
-                    // setState(() {});
-                    // _onSearchSubmit();
-                  },
                   decoration: InputDecoration(
-                      hintText: AppLocalizations
-                          .of(context)
-                          .address_screen_enter_state,
-                      hintStyle: TextStyle(
-                          fontSize: 12.0,
-                          color: MyTheme.light_grey),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(0),
-                        borderSide: BorderSide(
-                            color: MyTheme.light_grey, width: 2.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(0),
-                        borderSide: BorderSide(
-                            color: MyTheme.light_grey, width: 2.0),
-                      ),
-                      contentPadding:
-                      EdgeInsets.symmetric(horizontal: 8.0)),
+                    hintText: AppLocalizations.of(context).address_screen_enter_state,
+                    hintStyle: TextStyle(fontSize: 12.0, color: MyTheme.light_grey),
+                    suffixIcon: Icon(Icons.arrow_drop_down_sharp),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(0),
+                      borderSide: BorderSide(color: MyTheme.light_grey, width: 2.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(0),
+                      borderSide: BorderSide(color: MyTheme.light_grey, width: 2.0),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
+                  ),
                 ),
               ),
             ),
@@ -1776,7 +1843,9 @@ class _CheckoutState extends State<Checkout> {
                   var cityResponse = await AddressRepository()
                       .getCityListByState(
                       state_id: _selected_state.id);
-                  return cityResponse.cities;
+                  return cityResponse.cities.where((element) =>
+                  element.name.toLowerCase().contains(name.toLowerCase())
+                  );
                 },
                 loadingBuilder: (context) {
                   return Container(
@@ -1829,6 +1898,7 @@ class _CheckoutState extends State<Checkout> {
                       hintStyle: TextStyle(
                           fontSize: 12.0,
                           color: MyTheme.light_grey),
+                      suffixIcon: Icon(Icons.arrow_drop_down_sharp),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(0),
                         borderSide: BorderSide(
@@ -1843,6 +1913,7 @@ class _CheckoutState extends State<Checkout> {
                       EdgeInsets.symmetric(horizontal: 8.0)),
                 ),
               ),
+
             ),
           ),
 
@@ -1860,7 +1931,9 @@ class _CheckoutState extends State<Checkout> {
                 suggestionsCallback: (name) async {
                   var countryResponse = await AddressRepository()
                       .getCountryList(id: _selected_city.id);
-                  return countryResponse.countries;
+                  return countryResponse.countries.where((element) =>
+                  element.name.toLowerCase().contains(name.toLowerCase())
+                  );
                 },
                 loadingBuilder: (context) {
                   return Container(
@@ -1913,6 +1986,7 @@ class _CheckoutState extends State<Checkout> {
                       hintStyle: TextStyle(
                           fontSize: 12.0,
                           color: MyTheme.light_grey),
+                      suffixIcon: Icon(Icons.arrow_drop_down_sharp),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(0),
                         borderSide: BorderSide(
@@ -1930,48 +2004,6 @@ class _CheckoutState extends State<Checkout> {
             ),
           ),
 
-          // Align(
-          //   alignment: Alignment.centerRight,
-          //   child: InkWell(
-          //     onTap: (){
-          //       AddressRepository().getAddressUpdateAddResponse(
-          //           address: _addressController.text,
-          //           area: _countryController.text,
-          //           zone: _cityController.text,
-          //           city: _stateController.text,
-          //           phone: _phoneController.text,
-          //           name: _nameController.text,
-          //           email: _emailController.text,
-          //           note: _orderNoteController.text,
-          //       ).then((value) {
-          //         ToastComponent.showDialog("Address Updated Successfully", context,
-          //             gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-          //       });
-          //       print(_addressController.text.toString());
-          //       print(_countryController.text.toString());
-          //       print(_cityController.text.toString());
-          //       print(_addressController.text.toString());
-          //       print(_stateController.text.toString());
-          //       print(_phoneController.text.toString());
-          //       print(_nameController.text.toString());
-          //       print(_orderNoteController.text.toString());
-          //     },
-          //     child: Container(
-          //       margin: EdgeInsets.only(bottom: 10, right: 6),
-          //       height: 40,
-          //       width: 100,
-          //       color: MyTheme.secondary,
-          //       child: Center(child: Text("UPDATE",
-          //         style: TextStyle(
-          //             fontSize: 16,
-          //             color: MyTheme.white,
-          //             fontWeight: FontWeight.w500
-          //         ),
-          //       )),
-          //     ),
-          //   )
-          // )
-
         ],
       );
     });
@@ -1979,14 +2011,16 @@ class _CheckoutState extends State<Checkout> {
 
   buildDetails(){
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8),
+      color: MyTheme.white,
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      padding: EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     AppLocalizations.of(context).cart_screen_total_amount,
@@ -1995,7 +2029,6 @@ class _CheckoutState extends State<Checkout> {
                         fontSize: 14,
                         fontWeight: FontWeight.bold),
                   ),
-                  Spacer(),
                   Text(
                     _subTotalString ?? '',
                     style: TextStyle(
@@ -2039,6 +2072,7 @@ class _CheckoutState extends State<Checkout> {
           Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "Shipping Cost",
@@ -2050,7 +2084,7 @@ class _CheckoutState extends State<Checkout> {
                         fontSize: 14,
                         fontWeight: FontWeight.bold),
                   ),
-                  Spacer(),
+
                   Text(
                     _shippingCostString ?? '',
                     style: TextStyle(
@@ -2065,6 +2099,7 @@ class _CheckoutState extends State<Checkout> {
            Container() : Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "Discount",
@@ -2076,7 +2111,6 @@ class _CheckoutState extends State<Checkout> {
                         fontSize: 14,
                         fontWeight: FontWeight.bold),
                   ),
-                  Spacer(),
 
                   Text(
                     _discountedPrice ?? '',
@@ -2088,29 +2122,27 @@ class _CheckoutState extends State<Checkout> {
                 ],
               )) ,
 
-          Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Row(
-                children: [
-                  Text(
-                    "Total",
-                    //AppLocalizations.of(context).checkout_screen_total_amount,
-                    textAlign: TextAlign.end,
-                    style: TextStyle(
-                        color: MyTheme.secondary,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Spacer(),
-                  Text(
-                    _totalString ?? '',
-                    style: TextStyle(
-                        color: MyTheme.secondary,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              )),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Total",
+                //AppLocalizations.of(context).checkout_screen_total_amount,
+                textAlign: TextAlign.end,
+                style: TextStyle(
+                    color: MyTheme.secondary,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold),
+              ),
+              Text(
+                _totalString ?? '',
+                style: TextStyle(
+                    color: MyTheme.secondary,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -2220,19 +2252,18 @@ class _CheckoutState extends State<Checkout> {
           ),
           elevation: 0.0,
           child: ExpansionTile(
-            title: _shippingAddressList != 0 ? Text(user_name.$,
+            title:  Text(_nameController.text.toString() ?? 'No Name',
               style: TextStyle(
                 color: MyTheme.secondary,
               ),
-            ) :
-            Text("No Name"),
+            ),
             subtitle: Row(
               children: [
-                _shippingAddressList != 0 ?  Text(_shippingAddressList[0].address,
+                  Text(_addressController.text.toString() ?? '',
                   style: TextStyle(
                     color: MyTheme.secondary,
                   ),
-                ) : Text(""),
+                ) ,
                 SizedBox(
                   width: mWidth * 0.05,
                 ),
@@ -2244,12 +2275,11 @@ class _CheckoutState extends State<Checkout> {
                 SizedBox(
                   width: mWidth * 0.05,
                 ),
-                _shippingAddressList != 0 ?  Text(_shippingAddressList[0].phone,
+                  Text(_phoneController.text.toString() ?? '',
                   style: TextStyle(
                     color: MyTheme.secondary,
                   ),
-                ) :
-                Text("..."),
+                )
               ],
             ),
 
@@ -2284,7 +2314,7 @@ class _CheckoutState extends State<Checkout> {
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.grey[200],
           appBar: buildAppBar(context),
           bottomNavigationBar: buildBottomAppBar(context),
           body: Stack(
@@ -2442,10 +2472,10 @@ class _CheckoutState extends State<Checkout> {
                       ),
                       ),
                     ),
-
-                    SizedBox(
-                      height: 10,
-                    ),
+                    //
+                    // SizedBox(
+                    //   height: 5,
+                    // ),
 
                     // Accordion(
                     //
@@ -2460,17 +2490,36 @@ class _CheckoutState extends State<Checkout> {
                     //   ],
                     // ),
                     Container(
-                      child: _shippingAddressList == 0 ? Container() : buildAddressExpandedTile(),
+                    child: buildAddressExpandedTile(),
                     ),
 
                     SizedBox(
                       height: 10,
                     ),
 
-                    Container(
-                      //height: 300,
-                      //color: Colors.grey,
-                      child: buildCartSellerItemCard(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text("Your Order",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: MyTheme.secondary,
+                            ),
+                          ),
+                        ),
+
+                        // SizedBox(
+                        //   height: 5,
+                        // ),
+                        Container(
+                          //height: 300,
+                          //color: Colors.grey,
+                          child: buildCartSellerItemCard(),
+                        ),
+                      ],
                     ),
 
                     SizedBox(
@@ -2497,14 +2546,16 @@ class _CheckoutState extends State<Checkout> {
                       height: 14,
                     ),
                     Container(
+                      //color: MyTheme.white,
+                      margin: EdgeInsets.symmetric(horizontal: 5),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0, left: 8),
+                            padding: const EdgeInsets.only(bottom: 8.0, left: 8, top: 8),
                             child: Text("Order Notes",
                                 style: TextStyle(
-                                    color: MyTheme.secondary, fontSize: 12)),
+                                    color: MyTheme.secondary, fontSize: 14)),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 16.0, left: 8, right: 8),
@@ -2525,12 +2576,12 @@ class _CheckoutState extends State<Checkout> {
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(0),
                                       borderSide: BorderSide(
-                                          color: MyTheme.light_grey, width: 2.0),
+                                          color: MyTheme.dark_grey, width: 1.0),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(0),
                                       borderSide: BorderSide(
-                                          color: MyTheme.light_grey, width: 2.0),
+                                          color: MyTheme.dark_grey, width: 1.0),
                                     ),
                                     contentPadding: EdgeInsets.only(
                                         left: 8.0, top: 16.0, bottom: 16.0)),
@@ -2602,32 +2653,41 @@ class _CheckoutState extends State<Checkout> {
                           // )
                           //     : Container(),
 
-                          Padding(
-                            padding:
-                            const EdgeInsets.only(left: 16.0, right: 16.0),
-                            child: buildPaymentMethodList(),
-                          ),
-
-                          Padding(
-                            padding: const EdgeInsets.only(top: 0.0, bottom:10),
-                            child: Row(
+                          Container(
+                            color: MyTheme.white,
+                           // margin: EdgeInsets.symmetric(horizontal: 5),
+                            padding: EdgeInsets.all(5),
+                            child: Column(
                               children: [
-                                Checkbox(
-                                  value: _termsChecked,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _termsChecked = value;
-                                    });
-                                  },
+                                Padding(
+                                  padding:
+                                  const EdgeInsets.only(left: 16.0, right: 16.0),
+                                  child: buildPaymentMethodList(),
                                 ),
-                                Flexible(
-                                  child: Text(
-                                    "I HAVE READ AND AGREE TO THE KIREI'S TERMS AND CONDITIONS, PRIVACY POLICY, AND REFUND POLICY.",
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 0.0, bottom:10),
+                                  child: Row(
+                                    children: [
+                                      Checkbox(
+                                        value: _termsChecked,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _termsChecked = value;
+                                          });
+                                        },
+                                      ),
+                                      Flexible(
+                                        child: Text(
+                                          "I HAVE READ AND AGREE TO THE KIREI'S TERMS AND CONDITIONS, PRIVACY POLICY, AND REFUND POLICY.",
+                                          maxLines: 3,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -2745,12 +2805,15 @@ class _CheckoutState extends State<Checkout> {
 
   Container buildApplyCouponRow(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8),
+      margin: EdgeInsets.symmetric(horizontal: 5),
+     // padding: EdgeInsets.all(8),
+      width: MediaQuery.of(context).size.width,
+     // color: MyTheme.white,
       child: Row(
         children: [
           Container(
             height: 42,
-            width: MediaQuery.of(context).size.width  * 0.55,
+            width: MediaQuery.of(context).size.width  * 0.56,
             alignment: Alignment.center,
             child: TextFormField(
               controller: _couponController,
@@ -3463,19 +3526,6 @@ class _CheckoutState extends State<Checkout> {
               ),
               onPressed: () {
                 _shippingAddressList == null ? onAddressAdd(context) : Container();
-                // AddressRepository().getAddressUpdateAddResponse(
-                //   address: _addressController.text,
-                //   area: _countryController.text,
-                //   zone: _cityController.text,
-                //   city: _stateController.text,
-                //   phone: _phoneController.text,
-                //   name: _nameController.text,
-                //   email: _emailController.text,
-                //   note: _orderNoteController.text,
-                // ).then((value) {
-                //   ToastComponent.showDialog("Address Updated Successfully", context,
-                //       gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-                // });
                 onPressPlaceOrderOrProceed();
                 onPressProceed();
               },

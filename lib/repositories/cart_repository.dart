@@ -109,7 +109,7 @@ class CartRepository {
     return cartSummaryResponseFromJson(response.body);
   }
 
-  Future getCartQuantityResponse( productId, int ProductQuantity) async {
+  Future<dynamic> getCartQuantityResponse( productId, int ProductQuantity) async {
     Uri url = Uri.parse("${ENDP.CART_QUANTITY}");
     print("cart Change Quantity");
 
