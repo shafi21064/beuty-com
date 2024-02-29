@@ -104,6 +104,8 @@ class _OrderListState extends State<OrderList> {
         fetchData();
       }
     });
+
+    print("_orderList.length"+ _orderList.length.toString());
   }
 
   @override
@@ -177,7 +179,12 @@ class _OrderListState extends State<OrderList> {
         payment_status: _selectedPaymentStatus.option_key,
         delivery_status: _selectedDeliveryStatus.option_key);
     //print("or:"+orderResponse.toJson().toString());
-    _orderList.addAll(orderResponse.data);
+   _orderList.addAll(orderResponse["data"]);
+   // _orderList.addAll(orderResponse.data);
+
+    print("orderResponse ${orderResponse.toString()}");
+    //_orderList.add(orderResponse.data);
+    print("_orderList: ${_orderList.toString()}");
     _isInitial = false;
     // _totalData = orderResponse.meta.total;
     _showLoadingContainer = false;
@@ -458,7 +465,8 @@ class _OrderListState extends State<OrderList> {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return OrderDetails(
-                          id: _orderList[index].id,
+                         //id: _orderList[index].id,
+                          id: _orderList[index]["id"],
                         );
                       }));
                     },
@@ -504,13 +512,15 @@ class _OrderListState extends State<OrderList> {
                   //   ),
                   // ),
 
-                  Text('Order Number: ' + _orderList[index].id.toString()?? '',
+                  //Text('Order Number: ' + _orderList[index].id.toString()?? '',
+                  Text('Order Number: ' + _orderList[index]["id"].toString()?? '',
                       style: TextStyle(color: MyTheme.secondary, fontSize: 13)),
                   Spacer(),
                   Column(
                     children: [
                       Text(
-                        _orderList[index].grandTotal ?? '',
+                  //'${_orderList[index].grandTotal.toString()}' ?? '',
+                        '${_orderList[index]["grand_total"].toString()}' ?? '',
                         style: TextStyle(
                             color: MyTheme.primary,
                             fontSize: 14,
@@ -543,7 +553,8 @@ class _OrderListState extends State<OrderList> {
                     style: TextStyle(color: MyTheme.secondary, fontSize: 13),
                   ),
                   Text(
-                    _orderList[index].paymentStatusString ?? '',
+                    //_orderList[index].paymentStatusString ?? '',
+                    _orderList[index]["payment_status_string"].toString() ?? '',
                     style: TextStyle(color: MyTheme.secondary, fontSize: 13),
                   ),
                   Padding(
@@ -551,8 +562,10 @@ class _OrderListState extends State<OrderList> {
                         ? const EdgeInsets.only(right: 8.0)
                         : const EdgeInsets.only(left: 8.0),
                     child: buildPaymentStatusCheckContainer(
-                        _orderList[index].paymentStatus),
-                  ),
+                        //_orderList[index].paymentStatus
+                        _orderList[index]["payment_status_string"]
+                    ),
+                   ),
                 ],
               ),
             ),
@@ -580,14 +593,16 @@ class _OrderListState extends State<OrderList> {
                     ),
 
                     Text(
-                      _orderList[index].deliveryStatusString ?? '',
+                      //_orderList[index].deliveryStatusString ?? '',
+                      _orderList[index]["delivery_status_string"] ?? '',
                       style: TextStyle(color: MyTheme.secondary, fontSize: 13),
                     ),
                   ],
                 ),
 
                 Text(
-                  _orderList[index].date ?? '',
+                  //_orderList[index].date ?? '',
+                  _orderList[index]["date"] ?? '',
                   style: TextStyle(color: MyTheme.secondary, fontSize: 13, fontWeight: FontWeight.w600),
                 ),
               ],

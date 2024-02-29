@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:kirei/data_model/category_response.dart';
 import 'package:kirei/my_theme.dart';
+import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/repositories/category_repository.dart';
 import 'package:kirei/screens/BeautyBooks.dart';
 import 'package:kirei/screens/appointment.dart';
@@ -29,6 +30,7 @@ import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/auth_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 class MainDrawer extends StatefulWidget {
   const MainDrawer({
@@ -663,23 +665,28 @@ class _MainDrawerState extends State<MainDrawer> {
                 )
                     : Container(),
                 is_logged_in.$ == true
-                    ? ListTile(
-                        visualDensity:
-                            VisualDensity(
-                                horizontal: -4,
-                                vertical: -4
+                    ? Consumer<CartCountUpdate>(
+                      builder: (widget, value, child) {
+                        return ListTile(
+                            visualDensity:
+                                VisualDensity(
+                                    horizontal: -4,
+                                    vertical: -4
+                                ),
+                            // leading: Image.asset("assets/logout.png",
+                            //     height: 16,
+                            //     color: Color.fromRGBO(153, 153, 153, 1)),
+                            title: Text(
+                              AppLocalizations.of(context)
+                                  .main_drawer_logout
+                                  .toUpperCase(),
                             ),
-                        // leading: Image.asset("assets/logout.png",
-                        //     height: 16,
-                        //     color: Color.fromRGBO(153, 153, 153, 1)),
-                        title: Text(
-                          AppLocalizations.of(context)
-                              .main_drawer_logout
-                              .toUpperCase(),
-                        ),
-                        onTap: () {
-                          onTapLogout(context);
-                        })
+                            onTap: () {
+                              onTapLogout(context);
+                              value.getReset();
+                            });
+                      }
+                    )
                     : Container(),
 
                 SizedBox(

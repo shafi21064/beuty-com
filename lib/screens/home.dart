@@ -416,8 +416,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                                     (context) {
                                                                   return ProductDetails(
                                                                       id: suggestion
-                                                                          .id);
-                                                                })).then((value) {
+                                                                          .id,
+                                                                    stock: suggestion.stock,
+                                                                  );
+                                                                }))
+                                                            .then((value) {
                                                           onPopped(value);
                                                         });
                                                       },
@@ -1992,6 +1995,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                           child: FadeInImage.assetNetwork(
                             placeholder: 'assets/placeholder_rectangle.png',
+                            //placeholder: 'assets/placeholder.png',
                             image: i ?? '',
                             fit: BoxFit.cover,
                           ))),

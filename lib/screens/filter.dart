@@ -47,14 +47,14 @@ class WhichFilter {
 class Filter extends StatefulWidget {
   Filter(
       {Key key,
-      this.selected_filter = "product",
-      this.selected_skin,
-      this.good_for,
-      this.tag,
-      this.type,
-      this.category,
+        this.selected_filter = "product",
+        this.selected_skin,
+        this.good_for,
+        this.tag,
+        this.type,
+        this.category,
         this.categoryIndex,
-      this.key_ingredients})
+        this.key_ingredients})
       : super(key: key);
 
   String selected_filter;
@@ -139,7 +139,7 @@ class _FilterState extends State<Filter> {
 
   fetchFilteredBrands() async {
     var filteredBrandResponse =
-        await SkinTypesRepository().getFilterPageSkinTypes();
+    await SkinTypesRepository().getFilterPageSkinTypes();
     print("callllllled");
     _filterBrandList.addAll(filteredBrandResponse.skinTypes);
     print(_filterBrandList);
@@ -149,7 +149,7 @@ class _FilterState extends State<Filter> {
 
   fetchFilteredCategories() async {
     var filteredCategoriesResponse =
-        await CategoryRepository().getFilterPageCategories();
+    await CategoryRepository().getFilterPageCategories();
     _filterCategoryList.addAll(filteredCategoriesResponse.categories);
     _filteredCategoriesCalled = true;
     setState(() {});
@@ -203,9 +203,9 @@ class _FilterState extends State<Filter> {
   visibileMethod(){
 
     if(widget.category == "skin-care" || widget.category == "hair-care" || widget.category == "make-up" || widget.category == "body-care"){
-       isTrue = true;
+      isTrue = true;
     } else {
-       isTrue = false;
+      isTrue = false;
 
     }
   }
@@ -213,7 +213,7 @@ class _FilterState extends State<Filter> {
   @override
   void initState() {
     init();
-   getSubCategories();
+    getSubCategories();
     //fetchFeaturedCategories();
     //fetchAllCategory();
     //print(_allSubCategories);
@@ -230,7 +230,7 @@ class _FilterState extends State<Filter> {
     _shopScrollController.dispose();
     super.dispose();
   }
-onPopped(value) async {
+  onPopped(value) async {
     reset();
   }
 
@@ -259,8 +259,8 @@ onPopped(value) async {
       fetchProductData();
     }
 
-    
-  
+
+
 
     //set scroll listeners
 
@@ -306,7 +306,7 @@ onPopped(value) async {
         name: _searchKey,
         sort_key: _selectedSort,
         categories:
-            widget.category != null ? widget.category : _selectedCategory,
+        widget.category != null ? widget.category : _selectedCategory,
         skin_type: widget.selected_skin != null
             ? widget.selected_skin
             : _selectedBrands.join(",").toString(),
@@ -336,7 +336,7 @@ onPopped(value) async {
 
   fetchBrandData() async {
     var brandResponse =
-        await BrandRepository().getBrands(page: _brandPage, name: _searchKey);
+    await BrandRepository().getBrands(page: _brandPage, name: _searchKey);
     _brandList.addAll(brandResponse.brands);
     _isBrandInitial = false;
     _totalBrandData = brandResponse.meta.total;
@@ -355,7 +355,7 @@ onPopped(value) async {
 
   fetchShopData() async {
     var shopResponse =
-        await ShopRepository().getShops(page: _shopPage, name: _searchKey);
+    await ShopRepository().getShops(page: _shopPage, name: _searchKey);
     _shopList.addAll(shopResponse.shops);
     _isShopInitial = false;
     _totalShopData = shopResponse.meta.total;
@@ -496,7 +496,7 @@ onPopped(value) async {
     /*print(_appBar.preferredSize.height.toString()+" Appbar height");
     print(kToolbarHeight.toString()+" kToolbarHeight height");
     print(MediaQuery.of(context).padding.top.toString() +" MediaQuery.of(context).padding.top");*/
-   // var discountPercentage = ((((int.parse(widget.price) - int.parse(widget.sale_price))/(int.parse(widget.price)))*100 ).toStringAsFixed(0).toString());
+    // var discountPercentage = ((((int.parse(widget.price) - int.parse(widget.sale_price))/(int.parse(widget.price)))*100 ).toStringAsFixed(0).toString());
     return Directionality(
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
@@ -511,8 +511,8 @@ onPopped(value) async {
           _selectedFilter.option_key == 'product'
               ? buildProductList()
               : (_selectedFilter.option_key == 'brands'
-                  ? buildBrandList()
-                  : buildShopList()),
+              ? buildBrandList()
+              : buildShopList()),
           Positioned(
             top: 0.0,
             left: 0.0,
@@ -521,12 +521,12 @@ onPopped(value) async {
           ),
 
           Align(
-              //alignment: Alignment.bottomCenter,
+            //alignment: Alignment.bottomCenter,
               child: _selectedFilter.option_key == 'product'
                   ? buildProductLoadingContainer()
                   : (_selectedFilter.option_key == 'brands'
-                      ? buildBrandLoadingContainer()
-                      : buildShopLoadingContainer())),
+                  ? buildBrandLoadingContainer()
+                  : buildShopLoadingContainer())),
         ]),
       ),
     );
@@ -559,8 +559,8 @@ onPopped(value) async {
               ),
 
               Visibility(
-                  visible: isTrue,
-                  child: buildScrollableSubCategory(),
+                visible: isTrue,
+                child: buildScrollableSubCategory(),
               ),
 
               //widget.category != null ? buildScrollableSubCategory() : Container()
@@ -655,10 +655,10 @@ onPopped(value) async {
             _selectedFilter.option_key == "product"
                 ? _scaffoldKey.currentState.openEndDrawer()
                 : ToastComponent.showDialog(
-                    AppLocalizations.of(context).filter_screen_sort_warning,
-                    context,
-                    gravity: Toast.CENTER,
-                    duration: Toast.LENGTH_LONG);
+                AppLocalizations.of(context).filter_screen_sort_warning,
+                context,
+                gravity: Toast.CENTER,
+                duration: Toast.LENGTH_LONG);
           },
           child: Container(
             decoration: BoxDecoration(color: Colors.white),
@@ -666,194 +666,194 @@ onPopped(value) async {
             width: MediaQuery.of(context).size.width * .50,
             child: Center(
                 child: Container(
-              width: 50,
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.filter_alt_outlined,
-                    size: 13,
-                    color: Colors.black,
+                  width: 50,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.filter_alt_outlined,
+                        size: 13,
+                        color: Colors.black,
+                      ),
+                      SizedBox(width: 2),
+                      Text(
+                        AppLocalizations.of(context).filter_screen_filter,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(width: 2),
-                  Text(
-                    AppLocalizations.of(context).filter_screen_filter,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 13,
-                    ),
-                  ),
-                ],
-              ),
-            )),
+                )),
           ),
         ),
         GestureDetector(
           onTap: () {
             _selectedFilter.option_key == "product"
                 ? showDialog(
-                    context: context,
-                    builder: (_) => Directionality(
-                          textDirection: app_language_rtl.$
-                              ? TextDirection.rtl
-                              : TextDirection.ltr,
-                          child: AlertDialog(
-                            contentPadding: EdgeInsets.only(
-                                top: 16.0, left: 2.0, right: 2.0, bottom: 2.0),
-                            content: StatefulBuilder(builder:
-                                (BuildContext context, StateSetter setState) {
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 24.0),
-                                      child: Text(
-                                        AppLocalizations.of(context)
-                                            .filter_screen_sort_products_by,
-                                      )),
-                                  RadioListTile(
-                                    dense: true,
-                                    value: "default",
-                                    groupValue: _selectedSort,
-                                    activeColor: MyTheme.secondary,
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    title: Text(AppLocalizations.of(context)
-                                        .filter_screen_default),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _selectedSort = value;
-                                      });
-                                      _onSortChange();
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  RadioListTile(
-                                    dense: true,
-                                    value: "bestseller",
-                                    groupValue: _selectedSort,
-                                    activeColor: MyTheme.secondary,
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    title: Text(AppLocalizations.of(context)
-                                        .filter_screen_popularity),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _selectedSort = value;
-                                      });
-                                      _onSortChange();
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  RadioListTile(
-                                    dense: true,
-                                    value: "rating",
-                                    groupValue: _selectedSort,
-                                    activeColor: MyTheme.secondary,
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    title: Text(AppLocalizations.of(context)
-                                        .filter_screen_top_rated),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _selectedSort = value;
-                                      });
-                                      _onSortChange();
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  RadioListTile(
-                                    dense: true,
-                                    value: "new",
-                                    groupValue: _selectedSort,
-                                    activeColor: MyTheme.secondary,
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    title: Text(AppLocalizations.of(context)
-                                        .filter_screen_price_new_arrival),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _selectedSort = value;
-                                      });
-                                      _onSortChange();
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  RadioListTile(
-                                    dense: true,
-                                    value: "hot",
-                                    groupValue: _selectedSort,
-                                    activeColor: MyTheme.secondary,
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    title: Text(AppLocalizations.of(context)
-                                        .filter_screen_hot_deals),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _selectedSort = value;
-                                      });
-                                      _onSortChange();
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  RadioListTile(
-                                    dense: true,
-                                    value: "price_high_to_low",
-                                    groupValue: _selectedSort,
-                                    activeColor: MyTheme.secondary,
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    title: Text(AppLocalizations.of(context)
-                                        .filter_screen_price_high_to_low),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _selectedSort = value;
-                                      });
-                                      _onSortChange();
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  RadioListTile(
-                                    dense: true,
-                                    value: "price_low_to_high",
-                                    groupValue: _selectedSort,
-                                    activeColor: MyTheme.secondary,
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    title: Text(AppLocalizations.of(context)
-                                        .filter_screen_price_low_to_high),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _selectedSort = value;
-                                      });
-                                      _onSortChange();
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
-                              );
-                            }),
-                            actions: [
-                              FlatButton(
-                                child: Text(
-                                  AppLocalizations.of(context)
-                                      .common_close_in_all_capital,
-                                  style: TextStyle(color: MyTheme.dark_grey),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context, rootNavigator: true)
-                                      .pop();
-                                },
-                              ),
-                            ],
+                context: context,
+                builder: (_) => Directionality(
+                  textDirection: app_language_rtl.$
+                      ? TextDirection.rtl
+                      : TextDirection.ltr,
+                  child: AlertDialog(
+                    contentPadding: EdgeInsets.only(
+                        top: 16.0, left: 2.0, right: 2.0, bottom: 2.0),
+                    content: StatefulBuilder(builder:
+                        (BuildContext context, StateSetter setState) {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 24.0),
+                              child: Text(
+                                AppLocalizations.of(context)
+                                    .filter_screen_sort_products_by,
+                              )),
+                          RadioListTile(
+                            dense: true,
+                            value: "default",
+                            groupValue: _selectedSort,
+                            activeColor: MyTheme.secondary,
+                            controlAffinity:
+                            ListTileControlAffinity.leading,
+                            title: Text(AppLocalizations.of(context)
+                                .filter_screen_default),
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedSort = value;
+                              });
+                              _onSortChange();
+                              Navigator.pop(context);
+                            },
                           ),
-                        ))
+                          RadioListTile(
+                            dense: true,
+                            value: "bestseller",
+                            groupValue: _selectedSort,
+                            activeColor: MyTheme.secondary,
+                            controlAffinity:
+                            ListTileControlAffinity.leading,
+                            title: Text(AppLocalizations.of(context)
+                                .filter_screen_popularity),
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedSort = value;
+                              });
+                              _onSortChange();
+                              Navigator.pop(context);
+                            },
+                          ),
+                          RadioListTile(
+                            dense: true,
+                            value: "rating",
+                            groupValue: _selectedSort,
+                            activeColor: MyTheme.secondary,
+                            controlAffinity:
+                            ListTileControlAffinity.leading,
+                            title: Text(AppLocalizations.of(context)
+                                .filter_screen_top_rated),
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedSort = value;
+                              });
+                              _onSortChange();
+                              Navigator.pop(context);
+                            },
+                          ),
+                          RadioListTile(
+                            dense: true,
+                            value: "new",
+                            groupValue: _selectedSort,
+                            activeColor: MyTheme.secondary,
+                            controlAffinity:
+                            ListTileControlAffinity.leading,
+                            title: Text(AppLocalizations.of(context)
+                                .filter_screen_price_new_arrival),
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedSort = value;
+                              });
+                              _onSortChange();
+                              Navigator.pop(context);
+                            },
+                          ),
+                          RadioListTile(
+                            dense: true,
+                            value: "hot",
+                            groupValue: _selectedSort,
+                            activeColor: MyTheme.secondary,
+                            controlAffinity:
+                            ListTileControlAffinity.leading,
+                            title: Text(AppLocalizations.of(context)
+                                .filter_screen_hot_deals),
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedSort = value;
+                              });
+                              _onSortChange();
+                              Navigator.pop(context);
+                            },
+                          ),
+                          RadioListTile(
+                            dense: true,
+                            value: "price_high_to_low",
+                            groupValue: _selectedSort,
+                            activeColor: MyTheme.secondary,
+                            controlAffinity:
+                            ListTileControlAffinity.leading,
+                            title: Text(AppLocalizations.of(context)
+                                .filter_screen_price_high_to_low),
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedSort = value;
+                              });
+                              _onSortChange();
+                              Navigator.pop(context);
+                            },
+                          ),
+                          RadioListTile(
+                            dense: true,
+                            value: "price_low_to_high",
+                            groupValue: _selectedSort,
+                            activeColor: MyTheme.secondary,
+                            controlAffinity:
+                            ListTileControlAffinity.leading,
+                            title: Text(AppLocalizations.of(context)
+                                .filter_screen_price_low_to_high),
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedSort = value;
+                              });
+                              _onSortChange();
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      );
+                    }),
+                    actions: [
+                      FlatButton(
+                        child: Text(
+                          AppLocalizations.of(context)
+                              .common_close_in_all_capital,
+                          style: TextStyle(color: MyTheme.dark_grey),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context, rootNavigator: true)
+                              .pop();
+                        },
+                      ),
+                    ],
+                  ),
+                ))
                 : ToastComponent.showDialog(
-                    AppLocalizations.of(context).filter_screen_filter_warning,
-                    context,
-                    gravity: Toast.CENTER,
-                    duration: Toast.LENGTH_LONG);
+                AppLocalizations.of(context).filter_screen_filter_warning,
+                context,
+                gravity: Toast.CENTER,
+                duration: Toast.LENGTH_LONG);
           },
           child: Container(
             decoration: BoxDecoration(color: Colors.white),
@@ -861,25 +861,25 @@ onPopped(value) async {
             width: MediaQuery.of(context).size.width * .50,
             child: Center(
                 child: Container(
-              width: 50,
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.swap_vert,
-                    color: Colors.black,
-                    size: 13,
+                  width: 50,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.swap_vert,
+                        color: Colors.black,
+                        size: 13,
+                      ),
+                      SizedBox(width: 2),
+                      Text(
+                        "Sort",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(width: 2),
-                  Text(
-                    "Sort",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 13,
-                    ),
-                  ),
-                ],
-              ),
-            )),
+                )),
           ),
         )
       ],
@@ -908,7 +908,7 @@ onPopped(value) async {
         child: Container(
           child: Padding(
               padding: MediaQuery.of(context).viewPadding.top >
-                      30 //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
+                  30 //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
                   ? const EdgeInsets.symmetric(vertical: 36.0, horizontal: 0.0)
                   : const EdgeInsets.symmetric(vertical: 14.0, horizontal: 0.0),
               child: TypeAheadField(
@@ -929,10 +929,10 @@ onPopped(value) async {
                     height: 50,
                     child: Center(
                         child: Text(
-                      AppLocalizations.of(context)
-                          .filter_screen_loading_suggestions,
-                      style: TextStyle(color: MyTheme.dark_grey),
-                    )),
+                          AppLocalizations.of(context)
+                              .filter_screen_loading_suggestions,
+                          style: TextStyle(color: MyTheme.dark_grey),
+                        )),
                   );
                 },
                 itemBuilder: (context, suggestion) {
@@ -940,12 +940,12 @@ onPopped(value) async {
                     visible: _searchController.text != "",
                     child: ListTile(
                       onTap:(){
-                         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ProductDetails(id: suggestion.id,
-          );
-        })).then((value) {
-          onPopped(value);
-        });
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return ProductDetails(id: suggestion.id,
+                          );
+                        })).then((value) {
+                          onPopped(value);
+                        });
 
                       },
                       contentPadding: EdgeInsets.only(top: 5),
@@ -977,9 +977,9 @@ onPopped(value) async {
                               style: TextStyle(
                                 color: MyTheme.dark_grey,
                                 decoration:
-                                    suggestion.sale_price != suggestion.price
-                                        ? TextDecoration.lineThrough
-                                        : TextDecoration.none,
+                                suggestion.sale_price != suggestion.price
+                                    ? TextDecoration.lineThrough
+                                    : TextDecoration.none,
                               ),
                             ),
                             TextSpan(
@@ -1026,7 +1026,7 @@ onPopped(value) async {
                           .filter_screen_search_here,
                       border: InputBorder.none,
                       hintStyle:
-                          TextStyle(fontSize: 14.0, color: MyTheme.light_grey),
+                      TextStyle(fontSize: 14.0, color: MyTheme.light_grey),
                       alignLabelWithHint: true,
                       // focusedBorder: OutlineInputBorder(
                       //   borderSide:
@@ -1165,18 +1165,18 @@ onPopped(value) async {
                       ),
                       _filterCategoryList.length == 0
                           ? Container(
-                              height: 100,
-                              child: Center(
-                                child: Text(
-                                  AppLocalizations.of(context)
-                                      .common_no_category_is_available,
-                                  style: TextStyle(color: MyTheme.secondary),
-                                ),
-                              ),
-                            )
+                        height: 100,
+                        child: Center(
+                          child: Text(
+                            AppLocalizations.of(context)
+                                .common_no_category_is_available,
+                            style: TextStyle(color: MyTheme.secondary),
+                          ),
+                        ),
+                      )
                           : SingleChildScrollView(
-                              child: buildFilterCategoryList(),
-                            ),
+                        child: buildFilterCategoryList(),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 16.0),
                         child: Text(
@@ -1187,18 +1187,18 @@ onPopped(value) async {
                       ),
                       _filterBrandList.length == 0
                           ? Container(
-                              height: 100,
-                              child: Center(
-                                child: Text(
-                                  AppLocalizations.of(context)
-                                      .common_no_brand_is_available,
-                                  style: TextStyle(color: MyTheme.secondary),
-                                ),
-                              ),
-                            )
+                        height: 100,
+                        child: Center(
+                          child: Text(
+                            AppLocalizations.of(context)
+                                .common_no_brand_is_available,
+                            style: TextStyle(color: MyTheme.secondary),
+                          ),
+                        ),
+                      )
                           : SingleChildScrollView(
-                              child: buildFilterBrandsList(),
-                            ),
+                        child: buildFilterBrandsList(),
+                      ),
                     ]),
                   )
                 ]),
@@ -1252,14 +1252,14 @@ onPopped(value) async {
                         var max = _maxPriceController.text;
                         bool apply = true;
                         if (min != "" && max != "") {
-                            if (int.parse(max).compareTo(int.parse(min)) < 0) {
-                              ToastComponent.showDialog(
-                                  AppLocalizations.of(context)
-                                      .filter_screen_min_max_warning,
-                                  context,
-                                  gravity: Toast.CENTER,
-                                  duration: Toast.LENGTH_LONG);
-                              apply = false;
+                          if (int.parse(max).compareTo(int.parse(min)) < 0) {
+                            ToastComponent.showDialog(
+                                AppLocalizations.of(context)
+                                    .filter_screen_min_max_warning,
+                                context,
+                                gravity: Toast.CENTER,
+                                duration: Toast.LENGTH_LONG);
+                            apply = false;
                           }
                         }
 
@@ -1292,23 +1292,23 @@ onPopped(value) async {
         ..._filterBrandList
             .map(
               (brand) => CheckboxListTile(
-                controlAffinity: ListTileControlAffinity.leading,
-                dense: true,
-                title: Text(brand.title),
-                value: _selectedBrands.contains(brand.title),
-                onChanged: (bool value) {
-                  if (value) {
-                    setState(() {
-                      _selectedBrands.add(brand.title);
-                    });
-                  } else {
-                    setState(() {
-                      _selectedBrands.remove(brand.title);
-                    });
-                  }
-                },
-              ),
-            )
+            controlAffinity: ListTileControlAffinity.leading,
+            dense: true,
+            title: Text(brand.title),
+            value: _selectedBrands.contains(brand.title),
+            onChanged: (bool value) {
+              if (value) {
+                setState(() {
+                  _selectedBrands.add(brand.title);
+                });
+              } else {
+                setState(() {
+                  _selectedBrands.remove(brand.title);
+                });
+              }
+            },
+          ),
+        )
             .toList()
       ],
     );
@@ -1323,19 +1323,19 @@ onPopped(value) async {
         ..._filterCategoryList
             .map(
               (category) => RadioListTile<String>(
-                controlAffinity: ListTileControlAffinity.leading,
-                dense: true,
-                title: Text(category.name),
-                groupValue: _selectedCategory,
-                value: category.name,
-                onChanged: (value) {
-                  setState(() {
-                    debugPrint("Val=$value");
-                    _selectedCategory = value;
-                  });
-                },
-              ),
-            )
+            controlAffinity: ListTileControlAffinity.leading,
+            dense: true,
+            title: Text(category.name),
+            groupValue: _selectedCategory,
+            value: category.name,
+            onChanged: (value) {
+              setState(() {
+                debugPrint("Val=$value");
+                _selectedCategory = value;
+              });
+            },
+          ),
+        )
             .toList()
       ],
     );
@@ -1359,7 +1359,7 @@ onPopped(value) async {
         //margin: widget.category!= null? EdgeInsets.only(top: 150) : EdgeInsets.only(top: 0),
         //padding: widget.category!= null? EdgeInsets.only(top: 200) : EdgeInsets.only(top: 0),
           margin: isTrue ? EdgeInsets.only(top: 150) : EdgeInsets.only(top: 100),
-        padding: isTrue ? EdgeInsets.only(top: 65) : EdgeInsets.only(top: 35),
+          padding: isTrue ? EdgeInsets.only(top: 65) : EdgeInsets.only(top: 35),
           child: ShimmerHelper()
               .buildProductGridShimmer(scontroller: _scrollController));
     } else if (_productList.length > 0) {
@@ -1378,9 +1378,9 @@ onPopped(value) async {
               children: [
                 SizedBox(
                     height:
-                        MediaQuery.of(context).viewPadding.top > 40 ? 180 : 135
-                    //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
-                    ),
+                    MediaQuery.of(context).viewPadding.top > 40 ? 180 : 135
+                  //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
+                ),
                 GridView.builder(
                   // 2
                   //addAutomaticKeepAlives: true,
@@ -1455,9 +1455,9 @@ onPopped(value) async {
             children: [
               SizedBox(
                   height:
-                      MediaQuery.of(context).viewPadding.top > 40 ? 180 : 135
-                  //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
-                  ),
+                  MediaQuery.of(context).viewPadding.top > 40 ? 180 : 135
+                //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
+              ),
               GridView.builder(
                 // 2
                 //addAutomaticKeepAlives: true,
@@ -1487,7 +1487,7 @@ onPopped(value) async {
     } else if (_totalBrandData == 0) {
       return Center(
           child:
-              Text(AppLocalizations.of(context).common_no_brand_is_available));
+          Text(AppLocalizations.of(context).common_no_brand_is_available));
     } else {
       return Container(); // should never be happening
     }
@@ -1592,9 +1592,9 @@ onPopped(value) async {
             children: [
               SizedBox(
                   height:
-                      MediaQuery.of(context).viewPadding.top > 40 ? 180 : 135
-                  //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
-                  ),
+                  MediaQuery.of(context).viewPadding.top > 40 ? 180 : 135
+                //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
+              ),
               GridView.builder(
                 // 2
                 //addAutomaticKeepAlives: true,
@@ -1614,8 +1614,8 @@ onPopped(value) async {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return SellerDetails();
-                      }));
+                            return SellerDetails();
+                          }));
                     },
                     child: ShopSquareCard(
                       id: _shopList[index].id,
@@ -1632,7 +1632,7 @@ onPopped(value) async {
     } else if (_totalShopData == 0) {
       return Center(
           child:
-              Text(AppLocalizations.of(context).common_no_shop_is_available));
+          Text(AppLocalizations.of(context).common_no_shop_is_available));
     } else {
       return Container(); // should never be happening
     }
@@ -1645,7 +1645,7 @@ onPopped(value) async {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 8,),
           color: MyTheme.white,
-            child: Row(
+          child: Row(
             children: [
               Padding(
                   padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8,),
@@ -1692,7 +1692,7 @@ onPopped(value) async {
               return GestureDetector(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_)=> Filter(
-                      type: _allSubCategories[index]?.slug
+                      category: _allSubCategories[index]?.slug
                   )));
                 },
                 child: Container(
@@ -1706,23 +1706,29 @@ onPopped(value) async {
                       Container(
                         height: 56,
                         width: 56,
+                        alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
+                          //borderRadius: BorderRadius.circular(30),
+                            shape: BoxShape.circle,
+                            border: Border.all(color: MyTheme.light_grey, width: 1)
                         ),
                         child: ClipOval(
                           child: _allSubCategories[index]?.icon != null
                               ? FadeInImage.assetNetwork(
                             image: _allSubCategories[index]?.icon,
                             placeholder: 'assets/placeholder.png',
-                            fit: BoxFit.cover,
+                            //fit: BoxFit.cover,
                             height: 56,
                             width: 56,
                           )
-                              : Image.asset(
-                            'assets/placeholder.png',
-                            fit: BoxFit.cover,
-                            height: 56,
-                            width: 56,
+                              : Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
+                              'assets/placeholder.png',
+                              // fit: BoxFit.,
+                              height: 56,
+                              width: 56,
+                            ),
                           ),
                         ),
                       ),
@@ -1731,7 +1737,7 @@ onPopped(value) async {
                         child: Text(
                           _allSubCategories[index]?.name,
                           textAlign: TextAlign.center,
-                           overflow: TextOverflow.ellipsis,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: MyTheme.secondary,
                             fontWeight: FontWeight.w300,

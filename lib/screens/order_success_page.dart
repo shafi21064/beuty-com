@@ -8,9 +8,9 @@ import 'package:kirei/screens/order_list.dart';
 import 'package:provider/provider.dart';
 
 class OrderSuccessPage extends StatefulWidget {
-  //int orderId;
+  int orderId;
    OrderSuccessPage({Key key,
-     //this.orderId
+     this.orderId
    }): super(key: key);
 
 
@@ -34,38 +34,38 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
     );
   }
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //  // fetchOrderDetails();
-  //  // fetchOrderedItems();
-  //   //print("UserID1:${orderDetails?.user_id}");
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    // TODO: implement initState
+    fetchOrderDetails();
+    fetchOrderedItems();
+    //print("UserID1:${orderDetails?.user_id}");
+    super.initState();
+  }
 
   var orderDetails;
   var orderedItemList;
 
-  // fetchOrderDetails() async {
-  //   var orderDetailsResponse =
-  //   await OrderRepository().getOrderDetails(id: widget.orderId);
-  //
-  //   if (orderDetailsResponse.detailed_orders.length > 0) {
-  //     //orderDetails = orderDetailsResponse.detailed_orders[0];
-  //     orderDetails = orderDetailsResponse.detailed_orders[0];
-  //   }
-  //
-  //   setState(() {});
-  // }
+  fetchOrderDetails() async {
+    var orderDetailsResponse =
+    await OrderRepository().getOrderDetails(id: widget.orderId);
 
-  // fetchOrderedItems() async {
-  //   var orderItemResponse =
-  //   await OrderRepository().getOrderItems(id: widget.orderId);
-  //   orderedItemList.addAll(orderItemResponse.ordered_items);
-  //   //orderItemsInit = true;
-  //
-  //   setState(() {});
-  // }
+    if (orderDetailsResponse.detailed_orders.length > 0) {
+      //orderDetails = orderDetailsResponse.detailed_orders[0];
+      orderDetails = orderDetailsResponse.detailed_orders[0];
+    }
+
+    setState(() {});
+  }
+
+  fetchOrderedItems() async {
+    var orderItemResponse =
+    await OrderRepository().getOrderItems(id: widget.orderId);
+    orderedItemList.addAll(orderItemResponse.ordered_items);
+    //orderItemsInit = true;
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,27 +121,6 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
               height: MediaQuery.of(context).size.height * 0.03,
             ),
 
-            // InkWell(
-            //   onTap: ()=> Navigator.pushAndRemoveUntil(
-            //       context, MaterialPageRoute(builder: (_)=> OrderList()), (route) => false),
-            //   child: Container(
-            //     height: 50,
-            //     width: 160,
-            //     decoration: BoxDecoration(
-            //       color: MyTheme.secondary,
-            //     ),
-            //     child: Center(
-            //       child: Text("Order History",
-            //         style: TextStyle(
-            //             fontWeight: FontWeight.bold,
-            //             color: MyTheme.white,
-            //             fontSize: 16
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            //
             // Row(
             //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
             //   children: [
@@ -204,156 +183,182 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
             // SizedBox(
             //   height: MediaQuery.of(context).size.height * 0.03,
             // ),
-            //
-            // Text("Order Summery",
-            // style: TextStyle(
-            //   fontWeight: FontWeight.bold,
-            //   fontSize: 18,
-            //   color: MyTheme.secondary
-            // ),
-            // ),
-            // SizedBox(
-            //   height: MediaQuery.of(context).size.height * 0.02,
-            // ),
-            //
-            // Container(
-            //   padding: EdgeInsets.symmetric(horizontal: 25),
-            //   child: Column(
-            //     children: [
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //           Text("Order Number",
-            //             style: TextStyle(
-            //                 fontSize: 14,
-            //                 color: MyTheme.secondary,
-            //                 fontWeight: FontWeight.bold
-            //             ),
-            //           ),
-            //           Text("${orderDetails?.id.toString()}",
-            //             style: TextStyle(
-            //                 fontSize: 14,
-            //                 color: MyTheme.secondary,
-            //                 fontWeight: FontWeight.bold
-            //             ),
-            //           )
-            //         ],
-            //       ),
-            //
-            //       SizedBox(
-            //         height: MediaQuery.of(context).size.height * 0.02,
-            //       ),
-            //
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //
-            //           Text("Subtotal",
-            //             style: TextStyle(
-            //                 fontSize: 14,
-            //                 color: MyTheme.secondary,
-            //                 fontWeight: FontWeight.bold
-            //             ),
-            //           ),
-            //           Text("${orderDetails.subtotal.toString()}",
-            //             style: TextStyle(
-            //                 fontSize: 14,
-            //                 color: MyTheme.secondary,
-            //                 fontWeight: FontWeight.bold
-            //           ),
-            //           )
-            //         ],
-            //       ),
-            //
-            //       Divider(
-            //         height: 1,
-            //         thickness: 1,
-            //         color: MyTheme.dark_grey,
-            //       ),
-            //
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //
-            //           Text("Coupon Discount",
-            //             style: TextStyle(
-            //                 fontSize: 14,
-            //                 color: MyTheme.secondary,
-            //                 fontWeight: FontWeight.bold
-            //             ),
-            //           ),
-            //           Text("${orderDetails.coupon_discount.toString()}",
-            //             style: TextStyle(
-            //                 fontSize: 14,
-            //                 color: MyTheme.secondary,
-            //                 fontWeight: FontWeight.bold
-            //             ),
-            //           )
-            //         ],
-            //       ),
-            //
-            //       Divider(
-            //         height: 1,
-            //         thickness: 1,
-            //         color: MyTheme.dark_grey,
-            //       ),
-            //
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //
-            //           Text("Delivery Charge",
-            //             style: TextStyle(
-            //                 fontSize: 14,
-            //                 color: MyTheme.secondary,
-            //                 fontWeight: FontWeight.bold
-            //             ),
-            //           ),
-            //           Text("${orderDetails.shipping_cost.toString()}",
-            //             style: TextStyle(
-            //                 fontSize: 14,
-            //                 color: MyTheme.secondary,
-            //                 fontWeight: FontWeight.bold
-            //             ),
-            //           )
-            //         ],
-            //       ),
-            //
-            //       Divider(
-            //         height: 1,
-            //         thickness: 1,
-            //         color: MyTheme.dark_grey,
-            //       ),
-            //
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //
-            //           Text("Total",
-            //             style: TextStyle(
-            //                 fontSize: 14,
-            //                 color: MyTheme.secondary,
-            //                 fontWeight: FontWeight.bold
-            //             ),
-            //           ),
-            //           Text("${orderDetails.grand_total.toString()}",
-            //             style: TextStyle(
-            //                 fontSize: 14,
-            //                 color: MyTheme.secondary,
-            //                 fontWeight: FontWeight.bold
-            //             ),
-            //           )
-            //
-            //         ],
-            //       ),
-            //
-            //     ],
-            //   ),
-            // ),
-            //
-            // SizedBox(
-            //   height: MediaQuery.of(context).size.height * 0.03,
-            // ),
+
+            Text("Order Summery",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              color: MyTheme.secondary
+            ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
+
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 25),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Order Number",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: MyTheme.secondary,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Text("${orderDetails?.id.toString()}",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: MyTheme.secondary,
+                            fontWeight: FontWeight.bold
+                        ),
+                      )
+                    ],
+                  ),
+
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
+                      Text("Subtotal",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: MyTheme.secondary,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Text(orderDetails.subtotal != null ? "${orderDetails.subtotal.toString()}" : "",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: MyTheme.secondary,
+                            fontWeight: FontWeight.bold
+                      ),
+                      )
+                    ],
+                  ),
+
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                    color: MyTheme.dark_grey,
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
+                      Text("Coupon Discount",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: MyTheme.secondary,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Text("${orderDetails.coupon_discount.toString()}",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: MyTheme.secondary,
+                            fontWeight: FontWeight.bold
+                        ),
+                      )
+                    ],
+                  ),
+
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                    color: MyTheme.dark_grey,
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
+                      Text("Delivery Charge",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: MyTheme.secondary,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Text("${orderDetails.shipping_cost.toString()}",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: MyTheme.secondary,
+                            fontWeight: FontWeight.bold
+                        ),
+                      )
+                    ],
+                  ),
+
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                    color: MyTheme.dark_grey,
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
+                      Text("Total",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: MyTheme.secondary,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Text("${orderDetails.grand_total.toString()}",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: MyTheme.secondary,
+                            fontWeight: FontWeight.bold
+                        ),
+                      )
+
+                    ],
+                  ),
+
+                ],
+              ),
+            ),
+
+
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
+            ),
+
+            InkWell(
+              onTap: ()=> Navigator.pushAndRemoveUntil(
+                  context, MaterialPageRoute(builder: (_)=> OrderList()), (route) => false),
+              child: Container(
+                height: 50,
+                width: 160,
+                decoration: BoxDecoration(
+                  color: MyTheme.secondary,
+                ),
+                child: Center(
+                  child: Text("Order History",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: MyTheme.white,
+                        fontSize: 16
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
 
             InkWell(
               onTap: (){ Navigator.pushAndRemoveUntil(

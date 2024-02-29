@@ -407,9 +407,12 @@ class _CheckoutState extends State<Checkout> {
     requestBody["shipping_name"] = user_name.$ ?? '';
     requestBody["shipping_phone"] = _phoneController.text;
     //user_email.$ != null ? user_email.$ : _phoneController.text;
-    requestBody["shipping_city"] = _stateController.text;
-    requestBody["shipping_zone"] = _cityController.text;
-    requestBody["shipping_area"] = _countryController.text;
+    //requestBody["shipping_city"] = _stateController.text;
+    requestBody["shipping_city_id"] = _selected_state.id;
+    //requestBody["shipping_zone"] = _cityController.text;
+    requestBody["shipping_zone_id"] = _selected_city.id;
+    //requestBody["shipping_area"] = _countryController.text;
+    requestBody["shipping_area_id"] = _selected_country.id;
     requestBody["is_preorder"] = 0;
     requestBody["payment_type"] = _selected_payment_method;
     requestBody["note"] = _orderNoteController.text;
@@ -451,7 +454,7 @@ class _CheckoutState extends State<Checkout> {
             );
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (_)=> OrderSuccessPage(
-                //orderId: orderCreateResponse.data.order.id,
+                orderId: orderCreateResponse.data.order.id,
               )), (route) => false);
 
         }
@@ -2160,26 +2163,27 @@ class _CheckoutState extends State<Checkout> {
               borderRadius: BorderRadius.circular(0.0),
             ),
             elevation: 0.0,
-            child: Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              Container(
-                  width: 90,
-                  height: 100,
-                  child: Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: FadeInImage.assetNetwork(
-                        placeholder: 'assets/placeholder.png',
-                        image: widget.allCartProductList[index]
-                            .product_thumbnail_image,
-                        fit: BoxFit.fitWidth,
-                      ))),
-              Container(
-                width: 200,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: Column(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                Container(
+                    width: MediaQuery.of(context).size.width * .23,
+                    //height: 100,
+                    child: FadeInImage.assetNetwork(
+                      placeholder: 'assets/placeholder.png',
+                      image: widget.allCartProductList[index]
+                          .product_thumbnail_image,
+                      fit: BoxFit.fitWidth,
+                    )),
+                Container(
+                  width: MediaQuery.of(context).size.width * .5,
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -2211,22 +2215,17 @@ class _CheckoutState extends State<Checkout> {
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
-                              Spacer(),
+
                             ],
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Spacer(),
 
-              Padding(
-                padding: const EdgeInsets.only(right: 15.0),
-                child: Container(
+                Container(
                   child: Text(
-
                     '${widget.allCartProductList[index].currency_symbol}'
                         '${widget.allCartProductList[index].quantity *
                         widget.allCartProductList[index].price}',
@@ -2236,9 +2235,9 @@ class _CheckoutState extends State<Checkout> {
                         height: 1.6,
                         fontWeight: FontWeight.w600),
                   ),
-                ),
-              )
-            ]),
+                )
+              ]),
+            ),
           );
         }
     );
@@ -3525,6 +3524,10 @@ class _CheckoutState extends State<Checkout> {
                     fontWeight: FontWeight.w600),
               ),
               onPressed: () {
+                print("_selected_city.id${_selected_state.id}");
+                print("_selected_area.id${_selected_country.id}");
+                print("_selected_zone.id${_selected_city.id}");
+                //print("_selected_.id${_selected_state.id}");
                 _shippingAddressList == null ? onAddressAdd(context) : Container();
                 onPressPlaceOrderOrProceed();
                 onPressProceed();
