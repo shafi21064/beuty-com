@@ -366,9 +366,15 @@ class _OrderListState extends State<OrderList> {
           centerTitle: false,
           backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
-          actions: [
-            new Container(),
-          ],
+          // actions: [
+          //   //new Container(),
+          //   IconButton(
+          //       onPressed: (){
+          //         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=> Main()), (route) => false);
+          //       },
+          //       icon: Icon(Icons.home_outlined, color: MyTheme.primary,)
+          //   )
+          // ],
           elevation: 0.0,
           titleSpacing: 0,
           flexibleSpace: Padding(
@@ -397,13 +403,14 @@ class _OrderListState extends State<OrderList> {
             builder: (context) => IconButton(
               icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
               onPressed: () {
-                if (widget.from_checkout) {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return Main();
-                  }));
-                } else {
-                  return Navigator.of(context).pop();
-                }
+                // if (widget.from_checkout) {
+                //   Navigator.push(context, MaterialPageRoute(builder: (context) {
+                //     return Main();
+                //   }));
+                // } else {
+                //   return Navigator.of(context).pop();
+                // }
+                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=> Main()), (route) => false);
               },
             ),
           ),

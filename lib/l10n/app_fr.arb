@@ -345,7 +345,7 @@
   "address_screen_enter_address": "Entrer l'adresse",
   "address_screen_city": "Ville",
   "address_screen_select_city": "S\u00e9lectionnez une ville",
-  "address_screen_enter_city": "Entrez la ville",
+  "address_screen_enter_zone": "Entrez la ville",
   "address_screen_postal_code": "code postal",
   "address_screen_enter_postal_code": "Entrez le code postal",
   "address_screen_country": "Pays",

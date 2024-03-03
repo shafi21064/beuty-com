@@ -82,7 +82,7 @@ class _AddressState extends State<Address> {
     print("enter fetchShippingAddressList");
     var addressResponse = await AddressRepository().getAddressList();
     print(addressResponse);
-    _shippingAddressList.addAll(addressResponse.data);
+    _shippingAddressList.addAll(addressResponse['data']);
     print(_shippingAddressList);
     setState(() {
       _isInitial = false;
@@ -193,7 +193,7 @@ class _AddressState extends State<Address> {
         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
 
     setState(() {
-      _default_shipping_address = _shippingAddressList[index].id;
+      _default_shipping_address = _shippingAddressList[index]['id'];
     });
   }
 
@@ -369,7 +369,7 @@ class _AddressState extends State<Address> {
     afterUpdatingAnAddress();
   }
 
-  onSelectCountryDuringAdd(country, setModalState) {
+  onSelectAreaDuringAdd(country, setModalState) {
     if (_selected_country != null && country.id == _selected_country.id) {
       setModalState(() {
         _countryController.text = country.name;
@@ -388,7 +388,7 @@ class _AddressState extends State<Address> {
     });
   }
 
-  onSelectStateDuringAdd(state, setModalState) {
+  onSelectCityDuringAdd(state, setModalState) {
     if (_selected_state != null && state.id == _selected_state.id) {
       setModalState(() {
         _stateController.text = state.name;
@@ -404,7 +404,7 @@ class _AddressState extends State<Address> {
     });
   }
 
-  onSelectCityDuringAdd(city, setModalState) {
+  onSelectZoneDuringAdd(city, setModalState) {
     if (_selected_city != null && city.id == _selected_city.id) {
       setModalState(() {
         _cityController.text = city.name;
@@ -717,7 +717,7 @@ class _AddressState extends State<Address> {
                           child: TypeAheadField(
                             suggestionsCallback: (name) async {
                               var stateResponse = await AddressRepository()
-                                  .getStateListByCountry(
+                                  .getCityByCountry(
                                   country_id: "3069"); // blank response
                               return stateResponse.states;
                             },
@@ -754,7 +754,7 @@ class _AddressState extends State<Address> {
                               );
                             },
                             onSuggestionSelected: (state) {
-                              onSelectStateDuringAdd(state, setModalState);
+                              onSelectCityDuringAdd(state, setModalState);
                             },
                             textFieldConfiguration: TextFieldConfiguration(
                               onTap: () {},
@@ -806,7 +806,7 @@ class _AddressState extends State<Address> {
                           child: TypeAheadField(
                             suggestionsCallback: (name) async {
                               var cityResponse = await AddressRepository()
-                                  .getCityListByState(
+                                  .getZoneByCity(
                                   state_id: _selected_state.id);
                               return cityResponse.cities;
                             },
@@ -843,7 +843,7 @@ class _AddressState extends State<Address> {
                               );
                             },
                             onSuggestionSelected: (city) {
-                              onSelectCityDuringAdd(city, setModalState);
+                              onSelectZoneDuringAdd(city, setModalState);
                             },
                             textFieldConfiguration: TextFieldConfiguration(
                               onTap: () {},
@@ -854,7 +854,7 @@ class _AddressState extends State<Address> {
                               },
                               decoration: InputDecoration(
                                   hintText: AppLocalizations.of(context)
-                                      .address_screen_enter_city,
+                                      .address_screen_enter_zone,
                                   hintStyle: TextStyle(
                                       fontSize: 12.0,
                                       color: MyTheme.light_grey),
@@ -892,7 +892,7 @@ class _AddressState extends State<Address> {
                           child: TypeAheadField(
                             suggestionsCallback: (name) async {
                               var countryResponse = await AddressRepository()
-                                  .getCountryList(id: _selected_city.id);
+                                  .getAreaByZone(id: _selected_city.id);
                               return countryResponse.countries;
                             },
                             loadingBuilder: (context) {
@@ -928,7 +928,7 @@ class _AddressState extends State<Address> {
                               );
                             },
                             onSuggestionSelected: (city) {
-                              onSelectCountryDuringAdd(city, setModalState);
+                              onSelectAreaDuringAdd(city, setModalState);
                             },
                             textFieldConfiguration: TextFieldConfiguration(
                               onTap: () {},
@@ -939,7 +939,7 @@ class _AddressState extends State<Address> {
                               },
                               decoration: InputDecoration(
                                   hintText: AppLocalizations.of(context)
-                                      .address_screen_enter_city,
+                                      .address_screen_enter_zone,
                                   hintStyle: TextStyle(
                                       fontSize: 12.0,
                                       color: MyTheme.light_grey),
@@ -974,7 +974,7 @@ class _AddressState extends State<Address> {
                           child: TypeAheadField(
                             suggestionsCallback: (name) async {
                               var countryResponse = await AddressRepository()
-                                  .getCountryList(id: _selected_city.id);
+                                  .getAreaByZone(id: _selected_city.id);
                               return countryResponse.countries;
                             },
                             loadingBuilder: (context) {
@@ -1010,7 +1010,7 @@ class _AddressState extends State<Address> {
                               );
                             },
                             onSuggestionSelected: (country) {
-                              onSelectCountryDuringAdd(country, setModalState);
+                              onSelectAreaDuringAdd(country, setModalState);
                             },
                             textFieldConfiguration: TextFieldConfiguration(
                               onTap: () {},
@@ -1302,11 +1302,11 @@ class _AddressState extends State<Address> {
                               // if (_selected_country_list_for_update[index] ==
                               //     null) {
                               //   var stateResponse = await AddressRepository()
-                              //       .getStateListByCountry( country_id: "3069"); // blank response
+                              //       .getCityByCountry( country_id: "3069"); // blank response
                               //   return stateResponse.states;
                               // }
                               var stateResponse = await AddressRepository()
-                                  .getStateListByCountry(
+                                  .getCityByCountry(
                                 country_id: "3069",
                               );
                               return stateResponse.states;
@@ -1397,11 +1397,11 @@ class _AddressState extends State<Address> {
                               // if (_selected_state_list_for_update[index] ==
                               //     null) {
                               //   var cityResponse = await AddressRepository()
-                              //       .getCityListByState(); // blank response
+                              //       .getZoneByCity(); // blank response
                               //   return cityResponse.cities;
                               // }
                               var cityResponse = await AddressRepository()
-                                  .getCityListByState(
+                                  .getZoneByCity(
                                       state_id:
                                           _selected_state_list_for_update[index]
                                               .id,
@@ -1453,7 +1453,7 @@ class _AddressState extends State<Address> {
                               },
                               decoration: InputDecoration(
                                   hintText: AppLocalizations.of(context)
-                                      .address_screen_enter_city,
+                                      .address_screen_enter_zone,
                                   hintStyle: TextStyle(
                                       fontSize: 12.0,
                                       color: MyTheme.light_grey),
@@ -1490,7 +1490,7 @@ class _AddressState extends State<Address> {
                           child: TypeAheadField(
                             suggestionsCallback: (name) async {
                               // var countryResponse = await AddressRepository()
-                              //     .getCountryList(name: name);
+                              //     .getAreaByZone(name: name);
                               // return countryResponse.countries;
                             },
                             loadingBuilder: (context) {
@@ -1696,7 +1696,7 @@ class _AddressState extends State<Address> {
                         ),
                         onPressed: () {
                           onAddressUpdate(
-                              context, index, _shippingAddressList[index].id);
+                              context, index, _shippingAddressList[index]['id']);
                         },
                       ),
                     )
@@ -1778,13 +1778,13 @@ class _AddressState extends State<Address> {
   GestureDetector buildAddressItemCard(index) {
     return GestureDetector(
       onDoubleTap: () {
-        if (_default_shipping_address != _shippingAddressList[index].id) {
+        if (_default_shipping_address != _shippingAddressList[index]['id']) {
           onAddressSwitch(index);
         }
       },
       child: Card(
         shape: RoundedRectangleBorder(
-          side: _default_shipping_address == _shippingAddressList[index].id
+          side: _default_shipping_address == _shippingAddressList[index]['id']
               ? BorderSide(color: MyTheme.primary, width: 2.0)
               : BorderSide(color: MyTheme.light_grey, width: 1.0),
           borderRadius: BorderRadius.circular(8.0),
@@ -1814,7 +1814,7 @@ class _AddressState extends State<Address> {
                         Container(
                           width: 175,
                           child: Text(
-                            _shippingAddressList[index].address ?? '',
+                            _shippingAddressList[index]['address'] ?? '',
                             maxLines: 2,
                             style: TextStyle(
                                 color: MyTheme.dark_grey,
@@ -1842,7 +1842,7 @@ class _AddressState extends State<Address> {
                         Container(
                           width: 200,
                           child: Text(
-                            _shippingAddressList[index].city ?? '',
+                            _shippingAddressList[index]['city_name'] ?? '',
                             maxLines: 2,
                             style: TextStyle(
                                 color: MyTheme.dark_grey,
@@ -1870,7 +1870,7 @@ class _AddressState extends State<Address> {
                         Container(
                           width: 200,
                           child: Text(
-                            _shippingAddressList[index].zone ?? '',
+                            _shippingAddressList[index]['zone_name'] ?? '',
                             maxLines: 2,
                             style: TextStyle(
                                 color: MyTheme.dark_grey,
@@ -1898,7 +1898,7 @@ class _AddressState extends State<Address> {
                         Container(
                           width: 200,
                           child: Text(
-                            _shippingAddressList[index].area ?? '',
+                            _shippingAddressList[index]['area_name'] ?? '',
                             maxLines: 2,
                             style: TextStyle(
                                 color: MyTheme.dark_grey,
@@ -1954,7 +1954,7 @@ class _AddressState extends State<Address> {
                         Container(
                           width: 200,
                           child: Text(
-                            _shippingAddressList[index].phone ?? '',
+                            _shippingAddressList[index]['phone'] ?? '',
                             maxLines: 2,
                             style: TextStyle(
                                 color: MyTheme.dark_grey,
@@ -2009,7 +2009,7 @@ class _AddressState extends State<Address> {
                     top: 0.0,
                     child: InkWell(
                       onTap: () {
-                        onPressDelete(_shippingAddressList[index].id);
+                        onPressDelete(_shippingAddressList[index]['id']);
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(
@@ -2026,7 +2026,7 @@ class _AddressState extends State<Address> {
                     top: 40.0,
                     child: InkWell(
                       onTap: () {
-                        onPressDelete(_shippingAddressList[index].id);
+                        onPressDelete(_shippingAddressList[index]['id']);
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(

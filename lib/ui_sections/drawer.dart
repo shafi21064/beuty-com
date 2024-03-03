@@ -307,22 +307,56 @@ class _MainDrawerState extends State<MainDrawer> {
                         return Appointment();
                       }));
                     }),
+
+                // ListTile(
+                //     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                //     // leading: Image.asset("assets/blog.jpg",
+                //     //     height: 22,
+                //     //     color:
+                //     //         Theme.of(context).buttonTheme.colorScheme.primary),
+                //     title: Text('Blog'.toUpperCase(),
+                //         style: TextStyle(
+                //           fontSize: 13,
+                //         )),
+                //     onTap: () {
+                //       Navigator.push(context,
+                //           MaterialPageRoute(builder: (context) {
+                //         return Blogs();
+                //       }));
+                //     }),
+                // ListTile(
+                //     visualDensity:
+                //     VisualDensity(horizontal: -4, vertical: -4),
+                //     // leading: Image.asset("assets/app_logo.png", height: 24),
+                //     title: Text('Blog'.toUpperCase(),
+                //         style: TextStyle(fontSize: 13)),
+                //     onTap: () {
+                //       Navigator.push(context,
+                //           MaterialPageRoute(builder: (context) {
+                //             return CommonWebviewScreen(
+                //               //url: "https://kireibd.com/contact-us?type=app",
+                //               url: "https://beta.kireibd.com/blogs",
+                //               //page_name: "Blog",
+                //             );
+                //           }));
+                //     }),
+
                 ListTile(
-                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    // leading: Image.asset("assets/blog.jpg",
-                    //     height: 22,
-                    //     color:
-                    //         Theme.of(context).buttonTheme.colorScheme.primary),
-                    title: Text('Blog'.toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 13,
-                        )),
+                    visualDensity:
+                    VisualDensity(horizontal: -4, vertical: -4),
+                    // leading: Image.asset("assets/app_logo.png", height: 24),
+                    title: Text('BLOG',
+                        style: TextStyle(fontSize: 13)),
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return Blogs();
-                      }));
+                            return CommonWebviewScreen(
+                              url: "https://kireibd.com/blogs",
+                              page_name: "Blog",
+                            );
+                          }));
                     }),
+
                 ExpansionTile(
                     // leading: Icon(Icons.category,
                     //     color: Theme.of(context).buttonTheme.colorScheme.primary),

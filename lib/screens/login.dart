@@ -396,7 +396,7 @@ class _LoginState extends State<Login> {
                                             signed: true, decimal: true),
                                     inputDecoration: InputDecorations
                                         .buildInputDecoration_phone(
-                                            hint_text: "1710 333 558"),
+                                            hint_text: "01*********"),
                                     onSaved: (PhoneNumber number) {
                                       print('On Saved: $number');
                                     },
@@ -486,7 +486,7 @@ class _LoginState extends State<Login> {
                                           "Remember Me",
                                           style: TextStyle(
                                             color: MyTheme.primary,
-                                            fontStyle: FontStyle.italic,
+                                            //fontStyle: FontStyle.italic,
                                           ),
                                         ),
                                       ],
@@ -505,7 +505,7 @@ class _LoginState extends State<Login> {
                                             .login_screen_forgot_password,
                                         style: TextStyle(
                                           color: MyTheme.primary,
-                                          fontStyle: FontStyle.italic,
+                                          //fontStyle: FontStyle.italic,
                                           decoration: TextDecoration.underline,
                                         ),
                                       ),
@@ -688,7 +688,7 @@ class _LoginState extends State<Login> {
                             padding: const EdgeInsets.only(top: 20.0),
                             child: Center(
                                 child: Text(
-                              "Register here ",
+                              "Don't have an account?",
                               style: TextStyle(
                                   color: MyTheme.secondary,
                                   fontWeight: FontWeight.bold,

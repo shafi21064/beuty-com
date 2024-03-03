@@ -18,7 +18,22 @@ import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter/foundation.dart';
 
 class AddressRepository {
-  Future<AddressResponse> getAddressList() async {
+  // Future<AddressResponse> getAddressList() async {
+  //   Uri url = Uri.parse("${ENDP.AddrList}");
+  //   final response = await http.get(
+  //     url,
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Authorization": "Bearer ${access_token.$}",
+  //       "App-Language": app_language.$,
+  //     },
+  //   );
+  //   print("response.body.toString()${response.body.toString()}");
+  //
+  //   return addressResponseFromJson(response.body);
+  // }
+
+  Future<dynamic> getAddressList() async {
     Uri url = Uri.parse("${ENDP.AddrList}");
     final response = await http.get(
       url,
@@ -29,8 +44,9 @@ class AddressRepository {
       },
     );
     print("response.body.toString()${response.body.toString()}");
+    return jsonDecode(response.body);
 
-    return addressResponseFromJson(response.body);
+    //return addressResponseFromJson(jsonDecode(response.body));
   }
 
 
@@ -197,17 +213,17 @@ print(response.body.toString());
     return addressDeleteResponseFromJson(response.body);
   }
 
-  Future<CityResponse> getCityListByState({state_id = 0, name = ""}) async {
+  Future<CityResponse> getZoneByCity({state_id = 0, name = ""}) async {
     Uri url = Uri.parse("${ENDP.AddrDelete}/${state_id}");
     final response = await http.get(url);
 
     print(url.toString());
+    print("STATUSCODE ${response.statusCode.toString()}");
     print(response.body.toString());
-
     return cityResponseFromJson(response.body);
   }
 
-  Future<MyStateResponse> getStateListByCountry({country_id = 0}) async {
+  Future<MyStateResponse> getCityByCountry({country_id = 0}) async {
     Uri url = Uri.parse("${ENDP.StateList}/${country_id}");
     final response = await http.get(url);
 
@@ -216,7 +232,7 @@ print(response.body.toString());
     return myStateResponseFromJson(response.body);
   }
 
-  Future<CountryResponse> getCountryList({id}) async {
+  Future<CountryResponse> getAreaByZone({id}) async {
     Uri url = Uri.parse("${ENDP.CountryList}/${id}");
     final response = await http.get(url);
 

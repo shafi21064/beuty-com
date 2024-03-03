@@ -16,6 +16,19 @@ class ShimmerHelper {
     );
   }
 
+  buildAddressLoadingShimmer(
+      {double height = double.infinity, double width = double.infinity}) {
+    return Shimmer.fromColors(
+      baseColor: MyTheme.white,
+      highlightColor: MyTheme.white,
+      child: Container(
+        height: height,
+        width: width,
+        color: Colors.white,
+      ),
+    );
+  }
+
   buildListShimmer({item_count = 10, item_height = 100.0}) {
     return ListView.builder(
       itemCount: item_count,

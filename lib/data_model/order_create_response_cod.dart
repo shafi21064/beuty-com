@@ -85,8 +85,10 @@ class Order {
   dynamic note;
   int isRecurring;
   String couponCode;
-  int grandTotal;
-  int couponDiscount;
+  //int grandTotal;
+  dynamic grandTotal;
+  //int couponDiscount;
+  dynamic couponDiscount;
   DateTime updatedAt;
   DateTime createdAt;
   int id;

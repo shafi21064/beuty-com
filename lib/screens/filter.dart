@@ -2,6 +2,7 @@ import 'package:kirei/app_config.dart';
 import 'package:kirei/data_model/feature_category_response.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/repositories/skin_types_repository.dart';
+import 'package:kirei/screens/main.dart';
 import 'package:kirei/screens/product_details.dart';
 import 'package:kirei/screens/seller_details.dart';
 import 'package:kirei/ui_sections/drawer.dart';
@@ -491,6 +492,94 @@ class _FilterState extends State<Filter> {
 
   //--------------------
 
+  buildBottomButton(){
+   return Row(
+
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width / 2,
+          height: 44,
+          child: RaisedButton(
+            onPressed: () {
+              // onPressAddToCart(context, _addedToCartSnackbar);
+              // value.setCartValue(_quantity);
+              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Main()));
+            },
+            // shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.circular(80.0)),
+            padding: EdgeInsets.all(0.0),
+            child: Ink(
+              color: MyTheme.secondary,
+              child: Container(
+                  constraints:
+                  BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Icon(
+                      //   Icons
+                      //       .shopping_bag_outlined, // Use the appropriate cart icon
+                      //   color: Colors.white,
+                      //   size: 17,
+                      // ),
+                      // SizedBox(
+                      //   width: 2,
+                      // ),
+                      // Add some space between the icon and text
+                      Text(
+                        // AppLocalizations.of(context)
+                        //     .product_details_screen_button_add_to_cart,
+                        "Go to Home",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  )),
+            ),
+          )
+        ),
+        SizedBox(
+          width: 1,
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width / 2,
+          height: 44,
+          child: RaisedButton(
+            onPressed: () {
+              // onPressBuyNow(context);
+              // value.setCartValue(_quantity);
+              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Main(pageIndex: 2,)));
+
+            },
+            padding: EdgeInsets.all(0.0),
+            child: Ink(
+              color: MyTheme.primary,
+              child: Container(
+                constraints:
+                BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+                alignment: Alignment.center,
+                child: Text(
+                  // AppLocalizations.of(context)
+                  //     .product_details_screen_button_buy_now,
+                  "Go to Cart",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
+          )
+        ),
+      ],
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     /*print(_appBar.preferredSize.height.toString()+" Appbar height");
@@ -527,7 +616,16 @@ class _FilterState extends State<Filter> {
                   : (_selectedFilter.option_key == 'brands'
                   ? buildBrandLoadingContainer()
                   : buildShopLoadingContainer())),
-        ]),
+
+          Visibility(
+            visible: widget.category != null,
+            child: Positioned(
+              bottom: 0,
+                child: buildBottomButton()
+            ),
+          )
+        ],
+        ),
       ),
     );
   }

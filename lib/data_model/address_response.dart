@@ -38,9 +38,12 @@ class Address {
     this.address,
     this.country_id,
     this.country_name,
-    this.city,
-    this.zone,
-    this.area,
+    this.city_id,
+    this.city_name,
+    this.zone_id,
+    this.zone_name,
+    this.area_id,
+    this.area_name,
     this.postal_code,
     this.phone,
     this.set_default,
@@ -54,9 +57,12 @@ class Address {
   String address;
   int country_id;
   String country_name;
-  String city;
-  String zone;
-  String area;
+  int city_id;
+  String city_name;
+  int zone_id;
+  String zone_name;
+  int area_id;
+  String area_name;
   String postal_code;
   String phone;
   int set_default;
@@ -70,9 +76,12 @@ class Address {
         address: json["address"],
         country_id: json["country_id"],
         country_name: json["country_name"],
-        city: json["city"],
-        zone: json["zone"],
-        area: json["area"],
+        city_id: json["city_id"],
+        city_name: json["city_name"],
+        zone_id: json["zone_id"],
+        zone_name: json["zone_name"],
+        area_id: json["area_id"],
+        area_name: json["area_name"],
         postal_code: json["postal_code"],
         phone: json["phone"],
         set_default: json["set_default"],
@@ -87,9 +96,12 @@ class Address {
         "address": address,
         "country_id": country_id,
         "country_name": country_name,
-        "city": city,
-        "zone": zone,
-        "area": area,
+        "city_id": city_id,
+        "city_name": city_name,
+        "zone_id": zone_id,
+        "zone_name": zone_name,
+        "area_id": area_id,
+        "area_id": area_name,
         "postal_code": postal_code,
         "phone": phone,
         "set_default": set_default,

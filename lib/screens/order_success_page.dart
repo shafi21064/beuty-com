@@ -40,6 +40,8 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
     fetchOrderDetails();
     fetchOrderedItems();
     //print("UserID1:${orderDetails?.user_id}");
+
+
     super.initState();
   }
 
@@ -184,7 +186,7 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
             //   height: MediaQuery.of(context).size.height * 0.03,
             // ),
 
-            Text("Order Summery",
+            Text("Order Summary",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
@@ -211,7 +213,7 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
                       ),
                       Text("${orderDetails?.id.toString()}",
                         style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 16,
                             color: MyTheme.secondary,
                             fontWeight: FontWeight.bold
                         ),
@@ -336,8 +338,10 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
             ),
 
             InkWell(
-              onTap: ()=> Navigator.pushAndRemoveUntil(
-                  context, MaterialPageRoute(builder: (_)=> OrderList()), (route) => false),
+              onTap: (){ Navigator.pushAndRemoveUntil(
+                  context, MaterialPageRoute(builder: (_)=> OrderList()), (route) => false);
+              cartCountUpdate.getReset();
+              },
               child: Container(
                 height: 50,
                 width: 160,

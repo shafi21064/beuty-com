@@ -33,7 +33,8 @@ import 'newsfeed.dart';
 // ignore: must_be_immutable
 class Main extends StatefulWidget {
   int pageIndex;
-  Main({Key key, go_back = true, this.pageIndex}) : super(key: key);
+  //String filterSlug;
+  Main({Key key, go_back = true, this.pageIndex, }) : super(key: key);
 
   // ignore: non_constant_identifier_names
   bool go_back;
@@ -54,6 +55,8 @@ class _MainState extends State<Main> {
     Cart(has_bottomnav: true),
     Profile(),
   ];
+
+
 
   void onTapped(int i) {
     if (!is_logged_in.$ && (i == 4 || i == 3)) {

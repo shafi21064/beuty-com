@@ -254,7 +254,7 @@ class _RegistrationState extends State<Registration> {
                                     autofocus: false,
                                     decoration:
                                         InputDecorations.buildInputDecoration_1(
-                                      hint_text: "Farhan Khan",
+                                      hint_text: "Your Name",
                                     ),
                                   ),
                                 ),
@@ -346,7 +346,7 @@ class _RegistrationState extends State<Registration> {
                                       signed: true, decimal: true),
                                   inputDecoration: InputDecorations
                                       .buildInputDecoration_phone(
-                                          hint_text: "01710 333 558"),
+                                          hint_text: "01*********"),
                                   onSaved: (PhoneNumber number) {
                                     //print('On Saved: $number');
                                   },
