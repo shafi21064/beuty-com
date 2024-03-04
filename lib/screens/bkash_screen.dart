@@ -9,16 +9,20 @@ import 'package:kirei/screens/order_list.dart';
 import 'package:kirei/screens/wallet.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'order_success_page.dart';
+
 class BkashScreen extends StatefulWidget {
   double amount;
   String payment_type;
   String payment_method_key;
+  int order_id;
 
   BkashScreen(
       {Key key,
       this.amount = 0.00,
       this.payment_type = "",
-      this.payment_method_key = ""})
+      this.payment_method_key = "",
+      this.order_id})
       : super(key: key);
 
   @override
@@ -38,14 +42,14 @@ class _BkashScreenState extends State<BkashScreen> {
     // TODO: implement initState
     super.initState();
 
-    if (widget.payment_type == "cart_payment") {
-      createOrder();
-    }
+    // if (widget.payment_type == "cart_payment") {
+    //   createOrder();
+    // }
 
-    if (widget.payment_type != "cart_payment") {
-      // on cart payment need proper order id
-      getSetInitialUrl();
-    }
+    // if (widget.payment_type != "cart_payment") {
+    //   // on cart payment need proper order id
+       getSetInitialUrl();
+    // }
   }
 
   createOrder() async {
@@ -68,7 +72,12 @@ class _BkashScreenState extends State<BkashScreen> {
 
   getSetInitialUrl() async {
     var bkashUrlResponse = await PaymentRepository().getBkashBeginResponse(
-        widget.payment_type, _combined_order_id, widget.amount);
+        widget.payment_type, widget.order_id, widget.amount);
+
+    print('bkash result3 ${bkashUrlResponse.message}');
+    print('bkash result ${bkashUrlResponse.url}');
+    print('bkash result ${bkashUrlResponse.result}');
+    print('bkash result ${bkashUrlResponse.token}');
 
     if (bkashUrlResponse.result == false) {
       ToastComponent.showDialog(bkashUrlResponse.message, context,
@@ -82,8 +91,8 @@ class _BkashScreenState extends State<BkashScreen> {
 
     setState(() {});
 
-    print(_initial_url);
-    print(_initial_url_fetched);
+   // print(_initial_url);
+    // print(_initial_url_fetched);
   }
 
   @override
@@ -96,22 +105,35 @@ class _BkashScreenState extends State<BkashScreen> {
   }
 
   void getData() {
-    print('bkash 00');
+     print('bkash 00');
     var payment_details = '';
     _webViewController
         .evaluateJavascript("document.body.innerText")
         .then((data) {
       var decodedJSON = jsonDecode(data);
       Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
-      print('Bkash data' +decodedJSON.toString());
+
+      print('Bkash json Response' +decodedJSON.toString());
+
       if (responseJSON["result"] == false) {
         Toast.show(responseJSON["message"], context,
             duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
         Navigator.pop(context);
       } else if (responseJSON["result"] == true) {
         payment_details = responseJSON['payment_details'];
-        print('payment success');
-        onPaymentSuccess(payment_details);
+         print('payment success');
+         //return true;
+        ToastComponent.showDialog(
+          responseJSON["message"],
+          context,
+          gravity: Toast.CENTER,
+          duration: Toast.LENGTH_LONG,
+        );
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+              orderId: widget.order_id,
+            )), (route) => false);
+        //onPaymentSuccess(payment_details);
       }
     });
   }
@@ -130,29 +152,31 @@ class _BkashScreenState extends State<BkashScreen> {
 
     Toast.show(bkashPaymentProcessResponse.message, context,
         duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
-    if (widget.payment_type == "cart_payment") {
+    // if (widget.payment_type == "cart_payment") {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return OrderList(from_checkout: true);
       }));
-    } else if (widget.payment_type == "wallet_payment") {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return Wallet(from_recharge: true);
-      }));
-    }
+    // } else if (widget.payment_type == "wallet_payment") {
+    //   Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //     return Wallet(from_recharge: true);
+    //   }));
+    // }
   }
 
   buildBody() {
-    print('bkash link: ${_initial_url}');
-
-    if (_order_init == false &&
-        _combined_order_id == 0 &&
-        widget.payment_type == "cart_payment") {
-      return Container(
-        child: Center(
-          child: Text(AppLocalizations.of(context).common_creating_order),
-        ),
-      );
-    } else if (_initial_url_fetched == false) {
+     print('bkash link: ${_initial_url}');
+     print('bkash link2: ${_initial_url_fetched}');
+    //
+    // if (_order_init == false &&
+    //     _combined_order_id == 0 &&
+    //     widget.payment_type == "cart_payment") {
+    //   return Container(
+    //     child: Center(
+    //       child: Text(AppLocalizations.of(context).common_creating_order),
+    //     ),
+    //   );
+    // } else
+      if (_initial_url_fetched == false) {
       return Container(
         child: Center(
           child: Text(
@@ -160,6 +184,7 @@ class _BkashScreenState extends State<BkashScreen> {
         ),
       );
     } else {
+        print('bkash 22');
       return SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -171,11 +196,13 @@ class _BkashScreenState extends State<BkashScreen> {
               _webViewController = controller;
               _webViewController.loadUrl(_initial_url);
             },
-            onWebResourceError: (error) {},
+            onWebResourceError: (error) {
+              print('bkash 11');
+            },
             onPageFinished: (page) {
-              //print(page.toString());
-              //getData();
-              print("page link: + ${page.toString()}");
+              // print(page.toString());
+              // getData();
+              // print("page link: + ${page.toString()}");
               if (page.contains("/bkash/api/callback")) {
                 getData();
               } else if (page.contains("/bkash/api/fail")) {
