@@ -97,6 +97,15 @@ class _ProductDetailsState extends State<ProductDetails> {
   List<dynamic> _topProducts = [];
   bool _topProductInit = false;
 
+  bool _isAddedToCart = false;
+
+  buildUpdateGoToCart(){
+    _isAddedToCart = true;
+    setState(() {
+
+    });
+  }
+
   @override
   void initState() {
     print("HowMuch${widget.stock}");
@@ -2186,6 +2195,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         onPressed: () {
                           onPressAddToCart(context, _addedToCartSnackbar);
                           value.setCartValue(_quantity);
+                          buildUpdateGoToCart();
                         },
                         // shape: RoundedRectangleBorder(
                         //     borderRadius: BorderRadius.circular(80.0)),
@@ -2243,14 +2253,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                         },
                         padding: EdgeInsets.all(0.0),
                         child: Ink(
-                          color: MyTheme.primary,
+                          color: _isAddedToCart == true ? Color(0xffE49000) : MyTheme.primary,
                           child: Container(
                             constraints:
                                 BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
                             alignment: Alignment.center,
                             child: Text(
-                              AppLocalizations.of(context)
-                                  .product_details_screen_button_buy_now,
+                              // AppLocalizations.of(context)
+                              //     .product_details_screen_button_buy_now,
+                              _isAddedToCart == true ? "Go to Cart" : "Buy Now",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,

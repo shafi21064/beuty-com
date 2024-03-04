@@ -139,6 +139,7 @@ class ProductRepository {
     String min = "",
     String max = "",
     String type = "",
+    String search = "",
     String key_ingredients = "",
     String good_for = "",
   }) async {
@@ -163,7 +164,8 @@ class ProductRepository {
       parameters['tag'] = tag.toLowerCase().replaceAll(' ', '-');
     if (type != null && type != "")
       parameters['type'] = type.toLowerCase().replaceAll(' ', '-');
-
+    if (search != null && search != "")
+      parameters['search'] = type.toLowerCase().replaceAll(' ', '-');
     // Constructing the query string manually
     String queryString = parameters.entries
         .map((entry) =>

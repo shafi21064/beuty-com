@@ -95,7 +95,7 @@ class CartState extends State<Cart> {
     }
     _isInitial = false;
 
-    // await fetchCartCount(); // Wait for fetchCartCount to complete
+    await fetchCartCount();
     getSetCartTotal();
     setState(() {});
   }

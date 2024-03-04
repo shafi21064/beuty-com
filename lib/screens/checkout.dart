@@ -2168,7 +2168,7 @@ class _CheckoutState extends State<Checkout> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
                         width: MediaQuery.of(context).size.width * .23,
@@ -2180,7 +2180,7 @@ class _CheckoutState extends State<Checkout> {
                           fit: BoxFit.fitWidth,
                         )),
                     Container(
-                      width: MediaQuery.of(context).size.width * .5,
+                      width: MediaQuery.of(context).size.width * .47,
                       padding: EdgeInsets.symmetric(horizontal: 8),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2713,9 +2713,9 @@ class _CheckoutState extends State<Checkout> {
                                   // hintText: AppLocalizations
                                   //     .of(context)
                                   //     .address_screen_enter_address,
-                                    hintText: "Enter Order Notes",
+                                    hintText: "Notes about your order, e.g. special notes for delivery.",
                                     hintStyle: TextStyle(
-                                        fontSize: 12.0, color: MyTheme.light_grey),
+                                        fontSize: 12.0, color: MyTheme.dark_grey),
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(0),
                                       borderSide: BorderSide(
