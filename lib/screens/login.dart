@@ -363,6 +363,7 @@ class _LoginState extends State<Login> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Container(
+                                  padding: EdgeInsets.only(right: 10),
                                   height: 36,
                                   child: CustomInternationalPhoneNumberInput(
                                     onInputChanged: (PhoneNumber number) {
@@ -379,16 +380,20 @@ class _LoginState extends State<Login> {
                                       }
                                     },
                                     selectorConfig: SelectorConfig(
+                                      showFlags: false,
                                       selectorType:
-                                          PhoneInputSelectorType.DIALOG,
+                                          PhoneInputSelectorType.DROPDOWN,
+
                                     ),
+
                                     ignoreBlank: false,
                                     autoValidateMode: AutovalidateMode.disabled,
                                     selectorTextStyle:
-                                        TextStyle(color: MyTheme.secondary),
+                                        TextStyle(color: MyTheme.white),
                                     textStyle:
                                         TextStyle(color: MyTheme.secondary),
                                     initialValue: phoneCode,
+                                    //initialValue: null,
                                     textFieldController: _phoneNumberController,
                                     formatInput: true,
                                     keyboardType:
@@ -397,6 +402,10 @@ class _LoginState extends State<Login> {
                                     inputDecoration: InputDecorations
                                         .buildInputDecoration_phone(
                                             hint_text: "01*********"),
+                                    // inputBorder: OutlineInputBorder( // Customize the input border
+                                    //   borderRadius: BorderRadius.zero,
+                                    //   borderSide: BorderSide(color: Colors.black), // Customize the border color
+                                    // ),
                                     onSaved: (PhoneNumber number) {
                                       print('On Saved: $number');
                                     },

@@ -310,7 +310,7 @@ class _RegistrationState extends State<Registration> {
                         //   )
 
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
+                          padding: const EdgeInsets.only(bottom: 8.0, right: 8),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
@@ -333,12 +333,13 @@ class _RegistrationState extends State<Registration> {
                                     }
                                   },
                                   selectorConfig: SelectorConfig(
-                                    selectorType: PhoneInputSelectorType.DIALOG,
+                                    showFlags: false,
+                                    selectorType: PhoneInputSelectorType.DROPDOWN,
                                   ),
                                   ignoreBlank: false,
                                   autoValidateMode: AutovalidateMode.disabled,
                                   selectorTextStyle:
-                                      TextStyle(color: MyTheme.secondary),
+                                      TextStyle(color: MyTheme.white),
                                   initialValue: phoneCode,
                                   textFieldController: _phoneNumberController,
                                   formatInput: true,

@@ -200,33 +200,42 @@ class _MainDrawerState extends State<MainDrawer> {
                   children: categories.map((category) {
                     return category.children != null &&
                             category.children.isNotEmpty
-                        ? ExpansionTile(
-                            title: Text(category.name),
-                            children: category.children.map((child) {
-                              return ListTile(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return Filter(category:child.name);
-                                  }));
-                                },
-                                visualDensity:
-                                    VisualDensity(horizontal: -4, vertical: -4),
-                                title: Text(child.name),
-                              );
-                            }).toList(),
-                          )
-                        : ListTile(
-                          onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Filter(category:category.name);
-                      }));
-                    },
-                            visualDensity:
-                                VisualDensity(horizontal: -4, vertical: -4),
-                            title: Text(category.name),
-                          );
+                        ? Padding(
+                          padding:  EdgeInsets.only(left: 8.0),
+                          child: ExpansionTile(
+                              title: Text(category.name),
+                              children: category.children.map((child) {
+                                return Padding(
+                                  padding:  EdgeInsets.only(left: 8.0),
+                                  child: ListTile(
+                                    onTap: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return Filter(category:child.name);
+                                      }));
+                                    },
+                                    visualDensity:
+                                        VisualDensity(horizontal: -4, vertical: -4),
+                                    title: Text(child.name),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                        )
+                        : Padding(
+                          padding:  EdgeInsets.only( left: 8.0),
+                          child: ListTile(
+                            onTap: () {
+                                                Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return Filter(category:category.name);
+                                                }));
+                                              },
+                              visualDensity:
+                                  VisualDensity(horizontal: -4, vertical: -4),
+                              title: Text(category.name),
+                            ),
+                        );
                   }).toList(),
                 ),
                 // ListTile(
@@ -351,7 +360,7 @@ class _MainDrawerState extends State<MainDrawer> {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                             return CommonWebviewScreen(
-                              url: "https://kireibd.com/blogs",
+                              url: "https://kireibd.com/blogs?type=app",
                               page_name: "Blog",
                             );
                           }));
@@ -392,129 +401,136 @@ class _MainDrawerState extends State<MainDrawer> {
                       ],
                     ),
                     children: [
-                      ListTile(
-                          visualDensity:
-                              VisualDensity(horizontal: -4, vertical: -4),
-                          // leading: Image.asset("assets/app_logo.png", height: 24),
-                          title: Text('Who We Are?',
-                              style: TextStyle(fontSize: 13)),
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return CommonWebviewScreen(
-                                url: "https://kireibd.com/about-us?type=app",
-                                page_name: 'Who We Are?',
-                              );
-                            }));
-                          }),
-                      ListTile(
-                          visualDensity:
-                              VisualDensity(horizontal: -4, vertical: -4),
-                          // leading: Image.asset("assets/app_logo.png", height: 24),
-                          title: Text('FAQs', style: TextStyle(fontSize: 13)),
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return CommonWebviewScreen(
-                                url: "https://kireibd.com/faq?type=app",
-                                page_name: "FAQs",
-                              );
-                            }));
-                          }),
-                      ListTile(
-                          visualDensity:
-                              VisualDensity(horizontal: -4, vertical: -4),
-                          // leading: Image.asset("assets/app_logo.png", height: 24),
-                          title: Text('Contact us',
-                              style: TextStyle(fontSize: 13)),
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return CommonWebviewScreen(
-                                url: "https://kireibd.com/contact-us?type=app",
-                                page_name: "Contact Us",
-                              );
-                            }));
-                          }),
-                      ListTile(
-                          visualDensity:
-                              VisualDensity(horizontal: -4, vertical: -4),
-                          // leading: Image.asset("assets/app_logo.png", height: 24),
-                          title: Text('Testimonials',
-                              style: TextStyle(fontSize: 13)),
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return CommonWebviewScreen(
-                                url: "https://kireibd.com/testimonial?type=app",
-                                page_name: 'Testimonials',
-                              );
-                            }));
-                          }),
-                      ListTile(
-                          visualDensity:
-                              VisualDensity(horizontal: -4, vertical: -4),
-                          // leading: Image.asset("assets/app_logo.png", height: 24),
-                          title: Text('Privacy & Policy',
-                              style: TextStyle(fontSize: 13)),
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return CommonWebviewScreen(
-                                url:
-                                    "https://kireibd.com/privacy-policy?type=app",
-                                page_name: "Privacy & Policy ",
-                              );
-                            }));
-                          }),
-                      ListTile(
-                          visualDensity:
-                              VisualDensity(horizontal: -4, vertical: -4),
-                          // leading: Image.asset("assets/app_logo.png", height: 24),
-                          title: Text('Terms & Conditions',
-                              style: TextStyle(fontSize: 13)),
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return CommonWebviewScreen(
-                                url:
-                                    "https://kireibd.com/term-condition?type=app",
-                                page_name: "Terms & Conditions",
-                              );
-                            }));
-                          }),
-                      ListTile(
-                          visualDensity:
-                              VisualDensity(horizontal: -4, vertical: -4),
-                          // leading: Image.asset("assets/app_logo.png", height: 24),
-                          title: Text('Returns & Refunds',
-                              style: TextStyle(fontSize: 13)),
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return CommonWebviewScreen(
-                                url:
-                                    "hhttps://kireibd.com/return-refund?type=app",
-                                page_name: 'Returns & Refunds',
-                              );
-                            }));
-                          }),
-                      ListTile(
-                          visualDensity:
-                              VisualDensity(horizontal: -4, vertical: -4),
-                          // leading: Image.asset("assets/app_logo.png", height: 24),
-                          title: Text('Responsible Disclosure',
-                              style: TextStyle(fontSize: 13)),
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return CommonWebviewScreen(
-                                url:
-                                    "https://kireibd.com/responsible-disclosure?type=app",
-                                page_name: 'Responsible Disclosure',
-                              );
-                            }));
-                          })
+                        Padding(
+                          padding:  EdgeInsets.only( left: 8.0),
+                          child: Column(
+                            children: [
+                              ListTile(
+                                  visualDensity:
+                                  VisualDensity(horizontal: -4, vertical: -4),
+                                  // leading: Image.asset("assets/app_logo.png", height: 24),
+                                  title: Text('Who We Are?',
+                                      style: TextStyle(fontSize: 13)),
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                          return CommonWebviewScreen(
+                                            url: "https://kireibd.com/about-us?type=app",
+                                            page_name: 'Who We Are?',
+                                          );
+                                        }));
+                                  }),
+                              ListTile(
+                                  visualDensity:
+                                  VisualDensity(horizontal: -4, vertical: -4),
+                                  // leading: Image.asset("assets/app_logo.png", height: 24),
+                                  title: Text('FAQs', style: TextStyle(fontSize: 13)),
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                          return CommonWebviewScreen(
+                                            url: "https://kireibd.com/faq?type=app",
+                                            page_name: "FAQs",
+                                          );
+                                        }));
+                                  }),
+                              ListTile(
+                                  visualDensity:
+                                  VisualDensity(horizontal: -4, vertical: -4),
+                                  // leading: Image.asset("assets/app_logo.png", height: 24),
+                                  title: Text('Contact us',
+                                      style: TextStyle(fontSize: 13)),
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                          return CommonWebviewScreen(
+                                            url: "https://kireibd.com/contact-us?type=app",
+                                            page_name: "Contact Us",
+                                          );
+                                        }));
+                                  }),
+                              ListTile(
+                                  visualDensity:
+                                  VisualDensity(horizontal: -4, vertical: -4),
+                                  // leading: Image.asset("assets/app_logo.png", height: 24),
+                                  title: Text('Testimonials',
+                                      style: TextStyle(fontSize: 13)),
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                          return CommonWebviewScreen(
+                                            url: "https://kireibd.com/testimonial?type=app",
+                                            page_name: 'Testimonials',
+                                          );
+                                        }));
+                                  }),
+                              ListTile(
+                                  visualDensity:
+                                  VisualDensity(horizontal: -4, vertical: -4),
+                                  // leading: Image.asset("assets/app_logo.png", height: 24),
+                                  title: Text('Privacy & Policy',
+                                      style: TextStyle(fontSize: 13)),
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                          return CommonWebviewScreen(
+                                            url:
+                                            "https://kireibd.com/privacy-policy?type=app",
+                                            page_name: "Privacy & Policy ",
+                                          );
+                                        }));
+                                  }),
+                              ListTile(
+                                  visualDensity:
+                                  VisualDensity(horizontal: -4, vertical: -4),
+                                  // leading: Image.asset("assets/app_logo.png", height: 24),
+                                  title: Text('Terms & Conditions',
+                                      style: TextStyle(fontSize: 13)),
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                          return CommonWebviewScreen(
+                                            url:
+                                            "https://kireibd.com/term-condition?type=app",
+                                            page_name: "Terms & Conditions",
+                                          );
+                                        }));
+                                  }),
+                              ListTile(
+                                  visualDensity:
+                                  VisualDensity(horizontal: -4, vertical: -4),
+                                  // leading: Image.asset("assets/app_logo.png", height: 24),
+                                  title: Text('Returns & Refunds',
+                                      style: TextStyle(fontSize: 13)),
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                          return CommonWebviewScreen(
+                                            url:
+                                            "hhttps://kireibd.com/return-refund?type=app",
+                                            page_name: 'Returns & Refunds',
+                                          );
+                                        }));
+                                  }),
+                              ListTile(
+                                  visualDensity:
+                                  VisualDensity(horizontal: -4, vertical: -4),
+                                  // leading: Image.asset("assets/app_logo.png", height: 24),
+                                  title: Text('Responsible Disclosure',
+                                      style: TextStyle(fontSize: 13)),
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                          return CommonWebviewScreen(
+                                            url:
+                                            "https://kireibd.com/responsible-disclosure?type=app",
+                                            page_name: 'Responsible Disclosure',
+                                          );
+                                        }));
+                                  })
+                            ],
+                          ),
+                        )
                     ]),
                 // ListTile(
                 //     visualDensity: VisualDensity(horizontal: -4, vertical: -4),

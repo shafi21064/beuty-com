@@ -55,7 +55,9 @@ class Filter extends StatefulWidget {
         this.type,
         this.category,
         this.categoryIndex,
-        this.key_ingredients})
+        this.key_ingredients,
+      this.search,
+      })
       : super(key: key);
 
   String selected_filter;
@@ -65,6 +67,7 @@ class Filter extends StatefulWidget {
   String key_ingredients;
   String category;
   String type;
+  String search;
   int categoryIndex;
 
   // dynamic _searchBar;
@@ -304,7 +307,8 @@ class _FilterState extends State<Filter> {
     //print("sb:"+_selectedBrands.join(",").toString());
     var productResponse = await ProductRepository().getFilteredProducts(
         page: _productPage,
-        name: _searchKey,
+        //name: _searchKey,
+        name: widget.search ?? _searchKey,
         sort_key: _selectedSort,
         categories:
         widget.category != null ? widget.category : _selectedCategory,
@@ -316,7 +320,9 @@ class _FilterState extends State<Filter> {
         type: widget.type,
         key_ingredients: widget.key_ingredients,
         max: _maxPriceController.text.toString(),
-        min: _minPriceController.text.toString());
+        min: _minPriceController.text.toString(),
+        //search: widget.search.toString(),
+    );
 
     _productList.addAll(productResponse.products);
     print(_productList);
@@ -1819,15 +1825,7 @@ class _FilterState extends State<Filter> {
                             height: 56,
                             width: 56,
                           )
-                              : Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.asset(
-                              'assets/placeholder.png',
-                              // fit: BoxFit.,
-                              height: 56,
-                              width: 56,
-                            ),
-                          ),
+                              : SizedBox()
                         ),
                       ),
                       Padding(

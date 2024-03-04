@@ -525,6 +525,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                     _searchKey = txt;
                                                     setState(() {});
                                                     // _onSearchSubmit();
+                                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) =>Filter(
+                                                      search: txt,
+                                                    ) ));
                                                   },
                                                   style: TextStyle(
                                                       color: MyTheme.secondary),
