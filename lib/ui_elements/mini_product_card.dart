@@ -148,8 +148,8 @@ class _MiniProductCardState extends State<MiniProductCard> {
 elevation: 0, // Set the elevation to 0 for no shadow
   
         child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+             //mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
                 width: double.infinity,
@@ -166,7 +166,8 @@ elevation: 0, // Set the elevation to 0 for no shadow
                             : FadeInImage.assetNetwork(
                           placeholder: 'assets/placeholder.png',
                           image: widget.image,
-                          fit: BoxFit.fill,
+                          //fit: BoxFit.fill,
+                          fit: BoxFit.fitWidth,
                         )),
                     Visibility(
                       visible: widget.sale_price != widget.price,
@@ -199,7 +200,7 @@ elevation: 0, // Set the elevation to 0 for no shadow
                 ),
               ),
               Container(
-                width: MediaQuery.of(context).size.width / 2 - .5,
+                width: MediaQuery.of(context).size.width * 0.30,
                 height: 36,
                 child: RaisedButton(
                   onPressed: () {
