@@ -339,7 +339,9 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
 
             InkWell(
               onTap: (){ Navigator.pushAndRemoveUntil(
-                  context, MaterialPageRoute(builder: (_)=> OrderList()), (route) => false);
+                  context, MaterialPageRoute(builder: (_)=> OrderList(
+                from_checkout: true,
+              )), (route) => false);
               cartCountUpdate.getReset();
               },
               child: Container(
