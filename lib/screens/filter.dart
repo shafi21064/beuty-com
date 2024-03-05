@@ -189,7 +189,11 @@ class _FilterState extends State<Filter> {
   //   setState(() {});
   // }
   Future<List<FeaturedCategory>> getSubCategories() async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/sub-categories/${Provider.of<CategoryPassingController>(context, listen: false).categoryKey}");
+    var categoryKey = Provider.of<CategoryPassingController>(context, listen: false);
+    if(categoryKey.categoryKey == null || categoryKey.categoryKey == ''){
+      _shimmerShow = false;
+    }
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/sub-categories/${categoryKey.categoryKey}");
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
@@ -197,25 +201,32 @@ class _FilterState extends State<Filter> {
     //  print("categoriesssss1: ${response.body.toString()}");
     // print(featuredCategoryListFromJson(response.body).toString()) ;
     List<FeaturedCategory> categories = featuredCategoryListFromJson(response.body);
+    _shimmerShow = false;
+
     // print("Categories:");
     // categories.forEach((category) {
     //   print(category); // This will implicitly call toString() method of FeaturedCategory
     // });
     _allSubCategories = categories;
+    if(_allSubCategories.length > 0){
+      _isSubcategoryExist = true;
+    }
+
     return categories;
   }
 
-  bool isTrue = false;
+  bool _isSubcategoryExist = false;
+  bool _shimmerShow = true;
 
-  visibileMethod(){
-
-    if(widget.category == "skin-care" || widget.category == "hair-care" || widget.category == "make-up" || widget.category == "body-care"){
-      isTrue = true;
-    } else {
-      isTrue = false;
-
-    }
-  }
+  // visibileMethod(){
+  //
+  //   if(widget.category == "skin-care" || widget.category == "hair-care" || widget.category == "make-up" || widget.category == "body-care"){
+  //     isTrue = true;
+  //   } else {
+  //     isTrue = false;
+  //
+  //   }
+  // }
 
   @override
   void initState() {
@@ -225,7 +236,7 @@ class _FilterState extends State<Filter> {
     //fetchAllCategory();
     //print(_allSubCategories);
     // print(widget.categoryIndex);
-    visibileMethod();
+    //visibileMethod();
     super.initState();
   }
 
@@ -657,19 +668,7 @@ class _FilterState extends State<Filter> {
             children: [
               buildTopAppbar(context),
               buildBottomAppBar(context),
-              Visibility(
-                visible: isTrue,
-                child: Divider(
-                  color: MyTheme.dark_grey,
-                  thickness: 1,
-                  height: 1,
-                ),
-              ),
-
-              Visibility(
-                visible: isTrue,
-                child: buildScrollableSubCategory(),
-              ),
+              buildScrollableSubCategory() ?? SizedBox(),
 
               //widget.category != null ? buildScrollableSubCategory() : Container()
               //buildScrollableSubCategory()
@@ -1488,14 +1487,14 @@ class _FilterState extends State<Filter> {
       return Container(
         //margin: widget.category!= null? EdgeInsets.only(top: 150) : EdgeInsets.only(top: 0),
         //padding: widget.category!= null? EdgeInsets.only(top: 200) : EdgeInsets.only(top: 0),
-          margin: isTrue ? EdgeInsets.only(top: 150) : EdgeInsets.only(top: 100),
-          padding: isTrue ? EdgeInsets.only(top: 65) : EdgeInsets.only(top: 35),
+          margin: _isSubcategoryExist == true ? EdgeInsets.only(top: 150) : EdgeInsets.only(top: 100),
+          padding: _isSubcategoryExist == true ? EdgeInsets.only(top: 65) : EdgeInsets.only(top: 35),
           child: ShimmerHelper()
               .buildProductGridShimmer(scontroller: _scrollController));
     } else if (_productList.length > 0) {
       return Container(
-        margin: isTrue ? EdgeInsets.only(top: 51) : EdgeInsets.only(top: 0),
-        padding: isTrue ? EdgeInsets.only(top: 30) : EdgeInsets.only(top: 0),
+        margin: _isSubcategoryExist == true ? EdgeInsets.only(top: 51) : EdgeInsets.only(top: 0),
+        padding: _isSubcategoryExist == true ? EdgeInsets.only(top: 30) : EdgeInsets.only(top: 0),
         child: RefreshIndicator(
           color: Colors.white,
           backgroundColor: MyTheme.primary,
@@ -1769,111 +1768,135 @@ class _FilterState extends State<Filter> {
   }
 
   buildScrollableSubCategory(){
-    if (_allSubCategories.length == 0) {
-      return SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 8,),
-          color: MyTheme.white,
-          child: Row(
-            children: [
-              Padding(
-                  padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8,),
-                  child: ClipOval(
-                      child: ShimmerHelper()
-                          .buildBasicShimmer(height: 58.0, width: 58.0))),
-              Padding(
-                  padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
-                  child: ClipOval(
-                      child: ShimmerHelper()
-                          .buildBasicShimmer(height: 58.0, width: 58.0))),
-              Padding(
-                  padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
-                  child: ClipOval(
-                      child: ShimmerHelper()
-                          .buildBasicShimmer(height: 58.0, width: 58.0))),
-              Padding(
-                  padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
-                  child: ClipOval(
-                      child: ShimmerHelper()
-                          .buildBasicShimmer(height: 58.0, width: 58.0))),
-              Padding(
-                  padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
-                  child: ClipOval(
-                      child: ShimmerHelper()
-                          .buildBasicShimmer(height: 58.0, width: 58.0))),
-              Padding(
-                  padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
-                  child: ClipOval(
-                      child: ShimmerHelper()
-                          .buildBasicShimmer(height: 58.0, width: 58.0))),
-            ],
+    var providerValue = Provider.of<CategoryPassingController>(context, listen: false);
+    if (_shimmerShow == true) {
+      return Column(
+        children: [
+          Divider(
+            color: MyTheme.dark_grey,
+            thickness: 1,
+            height: 1,
           ),
-        ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 8,),
+              color: MyTheme.white,
+              child: Row(
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8,),
+                      child: ClipOval(
+                          child: ShimmerHelper()
+                              .buildBasicShimmer(height: 58.0, width: 58.0))),
+                  Padding(
+                      padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
+                      child: ClipOval(
+                          child: ShimmerHelper()
+                              .buildBasicShimmer(height: 58.0, width: 58.0))),
+                  Padding(
+                      padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
+                      child: ClipOval(
+                          child: ShimmerHelper()
+                              .buildBasicShimmer(height: 58.0, width: 58.0))),
+                  Padding(
+                      padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
+                      child: ClipOval(
+                          child: ShimmerHelper()
+                              .buildBasicShimmer(height: 58.0, width: 58.0))),
+                  Padding(
+                      padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
+                      child: ClipOval(
+                          child: ShimmerHelper()
+                              .buildBasicShimmer(height: 58.0, width: 58.0))),
+                  Padding(
+                      padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
+                      child: ClipOval(
+                          child: ShimmerHelper()
+                              .buildBasicShimmer(height: 58.0, width: 58.0))),
+                ],
+              ),
+            ),
+          ),
+        ],
       );
+    }else if(_allSubCategories.length == 0){
+      _isSubcategoryExist == false;
+      providerValue.ResetValue();
     }else if (_allSubCategories.length > 0){
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 8),
-        color: MyTheme.white,
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: List.generate(_allSubCategories.length, (index) {
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=> Filter(
-                      category: _allSubCategories[index]?.slug
-                  )));
-                },
-                child: Container(
-                  margin: EdgeInsets.only(right: 5, top: 3),
-                  padding: EdgeInsets.only(bottom: 6,),
-                  //height: 120,
-                  width: MediaQuery.of(context).size.width / 5 - 4,
-                  color: MyTheme.white,
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 56,
-                        width: 56,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          //borderRadius: BorderRadius.circular(30),
-                            shape: BoxShape.circle,
-                            border: Border.all(color: MyTheme.light_grey, width: 1)
-                        ),
-                        child: ClipOval(
-                            child: _allSubCategories[index]?.icon != null
-                                ? FadeInImage.assetNetwork(
-                              image: _allSubCategories[index]?.icon,
-                              placeholder: 'assets/placeholder.png',
-                              //fit: BoxFit.cover,
-                              height: 56,
-                              width: 56,
-                            )
-                                : SizedBox()
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8),
-                        child: Text(
-                          _allSubCategories[index]?.name,
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: MyTheme.secondary,
-                            fontWeight: FontWeight.w300,
-                            fontSize: 12,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              );
-            }),
+      _isSubcategoryExist == true;
+      providerValue.ResetValue();
+      return Column(
+        children: [
+          Divider(
+            color: MyTheme.dark_grey,
+            thickness: 1,
+            height: 1,
           ),
-        ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            color: MyTheme.white,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: List.generate(_allSubCategories.length, (index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_)=> Filter(
+                          category: _allSubCategories[index]?.slug
+                      )));
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(right: 5, top: 3),
+                      padding: EdgeInsets.only(bottom: 6,),
+                      //height: 120,
+                      width: MediaQuery.of(context).size.width / 5 - 4,
+                      color: MyTheme.white,
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 56,
+                            width: 56,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              //borderRadius: BorderRadius.circular(30),
+                                shape: BoxShape.circle,
+                                border: Border.all(color: MyTheme.light_grey, width: 1)
+                            ),
+                            child: ClipOval(
+                                child: _allSubCategories[index]?.icon != null
+                                    ? FadeInImage.assetNetwork(
+                                  image: _allSubCategories[index]?.icon,
+                                  placeholder: 'assets/placeholder.png',
+                                  //fit: BoxFit.cover,
+                                  height: 56,
+                                  width: 56,
+                                )
+                                    : SizedBox()
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              _allSubCategories[index]?.name,
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: MyTheme.secondary,
+                                fontWeight: FontWeight.w300,
+                                fontSize: 12,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ),
+          ),
+        ],
       );
     }
   }
