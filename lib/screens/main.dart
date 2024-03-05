@@ -6,6 +6,7 @@ import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:kirei/main.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/providers/cart_count_update.dart';
+import 'package:kirei/providers/category_passing_controller.dart';
 import 'package:kirei/repositories/cart_repository.dart';
 import 'package:kirei/screens/cart.dart';
 import 'package:kirei/screens/category_list.dart';
@@ -48,9 +49,6 @@ class _MainState extends State<Main> {
 
   var _children = [
     Home(),
-    // CategoryList(
-    //   is_base_category: true,
-    // ),
     Filter(),
     Cart(has_bottomnav: true),
     Profile(),
@@ -59,15 +57,18 @@ class _MainState extends State<Main> {
 
 
   void onTapped(int i) {
+
     if (!is_logged_in.$ && (i == 4 || i == 3)) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
       return;
     }
+
     setState(() {
       _currentIndex = i;
       widget.pageIndex = _currentIndex ;
     });
     print("i$i");
+
   }
 
   void initState() {

@@ -1,6 +1,7 @@
 import 'package:kirei/app_config.dart';
 import 'package:kirei/data_model/feature_category_response.dart';
 import 'package:kirei/my_theme.dart';
+import 'package:kirei/providers/category_passing_controller.dart';
 import 'package:kirei/repositories/skin_types_repository.dart';
 import 'package:kirei/screens/main.dart';
 import 'package:kirei/screens/product_details.dart';
@@ -12,6 +13,7 @@ import 'package:kirei/ui_elements/shop_square_card.dart';
 import 'package:kirei/ui_elements/brand_square_card.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 import 'package:kirei/custom/toast_component.dart';
 import 'package:kirei/repositories/category_repository.dart';
@@ -56,7 +58,7 @@ class Filter extends StatefulWidget {
         this.category,
         this.categoryIndex,
         this.key_ingredients,
-      this.search,
+        this.search,
       })
       : super(key: key);
 
@@ -139,6 +141,7 @@ class _FilterState extends State<Filter> {
   int _totalShopData = 0;
   bool _showShopLoadingContainer = false;
 
+
   //----------------------------------------
 
   fetchFilteredBrands() async {
@@ -186,7 +189,7 @@ class _FilterState extends State<Filter> {
   //   setState(() {});
   // }
   Future<List<FeaturedCategory>> getSubCategories() async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/sub-categories/${widget.category}");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/sub-categories/${Provider.of<CategoryPassingController>(context, listen: false).categoryKey}");
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
@@ -303,25 +306,26 @@ class _FilterState extends State<Filter> {
   }
 
   fetchProductData() async {
+    var providerValue = Provider.of<CategoryPassingController>(context, listen: false);
     //print("sc:"+_selectedCategories.join(",").toString());
     //print("sb:"+_selectedBrands.join(",").toString());
     var productResponse = await ProductRepository().getFilteredProducts(
-        page: _productPage,
-        //name: _searchKey,
-        name: widget.search ?? _searchKey,
-        sort_key: _selectedSort,
-        categories:
-        widget.category != null ? widget.category : _selectedCategory,
-        skin_type: widget.selected_skin != null
-            ? widget.selected_skin
-            : _selectedBrands.join(",").toString(),
-        tag: widget.tag,
-        good_for: widget.good_for,
-        type: widget.type,
-        key_ingredients: widget.key_ingredients,
-        max: _maxPriceController.text.toString(),
-        min: _minPriceController.text.toString(),
-        //search: widget.search.toString(),
+      page: _productPage,
+      //name: _searchKey,
+      name: widget.search ?? _searchKey,
+      sort_key: _selectedSort,
+      categories:
+      providerValue.categoryKey != null ? providerValue.categoryKey : _selectedCategory,
+      skin_type: widget.selected_skin != null
+          ? widget.selected_skin
+          : _selectedBrands.join(",").toString(),
+      tag: widget.tag,
+      good_for: widget.good_for,
+      type: providerValue.typeKey,
+      key_ingredients: widget.key_ingredients,
+      max: _maxPriceController.text.toString(),
+      min: _minPriceController.text.toString(),
+      //search: widget.search.toString(),
     );
 
     _productList.addAll(productResponse.products);
@@ -498,92 +502,92 @@ class _FilterState extends State<Filter> {
 
   //--------------------
 
-  buildBottomButton(){
-   return Row(
-
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width / 2,
-          height: 44,
-          child: RaisedButton(
-            onPressed: () {
-              // onPressAddToCart(context, _addedToCartSnackbar);
-              // value.setCartValue(_quantity);
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Main()));
-            },
-            // shape: RoundedRectangleBorder(
-            //     borderRadius: BorderRadius.circular(80.0)),
-            padding: EdgeInsets.all(0.0),
-            child: Ink(
-              color: MyTheme.secondary,
-              child: Container(
-                  constraints:
-                  BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Icon(
-                      //   Icons
-                      //       .shopping_bag_outlined, // Use the appropriate cart icon
-                      //   color: Colors.white,
-                      //   size: 17,
-                      // ),
-                      // SizedBox(
-                      //   width: 2,
-                      // ),
-                      // Add some space between the icon and text
-                      Text(
-                        // AppLocalizations.of(context)
-                        //     .product_details_screen_button_add_to_cart,
-                        "Go to Home",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  )),
-            ),
-          )
-        ),
-        SizedBox(
-          width: 1,
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width / 2,
-          height: 44,
-          child: RaisedButton(
-            onPressed: () {
-              // onPressBuyNow(context);
-              // value.setCartValue(_quantity);
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Main(pageIndex: 2,)));
-
-            },
-            padding: EdgeInsets.all(0.0),
-            child: Ink(
-              color: MyTheme.primary,
-              child: Container(
-                constraints:
-                BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
-                alignment: Alignment.center,
-                child: Text(
-                  // AppLocalizations.of(context)
-                  //     .product_details_screen_button_buy_now,
-                  "Go to Cart",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-            ),
-          )
-        ),
-      ],
-    );
-  }
+  // buildBottomButton(){
+  //  return Row(
+  //
+  //     children: [
+  //       Container(
+  //         width: MediaQuery.of(context).size.width / 2,
+  //         height: 44,
+  //         child: RaisedButton(
+  //           onPressed: () {
+  //             // onPressAddToCart(context, _addedToCartSnackbar);
+  //             // value.setCartValue(_quantity);
+  //             Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Main()));
+  //           },
+  //           // shape: RoundedRectangleBorder(
+  //           //     borderRadius: BorderRadius.circular(80.0)),
+  //           padding: EdgeInsets.all(0.0),
+  //           child: Ink(
+  //             color: MyTheme.secondary,
+  //             child: Container(
+  //                 constraints:
+  //                 BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+  //                 alignment: Alignment.center,
+  //                 child: Row(
+  //                   mainAxisAlignment: MainAxisAlignment.center,
+  //                   children: [
+  //                     // Icon(
+  //                     //   Icons
+  //                     //       .shopping_bag_outlined, // Use the appropriate cart icon
+  //                     //   color: Colors.white,
+  //                     //   size: 17,
+  //                     // ),
+  //                     // SizedBox(
+  //                     //   width: 2,
+  //                     // ),
+  //                     // Add some space between the icon and text
+  //                     Text(
+  //                       // AppLocalizations.of(context)
+  //                       //     .product_details_screen_button_add_to_cart,
+  //                       "Go to Home",
+  //                       style: TextStyle(
+  //                         color: Colors.white,
+  //                         fontSize: 14,
+  //                         fontWeight: FontWeight.w600,
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 )),
+  //           ),
+  //         )
+  //       ),
+  //       SizedBox(
+  //         width: 1,
+  //       ),
+  //       Container(
+  //         width: MediaQuery.of(context).size.width / 2,
+  //         height: 44,
+  //         child: RaisedButton(
+  //           onPressed: () {
+  //             // onPressBuyNow(context);
+  //             // value.setCartValue(_quantity);
+  //             Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Main(pageIndex: 2,)));
+  //
+  //           },
+  //           padding: EdgeInsets.all(0.0),
+  //           child: Ink(
+  //             color: MyTheme.primary,
+  //             child: Container(
+  //               constraints:
+  //               BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+  //               alignment: Alignment.center,
+  //               child: Text(
+  //                 // AppLocalizations.of(context)
+  //                 //     .product_details_screen_button_buy_now,
+  //                 "Go to Cart",
+  //                 style: TextStyle(
+  //                     color: Colors.white,
+  //                     fontSize: 14,
+  //                     fontWeight: FontWeight.w600),
+  //               ),
+  //             ),
+  //           ),
+  //         )
+  //       ),
+  //     ],
+  //   );
+  // }
 
 
   @override
@@ -623,13 +627,13 @@ class _FilterState extends State<Filter> {
                   ? buildBrandLoadingContainer()
                   : buildShopLoadingContainer())),
 
-          Visibility(
-            visible: widget.category != null,
-            child: Positioned(
-              bottom: 0,
-                child: buildBottomButton()
-            ),
-          )
+          // Visibility(
+          //   visible: widget.category != null,
+          //   child: Positioned(
+          //     bottom: 0,
+          //       child: buildBottomButton()
+          //   ),
+          // )
         ],
         ),
       ),
@@ -675,6 +679,28 @@ class _FilterState extends State<Filter> {
           ),
         ));
   }
+
+  // AppBar buildAppBar(BuildContext context) {
+  //   return AppBar(
+  //     backgroundColor: Colors.white,
+  //     centerTitle: true,
+  //     leading: Builder(
+  //       builder: (context) => IconButton(
+  //           icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
+  //           onPressed: () {
+  //
+  //             return Navigator.of(context).pop();
+  //
+  //           }),
+  //     ),
+  //     title: Text(
+  //       AppLocalizations.of(context).order_details_screen_order_details,
+  //       style: TextStyle(fontSize: 16, color: MyTheme.primary),
+  //     ),
+  //     elevation: 0.0,
+  //     titleSpacing: 0,
+  //   );
+  // }
 
   // AppBar buildAppBar(BuildContext context) {
   //   return AppBar(
@@ -1013,7 +1039,7 @@ class _FilterState extends State<Filter> {
           child: Padding(
               padding: MediaQuery.of(context).viewPadding.top >
                   30 //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
-                  ? const EdgeInsets.symmetric(vertical: 36.0, horizontal: 0.0)
+                  ? const EdgeInsets.symmetric(vertical: 36)
                   : const EdgeInsets.symmetric(vertical: 14.0, horizontal: 0.0),
               child: TypeAheadField(
                 // ignore: missing_return
@@ -1817,15 +1843,15 @@ class _FilterState extends State<Filter> {
                             border: Border.all(color: MyTheme.light_grey, width: 1)
                         ),
                         child: ClipOval(
-                          child: _allSubCategories[index]?.icon != null
-                              ? FadeInImage.assetNetwork(
-                            image: _allSubCategories[index]?.icon,
-                            placeholder: 'assets/placeholder.png',
-                            //fit: BoxFit.cover,
-                            height: 56,
-                            width: 56,
-                          )
-                              : SizedBox()
+                            child: _allSubCategories[index]?.icon != null
+                                ? FadeInImage.assetNetwork(
+                              image: _allSubCategories[index]?.icon,
+                              placeholder: 'assets/placeholder.png',
+                              //fit: BoxFit.cover,
+                              height: 56,
+                              width: 56,
+                            )
+                                : SizedBox()
                         ),
                       ),
                       Padding(

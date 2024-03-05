@@ -5,6 +5,7 @@ import 'package:kirei/data_model/shop_details_response.dart';
 import 'package:kirei/helpers/addons_helper.dart';
 import 'package:kirei/helpers/business_setting_helper.dart';
 import 'package:kirei/my_theme.dart';
+import 'package:kirei/providers/category_passing_controller.dart';
 import 'package:kirei/providers/locale_provider.dart';
 import 'package:kirei/repositories/search_repository.dart';
 import 'package:kirei/screens/appointment.dart';
@@ -1333,90 +1334,92 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         scrollDirection: Axis.horizontal,
         child: Row(
           children: List.generate(_featuredCategoryList.length, (index) {
-            return GestureDetector(
-              onTap: () {
-                if (_featuredCategoryList[index]?.itemType == "type") {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return Filter(
-                      type: _featuredCategoryList[index]?.slug,
-                      //categoryIndex: index,
-                    );
-                  }));
-                } else if (_featuredCategoryList[index]?.itemType ==
-                    "category") {
-                  //fetchAllCategory(index);
-                  // print('My catagory ${_allCategories}');
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return Filter(
-                      category: _featuredCategoryList[index]?.slug,
-                      //categoryIndex: index,
-                    );
-                  }));
-                } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) {
-                      String slug = _featuredCategoryList[index]?.slug;
+            return Consumer<CategoryPassingController>(
+              builder: (widget, value, child) {
+                return GestureDetector(
+                  onTap: () {
+                    if (_featuredCategoryList[index]?.itemType == "type") {
 
-                      switch (slug) {
-                        case 'BeautyTips()':
-                          return BeautyTips();
-                        case 'FeedList()':
-                          return FeedList();
-                        case 'Appointment()':
-                          return Appointment();
-                        default:
-                          return Container();
-                      }
-                    }),
-                  );
-                }
-              },
-              child: Container(
-                margin: EdgeInsets.only(right: 5),
-                padding: EdgeInsets.only(top: 16),
-                height: 120,
-                width: MediaQuery.of(context).size.width / 5 - 4,
-                child: Column(
-                  children: [
-                    Container(
-                      height: 56,
-                      width: 56,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: ClipOval(
-                        child: _featuredCategoryList[index]?.icon != null
-                            ? FadeInImage.assetNetwork(
-                          image: _featuredCategoryList[index]?.icon,
-                          placeholder: 'assets/placeholder.png',
-                          fit: BoxFit.cover,
+                      value.setTypeKey(_featuredCategoryList[index]?.slug);
+
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return Main(pageIndex: 1,);
+                      }));
+                    } else if (_featuredCategoryList[index]?.itemType ==
+                        "category") {
+
+                      value.setCategoryKey(_featuredCategoryList[index]?.slug);
+
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return Main(pageIndex: 1,);
+                      }));
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          String slug = _featuredCategoryList[index]?.slug;
+
+                          switch (slug) {
+                            case 'BeautyTips()':
+                              return BeautyTips();
+                            case 'FeedList()':
+                              return FeedList();
+                            case 'Appointment()':
+                              return Appointment();
+                            default:
+                              return Container();
+                          }
+                        }),
+                      );
+                    }
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(right: 5),
+                    padding: EdgeInsets.only(top: 16),
+                    height: 120,
+                    width: MediaQuery.of(context).size.width / 5 - 4,
+                    child: Column(
+                      children: [
+                        Container(
                           height: 56,
                           width: 56,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: ClipOval(
+                            child: _featuredCategoryList[index]?.icon != null
+                                ? FadeInImage.assetNetwork(
+                              image: _featuredCategoryList[index]?.icon,
+                              placeholder: 'assets/placeholder.png',
+                              fit: BoxFit.cover,
+                              height: 56,
+                              width: 56,
+                            )
+                                : Image.asset(
+                              'assets/placeholder.png',
+                              fit: BoxFit.cover,
+                              height: 56,
+                              width: 56,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Text(
+                            _featuredCategoryList[index]?.name,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: MyTheme.secondary,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 12,
+                            ),
+                          ),
                         )
-                            : Image.asset(
-                          'assets/placeholder.png',
-                          fit: BoxFit.cover,
-                          height: 56,
-                          width: 56,
-                        ),
-                      ),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: Text(
-                        _featuredCategoryList[index]?.name,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: MyTheme.secondary,
-                          fontWeight: FontWeight.w300,
-                          fontSize: 12,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
+                  ),
+                );
+              }
             );
           }),
         ),
