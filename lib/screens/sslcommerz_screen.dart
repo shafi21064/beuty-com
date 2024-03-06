@@ -7,8 +7,9 @@ import 'package:kirei/my_theme.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:kirei/screens/order_list.dart';
 import 'package:kirei/screens/wallet.dart';
-import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'order_success_page.dart';
 
 class SslCommerzScreen extends StatefulWidget {
   double amount;
@@ -17,13 +18,14 @@ class SslCommerzScreen extends StatefulWidget {
   String ssl_initial_url;
   int order_id;
 
+
   SslCommerzScreen(
       {Key key,
-      this.amount = 0.00,
-      this.payment_type = "",
-      this.payment_method_key = "",
-      this.order_id,
-      this.ssl_initial_url})
+        this.amount = 0.00,
+        this.payment_type = "",
+        this.payment_method_key = "",
+        this.order_id,
+        this.ssl_initial_url})
       : super(key: key);
 
   @override
@@ -34,8 +36,6 @@ class _SslCommerzScreenState extends State<SslCommerzScreen> {
   int _combined_order_id = 0;
   bool _order_init = false;
 
-  String _initial_url = "";
-  bool _initial_url_fetched = false;
 
   WebViewController _webViewController;
 
@@ -44,147 +44,195 @@ class _SslCommerzScreenState extends State<SslCommerzScreen> {
     // TODO: implement initState
     super.initState();
 
-    if (widget.payment_type == "cart_payment") {
-      createOrder();
-    }
+    // if (widget.payment_type == "cart_payment") {
+    //   createOrder();
+    // }
 
-    if (widget.payment_type != "cart_payment") {
-      // on cart payment need proper order id
-      getSetInitialUrl();
-    }
+    // if (widget.payment_type != "cart_payment") {
+    //   // on cart payment need proper order id
+    //getSetInitialUrl();
+    // }
   }
 
-  createOrder() async {
-    var orderCreateResponse = await PaymentRepository()
-        .getOrderCreateResponse(widget.payment_method_key);
-
-    if (orderCreateResponse.result == false) {
-      ToastComponent.showDialog(orderCreateResponse.message, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-      Navigator.of(context).pop();
-      return;
-    }
-
-    _combined_order_id = orderCreateResponse.combined_order_id;
-    _order_init = true;
-    setState(() {});
-
-    getSetInitialUrl();
-  }
+  // createOrder() async {
+  //   var orderCreateResponse = await PaymentRepository()
+  //       .getOrderCreateResponse(widget.payment_method_key);
+  //
+  //   if (orderCreateResponse.result == false) {
+  //     ToastComponent.showDialog(orderCreateResponse.message, context,
+  //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+  //     Navigator.of(context).pop();
+  //     return;
+  //   }
+  //
+  //   _combined_order_id = orderCreateResponse.combined_order_id;
+  //   _order_init = true;
+  //   setState(() {});
+  //
+  //   getSetInitialUrl();
+  // }
 
   getSetInitialUrl() async {
-    var sslcommerzUrlResponse = await PaymentRepository()
-        .getSslcommerzBeginResponse(
-            widget.payment_type, _combined_order_id, widget.amount);
+    var sslUrlResponse = await PaymentRepository().getSslcommerzBeginResponse(
+        widget.payment_type, widget.order_id, widget.amount);
 
-    if (sslcommerzUrlResponse.result == false) {
-      ToastComponent.showDialog(sslcommerzUrlResponse.message, context,
+    print('bkash result3 ${sslUrlResponse.message}');
+    print('bkash result ${sslUrlResponse.url}');
+    print('ss result ${sslUrlResponse.result}');
+    //print('bkash result ${sslUrlResponse.token}');
+
+    if (sslUrlResponse.result == false) {
+      ToastComponent.showDialog(sslUrlResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       Navigator.of(context).pop();
       return;
     }
 
-    _initial_url = sslcommerzUrlResponse.url;
-    _initial_url_fetched = true;
+
+
 
     setState(() {});
 
-    //print(_initial_url);
-    //print(_initial_url_fetched);
+
   }
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: buildAppBar(context),
-        body: buildBody(),
-      ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: buildAppBar(context),
+      body: buildBody(),
     );
   }
 
   void getData() {
+    var payment_details = '';
     _webViewController
         .evaluateJavascript("document.body.innerText")
         .then((data) {
       var decodedJSON = jsonDecode(data);
       Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
-      //print(data.toString());
+
+      print('Bkash json Response' +decodedJSON.toString());
+
       if (responseJSON["result"] == false) {
         Toast.show(responseJSON["message"], context,
             duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
-        Navigator.pop(context);
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+              orderId: widget.order_id,
+              message:responseJSON["message"],
+              type: "danger",
+            )), (route) => false);
+        //Navigator.pop(context);
       } else if (responseJSON["result"] == true) {
-        Toast.show(responseJSON["message"], context,
-            duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
-        if (widget.payment_type == "cart_payment") {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return OrderList(from_checkout: true);
-          }));
-        } else if (widget.payment_type == "wallet_payment") {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return Wallet(from_recharge: true);
-          }));
-        }
+        print('${responseJSON['payment_details']}');
+        print('${widget.order_id}');
+        //print('${responseJSON['payment_details']}');
+        payment_details = responseJSON['payment_details'];
+        print('payment success');
+        //return true;
+        onPaymentSuccess(payment_details);
       }
     });
   }
 
-  buildBody() {
-/*    String initial_url =
-        "${AppConfig.BASE_URL}/sslcommerz/begin?payment_type=${widget.payment_type}&combined_order_id=${_combined_order_id}&amount=${widget.amount}&user_id=${user_id.$}";*/
+  onPaymentSuccess(payment_details) async {
+    var bkashPaymentProcessResponse = await PaymentRepository()
+        .getBkashPaymentProcessResponse(widget.payment_type, widget.amount,
+        _combined_order_id, payment_details);
 
-    //print("init url");
-    //print(initial_url);
-
-    if (_order_init == false &&
-        _combined_order_id == 0 &&
-        widget.payment_type == "cart_payment") {
-      return Container(
-        child: Center(
-          child: Text(AppLocalizations.of(context).common_creating_order),
-        ),
-      );
-    } else if (_initial_url_fetched == false) {
-      return Container(
-        child: Center(
-          child: Text(AppLocalizations.of(context)
-              .sslcommerz_screen_fetching_sslcommerz_url),
-        ),
-      );
-    } else {
-      return SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: WebView(
-            debuggingEnabled: false,
-            javascriptMode: JavascriptMode.unrestricted,
-            onWebViewCreated: (controller) {
-              _webViewController = controller;
-              _webViewController.loadUrl(_initial_url);
-            },
-            onWebResourceError: (error) {},
-            onPageFinished: (page) {
-              //print(page.toString());
-
-              if (page.contains("/sslcommerz/success")) {
-                getData();
-              } else if (page.contains("/sslcommerz/cancel") ||
-                  page.contains("/sslcommerz/fail")) {
-                ToastComponent.showDialog(
-                    "Payment cancelled or failed", context,
-                    gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-                Navigator.of(context).pop();
-                return;
-              }
-            },
-          ),
-        ),
-      );
+    if (bkashPaymentProcessResponse.result == false) {
+      Toast.show(bkashPaymentProcessResponse.message, context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+            orderId: widget.order_id,
+            message:bkashPaymentProcessResponse.message,
+            type: "danger",
+          )), (route) => false);
+      return;
     }
+
+    Toast.show(bkashPaymentProcessResponse.message, context,
+        duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
+
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+          orderId: widget.order_id,
+          message: bkashPaymentProcessResponse.message,
+          type: "success",
+        )), (route) => false);
+  }
+
+  buildBody() {
+
+
+    //
+    // if (_order_init == false &&
+    //     _combined_order_id == 0 &&
+    //     widget.payment_type == "cart_payment") {
+    //   return Container(
+    //     child: Center(
+    //       child: Text(AppLocalizations.of(context).common_creating_order),
+    //     ),
+    //   );
+    // } else
+
+
+    print('going to main widget');
+    return SingleChildScrollView(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height * 0.9,
+        child: WebView(
+          debuggingEnabled: false,
+          javascriptMode: JavascriptMode.unrestricted,
+          onWebViewCreated: (controller) {
+            _webViewController = controller;
+            _webViewController.loadUrl(widget.ssl_initial_url);
+          },
+          onWebResourceError: (error) {
+            print('ssl error');
+            print(error);
+            Navigator.pushAndRemoveUntil(context,
+                MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+                  orderId: widget.order_id,
+                  message:"Something went wrong.",
+                  type: "danger",
+                )), (route) => false);
+          },
+          onPageFinished: (page) {
+            print("page.toString()");
+            print(page.toString());
+
+            if (page.contains("status=success")) {
+              //getData();
+              Toast.show('Order Successful', context,
+                  duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
+
+              Navigator.pushAndRemoveUntil(context,
+                  MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+                    orderId: widget.order_id,
+                    message: 'Order Successful',
+                    type: "success",
+                  )), (route) => false);
+
+            } else if (page.contains("status=failure")) {
+              Toast.show("Payment Cancelled", context,
+                  duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
+              Navigator.pushAndRemoveUntil(context,
+                  MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+                    orderId: widget.order_id,
+                    message:"Payment Cancelled",
+                    type: "danger",
+                  )), (route) => false);
+              return;
+            }
+          },
+        ),
+      ),
+    );
   }
 
   AppBar buildAppBar(BuildContext context) {
