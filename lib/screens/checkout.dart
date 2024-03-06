@@ -492,13 +492,16 @@ class _CheckoutState extends State<Checkout> {
     }
 
     try {
+      print('_selected_payment_method ${_selected_payment_method}');
 
         print('this is my Order request' +requestBody.toString());
         loading();
 
         var orderCreateResponse =
         await PaymentRepository().getOrderCreateResponseFromCod(requestBody);
-
+        print('orderCreateResponse ${orderCreateResponse.data.paymentUrl}');
+        print('orderCreateResponseResult ${orderCreateResponse.data.payment}');
+        print('orderCreateResponse# ${orderCreateResponse}');
         //print("orderCreateResponse${orderCreateResponse}");
         // Check if the widget is mounted before updating the UI
         if (mounted) {
@@ -516,6 +519,7 @@ class _CheckoutState extends State<Checkout> {
             return;
           } else{
             if (_selected_payment_method == "bkash") {
+              print('bkash_initial_url ${orderCreateResponse.data.paymentUrl}');
               print('navigating to bkash');
               if(orderCreateResponse.data.paymentUrl != null) {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -555,7 +559,8 @@ class _CheckoutState extends State<Checkout> {
               })).then((value) {
                 onPopped(value);
               });
-            } else if (_selected_payment_method == "sslcommerz_payment") {
+            } else if (_selected_payment_method == "ssl") {
+              print('ssl_initial_url ${orderCreateResponse.data.paymentUrl}');
               if (_grandTotalValue == 0.00) {
                 ToastComponent.showDialog(
                     AppLocalizations
