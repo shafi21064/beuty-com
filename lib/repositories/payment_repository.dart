@@ -222,6 +222,10 @@ class PaymentRepository {
       @required String payment_type,
       @required int combined_order_id,
       @required double amount) async {
+    print("Payment Type: ${payment_type}");
+    print("combined_order_id: ${combined_order_id}");
+    print("amount: ${amount}");
+    print("user_id: ${user_id.$}");
     Uri url = Uri.parse(
         "${AppConfig.BASE_URL}/bkash/begin?payment_type=${payment_type}&combined_order_id=${combined_order_id}&amount=${amount}&user_id=${user_id.$}");
 

@@ -310,7 +310,7 @@ class _RegistrationState extends State<Registration> {
                         //   )
 
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0, right: 8),
+                          padding: const EdgeInsets.only(bottom: 8.0, ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
@@ -466,7 +466,8 @@ class _RegistrationState extends State<Registration> {
                         ),
 
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          //padding: const EdgeInsets.all(8.0),
+                          padding:  EdgeInsets.only(top: 8.0, left: 0, right: 0,bottom: 8),
                           child: RaisedButton(
                             onPressed: onPressSignUp,
                             shape: RoundedRectangleBorder(
@@ -501,7 +502,8 @@ class _RegistrationState extends State<Registration> {
                           )),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          //padding: const EdgeInsets.all(8.0),
+                          padding:  EdgeInsets.only(top: 8.0, left: 0, right: 0,bottom: 8),
                           child: _register_by != "otp"
                               ? RaisedButton(
                                   onPressed: () {

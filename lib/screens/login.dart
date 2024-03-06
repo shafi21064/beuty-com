@@ -359,12 +359,26 @@ class _LoginState extends State<Login> {
                           )
                         else
                           Padding(
+                            padding:
+                            const EdgeInsets.only(bottom: 4.0, top: 10),
+                            child: Text(
+                              "Phone",
+                                style: GoogleFonts.ubuntu(
+                                    color: Theme.of(context)
+                                        .buttonTheme
+                                        .colorScheme
+                                        .primary,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600)),
+                          ),
+                          Padding(
                             padding: const EdgeInsets.only(bottom: 8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Container(
-                                  padding: EdgeInsets.only(right: 10),
+                                  //padding: EdgeInsets.only(right: 10),
+                                  padding: const EdgeInsets.only(bottom: 4.0),
                                   height: 36,
                                   // child: CustomInternationalPhoneNumberInput(
                                   //   onInputChanged: (PhoneNumber number) {
@@ -436,6 +450,16 @@ class _LoginState extends State<Login> {
                                         //     ? Icon(Icons.email)
                                         //     : Icon(Icons.local_phone_outlined),
                                         hintStyle: TextStyle(color: Colors.grey),
+                                        // border: UnderlineInputBorder(
+                                        //   borderSide:BorderSide(
+                                        //     color: MyTheme.primary
+                                        //   )
+                                        // ),
+                                        // enabledBorder: UnderlineInputBorder(
+                                        //     borderSide:BorderSide(
+                                        //         color: MyTheme.primary
+                                        //     )
+                                        // ),
                                         filled: true,
                                         fillColor: Colors.white70,
                                       ),
@@ -556,7 +580,8 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          //padding: const EdgeInsets.all(8.0),
+                          padding:  EdgeInsets.only(top: 8.0, left: 0, right: 0,bottom: 8),
                           child: RaisedButton(
                             onPressed: onPressedLogin,
                             shape: RoundedRectangleBorder(
@@ -589,7 +614,8 @@ class _LoginState extends State<Login> {
                           )),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          //padding: const EdgeInsets.all(8.0),
+                          padding:  EdgeInsets.only(top: 8.0, left: 0, right: 0,bottom: 8),
                           child: _login_by != "otp"
                               ? RaisedButton(
                                   onPressed: () {

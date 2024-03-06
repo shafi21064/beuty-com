@@ -9,8 +9,13 @@ import 'package:provider/provider.dart';
 
 class OrderSuccessPage extends StatefulWidget {
   int orderId;
+  String message;
+  String type;
+
    OrderSuccessPage({Key key,
-     this.orderId
+     this.orderId,
+     this.message,
+     this.type
    }): super(key: key);
 
 
@@ -82,7 +87,7 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
+           widget.type == "success" ?  Container(
               height: 100,
               margin: EdgeInsets.symmetric(horizontal: 16),
               width: width,
@@ -117,7 +122,43 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
                   ],
                 ),
               ),
-            ),
+            ) :
+           Container(
+             height: 100,
+             margin: EdgeInsets.symmetric(horizontal: 16),
+             width: width,
+             decoration: BoxDecoration(
+                 borderRadius: BorderRadius.circular(10),
+                 //color: Colors.green,
+                 border: Border.all(
+                   width: 2,
+                   color: MyTheme.primary,
+                 )
+             ),
+             child: Center(
+               child: Row(
+                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                 children: [
+                   Container(
+                     height: 50,
+                     width: 50,
+                     decoration: BoxDecoration(
+                       shape: BoxShape.circle,
+                       color: MyTheme.primary,
+                     ),
+                     child: Icon(Icons.cancel, color: MyTheme.white,),
+                   ),
+                   Text("${widget.message}",
+                     style: TextStyle(
+                       fontSize: 22,
+                       fontWeight: FontWeight.bold,
+                       color: MyTheme.secondary,
+                     ),
+                   ),
+                 ],
+               ),
+             ),
+           ),
 
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.03,

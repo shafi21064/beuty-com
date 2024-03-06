@@ -121,7 +121,7 @@ class _ProductCardState extends State<ProductCard> {
 
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
                   width: double.infinity,
@@ -177,7 +177,7 @@ class _ProductCardState extends State<ProductCard> {
                     ],
                   )),
               Container(
-                width: MediaQuery.of(context).size.width / 2 - .5,
+                width: MediaQuery.of(context).size.width * 0.35,
                 height: 40,
                 child: RaisedButton(
                   onPressed: () {
@@ -231,6 +231,7 @@ class _ProductCardState extends State<ProductCard> {
               ),
               Container(
                 height: 95,
+                width: MediaQuery.of(context).size.width * 0.35,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

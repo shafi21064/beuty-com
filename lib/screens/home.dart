@@ -970,7 +970,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           child: ListView.builder(
             itemCount: _bestSellingProductList.length,
             scrollDirection: Axis.horizontal,
-            itemExtent: MediaQuery.of(context).size.width / 2.5,
+            itemExtent: MediaQuery.of(context).size.width / 2.9,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(right: 5, left: 5),
@@ -1083,7 +1083,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           child: ListView.builder(
             itemCount: _recommendedProductList.length,
             scrollDirection: Axis.horizontal,
-            itemExtent: MediaQuery.of(context).size.width / 2.5,
+            itemExtent: MediaQuery.of(context).size.width / 2.9,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(right: 5, left: 5),
@@ -1128,7 +1128,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           child: ListView.builder(
             itemCount: _popularSearchProductList.length,
             scrollDirection: Axis.horizontal,
-            itemExtent: MediaQuery.of(context).size.width / 2.5,
+            itemExtent: MediaQuery.of(context).size.width / 2.9,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(right: 5, left: 5),
@@ -1172,7 +1172,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           child: ListView.builder(
             itemCount: _trendingProductList.length,
             scrollDirection: Axis.horizontal,
-            itemExtent: MediaQuery.of(context).size.width / 2.5,
+            itemExtent: MediaQuery.of(context).size.width / 2.9,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(right: 5, left: 5),
@@ -1215,7 +1215,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           child: ListView.builder(
             itemCount: _hotDealsProductList.length,
             scrollDirection: Axis.horizontal,
-            itemExtent: MediaQuery.of(context).size.width / 2.5,
+            itemExtent: MediaQuery.of(context).size.width / 2.9,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(right: 5, left: 5),
@@ -1258,7 +1258,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           child: ListView.builder(
             itemCount: _newArrivalProductList.length,
             scrollDirection: Axis.horizontal,
-            itemExtent: MediaQuery.of(context).size.width / 2.5,
+            itemExtent: MediaQuery.of(context).size.width / 2.9,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(right: 5, left: 5),

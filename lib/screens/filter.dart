@@ -678,6 +678,7 @@ class _FilterState extends State<Filter> {
             color: MyTheme.primary,
           ),
           padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
+          //padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
           child: Column(
             children: [
               buildTopAppbar(context),

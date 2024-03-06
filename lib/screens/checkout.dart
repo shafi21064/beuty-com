@@ -493,13 +493,13 @@ class _CheckoutState extends State<Checkout> {
 
     try {
 
-        print('this is my request' +requestBody.toString());
+        print('this is my Order request' +requestBody.toString());
         loading();
 
         var orderCreateResponse =
         await PaymentRepository().getOrderCreateResponseFromCod(requestBody);
 
-        print("orderCreateResponse${orderCreateResponse}");
+        //print("orderCreateResponse${orderCreateResponse}");
         // Check if the widget is mounted before updating the UI
         if (mounted) {
           Navigator.of(loadingcontext).pop();
@@ -525,7 +525,8 @@ class _CheckoutState extends State<Checkout> {
                   order_id: orderCreateResponse.data.order.id,
                 );
               })).then((value) {
-                onPopped(value);
+                //onPopped(value);
+                print('Return back from bkash');
               });
             } else if (_selected_payment_method == "nagad") {
               if (_grandTotalValue == 0.00) {
@@ -571,10 +572,10 @@ class _CheckoutState extends State<Checkout> {
                 gravity: Toast.CENTER,
                 duration: Toast.LENGTH_LONG,
               );
-              Navigator.pushAndRemoveUntil(context,
-                  MaterialPageRoute(builder: (_)=> OrderSuccessPage(
-                    orderId: orderCreateResponse.data.order.id,
-                  )), (route) => false);
+              // Navigator.pushAndRemoveUntil(context,
+              //     MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+              //       orderId: orderCreateResponse.data.order.id,
+              //     )), (route) => false);
             }
 
           }
@@ -647,7 +648,7 @@ class _CheckoutState extends State<Checkout> {
   }
 
   onPressPlaceOrderOrProceed() {
-    print('payment: ${_selected_payment_method}');
+   // print('payment: ${_selected_payment_method}');
 
     if (_grandTotalValue == 0.00) {
       ToastComponent.showDialog(

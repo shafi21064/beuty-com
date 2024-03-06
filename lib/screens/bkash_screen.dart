@@ -118,22 +118,21 @@ class _BkashScreenState extends State<BkashScreen> {
       if (responseJSON["result"] == false) {
         Toast.show(responseJSON["message"], context,
             duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
-        Navigator.pop(context);
-      } else if (responseJSON["result"] == true) {
-        payment_details = responseJSON['payment_details'];
-         print('payment success');
-         //return true;
-        ToastComponent.showDialog(
-          responseJSON["message"],
-          context,
-          gravity: Toast.CENTER,
-          duration: Toast.LENGTH_LONG,
-        );
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (_)=> OrderSuccessPage(
               orderId: widget.order_id,
+              message:responseJSON["message"],
+              type: "danger",
             )), (route) => false);
-        //onPaymentSuccess(payment_details);
+        //Navigator.pop(context);
+      } else if (responseJSON["result"] == true) {
+        print('${responseJSON['payment_details']}');
+        print('${widget.order_id}');
+        //print('${responseJSON['payment_details']}');
+        payment_details = responseJSON['payment_details'];
+         print('payment success');
+         //return true;
+        onPaymentSuccess(payment_details);
       }
     });
   }
@@ -146,21 +145,24 @@ class _BkashScreenState extends State<BkashScreen> {
     if (bkashPaymentProcessResponse.result == false) {
       Toast.show(bkashPaymentProcessResponse.message, context,
           duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
-      Navigator.pop(context);
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+            orderId: widget.order_id,
+            message:bkashPaymentProcessResponse.message,
+            type: "danger",
+          )), (route) => false);
       return;
     }
 
     Toast.show(bkashPaymentProcessResponse.message, context,
         duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
-    // if (widget.payment_type == "cart_payment") {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return OrderList(from_checkout: true);
-      }));
-    // } else if (widget.payment_type == "wallet_payment") {
-    //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //     return Wallet(from_recharge: true);
-    //   }));
-    // }
+
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+          orderId: widget.order_id,
+          message: bkashPaymentProcessResponse.message,
+          type: "success",
+        )), (route) => false);
   }
 
   buildBody() {
@@ -198,17 +200,29 @@ class _BkashScreenState extends State<BkashScreen> {
             },
             onWebResourceError: (error) {
               print('bkash 11');
+              print(error);
+              Navigator.pushAndRemoveUntil(context,
+                  MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+                    orderId: widget.order_id,
+                    message:"Something went wrong.",
+                    type: "danger",
+                  )), (route) => false);
             },
             onPageFinished: (page) {
-              // print(page.toString());
-              // getData();
-              // print("page link: + ${page.toString()}");
+               print("page.toString()");
+               print(page.toString());
+
               if (page.contains("/bkash/api/callback")) {
                 getData();
               } else if (page.contains("/bkash/api/fail")) {
-                ToastComponent.showDialog("Payment cancelled", context,
-                    gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-                Navigator.of(context).pop();
+                Toast.show("Payment cancelled", context,
+                    duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
+                Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+                      orderId: widget.order_id,
+                      message:"Payment cancelled",
+                      type: "danger",
+                    )), (route) => false);
                 return;
               }
             },
