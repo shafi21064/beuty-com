@@ -236,7 +236,7 @@ class _CategoryListState extends State<CategoryList> {
                           fit: BoxFit.cover,
                         )
                       : Image.asset(
-                          'assets/app_logo.png',
+                          'assets/placeholder.png',
                           fit: BoxFit.fitWidth,
                         ))),
           Container(

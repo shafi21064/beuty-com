@@ -50,7 +50,7 @@ class _BrandSquareCardState extends State<BrandSquareCard> {
                               fit: BoxFit.scaleDown,
                             )
                           : Image.asset(
-                              'assets/app_logo.png',
+                              'assets/placeholder.png',
                               fit: BoxFit.fitWidth,
                             ))),
               Container(

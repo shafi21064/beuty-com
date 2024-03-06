@@ -268,7 +268,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                         )
                       : CircleAvatar(
                           // Place your default avatar here or provide a placeholder image
-                          backgroundImage: AssetImage('assets/app_logo.png'),
+                          backgroundImage: AssetImage('assets/placeholder.png'),
                           radius: 100.0,
                         ),
                 ),

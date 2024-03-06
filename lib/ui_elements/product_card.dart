@@ -139,12 +139,12 @@ class _ProductCardState extends State<ProductCard> {
                                 color: MyTheme.light_grey,
                                 child: widget.image != null
                                     ? FadeInImage.assetNetwork(
-                                        placeholder: 'assets/app_logo.png',
+                                        placeholder: 'assets/placeholder.png',
                                         image: widget.image,
                                         fit: BoxFit.fill,
                                       )
                                     : Image.asset(
-                                        'assets/app_logo.png',
+                                        'assets/placeholder.png',
                                         fit: BoxFit.fitWidth,
                                       ))),
                       ),

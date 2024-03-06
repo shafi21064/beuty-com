@@ -3146,7 +3146,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       fit: BoxFit.contain,
                                     )
                                   : Image.asset(
-                                      'assets/app_logo.png',
+                                      'assets/placeholder.png',
                                       fit: BoxFit.fitWidth,
                                     )),
                         ),

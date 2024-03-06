@@ -160,7 +160,7 @@ elevation: 0, // Set the elevation to 0 for no shadow
                     ClipRRect(
                         child: widget.image == ''
                             ? Image.asset(
-                          'assets/app_logo.png',
+                          'assets/placeholder.png',
                           fit: BoxFit.fitWidth,
                         )
                             : FadeInImage.assetNetwork(
