@@ -3,6 +3,7 @@ import 'package:kirei/helpers/auth_helper.dart';
 import 'package:kirei/helpers/business_setting_helper.dart';
 import 'package:kirei/other_config.dart';
 import 'package:kirei/providers/cart_count_update.dart';
+import 'package:kirei/providers/category_passing_controller.dart';
 import 'package:kirei/screens/order_failed_page.dart';
 import 'package:kirei/screens/order_success_page.dart';
 import 'package:kirei/theme/appThemes.dart';
@@ -87,6 +88,7 @@ class _MyAppState extends State<MyApp> {
         providers: [
           ChangeNotifierProvider(create: (_) => LocaleProvider()),
           ChangeNotifierProvider(create: (_) => CartCountUpdate()),
+          ChangeNotifierProvider(create: (_) => CategoryPassingController()),
         ],
         child: Consumer<LocaleProvider>(builder: (context, provider, snapshot) {
           return DynamicTheme(
