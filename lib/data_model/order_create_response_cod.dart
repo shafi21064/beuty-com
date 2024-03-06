@@ -40,19 +40,23 @@ class OrderData {
   OrderData({
     this.order,
     this.payment,
+    this.paymentUrl
   });
 
   Order order;
   dynamic payment;
+  String paymentUrl;
 
   factory OrderData.fromJson(Map<String, dynamic> json) => OrderData(
     order: json["order"] != null ? Order.fromJson(json["order"]) : null,
     payment: json["payment"],
+    paymentUrl: json["payment_url"],
   );
 
   Map<String, dynamic> toJson() => {
     "order": order != null ? order.toJson() : null,
     "payment": payment,
+    "payment_url": paymentUrl,
   };
 }
 
@@ -73,6 +77,7 @@ class Order {
     this.updatedAt,
     this.createdAt,
     this.id,
+
   });
 
   int userId;
@@ -93,6 +98,7 @@ class Order {
   DateTime createdAt;
   int id;
 
+
   factory Order.fromJson(Map<String, dynamic> json) => Order(
     userId: json["user_id"],
     apiCredentialId: json["api_credential_id"],
@@ -109,6 +115,7 @@ class Order {
     updatedAt: DateTime.parse(json["updated_at"]),
     createdAt: DateTime.parse(json["created_at"]),
     id: json["id"],
+
   );
 
   Map<String, dynamic> toJson() => {
@@ -127,6 +134,7 @@ class Order {
     "updated_at": updatedAt.toIso8601String(),
     "created_at": createdAt.toIso8601String(),
     "id": id,
+
   };
 }
 
