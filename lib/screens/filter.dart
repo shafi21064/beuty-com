@@ -218,6 +218,23 @@ class _FilterState extends State<Filter> {
   bool _isSubcategoryExist = false;
   bool _shimmerShow = true;
 
+
+  bool _isVisible = true;
+  double _scrollPosition = 0.0;
+  double _scrollThreshold = 50.0; // Adjust as needed
+
+  // void _scrollListener() {
+  //   double newPosition = _scrollController.position.pixels;
+  //   setState(() {
+  //     if (newPosition > _scrollPosition && _isVisible) {
+  //       _isVisible = false;
+  //     } else if (newPosition < _scrollPosition && !_isVisible) {
+  //       _isVisible = true;
+  //     }
+  //     _scrollPosition = newPosition;
+  //   });
+  // }
+
   // visibileMethod(){
   //
   //   if(widget.category == "skin-care" || widget.category == "hair-care" || widget.category == "make-up" || widget.category == "body-care"){
@@ -614,40 +631,37 @@ class _FilterState extends State<Filter> {
         drawer: MainDrawer(),
         endDrawer: buildFilterDrawer(),
         backgroundColor: MyTheme.white,
-        body: Stack(clipBehavior: Clip.none, children: [
+        body: Column(
+         // clipBehavior: Clip.none,
+          children: [
 
+          buildAppBar(context),
 
+            _selectedFilter.option_key == 'product'
+                ? buildProductList()
+                : (_selectedFilter.option_key == 'brands'
+                ? buildBrandList()
+                : buildShopList()),
 
-          _selectedFilter.option_key == 'product'
-              ? buildProductList()
-              : (_selectedFilter.option_key == 'brands'
-              ? buildBrandList()
-              : buildShopList()),
-          Positioned(
-            top: 0.0,
-            left: 0.0,
-            right: 0.0,
-            child: buildAppBar(context),
-          ),
-
-          Align(
-            //alignment: Alignment.bottomCenter,
-              child: _selectedFilter.option_key == 'product'
-                  ? buildProductLoadingContainer()
-                  : (_selectedFilter.option_key == 'brands'
-                  ? buildBrandLoadingContainer()
-                  : buildShopLoadingContainer())),
-
-          // Visibility(
-          //   visible: widget.category != null,
-          //   child: Positioned(
-          //     bottom: 0,
-          //       child: buildBottomButton()
-          //   ),
+          // Align(
+          //    //alignment: Alignment.bottomCenter,
+          //     child: _selectedFilter.option_key == 'product'
+          //         ? buildProductLoadingContainer()
+          //         : (_selectedFilter.option_key == 'brands'
+          //         ? buildBrandLoadingContainer()
+          //         : buildShopLoadingContainer())
           // )
+
+        // Visibility(
+        //   visible: widget.category != null,
+        //   child: Positioned(
+        //     bottom: 0,
+        //       child: buildBottomButton()
+        //   ),
+        // )
         ],
-        ),
       ),
+    ),
     );
   }
 
@@ -669,7 +683,8 @@ class _FilterState extends State<Filter> {
             children: [
               buildTopAppbar(context),
               buildBottomAppBar(context),
-              buildScrollableSubCategory() ?? SizedBox(),
+              //buildScrollableSubCategory() ?? SizedBox(),
+
 
               //widget.category != null ? buildScrollableSubCategory() : Container()
               //buildScrollableSubCategory()
@@ -1829,7 +1844,7 @@ class _FilterState extends State<Filter> {
       _isSubcategoryExist == true;
       providerValue.ResetValue();
       return Column(
-        children: [
+        children : [
           Divider(
             color: MyTheme.dark_grey,
             thickness: 1,
