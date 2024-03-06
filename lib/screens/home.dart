@@ -523,12 +523,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                   onTap: () {},
                                                   controller: _searchController,
                                                   onSubmitted: (txt) {
-                                                    _searchKey = txt;
-                                                    setState(() {});
+                                                    //_searchKey = txt;
+                                                    //setState(() {});
+                                                    Provider.of<CategoryPassingController>(context).setSearchKey(txt);
+                                                    print('navigating to filter');
+
                                                     // _onSearchSubmit();
-                                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) =>Filter(
-                                                      search: txt,
-                                                    ) ));
+                                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) =>Filter()));
                                                   },
                                                   style: TextStyle(
                                                       color: MyTheme.secondary),

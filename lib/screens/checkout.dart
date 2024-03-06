@@ -589,10 +589,12 @@ class _CheckoutState extends State<Checkout> {
                 gravity: Toast.CENTER,
                 duration: Toast.LENGTH_LONG,
               );
-              // Navigator.pushAndRemoveUntil(context,
-              //     MaterialPageRoute(builder: (_)=> OrderSuccessPage(
-              //       orderId: orderCreateResponse.data.order.id,
-              //     )), (route) => false);
+              Navigator.pushAndRemoveUntil(context,
+                  MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+                    orderId: orderCreateResponse.data.order.id,
+                    type: 'success',
+                    message: 'Order Successful',
+                  )), (route) => false);
             }
 
           }

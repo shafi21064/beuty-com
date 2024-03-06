@@ -340,7 +340,7 @@ class _FilterState extends State<Filter> {
     var productResponse = await ProductRepository().getFilteredProducts(
       page: _productPage,
       //name: _searchKey,
-      name: widget.search ?? _searchKey,
+      name: providerValue.searchKey ?? _searchKey,
       sort_key: _selectedSort,
       categories:
       providerValue.categoryKey != null ? providerValue.categoryKey : _selectedCategory,
@@ -690,7 +690,7 @@ class _FilterState extends State<Filter> {
           decoration: BoxDecoration(
             color: MyTheme.primary,
           ),
-          padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
+          padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
           //padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
           child: Column(
             children: [
@@ -957,7 +957,7 @@ class _FilterState extends State<Filter> {
                           ),
                           RadioListTile(
                             dense: true,
-                            value: "price_high_to_low",
+                            value: "price-desc",
                             groupValue: _selectedSort,
                             activeColor: MyTheme.secondary,
                             controlAffinity:
@@ -974,7 +974,7 @@ class _FilterState extends State<Filter> {
                           ),
                           RadioListTile(
                             dense: true,
-                            value: "price_low_to_high",
+                            value: "price-asc",
                             groupValue: _selectedSort,
                             activeColor: MyTheme.secondary,
                             controlAffinity:
@@ -1516,13 +1516,13 @@ class _FilterState extends State<Filter> {
       return Container(
         //margin: widget.category!= null? EdgeInsets.only(top: 150) : EdgeInsets.only(top: 0),
         //padding: widget.category!= null? EdgeInsets.only(top: 200) : EdgeInsets.only(top: 0),
-          margin: _isSubcategoryExist == true ? EdgeInsets.only(top: 150) : EdgeInsets.only(top: 100),
+          margin: _isSubcategoryExist == true ? EdgeInsets.only(top: 130) : EdgeInsets.only(top: 100),
           padding: _isSubcategoryExist == true ? EdgeInsets.only(top: 65) : EdgeInsets.only(top: 35),
           child: ShimmerHelper()
               .buildProductGridShimmer(scontroller: _scrollController));
     } else if (_productList.length > 0) {
       return Container(
-        margin: _isSubcategoryExist == true ? EdgeInsets.only(top: 51) : EdgeInsets.only(top: 0),
+        margin: _isSubcategoryExist == true ? EdgeInsets.only(top: 55) : EdgeInsets.only(top: 0),
         padding: _isSubcategoryExist == true ? EdgeInsets.only(top: 30) : EdgeInsets.only(top: 0),
         child: RefreshIndicator(
           color: Colors.white,
@@ -1871,8 +1871,9 @@ class _FilterState extends State<Filter> {
                 children: List.generate(_allSubCategories.length, (index) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_)=> Filter(
-                          category: _allSubCategories[index]?.slug
+                      providerValue.setCategoryKey(_allSubCategories[index]?.slug);
+                      Navigator.push(context, MaterialPageRoute(builder: (_)=> Main(
+                        pageIndex: 1,
                       )));
                     },
                     child: Container(
