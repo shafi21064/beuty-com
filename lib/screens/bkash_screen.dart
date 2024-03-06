@@ -15,14 +15,17 @@ class BkashScreen extends StatefulWidget {
   double amount;
   String payment_type;
   String payment_method_key;
+  String bkash_initial_url;
   int order_id;
+
 
   BkashScreen(
       {Key key,
       this.amount = 0.00,
       this.payment_type = "",
       this.payment_method_key = "",
-      this.order_id})
+      this.order_id,
+      this.bkash_initial_url})
       : super(key: key);
 
   @override
@@ -32,8 +35,7 @@ class BkashScreen extends StatefulWidget {
 class _BkashScreenState extends State<BkashScreen> {
   int _combined_order_id = 0;
   bool _order_init = false;
-  String _initial_url = "";
-  bool _initial_url_fetched = false;
+
 
   WebViewController _webViewController;
 
@@ -48,7 +50,7 @@ class _BkashScreenState extends State<BkashScreen> {
 
     // if (widget.payment_type != "cart_payment") {
     //   // on cart payment need proper order id
-       getSetInitialUrl();
+       //getSetInitialUrl();
     // }
   }
 
@@ -86,13 +88,12 @@ class _BkashScreenState extends State<BkashScreen> {
       return;
     }
 
-    _initial_url = bkashUrlResponse.url;
-    _initial_url_fetched = true;
+
+
 
     setState(() {});
 
-   // print(_initial_url);
-    // print(_initial_url_fetched);
+
   }
 
   @override
@@ -105,7 +106,6 @@ class _BkashScreenState extends State<BkashScreen> {
   }
 
   void getData() {
-     print('bkash 00');
     var payment_details = '';
     _webViewController
         .evaluateJavascript("document.body.innerText")
@@ -166,8 +166,8 @@ class _BkashScreenState extends State<BkashScreen> {
   }
 
   buildBody() {
-     print('bkash link: ${_initial_url}');
-     print('bkash link2: ${_initial_url_fetched}');
+
+
     //
     // if (_order_init == false &&
     //     _combined_order_id == 0 &&
@@ -178,14 +178,8 @@ class _BkashScreenState extends State<BkashScreen> {
     //     ),
     //   );
     // } else
-      if (_initial_url_fetched == false) {
-      return Container(
-        child: Center(
-          child: Text(
-              AppLocalizations.of(context).bkash_screen_fetching_bkash_url),
-        ),
-      );
-    } else {
+
+
         print('bkash 22');
       return SingleChildScrollView(
         child: Container(
@@ -196,7 +190,7 @@ class _BkashScreenState extends State<BkashScreen> {
             javascriptMode: JavascriptMode.unrestricted,
             onWebViewCreated: (controller) {
               _webViewController = controller;
-              _webViewController.loadUrl(_initial_url);
+              _webViewController.loadUrl(widget.bkash_initial_url);
             },
             onWebResourceError: (error) {
               print('bkash 11');
@@ -212,15 +206,25 @@ class _BkashScreenState extends State<BkashScreen> {
                print("page.toString()");
                print(page.toString());
 
-              if (page.contains("/bkash/api/callback")) {
-                getData();
-              } else if (page.contains("/bkash/api/fail")) {
-                Toast.show("Payment cancelled", context,
+              if (page.contains("status=success")) {
+                //getData();
+                Toast.show('Order Successful', context,
+                    duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
+
+                Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+                      orderId: widget.order_id,
+                      message: 'Order Successful',
+                      type: "success",
+                    )), (route) => false);
+
+              } else if (page.contains("status=failure")) {
+                Toast.show("Payment Cancelled", context,
                     duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
                 Navigator.pushAndRemoveUntil(context,
                     MaterialPageRoute(builder: (_)=> OrderSuccessPage(
                       orderId: widget.order_id,
-                      message:"Payment cancelled",
+                      message:"Payment Cancelled",
                       type: "danger",
                     )), (route) => false);
                 return;
@@ -229,7 +233,6 @@ class _BkashScreenState extends State<BkashScreen> {
           ),
         ),
       );
-    }
   }
 
   AppBar buildAppBar(BuildContext context) {

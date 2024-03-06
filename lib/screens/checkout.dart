@@ -517,17 +517,27 @@ class _CheckoutState extends State<Checkout> {
           } else{
             if (_selected_payment_method == "bkash") {
               print('navigating to bkash');
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return BkashScreen(
-                  amount: _grandTotalValue,
-                  payment_type: payment_type,
-                  payment_method_key: "bkash",
-                  order_id: orderCreateResponse.data.order.id,
-                );
-              })).then((value) {
-                //onPopped(value);
-                print('Return back from bkash');
-              });
+              if(orderCreateResponse.data.paymentUrl != null) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return BkashScreen(
+                      amount: _grandTotalValue,
+                      payment_type: payment_type,
+                      payment_method_key: "bkash",
+                      order_id: orderCreateResponse.data.order.id,
+                      bkash_initial_url: orderCreateResponse.data.paymentUrl
+                  );
+                })).then((value) {
+                  //onPopped(value);
+                  print('Return back from bkash');
+                });
+              }else{
+                ToastComponent.showDialog(
+                    AppLocalizations
+                        .of(context)
+                        .common_nothing_to_pay, context,
+                    gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+                return;
+              }
             } else if (_selected_payment_method == "nagad") {
               if (_grandTotalValue == 0.00) {
                 ToastComponent.showDialog(
@@ -560,6 +570,8 @@ class _CheckoutState extends State<Checkout> {
                   amount: _grandTotalValue,
                   payment_type: payment_type,
                   payment_method_key: _selected_payment_method_key,
+                    order_id: orderCreateResponse.data.order.id,
+                    ssl_initial_url: orderCreateResponse.data.paymentUrl
                 );
               })).then((value) {
                 onPopped(value);

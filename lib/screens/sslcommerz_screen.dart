@@ -14,12 +14,16 @@ class SslCommerzScreen extends StatefulWidget {
   double amount;
   String payment_type;
   String payment_method_key;
+  String ssl_initial_url;
+  int order_id;
 
   SslCommerzScreen(
       {Key key,
       this.amount = 0.00,
       this.payment_type = "",
-      this.payment_method_key = ""})
+      this.payment_method_key = "",
+      this.order_id,
+      this.ssl_initial_url})
       : super(key: key);
 
   @override
