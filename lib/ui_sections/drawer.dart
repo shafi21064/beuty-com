@@ -336,7 +336,7 @@ class _MainDrawerState extends State<MainDrawer> {
                 // ListTile(
                 //     visualDensity:
                 //     VisualDensity(horizontal: -4, vertical: -4),
-                //     // leading: Image.asset("assets/app_logo.png", height: 24),
+                //     // leading: Image.asset("assets/placeholder.png", height: 24),
                 //     title: Text('Blog'.toUpperCase(),
                 //         style: TextStyle(fontSize: 13)),
                 //     onTap: () {
@@ -353,7 +353,7 @@ class _MainDrawerState extends State<MainDrawer> {
                 ListTile(
                     visualDensity:
                     VisualDensity(horizontal: -4, vertical: -4),
-                    // leading: Image.asset("assets/app_logo.png", height: 24),
+                    // leading: Image.asset("assets/placeholder.png", height: 24),
                     title: Text('BLOG',
                         style: TextStyle(fontSize: 13)),
                     onTap: () {
@@ -408,7 +408,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               ListTile(
                                   visualDensity:
                                   VisualDensity(horizontal: -4, vertical: -4),
-                                  // leading: Image.asset("assets/app_logo.png", height: 24),
+                                  // leading: Image.asset("assets/placeholder.png", height: 24),
                                   title: Text('Who We Are?',
                                       style: TextStyle(fontSize: 13)),
                                   onTap: () {
@@ -423,7 +423,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               ListTile(
                                   visualDensity:
                                   VisualDensity(horizontal: -4, vertical: -4),
-                                  // leading: Image.asset("assets/app_logo.png", height: 24),
+                                  // leading: Image.asset("assets/placeholder.png", height: 24),
                                   title: Text('FAQs', style: TextStyle(fontSize: 13)),
                                   onTap: () {
                                     Navigator.push(context,
@@ -437,7 +437,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               ListTile(
                                   visualDensity:
                                   VisualDensity(horizontal: -4, vertical: -4),
-                                  // leading: Image.asset("assets/app_logo.png", height: 24),
+                                  // leading: Image.asset("assets/placeholder.png", height: 24),
                                   title: Text('Contact us',
                                       style: TextStyle(fontSize: 13)),
                                   onTap: () {
@@ -452,7 +452,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               ListTile(
                                   visualDensity:
                                   VisualDensity(horizontal: -4, vertical: -4),
-                                  // leading: Image.asset("assets/app_logo.png", height: 24),
+                                  // leading: Image.asset("assets/placeholder.png", height: 24),
                                   title: Text('Testimonials',
                                       style: TextStyle(fontSize: 13)),
                                   onTap: () {
@@ -467,7 +467,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               ListTile(
                                   visualDensity:
                                   VisualDensity(horizontal: -4, vertical: -4),
-                                  // leading: Image.asset("assets/app_logo.png", height: 24),
+                                  // leading: Image.asset("assets/placeholder.png", height: 24),
                                   title: Text('Privacy & Policy',
                                       style: TextStyle(fontSize: 13)),
                                   onTap: () {
@@ -483,7 +483,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               ListTile(
                                   visualDensity:
                                   VisualDensity(horizontal: -4, vertical: -4),
-                                  // leading: Image.asset("assets/app_logo.png", height: 24),
+                                  // leading: Image.asset("assets/placeholder.png", height: 24),
                                   title: Text('Terms & Conditions',
                                       style: TextStyle(fontSize: 13)),
                                   onTap: () {
@@ -499,7 +499,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               ListTile(
                                   visualDensity:
                                   VisualDensity(horizontal: -4, vertical: -4),
-                                  // leading: Image.asset("assets/app_logo.png", height: 24),
+                                  // leading: Image.asset("assets/placeholder.png", height: 24),
                                   title: Text('Returns & Refunds',
                                       style: TextStyle(fontSize: 13)),
                                   onTap: () {
@@ -515,7 +515,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               ListTile(
                                   visualDensity:
                                   VisualDensity(horizontal: -4, vertical: -4),
-                                  // leading: Image.asset("assets/app_logo.png", height: 24),
+                                  // leading: Image.asset("assets/placeholder.png", height: 24),
                                   title: Text('Responsible Disclosure',
                                       style: TextStyle(fontSize: 13)),
                                   onTap: () {
@@ -534,7 +534,7 @@ class _MainDrawerState extends State<MainDrawer> {
                     ]),
                 // ListTile(
                 //     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                //     // leading: Image.asset("assets/app_logo.png", height: 24),
+                //     // leading: Image.asset("assets/placeholder.png", height: 24),
                 //     title:
                 //         Text('Return Policy', style: TextStyle(fontSize: 13)),
                 //     onTap: () {

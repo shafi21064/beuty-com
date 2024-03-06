@@ -366,7 +366,7 @@ class _ProductQuestionsState extends State<ProductQuestions> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(35),
                   child: Image.asset(
-                    'assets/app_logo.png',
+                    'assets/placeholder.png',
                     fit: BoxFit.cover,
                   ),
                 ),

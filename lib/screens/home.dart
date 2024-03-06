@@ -912,7 +912,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   //                             child: _featuredCategoryList[index].banner == ''
   //                                 ? Image.asset(
-  //                                     'assets/app_logo.png',
+  //                                     'assets/placeholder.png',
   //                                     fit: BoxFit.fitWidth,
   //                                   )
   //                                 : FadeInImage.assetNetwork(

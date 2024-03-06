@@ -219,9 +219,9 @@ class _FilterState extends State<Filter> {
   bool _shimmerShow = true;
 
 
-  bool _isVisible = true;
-  double _scrollPosition = 0.0;
-  double _scrollThreshold = 50.0; // Adjust as needed
+  // bool _isVisible = true;
+  // double _scrollPosition = 0.0;
+  // double _scrollThreshold = 50.0; // Adjust as needed
 
   // void _scrollListener() {
   //   double newPosition = _scrollController.position.pixels;
@@ -631,37 +631,50 @@ class _FilterState extends State<Filter> {
         drawer: MainDrawer(),
         endDrawer: buildFilterDrawer(),
         backgroundColor: MyTheme.white,
-        body: Column(
-         // clipBehavior: Clip.none,
+        body: Stack(
+          clipBehavior: Clip.none,
           children: [
-
-          buildAppBar(context),
-
+            // buildAppBar(context),
             _selectedFilter.option_key == 'product'
                 ? buildProductList()
                 : (_selectedFilter.option_key == 'brands'
                 ? buildBrandList()
                 : buildShopList()),
+            Positioned(
+              top: 0.0,
+              left: 0.0,
+              right: 0.0,
+              child: buildAppBar(context),
+            ),
 
-          // Align(
-          //    //alignment: Alignment.bottomCenter,
-          //     child: _selectedFilter.option_key == 'product'
-          //         ? buildProductLoadingContainer()
-          //         : (_selectedFilter.option_key == 'brands'
-          //         ? buildBrandLoadingContainer()
-          //         : buildShopLoadingContainer())
-          // )
+            Align(
+              //alignment: Alignment.bottomCenter,
+                child: _selectedFilter.option_key == 'product'
+                    ? buildProductLoadingContainer()
+                    : (_selectedFilter.option_key == 'brands'
+                    ? buildBrandLoadingContainer()
+                    : buildShopLoadingContainer())),
 
-        // Visibility(
-        //   visible: widget.category != null,
-        //   child: Positioned(
-        //     bottom: 0,
-        //       child: buildBottomButton()
-        //   ),
-        // )
-        ],
+
+            // Align(
+            //    //alignment: Alignment.bottomCenter,
+            //     child: _selectedFilter.option_key == 'product'
+            //         ? buildProductLoadingContainer()
+            //         : (_selectedFilter.option_key == 'brands'
+            //         ? buildBrandLoadingContainer()
+            //         : buildShopLoadingContainer())
+            // )
+
+            // Visibility(
+            //   visible: widget.category != null,
+            //   child: Positioned(
+            //     bottom: 0,
+            //       child: buildBottomButton()
+            //   ),
+            // )
+          ],
+        ),
       ),
-    ),
     );
   }
 
@@ -683,7 +696,7 @@ class _FilterState extends State<Filter> {
             children: [
               buildTopAppbar(context),
               buildBottomAppBar(context),
-              //buildScrollableSubCategory() ?? SizedBox(),
+              buildScrollableSubCategory() ?? SizedBox(),
 
 
               //widget.category != null ? buildScrollableSubCategory() : Container()
@@ -1535,8 +1548,7 @@ class _FilterState extends State<Filter> {
                       crossAxisCount: 2,
                       crossAxisSpacing: 15,
                       mainAxisSpacing: 30,
-                      childAspectRatio: 0.618,
-                  ),
+                      childAspectRatio: 0.618),
                   padding: EdgeInsets.all(16),
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
@@ -1550,7 +1562,7 @@ class _FilterState extends State<Filter> {
                       ratings: _productList[index].ratings,
                       image: _productList[index].pictures.length > 0
                           ? _productList[index].pictures[0].url
-                          : "assets/app_logo.png",
+                          : "assets/placeholder.png",
                       slug: _productList[index].slug,
                       reviews: _productList[index].reviews,
                       stock: _productList[index].stock,

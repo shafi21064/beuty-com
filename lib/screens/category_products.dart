@@ -210,7 +210,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
                 ratings: _productList[index].ratings,
                 image: _productList[index].pictures.length > 0
                     ? _productList[index].pictures[0].url
-                    : "assets/app_logo.png",
+                    : "assets/placeholder.png",
                 slug: _productList[index].slug,
                 reviews: _productList[index].reviews,
                 stock: _productList[index].stock,

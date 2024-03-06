@@ -161,7 +161,7 @@ elevation: 0, // Set the elevation to 0 for no shadow
                 //     ClipRRect(
                 //         child: widget.image == ''
                 //             ? Image.asset(
-                //           'assets/app_logo.png',
+                //           'assets/placeholder.png',
                 //           fit: BoxFit.fitWidth,
                 //         )
                 //             : FadeInImage.assetNetwork(
@@ -210,13 +210,13 @@ elevation: 0, // Set the elevation to 0 for no shadow
                           color: MyTheme.light_grey,
                           child: widget.image != null
                               ? FadeInImage.assetNetwork(
-                              placeholder: 'assets/app_logo.png',
+                              placeholder: 'assets/placeholder.png',
                               image: widget.image,
                               //fit: BoxFit.fill,
                               fit: BoxFit.fitWidth
                           )
                               : Image.asset(
-                            'assets/app_logo.png',
+                            'assets/placeholder.png',
                             fit: BoxFit.fitWidth,
                           ))),
                 ),
