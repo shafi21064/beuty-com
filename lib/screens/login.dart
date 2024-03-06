@@ -66,6 +66,7 @@ class _LoginState extends State<Login> {
     var email = _emailController.text.toString();
     var password = _passwordController.text.toString();
     var _phone = _phoneNumberController.text.toString();
+    print("_phone${_phone}");
 
     if (_login_by == 'email' && email == "") {
       ToastComponent.showDialog(
@@ -365,51 +366,80 @@ class _LoginState extends State<Login> {
                                 Container(
                                   padding: EdgeInsets.only(right: 10),
                                   height: 36,
-                                  child: CustomInternationalPhoneNumberInput(
-                                    onInputChanged: (PhoneNumber number) {
-                                      print(number.phoneNumber);
-                                      setState(() {
-                                        _phone = number.phoneNumber;
-                                      });
-                                    },
-                                    onInputValidated: (bool value) {
-                                      if (value) {
-                                        validPhoneNumber = true;
-                                      } else {
-                                        _phone = '';
-                                      }
-                                    },
-                                    selectorConfig: SelectorConfig(
-                                      showFlags: false,
-                                      selectorType:
-                                          PhoneInputSelectorType.DROPDOWN,
+                                  // child: CustomInternationalPhoneNumberInput(
+                                  //   onInputChanged: (PhoneNumber number) {
+                                  //     print(number.phoneNumber);
+                                  //     setState(() {
+                                  //       _phone = number.phoneNumber;
+                                  //     });
+                                  //   },
+                                  //   onInputValidated: (bool value) {
+                                  //     if (value) {
+                                  //       validPhoneNumber = true;
+                                  //     } else {
+                                  //       _phone = '';
+                                  //     }
+                                  //   },
+                                  //   selectorConfig: SelectorConfig(
+                                  //     showFlags: false,
+                                  //     selectorType:
+                                  //         PhoneInputSelectorType.DROPDOWN,
+                                  //
+                                  //   ),
+                                  //
+                                  //   ignoreBlank: false,
+                                  //   autoValidateMode: AutovalidateMode.disabled,
+                                  //   selectorTextStyle:
+                                  //       TextStyle(color: MyTheme.secondary),
+                                  //   textStyle:
+                                  //       TextStyle(color: MyTheme.secondary),
+                                  //   initialValue: phoneCode,
+                                  //   //initialValue: null,
+                                  //   textFieldController: _phoneNumberController,
+                                  //   formatInput: true,
+                                  //   keyboardType:
+                                  //       TextInputType.numberWithOptions(
+                                  //           signed: true, decimal: true),
+                                  //   inputDecoration: InputDecorations
+                                  //       .buildInputDecoration_phone(
+                                  //           hint_text: "01*********"),
+                                  //   // inputBorder: OutlineInputBorder( // Customize the input border
+                                  //   //   borderRadius: BorderRadius.zero,
+                                  //   //   borderSide: BorderSide(color: Colors.black), // Customize the border color
+                                  //   // ),
+                                  //   onSaved: (PhoneNumber number) {
+                                  //     print('On Saved: $number');
+                                  //   },
+                                  //   countries: ["BD"],
+                                  // ),
+                                  child: Container(
+                                    height: 56,
+                                    child: TextField(
+                                      controller: _phoneNumberController,
+                                      onChanged: (number) {
+                                        //print(number.phoneNumber);
+                                       // setState(() {
+                                          _phone = "${number}";
+                                          validPhoneNumber=true;
+                                       // });
+                                      },
 
+                                      // onSubmitted: (value){
+                                      //   print("value${value}");
+                                      //   print("value${_phone}");
+                                      // },
+                                      autofocus: false,
+                                      autocorrect: true,
+                                      decoration: InputDecoration(
+                                        hintText: '01*********',
+                                        // prefixIcon: _login_by == "email"
+                                        //     ? Icon(Icons.email)
+                                        //     : Icon(Icons.local_phone_outlined),
+                                        hintStyle: TextStyle(color: Colors.grey),
+                                        filled: true,
+                                        fillColor: Colors.white70,
+                                      ),
                                     ),
-
-                                    ignoreBlank: false,
-                                    autoValidateMode: AutovalidateMode.disabled,
-                                    selectorTextStyle:
-                                        TextStyle(color: MyTheme.white),
-                                    textStyle:
-                                        TextStyle(color: MyTheme.secondary),
-                                    initialValue: phoneCode,
-                                    //initialValue: null,
-                                    textFieldController: _phoneNumberController,
-                                    formatInput: true,
-                                    keyboardType:
-                                        TextInputType.numberWithOptions(
-                                            signed: true, decimal: true),
-                                    inputDecoration: InputDecorations
-                                        .buildInputDecoration_phone(
-                                            hint_text: "01*********"),
-                                    // inputBorder: OutlineInputBorder( // Customize the input border
-                                    //   borderRadius: BorderRadius.zero,
-                                    //   borderSide: BorderSide(color: Colors.black), // Customize the border color
-                                    // ),
-                                    onSaved: (PhoneNumber number) {
-                                      print('On Saved: $number');
-                                    },
-                                    countries: ["BD"],
                                   ),
                                 ),
                                 // GestureDetector(

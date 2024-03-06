@@ -403,13 +403,13 @@ class _OrderListState extends State<OrderList> {
             builder: (context) => IconButton(
               icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
               onPressed: () {
-                // if (widget.from_checkout) {
-                //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                //     return Main();
-                //   }));
-                // } else {
-                //   return Navigator.of(context).pop();
-                // }
+                if (widget.from_checkout) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return Main();
+                  }));
+                } else {
+                  return Navigator.of(context).pop();
+                }
                 Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=> Main()), (route) => false);
               },
             ),
