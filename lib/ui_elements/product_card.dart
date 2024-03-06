@@ -231,6 +231,7 @@ class _ProductCardState extends State<ProductCard> {
               ),
               Container(
                 height: 95,
+                width: MediaQuery.of(context).size.width * 0.35,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
