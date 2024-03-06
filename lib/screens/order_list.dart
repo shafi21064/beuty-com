@@ -570,7 +570,8 @@ class _OrderListState extends State<OrderList> {
                         : const EdgeInsets.only(left: 8.0),
                     child: buildPaymentStatusCheckContainer(
                         //_orderList[index].paymentStatus
-                        _orderList[index]["payment_status_string"]
+                        //_orderList[index]["payment_status_string"]
+                        _orderList[index]["payment_status"]
                     ),
                    ),
                 ],

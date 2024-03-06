@@ -26,7 +26,7 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     //on Splash Screen hide statusbar
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
     super.initState();
     _initPackageInfo();
   }
@@ -35,7 +35,7 @@ class _SplashState extends State<Splash> {
   void dispose() {
     //before going to other screen show statusbar
     SystemChrome.setEnabledSystemUIMode(
-        SystemUiMode.manual, overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+        SystemUiMode.manual, overlays: [SystemUiOverlay.top, SystemUiOverlay.top]);
     super.dispose();
   }
 
@@ -54,40 +54,43 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomSplashScreen(
-      //comment this
-      seconds: 3,
+    return Center(
+      child: CustomSplashScreen(
 
-      //comment this
-      navigateAfterSeconds: Main(),
+        //comment this
+        seconds: 3,
 
-      //navigateAfterFuture: loadFromFuture(), //uncomment this
-      title: Text(
-        "V " + _packageInfo.version,
-        style: TextStyle(
-            fontWeight: FontWeight.bold, fontSize: 14.0, color: Colors.white),
-      ),
-      useLoader: true,
-      loadingText: Text(
-        AppConfig.copyright_text,
-        style: TextStyle(
-          fontWeight: FontWeight.w400,
-          fontSize: 13.0,
-          color: Colors.white,
+        //comment this
+        navigateAfterSeconds: Main(),
+
+        //navigateAfterFuture: loadFromFuture(), //uncomment this
+        title: Text(
+          "V " + _packageInfo.version,
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 14.0, color: Colors.white),
         ),
+        useLoader: true,
+        loadingText: Text(
+          AppConfig.copyright_text,
+          style: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 13.0,
+            color: Colors.white,
+          ),
+        ),
+        //image: Image.asset("assets/splash_screen_logo.png",alignment: Alignment.center),
+        image: Image.asset("assets/splash_screen_logo_new.png",),
+        //backgroundColor: MyTheme.primary,
+        backgroundColor: MyTheme.white,
+        // backgroundImage:
+        //     Image.asset("assets/image_02.png"),
+        // gradientBackground: FlutterGradients.happyMemories(
+        //   type: GradientType.linear,
+        //   center: Alignment.center,
+        // ),
+        photoSize: 60.0,
+        backgroundPhotoSize: 140.0,
       ),
-      //image: Image.asset("assets/splash_screen_logo.png",alignment: Alignment.center),
-      image: Image.asset("assets/splash_screen_logo_new.png",alignment: Alignment.center),
-      //backgroundColor: MyTheme.primary,
-      backgroundColor: MyTheme.white,
-      // backgroundImage:
-      //     Image.asset("assets/image_02.png"),
-      // gradientBackground: FlutterGradients.happyMemories(
-      //   type: GradientType.linear,
-      //   center: Alignment.center,
-      // ),
-      photoSize: 60.0,
-      backgroundPhotoSize: 140.0,
     );
   }
 }
@@ -141,7 +144,6 @@ class CustomSplashScreen extends StatefulWidget {
 
   /// RouteSettings name for pushing a route with custom name (if left out in MaterialApp route names) to navigator stack (Contribution by Ramis Mustafa)
   final String routeName;
-
   /// expects a function that returns a future, when this future is returned it will navigate
   final Future<dynamic> navigateAfterFuture;
 
@@ -184,7 +186,7 @@ class CustomSplashScreen extends StatefulWidget {
           ImageProvider imageBackground,
           Gradient gradientBackground,
           bool useLoader,
-          String routeName}) =>
+          String routeName,}) =>
       CustomSplashScreen(
         loaderColor: loaderColor,
         seconds: seconds,
@@ -219,7 +221,8 @@ class CustomSplashScreen extends StatefulWidget {
           ImageProvider imageBackground,
           Gradient gradientBackground,
           bool useLoader,
-          String routeName}) =>
+          String routeName,
+          }) =>
       CustomSplashScreen(
         loaderColor: loaderColor,
         navigateAfterFuture: navigateAfterFuture,
@@ -331,7 +334,7 @@ class _CustomSplashScreenState extends State<CustomSplashScreen> {
                     radius: widget.backgroundPhotoSize,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 120.0),
+                    padding: const EdgeInsets.only(top: 50.0),
                     child: Container(
                         width: double.infinity,
                         child: Column(
@@ -344,7 +347,8 @@ class _CustomSplashScreenState extends State<CustomSplashScreen> {
                                 backgroundColor: Colors.transparent,
                                 child: Hero(
                                   tag: "splashscreenImage",
-                                  child: Container(child: widget.image),
+                                  child: Container(
+                                      child: widget.image),
                                 ),
                                 radius: widget.photoSize,
                               ),

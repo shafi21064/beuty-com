@@ -124,7 +124,8 @@ class _ProductCardState extends State<ProductCard> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                  width: double.infinity,
+                  //width: double.infinity,
+                  //width: MediaQuery.of(context).size.width / 2 - .5,
                   padding: EdgeInsets.only(bottom: 8),
                   //height: 158,
                   height: ((MediaQuery.of(context).size.width - 32) / 2.5),
@@ -132,16 +133,18 @@ class _ProductCardState extends State<ProductCard> {
                     children: [
                       Center(
                         child: ClipRRect(
-                            clipBehavior: Clip.hardEdge,
+                            clipBehavior: Clip.antiAlias,
                             borderRadius: BorderRadius.vertical(
                                 top: Radius.circular(0), bottom: Radius.zero),
                             child: Container(
+                                width: MediaQuery.of(context).size.width,
                                 color: MyTheme.light_grey,
                                 child: widget.image != null
                                     ? FadeInImage.assetNetwork(
                                         placeholder: 'assets/app_logo.png',
                                         image: widget.image,
-                                        fit: BoxFit.fill,
+                                        //fit: BoxFit.fill,
+                                        fit: BoxFit.fitWidth
                                       )
                                     : Image.asset(
                                         'assets/app_logo.png',
@@ -177,7 +180,8 @@ class _ProductCardState extends State<ProductCard> {
                     ],
                   )),
               Container(
-                width: MediaQuery.of(context).size.width * 0.35,
+                width: MediaQuery.of(context).size.width / 2 - .5,
+                //width: MediaQuery.of(context).size.width * 0.35,
                 height: 40,
                 child: RaisedButton(
                   onPressed: () {
@@ -231,7 +235,7 @@ class _ProductCardState extends State<ProductCard> {
               ),
               Container(
                 height: 95,
-                width: MediaQuery.of(context).size.width * 0.35,
+                //width: MediaQuery.of(context).size.width * 0.35,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

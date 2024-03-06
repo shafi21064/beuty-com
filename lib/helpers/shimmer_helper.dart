@@ -74,6 +74,65 @@ class ShimmerHelper {
     );
   }
 
+  buildHomeProductGridShimmer({scontroller, item_count = 10}) {
+    return GridView.builder(
+      itemCount: item_count,
+      controller: scontroller,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: 0.85),
+      padding: EdgeInsets.all(8),
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Shimmer.fromColors(
+            baseColor: MyTheme.light_grey,
+            highlightColor: MyTheme.light_grey,
+            child: Container(
+              height: 120,
+              width: double.infinity,
+              color: Colors.white,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  // buildHomeProductGridShimmer({scontroller, item_count = 10}) {
+  //   return ListView.builder(
+  //     scrollDirection: Axis.horizontal,
+  //     itemCount: item_count,
+  //     controller: scontroller,
+  //     // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+  //     //     crossAxisCount: 2,
+  //     //     crossAxisSpacing: 10,
+  //     //     mainAxisSpacing: 10,
+  //     //     childAspectRatio: 0.85),
+  //     padding: EdgeInsets.all(8),
+  //     physics: NeverScrollableScrollPhysics(),
+  //     shrinkWrap: true,
+  //     itemBuilder: (context, index) {
+  //       return Padding(
+  //         padding: const EdgeInsets.all(8.0),
+  //         child: Shimmer.fromColors(
+  //           baseColor: MyTheme.light_grey,
+  //           highlightColor: MyTheme.light_grey,
+  //           child: Container(
+  //             height: 120,
+  //             width: 60,
+  //             color: Colors.white,
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
+
   buildSquareGridShimmer({scontroller, item_count = 10}) {
     return GridView.builder(
       itemCount: item_count,

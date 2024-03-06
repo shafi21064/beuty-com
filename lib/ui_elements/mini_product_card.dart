@@ -144,7 +144,6 @@ class _MiniProductCardState extends State<MiniProductCard> {
         }));
       },
       child: Card(
-      
 elevation: 0, // Set the elevation to 0 for no shadow
   
         child: Column(
@@ -152,55 +151,107 @@ elevation: 0, // Set the elevation to 0 for no shadow
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                width: double.infinity,
+                alignment: Alignment.center,
+                //width: double.infinity,
+                width: MediaQuery.of(context).size.width,
                 height: (MediaQuery.of(context).size.width - 36) / 3,
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    ClipRRect(
-                        child: widget.image == ''
-                            ? Image.asset(
-                          'assets/app_logo.png',
-                          fit: BoxFit.fitWidth,
-                        )
-                            : FadeInImage.assetNetwork(
-                          placeholder: 'assets/placeholder.png',
-                          image: widget.image,
-                          //fit: BoxFit.fill,
-                          fit: BoxFit.fitWidth,
-                        )),
-                    Visibility(
-                      visible: widget.sale_price != widget.price,
-                      child: Positioned(
-                        left: 5,
-                        top: 5,
-                        child: Container(
-                          height: 33,
-                          width: 33,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: MyTheme.primary,
-                              shape: BoxShape.circle
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(2),
-                            child: Text('-${widget.discount}%',
-                            style: TextStyle(
+                // child: Stack(
+                //   clipBehavior: Clip.none,
+                //   children: [
+                //     ClipRRect(
+                //         child: widget.image == ''
+                //             ? Image.asset(
+                //           'assets/app_logo.png',
+                //           fit: BoxFit.fitWidth,
+                //         )
+                //             : FadeInImage.assetNetwork(
+                //           placeholder: 'assets/placeholder.png',
+                //           image: widget.image,
+                //           fit: BoxFit.fill,
+                //         )),
+                //     Visibility(
+                //       visible: widget.sale_price != widget.price,
+                //       child: Positioned(
+                //         left: 5,
+                //         top: 5,
+                //         child: Container(
+                //           height: 33,
+                //           width: 33,
+                //           alignment: Alignment.center,
+                //           decoration: BoxDecoration(
+                //               color: MyTheme.primary,
+                //               shape: BoxShape.circle
+                //           ),
+                //           child: Padding(
+                //             padding: const EdgeInsets.all(2),
+                //             child: Text('-${widget.discount}%',
+                //             style: TextStyle(
+                //               fontWeight: FontWeight.bold,
+                //               color: MyTheme.white,
+                //               fontSize: 10
+                //             ),
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //
+                //   ],
+                // ),
+            child: Stack(
+              children: [
+                Center(
+                  child: ClipRRect(
+                      clipBehavior: Clip.antiAlias,
+                      borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(0), bottom: Radius.zero),
+                      child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          color: MyTheme.light_grey,
+                          child: widget.image != null
+                              ? FadeInImage.assetNetwork(
+                              placeholder: 'assets/app_logo.png',
+                              image: widget.image,
+                              //fit: BoxFit.fill,
+                              fit: BoxFit.fitWidth
+                          )
+                              : Image.asset(
+                            'assets/app_logo.png',
+                            fit: BoxFit.fitWidth,
+                          ))),
+                ),
+                Visibility(
+                  visible: widget.sale_price != widget.price,
+                  child: Positioned(
+                    left: 5,
+                    top: 5,
+                    child: Container(
+                      height: 33,
+                      width: 33,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: MyTheme.primary,
+                          shape: BoxShape.circle
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Text('-${widget.discount}%',
+                          style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: MyTheme.white,
                               fontSize: 10
-                            ),
-                            ),
                           ),
                         ),
                       ),
                     ),
-
-                  ],
+                  ),
                 ),
-              ),
+              ],
+            )),
+
               Container(
-                width: MediaQuery.of(context).size.width * 0.30,
+                //width: MediaQuery.of(context).size.width * 0.30,
+                width: MediaQuery.of(context).size.width / 2 - .5,
                 height: 36,
                 child: RaisedButton(
                   onPressed: () {
