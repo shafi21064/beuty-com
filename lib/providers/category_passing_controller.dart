@@ -27,10 +27,13 @@ class CategoryPassingController with ChangeNotifier{
 
   void setSearchKey(searchKeyValue){
     _searchKey = searchKeyValue;
+    print('searchkey ${searchKey}' );
+    notifyListeners();
   }
 
-  void ResetValue(){
+  void resetCategoryKeyValue(){
     _categoryKey = '';
     _typeKey= '';
+    _searchKey = '';
   }
 }

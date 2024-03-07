@@ -1,6 +1,7 @@
 import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/screens/checkout.dart';
 import 'package:kirei/screens/filter.dart';
+import 'package:kirei/screens/main.dart';
 import 'package:kirei/screens/shipping_info.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
@@ -678,7 +679,7 @@ class CartState extends State<Cart> {
             GestureDetector(
               onTap: () {
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => Filter()));
+                    .push(MaterialPageRoute(builder: (context) => Main(pageIndex: 1,)));
               },
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.06,

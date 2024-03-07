@@ -58,7 +58,6 @@ class Filter extends StatefulWidget {
         this.category,
         this.categoryIndex,
         this.key_ingredients,
-        this.search,
       })
       : super(key: key);
 
@@ -69,7 +68,6 @@ class Filter extends StatefulWidget {
   String key_ingredients;
   String category;
   String type;
-  String search;
   int categoryIndex;
 
   // dynamic _searchBar;
@@ -1839,10 +1837,10 @@ class _FilterState extends State<Filter> {
       );
     }else if(_allSubCategories.length == 0){
       _isSubcategoryExist == false;
-      providerValue.ResetValue();
+      //providerValue.ResetValue();
     }else if (_allSubCategories.length > 0){
       _isSubcategoryExist == true;
-      providerValue.ResetValue();
+      //providerValue.ResetValue();
       return Column(
         children : [
           Divider(

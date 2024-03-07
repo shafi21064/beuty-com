@@ -427,7 +427,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         fetchAll();
       } else if (mode == 'buy_now') {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return Cart(has_bottomnav: false);
+          return Main(pageIndex: 2,);
         })).then((value) {
           onPopped(value);
         });
