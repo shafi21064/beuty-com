@@ -1501,12 +1501,8 @@ class _FilterState extends State<Filter> {
 
   Container buildProductList() {
     return Container(
-      child: Column(
-        children: [
-          Expanded(
-            child: buildProductScrollableList(),
-          )
-        ],
+      child: Expanded(
+        child: buildProductScrollableList(),
       ),
     );
   }
@@ -1516,8 +1512,8 @@ class _FilterState extends State<Filter> {
       return Container(
         //margin: widget.category!= null? EdgeInsets.only(top: 150) : EdgeInsets.only(top: 0),
         //padding: widget.category!= null? EdgeInsets.only(top: 200) : EdgeInsets.only(top: 0),
-          margin: _isSubcategoryExist == true ? EdgeInsets.only(top: 130) : EdgeInsets.only(top: 100),
-          padding: _isSubcategoryExist == true ? EdgeInsets.only(top: 65) : EdgeInsets.only(top: 35),
+          margin: _isSubcategoryExist == true ? EdgeInsets.only(top: 150) : EdgeInsets.only(top: 100),
+          padding: _isSubcategoryExist == true ? EdgeInsets.only(top: 55) : EdgeInsets.only(top: 50),
           child: ShimmerHelper()
               .buildProductGridShimmer(scontroller: _scrollController));
     } else if (_productList.length > 0) {
@@ -1586,12 +1582,8 @@ class _FilterState extends State<Filter> {
 
   Container buildBrandList() {
     return Container(
-      child: Column(
-        children: [
-          Expanded(
-            child: buildBrandScrollableList(),
-          )
-        ],
+      child: Expanded(
+        child: buildBrandScrollableList(),
       ),
     );
   }
@@ -1721,12 +1713,8 @@ class _FilterState extends State<Filter> {
 
   Container buildShopList() {
     return Container(
-      child: Column(
-        children: [
-          Expanded(
-            child: buildShopScrollableList(),
-          )
-        ],
+      child: Expanded(
+        child: buildShopScrollableList(),
       ),
     );
   }

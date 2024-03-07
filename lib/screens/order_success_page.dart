@@ -46,7 +46,7 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
     fetchOrderedItems();
     //print("UserID1:${orderDetails?.user_id}");
 
-
+    Provider.of<CartCountUpdate>(context).getReset();
     super.initState();
   }
 
