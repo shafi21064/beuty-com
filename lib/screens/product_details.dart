@@ -97,10 +97,10 @@ class _ProductDetailsState extends State<ProductDetails> {
   List<dynamic> _topProducts = [];
   bool _topProductInit = false;
 
-  bool _isAddedToCart = false;
+  bool _isGoToCart = false;
 
   buildUpdateGoToCart(){
-    _isAddedToCart = true;
+    _isGoToCart = true;
     setState(() {
 
     });
@@ -394,7 +394,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     addToCart(mode: "add_to_cart", context: context, snackbar: snackbar);
   }
 
-  onPressBuyNow(context) {
+  onPressBuyNow(context, isGoToCart) {
     addToCart(mode: "buy_now", context: context);
   }
 
@@ -2248,12 +2248,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                     builder: (widget, value, child) {
                       return RaisedButton(
                         onPressed: () {
-                          onPressBuyNow(context);
+                          onPressBuyNow(context, _isGoToCart);
                           value.setCartValue(_quantity);
                         },
                         padding: EdgeInsets.all(0.0),
                         child: Ink(
-                          color: _isAddedToCart == true ? Color(0xffE49000) : MyTheme.primary,
+                          color: _isGoToCart == true ? Color(0xffE49000) : MyTheme.primary,
                           child: Container(
                             constraints:
                                 BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
@@ -2261,7 +2261,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             child: Text(
                               // AppLocalizations.of(context)
                               //     .product_details_screen_button_buy_now,
-                              _isAddedToCart == true ? "Go to Cart" : "Buy Now",
+                              _isGoToCart == true ? "Go to Cart" : "Buy Now",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,
@@ -2282,7 +2282,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   height: 44,
                   child: RaisedButton(
                     onPressed: () {
-                      onPressBuyNow(context);
+                      // onPressBuyNow(context, _isGoToCart);
                     },
                     padding: EdgeInsets.all(0.0),
                     child: Ink(

@@ -694,7 +694,7 @@ class _FilterState extends State<Filter> {
             children: [
               buildTopAppbar(context),
               buildBottomAppBar(context),
-              buildScrollableSubCategory() ?? SizedBox(),
+              // buildScrollableSubCategory() ?? SizedBox(),
 
 
               //widget.category != null ? buildScrollableSubCategory() : Container()
@@ -1510,14 +1510,19 @@ class _FilterState extends State<Filter> {
       return Container(
         //margin: widget.category!= null? EdgeInsets.only(top: 150) : EdgeInsets.only(top: 0),
         //padding: widget.category!= null? EdgeInsets.only(top: 200) : EdgeInsets.only(top: 0),
-          margin: _isSubcategoryExist == true ? EdgeInsets.only(top: 150) : EdgeInsets.only(top: 100),
-          padding: _isSubcategoryExist == true ? EdgeInsets.only(top: 55) : EdgeInsets.only(top: 50),
-          child: ShimmerHelper()
-              .buildProductGridShimmer(scontroller: _scrollController));
+          margin:EdgeInsets.only(top: 100),
+          padding:EdgeInsets.only(top: 35),
+          child: ListView(
+            children: [
+              buildSUbCategoryLoading() ?? SizedBox(),
+              ShimmerHelper()
+                  .buildProductGridShimmer(scontroller: _scrollController)
+            ],
+          ));
     } else if (_productList.length > 0) {
       return Container(
-        margin: _isSubcategoryExist == true ? EdgeInsets.only(top: 55) : EdgeInsets.only(top: 0),
-        padding: _isSubcategoryExist == true ? EdgeInsets.only(top: 30) : EdgeInsets.only(top: 0),
+        //margin:  EdgeInsets.only(top: 5),
+        //padding: EdgeInsets.only(top: 8),
         child: RefreshIndicator(
           color: Colors.white,
           backgroundColor: MyTheme.primary,
@@ -1533,6 +1538,8 @@ class _FilterState extends State<Filter> {
                     MediaQuery.of(context).viewPadding.top > 40 ? 180 : 135
                   //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
                 ),
+                //Text('data'),
+                buildScrollableSubCategory() ?? SizedBox(),
                 GridView.builder(
                   // 2
                   //addAutomaticKeepAlives: true,
@@ -1782,137 +1789,139 @@ class _FilterState extends State<Filter> {
     }
   }
 
+  buildSUbCategoryLoading(){
+    if (_shimmerShow == true) {
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Card(
+          margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 8,),
+            color: MyTheme.white,
+            child: Row(
+              children: [
+                Padding(
+                    padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8,),
+                    child: ClipOval(
+                        child: ShimmerHelper()
+                            .buildBasicShimmer(height: 58.0, width: 58.0))),
+                Padding(
+                    padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
+                    child: ClipOval(
+                        child: ShimmerHelper()
+                            .buildBasicShimmer(height: 58.0, width: 58.0))),
+                Padding(
+                    padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
+                    child: ClipOval(
+                        child: ShimmerHelper()
+                            .buildBasicShimmer(height: 58.0, width: 58.0))),
+                Padding(
+                    padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
+                    child: ClipOval(
+                        child: ShimmerHelper()
+                            .buildBasicShimmer(height: 58.0, width: 58.0))),
+                Padding(
+                    padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
+                    child: ClipOval(
+                        child: ShimmerHelper()
+                            .buildBasicShimmer(height: 58.0, width: 58.0))),
+                Padding(
+                    padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
+                    child: ClipOval(
+                        child: ShimmerHelper()
+                            .buildBasicShimmer(height: 58.0, width: 58.0))),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+  }
+
   buildScrollableSubCategory(){
     var providerValue = Provider.of<CategoryPassingController>(context, listen: false);
-    if (_shimmerShow == true) {
-      return Column(
-        children: [
-          Divider(
-            color: MyTheme.dark_grey,
-            thickness: 1,
-            height: 1,
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 8,),
-              color: MyTheme.white,
-              child: Row(
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8,),
-                      child: ClipOval(
-                          child: ShimmerHelper()
-                              .buildBasicShimmer(height: 58.0, width: 58.0))),
-                  Padding(
-                      padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
-                      child: ClipOval(
-                          child: ShimmerHelper()
-                              .buildBasicShimmer(height: 58.0, width: 58.0))),
-                  Padding(
-                      padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
-                      child: ClipOval(
-                          child: ShimmerHelper()
-                              .buildBasicShimmer(height: 58.0, width: 58.0))),
-                  Padding(
-                      padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
-                      child: ClipOval(
-                          child: ShimmerHelper()
-                              .buildBasicShimmer(height: 58.0, width: 58.0))),
-                  Padding(
-                      padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
-                      child: ClipOval(
-                          child: ShimmerHelper()
-                              .buildBasicShimmer(height: 58.0, width: 58.0))),
-                  Padding(
-                      padding: const EdgeInsets.only(right: 8.0, top: 8, bottom: 8),
-                      child: ClipOval(
-                          child: ShimmerHelper()
-                              .buildBasicShimmer(height: 58.0, width: 58.0))),
-                ],
-              ),
-            ),
-          ),
-        ],
-      );
-    }else if(_allSubCategories.length == 0){
+    if(!_shimmerShow && _allSubCategories.length == 0){
       _isSubcategoryExist == false;
-      //providerValue.ResetValue();
+      providerValue.resetCategoryKeyValue();
     }else if (_allSubCategories.length > 0){
       _isSubcategoryExist == true;
-      //providerValue.ResetValue();
-      return Column(
-        children : [
-          Divider(
-            color: MyTheme.dark_grey,
-            thickness: 1,
-            height: 1,
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            color: MyTheme.white,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: List.generate(_allSubCategories.length, (index) {
-                  return GestureDetector(
-                    onTap: () {
-                      providerValue.setCategoryKey(_allSubCategories[index]?.slug);
-                      Navigator.push(context, MaterialPageRoute(builder: (_)=> Main(
-                        pageIndex: 1,
-                      )));
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(right: 5, top: 3),
-                      padding: EdgeInsets.only(bottom: 6,),
-                      //height: 120,
-                      width: MediaQuery.of(context).size.width / 5 - 4,
-                      color: MyTheme.white,
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 56,
-                            width: 56,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              //borderRadius: BorderRadius.circular(30),
-                                shape: BoxShape.circle,
-                                border: Border.all(color: MyTheme.light_grey, width: 1)
-                            ),
-                            child: ClipOval(
-                                child: _allSubCategories[index]?.icon != null
-                                    ? FadeInImage.assetNetwork(
-                                  image: _allSubCategories[index]?.icon,
-                                  placeholder: 'assets/placeholder.png',
-                                  //fit: BoxFit.cover,
-                                  height: 56,
-                                  width: 56,
-                                )
-                                    : SizedBox()
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8),
-                            child: Text(
-                              _allSubCategories[index]?.name,
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: MyTheme.secondary,
-                                fontWeight: FontWeight.w300,
-                                fontSize: 12,
+      providerValue.resetCategoryKeyValue();
+      return Card(
+        margin : EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+        elevation: 5,
+        child: Column(
+          children : [
+            Divider(
+              color: MyTheme.dark_grey,
+              thickness: 1,
+              height: 1,
+            ),
+            SizedBox(height: 5,),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              color: MyTheme.white,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: List.generate(_allSubCategories.length, (index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (_)=> Filter(
+                            category: _allSubCategories[index]?.slug
+                        )));
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(right: 5, top: 3),
+                        padding: EdgeInsets.only(bottom: 6,),
+                        //height: 120,
+                        width: MediaQuery.of(context).size.width / 5 - 4,
+                        color: MyTheme.white,
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 56,
+                              width: 56,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                //borderRadius: BorderRadius.circular(30),
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: MyTheme.light_grey, width: 1)
+                              ),
+                              child: ClipOval(
+                                  child: _allSubCategories[index]?.icon != null
+                                      ? FadeInImage.assetNetwork(
+                                    image: _allSubCategories[index]?.icon,
+                                    placeholder: 'assets/placeholder.png',
+                                    //fit: BoxFit.cover,
+                                    height: 56,
+                                    width: 56,
+                                  )
+                                      : SizedBox()
                               ),
                             ),
-                          )
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8),
+                              child: Text(
+                                _allSubCategories[index]?.name,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: MyTheme.secondary,
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  }),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     }
   }
