@@ -4,6 +4,7 @@ import 'package:kirei/helpers/business_setting_helper.dart';
 import 'package:kirei/other_config.dart';
 import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/providers/category_passing_controller.dart';
+import 'package:kirei/screens/filter.dart';
 import 'package:kirei/screens/order_failed_page.dart';
 import 'package:kirei/screens/order_success_page.dart';
 import 'package:kirei/theme/appThemes.dart';
@@ -132,6 +133,7 @@ class _MyAppState extends State<MyApp> {
                   locale: provider.locale,
                   supportedLocales: LangConfig().supportedLocales(),
                   home: Splash(),
+                 // home: Filter(),
                   //home: OrderFailedPage(),
                   //home: Main(),
                 ));

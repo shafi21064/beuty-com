@@ -1,7 +1,9 @@
 import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/screens/checkout.dart';
 import 'package:kirei/screens/filter.dart';
+import 'package:kirei/screens/login.dart';
 import 'package:kirei/screens/main.dart';
+import 'package:kirei/screens/product_details.dart';
 import 'package:kirei/screens/shipping_info.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
@@ -44,12 +46,6 @@ class CartState extends State<Cart> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    print("user data");
-    print(is_logged_in.$);
-    print(access_token.$);
-    print(user_id.$);
-    print(user_email.$);
 
     if (is_logged_in.$ == true) {
       fetchData();
@@ -607,12 +603,67 @@ class CartState extends State<Cart> {
       VoidCallback deleteCartItem, VoidCallback setCartCount) {
     if (is_logged_in.$ == false) {
       return Container(
-          height: 100,
-          child: Center(
-              child: Text(
-            AppLocalizations.of(context).cart_screen_please_log_in,
-            style: TextStyle(color: MyTheme.secondary),
-          )));
+          height: 300,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset("assets/profile.png"),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.07,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Center(
+                    child: Text(
+                      AppLocalizations.of(context).cart_screen_please_log_in,
+                      style: TextStyle(color: MyTheme.secondary),
+                    )),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.05,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // Container(
+                    //     height: 100,
+                    //     child: Center(
+                    //         child: Text(
+                    //           AppLocalizations.of(context).cart_screen_cart_empty,
+                    //           style: TextStyle(color: MyTheme.secondary),
+                    //         ))),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) => Login()));
+                      },
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        color: MyTheme.secondary,
+                        // constraints:
+                        //     BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+                        alignment: Alignment.center,
+                        child: Text(
+                          // AppLocalizations.of(context)
+                          //     .product_details_screen_button_checkout
+                          //     .toUpperCase(),
+                          "Login Now",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ));
     } else if (_isInitial && _shopList.length == 0) {
       return SingleChildScrollView(
           child: ShimmerHelper()
@@ -755,81 +806,90 @@ class CartState extends State<Cart> {
                       .product_thumbnail_image,
                   fit: BoxFit.fitWidth,
                 ))),
-        Container(
-          width: 200,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      _shopList[seller_index]
-                          .cart_items[item_index]
-                          .product_name,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: TextStyle(
-                          color: MyTheme.secondary,
-                          fontSize: 14,
-                          height: 1.6,
-                          fontWeight: FontWeight.w400),
-                    ),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            _shopList[seller_index]
-                                    .cart_items[item_index]
-                                    .currency_symbol +
-                                (_shopList[seller_index]
-                                            .cart_items[item_index]
-                                            .price *
-                                        _shopList[seller_index]
-                                            .cart_items[item_index]
-                                            .quantity)
-                                    .toStringAsFixed(2),
-                            textAlign: TextAlign.left,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            style: TextStyle(
-                                color: MyTheme.secondary,
-                                fontSize: 14,
-                                height: 1.6,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        Spacer(),
-                        SizedBox(
-                          height: 28,
-                          child: InkWell(
-                            onTap: () {},
-                            child: IconButton(
-                              onPressed: () {
-                                onPressDelete(
-                                    _shopList[seller_index]
-                                        .cart_items[item_index]
-                                        .id,
-                                    deleteCartItem);
-                                setCartCount();
-                              },
-                              icon: Icon(
-                                Icons.delete_forever_outlined,
-                                color: MyTheme.dark_grey,
-                                size: 24,
-                              ),
+        GestureDetector(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (_)=> ProductDetails(
+              id: _shopList[seller_index].cart_items[item_index]
+                  .product_id,
+              stock: _shopList[seller_index].cart_items[item_index].upper_limit
+            )));
+          },
+          child: Container(
+            width: 200,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _shopList[seller_index]
+                            .cart_items[item_index]
+                            .product_name,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: MyTheme.secondary,
+                            fontSize: 14,
+                            height: 1.6,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Text(
+                              _shopList[seller_index]
+                                      .cart_items[item_index]
+                                      .currency_symbol +
+                                  (_shopList[seller_index]
+                                              .cart_items[item_index]
+                                              .price *
+                                          _shopList[seller_index]
+                                              .cart_items[item_index]
+                                              .quantity)
+                                      .toStringAsFixed(2),
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: TextStyle(
+                                  color: MyTheme.secondary,
+                                  fontSize: 14,
+                                  height: 1.6,
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                  ],
+                          Spacer(),
+                          SizedBox(
+                            height: 28,
+                            child: InkWell(
+                              onTap: () {},
+                              child: IconButton(
+                                onPressed: () {
+                                  onPressDelete(
+                                      _shopList[seller_index]
+                                          .cart_items[item_index]
+                                          .id,
+                                      deleteCartItem);
+                                  setCartCount();
+                                },
+                                icon: Icon(
+                                  Icons.delete_forever_outlined,
+                                  color: MyTheme.dark_grey,
+                                  size: 24,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         Spacer(),

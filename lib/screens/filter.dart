@@ -1499,8 +1499,12 @@ class _FilterState extends State<Filter> {
 
   Container buildProductList() {
     return Container(
-      child: Expanded(
-        child: buildProductScrollableList(),
+      child: Column(
+        children: [
+          Expanded(
+            child: buildProductScrollableList(),
+          ),
+        ],
       ),
     );
   }
@@ -1587,8 +1591,12 @@ class _FilterState extends State<Filter> {
 
   Container buildBrandList() {
     return Container(
-      child: Expanded(
-        child: buildBrandScrollableList(),
+      child: Column(
+        children: [
+          Expanded(
+            child: buildBrandScrollableList(),
+          ),
+        ],
       ),
     );
   }
@@ -1718,8 +1726,12 @@ class _FilterState extends State<Filter> {
 
   Container buildShopList() {
     return Container(
-      child: Expanded(
-        child: buildShopScrollableList(),
+      child: Column(
+        children: [
+          Expanded(
+            child: buildShopScrollableList(),
+          ),
+        ],
       ),
     );
   }
@@ -1851,11 +1863,6 @@ class _FilterState extends State<Filter> {
         elevation: 5,
         child: Column(
           children : [
-            Divider(
-              color: MyTheme.dark_grey,
-              thickness: 1,
-              height: 1,
-            ),
             SizedBox(height: 5,),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 8),
@@ -1866,8 +1873,9 @@ class _FilterState extends State<Filter> {
                   children: List.generate(_allSubCategories.length, (index) {
                     return GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_)=> Filter(
-                            category: _allSubCategories[index]?.slug
+                        providerValue.setCategoryKey(_allSubCategories[index]?.slug);
+                        Navigator.push(context, MaterialPageRoute(builder: (_)=> Main(
+                            pageIndex: 1,
                         )));
                       },
                       child: Container(

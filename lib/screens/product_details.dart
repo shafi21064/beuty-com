@@ -390,9 +390,9 @@ class _ProductDetailsState extends State<ProductDetails> {
   //   fetchAndSetVariantWiseInfo();
   // }
 
-  onPressAddToCart(context, snackbar) {
-    addToCart(mode: "add_to_cart", context: context, snackbar: snackbar);
-  }
+  // onPressAddToCart(context, snackbar) {
+  //   addToCart(mode: "add_to_cart", context: context, snackbar: snackbar);
+  // }
 
   onPressBuyNow(context, isGoToCart) {
     addToCart(mode: "buy_now", context: context);
@@ -2193,7 +2193,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     builder: (widget, value, child) {
                       return RaisedButton(
                         onPressed: () {
-                          onPressAddToCart(context, _addedToCartSnackbar);
+                          //onPressAddToCart(context, _addedToCartSnackbar);
                           value.setCartValue(_quantity);
                           buildUpdateGoToCart();
                         },
