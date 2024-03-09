@@ -829,8 +829,7 @@ class _ProfileState extends State<Profile> {
                         ),
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: NetworkImage("${avatar_original.$}" ??
-                              "assets/placeholder.png"), //TODO:change the avatar
+                          image: avatar_original.$ != null ? NetworkImage("${avatar_original.$}") : AssetImage('assets/placeholder.png') //TODO:change the avatar
                         ),
                       ),
                     ),

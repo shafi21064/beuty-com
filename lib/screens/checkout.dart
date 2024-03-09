@@ -542,15 +542,15 @@ class _CheckoutState extends State<Checkout> {
                         .of(context)
                         .common_nothing_to_pay, context,
                     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+                Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+                      orderId: orderCreateResponse.data.order.id,
+                      message:"Something went wrong.",
+                      type: "danger",
+                    )), (route) => false);
                 return;
               }
             } else if (_selected_payment_method == "nagad") {
-              if (_grandTotalValue == 0.00) {
-                ToastComponent.showDialog(
-                    AppLocalizations.of(context).common_nothing_to_pay, context,
-                    gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-                return;
-              }
 
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return NagadScreen(
@@ -563,27 +563,37 @@ class _CheckoutState extends State<Checkout> {
               });
             } else if (_selected_payment_method == "ssl") {
               print('ssl_initial_url ${orderCreateResponse.data.paymentUrl}');
-              if (_grandTotalValue == 0.00) {
-                ToastComponent.showDialog(
-                    AppLocalizations
-                        .of(context)
-                        .common_nothing_to_pay, context,
-                    gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-                return;
-              }
 
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return SslCommerzScreen(
-                  amount: _grandTotalValue,
-                  payment_type: payment_type,
-                  payment_method_key: _selected_payment_method_key,
-                    order_id: orderCreateResponse.data.order.id,
-                    ssl_initial_url: orderCreateResponse.data.paymentUrl
-                );
-              })).then((value) {
-                onPopped(value);
-              });
+              if (orderCreateResponse.data.paymentUrl != null) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return SslCommerzScreen(
+                      amount: _grandTotalValue,
+                      payment_type: payment_type,
+                      payment_method_key: _selected_payment_method_key,
+                      order_id: orderCreateResponse.data.order.id,
+                      ssl_initial_url: orderCreateResponse.data.paymentUrl
+                  );
+                })).then((value) {
+                  onPopped(value);
+                });
+              }else{
+                  ToastComponent.showDialog(
+                      AppLocalizations
+                          .of(context)
+                          .common_nothing_to_pay, context,
+                      gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+
+                  Navigator.pushAndRemoveUntil(context,
+                      MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+                        orderId: orderCreateResponse.data.order.id,
+                        message:"Something went wrong.",
+                        type: "danger",
+                      )), (route) => false);
+                  return;
+              }
             }
+
+
             else{
               ToastComponent.showDialog(
                 orderCreateResponse.message,
@@ -668,250 +678,6 @@ class _CheckoutState extends State<Checkout> {
 
   }
 
-  onPressPlaceOrderOrProceed() {
-   // print('payment: ${_selected_payment_method}');
-
-    if (_grandTotalValue == 0.00) {
-      ToastComponent.showDialog(
-          AppLocalizations.of(context).common_nothing_to_pay, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-      return;
-    }
-
-    // Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //   return BkashScreen(
-    //     amount: _grandTotalValue,
-    //     payment_type: "bkash",
-    //     payment_method_key: "bkash",
-    //   );
-    // })).then((value) {
-    //   onPopped(value);
-    // });
-
-    if (_selected_payment_method == "") {
-      ToastComponent.showDialog(
-          AppLocalizations.of(context).common_payment_choice_warning, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-      return;
-    }
-
-    // if (_selected_payment_method == "stripe_payment") {
-    //   if (_grandTotalValue == 0.00) {
-    //     ToastComponent.showDialog(
-    //         AppLocalizations.of(context).common_nothing_to_pay, context,
-    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-    //     return;
-    //   }
-    //
-    //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //     return StripeScreen(
-    //       amount: _grandTotalValue,
-    //       payment_type: payment_type,
-    //       payment_method_key: _selected_payment_method_key,
-    //     );
-    //   })).then((value) {
-    //     onPopped(value);
-    //   });
-    // } else if (_selected_payment_method == "paypal_payment") {
-    //   if (_grandTotalValue == 0.00) {
-    //     ToastComponent.showDialog(
-    //         AppLocalizations.of(context).common_nothing_to_pay, context,
-    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-    //     return;
-    //   }
-    //
-    //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //     return PaypalScreen(
-    //       amount: _grandTotalValue,
-    //       payment_type: payment_type,
-    //       payment_method_key: _selected_payment_method_key,
-    //     );
-    //   })).then((value) {
-    //     onPopped(value);
-    //   });
-    //   ;
-    // } else if (_selected_payment_method == "razorpay") {
-    //   if (_grandTotalValue == 0.00) {
-    //     ToastComponent.showDialog(
-    //         AppLocalizations.of(context).common_nothing_to_pay, context,
-    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-    //     return;
-    //   }
-    //
-    //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //     return RazorpayScreen(
-    //       amount: _grandTotalValue,
-    //       payment_type: payment_type,
-    //       payment_method_key: _selected_payment_method_key,
-    //     );
-    //   })).then((value) {
-    //     onPopped(value);
-    //   });
-    // } else if (_selected_payment_method == "paystack") {
-    //   if (_grandTotalValue == 0.00) {
-    //     ToastComponent.showDialog(
-    //         AppLocalizations.of(context).common_nothing_to_pay, context,
-    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-    //     return;
-    //   }
-    //
-    //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //     return PaystackScreen(
-    //       amount: _grandTotalValue,
-    //       payment_type: payment_type,
-    //       payment_method_key: _selected_payment_method_key,
-    //     );
-    //   })).then((value) {
-    //     onPopped(value);
-    //   });
-    // } else if (_selected_payment_method == "iyzico") {
-    //   if (_grandTotalValue == 0.00) {
-    //     ToastComponent.showDialog(
-    //         AppLocalizations.of(context).common_nothing_to_pay, context,
-    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-    //     return;
-    //   }
-    //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //     return BkashScreen(
-    //       amount: _grandTotalValue,
-    //       payment_type: payment_type,
-    //       payment_method_key: _selected_payment_method_key,
-    //     );
-    //   })).then((value) {
-    //     onPopped(value);
-    //   });
-
-      // Navigator.push(context, MaterialPageRoute(builder: (context) {
-      //   return IyzicoScreen(
-      //     amount: _grandTotalValue,
-      //     payment_type: payment_type,
-      //     payment_method_key: _selected_payment_method_key,
-      //   );
-      // })).then((value) {
-      //   onPopped(value);
-      // });
-    // } else
-      if (_selected_payment_method == "bkash") {
-      if (_grandTotalValue == 0.00) {
-        ToastComponent.showDialog(
-            AppLocalizations.of(context).common_nothing_to_pay, context,
-            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-        return;
-      }
-
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return BkashScreen(
-          amount: _grandTotalValue,
-          payment_type: "bkash",
-          payment_method_key: "bkash",
-        );
-      })).then((value) {
-        onPopped(value);
-      });
-    } else if (_selected_payment_method == "nagad") {
-      if (_grandTotalValue == 0.00) {
-        ToastComponent.showDialog(
-            AppLocalizations.of(context).common_nothing_to_pay, context,
-            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-        return;
-      }
-
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return NagadScreen(
-          amount: _grandTotalValue,
-          payment_type: payment_type,
-          payment_method_key: _selected_payment_method_key,
-        );
-      })).then((value) {
-        onPopped(value);
-      });
-    } else if (_selected_payment_method == "sslcommerz_payment") {
-        if (_grandTotalValue == 0.00) {
-          ToastComponent.showDialog(
-              AppLocalizations
-                  .of(context)
-                  .common_nothing_to_pay, context,
-              gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-          return;
-        }
-
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return SslCommerzScreen(
-            amount: _grandTotalValue,
-            payment_type: payment_type,
-            payment_method_key: _selected_payment_method_key,
-          );
-        })).then((value) {
-          onPopped(value);
-        });
-      }
-      else {
-        pay_by_cod();
-      }
-
-    // else if (_selected_payment_method == "flutterwave") {
-    //   if (_grandTotalValue == 0.00) {
-    //     ToastComponent.showDialog(
-    //         AppLocalizations.of(context).common_nothing_to_pay, context,
-    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-    //     return;
-    //   }
-    //
-    //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //     return FlutterwaveScreen(
-    //       amount: _grandTotalValue,
-    //       payment_type: payment_type,
-    //       payment_method_key: _selected_payment_method_key,
-    //     );
-    //   })).then((value) {
-    //     onPopped(value);
-    //   });
-    // } else if (_selected_payment_method == "paytm") {
-    //   if (_grandTotalValue == 0.00) {
-    //     ToastComponent.showDialog(
-    //         AppLocalizations.of(context).common_nothing_to_pay, context,
-    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-    //     return;
-    //   }
-    //
-    //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //     return PaytmScreen(
-    //       amount: _grandTotalValue,
-    //       payment_type: payment_type,
-    //       payment_method_key: _selected_payment_method_key,
-    //     );
-    //   })).then((value) {
-    //     onPopped(value);
-    //   });
-    // } else if (_selected_payment_method == "wallet_system") {
-    //   pay_by_wallet();
-    // }
-
-
-    //   else if (_selected_payment_method == "cash_payment") {
-    //   pay_by_cod();
-    // }
-
-    // else if (_selected_payment_method == "manual_payment" &&
-    //     widget.manual_payment_from_order_details == false) {
-    //   pay_by_manual_payment();
-    // } else if (_selected_payment_method == "manual_payment" &&
-    //     widget.manual_payment_from_order_details == true) {
-    //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //     return OfflineScreen(
-    //       order_id: widget.order_id,
-    //       payment_type: "manual_payment",
-    //       details: _paymentTypeList[_selected_payment_method_index].details,
-    //       offline_payment_id: _paymentTypeList[_selected_payment_method_index]
-    //           .offline_payment_id,
-    //       isWalletRecharge: widget.isWalletRecharge,
-    //       rechargeAmount: widget.rechargeAmount,
-    //     );
-    //   })).then((value) {
-    //     onPopped(value);
-    //   });
-    // }
-  }
 
   pay_by_wallet() async {
     var orderCreateResponse = await PaymentRepository()

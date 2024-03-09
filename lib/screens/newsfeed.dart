@@ -179,14 +179,20 @@ class _FeedListState extends State<FeedList> {
                                   keyboardType: TextInputType.multiline,
                                   onChanged: (value){
                                     if (is_logged_in.$ == true) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> db8ff192515df1907c74203ea1883dc41e356fc4
                                     } else {
                                       Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Login()));
                                     }
                                   },
                                   onFieldSubmitted: (value){
                                     if (is_logged_in.$ == true) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> db8ff192515df1907c74203ea1883dc41e356fc4
                                     } else {
                                       Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Login()));
                                     }

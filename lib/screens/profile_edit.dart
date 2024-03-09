@@ -260,7 +260,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 child: ClipRRect(
                   clipBehavior: Clip.hardEdge,
                   borderRadius: BorderRadius.all(Radius.circular(100.0)),
-                  child: avatar_original != null
+                  child: avatar_original.$ != null
                       ? FadeInImage.assetNetwork(
                           placeholder: 'assets/placeholder.png',
                           image: "${avatar_original.$}",
