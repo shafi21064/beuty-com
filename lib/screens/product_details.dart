@@ -1,5 +1,6 @@
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:kirei/providers/cart_count_update.dart';
+import 'package:kirei/providers/category_passing_controller.dart';
 import 'package:kirei/repositories/search_repository.dart';
 import 'package:kirei/screens/cart.dart';
 import 'package:kirei/screens/common_webview_screen.dart';
@@ -1982,128 +1983,134 @@ class _ProductDetailsState extends State<ProductDetails> {
                     30 //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
                     ? const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0)
                     : const EdgeInsets.symmetric(vertical: 6.0, horizontal: 0.0),
-                child: TypeAheadField(
-                  // ignore: missing_return
-                  suggestionsCallback: (pattern) async {
-                    //return await BackendService.getSuggestions(pattern);
-                    if (pattern != "") {
-                      var suggestions = await SearchRepository()
-                          .getSearchSuggestionListResponse(
-                        query_key: pattern,
-                      );
+                child: Consumer<CategoryPassingController>(
+                  builder: (widget, value, child) {
+                    return TypeAheadField(
+                      // ignore: missing_return
+                      suggestionsCallback: (pattern) async {
+                        //return await BackendService.getSuggestions(pattern);
+                        if (pattern != "") {
+                          var suggestions = await SearchRepository()
+                              .getSearchSuggestionListResponse(
+                            query_key: pattern,
+                          );
 
-                      return suggestions.products;
-                    }
-                  },
-                  loadingBuilder: (context) {
-                    return Container(
-                      height: 50,
-                      child: Center(
-                          child: Text(
-                            AppLocalizations.of(context)
-                                .filter_screen_loading_suggestions,
-                            style: TextStyle(color: MyTheme.dark_grey),
-                          )),
-                    );
-                  },
-                  itemBuilder: (context, suggestion) {
-                    return Visibility(
-                      visible: _searchController.text != "",
-                      child: ListTile(
-                        onTap:(){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return ProductDetails(id: suggestion.id);
-                          })).then((value) {
-                            onPopped(value);
-                          });
-
-                        },
-                        contentPadding: EdgeInsets.only(top: 5),
-                        dense: true,
-                        leading: Image.network(
-                          suggestion.pictures[0]
-                              .url, // Replace with the actual URL of your image
-                          width: 40, // Adjust the width as needed
-                          height: 40, // Adjust the height as needed
-                          fit: BoxFit.cover,
-                        ),
-                        title: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: suggestion.name,
-                                style: TextStyle(color: MyTheme.secondary),
-                              ),
-                            ],
-                          ),
-                        ),
-                        subtitle: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: suggestion.sale_price != suggestion.price
-                                    ? "৳" + suggestion.price.toString()
-                                    : '',
-                                style: TextStyle(
-                                  color: MyTheme.dark_grey,
-                                  decoration:
-                                  suggestion.sale_price != suggestion.price
-                                      ? TextDecoration.lineThrough
-                                      : TextDecoration.none,
-                                ),
-                              ),
-                              TextSpan(
-                                text: suggestion.sale_price != suggestion.price
-                                    ? ' ৳${suggestion.sale_price.toString()}'
-                                    : "৳" + suggestion.price.toString(),
+                          return suggestions.products;
+                        }
+                      },
+                      loadingBuilder: (context) {
+                        return Container(
+                          height: 50,
+                          child: Center(
+                              child: Text(
+                                AppLocalizations.of(context)
+                                    .filter_screen_loading_suggestions,
                                 style: TextStyle(color: MyTheme.dark_grey),
+                              )),
+                        );
+                      },
+                      itemBuilder: (context, suggestion) {
+                        return Visibility(
+                          visible: _searchController.text != "",
+                          child: ListTile(
+                            onTap:(){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return ProductDetails(id: suggestion.id, stock: suggestion.stock,);
+                              })).then((value) {
+                                onPopped(value);
+                              });
+
+                            },
+                            contentPadding: EdgeInsets.only(top: 5),
+                            dense: true,
+                            leading: Image.network(
+                              suggestion.pictures[0]
+                                  .url, // Replace with the actual URL of your image
+                              width: 40, // Adjust the width as needed
+                              height: 40, // Adjust the height as needed
+                              fit: BoxFit.cover,
+                            ),
+                            title: RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: suggestion.name,
+                                    style: TextStyle(color: MyTheme.secondary),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
+                            subtitle: RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: suggestion.sale_price != suggestion.price
+                                        ? "৳" + suggestion.price.toString()
+                                        : '',
+                                    style: TextStyle(
+                                      color: MyTheme.dark_grey,
+                                      decoration:
+                                      suggestion.sale_price != suggestion.price
+                                          ? TextDecoration.lineThrough
+                                          : TextDecoration.none,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: suggestion.sale_price != suggestion.price
+                                        ? ' ৳${suggestion.sale_price.toString()}'
+                                        : "৳" + suggestion.price.toString(),
+                                    style: TextStyle(color: MyTheme.dark_grey),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
+                        );
+                      },
+                      noItemsFoundBuilder: (context) {
+                        return Container(
+                          height: 50,
+                          child: Center(
+                              child: Text(
+                                  AppLocalizations.of(context)
+                                      .filter_screen_no_suggestion_available,
+                                  style: TextStyle(color: MyTheme.dark_grey))),
+                        );
+                      },
+                      onSuggestionSelected: (suggestion) {
+                        _searchController.text = suggestion.name;
+                        _searchKey = suggestion.name;
+                        setState(() {});
+                        //_onSearchSubmit();
+                      },
+                      textFieldConfiguration: TextFieldConfiguration(
+                        onTap: () {},
+                        controller: _searchController,
+                        onSubmitted: (txt) {
+                          _searchKey = txt;
+                          value.setSearchKey(_searchKey);
+                          Navigator.push(context, MaterialPageRoute(builder: (_)=> Main(pageIndex: 1,)));
+                          //setState(() {});
+                          //_onSearchSubmit();
+                        },
+                        style: TextStyle(color: MyTheme.white),
+                        autofocus: false,
+                        cursorColor: MyTheme.white,
+                        decoration: InputDecoration(
+                            hintText: AppLocalizations.of(context)
+                                .filter_screen_search_here,
+                            border: InputBorder.none,
+                            hintStyle:
+                            TextStyle(fontSize: 14.0, color: MyTheme.light_grey),
+                            alignLabelWithHint: true,
+                            // focusedBorder: OutlineInputBorder(
+                            //   borderSide:
+                            //       BorderSide(color: MyTheme.white, width: 0.0),
+                            // ),
+                            contentPadding: EdgeInsets.only(left: 30)),
                       ),
                     );
-                  },
-                  noItemsFoundBuilder: (context) {
-                    return Container(
-                      height: 50,
-                      child: Center(
-                          child: Text(
-                              AppLocalizations.of(context)
-                                  .filter_screen_no_suggestion_available,
-                              style: TextStyle(color: MyTheme.dark_grey))),
-                    );
-                  },
-                  onSuggestionSelected: (suggestion) {
-                    _searchController.text = suggestion.name;
-                    _searchKey = suggestion.name;
-                    setState(() {});
-                    _onSearchSubmit();
-                  },
-                  textFieldConfiguration: TextFieldConfiguration(
-                    onTap: () {},
-                    controller: _searchController,
-                    onSubmitted: (txt) {
-                      _searchKey = txt;
-                      setState(() {});
-                      _onSearchSubmit();
-                    },
-                    style: TextStyle(color: MyTheme.white),
-                    autofocus: false,
-                    cursorColor: MyTheme.white,
-                    decoration: InputDecoration(
-                        hintText: AppLocalizations.of(context)
-                            .filter_screen_search_here,
-                        border: InputBorder.none,
-                        hintStyle:
-                        TextStyle(fontSize: 14.0, color: MyTheme.light_grey),
-                        alignLabelWithHint: true,
-                        // focusedBorder: OutlineInputBorder(
-                        //   borderSide:
-                        //       BorderSide(color: MyTheme.white, width: 0.0),
-                        // ),
-                        contentPadding: EdgeInsets.only(left: 30)),
-                  ),
+                  }
                 )),
           ),
         ),
