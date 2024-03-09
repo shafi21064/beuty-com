@@ -3,6 +3,7 @@ import 'package:kirei/repositories/extra_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
+import 'package:kirei/screens/login.dart';
 import 'package:kirei/ui_sections/drawer.dart';
 import 'package:kirei/custom/toast_component.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
@@ -176,6 +177,20 @@ class _FeedListState extends State<FeedList> {
                                 child: TextFormField(
                                   controller: _descriptionController,
                                   keyboardType: TextInputType.multiline,
+                                  onChanged: (value){
+                                    if (is_logged_in.$ == true) {
+
+                                    } else {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Login()));
+                                    }
+                                  },
+                                  onFieldSubmitted: (value){
+                                    if (is_logged_in.$ == true) {
+
+                                    } else {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Login()));
+                                    }
+                                  },
                                   minLines:
                                       3, //Normal textInputField will be displayed
                                   maxLines: 5, //
@@ -209,7 +224,11 @@ class _FeedListState extends State<FeedList> {
                                             )),
                                   FlatButton(
                                     onPressed: () async {
-                                      await pickCommunityImg(context);
+                                      if (is_logged_in.$ == true) {
+                                        await pickCommunityImg(context);
+                                      } else {
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Login()));
+                                      }
                                     },
                                     child: Icon(
                                       Icons.add_photo_alternate_outlined,
@@ -222,7 +241,11 @@ class _FeedListState extends State<FeedList> {
                                   ),
                                   RaisedButton(
                                     onPressed: () async {
-                                      await addCommunityPost(context);
+                                      if (is_logged_in.$ == true) {
+                                        await addCommunityPost(context);
+                                      } else {
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Login()));
+                                      }
                                     },
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -258,23 +281,23 @@ class _FeedListState extends State<FeedList> {
                       ),
                     ),
                   ),
-                  Container(
-                      margin: EdgeInsets.only(left: 15, top: 12, bottom: 12),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                              left: BorderSide(color: Colors.teal, width: 5)),
-                        ),
-                        child: Text(
-                          ' HashTags',
-                          style: GoogleFonts.ubuntu(
-                              color: Colors.red[800], fontSize: 18),
-                        ),
-                      )),
-                  SizedBox(
-                    child: buildFeedHashList(),
-                    height: 42,
-                  ),
+                  // Container(
+                  //     margin: EdgeInsets.only(left: 15, top: 12, bottom: 12),
+                  //     child: Container(
+                  //       decoration: BoxDecoration(
+                  //         border: Border(
+                  //             left: BorderSide(color: Colors.teal, width: 5)),
+                  //       ),
+                  //       child: Text(
+                  //         ' HashTags',
+                  //         style: GoogleFonts.ubuntu(
+                  //             color: Colors.red[800], fontSize: 18),
+                  //       ),
+                  //     )),
+                  // SizedBox(
+                  //   child: buildFeedHashList(),
+                  //   height: 42,
+                  // ),
                   buildFeedList(),
                 ]))
               ],

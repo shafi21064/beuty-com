@@ -86,7 +86,7 @@ class ExtraRepository {
       // "title": "$title",
      // "hashtags": "$hashtags",
     });
-    //print(post_body.toString());
+    print("PostData: ${post_body.toString()}");
 
     Uri url = Uri.parse("${ENDP.COMMUNITY_POST_CREATE}");
     final response = await http.post(url,
@@ -97,7 +97,7 @@ class ExtraRepository {
         },
         body: post_body);
 
-    //print(response.body.toString());
+    print("KireiBdApp100: ${response.body.toString()}");
     return newCommunityPostResponseFromJson(response.body);
   }
 
