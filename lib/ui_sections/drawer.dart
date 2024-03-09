@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:kirei/data_model/category_response.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/providers/cart_count_update.dart';
+import 'package:kirei/providers/category_passing_controller.dart';
 import 'package:kirei/repositories/category_repository.dart';
 import 'package:kirei/screens/BeautyBooks.dart';
 import 'package:kirei/screens/appointment.dart';
@@ -86,7 +87,7 @@ class _MainDrawerState extends State<MainDrawer> {
     return Drawer(
       child: Directionality(
         textDirection:
-            app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
+        app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
         child: Container(
           padding: EdgeInsets.only(top: 50, left: 5),
           child: SingleChildScrollView(
@@ -96,20 +97,20 @@ class _MainDrawerState extends State<MainDrawer> {
               children: <Widget>[
                 is_logged_in.$ == true
                     ? ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            "${avatar_original.$}" ??
-                                "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png",
-                          ),
-                        ),
-                        title: Text("${user_name.$}"),
-                        subtitle: Text(
-                          //if user email is not available then check user phone if user phone is not available use empty string
-                          "${user_email.$ != "" && user_email.$ != null ? user_email.$ : user_phone.$ != "" && user_phone.$ != null ? user_phone.$ : ''}",
-                        ))
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        "${avatar_original.$}" ??
+                            "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png",
+                      ),
+                    ),
+                    title: Text("${user_name.$}"),
+                    subtitle: Text(
+                      //if user email is not available then check user phone if user phone is not available use empty string
+                      "${user_email.$ != "" && user_email.$ != null ? user_email.$ : user_phone.$ != "" && user_phone.$ != null ? user_phone.$ : ''}",
+                    ))
                     : Text(
-                        AppLocalizations.of(context).main_drawer_not_logged_in,
-                        style: TextStyle(fontSize: 13)),
+                    AppLocalizations.of(context).main_drawer_not_logged_in,
+                    style: TextStyle(fontSize: 13)),
                 Divider(),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
@@ -125,10 +126,10 @@ class _MainDrawerState extends State<MainDrawer> {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return Main();
-                      }));
+                            return Main();
+                          }));
                     }
-                    ),
+                ),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     // leading: Image.asset("assets/blog.jpg",
@@ -142,101 +143,107 @@ class _MainDrawerState extends State<MainDrawer> {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                            return Filter();
+                            return Main(pageIndex: 1,);
                           }));
                     }),
-                ExpansionTile(
-                  // leading: Icon(Icons.category,
-                  //     color: Theme.of(context).buttonTheme.colorScheme.primary),
-                  title: Row(
-                    children: [
-                      Text(
-                        "Categories".toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 13,
-                        ),
-                      ),
-
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.05,
-                      ),
-
-                      Stack(
-                        children: [
-                          Transform.rotate(
-                            angle: pi/5,
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                top: 3
-                              ),
-                              height: 15,
-                              width: 15,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                color: Colors.pinkAccent,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 22,
-                            width: 45,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: Colors.pinkAccent,
-                                borderRadius: BorderRadius.circular(2)
-                            ),
-                            child: Text("New!",
+                Consumer<CategoryPassingController>(
+                    builder: (widget, value, child) {
+                      return ExpansionTile(
+                        // leading: Icon(Icons.category,
+                        //     color: Theme.of(context).buttonTheme.colorScheme.primary),
+                        title: Row(
+                          children: [
+                            Text(
+                              "Categories".toUpperCase(),
                               style: TextStyle(
-                                  color: MyTheme.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500
+                                fontSize: 13,
                               ),
                             ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  children: categories.map((category) {
-                    return category.children != null &&
-                            category.children.isNotEmpty
-                        ? Padding(
-                          padding:  EdgeInsets.only(left: 8.0),
-                          child: ExpansionTile(
+
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.05,
+                            ),
+
+                            Stack(
+                              children: [
+                                Transform.rotate(
+                                  angle: pi/5,
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                        top: 3
+                                    ),
+                                    height: 15,
+                                    width: 15,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      color: Colors.pinkAccent,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 22,
+                                  width: 45,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      color: Colors.pinkAccent,
+                                      borderRadius: BorderRadius.circular(2)
+                                  ),
+                                  child: Text("New!",
+                                    style: TextStyle(
+                                        color: MyTheme.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        children: categories.map((category) {
+                          return category.children != null &&
+                              category.children.isNotEmpty
+                              ? Padding(
+                            padding:  EdgeInsets.only(left: 8.0),
+                            child: ExpansionTile(
                               title: Text(category.name),
                               children: category.children.map((child) {
                                 return Padding(
                                   padding:  EdgeInsets.only(left: 8.0),
                                   child: ListTile(
                                     onTap: () {
+                                      value.setCategoryKey(child.slug);
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context) {
-                                        return Filter(category:child.name);
-                                      }));
+                                            return Main(pageIndex: 1,);
+                                          }));
                                     },
                                     visualDensity:
-                                        VisualDensity(horizontal: -4, vertical: -4),
+                                    VisualDensity(horizontal: -4, vertical: -4),
                                     title: Text(child.name),
                                   ),
                                 );
                               }).toList(),
                             ),
-                        )
-                        : Padding(
-                          padding:  EdgeInsets.only( left: 8.0),
-                          child: ListTile(
-                            onTap: () {
-                                                Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return Filter(category:category.name);
-                                                }));
-                                              },
+                          )
+                              : Padding(
+                            padding:  EdgeInsets.only( left: 8.0),
+                            child: ListTile(
+                              onTap: () {
+                                value.setCategoryKey(category.slug);
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return Main(pageIndex: 1,);
+                                    }));
+                              },
                               visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
+                              VisualDensity(horizontal: -4, vertical: -4),
                               title: Text(category.name),
                             ),
-                        );
-                  }).toList(),
+                          );
+                        }).toList(),
+                      );
+                    }
                 ),
                 // ListTile(
                 //     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
@@ -267,8 +274,8 @@ class _MainDrawerState extends State<MainDrawer> {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return BeautyTips();
-                      }));
+                            return BeautyTips();
+                          }));
                     }),
                 // ListTile(
                 //     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
@@ -313,8 +320,8 @@ class _MainDrawerState extends State<MainDrawer> {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return Appointment();
-                      }));
+                            return Appointment();
+                          }));
                     }),
 
                 // ListTile(
@@ -367,8 +374,8 @@ class _MainDrawerState extends State<MainDrawer> {
                     }),
 
                 ExpansionTile(
-                    // leading: Icon(Icons.category,
-                    //     color: Theme.of(context).buttonTheme.colorScheme.primary),
+                  // leading: Icon(Icons.category,
+                  //     color: Theme.of(context).buttonTheme.colorScheme.primary),
                     title: Row(
                       children: [
                         Text(
@@ -387,150 +394,150 @@ class _MainDrawerState extends State<MainDrawer> {
                           width: 45,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            color: Color(0xff05ABE0),
-                            borderRadius: BorderRadius.circular(5)
+                              color: Color(0xff05ABE0),
+                              borderRadius: BorderRadius.circular(5)
                           ),
                           child: Text("INFO",
-                          style: TextStyle(
-                            color: MyTheme.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500
-                          ),
+                            style: TextStyle(
+                                color: MyTheme.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500
+                            ),
                           ),
                         )
                       ],
                     ),
                     children: [
-                        Padding(
-                          padding:  EdgeInsets.only( left: 8.0),
-                          child: Column(
-                            children: [
-                              ListTile(
-                                  visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                                  // leading: Image.asset("assets/placeholder.png", height: 24),
-                                  title: Text('Who We Are?',
-                                      style: TextStyle(fontSize: 13)),
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                          return CommonWebviewScreen(
-                                            url: "https://kireibd.com/about-us?type=app",
-                                            page_name: 'Who We Are?',
-                                          );
-                                        }));
-                                  }),
-                              ListTile(
-                                  visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                                  // leading: Image.asset("assets/placeholder.png", height: 24),
-                                  title: Text('FAQs', style: TextStyle(fontSize: 13)),
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                          return CommonWebviewScreen(
-                                            url: "https://kireibd.com/faq?type=app",
-                                            page_name: "FAQs",
-                                          );
-                                        }));
-                                  }),
-                              ListTile(
-                                  visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                                  // leading: Image.asset("assets/placeholder.png", height: 24),
-                                  title: Text('Contact us',
-                                      style: TextStyle(fontSize: 13)),
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                          return CommonWebviewScreen(
-                                            url: "https://kireibd.com/contact-us?type=app",
-                                            page_name: "Contact Us",
-                                          );
-                                        }));
-                                  }),
-                              ListTile(
-                                  visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                                  // leading: Image.asset("assets/placeholder.png", height: 24),
-                                  title: Text('Testimonials',
-                                      style: TextStyle(fontSize: 13)),
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                          return CommonWebviewScreen(
-                                            url: "https://kireibd.com/testimonial?type=app",
-                                            page_name: 'Testimonials',
-                                          );
-                                        }));
-                                  }),
-                              ListTile(
-                                  visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                                  // leading: Image.asset("assets/placeholder.png", height: 24),
-                                  title: Text('Privacy & Policy',
-                                      style: TextStyle(fontSize: 13)),
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                          return CommonWebviewScreen(
-                                            url:
-                                            "https://kireibd.com/privacy-policy?type=app",
-                                            page_name: "Privacy & Policy ",
-                                          );
-                                        }));
-                                  }),
-                              ListTile(
-                                  visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                                  // leading: Image.asset("assets/placeholder.png", height: 24),
-                                  title: Text('Terms & Conditions',
-                                      style: TextStyle(fontSize: 13)),
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                          return CommonWebviewScreen(
-                                            url:
-                                            "https://kireibd.com/term-condition?type=app",
-                                            page_name: "Terms & Conditions",
-                                          );
-                                        }));
-                                  }),
-                              ListTile(
-                                  visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                                  // leading: Image.asset("assets/placeholder.png", height: 24),
-                                  title: Text('Returns & Refunds',
-                                      style: TextStyle(fontSize: 13)),
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                          return CommonWebviewScreen(
-                                            url:
-                                            "hhttps://kireibd.com/return-refund?type=app",
-                                            page_name: 'Returns & Refunds',
-                                          );
-                                        }));
-                                  }),
-                              ListTile(
-                                  visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                                  // leading: Image.asset("assets/placeholder.png", height: 24),
-                                  title: Text('Responsible Disclosure',
-                                      style: TextStyle(fontSize: 13)),
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                          return CommonWebviewScreen(
-                                            url:
-                                            "https://kireibd.com/responsible-disclosure?type=app",
-                                            page_name: 'Responsible Disclosure',
-                                          );
-                                        }));
-                                  })
-                            ],
-                          ),
-                        )
+                      Padding(
+                        padding:  EdgeInsets.only( left: 8.0),
+                        child: Column(
+                          children: [
+                            ListTile(
+                                visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
+                                // leading: Image.asset("assets/placeholder.png", height: 24),
+                                title: Text('Who We Are?',
+                                    style: TextStyle(fontSize: 13)),
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                        return CommonWebviewScreen(
+                                          url: "https://kireibd.com/about-us?type=app",
+                                          page_name: 'Who We Are?',
+                                        );
+                                      }));
+                                }),
+                            ListTile(
+                                visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
+                                // leading: Image.asset("assets/placeholder.png", height: 24),
+                                title: Text('FAQs', style: TextStyle(fontSize: 13)),
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                        return CommonWebviewScreen(
+                                          url: "https://kireibd.com/faq?type=app",
+                                          page_name: "FAQs",
+                                        );
+                                      }));
+                                }),
+                            ListTile(
+                                visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
+                                // leading: Image.asset("assets/placeholder.png", height: 24),
+                                title: Text('Contact us',
+                                    style: TextStyle(fontSize: 13)),
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                        return CommonWebviewScreen(
+                                          url: "https://kireibd.com/contact-us?type=app",
+                                          page_name: "Contact Us",
+                                        );
+                                      }));
+                                }),
+                            ListTile(
+                                visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
+                                // leading: Image.asset("assets/placeholder.png", height: 24),
+                                title: Text('Testimonials',
+                                    style: TextStyle(fontSize: 13)),
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                        return CommonWebviewScreen(
+                                          url: "https://kireibd.com/testimonial?type=app",
+                                          page_name: 'Testimonials',
+                                        );
+                                      }));
+                                }),
+                            ListTile(
+                                visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
+                                // leading: Image.asset("assets/placeholder.png", height: 24),
+                                title: Text('Privacy & Policy',
+                                    style: TextStyle(fontSize: 13)),
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                        return CommonWebviewScreen(
+                                          url:
+                                          "https://kireibd.com/privacy-policy?type=app",
+                                          page_name: "Privacy & Policy ",
+                                        );
+                                      }));
+                                }),
+                            ListTile(
+                                visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
+                                // leading: Image.asset("assets/placeholder.png", height: 24),
+                                title: Text('Terms & Conditions',
+                                    style: TextStyle(fontSize: 13)),
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                        return CommonWebviewScreen(
+                                          url:
+                                          "https://kireibd.com/term-condition?type=app",
+                                          page_name: "Terms & Conditions",
+                                        );
+                                      }));
+                                }),
+                            ListTile(
+                                visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
+                                // leading: Image.asset("assets/placeholder.png", height: 24),
+                                title: Text('Returns & Refunds',
+                                    style: TextStyle(fontSize: 13)),
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                        return CommonWebviewScreen(
+                                          url:
+                                          "https://kireibd.com/return-refund?type=app",
+                                          page_name: 'Returns & Refunds',
+                                        );
+                                      }));
+                                }),
+                            ListTile(
+                                visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
+                                // leading: Image.asset("assets/placeholder.png", height: 24),
+                                title: Text('Responsible Disclosure',
+                                    style: TextStyle(fontSize: 13)),
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                        return CommonWebviewScreen(
+                                          url:
+                                          "https://kireibd.com/responsible-disclosure?type=app",
+                                          page_name: 'Responsible Disclosure',
+                                        );
+                                      }));
+                                })
+                          ],
+                        ),
+                      )
                     ]),
                 // ListTile(
                 //     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
@@ -549,84 +556,84 @@ class _MainDrawerState extends State<MainDrawer> {
                 //     }),
                 is_logged_in.$ == true
                     ? Column(
-                        children: [
-                          ListTile(
-                              visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                              title: Text(
-                                AppLocalizations.of(context)
-                                    .main_drawer_profile
-                                    .toUpperCase(),
-                                // style: TextStyle(
-                                //     color: Theme.of(context)
-                                //         .buttonTheme
-                                //         .colorScheme
-                                //         .primary,
-                                //     fontSize: 13)
-                              ),
-                              onTap: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return Main(pageIndex: 3,);
-                                }));
-                              }),
-                          ListTile(
-                              visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                              title: Text(
-                                AppLocalizations.of(context)
-                                    .main_drawer_orders
-                                    .toUpperCase(),
-                              ),
-                              onTap: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return OrderList(from_checkout: false);
-                                }));
-                              }),
-                          // ListTile(
-                          //     visualDensity:
-                          //         VisualDensity(horizontal: -4, vertical: -4),
-                          //     title: Text(
-                          //         AppLocalizations.of(context)
-                          //             .main_drawer_messages,
-                          //         style: TextStyle(
-                          //             color: Theme.of(context)
-                          //                 .buttonTheme
-                          //                 .colorScheme
-                          //                 .primary,
-                          //             fontSize: 13)),
-                          //     onTap: () {
-                          //       Navigator.push(context,
-                          //           MaterialPageRoute(builder: (context) {
-                          //         return MessengerList();
-                          //       }));
-                          //     }),
-                          wallet_system_status.$
-                              ? ListTile(
-                                  visualDensity: VisualDensity(
-                                      horizontal: -4,
-                                      vertical: -4
-                                  ),
-                                  leading: Image.asset("assets/wallet.png",
-                                      height: 16,
-                                      color: Theme.of(context)
-                                          .buttonTheme
-                                          .colorScheme
-                                          .primary),
-                                  title: Text(
-                                      AppLocalizations.of(context)
-                                          .main_drawer_wallet,
-                                      style: TextStyle(fontSize: 13)),
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return Wallet();
-                                    }));
-                                  })
-                              : Container(),
-                        ],
-                      )
+                  children: [
+                    ListTile(
+                        visualDensity:
+                        VisualDensity(horizontal: -4, vertical: -4),
+                        title: Text(
+                          AppLocalizations.of(context)
+                              .main_drawer_profile
+                              .toUpperCase(),
+                          // style: TextStyle(
+                          //     color: Theme.of(context)
+                          //         .buttonTheme
+                          //         .colorScheme
+                          //         .primary,
+                          //     fontSize: 13)
+                        ),
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                                return Main(pageIndex: 3,);
+                              }));
+                        }),
+                    ListTile(
+                        visualDensity:
+                        VisualDensity(horizontal: -4, vertical: -4),
+                        title: Text(
+                          AppLocalizations.of(context)
+                              .main_drawer_orders
+                              .toUpperCase(),
+                        ),
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                                return OrderList(from_checkout: false);
+                              }));
+                        }),
+                    // ListTile(
+                    //     visualDensity:
+                    //         VisualDensity(horizontal: -4, vertical: -4),
+                    //     title: Text(
+                    //         AppLocalizations.of(context)
+                    //             .main_drawer_messages,
+                    //         style: TextStyle(
+                    //             color: Theme.of(context)
+                    //                 .buttonTheme
+                    //                 .colorScheme
+                    //                 .primary,
+                    //             fontSize: 13)),
+                    //     onTap: () {
+                    //       Navigator.push(context,
+                    //           MaterialPageRoute(builder: (context) {
+                    //         return MessengerList();
+                    //       }));
+                    //     }),
+                    wallet_system_status.$
+                        ? ListTile(
+                        visualDensity: VisualDensity(
+                            horizontal: -4,
+                            vertical: -4
+                        ),
+                        leading: Image.asset("assets/wallet.png",
+                            height: 16,
+                            color: Theme.of(context)
+                                .buttonTheme
+                                .colorScheme
+                                .primary),
+                        title: Text(
+                            AppLocalizations.of(context)
+                                .main_drawer_wallet,
+                            style: TextStyle(fontSize: 13)),
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                                return Wallet();
+                              }));
+                        })
+                        : Container(),
+                  ],
+                )
                     : Container(),
                 //Divider(height: 24),
 
@@ -635,26 +642,26 @@ class _MainDrawerState extends State<MainDrawer> {
                 ),
 
                 is_logged_in.$ == false
-                    // ? ListTile(
-                    //     visualDensity:
-                    //         VisualDensity(horizontal: -4, vertical: -4),
-                    //     // leading: Image.asset("assets/login.png",
-                    //     //     height: 16,
-                    //     //     color: Theme.of(context)
-                    //     //         .buttonTheme
-                    //     //         .colorScheme
-                    //     //         .primary),
-                    //     title: Text(
-                    //         AppLocalizations.of(context).main_drawer_login,
-                    //         style: TextStyle(fontSize: 13)),
-                    //     onTap: () {
-                    //       Navigator.push(context,
-                    //           MaterialPageRoute(builder: (context) {
-                    //         return Login();
-                    //       }));
-                    //     },
-                    //   )
-                ? Row(
+                // ? ListTile(
+                //     visualDensity:
+                //         VisualDensity(horizontal: -4, vertical: -4),
+                //     // leading: Image.asset("assets/login.png",
+                //     //     height: 16,
+                //     //     color: Theme.of(context)
+                //     //         .buttonTheme
+                //     //         .colorScheme
+                //     //         .primary),
+                //     title: Text(
+                //         AppLocalizations.of(context).main_drawer_login,
+                //         style: TextStyle(fontSize: 13)),
+                //     onTap: () {
+                //       Navigator.push(context,
+                //           MaterialPageRoute(builder: (context) {
+                //         return Login();
+                //       }));
+                //     },
+                //   )
+                    ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
 
@@ -671,13 +678,13 @@ class _MainDrawerState extends State<MainDrawer> {
                         ),
                         child:Center(
                           child: Text(
-                           AppLocalizations.of(context).main_drawer_login,
-                           style: TextStyle(
-                               fontSize: 13,
-                             color: MyTheme.white,
-                               fontWeight: FontWeight.w600
+                              AppLocalizations.of(context).main_drawer_login,
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: MyTheme.white,
+                                  fontWeight: FontWeight.w600
 
-                           )
+                              )
                           ),
                         ),
                       ),
@@ -704,7 +711,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               style: TextStyle(
                                   fontSize: 13,
                                   color: MyTheme.white,
-                                fontWeight: FontWeight.w600
+                                  fontWeight: FontWeight.w600
                               )
                           ),
                         ),
@@ -716,27 +723,27 @@ class _MainDrawerState extends State<MainDrawer> {
                     : Container(),
                 is_logged_in.$ == true
                     ? Consumer<CartCountUpdate>(
-                      builder: (widget, value, child) {
-                        return ListTile(
-                            visualDensity:
-                                VisualDensity(
-                                    horizontal: -4,
-                                    vertical: -4
-                                ),
-                            // leading: Image.asset("assets/logout.png",
-                            //     height: 16,
-                            //     color: Color.fromRGBO(153, 153, 153, 1)),
-                            title: Text(
-                              AppLocalizations.of(context)
-                                  .main_drawer_logout
-                                  .toUpperCase(),
-                            ),
-                            onTap: () {
-                              onTapLogout(context);
-                              value.getReset();
-                            });
-                      }
-                    )
+                    builder: (widget, value, child) {
+                      return ListTile(
+                          visualDensity:
+                          VisualDensity(
+                              horizontal: -4,
+                              vertical: -4
+                          ),
+                          // leading: Image.asset("assets/logout.png",
+                          //     height: 16,
+                          //     color: Color.fromRGBO(153, 153, 153, 1)),
+                          title: Text(
+                            AppLocalizations.of(context)
+                                .main_drawer_logout
+                                .toUpperCase(),
+                          ),
+                          onTap: () {
+                            onTapLogout(context);
+                            value.getReset();
+                          });
+                    }
+                )
                     : Container(),
 
                 SizedBox(
@@ -769,14 +776,14 @@ class _MainDrawerState extends State<MainDrawer> {
                       onTap: (){
 
                       },
-                   child: Container(
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      width: MediaQuery.of(context).size.width * 0.1,
-                      decoration: BoxDecoration(
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.05,
+                        width: MediaQuery.of(context).size.width * 0.1,
+                        decoration: BoxDecoration(
                           //image: DecorationImage(image: AssetImage("assets/youtube.png"))
-                      ),
-                      child: Image.asset("assets/youtube.png", fit: BoxFit.cover,),
-                    ),),
+                        ),
+                        child: Image.asset("assets/youtube.png", fit: BoxFit.cover,),
+                      ),),
 
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.02,
