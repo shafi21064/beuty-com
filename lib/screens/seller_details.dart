@@ -305,7 +305,7 @@ class _SellerDetailsState extends State<SellerDetails> {
                       child: ClipRRect(
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                           child: FadeInImage.assetNetwork(
-                            placeholder: 'assets/placeholder_rectangle.png',
+                            placeholder: 'assets/placeholder.png',
                             image: i,
                             fit: BoxFit.fill,
                           ))),
