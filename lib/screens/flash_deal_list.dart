@@ -197,7 +197,7 @@ class _FlashDealListState extends State<FlashDealList> {
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(16.0),
                           child: FadeInImage.assetNetwork(
-                            placeholder: 'assets/placeholder_rectangle.png',
+                            placeholder: 'assets/placeholder.png',
                             image: flashDealResponse.flash_deals[index].banner,
                             fit: BoxFit.cover,
                           ))),

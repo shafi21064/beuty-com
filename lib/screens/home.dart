@@ -1384,7 +1384,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     margin: EdgeInsets.only(right: 5),
                     padding: EdgeInsets.only(top: 16),
                     height: 120,
-                    width: MediaQuery.of(context).size.width / 5 - 4,
+                    width: 76,
                     child: Column(
                       children: [
                         Container(
@@ -2003,11 +2003,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 children: <Widget>[
                   Container(
                       width: double.infinity,
+                      height: 200,
                       margin: EdgeInsets.symmetric(horizontal: 5.0),
                       child: ClipRRect(
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                           child: FadeInImage.assetNetwork(
-                            placeholder: 'assets/placeholder_rectangle.png',
+                            placeholder: 'assets/placeholder.png',
                             //placeholder: 'assets/placeholder.png',
                             image: i ?? '',
                             fit: BoxFit.cover,
@@ -2019,14 +2020,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       children: _carouselImageList.map((url) {
                         int index = _carouselImageList.indexOf(url);
                         return Container(
-                          width: 7.0,
-                          height: 7.0,
+                          width: 16.0,
+                          height: 6.0,
                           margin: EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 4.0),
                           decoration: BoxDecoration(
-                            shape: BoxShape.circle,
+                            borderRadius: BorderRadius.circular(6),
+                            // shape: BoxShape.circle,
                             color: _current_slider == index
-                                ? MyTheme.white
+                                ? MyTheme.secondary
                                 : Color.fromRGBO(112, 112, 112, .3),
                           ),
                         );
