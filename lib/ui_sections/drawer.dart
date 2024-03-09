@@ -567,7 +567,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               onTap: () {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
-                                  return Profile(show_back_button: true);
+                                  return Main(pageIndex: 3,);
                                 }));
                               }),
                           ListTile(

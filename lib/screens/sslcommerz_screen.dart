@@ -218,7 +218,7 @@ class _SslCommerzScreenState extends State<SslCommerzScreen> {
                     type: "success",
                   )), (route) => false);
 
-            } else if (page.contains("status=failure")) {
+            } else if (page.contains("status=failure") || page.contains("status=DECLINED")) {
               Toast.show("Payment Cancelled", context,
                   duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
               Navigator.pushAndRemoveUntil(context,
