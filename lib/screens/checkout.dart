@@ -6,6 +6,7 @@ import 'package:kirei/data_model/login_response.dart';
 import 'package:kirei/data_model/payment_type_response.dart';
 import 'package:kirei/data_model/pickup_points_response.dart';
 import 'package:kirei/data_model/state_response.dart';
+import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/repositories/address_repository.dart';
 import 'package:kirei/repositories/auth_repository.dart';
 import 'package:kirei/repositories/pickup_points_repository.dart';
@@ -32,6 +33,7 @@ import 'package:kirei/repositories/coupon_repository.dart';
 import 'package:kirei/helpers/shimmer_helper.dart';
 import 'package:kirei/app_config.dart';
 import 'package:kirei/custom/toast_component.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 import 'package:kirei/screens/offline_screen.dart';
 import 'package:kirei/screens/paytm_screen.dart';
@@ -611,7 +613,7 @@ class _CheckoutState extends State<Checkout> {
           // }));
       }
       // Call API
-
+      Provider.of<CartCountUpdate>(context).getReset();
     } catch (e) {
       print('Error in onPressProceed: $e');
       // Handle the error appropriately, e.g., show a dialog or log it.
