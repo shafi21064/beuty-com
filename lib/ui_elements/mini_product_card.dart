@@ -255,8 +255,10 @@ elevation: 0, // Set the elevation to 0 for no shadow
                 height: 36,
                 child: RaisedButton(
                   onPressed: () {
-                    addCartCount.getIncrease();
                     onPressAddToCart(context);
+                    if(widget.stock>0 && is_logged_in.$ == true) {
+                      addCartCount.getIncrease();
+                    }
                     print(_shopList.length.toString());
 
                   },

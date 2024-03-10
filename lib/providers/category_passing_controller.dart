@@ -6,10 +6,12 @@ class CategoryPassingController with ChangeNotifier{
   String _categoryKey;
   String _typeKey;
   String _searchKey;
+  String _tagsKey;
 
   String get categoryKey => _categoryKey;
   String get typeKey => _typeKey;
   String get searchKey => _searchKey;
+  String get tagsKey => _tagsKey;
 
   void setCategoryKey(keyValue){
     _categoryKey = keyValue;
@@ -28,6 +30,11 @@ class CategoryPassingController with ChangeNotifier{
   void setSearchKey(searchKeyValue){
     _searchKey = searchKeyValue;
     print('searchkey ${searchKey}' );
+    notifyListeners();
+  }
+  void setTagsKey(tagsKeyValue){
+    _tagsKey = tagsKeyValue;
+    print('searchkey ${_tagsKey}' );
     notifyListeners();
   }
 

@@ -756,7 +756,13 @@ class _MainDrawerState extends State<MainDrawer> {
 
                     GestureDetector(
                       onTap: (){
-
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                              return CommonWebviewScreen(
+                                url: "https://www.facebook.com/jbeautybyKirei?type=app",
+                                page_name: "Facebook",
+                              );
+                            }));
                       },
                       child: Container(
                         height: MediaQuery.of(context).size.height * 0.05,
@@ -774,7 +780,13 @@ class _MainDrawerState extends State<MainDrawer> {
 
                     GestureDetector(
                       onTap: (){
-
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                              return CommonWebviewScreen(
+                                url: "https://www.youtube.com/channel/UCfcO3vgVRLyqcIoAl8AX8Ew?type=app",
+                                page_name: "Youtube",
+                              );
+                            }));
                       },
                       child: Container(
                         height: MediaQuery.of(context).size.height * 0.05,
@@ -791,7 +803,13 @@ class _MainDrawerState extends State<MainDrawer> {
 
                     GestureDetector(
                       onTap: (){
-
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                              return CommonWebviewScreen(
+                                url: "https://www.instagram.com/accounts/login/?next=%2Fjbeauty_kirei%2F?type=app",
+                                page_name: "Instagram",
+                              );
+                            }));
                       },
                       child: Container(
                         height: MediaQuery.of(context).size.height * 0.05,

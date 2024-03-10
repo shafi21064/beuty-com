@@ -345,7 +345,8 @@ class _FilterState extends State<Filter> {
       skin_type: widget.selected_skin != null
           ? widget.selected_skin
           : _selectedBrands.join(",").toString(),
-      tag: widget.tag,
+      //tag: widget.tag,
+      tag: providerValue.tagsKey,
       good_for: widget.good_for,
       type: providerValue.typeKey,
       key_ingredients: widget.key_ingredients,
@@ -526,102 +527,8 @@ class _FilterState extends State<Filter> {
     );
   }
 
-  //--------------------
-
-  // buildBottomButton(){
-  //  return Row(
-  //
-  //     children: [
-  //       Container(
-  //         width: MediaQuery.of(context).size.width / 2,
-  //         height: 44,
-  //         child: RaisedButton(
-  //           onPressed: () {
-  //             // onPressAddToCart(context, _addedToCartSnackbar);
-  //             // value.setCartValue(_quantity);
-  //             Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Main()));
-  //           },
-  //           // shape: RoundedRectangleBorder(
-  //           //     borderRadius: BorderRadius.circular(80.0)),
-  //           padding: EdgeInsets.all(0.0),
-  //           child: Ink(
-  //             color: MyTheme.secondary,
-  //             child: Container(
-  //                 constraints:
-  //                 BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
-  //                 alignment: Alignment.center,
-  //                 child: Row(
-  //                   mainAxisAlignment: MainAxisAlignment.center,
-  //                   children: [
-  //                     // Icon(
-  //                     //   Icons
-  //                     //       .shopping_bag_outlined, // Use the appropriate cart icon
-  //                     //   color: Colors.white,
-  //                     //   size: 17,
-  //                     // ),
-  //                     // SizedBox(
-  //                     //   width: 2,
-  //                     // ),
-  //                     // Add some space between the icon and text
-  //                     Text(
-  //                       // AppLocalizations.of(context)
-  //                       //     .product_details_screen_button_add_to_cart,
-  //                       "Go to Home",
-  //                       style: TextStyle(
-  //                         color: Colors.white,
-  //                         fontSize: 14,
-  //                         fontWeight: FontWeight.w600,
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 )),
-  //           ),
-  //         )
-  //       ),
-  //       SizedBox(
-  //         width: 1,
-  //       ),
-  //       Container(
-  //         width: MediaQuery.of(context).size.width / 2,
-  //         height: 44,
-  //         child: RaisedButton(
-  //           onPressed: () {
-  //             // onPressBuyNow(context);
-  //             // value.setCartValue(_quantity);
-  //             Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Main(pageIndex: 2,)));
-  //
-  //           },
-  //           padding: EdgeInsets.all(0.0),
-  //           child: Ink(
-  //             color: MyTheme.primary,
-  //             child: Container(
-  //               constraints:
-  //               BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
-  //               alignment: Alignment.center,
-  //               child: Text(
-  //                 // AppLocalizations.of(context)
-  //                 //     .product_details_screen_button_buy_now,
-  //                 "Go to Cart",
-  //                 style: TextStyle(
-  //                     color: Colors.white,
-  //                     fontSize: 14,
-  //                     fontWeight: FontWeight.w600),
-  //               ),
-  //             ),
-  //           ),
-  //         )
-  //       ),
-  //     ],
-  //   );
-  // }
-
-
   @override
   Widget build(BuildContext context) {
-    /*print(_appBar.preferredSize.height.toString()+" Appbar height");
-    print(kToolbarHeight.toString()+" kToolbarHeight height");
-    print(MediaQuery.of(context).padding.top.toString() +" MediaQuery.of(context).padding.top");*/
-    // var discountPercentage = ((((int.parse(widget.price) - int.parse(widget.sale_price))/(int.parse(widget.price)))*100 ).toStringAsFixed(0).toString());
     return Directionality(
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
@@ -688,7 +595,7 @@ class _FilterState extends State<Filter> {
           decoration: BoxDecoration(
             color: MyTheme.primary,
           ),
-          padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+          padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
           //padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
           child: Column(
             children: [
@@ -1548,9 +1455,9 @@ class _FilterState extends State<Filter> {
               children: [
                 SizedBox(
                     height:
-                    MediaQuery.of(context).viewPadding.top > 40 ? 180 : 135
+                    MediaQuery.of(context).viewPadding.top > 30 ? 180 : 135
                   //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
-                ),
+               ),
                 //Text('data'),
                 buildScrollableSubCategory() ?? SizedBox(),
                 GridView.builder(
@@ -1868,11 +1775,11 @@ class _FilterState extends State<Filter> {
       _isSubcategoryExist == true;
       providerValue.resetCategoryKeyValue();
       return Card(
-        margin : EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+        margin : EdgeInsets.symmetric(vertical: 2, horizontal: 0),
         elevation: 5,
         child: Column(
           children : [
-            SizedBox(height: 5,),
+            SizedBox(height: 1,),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 8),
               color: MyTheme.white,

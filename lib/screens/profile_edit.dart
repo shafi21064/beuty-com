@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
@@ -5,6 +7,8 @@ import 'package:kirei/app_config.dart';
 import 'package:kirei/custom/toast_component.dart';
 import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kirei/screens/main.dart';
+import 'package:kirei/screens/profile.dart';
 import 'package:toast/toast.dart';
 import 'package:kirei/custom/input_decorations.dart';
 import 'package:kirei/repositories/profile_repository.dart';
@@ -160,9 +164,11 @@ class _ProfileEditState extends State<ProfileEdit> {
     } else {
       ToastComponent.showDialog(profileUpdateResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-
       user_name.$ = name;
       setState(() {});
+      Timer(Duration(milliseconds: 650), () {
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=> Main(pageIndex: 3,)), (route) => false);
+      });
     }
   }
 

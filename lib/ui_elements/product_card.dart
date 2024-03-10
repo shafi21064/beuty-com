@@ -186,7 +186,9 @@ class _ProductCardState extends State<ProductCard> {
                 child: RaisedButton(
                   onPressed: () {
                      onPressAddToCart(context);
-                     addCartProduct.getIncrease();
+                     if(widget.stock>0 && is_logged_in.$ == true){
+                       addCartProduct.getIncrease();
+                     }
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0.0)),

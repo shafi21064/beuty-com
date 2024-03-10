@@ -497,6 +497,11 @@ class _ProductReviewsState extends State<ProductReviews> {
             ),
           ],
         ),
+        MediaQuery.of(context).viewPadding.bottom > 30 ? SizedBox(
+          height: 10,
+        ) : SizedBox(
+          height: 2,
+        ),
       ],
     );
   }

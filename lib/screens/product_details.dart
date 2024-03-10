@@ -2749,40 +2749,46 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ...List.generate(_tags.length, (index) {
                   final tag = _tags[index];
 
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Filter(
-                          tag: tag,
-                        );
-                      }));
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 10.0),
-                      child: Container(
-                        padding: EdgeInsets.only(
-                            top: 0, bottom: 0, right: 0, left: 0),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: MyTheme.secondary,
-                              width: 1.0,
+                  return Consumer<CategoryPassingController>(builder: (widget, value, child){
+                    return InkWell(
+                      onTap: () {
+                        value.setTagsKey(tag);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                              // return Filter(
+                              //   tag: tag,
+                              // );
+                              return Main(
+                                pageIndex: 1,
+                              );
+                            }));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 10.0),
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              top: 0, bottom: 0, right: 0, left: 0),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: MyTheme.secondary,
+                                width: 1.0,
+                              ),
+                            ),
+                          ),
+                          child: Text(
+                            "${tag.substring(0, 1).toUpperCase()}${tag.substring(1)}${index == _tags.length - 1 ? '' : ','}",
+                            style: TextStyle(
+                                color: MyTheme.secondary,
+                                fontSize: 14,
+                                height: 1.6,
+                                fontWeight: FontWeight.w600
                             ),
                           ),
                         ),
-                        child: Text(
-                          "${tag.substring(0, 1).toUpperCase()}${tag.substring(1)}${index == _tags.length - 1 ? '' : ','}",
-                          style: TextStyle(
-                              color: MyTheme.secondary,
-                              fontSize: 14,
-                              height: 1.6,
-                          fontWeight: FontWeight.w600
-                          ),
-                        ),
                       ),
-                    ),
-                  );
+                    );
+                  });
                 }),
                 // Spacer(),
               ],
