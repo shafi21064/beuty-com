@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kirei/helpers/shimmer_helper.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/repositories/order_repository.dart';
@@ -42,7 +43,9 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
   @override
   void initState() {
     // TODO: implement initState
+    //print("orderDetails: ${orderDetails}");
     fetchOrderDetails();
+    //print("orderDetails1: ${orderDetails}");
     fetchOrderedItems();
     //print("UserID1:${orderDetails?.user_id}");
 
@@ -60,6 +63,7 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
     if (orderDetailsResponse.detailed_orders.length > 0) {
       //orderDetails = orderDetailsResponse.detailed_orders[0];
       orderDetails = orderDetailsResponse.detailed_orders[0];
+      //print("orderDetails2: ${orderDetails}");
     }
 
     setState(() {});
@@ -82,7 +86,8 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
 
       appBar: buildAppBar(context),
 
-      body: Padding(
+      body: orderDetails == null ? ShimmerHelper().buildAddressLoadingShimmer() :
+      Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -431,7 +436,7 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
             ),
           ],
         ),
-      ),
+      ) ,
     );
   }
 }

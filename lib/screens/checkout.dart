@@ -508,7 +508,7 @@ class _CheckoutState extends State<Checkout> {
         // Check if the widget is mounted before updating the UI
         if (mounted) {
           Navigator.of(loadingcontext).pop();
-
+          Provider.of<CartCountUpdate>(context, listen: false).getReset();
           if (orderCreateResponse.result == false) {
             ToastComponent.showDialog(
               orderCreateResponse.message,
@@ -623,7 +623,6 @@ class _CheckoutState extends State<Checkout> {
           // }));
       }
       // Call API
-      Provider.of<CartCountUpdate>(context).getReset();
     } catch (e) {
       print('Error in onPressProceed: $e');
       // Handle the error appropriately, e.g., show a dialog or log it.
