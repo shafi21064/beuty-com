@@ -261,6 +261,65 @@ class _MainDrawerState extends State<MainDrawer> {
                 //       //   return BeautyTips();
                 //       // }));
                 //     }),
+
+                ListTile(
+                    visualDensity:
+                    VisualDensity(horizontal: -4, vertical: -4),
+                    // leading: Image.asset("assets/placeholder.png", height: 24),
+                    title: Row(
+                      children: [
+                        Text('BRANDS',
+                            style: TextStyle(fontSize: 13)),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.05,
+                        ),
+
+                        Stack(
+                          children: [
+                            Transform.rotate(
+                              angle: pi/5,
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    top: 3
+                                ),
+                                height: 15,
+                                width: 15,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  color: Colors.pinkAccent,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 22,
+                              width: 45,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: Colors.pinkAccent,
+                                  borderRadius: BorderRadius.circular(2)
+                              ),
+                              child: Text("Top!",
+                                style: TextStyle(
+                                    color: MyTheme.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                            return CommonWebviewScreen(
+                              url: "https://kireibd.com/brands?type=app",
+                              page_name: "Brands",
+                            );
+                          }));
+                    }),
+
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     // leading: Image.asset("assets/blog.jpg",
@@ -293,6 +352,23 @@ class _MainDrawerState extends State<MainDrawer> {
                 //       //   return BeautyTips();
                 //       // }));
                 //     }),
+
+                ListTile(
+                    visualDensity:
+                    VisualDensity(horizontal: -4, vertical: -4),
+                    // leading: Image.asset("assets/placeholder.png", height: 24),
+                    title: Text('PERSONAL RECOMMENDATION',
+                        style: TextStyle(fontSize: 13)),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                            return CommonWebviewScreen(
+                              url: "https://kireibd.com/personal-recommendation/skincare-recommendation?type=app",
+                              page_name: "Personal Recommendation",
+                            );
+                          }));
+                    }),
+
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     // leading: Image.asset(

@@ -1770,10 +1770,10 @@ class _FilterState extends State<Filter> {
     var providerValue = Provider.of<CategoryPassingController>(context, listen: false);
     if(!_shimmerShow && _allSubCategories.length == 0){
       _isSubcategoryExist == false;
-      providerValue.resetCategoryKeyValue();
+      //providerValue.resetCategoryKeyValue();
     }else if (_allSubCategories.length > 0){
       _isSubcategoryExist == true;
-      providerValue.resetCategoryKeyValue();
+      //providerValue.resetCategoryKeyValue();
       return Card(
         margin : EdgeInsets.symmetric(vertical: 2, horizontal: 0),
         elevation: 5,

@@ -28,6 +28,9 @@ class _ProfileEditState extends State<ProfileEdit> {
 
   TextEditingController _nameController =
       TextEditingController(text: "${user_name.$}");
+  // TextEditingController _phoneController =
+  //     TextEditingController(text: "${user_email.$}");
+  // TextEditingController _currentPasswordController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _passwordConfirmController = TextEditingController();
 
@@ -346,10 +349,59 @@ class _ProfileEditState extends State<ProfileEdit> {
                 ),
               ),
             ),
+
+            // Padding(
+            //   padding: const EdgeInsets.only(bottom: 4.0),
+            //   child: Text(
+            //     //AppLocalizations.of(context).profile_edit_screen_name,
+            //     "Phone",
+            //     style: TextStyle(
+            //         color: Colors.orangeAccent, fontWeight: FontWeight.w600),
+            //   ),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.only(bottom: 8.0),
+            //   child: Container(
+            //     height: 36,
+            //     child: TextField(
+            //       controller: _phoneController,
+            //       autofocus: false,
+            //       decoration: InputDecorations.buildInputDecoration_1(
+            //           hint_text: "01*********"),
+            //     ),
+            //   ),
+            // ),
+            //
+            // Padding(
+            //   padding: const EdgeInsets.only(bottom: 4.0),
+            //   child: Text(
+            //     //AppLocalizations.of(context).profile_edit_screen_password,
+            //     "Current Password",
+            //     style: TextStyle(
+            //         color: MyTheme.primary, fontWeight: FontWeight.w600),
+            //   ),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.only(bottom: 8.0),
+            //   child: Container(
+            //     height: 36,
+            //     child: TextField(
+            //       controller: _currentPasswordController,
+            //       autofocus: false,
+            //       obscureText: true,
+            //       enableSuggestions: false,
+            //       autocorrect: false,
+            //       decoration: InputDecorations.buildInputDecoration_1(
+            //           hint_text: "• • • • • • • •"),
+            //     ),
+            //   ),
+            // ),
+
             Padding(
               padding: const EdgeInsets.only(bottom: 4.0),
               child: Text(
-                AppLocalizations.of(context).profile_edit_screen_password,
+                //AppLocalizations.of(context).profile_edit_screen_password,
+                "New Password",
                 style: TextStyle(
                     color: MyTheme.primary, fontWeight: FontWeight.w600),
               ),
@@ -383,8 +435,9 @@ class _ProfileEditState extends State<ProfileEdit> {
             Padding(
               padding: const EdgeInsets.only(bottom: 4.0),
               child: Text(
-                AppLocalizations.of(context)
-                    .profile_edit_screen_retype_password,
+                // AppLocalizations.of(context)
+                //     .profile_edit_screen_retype_password,
+                "Confirm New Password",
                 style: TextStyle(
                     color: MyTheme.primary, fontWeight: FontWeight.w600),
               ),
