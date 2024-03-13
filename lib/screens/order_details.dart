@@ -1414,11 +1414,17 @@ class _OrderDetailsState extends State<OrderDetails> {
       width: 16,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
-          color: payment_status == "paid" ? Colors.green : Colors.red),
+          //color: payment_status == "paid" ? Colors.green : Colors.red),
+    color: payment_status == "paid"
+    ? Colors.green
+        : payment_status == "cod"
+    ? Colors.orange
+        : Colors.red,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(3),
         child: Icon(
-            payment_status == "paid" ? FontAwesome.check : FontAwesome.times,
+            payment_status == "paid" || payment_status == "cod"  ? FontAwesome.check : FontAwesome.times,
             color: Colors.white,
             size: 10),
       ),

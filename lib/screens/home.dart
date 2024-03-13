@@ -2236,8 +2236,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     ),
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage("${avatar_original.$}" ??
-                          "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png"), //TODO:change the avatar
+                      // image: NetworkImage("${avatar_original.$}" ??
+                      //     "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png"), //TODO:change the avatar
+                        image: avatar_original.$ != null ? NetworkImage("${avatar_original.$}") : AssetImage('assets/placeholder.png') //TODO:change the avatar
                     ),
                   ),
 

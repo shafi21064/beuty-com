@@ -69,6 +69,9 @@ class _MainState extends State<Main> {
     });
     print("i$i");
 
+    if(widget.pageIndex != 1){
+      Provider.of<CategoryPassingController>(context, listen: false).resetCategoryKeyValue();
+    }
   }
 
   void initState() {

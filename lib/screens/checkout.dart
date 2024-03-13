@@ -2118,7 +2118,7 @@ class _CheckoutState extends State<Checkout> {
 
 
 
-  buildAddressExpandedTile({bool initialExpanded}) {
+  buildAddressExpandedTile() {
     // int maxTextLen = 10;
     print('result#10' + success.toString());
     return Card(
@@ -2133,7 +2133,7 @@ class _CheckoutState extends State<Checkout> {
             //left: 32,
             //right: 30,
               top: 8.0, bottom: 8.0),
-          child: success == false? Container(
+          child: success == false || _nameController.text == 'Guest'? Container(
             margin: EdgeInsets.only(
                 top: 10
             ),
@@ -2143,7 +2143,6 @@ class _CheckoutState extends State<Checkout> {
             ),
             child: buildShowAddFormDialog(context),
           ) : ExpansionTile(
-            initiallyExpanded: initialExpanded,
 
             // title:  Text(_nameController.text.toString() ?? 'No Name',
             //   style: TextStyle(
@@ -2502,7 +2501,7 @@ class _CheckoutState extends State<Checkout> {
                     ),
 
                     success == null? ShimmerHelper().buildAddressLoadingShimmer(height: 80, ) :Container(
-                      child: success == false ? buildAddressExpandedTile(initialExpanded: true) : buildAddressExpandedTile(initialExpanded: false),
+                      child: buildAddressExpandedTile(),
                     ),
 
                     SizedBox(
