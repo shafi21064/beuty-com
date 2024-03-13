@@ -2491,37 +2491,43 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ...List.generate(_skinTypes.length, (index) {
                   final skinType = _skinTypes[index];
 
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Filter(
-                          selected_skin: skinType,
-                        );
-                      }));
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 2.0, vertical: 2.0),
-                      child: Container(
-                        padding: EdgeInsets.only(
-                            top: 0, bottom: 0, right: 5, left: 5),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: MyTheme.secondary,
-                            width: 1.0,
+                  return Consumer<CategoryPassingController>(
+                    builder: (widget, value, child) {
+                      return InkWell(
+                        onTap: () {
+                          value.setSkinTypesKey(skinType);
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            // return Filter(
+                            //   selected_skin: skinType,
+                            // );
+                                return Main(pageIndex: 1,);
+                          }));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 2.0, vertical: 2.0),
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                top: 0, bottom: 0, right: 5, left: 5),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: MyTheme.secondary,
+                                width: 1.0,
+                              ),
+                            ),
+                            child: Text(
+                              "${skinType.substring(0, 1).toUpperCase()}${skinType.substring(1)}",
+                              style: TextStyle(
+                                color: MyTheme.secondary,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           ),
                         ),
-                        child: Text(
-                          "${skinType.substring(0, 1).toUpperCase()}${skinType.substring(1)}",
-                          style: TextStyle(
-                            color: MyTheme.secondary,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
+                      );
+                    }
                   );
                 }),
               ],
@@ -2556,40 +2562,46 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ...List.generate(_keyIngredients.length, (index) {
                   final ingredients = _keyIngredients[index];
 
-                  return InkWell(
-                    onTap: () {
-                      // Handle the click on the ingredients (add your logic here)
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Filter(
-                          key_ingredients: ingredients,
-                        );
-                      }));
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 10.0),
-                      child: Container(
-                        padding: EdgeInsets.only(
-                            top: 0, bottom: 0, right: 0, left: 0),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: MyTheme.secondary,
-                              width: 1.0,
+                  return Consumer<CategoryPassingController>(
+                    builder: (widget, value, child) {
+                      return InkWell(
+                        onTap: () {
+                          // Handle the click on the ingredients (add your logic here)
+                          value.setIngredientsKey(ingredients);
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            // return Filter(
+                            //   key_ingredients: ingredients,
+                            // );
+                                return Main(pageIndex: 1,);
+                          }));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                top: 0, bottom: 0, right: 0, left: 0),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: MyTheme.secondary,
+                                  width: 1.0,
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              "${ingredients.substring(0, 1).toUpperCase()}${ingredients.substring(1)}${index == _keyIngredients.length - 1 ? '' : ', '}",
+                              style: TextStyle(
+                                  color: MyTheme.secondary,
+                                  fontSize: 14,
+                                  height: 1.6,
+                              fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                         ),
-                        child: Text(
-                          "${ingredients.substring(0, 1).toUpperCase()}${ingredients.substring(1)}${index == _keyIngredients.length - 1 ? '' : ', '}",
-                          style: TextStyle(
-                              color: MyTheme.secondary,
-                              fontSize: 14,
-                              height: 1.6,
-                          fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
+                      );
+                    }
                   );
                 }),
               ],
@@ -2625,38 +2637,44 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ...List.generate(_goodFor.length, (index) {
                   final good_for = _goodFor[index];
 
-                  return InkWell(
-                    onTap: () {
-                      // Handle the click on the ingredients (add your logic here)
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Filter(
-                          good_for: good_for,
-                        );
-                      }));
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 2.0, vertical: 2.0),
-                      child: Container(
-                        padding: EdgeInsets.only(
-                            top: 0, bottom: 0, right: 5, left: 5),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: MyTheme.secondary,
-                            width: 1.0,
+                  return Consumer<CategoryPassingController>(
+                    builder: (widget,value,child) {
+                      return InkWell(
+                        onTap: () {
+                          value.setGoodForKey(good_for);
+                          // Handle the click on the ingredients (add your logic here)
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            // return Filter(
+                            //   good_for: good_for,
+                            // );
+                                return Main(pageIndex: 1,);
+                          }));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 2.0, vertical: 2.0),
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                top: 0, bottom: 0, right: 5, left: 5),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: MyTheme.secondary,
+                                width: 1.0,
+                              ),
+                            ),
+                            child: Text(
+                              "${good_for.substring(0, 1).toUpperCase()}${good_for.substring(1)}${index == good_for.length - 1 ? '' : ''}",
+                              style: TextStyle(
+                                color: MyTheme.secondary,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           ),
                         ),
-                        child: Text(
-                          "${good_for.substring(0, 1).toUpperCase()}${good_for.substring(1)}${index == good_for.length - 1 ? '' : ''}",
-                          style: TextStyle(
-                            color: MyTheme.secondary,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
+                      );
+                    }
                   );
                 }),
               ],
@@ -2693,27 +2711,33 @@ class _ProductDetailsState extends State<ProductDetails> {
                   final category = _categories[index];
                   return MouseRegion(
                     cursor: SystemMouseCursors.click,
-                    child: InkWell(
-                      onTap: () {
-                        // Handle the click on the ingredients (add your logic here)
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return Filter(
-                            category: category,
-                          );
-                        }));
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: Text(
-                          "${category.substring(0, 1).toUpperCase()}${category.substring(1)}${index == _categories.length - 1 ? '' : ','}",
-                          style: TextStyle(
-                            color: MyTheme.primary,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
+                    child: Consumer<CategoryPassingController>(
+                      builder: (widget, value, child) {
+                        return InkWell(
+                          onTap: () {
+                            // Handle the click on the ingredients (add your logic here)
+                            value.setCategoryKey(category);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              // return Filter(
+                              //   category: category,
+                              // );
+                                  return Main(pageIndex: 1,);
+                            }));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                            child: Text(
+                              "${category.substring(0, 1).toUpperCase()}${category.substring(1)}${index == _categories.length - 1 ? '' : ','}",
+                              style: TextStyle(
+                                color: MyTheme.primary,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
+                        );
+                      }
                     ),
                   );
                 }),

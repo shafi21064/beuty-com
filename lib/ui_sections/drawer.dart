@@ -901,6 +901,16 @@ class _MainDrawerState extends State<MainDrawer> {
                 ),
 
                 SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.015,
+                ),
+
+                Text("Version: 2.0.3",
+                style: TextStyle(
+                  fontWeight: FontWeight.w500
+                ),
+                ),
+
+                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                 ),
               ],
