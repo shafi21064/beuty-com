@@ -31,9 +31,9 @@ class ProfileRepository {
   }
 
   Future<ProfileUpdateResponse> getProfileUpdateResponse(
-      @required String name,@required String password) async {
+      @required String name,@required String password, @required String currentPassword) async {
 
-    var post_body = jsonEncode({"name": "${name}", "password": "$password"});
+    var post_body = jsonEncode({"name": "${name}", "password": "$password", "current_password" : "${currentPassword}"});
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/profile/update");
     final response = await http.post(url,

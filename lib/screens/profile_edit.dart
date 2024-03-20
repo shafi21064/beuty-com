@@ -30,7 +30,7 @@ class _ProfileEditState extends State<ProfileEdit> {
       TextEditingController(text: "${user_name.$}");
   // TextEditingController _phoneController =
   //     TextEditingController(text: "${user_email.$}");
-  // TextEditingController _currentPasswordController = TextEditingController();
+   TextEditingController _currentPasswordController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _passwordConfirmController = TextEditingController();
 
@@ -104,6 +104,7 @@ class _ProfileEditState extends State<ProfileEdit> {
 
   onPressUpdate() async {
     var name = _nameController.text.toString();
+    var currentPassword = _currentPasswordController.text.toString();
     var password = _passwordController.text.toString();
     var password_confirm = _passwordConfirmController.text.toString();
 
@@ -159,6 +160,7 @@ class _ProfileEditState extends State<ProfileEdit> {
         await ProfileRepository().getProfileUpdateResponse(
       name,
       change_password ? password : "",
+          currentPassword,
     );
 
     if (profileUpdateResponse.result == false) {
@@ -372,30 +374,30 @@ class _ProfileEditState extends State<ProfileEdit> {
             //   ),
             // ),
             //
-            // Padding(
-            //   padding: const EdgeInsets.only(bottom: 4.0),
-            //   child: Text(
-            //     //AppLocalizations.of(context).profile_edit_screen_password,
-            //     "Current Password",
-            //     style: TextStyle(
-            //         color: MyTheme.primary, fontWeight: FontWeight.w600),
-            //   ),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.only(bottom: 8.0),
-            //   child: Container(
-            //     height: 36,
-            //     child: TextField(
-            //       controller: _currentPasswordController,
-            //       autofocus: false,
-            //       obscureText: true,
-            //       enableSuggestions: false,
-            //       autocorrect: false,
-            //       decoration: InputDecorations.buildInputDecoration_1(
-            //           hint_text: "• • • • • • • •"),
-            //     ),
-            //   ),
-            // ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4.0),
+              child: Text(
+                //AppLocalizations.of(context).profile_edit_screen_password,
+                "Current Password",
+                style: TextStyle(
+                    color: MyTheme.primary, fontWeight: FontWeight.w600),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Container(
+                height: 36,
+                child: TextField(
+                  controller: _currentPasswordController,
+                  autofocus: false,
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  decoration: InputDecorations.buildInputDecoration_1(
+                      hint_text: "• • • • • • • •"),
+                ),
+              ),
+            ),
 
             Padding(
               padding: const EdgeInsets.only(bottom: 4.0),
@@ -426,8 +428,9 @@ class _ProfileEditState extends State<ProfileEdit> {
                   Text(
                     AppLocalizations.of(context)
                         .profile_edit_screen_password_length_recommendation,
+                    textAlign: TextAlign.left,
                     style: TextStyle(
-                        color: MyTheme.light_grey, fontStyle: FontStyle.italic),
+                        color: MyTheme.dark_grey, fontStyle: FontStyle.italic, fontWeight: FontWeight.w600, fontSize: 10, wordSpacing:1, letterSpacing: 0.1 ),
                   )
                 ],
               ),

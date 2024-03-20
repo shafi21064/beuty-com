@@ -426,8 +426,10 @@ class _RegistrationState extends State<Registration> {
                                       AppLocalizations.of(context)
                                           .registration_screen_password_length_recommendation,
                                       style: TextStyle(
-                                        color: MyTheme.light_grey,
+                                        //color: MyTheme.light_grey,
+                                        color: MyTheme.dark_grey,
                                         fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.w600, fontSize: 10, wordSpacing:1, letterSpacing: 0.1
                                       ),
                                     ),
                                   ],

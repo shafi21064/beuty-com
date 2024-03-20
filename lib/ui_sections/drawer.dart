@@ -904,7 +904,7 @@ class _MainDrawerState extends State<MainDrawer> {
                   height: MediaQuery.of(context).size.height * 0.015,
                 ),
 
-                Text("Version: 2.0.3",
+                Text("Version: 2.0.4",
                 style: TextStyle(
                   fontWeight: FontWeight.w500
                 ),

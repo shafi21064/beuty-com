@@ -577,8 +577,8 @@ class _FeedListState extends State<FeedList> {
                       border: Border.all(color: Colors.white, width: 2),
                       borderRadius: BorderRadius.circular(140)),
                   child: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      'https://i.insider.com/5c9a115d8e436a63e42c2883?width=600&format=jpeg&auto=webp',
+                    backgroundImage: AssetImage(
+                      'assets/avater.png',
                     ),
                   )),
               Column(

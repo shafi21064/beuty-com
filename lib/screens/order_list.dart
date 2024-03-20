@@ -562,7 +562,7 @@ class _OrderListState extends State<OrderList> {
                   Text(
                     //_orderList[index].paymentStatusString ?? '',
                     _orderList[index]["payment_status_string"].toString() ?? '',
-                    style: TextStyle(color: MyTheme.secondary, fontSize: 13),
+                    style: TextStyle(color: MyTheme.secondary, fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                   Padding(
                     padding: app_language_rtl.$
