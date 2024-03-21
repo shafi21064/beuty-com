@@ -267,24 +267,49 @@ class _PasswordOtpState extends State<PasswordOtp> {
                                     color: MyTheme.light_grey, width: 1),
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(12.0))),
-                            child: FlatButton(
-                              minWidth: MediaQuery.of(context).size.width,
-                              //height: 50,
-                              color: MyTheme.primary,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(12.0))),
-                              child: Text(
-                                AppLocalizations.of(context)
-                                    .common_confirm_ucfirst,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              onPressed: () {
+                            // child: FlatButton(
+                            //   minWidth: MediaQuery.of(context).size.width,
+                            //   //height: 50,
+                            //   color: MyTheme.primary,
+                            //   shape: RoundedRectangleBorder(
+                            //       borderRadius: const BorderRadius.all(
+                            //           Radius.circular(12.0))),
+                            //   child: Text(
+                            //     AppLocalizations.of(context)
+                            //         .common_confirm_ucfirst,
+                            //     style: TextStyle(
+                            //         color: Colors.white,
+                            //         fontSize: 14,
+                            //         fontWeight: FontWeight.w600),
+                            //   ),
+                            //   onPressed: () {
+                            //     onPressConfirm();
+                            //   },
+                            // ),
+
+                            child: RaisedButton(
+                              onPressed: (){
                                 onPressConfirm();
                               },
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(2.0)),
+                              padding: EdgeInsets.all(0.0),
+                              child: Ink(
+                                decoration:
+                                BoxDecoration(color: MyTheme.secondary),
+                                child: Container(
+                                  constraints: BoxConstraints(
+                                      maxWidth: 300.0, minHeight: 50.0),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    AppLocalizations.of(context).otp_screen_confirm,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),

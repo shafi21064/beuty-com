@@ -425,12 +425,14 @@ class _ProfileEditState extends State<ProfileEdit> {
                           hint_text: "• • • • • • • •"),
                     ),
                   ),
-                  Text(
-                    AppLocalizations.of(context)
-                        .profile_edit_screen_password_length_recommendation,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        color: MyTheme.dark_grey, fontStyle: FontStyle.italic, fontWeight: FontWeight.w600, fontSize: 10, wordSpacing:1, letterSpacing: 0.1 ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      AppLocalizations.of(context)
+                          .profile_edit_screen_password_length_recommendation,
+                      style: TextStyle(
+                          color: MyTheme.dark_grey, fontStyle: FontStyle.italic, fontWeight: FontWeight.w600, fontSize: 10, wordSpacing:1, letterSpacing: 0.1 ),
+                    ),
                   )
                 ],
               ),

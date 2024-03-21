@@ -157,6 +157,7 @@ class _WishlistState extends State<Wishlist> {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return ProductDetails(
             id: _wishlistItems[index].product.id,
+            stock: 10,
           );
         }));
       },

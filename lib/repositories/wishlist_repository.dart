@@ -16,7 +16,8 @@ class WishListRepository {
         "App-Language": app_language.$,
       },
     );
-    print(response.body);
+    print("Apiresponse: ${response.body}");
+    debugPrint("Apiresponse2: ${response.body}");
     return wishlistResponseFromJson(response.body);
   }
 
