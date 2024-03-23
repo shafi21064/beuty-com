@@ -2193,6 +2193,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             children: [
               Visibility(
                 visible: widget.stock > 0,
+                //visible: _stock > 0,
                 child: Container(
                   width: MediaQuery.of(context).size.width / 2,
                   height: 44,
@@ -2248,6 +2249,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               // ),
               Visibility(
                 visible: widget.stock > 0,
+                //visible: _stock > 0,
                 child: Container(
                   width: MediaQuery.of(context).size.width / 2,
                   height: 44,
@@ -2284,6 +2286,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
               Visibility(
                 visible: widget.stock == 0,
+                //visible: _stock == 0,
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: 44,
