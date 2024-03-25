@@ -27,6 +27,7 @@ class ProductCard extends StatefulWidget {
   String slug;
   dynamic reviews;
   int discount;
+  int preorderAvailable;
   //bool has_discount;
 
   ProductCard(
@@ -40,6 +41,7 @@ class ProductCard extends StatefulWidget {
       this.reviews,
       this.slug,
       this.stock,
+      this.preorderAvailable,
         this.discount
       //this.has_discount
       })
@@ -199,9 +201,13 @@ class _ProductCardState extends State<ProductCard> {
                     //
                     //     ),
                     child: Container(
-                      color: widget.stock > 0
+                      color:
+                      widget.preorderAvailable == 1
+                          ? Color.fromRGBO(23, 162, 190, 1)
+                          :
+                       (widget.stock > 0
                           ? MyTheme.add_to_cart_button
-                          : Color.fromRGBO(192, 53, 50, 1),
+                          : Color.fromRGBO(192, 53, 50, 1)),
                       constraints:
                           BoxConstraints(maxWidth: 300.0, minHeight: 30.0),
                       alignment: Alignment.center,
@@ -219,16 +225,19 @@ class _ProductCardState extends State<ProductCard> {
                           SizedBox(
                               width:
                                   2), // Adjust the spacing between the icon and text
-                          Text(
-                            widget.stock > 0
-                                ? "Add to cart".toUpperCase()
-                                : "Out of stock".toUpperCase(),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
+                         Text(
+  widget.preorderAvailable == 1
+    ? "Preorder Now".toUpperCase()
+    : (widget.stock > 0 
+      ? "Add to Cart".toUpperCase()
+      : "Out of Stock".toUpperCase()),
+  style: TextStyle(
+    color: Colors.white,
+    fontSize: 12,
+    fontWeight: FontWeight.w300,
+  ),
+),
+
                         ],
                       ),
                     ),

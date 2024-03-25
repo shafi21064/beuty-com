@@ -28,6 +28,7 @@ class MiniProductCard extends StatefulWidget {
   int reviews;
   int stock;
   int discount;
+  int preorderAvailable;
 
   MiniProductCard({
     Key key,
@@ -40,7 +41,8 @@ class MiniProductCard extends StatefulWidget {
     this.slug,
     this.reviews,
     this.stock,
-    this.discount
+    this.discount,
+    this.preorderAvailable
 
   }) : super(key: key);
 
@@ -288,15 +290,18 @@ elevation: 0, // Set the elevation to 0 for no shadow
                               width:
                                   2), // Adjust the spacing between the icon and text
                           Text(
-                            widget.stock > 0
-                                ? "Add to cart".toUpperCase()
-                                : "Out of stock".toUpperCase(),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
+  widget.preorderAvailable == 1
+    ? "Preorder Now".toUpperCase()
+    : (widget.stock > 0 
+      ? "Add to Cart".toUpperCase()
+      : "Out of Stock".toUpperCase()),
+  style: TextStyle(
+    color: Colors.white,
+    fontSize: 12,
+    fontWeight: FontWeight.w300,
+  ),
+),
+
                         ],
                       ),
                     ),

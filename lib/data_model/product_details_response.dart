@@ -58,6 +58,7 @@ class DetailedProduct {
       this.calculable_price,
       this.currency_symbol,
       this.current_stock,
+     this.preorderAvailable,
       this.unit,
       this.rating,
       this.rating_count,
@@ -73,6 +74,7 @@ class DetailedProduct {
   int seller_id;
   int shop_id;
   String shop_name;
+  int preorderAvailable;
   String shop_logo;
   List<Photo> photos;
   String thumbnail_image;
@@ -114,6 +116,7 @@ class DetailedProduct {
         colors: List<String>.from(json["colors"].map((x) => x)),
         has_discount: json["has_discount"],
         stroked_price: json["stroked_price"],
+        preorderAvailable: json["preorder_available"],
         main_price: json["main_price"],
         calculable_price: json["calculable_price"],
         currency_symbol: json["currency_symbol"],
@@ -163,6 +166,7 @@ class DetailedProduct {
         "video_link": video_link,
         "link": link,
         "brand": brand.toJson(),
+        "preorder_available": preorderAvailable,
       };
 }
 

@@ -1476,6 +1476,7 @@ class _FilterState extends State<Filter> {
                   itemBuilder: (context, index) {
                     // 3
                     return ProductCard(
+                      preorderAvailable: _productList[index].preorderAvailable,
                       id: _productList[index].id,
                       name: _productList[index].name,
                       price: _productList[index].price.toString(),

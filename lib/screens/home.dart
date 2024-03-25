@@ -982,6 +982,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               return Padding(
                 padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
+                  preorderAvailable: _bestSellingProductList[index].preorderAvailable,
                   id: _bestSellingProductList[index].id,
                   image: _bestSellingProductList[index].pictures[0].url,
                   ratings: _bestSellingProductList[index].ratings,
@@ -1026,6 +1027,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               return Padding(
                 padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
+                  preorderAvailable: _featuredProductList[index].preorderAvailable,
+
                   id: _featuredProductList[index].id,
                   image: _featuredProductList[index].pictures[0].url,
                   ratings: _featuredProductList[index].ratings,
@@ -1095,6 +1098,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               return Padding(
                 padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
+                     preorderAvailable: _recommendedProductList[index].preorderAvailable,
+
                     id: _recommendedProductList[index].id,
                     image: _recommendedProductList[index].pictures[0].url,
                     ratings: _recommendedProductList[index].ratings,
@@ -1105,7 +1110,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     slug: _recommendedProductList[index].slug,
                     reviews: _recommendedProductList[index].reviews,
                     stock: _recommendedProductList[index].stock,
-                    discount:  _recommendedProductList[index].discount
+                    discount:  _recommendedProductList[index].discount,
+
                 ),
               );
             },
@@ -1140,6 +1146,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               return Padding(
                 padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
+                  preorderAvailable: _popularSearchProductList[index].preorderAvailable,
+
                   id: _popularSearchProductList[index].id,
                   image: _popularSearchProductList[index].pictures[0].url,
                   ratings: _popularSearchProductList[index].ratings,
@@ -1184,6 +1192,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               return Padding(
                 padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
+                  preorderAvailable: _trendingProductList[index].preorderAvailable,
+
                   id: _trendingProductList[index].id,
                   image: _trendingProductList[index].pictures[0].url,
                   ratings: _trendingProductList[index].ratings,
@@ -1227,6 +1237,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               return Padding(
                 padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
+                                    preorderAvailable: _hotDealsProductList[index].preorderAvailable,
+
                   id: _hotDealsProductList[index].id,
                   image: _hotDealsProductList[index].pictures[0].url,
                   ratings: _hotDealsProductList[index].ratings,
@@ -1270,6 +1282,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               return Padding(
                 padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
+                                      preorderAvailable: _newArrivalProductList[index].preorderAvailable,
+
                   id: _newArrivalProductList[index].id,
                   image: _newArrivalProductList[index].pictures[0].url,
                   ratings: _newArrivalProductList[index].ratings,
@@ -1766,6 +1780,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return Filter(
                   category: "green-tea",
+                  
                 );
               }));
             },
