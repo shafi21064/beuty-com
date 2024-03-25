@@ -67,12 +67,15 @@ class CartRepository {
       @required int id,
       @required String variant,
       @required int user_id,
-      @required int _quantity) async {
+      @required int _quantity,
+      //@required int _preOrder,
+      ) async {
     var post_body = jsonEncode({
       "id": "${id}",
       "variant": "$variant",
       "user_id": "$user_id",
       "quantity": "$_quantity",
+      //"is_preorder": "$_preOrder",
       "cost_matrix": AppConfig.purchase_code
     });
 

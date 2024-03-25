@@ -24,6 +24,7 @@ class _WishlistState extends State<Wishlist> {
   //init
   bool _wishlistInit = true;
   List<dynamic> _wishlistItems = [];
+  var isPreOrder ;
 
   @override
   void initState() {
@@ -45,6 +46,7 @@ class _WishlistState extends State<Wishlist> {
     _wishlistItems.addAll(wishlistResponse.wishlist_items);
     _wishlistInit = false;
     setState(() {});
+    //isPreOrder = _wishlistItems[index].preorder_available;
   }
 
   reset() {
@@ -96,7 +98,7 @@ class _WishlistState extends State<Wishlist> {
     //print(_quantity);
     print(access_token.$);
     var cartAddResponse = await CartRepository()
-        .getCartAddResponse(id, _variant, user_id.$, _quantity);
+        .getCartAddResponse(id, _variant, user_id.$, _quantity,);
 
     if (cartAddResponse.result == false) {
       ToastComponent.showDialog(cartAddResponse.message, context,

@@ -359,7 +359,7 @@ class _FilterState extends State<Filter> {
     );
 
     _productList.addAll(productResponse.products);
-    print(_productList);
+    print("foysal111"+_productList.toString());
     _isProductInitial = false;
     _totalProductData = productResponse.meta.total;
     _showProductLoadingContainer = false;

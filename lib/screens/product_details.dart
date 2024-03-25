@@ -30,6 +30,7 @@ import 'package:kirei/custom/toast_component.dart';
 import 'package:kirei/repositories/chat_repository.dart';
 import 'package:kirei/screens/chat.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 // import 'package:social_share/social_share.dart';
 import 'dart:async';
@@ -99,6 +100,8 @@ class _ProductDetailsState extends State<ProductDetails> {
   bool _topProductInit = false;
 
   bool _isGoToCart = false;
+  var showPreorderDate;
+  var preorderAvailable;
 
   buildUpdateGoToCart(){
     _isGoToCart = true;
@@ -139,6 +142,8 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     _productDetails = productDetailsResponse.detailed_products;
     print(productDetailsResponse);
+
+    //showPreorderDate = _productDetails.preorderAvailable ? true : false;
 
     var description = _productDetails.shortDescription;
     var document = parse(description);
@@ -184,6 +189,8 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   setProductDetailValues() {
     if (_productDetails != null) {
+      showPreorderDate = _productDetails.preorderDeliveryDate;
+      preorderAvailable = _productDetails.preorderAvailable;
       _appbarPriceString = _productDetails.salePrice.toString();
       // _singlePrice = _productDetails.calculable_price;
       _singlePriceString = _productDetails.salePrice;
@@ -413,7 +420,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     //print(_quantity);
     print(access_token.$);
     var cartAddResponse = await CartRepository()
-        .getCartAddResponse(widget.id, _variant, user_id.$, _quantity);
+        .getCartAddResponse(widget.id, _variant, user_id.$, _quantity, );
+        //.getCartAddResponse(widget.id, _variant, user_id.$, _quantity, preorderAvailable);
 
     if (cartAddResponse.result == false) {
       ToastComponent.showDialog(cartAddResponse.message, context,
@@ -937,6 +945,48 @@ class _ProductDetailsState extends State<ProductDetails> {
                 //     //       ),
                 //   ),
                 // ),
+                // SliverList(
+                //     delegate: SliverChildListDelegate([
+                //       Visibility(
+                //         visible: showPreorderDate,
+                //           child: Padding(
+                //             padding: const EdgeInsets.fromLTRB(
+                //               16.0,
+                //               8.0,
+                //               16.0,
+                //               0.0,
+                //             ),
+                //             // child: _productDetails != null
+                //             //     ? buildMainPriceRow()
+                //             //     : ShimmerHelper().buildBasicShimmer(
+                //             //   height: 30.0,
+                //             // ),
+                //             child: Text(_productDetails.preorderDeliveryDate),
+                //           ),
+                //       ),
+                //     ])),
+                
+                SliverList(
+                    delegate: SliverChildListDelegate([
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          16.0,
+                          8.0,
+                          16.0,
+                          0.0,
+                        ),
+                        // child: _productDetails != null
+                        //     ? buildMainPriceRow()
+                        //     : ShimmerHelper().buildBasicShimmer(
+                        //   height: 30.0,
+                        // ),
+                        child: showPreorderDate == null ? ShimmerHelper().buildBasicShimmer( height: 30) : _productDetails.preorderDeliveryDate != "30-11--0001" ? Text("Will Available on ${_productDetails.preorderDeliveryDate}", style: TextStyle(
+                          color: MyTheme.dark_grey,
+                          fontWeight: FontWeight.bold,
+                        ),) : Container(),
+                      ),
+                    ])),
+                
                 SliverList(
                     delegate: SliverChildListDelegate([
                   Padding(
@@ -1597,10 +1647,12 @@ class _ProductDetailsState extends State<ProductDetails> {
 
         Text(
           //   //"(${_stock} ${AppLocalizations.of(context).product_details_screen_available})",
-          _stock != 0 ? 'In Stock' : 'Stock Out',
+          //_stock != 0 ? 'In Stock' : 'Stock Out',
+          _productDetails.preorderAvailable == 0 ? _stock != 0 ? 'In Stock' : 'Stock Out' : "Coming soon",
           style: TextStyle(
             //color: Color.fromRGBO(152, 152, 153, 1),
-              color: _stock != 0? Colors.green : MyTheme.primary,
+              //color: _stock != 0? Colors.green : MyTheme.primary,
+             color:  _productDetails.preorderAvailable == 0 ? _stock != 0? Colors.green : MyTheme.primary : Colors.orange,
               fontWeight: FontWeight.bold,
               fontSize: 14),
         )
@@ -2192,100 +2244,210 @@ class _ProductDetailsState extends State<ProductDetails> {
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Visibility(
-                visible: widget.stock > 0,
+                visible: preorderAvailable > 0,
                 //visible: _stock > 0,
                 child: Container(
-                  width: MediaQuery.of(context).size.width / 2,
+                  width: MediaQuery.of(context).size.width * 1,
                   height: 44,
                   child: Consumer<CartCountUpdate>(
-                    builder: (widget, value, child) {
-                      return RaisedButton(
-                        onPressed: () {
-                          //onPressAddToCart(context, _addedToCartSnackbar);
-                          value.setCartValue(_quantity);
-                          buildUpdateGoToCart();
-                        },
-                        // shape: RoundedRectangleBorder(
-                        //     borderRadius: BorderRadius.circular(80.0)),
-                        padding: EdgeInsets.all(0.0),
-                        child: Ink(
-                          color: MyTheme.secondary,
-                          child: Container(
-                              constraints:
-                                  BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
-                              alignment: Alignment.center,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons
-                                        .shopping_bag_outlined, // Use the appropriate cart icon
-                                    color: Colors.white,
-                                    size: 17,
-                                  ),
-                                  SizedBox(
-                                    width: 2,
-                                  ),
-                                  // Add some space between the icon and text
-                                  Text(
-                                    AppLocalizations.of(context)
-                                        .product_details_screen_button_add_to_cart,
-                                    style: TextStyle(
+                      builder: (widget, value, child) {
+                        return RaisedButton (
+                          onPressed: () async{
+                            //onPressAddToCart(context, _addedToCartSnackbar);
+                             //value.setCartValue(_quantity);
+                            // buildUpdateGoToCart();
+
+                            SharedPreferences sharePreference = await SharedPreferences.getInstance();
+                            sharePreference.getInt("cartItemCount") != 0 ?
+                            showDialog(context: context, builder: (context){
+                              return AlertDialog(
+                                title: Text("Warning"),
+                                content: Container(
+                                  color: Colors.yellowAccent,
+                                  child: Text("We detected that you are trying to add a pre-order product in your cart. Please remove the rest of the products before proceeding."),
+                                ),
+                              );
+                            })
+                                :
+                            value.setCartValue(_quantity);
+                            buildUpdateGoToCart();
+                            onPressBuyNow(context, _isGoToCart);
+                          },
+                          // shape: RoundedRectangleBorder(
+                          //     borderRadius: BorderRadius.circular(80.0)),
+                          padding: EdgeInsets.all(0.0),
+                          child: Ink(
+                            color: MyTheme.secondary,
+                            child: Container(
+                                constraints:
+                                BoxConstraints(maxWidth: double.infinity, minHeight: 50.0),
+                                alignment: Alignment.center,
+                                color: Color(0xff138496),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons
+                                          .shopping_bag_outlined, // Use the appropriate cart icon
                                       color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
+                                      size: 17,
                                     ),
-                                  ),
-                                ],
-                              )),
-                        ),
-                      );
-                    }
-                  ),
-                ),
-              ),
-              // SizedBox(
-              //   width: 1,
-              // ),
-              Visibility(
-                visible: widget.stock > 0,
-                //visible: _stock > 0,
-                child: Container(
-                  width: MediaQuery.of(context).size.width / 2,
-                  height: 44,
-                  child: Consumer<CartCountUpdate>(
-                    builder: (widget, value, child) {
-                      return RaisedButton(
-                        onPressed: () {
-                          onPressBuyNow(context, _isGoToCart);
-                          value.setCartValue(_quantity);
-                        },
-                        padding: EdgeInsets.all(0.0),
-                        child: Ink(
-                          color: _isGoToCart == true ? Color(0xffE49000) : MyTheme.primary,
-                          child: Container(
-                            constraints:
-                                BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
-                            alignment: Alignment.center,
-                            child: Text(
-                              // AppLocalizations.of(context)
-                              //     .product_details_screen_button_buy_now,
-                              _isGoToCart == true ? "Go to Cart" : "Buy Now",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600),
-                            ),
+                                    SizedBox(
+                                      width: 2,
+                                    ),
+                                    // Add some space between the icon and text
+                                    Text(
+                                      // AppLocalizations.of(context)
+                                      //     .product_details_screen_button_add_to_cart,
+                                      "PREORDER NOW!",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                )),
                           ),
-                        ),
-                      );
-                    }
+                        );
+                      }
                   ),
                 ),
               ),
 
               Visibility(
-                visible: widget.stock == 0,
+                visible: widget.stock > 0,
+                //visible: _stock > 0,
+                child: Row(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width / 2,
+                      height: 44,
+                      child: Consumer<CartCountUpdate>(
+                        builder: (widget, value, child) {
+                          return RaisedButton(
+                            onPressed: () {
+                              //onPressAddToCart(context, _addedToCartSnackbar);
+                              value.setCartValue(_quantity);
+                              buildUpdateGoToCart();
+                            },
+                            // shape: RoundedRectangleBorder(
+                            //     borderRadius: BorderRadius.circular(80.0)),
+                            padding: EdgeInsets.all(0.0),
+                            child: Ink(
+                              color: MyTheme.secondary,
+                              child: Container(
+                                  constraints:
+                                      BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+                                  alignment: Alignment.center,
+                                  child: Row(
+
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons
+                                            .shopping_bag_outlined, // Use the appropriate cart icon
+                                        color: Colors.white,
+                                        size: 17,
+                                      ),
+                                      SizedBox(
+                                        width: 2,
+                                      ),
+                                      // Add some space between the icon and text
+                                      Text(
+                                        AppLocalizations.of(context)
+                                            .product_details_screen_button_add_to_cart,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                            ),
+                          );
+                        }
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 2,
+                      height: 44,
+                      child: Consumer<CartCountUpdate>(
+                          builder: (widget, value, child) {
+                            return RaisedButton(
+                              onPressed: () {
+                                onPressBuyNow(context, _isGoToCart);
+                                value.setCartValue(_quantity);
+                              },
+                              padding: EdgeInsets.all(0.0),
+                              child: Ink(
+                                color: _isGoToCart == true ? Color(0xffE49000) : MyTheme.primary,
+                                child: Container(
+                                  constraints:
+                                  BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    // AppLocalizations.of(context)
+                                    //     .product_details_screen_button_buy_now,
+                                    _isGoToCart == true ? "Go to Cart" : "Buy Now",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // SizedBox(
+              //   width: 1,
+              // ),
+
+              // Visibility(
+              //   visible: widget.stock > 0,
+              //   //visible: _stock > 0,
+              //   child: Container(
+              //     width: MediaQuery.of(context).size.width / 2,
+              //     height: 44,
+              //     child: Consumer<CartCountUpdate>(
+              //       builder: (widget, value, child) {
+              //         return RaisedButton(
+              //           onPressed: () {
+              //             onPressBuyNow(context, _isGoToCart);
+              //             value.setCartValue(_quantity);
+              //           },
+              //           padding: EdgeInsets.all(0.0),
+              //           child: Ink(
+              //             color: _isGoToCart == true ? Color(0xffE49000) : MyTheme.primary,
+              //             child: Container(
+              //               constraints:
+              //                   BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+              //               alignment: Alignment.center,
+              //               child: Text(
+              //                 // AppLocalizations.of(context)
+              //                 //     .product_details_screen_button_buy_now,
+              //                 _isGoToCart == true ? "Go to Cart" : "Buy Now",
+              //                 style: TextStyle(
+              //                     color: Colors.white,
+              //                     fontSize: 14,
+              //                     fontWeight: FontWeight.w600),
+              //               ),
+              //             ),
+              //           ),
+              //         );
+              //       }
+              //     ),
+              //   ),
+              // ),
+
+              Visibility(
+                visible: widget.stock == 0 && preorderAvailable == 0,
                 //visible: _stock == 0,
                 child: Container(
                   width: MediaQuery.of(context).size.width,
