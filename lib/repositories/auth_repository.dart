@@ -58,7 +58,7 @@ class AuthRepository {
   Future<LoginResponse> getLoginOTPResponse(@required String phone) async {
     var post_body = jsonEncode({"email": "${phone}"});
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/send-login-otp");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/send-login-otp");
     final response = await http.post(url,
         headers: {
           "Accept": "*/*",
@@ -83,7 +83,7 @@ class AuthRepository {
       "access_token": "$access_token"
     });
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/auth/social-login");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/social-login");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -98,7 +98,7 @@ class AuthRepository {
   }
 
   Future<LogoutResponse> getLogoutResponse() async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/auth/logout");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/logout");
     final response = await http.get(
       url,
       headers: {
@@ -126,7 +126,7 @@ class AuthRepository {
       "register_by": "$register_by"
     });
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/auth/signup");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/signup");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -145,7 +145,7 @@ class AuthRepository {
       "email": "${phone}",
     });
     print(post_body);
-    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/send-signup-otp");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/send-signup-otp");
     print(url);
     final response = await http.post(url,
         headers: {
@@ -162,7 +162,7 @@ class AuthRepository {
     var post_body =
         jsonEncode({"user_id": "$user_id", "register_by": "$verify_by"});
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/auth/resend_code");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/resend_code");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -178,7 +178,7 @@ class AuthRepository {
     var post_body = jsonEncode(
         {"user_id": "$user_id", "verification_code": "$verification_code"});
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/auth/confirm_code");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/confirm_code");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -194,7 +194,7 @@ class AuthRepository {
     var post_body =
         jsonEncode({"email": "$phone", "otp_code": "$verification_code"});
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/verify-signup-otp");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/verify-signup-otp");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -210,7 +210,7 @@ class AuthRepository {
     var post_body =
         jsonEncode({"email": "$phone", "otp_code": "$verification_code"});
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/verify-login-otp");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/verify-login-otp");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -227,7 +227,7 @@ class AuthRepository {
 
     print(post_body);
     Uri url = Uri.parse(
-      "${AppConfig.BASE_URL_1}/send-reset-otp",
+      "${AppConfig.BASE_URL}/send-reset-otp",
     );
     final response = await http.post(url,
         headers: {
@@ -248,7 +248,7 @@ class AuthRepository {
     print(post_body);
 
     Uri url = Uri.parse(
-      "${AppConfig.BASE_URL_1}/verify-reset-otp",
+      "${AppConfig.BASE_URL}/verify-reset-otp",
     );
     final response = await http.post(url,
         headers: {
@@ -276,7 +276,7 @@ class AuthRepository {
     print(post_body);
 
     Uri url = Uri.parse(
-      "${AppConfig.BASE_URL_1}/auth/password/confirm_reset",
+      "${AppConfig.BASE_URL}/auth/password/confirm_reset",
     );
     final response = await http.post(url,
         headers: {
@@ -295,7 +295,7 @@ class AuthRepository {
     var post_body = jsonEncode(
         {"email_or_code": "$email_or_code", "verify_by": "$verify_by"});
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/auth/password/resend_code");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/password/resend_code");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -308,7 +308,7 @@ class AuthRepository {
 
   Future<UserByTokenResponse> getUserByTokenResponse() async {
     var post_body = jsonEncode({"access_token": "${access_token.$}"});
-    Uri url = Uri.parse("${AppConfig.BASE_URL_1}/get-user-by-access_token");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/get-user-by-access_token");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",

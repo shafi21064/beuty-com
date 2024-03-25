@@ -69,6 +69,9 @@ class _MainState extends State<Main> {
     });
     print("i$i");
 
+    if(widget.pageIndex != 1){
+      Provider.of<CategoryPassingController>(context, listen: false).resetCategoryKeyValue();
+    }
   }
 
   void initState() {
@@ -181,11 +184,13 @@ fetchData() async {
     return WillPopScope(
       onWillPop: () async {
         print("_currentIndex");
-        if (_currentIndex != 0) {
-          setState(() {
-            _currentIndex = 0;
-          });
-          return false;
+        if (_currentIndex != 0 || widget.pageIndex !=0) {
+          // setState(() {
+          //   _currentIndex = 0;
+          // });
+          // return false;
+           Navigator.push(context, MaterialPageRoute(builder: (_)=> Main(pageIndex: 0,)));
+          // Navigator.pop(context);
         } else {
           CommonFunctions(context).appExitDialog();
         }

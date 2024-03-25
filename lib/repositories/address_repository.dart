@@ -87,41 +87,44 @@ class AddressRepository {
     return addressAddResponseFromJson(response.body);
   }
 
-  // Future<AddressAddResponse> getAddressUpdateAddResponse(
-  //     {@required String address,
-  //       @required String area,
-  //       @required String zone,
-  //       @required String city,
-  //       @required String phone,
-  //       @required String name,
-  //       @required String email,
-  //       @required String note,
-  //     }) async {
-  //   var post_body = jsonEncode({
-  //     "address": "$address",
-  //     "area": "$area",
-  //     "zone": "$zone",
-  //     "city": "$city",
-  //     "phone": "$phone",
-  //     "name" : "$name",
-  //     "email" : "$email",
-  //     "note" : "$note"
-  //   });
-  //   print('my address data2' +post_body);
-  //
-  //   Uri url = Uri.parse("${ENDP.UpdateAddrNew}");
-  //   final response = await http.post(url,
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "Authorization": "Bearer ${access_token.$}",
-  //         "App-Language": app_language.$
-  //       },
-  //       body: post_body);
-  //
-  //   print(url);
-  //   print(response.body.toString());
-  //   return addressAddResponseFromJson(response.body);
-  // }
+  Future<AddressAddResponse> getAddressUpdateAddResponse(
+      {@required String address,
+        // @required String area,
+        // @required String zone,
+        // @required String city,
+        @required int area,
+        @required int zone,
+        @required int city,
+        @required String phone,
+        @required String name,
+        @required String email,
+        @required String note,
+      }) async {
+    var post_body = jsonEncode({
+      "address": "$address",
+      "area_id": area,
+      "zone_id": zone,
+      "city_id": city,
+      "phone": "$phone",
+      "name" : "$name",
+      "email" : "$email",
+      "note" : "$note"
+    });
+    print('my address data2' +post_body);
+
+    Uri url = Uri.parse("${ENDP.UpdateAddrNew}");
+    final response = await http.post(url,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${access_token.$}",
+          "App-Language": app_language.$
+        },
+        body: post_body);
+
+    print(url);
+    print("initialState: "+response.body.toString());
+    return addressAddResponseFromJson(response.body);
+  }
 
   Future<AddressUpdateResponse> getAddressUpdateResponse(
       {@required int id,

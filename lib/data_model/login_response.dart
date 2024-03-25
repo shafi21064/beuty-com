@@ -104,8 +104,8 @@ class User {
         name: json["name"],
         email: json["email"],
         avatar: json["avatar"],
-        avatar_original: json["avatar_original"] ??
-            "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png",
+        avatar_original: json["avatar_original"] ,
+           // "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png",
         phone: json["phone"],
       );
 

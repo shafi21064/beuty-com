@@ -32,6 +32,7 @@ import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/auth_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MainDrawer extends StatefulWidget {
   const MainDrawer({
@@ -82,6 +83,13 @@ class _MainDrawerState extends State<MainDrawer> {
     }), (route) => false);
   }
 
+  Future<void> _launchUrl(Uri url) async {
+    // final Uri _url = Uri.parse('https://flutter.dev');
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -98,10 +106,12 @@ class _MainDrawerState extends State<MainDrawer> {
                 is_logged_in.$ == true
                     ? ListTile(
                     leading: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        "${avatar_original.$}" ??
-                            "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png",
-                      ),
+                      backgroundImage:
+            //NetworkImage(
+                        // "${avatar_original.$}" ??
+                        //     "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png",
+                          avatar_original.$ != null ? NetworkImage("${avatar_original.$}") : AssetImage('assets/placeholder.png') //TODO:change the avatar
+                      //),
                     ),
                     title: Text("${user_name.$}"),
                     subtitle: Text(
@@ -206,7 +216,16 @@ class _MainDrawerState extends State<MainDrawer> {
                               ? Padding(
                             padding:  EdgeInsets.only(left: 8.0),
                             child: ExpansionTile(
-                              title: Text(category.name),
+                              title: GestureDetector(
+                                  onTap: (){
+                                    value.setCategoryKey(category.slug);
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                          return Main(pageIndex: 1,);
+                                        }));
+                                  },
+                                  child: Text(category.name)
+                              ),
                               children: category.children.map((child) {
                                 return Padding(
                                   padding:  EdgeInsets.only(left: 8.0),
@@ -832,13 +851,7 @@ class _MainDrawerState extends State<MainDrawer> {
 
                     GestureDetector(
                       onTap: (){
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                              return CommonWebviewScreen(
-                                url: "https://www.facebook.com/jbeautybyKirei?type=app",
-                                page_name: "Facebook",
-                              );
-                            }));
+                        _launchUrl(Uri.parse('https://www.facebook.com/jbeautybyKirei'));
                       },
                       child: Container(
                         height: MediaQuery.of(context).size.height * 0.05,
@@ -856,13 +869,7 @@ class _MainDrawerState extends State<MainDrawer> {
 
                     GestureDetector(
                       onTap: (){
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                              return CommonWebviewScreen(
-                                url: "https://www.youtube.com/channel/UCfcO3vgVRLyqcIoAl8AX8Ew?type=app",
-                                page_name: "Youtube",
-                              );
-                            }));
+                        _launchUrl(Uri.parse('https://www.youtube.com/channel/UCfcO3vgVRLyqcIoAl8AX8Ew'));
                       },
                       child: Container(
                         height: MediaQuery.of(context).size.height * 0.05,
@@ -879,13 +886,7 @@ class _MainDrawerState extends State<MainDrawer> {
 
                     GestureDetector(
                       onTap: (){
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                              return CommonWebviewScreen(
-                                url: "https://www.instagram.com/accounts/login/?next=%2Fjbeauty_kirei%2F?type=app",
-                                page_name: "Instagram",
-                              );
-                            }));
+                        _launchUrl(Uri.parse('https://www.instagram.com/accounts/login/?next=%2Fjbeauty_kirei%2F'));
                       },
                       child: Container(
                         height: MediaQuery.of(context).size.height * 0.05,
@@ -897,6 +898,16 @@ class _MainDrawerState extends State<MainDrawer> {
                       ),
                     ),
                   ],
+                ),
+
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.015,
+                ),
+
+                Text("Version: 2.0.4",
+                style: TextStyle(
+                  fontWeight: FontWeight.w500
+                ),
                 ),
 
                 SizedBox(

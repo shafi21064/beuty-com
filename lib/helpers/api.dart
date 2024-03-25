@@ -12,7 +12,7 @@ var token="5|vFUwavpCbXFZaZd4XQDP2UyT2dcIVmJboDdxT4Ax";
 
 Future getApi(String endPoint) async {
 
-  Uri url = Uri.parse("${AppConfig.BASE_URL_1}/$endPoint");
+  Uri url = Uri.parse("${AppConfig.BASE_URL}/$endPoint");
   print("requent url: $url");
   final response = await http.get(url, headers: {
     "Content-Type": "application/json",

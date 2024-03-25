@@ -1,12 +1,12 @@
 import '../app_config.dart';
 
 class ENDP {
-  static const LOGIN = "${AppConfig.BASE_URL_1}/auth/login";
+  static const LOGIN = "${AppConfig.BASE_URL}/auth/login";
   static const AddOns = "${AppConfig.BASE_URL}/addon-list";
   static const AddrList = "${AppConfig.BASE_URL}/user/shipping/address";
   static const AddAddr = "${AppConfig.BASE_URL}/user/shipping/create";
   static const UpdateAddr = "${AppConfig.BASE_URL}/user/shipping/update";
-  //static const UpdateAddrNew = "${AppConfig.BASE_URL}/user/shipping/create-or-update";
+  static const UpdateAddrNew = "${AppConfig.BASE_URL}/user/shipping/create-or-update";
   static const UpdateShipAddr =
       "${AppConfig.BASE_URL}/user/shipping/update-location";
   static const ShipDefault = "${AppConfig.BASE_URL}/user/shipping/make_default";
@@ -54,20 +54,20 @@ class ENDP {
   static const COUPON_APPLY = "${AppConfig.BASE_URL}/coupon-apply/on-cart";
   static const COUPON_REMOVE = "${AppConfig.BASE_URL}/coupon-remove";
   //EXTRA_REPO
-  static const GET_BLOGS = "${AppConfig.BASE_URL_1}/blogs";
-  static const GET_BeautyBLOGS = "${AppConfig.BASE_URL_1}/beauty-blogs";
+  static const GET_BLOGS = "${AppConfig.BASE_URL}/blogs";
+  static const GET_BeautyBLOGS = "${AppConfig.BASE_URL}/beauty-blogs";
 
   //COMMUNITY POST
-  static const COMMUNITY_POSTS = "${AppConfig.BASE_URL_1}/community-posts";
-  static const COMMUNITY_HASH = "${AppConfig.BASE_URL_1}/community-hashtags";
+  static const COMMUNITY_POSTS = "${AppConfig.BASE_URL}/community-posts";
+  static const COMMUNITY_HASH = "${AppConfig.BASE_URL}/community-hashtags";
   static const COMMUNITY_POST_CREATE =
-      "${AppConfig.BASE_URL_1}/community-post-create";
+      "${AppConfig.BASE_URL}/community-post-create";
   static const COMMUNITY_POST_COMMENT_CREATE =
-      "${AppConfig.BASE_URL_1}/community-comment-create";
+      "${AppConfig.BASE_URL}/community-comment-create";
   static const COMMUNITY_POST_LIKE_CREATE =
-      "${AppConfig.BASE_URL_1}/community-like-update";
+      "${AppConfig.BASE_URL}/community-like-update";
   static const COMMUNITY_POST_COMMENT =
-      "${AppConfig.BASE_URL_1}/community-comments";
+      "${AppConfig.BASE_URL}/community-comments";
 
   //File repo
   static const IMAGE_UPLOAD = "${AppConfig.BASE_URL}/file/image-upload";

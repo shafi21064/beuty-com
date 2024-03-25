@@ -25,7 +25,7 @@ class AppointmentRepository {
       'whatsapp_number': whatsappNumber,
     });
     final response = await http.post(
-        Uri.parse('${AppConfig.BASE_URL_1}/new-appointment/store'),
+        Uri.parse('${AppConfig.BASE_URL}/new-appointment/store'),
         headers: {
           "Accept": "*/*",
           "Content-Type": "application/json",

@@ -138,6 +138,7 @@ class _RegistrationState extends State<Registration> {
     var signupResponse = await AuthRepository().getSignupResponse(
         name,
         _register_by == 'email' ? email : _phone,
+        //email,
         password,
         password_confirm,
         _register_by);
@@ -422,12 +423,17 @@ class _RegistrationState extends State<Registration> {
                                         ),
                                       ),
                                     ),
-                                    Text(
-                                      AppLocalizations.of(context)
-                                          .registration_screen_password_length_recommendation,
-                                      style: TextStyle(
-                                        color: MyTheme.light_grey,
-                                        fontStyle: FontStyle.italic,
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        AppLocalizations.of(context)
+                                            .registration_screen_password_length_recommendation,
+                                        style: TextStyle(
+                                          //color: MyTheme.light_grey,
+                                          color: MyTheme.dark_grey,
+                                          fontStyle: FontStyle.italic,
+                                            fontWeight: FontWeight.w600, fontSize: 10, wordSpacing:1, letterSpacing: 0.1
+                                        ),
                                       ),
                                     ),
                                   ],

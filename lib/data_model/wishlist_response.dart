@@ -63,6 +63,7 @@ class Product {
     this.thumbnail_image,
     this.base_price,
     this.rating,
+    this.stock,
   });
 
   int id;
@@ -70,6 +71,7 @@ class Product {
   String thumbnail_image;
   String base_price;
   int rating;
+  int stock;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
@@ -79,6 +81,7 @@ class Product {
         rating: json["rating"] != null
             ? int.tryParse(json["rating"].toString()) ?? 0
             : 0,
+        stock: json["stock"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -87,5 +90,6 @@ class Product {
         "thumbnail_image": thumbnail_image,
         "base_price": base_price,
         "rating": rating,
+        "stock" : stock,
       };
 }

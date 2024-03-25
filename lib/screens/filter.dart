@@ -342,21 +342,24 @@ class _FilterState extends State<Filter> {
       sort_key: _selectedSort,
       categories:
       providerValue.categoryKey != null ? providerValue.categoryKey : _selectedCategory,
-      skin_type: widget.selected_skin != null
-          ? widget.selected_skin
+      skin_type: providerValue.skinTypesKey != null
+          ? providerValue.skinTypesKey
           : _selectedBrands.join(",").toString(),
+      // skin_type: widget.selected_skin != null
+      //     ? widget.selected_skin
+      //     : _selectedBrands.join(",").toString(),
       //tag: widget.tag,
       tag: providerValue.tagsKey,
-      good_for: widget.good_for,
+      good_for: providerValue.goodForKey ?? widget.good_for,
       type: providerValue.typeKey,
-      key_ingredients: widget.key_ingredients,
+      key_ingredients: providerValue.ingredientsKey ?? widget.key_ingredients,
       max: _maxPriceController.text.toString(),
       min: _minPriceController.text.toString(),
       //search: widget.search.toString(),
     );
 
     _productList.addAll(productResponse.products);
-    print(_productList);
+    print("foysal111"+_productList.toString());
     _isProductInitial = false;
     _totalProductData = productResponse.meta.total;
     _showProductLoadingContainer = false;
