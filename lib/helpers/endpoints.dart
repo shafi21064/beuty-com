@@ -6,7 +6,7 @@ class ENDP {
   static const AddrList = "${AppConfig.BASE_URL}/user/shipping/address";
   static const AddAddr = "${AppConfig.BASE_URL}/user/shipping/create";
   static const UpdateAddr = "${AppConfig.BASE_URL}/user/shipping/update";
-  //static const UpdateAddrNew = "${AppConfig.BASE_URL}/user/shipping/create-or-update";
+  static const UpdateAddrNew = "${AppConfig.BASE_URL}/user/shipping/create-or-update";
   static const UpdateShipAddr =
       "${AppConfig.BASE_URL}/user/shipping/update-location";
   static const ShipDefault = "${AppConfig.BASE_URL}/user/shipping/make_default";

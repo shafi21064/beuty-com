@@ -138,6 +138,7 @@ class _RegistrationState extends State<Registration> {
     var signupResponse = await AuthRepository().getSignupResponse(
         name,
         _register_by == 'email' ? email : _phone,
+        //email,
         password,
         password_confirm,
         _register_by);
