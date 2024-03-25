@@ -419,8 +419,9 @@ class _ProductDetailsState extends State<ProductDetails> {
     // print(user_id.$);
     //print(_quantity);
     print(access_token.$);
+    print(preorderAvailable);
     var cartAddResponse = await CartRepository()
-        .getCartAddResponse(widget.id, _variant, user_id.$, _quantity, );
+        .getCartAddResponse(widget.id, _variant, user_id.$, _quantity,preorderAvailable );
         //.getCartAddResponse(widget.id, _variant, user_id.$, _quantity, preorderAvailable);
 
     if (cartAddResponse.result == false) {
@@ -2244,7 +2245,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Visibility(
-                visible: preorderAvailable > 0,
+                visible: preorderAvailable ==1,
                 //visible: _stock > 0,
                 child: Container(
                   width: MediaQuery.of(context).size.width * 1,
@@ -2257,18 +2258,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                              //value.setCartValue(_quantity);
                             // buildUpdateGoToCart();
 
-                            SharedPreferences sharePreference = await SharedPreferences.getInstance();
-                            sharePreference.getInt("cartItemCount") != 0 ?
-                            showDialog(context: context, builder: (context){
-                              return AlertDialog(
-                                title: Text("Warning"),
-                                content: Container(
-                                  color: Colors.yellowAccent,
-                                  child: Text("We detected that you are trying to add a pre-order product in your cart. Please remove the rest of the products before proceeding."),
-                                ),
-                              );
-                            })
-                                :
+                            
                             value.setCartValue(_quantity);
                             buildUpdateGoToCart();
                             onPressBuyNow(context, _isGoToCart);

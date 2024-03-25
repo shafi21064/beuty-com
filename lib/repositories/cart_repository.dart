@@ -48,7 +48,7 @@ class CartRepository {
       @required String cart_ids, @required String cart_quantities) async {
     var post_body = jsonEncode(
         {"cart_ids": "${cart_ids}", "cart_quantities": "$cart_quantities"});
-
+print(post_body);
     Uri url = Uri.parse("${ENDP.GET_PROCESS}");
     final response = await http.post(url,
         headers: {
@@ -68,14 +68,15 @@ class CartRepository {
       @required String variant,
       @required int user_id,
       @required int _quantity,
-      //@required int _preOrder,
+      @required dynamic preorderAvailable,
       ) async {
+        print(preorderAvailable);
     var post_body = jsonEncode({
       "id": "${id}",
       "variant": "$variant",
       "user_id": "$user_id",
       "quantity": "$_quantity",
-      //"is_preorder": "$_preOrder",
+      "is_preorder": "$preorderAvailable",
       "cost_matrix": AppConfig.purchase_code
     });
 

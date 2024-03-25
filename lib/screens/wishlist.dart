@@ -5,7 +5,9 @@ import 'package:kirei/app_config.dart';
 import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/repositories/cart_repository.dart';
 import 'package:kirei/repositories/wishlist_repository.dart';
+import 'package:kirei/screens/cart.dart';
 import 'package:kirei/screens/login.dart';
+import 'package:kirei/screens/main.dart';
 import 'package:kirei/screens/product_details.dart';
 import 'package:kirei/custom/toast_component.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +26,7 @@ class _WishlistState extends State<Wishlist> {
   //init
   bool _wishlistInit = true;
   List<dynamic> _wishlistItems = [];
-  var isPreOrder ;
+  var _isGotoCart=false;
 
   @override
   void initState() {
@@ -77,11 +79,11 @@ class _WishlistState extends State<Wishlist> {
   int _quantity = 1;
   String _variant="";
 
-  onPressAddToCart(context, int id) {
+  onPressAddToCart(context, int id,int preorder) {
     //print("IdValue1:" + id.toString());
-    addToCart(mode: "add_to_cart", context: context, id: id);
+    addToCart(mode: "add_to_cart", context: context, id: id,preorder: preorder);
   }
-  addToCart({mode, context = null, snackbar = null, id}) async {
+  addToCart({mode, context = null, snackbar = null, id,preorder}) async {
 
     //print("IdValue2:" + id.toString());
 
@@ -98,7 +100,7 @@ class _WishlistState extends State<Wishlist> {
     //print(_quantity);
     print(access_token.$);
     var cartAddResponse = await CartRepository()
-        .getCartAddResponse(id, _variant, user_id.$, _quantity,);
+        .getCartAddResponse(id, _variant, user_id.$, _quantity,preorder);
 
     if (cartAddResponse.result == false) {
       ToastComponent.showDialog(cartAddResponse.message, context,
@@ -119,40 +121,190 @@ class _WishlistState extends State<Wishlist> {
 
 
 
-        setState(() {});
+        setState(() {
+        });
 
         ToastComponent.showDialog(cartAddResponse.message, context,
             gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+          _isGotoCart=true;
+
+        
 
       }
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
-      child: Scaffold(
-          backgroundColor: Colors.white,
-          appBar: buildAppBar(context),
-          body: RefreshIndicator(
-            color: MyTheme.primary,
-            backgroundColor: Colors.white,
-            onRefresh: _onPageRefresh,
-            child: CustomScrollView(
-              controller: _mainScrollController,
-              physics: const BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics()),
-              slivers: [
-                SliverList(
+ @override
+Widget build(BuildContext context) {
+  return Directionality(
+    textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
+    child: Scaffold(
+      backgroundColor: Colors.white,
+      appBar: buildAppBar(context),
+      body: Column(
+        children: [
+          Expanded(
+            child: RefreshIndicator(
+              color: MyTheme.primary,
+              backgroundColor: Colors.white,
+              onRefresh: _onPageRefresh,
+              child: CustomScrollView(
+                controller: _mainScrollController,
+                physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
+                slivers: [
+                  SliverList(
                     delegate: SliverChildListDelegate([
-                  buildWishlist(),
-                ])),
-              ],
+                      buildWishlist(),
+                    ]),
+                  ),
+                ],
+              ),
             ),
-          )),
-    );
-  }
+          ),
+         Padding(
+  padding: const EdgeInsets.only(top: 8.0),
+  child: Row(
+    children: [
+      Expanded(
+        flex: 1,
+        child: Container(
+          height: 48,
+          decoration: BoxDecoration(
+            color: MyTheme.secondary,
+            borderRadius: app_language_rtl.$
+                ? const BorderRadius.only(
+                    topLeft: const Radius.circular(8.0),
+                    bottomLeft: const Radius.circular(8.0),
+                    topRight: const Radius.circular(0.0),
+                    bottomRight: const Radius.circular(0.0),
+                  )
+                : const BorderRadius.only(
+                    topLeft: const Radius.circular(0.0),
+                    bottomLeft: const Radius.circular(0.0),
+                    topRight: const Radius.circular(8.0),
+                    bottomRight: const Radius.circular(8.0),
+                  ),
+          ),
+          child: RaisedButton(
+            onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Main(pageIndex:0);
+              }));
+             
+            },
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(0.0),
+            ),
+            padding: EdgeInsets.all(0.0),
+            child: Ink(
+              decoration: BoxDecoration(),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                color: MyTheme.secondary,
+                alignment: Alignment.center,
+                child: Text(
+                  "Home"
+                      .toUpperCase(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+     Expanded(
+  flex: 1,
+  child: Container(
+    height: 48,
+    decoration: BoxDecoration(
+      color: MyTheme.secondary,
+      borderRadius: app_language_rtl.$
+          ? const BorderRadius.only(
+              topLeft: const Radius.circular(0.0),
+              bottomLeft: const Radius.circular(0.0),
+              topRight: const Radius.circular(8.0),
+              bottomRight: const Radius.circular(8.0),
+            )
+          : const BorderRadius.only(
+              topLeft: const Radius.circular(8.0),
+              bottomLeft: const Radius.circular(8.0),
+              topRight: const Radius.circular(0.0),
+              bottomRight: const Radius.circular(0.0),
+            ),
+    ),
+    child: _isGotoCart
+        ? RaisedButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Main(pageIndex: 2);
+              }));
+            },
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(0.0),
+            ),
+            padding: EdgeInsets.all(0.0),
+            child: Ink(
+              decoration: BoxDecoration(),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                color: Color(0xffE49000),
+                alignment: Alignment.center,
+                child: Text(
+                  "Go to cart".toUpperCase(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+          )
+        : RaisedButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Main(pageIndex:3);
+              }));
+            },
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(0.0),
+            ),
+            padding: EdgeInsets.all(0.0),
+            child: Ink(
+              decoration: BoxDecoration(),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                color: MyTheme.primary,
+                alignment: Alignment.center,
+                child: Text(
+                  "Profile".toUpperCase(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+          ),
+  ),
+),
+
+    ],
+  ),
+),
+
+        ],
+      ),
+    ),
+  );
+}
+
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
@@ -334,7 +486,7 @@ class _WishlistState extends State<Wishlist> {
                   onPressed: (){
                     var addCartCount = Provider.of<CartCountUpdate>(context, listen: false);
 
-                    onPressAddToCart(context, _wishlistItems[index].product.id,);
+                    onPressAddToCart(context, _wishlistItems[index].product.id,_wishlistItems[index].product.preorderAvailable);
                     setState(() {
                       //print("IdValue:" + _wishlistItems[index].product.id.toString());
                     });

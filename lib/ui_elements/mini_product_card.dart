@@ -79,7 +79,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
     //print(_quantity);
     print(access_token.$);
     var cartAddResponse = await CartRepository()
-        .getCartAddResponse(widget.id, _variant, user_id.$, _quantity);
+        .getCartAddResponse(widget.id, _variant, user_id.$, _quantity,widget.preorderAvailable);
 
     if (cartAddResponse.result == false) {
       ToastComponent.showDialog(cartAddResponse.message, context,
