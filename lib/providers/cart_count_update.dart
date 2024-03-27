@@ -42,7 +42,7 @@ class CartCountUpdate extends ChangeNotifier {
       await CartRepository().getCartResponseList(user_id.$);
 
   print('cartResponse list ${cartResponseList}');
-  
+
   int updateCartCount = 0;
 
   if (cartResponseList != null && cartResponseList.length > 0) {

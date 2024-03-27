@@ -40,7 +40,8 @@ class AuthRepository {
     var post_body = jsonEncode({
       "email": "${email}",
       "password": "$password",
-      "remember_me": remember_me
+      "remember_me": remember_me,
+      "version": "2.0.7",
     });
 
     Uri url = Uri.parse("${ENDP.LOGIN}");
@@ -56,7 +57,9 @@ class AuthRepository {
   }
 
   Future<LoginResponse> getLoginOTPResponse(@required String phone) async {
-    var post_body = jsonEncode({"email": "${phone}"});
+    var post_body = jsonEncode({"email": "${phone}",
+      "version": "2.0.7",
+    });
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/send-login-otp");
     final response = await http.post(url,
@@ -66,6 +69,8 @@ class AuthRepository {
           "App-Language": app_language.$,
         },
         body: post_body);
+    print(response.body);
+    print("Logininfo"+response.body);
     print(response.body);
     return loginResponseFromJson(response.body);
   }
@@ -123,7 +128,8 @@ class AuthRepository {
       "email_or_phone": "${email_or_phone}",
       "password": "$password",
       "password_confirmation": "${passowrd_confirmation}",
-      "register_by": "$register_by"
+      "register_by": "$register_by",
+      "version": "2.0.7",
     });
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/signup");
@@ -143,6 +149,7 @@ class AuthRepository {
   ) async {
     var post_body = jsonEncode({
       "email": "${phone}",
+      "version": "2.0.7",
     });
     print(post_body);
     Uri url = Uri.parse("${AppConfig.BASE_URL}/send-signup-otp");

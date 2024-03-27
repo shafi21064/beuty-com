@@ -417,7 +417,7 @@ Widget build(BuildContext context) {
                             ),
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Padding(
                                 padding: EdgeInsets.fromLTRB(8, 4, 8, 8),

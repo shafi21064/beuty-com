@@ -113,17 +113,17 @@ class _MiniProductCardState extends State<MiniProductCard> {
   fetchData() async {
     print(user_id.$);
 
-    var cartResponseList =
-    await CartRepository().getCartResponseList(user_id.$);
-
-    if (cartResponseList != null && cartResponseList.length > 0) {
-      // _shopList = cartResponseList;
-      // for (var shop in _shopList) {
-      //   for (var item in shop.cart_items) {
-      //     cartItemCount+= item.quantity;
-      //   }
-      // }
-    }
+    // var cartResponseList =
+    // await CartRepository().getCartResponseList(user_id.$);
+    //
+    // if (cartResponseList != null && cartResponseList.length > 0) {
+    //   // _shopList = cartResponseList;
+    //   // for (var shop in _shopList) {
+    //   //   for (var item in shop.cart_items) {
+    //   //     cartItemCount+= item.quantity;
+    //   //   }
+    //   // }
+    // }
     _isInitial = false;
     //getSetCartTotal();
     setState(() {});
@@ -269,9 +269,16 @@ elevation: 0, // Set the elevation to 0 for no shadow
                   padding: EdgeInsets.all(0.0),
                   child: Ink(
                     child: Container(
-                      color: widget.stock > 0
+                      // color: widget.stock > 0
+                      //     ? MyTheme.add_to_cart_button
+                      //     : Color.fromRGBO(192, 53, 50, 1),
+                      color:
+                      widget.preorderAvailable == 1
+                          ? Color.fromRGBO(23, 162, 190, 1)
+                          :
+                      (widget.stock > 0
                           ? MyTheme.add_to_cart_button
-                          : Color.fromRGBO(192, 53, 50, 1),
+                          : Color.fromRGBO(192, 53, 50, 1)),
                       constraints:
                           BoxConstraints(maxWidth: 300.0, minHeight: 30.0),
                       alignment: Alignment.center,
@@ -279,7 +286,7 @@ elevation: 0, // Set the elevation to 0 for no shadow
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Visibility(
-                            visible: widget.stock > 0,
+                            visible: widget.stock > 0 || widget.preorderAvailable == 1,
                             child: Icon(
                               Icons.shopping_bag_outlined,
                               size: 15,

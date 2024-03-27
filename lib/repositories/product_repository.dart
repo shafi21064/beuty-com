@@ -9,7 +9,7 @@ import 'package:kirei/helpers/shared_value_helper.dart';
 
 class ProductRepository {
   Future<ProductMiniResponse> getFeaturedProducts() async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products?bug-fixed=true");
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
@@ -49,7 +49,7 @@ class ProductRepository {
   }
 
   Future<ProductMiniResponse> getHotDealsProducts() async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products?bug-fixed=true");
 
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
@@ -59,7 +59,7 @@ class ProductRepository {
   }
 
    Future<ProductMiniResponse> getNewArrivalsProducts() async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products?bug-fixed=true");
 
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
@@ -69,7 +69,7 @@ class ProductRepository {
   }
 
   Future<ProductMiniResponse> getBestSellingProducts() async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products?bug-fixed=true");
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
