@@ -488,6 +488,7 @@ class _CheckoutState extends State<Checkout> {
     requestBody["payment_type"] = _selected_payment_method;
     requestBody["note"] = _orderNoteController.text;
     requestBody["type"] = 'app';
+    requestBody["version"] = "2.0.7";
 
     if (coupon_code != "") {
       requestBody["coupon_code"] = coupon_code;

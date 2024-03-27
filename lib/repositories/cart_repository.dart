@@ -15,6 +15,9 @@ class CartRepository {
     @required int user_id,
   ) async {
     Uri url = Uri.parse("${ENDP.GET_CARTS}");
+    var post_body = jsonEncode({
+      "version": "2.0.7",
+    });
     final response = await http.post(
       url,
       headers: {
@@ -22,6 +25,7 @@ class CartRepository {
         "Authorization": "Bearer ${access_token.$}",
         "App-Language": app_language.$,
       },
+      body: post_body,
     );
     print(url);
     print(response.body.toString());
@@ -77,7 +81,8 @@ print(post_body);
       "user_id": "$user_id",
       "quantity": "$_quantity",
       "is_preorder": "$preorderAvailable",
-      "cost_matrix": AppConfig.purchase_code
+      "cost_matrix": AppConfig.purchase_code,
+      "version": "2.0.7",
     });
 
     print(post_body);
