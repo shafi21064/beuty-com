@@ -50,7 +50,7 @@ class _TopSellingProductsState extends State<TopSellingProducts> {
 
   buildProductList(context) {
     return FutureBuilder(
-        future: ProductRepository().getBestSellingProducts(),
+        //future: ProductRepository().getBestSellingProducts(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             //snapshot.hasError

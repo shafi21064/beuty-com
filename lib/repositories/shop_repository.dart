@@ -1,8 +1,9 @@
 import 'package:kirei/app_config.dart';
 import 'package:http/http.dart' as http;
+import 'package:kirei/data_model/product_mini_response_old.dart';
 import 'package:kirei/data_model/shop_response.dart';
 import 'package:kirei/data_model/shop_details_response.dart';
-import 'package:kirei/data_model/product_mini_response.dart';
+import 'package:kirei/data_model/product_mini_response_home.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 

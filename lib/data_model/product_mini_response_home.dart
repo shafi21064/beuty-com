@@ -1,48 +1,104 @@
-// To parse this JSON data, do
-//
-//     final productMiniResponse = productMiniResponseFromJson(jsonString);
-//https://app.quicktype.io/
+// // To parse this JSON data, do
+// //
+// //     final productMiniResponse = productMiniResponseHomeFromJson(jsonString);
+// //https://app.quicktype.io/
+// import 'dart:convert';
+
+// ProductMiniResponseHome productMiniResponseHomeFromJson(String str,
+//         {String key = "data"}) =>
+//     ProductMiniResponseHome.fromJson(json.decode(str), key: key);
+
+// String productMiniResponseHomeToJson(ProductMiniResponseHome data) =>
+//     json.encode(data.toJson());
+
+// class ProductMiniResponseHome {
+//   ProductMiniResponseHome({
+//     this.products,
+//     this.meta,
+//     this.success,
+//     this.status,
+//   });
+
+//   List<Product> products;
+//   bool success;
+//   int status;
+//   Meta meta;
+
+//   factory ProductMiniResponseHome.fromJson(Map<String, dynamic> json,
+//       {String key = "data"}) {
+//     List<Product> productsList =
+//         List<Product>.from(json[key].map((x) => Product.fromJson(x)));
+
+//     return ProductMiniResponseHome(
+//       products: productsList,
+//       meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
+//       success: json["success"],
+//       status: json["status"],
+//     );
+//   }
+
+//   Map<String, dynamic> toJson() => {
+//         "data": List<dynamic>.from(products.map((x) => x.toJson())),
+//         "meta": meta == null ? null : meta.toJson(),
+//         "success": success,
+//         "status": status,
+//       };
+// }
 import 'dart:convert';
 
-ProductMiniResponse productMiniResponseFromJson(String str,
-        {String key = "data"}) =>
-    ProductMiniResponse.fromJson(json.decode(str), key: key);
+ProductMiniResponseHome productMiniResponseHomeFromJson(String str) =>
+    ProductMiniResponseHome.fromJson(json.decode(str));
 
-String productMiniResponseToJson(ProductMiniResponse data) =>
+String productMiniResponseHomeToJson(ProductMiniResponseHome data) =>
     json.encode(data.toJson());
 
-class ProductMiniResponse {
-  ProductMiniResponse({
-    this.products,
-    this.meta,
+
+class ProductMiniResponseHome {
+  ProductMiniResponseHome({
+    this.newProducts,
+    this.featuredProducts,
+    this.bestsellingProducts,
     this.success,
     this.status,
   });
 
-  List<Product> products;
+  List<Product> newProducts;
+  List<Product> featuredProducts;
+  List<Product> bestsellingProducts;
   bool success;
   int status;
-  Meta meta;
+factory ProductMiniResponseHome.fromJson(Map<String, dynamic> json) {
+  return ProductMiniResponseHome(
+    newProducts: json["new_products"] == null
+        ? null
+        : List<Product>.from(
+            json["new_products"].map((x) => Product.fromJson(x))),
+    featuredProducts: json["featured_products"] == null
+        ? null
+        : List<Product>.from(
+            json["featured_products"].map((x) => Product.fromJson(x))),
+    bestsellingProducts: json["bestselling_products"] == null
+        ? null
+        : List<Product>.from(
+            json["bestselling_products"].map((x) => Product.fromJson(x))),
+    success: json["success"],
+    status: json["status"],
+  );
+}
 
-  factory ProductMiniResponse.fromJson(Map<String, dynamic> json,
-      {String key = "data"}) {
-    List<Product> productsList =
-        List<Product>.from(json[key].map((x) => Product.fromJson(x)));
-
-    return ProductMiniResponse(
-      products: productsList,
-      meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
-      success: json["success"],
-      status: json["status"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(products.map((x) => x.toJson())),
-        "meta": meta == null ? null : meta.toJson(),
-        "success": success,
-        "status": status,
-      };
+Map<String, dynamic> toJson() => {
+  "new_products": newProducts == null
+      ? null
+      : List<dynamic>.from(newProducts.map((x) => x.toJson())),
+  "featured_products": featuredProducts == null
+      ? null
+      : List<dynamic>.from(featuredProducts.map((x) => x.toJson())),
+  "bestselling_products": bestsellingProducts == null
+      ? null
+      : List<dynamic>.from(bestsellingProducts.map((x) => x.toJson())),
+  "success": success,
+  "status": status,
+};
 }
 
 class Product {

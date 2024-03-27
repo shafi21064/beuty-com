@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:kirei/app_config.dart';
 import 'package:kirei/data_model/feature_category_response.dart';
 import 'package:kirei/helpers/endpoints.dart';
@@ -7,24 +8,34 @@ import 'package:kirei/helpers/shared_value_helper.dart';
 
 class CategoryRepository {
   Future<CategoryResponse> getCategories({parent_id = 0}) async {
-    Uri url = Uri.parse("${ENDP.GET_CATEGORIES}");
-    final response = await http.get(url, headers: {
-      "App-Language": app_language.$,
-    });
-    // print("${ENDP.GET_CATEGORIES}");
-    // print("All categoriesssss: ${response.body.toString()}");
-    print('category' +categoryResponseFromJson(response.body).toString());
-    return categoryResponseFromJson(response.body);
+    // Uri url = Uri.parse("${ENDP.GET_CATEGORIES}");
+    // final response = await http.get(url, headers: {
+    //   "App-Language": app_language.$,
+    // });
+    // // print("${ENDP.GET_CATEGORIES}");
+    // // print("All categoriesssss: ${response.body.toString()}");
+    // print('category' +categoryResponseFromJson(response.body).toString());
+    // return categoryResponseFromJson(response.body);
+    String jsonData = await rootBundle.loadString('assets/categories.json');
+
+    // Parse the JSON data
+    CategoryResponse categoryResponse = categoryResponseFromJson(jsonData);
+    return categoryResponse;
   }
 
   Future<List<FeaturedCategory>> getHomeFeaturedCategories() async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/home-featured-categories");
-    final response = await http.get(url, headers: {
-      "App-Language": app_language.$,
-    });
-    // print("${ENDP.GET_CATEGORIES}");
-    // print("categoriesssss: ${response.body.toString()}");
-    return featuredCategoryListFromJson(response.body);
+    // Uri url = Uri.parse("${AppConfig.BASE_URL}/home-featured-categories");
+    // final response = await http.get(url, headers: {
+    //   "App-Language": app_language.$,
+    // });
+    // // print("${ENDP.GET_CATEGORIES}");
+    // // print("categoriesssss: ${response.body.toString()}");
+    // return featuredCategoryListFromJson(response.body);
+     String jsonData = await rootBundle.loadString('assets/home_featured_categories.json');
+
+    // Parse the JSON data
+    List<FeaturedCategory> categoryResponse = featuredCategoryListFromJson(jsonData);
+    return categoryResponse;
   }
 
   Future<CategoryResponse> getFeturedCategories() async {
