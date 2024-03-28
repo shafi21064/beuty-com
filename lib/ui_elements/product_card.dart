@@ -188,7 +188,7 @@ class _ProductCardState extends State<ProductCard> {
                 child: RaisedButton(
                   onPressed: () {
                      onPressAddToCart(context);
-                     if(widget.stock>0 && is_logged_in.$ == true){
+                     if(widget.stock>0 || widget.preorderAvailable == 1 && is_logged_in.$ == true){
                        addCartProduct.getIncrease();
                      }
                   },
@@ -215,7 +215,7 @@ class _ProductCardState extends State<ProductCard> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Visibility(
-                            visible: widget.stock > 0,
+                            visible: widget.stock > 0 || widget.preorderAvailable == 1,
                             child: Icon(
                               Icons.shopping_bag_outlined,
                               size: 15,

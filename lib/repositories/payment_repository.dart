@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:kirei/app_config.dart';
 import 'package:kirei/data_model/order_create_response_cod.dart';
 import 'package:http/http.dart' as http;
@@ -21,16 +22,24 @@ import 'package:kirei/data_model/sslcommerz_begin_response.dart';
 class PaymentRepository {
   Future<List<PaymentTypeResponse>> getPaymentResponseList(
       {mode = "", list = "both"}) async {
-    Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/payment-types?mode=${mode}&list=${list}");
-    final response = await http.get(url, headers: {
-      "App-Language": app_language.$,
-    });
-   // print('payment ${response.body}');
+   //  Uri url = Uri.parse(
+   //      "${AppConfig.BASE_URL}/payment-types?mode=${mode}&list=${list}");
+   //  final response = await http.get(url, headers: {
+   //    "App-Language": app_language.$,
+   //  });
+   // // print('payment ${response.body}');
+   //
+   //  print('url : ${url}');
+   //  print('returns : ${paymentTypeResponseFromJson(response.body)}');
+   //
+   //  return paymentTypeResponseFromJson(response.body);
 
-    print('returns : ${paymentTypeResponseFromJson(response.body)}');
+    // Load the JSON file from the assets folder
+    String jsonData = await rootBundle.loadString('assets/payment_list.json');
 
-    return paymentTypeResponseFromJson(response.body);
+    // Parse the JSON data
+    List<PaymentTypeResponse> paymentResponse = paymentTypeResponseFromJson(jsonData);
+    return paymentResponse;
   }
 
   Future<OrderCreateResponse> getOrderCreateResponse(

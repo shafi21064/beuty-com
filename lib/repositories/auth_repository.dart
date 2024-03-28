@@ -164,12 +164,28 @@ class AuthRepository {
     return signupResponseFromJson(response.body);
   }
 
-  Future<ResendCodeResponse> getResendCodeResponse(
-      @required int user_id, @required String verify_by) async {
-    var post_body =
-        jsonEncode({"user_id": "$user_id", "register_by": "$verify_by"});
+  // Future<ResendCodeResponse> getResendCodeResponse(
+  //     @required int user_id, @required String verify_by) async {
+  //   var post_body =
+  //       jsonEncode({"user_id": "$user_id", "register_by": "$verify_by"});
+  //
+  //   Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/resend_code");
+  //   final response = await http.post(url,
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "App-Language": app_language.$,
+  //       },
+  //       body: post_body);
+  //
+  //   return resendCodeResponseFromJson(response.body);
+  // }
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/resend_code");
+  Future<ResendCodeResponse> getResendCodeResponse(
+      @required int phone) async {
+    var post_body =
+    jsonEncode({"email": phone,});
+
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/send-reset-otp");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",

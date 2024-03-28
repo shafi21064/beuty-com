@@ -79,9 +79,22 @@ class _OtpState extends State<Otp> {
     super.dispose();
   }
 
+  // onTapResend() async {
+  //   var resendCodeResponse = await AuthRepository()
+  //       .getResendCodeResponse(widget.user_id, widget.verify_by);
+  //
+  //   if (resendCodeResponse.result == false) {
+  //     ToastComponent.showDialog(resendCodeResponse.message, context,
+  //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+  //   } else {
+  //     ToastComponent.showDialog(resendCodeResponse.message, context,
+  //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+  //   }
+  // }
+
   onTapResend() async {
     var resendCodeResponse = await AuthRepository()
-        .getResendCodeResponse(widget.user_id, widget.verify_by);
+        .getResendCodeResponse(int.parse(widget.phoneNumber),);
 
     if (resendCodeResponse.result == false) {
       ToastComponent.showDialog(resendCodeResponse.message, context,
