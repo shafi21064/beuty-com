@@ -40,8 +40,8 @@ main() async {
   sharedPreferences = await SharedPreferences.getInstance();
 
   print("app_mobile_language.1isEmpty${app_mobile_language.$.isEmpty}");
-  AddonsHelper().setAddonsData();
-  BusinessSettingHelper().setBusinessSettingData();
+  // AddonsHelper().setAddonsData();
+  // BusinessSettingHelper().setBusinessSettingData();
   app_language.load();
   app_mobile_language.load();
   app_language_rtl.load();
