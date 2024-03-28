@@ -387,7 +387,8 @@ Widget build(BuildContext context) {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                        width: 100,
+                        //width: 100,
+                        width: MediaQuery.of(context).size.width * 0.25,
                         height: 100,
                         child: ClipRRect(
                             borderRadius: BorderRadius.horizontal(
@@ -399,7 +400,8 @@ Widget build(BuildContext context) {
                               fit: BoxFit.cover,
                             ))),
                     Container(
-                      width: 240,
+                      //width: 220,
+                      width: MediaQuery.of(context).size.width * 0.58,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -431,6 +433,10 @@ Widget build(BuildContext context) {
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600),
                                 ),
+                              ),
+
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.065,
                               ),
 
                               Padding(

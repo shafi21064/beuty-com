@@ -1417,7 +1417,7 @@ class _OrderDetailsState extends State<OrderDetails> {
           //color: payment_status == "paid" ? Colors.green : Colors.red),
     color: payment_status == "paid"
     ? Colors.green
-        : payment_status == "cod"
+        : payment_status == "cod" || payment_status == "cash_on_delivery"
     ? Colors.orange
         : Colors.red,
       ),

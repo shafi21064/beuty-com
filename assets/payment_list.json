@@ -1,0 +1,29 @@
+[
+{
+"payment_type": "cash_on_delivery",
+"payment_type_key": "cash_on_delivery",
+"image": "https://app.kireibd.com/assets/img/cards/cod.png",
+"name": "Cash Payment",
+"title": "Cash on delivery",
+"offline_payment_id": 0,
+"details": ""
+},
+{
+"payment_type": "bkash",
+"payment_type_key": "bkash",
+"image": "https://app.kireibd.com/assets/img/cards/bkash.png",
+"name": "Bkash",
+"title": "Checkout with Bkash",
+"offline_payment_id": 0,
+"details": ""
+},
+{
+"payment_type": "ssl",
+"payment_type_key": "ssl",
+"image": "https://app.kireibd.com/assets/img/cards/sslcommerz.png",
+"name": "Sslcommerz",
+"title": "Checkout with Sslcommerz",
+"offline_payment_id": 0,
+"details": ""
+}
+]
