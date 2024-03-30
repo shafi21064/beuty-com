@@ -16,7 +16,7 @@ class CartRepository {
   ) async {
     Uri url = Uri.parse("${ENDP.GET_CARTS}");
     var post_body = jsonEncode({
-      "version": "2.0.7",
+      "version": "2.0.8",
     });
     final response = await http.post(
       url,
@@ -82,7 +82,7 @@ print(post_body);
       "quantity": "$_quantity",
       "is_preorder": "$preorderAvailable",
       "cost_matrix": AppConfig.purchase_code,
-      "version": "2.0.7",
+      "version": "2.0.8",
     });
 
     print(post_body);

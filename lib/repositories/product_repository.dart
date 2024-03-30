@@ -11,7 +11,7 @@ import 'package:kirei/helpers/shared_value_helper.dart';
 
 class ProductRepository {
   Future<ProductMiniResponseHome> getHomeProducts() async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products?bug-fixed=true");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products?version=2.0.8");
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
@@ -36,37 +36,37 @@ class ProductRepository {
   }
 
   Future<ProductMiniResponse> getPopularSearchProducts() async {
-    // Uri url = Uri.parse(
-    //     "${AppConfig.BASE_URL}/gigalogy/users/recommend?gaip_user_id=${null}");
-    // final response = await http.get(url, headers: {
-    //   "App-Language": app_language.$,
-    // });
-    // print(response.body);
-    // return productMiniResponseFromJson(response.body);
-    String jsonData = await rootBundle.loadString('assets/recommended.json');
+    Uri url = Uri.parse(
+        "${AppConfig.BASE_URL}/gigalogy/users/recommend?gaip_user_id=${null}");
+    final response = await http.get(url, headers: {
+      "App-Language": app_language.$,
+    });
+    print(response.body);
+    return productMiniResponseFromJson(response.body);
+  //   String jsonData = await rootBundle.loadString('assets/recommended.json');
 
-    // Parse the JSON data
-  ProductMiniResponse productResponse = productMiniResponseFromJson(jsonData);
-    return productResponse;
+  //   // Parse the JSON data
+  // ProductMiniResponse productResponse = productMiniResponseFromJson(jsonData);
+  //   return productResponse;
   }
 
   Future<ProductMiniResponse> getTrendingProducts() async {
-    // Uri url = Uri.parse(
-    //     "${AppConfig.BASE_URL}/gigalogy/items/trending?gaip_user_id=${null}");
-    // final response = await http.get(url, headers: {
-    //   "App-Language": app_language.$,
-    // });
-    // print(response.body);
-    // return productMiniResponseFromJson(response.body);
-    String jsonData = await rootBundle.loadString('assets/trending.json');
+    Uri url = Uri.parse(
+        "${AppConfig.BASE_URL}/gigalogy/items/trending?gaip_user_id=${null}");
+    final response = await http.get(url, headers: {
+      "App-Language": app_language.$,
+    });
+    print(response.body);
+    return productMiniResponseFromJson(response.body);
+    // String jsonData = await rootBundle.loadString('assets/trending.json');
 
-    // Parse the JSON data
-    ProductMiniResponse productResponse = productMiniResponseFromJson(jsonData);
-    return productResponse;
+    // // Parse the JSON data
+    // ProductMiniResponse productResponse = productMiniResponseFromJson(jsonData);
+    // return productResponse;
   }
 
   // Future<ProductMiniResponseHome> getHotDealsProducts() async {
-  //   Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products?bug-fixed=true");
+  //   Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products");
 
   //   final response = await http.get(url, headers: {
   //     "App-Language": app_language.$,
@@ -76,7 +76,7 @@ class ProductRepository {
   // }
 
   //  Future<ProductMiniResponseHome> getNewArrivalsProducts() async {
-  //   Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products?bug-fixed=true");
+  //   Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products");
 
   //   final response = await http.get(url, headers: {
   //     "App-Language": app_language.$,
@@ -86,7 +86,7 @@ class ProductRepository {
   // }
 
   // Future<ProductMiniResponseHome> getBestSellingProducts() async {
-  //   Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products?bug-fixed=true");
+  //   Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products");
   //   final response = await http.get(url, headers: {
   //     "App-Language": app_language.$,
   //   });

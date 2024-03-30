@@ -442,7 +442,7 @@ Widget build(BuildContext context) {
                               Padding(
                                 padding: EdgeInsets.fromLTRB(16, 4, 8, 8),
                                 child: Text(
-                                  _wishlistItems[index].product.stock == 0 ?  "Out of Stock" : "In Stock" ,
+                                 _wishlistItems[index].product.preorderAvailable==1?"Preorder now".toString():_wishlistItems[index].product.stock == 0 ?  "Out of Stock" : "In Stock" ,
                                   textAlign: TextAlign.left,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
@@ -493,11 +493,21 @@ Widget build(BuildContext context) {
                     var addCartCount = Provider.of<CartCountUpdate>(context, listen: false);
 
                     onPressAddToCart(context, _wishlistItems[index].product.id,_wishlistItems[index].product.preorderAvailable);
-                    setState(() {
-                      //print("IdValue:" + _wishlistItems[index].product.id.toString());
-                    });
-                    if(_wishlistItems[index].product.stock > 0 && is_logged_in.$ == true) {
-                      addCartCount.getIncrease();
+                    // setState(() {
+                    //   //print("IdValue:" + _wishlistItems[index].product.id.toString());
+                    // });
+                    // if(_wishlistItems[index].product.stock > 0 && is_logged_in.$ == true) {
+                    //   addCartCount.getIncrease();
+                    // }
+                     if(is_logged_in.$ != false){
+
+                      if( _wishlistItems[index].product.preorderAvailable == 1){
+                        addCartCount.getReset();
+                        addCartCount.getIncrease();
+                      } else if(_wishlistItems[index].product.stock > 0){
+                        addCartCount.getIncrease();
+                      }
+
                     }
                     //print(_wishlistItems.length.toString());
                   },

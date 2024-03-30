@@ -48,12 +48,15 @@ class CartItem {
     this.quantity,
     this.lower_limit,
     this.upper_limit,
+    this.preorderAvailable,
+    
   });
 
   int id;
   int owner_id;
   int user_id;
   int product_id;
+  int preorderAvailable;
   String product_name;
   String product_thumbnail_image;
   String variation;
@@ -80,6 +83,8 @@ class CartItem {
     quantity: json["quantity"] == null ? null : json["quantity"],
     lower_limit: json["lower_limit"] == null ? null : json["lower_limit"],
     upper_limit: json["upper_limit"] == null ? null : json["upper_limit"],
+    preorderAvailable: json["is_preorder"],
+
   );
 
   Map<String, dynamic> toJson() => {
@@ -97,5 +102,6 @@ class CartItem {
     "quantity": quantity == null ? null : quantity,
     "lower_limit": lower_limit == null ? null : lower_limit,
     "upper_limit": upper_limit == null ? null : upper_limit,
+    "preorder_available": preorderAvailable,
   };
 }

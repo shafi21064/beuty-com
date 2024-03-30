@@ -41,7 +41,7 @@ class AuthRepository {
       "email": "${email}",
       "password": "$password",
       "remember_me": remember_me,
-      "version": "2.0.7",
+      "version": "2.0.8",
     });
 
     Uri url = Uri.parse("${ENDP.LOGIN}");
@@ -58,7 +58,7 @@ class AuthRepository {
 
   Future<LoginResponse> getLoginOTPResponse(@required String phone) async {
     var post_body = jsonEncode({"email": "${phone}",
-      "version": "2.0.7",
+      "version": "2.0.8",
     });
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/send-login-otp");
@@ -129,7 +129,7 @@ class AuthRepository {
       "password": "$password",
       "password_confirmation": "${passowrd_confirmation}",
       "register_by": "$register_by",
-      "version": "2.0.7",
+      "version": "2.0.8",
     });
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/signup");
@@ -149,7 +149,7 @@ class AuthRepository {
   ) async {
     var post_body = jsonEncode({
       "email": "${phone}",
-      "version": "2.0.7",
+      "version": "2.0.8",
     });
     print(post_body);
     Uri url = Uri.parse("${AppConfig.BASE_URL}/send-signup-otp");

@@ -55,6 +55,7 @@ class Checkout extends StatefulWidget {
   var pQuantity;
   var pPrice;
   var pLength;
+  int isPreorder=0;
 
 
   Checkout(
@@ -64,6 +65,7 @@ class Checkout extends StatefulWidget {
         this.product_ids,
         this.product_quantities,
         this.address,
+        this.isPreorder,
         this.list = "both",
         this.isWalletRecharge = false,
         this.rechargeAmount = 0.0,
@@ -147,6 +149,9 @@ class _CheckoutState extends State<Checkout> {
     //r print(widget.address);
     print(widget.product_ids);
     print(widget.product_quantities);
+    print("valuereeeu555");
+
+    print(widget.isPreorder);
     // if (is_logged_in.$ == true) {
     //   fetchAll();
     // }
@@ -487,11 +492,11 @@ class _CheckoutState extends State<Checkout> {
     requestBody["shipping_zone_id"] =_selectedZone_id;
     //requestBody["shipping_area"] = _countryController.text;
     requestBody["shipping_area_id"] = _selectedArea_id;
-    requestBody["is_preorder"] = 0;
+    requestBody["is_preorder"] = widget.isPreorder;
     requestBody["payment_type"] = _selected_payment_method;
     requestBody["note"] = _orderNoteController.text;
     requestBody["type"] = 'app';
-    requestBody["version"] = "2.0.7";
+    requestBody["version"] = "2.0.8";
 
     if (_nameController.text == "" || requestBody["shipping_name"] == "") {
       ToastComponent.showDialog(
@@ -516,6 +521,13 @@ class _CheckoutState extends State<Checkout> {
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
     }
+        if (_couponController.text != "" && _coupon_applied == false) {
+      ToastComponent.showDialog(
+        //AppLocalizations.of(context).address_screen_state_warning, context,
+          "Apply Your Coupon First or Clear", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    }
 
     if ( _stateController.text == "" || requestBody["shipping_city_id"] == "") {
       ToastComponent.showDialog(
@@ -533,8 +545,8 @@ class _CheckoutState extends State<Checkout> {
       return;
     }
 
-    if (coupon_code != "") {
-      requestBody["coupon_code"] = coupon_code;
+    if (_used_coupon_code != "") {
+      requestBody["coupon_code"] = _used_coupon_code;
     }
 
     try {
@@ -708,9 +720,7 @@ class _CheckoutState extends State<Checkout> {
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
     }
-    print(couponApplyResponse);
 
-    reset_summary();
   }
 
   onCouponRemove() async {
@@ -750,7 +760,7 @@ class _CheckoutState extends State<Checkout> {
     loading();
     var orderCreateResponse = await PaymentRepository()
         .getOrderCreateResponseFromCod(_selected_payment_method_key);
-    Navigator.of(loadingcontext).pop();
+    // Navigator.of(loadingcontext).pop();
     if (orderCreateResponse.result == false) {
       ToastComponent.showDialog(orderCreateResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);

@@ -45,16 +45,6 @@ class _BkashScreenState extends State<BkashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    // if (widget.payment_type == "cart_payment") {
-    //   createOrder();
-    // }
-
-    // if (widget.payment_type != "cart_payment") {
-    //   // on cart payment need proper order id
-       //getSetInitialUrl();
-    // }
-
         if (Platform.isAndroid) {
       WebView.platform = SurfaceAndroidWebView();
     }
@@ -93,12 +83,7 @@ class _BkashScreenState extends State<BkashScreen> {
       Navigator.of(context).pop();
       return;
     }
-
-
-
-
     setState(() {});
-
 
   }
 
@@ -174,19 +159,6 @@ class _BkashScreenState extends State<BkashScreen> {
 
   buildBody() {
 
-
-    //
-    // if (_order_init == false &&
-    //     _combined_order_id == 0 &&
-    //     widget.payment_type == "cart_payment") {
-    //   return Container(
-    //     child: Center(
-    //       child: Text(AppLocalizations.of(context).common_creating_order),
-    //     ),
-    //   );
-    // } else
-
-
         print('bkash 22');
       return SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -211,32 +183,11 @@ class _BkashScreenState extends State<BkashScreen> {
                   )), (route) => false);
             },
             onPageFinished: (page) {
-               print("page.toString()");
-               print(page.toString());
+              readResponse();
+              //  print("page.toString()");
+              //  print(page.toString());
 
-              if (page.contains("status=success")) {
-                //getData();
-                Toast.show('Order Successful', context,
-                    duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
-
-                Navigator.pushAndRemoveUntil(context,
-                    MaterialPageRoute(builder: (_)=> OrderSuccessPage(
-                      orderId: widget.order_id,
-                      message: 'Order Successful',
-                      type: "success",
-                    )), (route) => false);
-
-              } else if (page.contains("status=failure")) {
-                Toast.show("Payment Cancelled", context,
-                    duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
-                Navigator.pushAndRemoveUntil(context,
-                    MaterialPageRoute(builder: (_)=> OrderSuccessPage(
-                      orderId: widget.order_id,
-                      message:"Payment Cancelled",
-                      type: "danger",
-                    )), (route) => false);
-                return;
-              }
+             
             },
           ),
         ),
@@ -261,4 +212,46 @@ class _BkashScreenState extends State<BkashScreen> {
       titleSpacing: 0,
     );
   }
+
+  void readResponse() async {
+    setState(() {
+     var payment_details = '';
+    _webViewController
+        .evaluateJavascript("document.body.innerText")
+        .then((data) {
+      var decodedJSON = jsonDecode(data);
+      Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
+
+      print('Bkash json Response' +decodedJSON.toString());
+
+      if (responseJSON["result"] == true) {
+                //getData();
+                Toast.show('Order Successful', context,
+                    duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
+
+                Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+                      orderId: widget.order_id,
+                      message: 'Order Successful',
+                      type: "success",
+                    )), (route) => false);
+
+              } else if (responseJSON["result"] == false) {
+                Toast.show("Payment Cancelled", context,
+                    duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
+                Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder: (_)=> OrderSuccessPage(
+                      orderId: widget.order_id,
+                      message:"Payment Cancelled",
+                      type: "danger",
+                    )), (route) => false);
+                return;
+              }
+  
+    });
+    });
+    
 }
+}
+
+

@@ -71,7 +71,7 @@ class OrderFailedPage extends StatelessWidget {
                     child: Icon(Icons.close
                       , color: MyTheme.white,),
                   ),
-                  Text("Transection Failed",
+                  Text("Order Failed",
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,

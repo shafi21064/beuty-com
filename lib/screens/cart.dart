@@ -36,6 +36,7 @@ class CartState extends State<Cart> {
   var _cartTotal = 0.00;
   var _cartTotalString = ". . .";
   bool _termsChecked = false;
+  int _isPreorder=0;
 
   bool _hasItem = false;
 
@@ -266,13 +267,17 @@ class CartState extends State<Cart> {
       _shopList.forEach((shop) {
         if (shop.cart_items.length > 0) {
           shop.cart_items.forEach((cart_item) {
+            _isPreorder=cart_item.preorderAvailable;
             cart_ids.add(cart_item.id);
             prod_ids.add(cart_item.product_id);
+
             cart_quantities.add(cart_item.quantity);
           });
         }
       });
     }
+
+   
 
     if (cart_ids.length == 0) {
       // ToastComponent.showDialog(
@@ -309,6 +314,7 @@ class CartState extends State<Cart> {
             product_ids: prod_ids_string,
             product_quantities: cart_quantities_string,
             allCartProductList: _shopList[0].cart_items,
+            isPreorder:_isPreorder,
           );
         })).then((value) {
           onPopped(value);

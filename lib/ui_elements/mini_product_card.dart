@@ -261,11 +261,7 @@ elevation: 0, // Set the elevation to 0 for no shadow
                   onPressed: () {
                     onPressAddToCart(context);
                     //if(widget.stock>0 || widget.preorderAvailable == 1 && is_logged_in.$ == true) {
-                    // if(is_logged_in.$ != false  && widget.stock>0 || widget.preorderAvailable == 1  ) {
-                    //   print("KireiBd999: ${is_logged_in.$}");
-                    //   addCartCount.getIncrease();
-                    // }
-                    print("KireiBd1000"+widget.preorderAvailable.toString());
+                    
                     if(is_logged_in.$ != false){
 
                       if( widget.preorderAvailable == 1){

@@ -194,14 +194,18 @@ class _FilterState extends State<Filter> {
     if(categoryKey.categoryKey == null || categoryKey.categoryKey == ''){
       _shimmerShow = false;
     }
-    String jsonData = await rootBundle.loadString('assets/categories.json');
-      List<dynamic> data = jsonDecode(jsonData);
+     Uri url = Uri.parse("${AppConfig.BASE_URL}/sub-categories/${categoryKey.categoryKey}");
+    final response = await http.get(url, headers: {
+      "App-Language": app_language.$,
+    });
+  //   String jsonData = await rootBundle.loadString('assets/categories.json');
+  //     List<dynamic> data = jsonDecode(jsonData);
 
-  var categoryData = data.firstWhere(
-    (category) => category['slug'] == categoryKey.categoryKey,
-    orElse: () => null,
-  );
-  List<dynamic> childrenData = categoryData['children'] ?? [];
+  // var categoryData = data.firstWhere(
+  //   (category) => category['slug'] == categoryKey.categoryKey,
+  //   orElse: () => null,
+  // );
+  //List<dynamic> childrenData = categoryData['children'] ?? [];
 
 
     // Uri url = Uri.parse("${AppConfig.BASE_URL}/sub-categories/${categoryKey.categoryKey}");
@@ -211,7 +215,9 @@ class _FilterState extends State<Filter> {
     // print("${ENDP.GET_CATEGORIES}");
     //  print("categoriesssss1: ${response.body.toString()}");
     // print(featuredCategoryListFromJson(response.body).toString()) ;
-  List<FeaturedCategory> categories = featuredCategoryListFromJson(jsonEncode(childrenData));
+     List<FeaturedCategory> categories = featuredCategoryListFromJson(response.body);
+
+  // List<FeaturedCategory> categories = featuredCategoryListFromJson(jsonEncode(childrenData));
     _shimmerShow = false;
 
     // print("Categories:");
