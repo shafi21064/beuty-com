@@ -312,7 +312,7 @@ class _CheckoutState extends State<Checkout> {
       _totalString = cartSummaryResponse.grand_total;
       _grandTotalValue = cartSummaryResponse.grand_total_value;
       _used_coupon_code = cartSummaryResponse.coupon_code;
-      _couponController.text = _used_coupon_code;
+      _couponController.text = cartSummaryResponse.coupon_applied  == true ? _used_coupon_code : "";
       _coupon_applied = cartSummaryResponse.coupon_applied;
       setState(() {});
     }
@@ -403,6 +403,9 @@ class _CheckoutState extends State<Checkout> {
 //   }
 
   onPressProceed() async {
+
+
+
     if (_grandTotalValue == 0.00) {
       ToastComponent.showDialog(
           AppLocalizations.of(context).common_nothing_to_pay, context,
@@ -490,6 +493,46 @@ class _CheckoutState extends State<Checkout> {
     requestBody["type"] = 'app';
     requestBody["version"] = "2.0.7";
 
+    if (_nameController.text == "" || requestBody["shipping_name"] == "") {
+      ToastComponent.showDialog(
+        //AppLocalizations.of(context).address_screen_address_warning, context,
+          "Name  is required", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    }
+
+    if (_phoneController.text == "" || requestBody["shipping_phone"] == "") {
+      ToastComponent.showDialog(
+        //AppLocalizations.of(context).address_screen_country_warning, context,
+          "Phone is required", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    }
+
+    if (_addressController.text == "" || requestBody["shipping_address"] == "") {
+      ToastComponent.showDialog(
+        //AppLocalizations.of(context).address_screen_state_warning, context,
+          "Address is required", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    }
+
+    if ( _stateController.text == "" || requestBody["shipping_city_id"] == "") {
+      ToastComponent.showDialog(
+        //AppLocalizations.of(context).address_screen_city_warning, context,
+          "City is required", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    }
+
+    if (_cityController.text == "" || requestBody["shipping_zone_id"] == "") {
+      ToastComponent.showDialog(
+        //AppLocalizations.of(context).address_screen_city_warning, context,
+          "Zone is required", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    }
+
     if (coupon_code != "") {
       requestBody["coupon_code"] = coupon_code;
     }
@@ -502,8 +545,8 @@ class _CheckoutState extends State<Checkout> {
 
         var orderCreateResponse =
         await PaymentRepository().getOrderCreateResponseFromCod(requestBody);
-        print('orderCreateResponse ${orderCreateResponse.data.paymentUrl}');
-        print('orderCreateResponseResult ${orderCreateResponse.data.payment}');
+        print('orderCreateResponse ${orderCreateResponse.data?.paymentUrl}');
+        print('orderCreateResponseResult ${orderCreateResponse.data?.payment}');
         print('orderCreateResponse# ${orderCreateResponse}');
         //print("orderCreateResponse${orderCreateResponse}");
         // Check if the widget is mounted before updating the UI
@@ -524,7 +567,7 @@ class _CheckoutState extends State<Checkout> {
             if (_selected_payment_method == "bkash") {
               print('bkash_initial_url ${orderCreateResponse.data.paymentUrl}');
               print('navigating to bkash');
-              if(orderCreateResponse.data.paymentUrl != null) {
+              if(orderCreateResponse.data?.paymentUrl != null) {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return BkashScreen(
                       amount: _grandTotalValue,
@@ -545,7 +588,7 @@ class _CheckoutState extends State<Checkout> {
                     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
                 Navigator.pushAndRemoveUntil(context,
                     MaterialPageRoute(builder: (_)=> OrderSuccessPage(
-                      orderId: orderCreateResponse.data.order.id,
+                      orderId: orderCreateResponse.data?.order.id,
                       message:"Something went wrong.",
                       type: "danger",
                     )), (route) => false);
@@ -563,16 +606,16 @@ class _CheckoutState extends State<Checkout> {
                 onPopped(value);
               });
             } else if (_selected_payment_method == "ssl") {
-              print('ssl_initial_url ${orderCreateResponse.data.paymentUrl}');
+              print('ssl_initial_url ${orderCreateResponse.data?.paymentUrl}');
 
-              if (orderCreateResponse.data.paymentUrl != null) {
+              if (orderCreateResponse.data?.paymentUrl != null) {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return SslCommerzScreen(
                       amount: _grandTotalValue,
                       payment_type: payment_type,
                       payment_method_key: _selected_payment_method_key,
-                      order_id: orderCreateResponse.data.order.id,
-                      ssl_initial_url: orderCreateResponse.data.paymentUrl
+                      order_id: orderCreateResponse.data?.order.id,
+                      ssl_initial_url: orderCreateResponse.data?.paymentUrl
                   );
                 })).then((value) {
                   onPopped(value);
@@ -586,7 +629,7 @@ class _CheckoutState extends State<Checkout> {
 
                   Navigator.pushAndRemoveUntil(context,
                       MaterialPageRoute(builder: (_)=> OrderSuccessPage(
-                        orderId: orderCreateResponse.data.order.id,
+                        orderId: orderCreateResponse.data?.order.id,
                         message:"Something went wrong.",
                         type: "danger",
                       )), (route) => false);
@@ -622,7 +665,14 @@ class _CheckoutState extends State<Checkout> {
           // Navigator.push(context, MaterialPageRoute(builder: (context) {
           //   return OrderList(from_checkout: true);
           // }));
-      }
+      } else{
+          ToastComponent.showDialog(
+            "Something went wrong",
+            context,
+            gravity: Toast.CENTER,
+            duration: Toast.LENGTH_LONG,
+          );
+        }
       // Call API
     } catch (e) {
       print('Error in onPressProceed: $e');

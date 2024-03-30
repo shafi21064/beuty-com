@@ -185,7 +185,8 @@ class AuthRepository {
     var post_body =
     jsonEncode({"email": phone,});
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/send-reset-otp");
+    //Uri url = Uri.parse("${AppConfig.BASE_URL}/send-reset-otp");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/send-login-otp");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",

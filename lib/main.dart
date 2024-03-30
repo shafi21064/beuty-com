@@ -1,7 +1,5 @@
-import 'package:kirei/helpers/addons_helper.dart';
+import 'dart:io';
 import 'package:kirei/helpers/auth_helper.dart';
-import 'package:kirei/helpers/business_setting_helper.dart';
-import 'package:kirei/other_config.dart';
 import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/providers/category_passing_controller.dart';
 import 'package:kirei/screens/filter.dart';
@@ -12,21 +10,17 @@ import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kirei/my_theme.dart';
 import 'package:kirei/screens/splash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_value/shared_value.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
-import 'dart:async';
 import 'app_config.dart';
-// import 'package:kirei/services/push_notification_service.dart';
 import 'package:one_context/one_context.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:kirei/providers/locale_provider.dart';
 import 'lang_config.dart';
-// import 'package:firebase_core/firebase_core.dart';
 
 SharedPreferences sharedPreferences;
 
@@ -133,11 +127,36 @@ class _MyAppState extends State<MyApp> {
                   locale: provider.locale,
                   supportedLocales: LangConfig().supportedLocales(),
                   home: Splash(),
-                 // home: Filter(),
-                  //home: OrderFailedPage(),
+                  //home: WebViewExample(),
                   //home: Main(),
                 ));
               });
         }));
   }
 }
+
+// class WebViewExample extends StatefulWidget {
+//   @override
+//   _WebViewExampleState createState() => _WebViewExampleState();
+// }
+//
+// class _WebViewExampleState extends State<WebViewExample> {
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     if (Platform.isAndroid) {
+//       WebView.platform = SurfaceAndroidWebView();
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return WebView(
+//       initialUrl: 'https://www.google.com',
+//       javascriptMode: JavascriptMode.unrestricted,
+//       gestureNavigationEnabled: true,
+//
+//     );
+//   }
+// }

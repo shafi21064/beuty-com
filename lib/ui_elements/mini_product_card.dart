@@ -86,6 +86,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
     } else {
+      //print("KireiBd999:"+cartAddResponse.cart_quantity.toString());
       if (mode == "add_to_cart") {
         //fetchData();
         // if (snackbar != null && context != null) {
@@ -93,12 +94,13 @@ class _MiniProductCardState extends State<MiniProductCard> {
         // }
 
         // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-        // var cartItem = sharedPreferences.getInt("cartItemCount");
-        // cartItem++;
-        // sharedPreferences.setInt("cartItemCount", cartItem);
-        // print("kirei vai3: + ${sharedPreferences.getInt("cartItemCount")}" );
-
-
+        // //var cartItem = sharedPreferences.getInt("cartItemCount");
+        // // cartItem++;
+        // print("KireiBd999:"+cartAddResponse.cart_quantity.toString());
+        // sharedPreferences.setInt("cartItemCount", cartAddResponse.cart_quantity );
+        //  print("kirei vai3: + ${sharedPreferences.getInt("cartItemCount")}" );
+        //
+        // Provider.of<CartCountUpdate>(context, listen: true).getCurrentCartValue();
 
         setState(() {});
 
@@ -258,9 +260,24 @@ elevation: 0, // Set the elevation to 0 for no shadow
                 child: RaisedButton(
                   onPressed: () {
                     onPressAddToCart(context);
-                    if(widget.stock>0 || widget.preorderAvailable == 1 && is_logged_in.$ == true) {
-                      addCartCount.getIncrease();
+                    //if(widget.stock>0 || widget.preorderAvailable == 1 && is_logged_in.$ == true) {
+                    // if(is_logged_in.$ != false  && widget.stock>0 || widget.preorderAvailable == 1  ) {
+                    //   print("KireiBd999: ${is_logged_in.$}");
+                    //   addCartCount.getIncrease();
+                    // }
+                    print("KireiBd1000"+widget.preorderAvailable.toString());
+                    if(is_logged_in.$ != false){
+
+                      if( widget.preorderAvailable == 1){
+                        addCartCount.getReset();
+                        addCartCount.getIncrease();
+                      } else if(widget.stock>0){
+                        addCartCount.getIncrease();
+                      }
+
                     }
+
+
                     print(_shopList.length.toString());
 
                   },

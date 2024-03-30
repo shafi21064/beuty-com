@@ -1029,6 +1029,47 @@ class _AddressState extends State<Address> {
     // setState(() {
     //   loading = true;
     // });
+
+    if (_nameController.text == "") {
+      ToastComponent.showDialog(
+          //AppLocalizations.of(context).address_screen_address_warning, context,
+          "Name  is required", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    }
+
+    if (_phoneController.text == "") {
+      ToastComponent.showDialog(
+          //AppLocalizations.of(context).address_screen_country_warning, context,
+          "Phone is required", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    }
+
+    if (_addressController.text == "") {
+      ToastComponent.showDialog(
+          //AppLocalizations.of(context).address_screen_state_warning, context,
+          "Address is required", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    }
+
+    if ( _stateController.text == "") {
+      ToastComponent.showDialog(
+          //AppLocalizations.of(context).address_screen_city_warning, context,
+         "City is required", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    }
+
+    if (_cityController.text == "") {
+      ToastComponent.showDialog(
+          //AppLocalizations.of(context).address_screen_city_warning, context,
+          "Zone is required", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    }
+
     var addressUpdateResponse = await AddressRepository()
         .getAddressUpdateAddResponse(
         // id: id,

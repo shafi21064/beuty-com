@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:kirei/custom/toast_component.dart';
 import 'package:toast/toast.dart';
@@ -52,6 +54,10 @@ class _BkashScreenState extends State<BkashScreen> {
     //   // on cart payment need proper order id
        //getSetInitialUrl();
     // }
+
+        if (Platform.isAndroid) {
+      WebView.platform = SurfaceAndroidWebView();
+    }
   }
 
   createOrder() async {
@@ -99,6 +105,7 @@ class _BkashScreenState extends State<BkashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: buildAppBar(context),
       body: buildBody(),
@@ -182,6 +189,7 @@ class _BkashScreenState extends State<BkashScreen> {
 
         print('bkash 22');
       return SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
