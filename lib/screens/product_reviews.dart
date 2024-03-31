@@ -45,8 +45,6 @@ class _ProductReviewsState extends State<ProductReviews> {
     fetchData();
 
     _xcrollController.addListener(() {
-      //print("position: " + _xcrollController.position.pixels.toString());
-      //print("max: " + _xcrollController.position.maxScrollExtent.toString());
 
       if (_xcrollController.position.pixels ==
           _xcrollController.position.maxScrollExtent) {
@@ -97,7 +95,7 @@ class _ProductReviewsState extends State<ProductReviews> {
 
     //return;
     var myReviewText = _myReviewTextController.text.toString();
-    //print(chatText);
+
     if (myReviewText == "") {
       ToastComponent.showDialog(
           AppLocalizations.of(context)

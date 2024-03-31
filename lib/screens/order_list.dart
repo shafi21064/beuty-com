@@ -92,8 +92,6 @@ class _OrderListState extends State<OrderList> {
     fetchData();
 
     _xcrollController.addListener(() {
-      //print("position: " + _xcrollController.position.pixels.toString());
-      //print("max: " + _xcrollController.position.maxScrollExtent.toString());
 
       if (_xcrollController.position.pixels ==
           _xcrollController.position.maxScrollExtent) {
@@ -178,15 +176,15 @@ class _OrderListState extends State<OrderList> {
         page: _page,
         payment_status: _selectedPaymentStatus.option_key,
         delivery_status: _selectedDeliveryStatus.option_key);
-    //print("or:"+orderResponse.toJson().toString());
+
    _orderList.addAll(orderResponse["data"]);
-   // _orderList.addAll(orderResponse.data);
+
 
     print("orderResponse ${orderResponse.toString()}");
-    //_orderList.add(orderResponse.data);
-    print("_orderList: ${_orderList.toString()}");
+
+
     _isInitial = false;
-    // _totalData = orderResponse.meta.total;
+
     _showLoadingContainer = false;
     setState(() {});
   }

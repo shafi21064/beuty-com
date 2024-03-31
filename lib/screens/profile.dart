@@ -129,13 +129,12 @@ class _ProfileState extends State<Profile> {
         ? blank_zeros
         : txt;
 
-    // print(txt + " " + default_length.toString());
-    // print(newtxt);
+
 
     if (default_length > txt.length) {
       newtxt = leading_zeros + newtxt;
     }
-    //print(newtxt);
+
 
     return newtxt;
   }

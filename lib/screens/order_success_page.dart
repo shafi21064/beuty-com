@@ -43,13 +43,13 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
   @override
   void initState() {
     // TODO: implement initState
-    //print("orderDetails: ${orderDetails}");
-    fetchOrderDetails();
-    //print("orderDetails1: ${orderDetails}");
-    fetchOrderedItems();
-    //print("UserID1:${orderDetails?.user_id}");
 
-    //Provider.of<CartCountUpdate>(context).getReset();
+    fetchOrderDetails();
+
+    fetchOrderedItems();
+
+
+
     super.initState();
   }
 
@@ -61,9 +61,9 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
     await OrderRepository().getOrderDetails(id: widget.orderId);
 
     if (orderDetailsResponse.detailed_orders.length > 0) {
-      //orderDetails = orderDetailsResponse.detailed_orders[0];
+
       orderDetails = orderDetailsResponse.detailed_orders[0];
-      //print("orderDetails2: ${orderDetails}");
+
     }
 
     setState(() {});
@@ -73,7 +73,7 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
     var orderItemResponse =
     await OrderRepository().getOrderItems(id: widget.orderId);
     orderedItemList.addAll(orderItemResponse.ordered_items);
-    //orderItemsInit = true;
+
 
     setState(() {});
   }

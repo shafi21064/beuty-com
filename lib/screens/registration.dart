@@ -116,7 +116,7 @@ class _RegistrationState extends State<Registration> {
           duration: Toast.LENGTH_LONG);
       return;
     } else if (_register_by == "otp") {
-      var signupResponse = await AuthRepository().getSignupOtpResponse(_phone);
+      var signupResponse = await AuthRepository().getSignupOtpResponse(_phone, context);
       if (signupResponse.result == false) {
         ToastComponent.showDialog(signupResponse.message, context,
             gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
@@ -141,7 +141,7 @@ class _RegistrationState extends State<Registration> {
         //email,
         password,
         password_confirm,
-        _register_by);
+        _register_by, context);
 
     if (signupResponse.result == false) {
       ToastComponent.showDialog(signupResponse.message, context,

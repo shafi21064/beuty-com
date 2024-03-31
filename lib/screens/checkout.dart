@@ -2,13 +2,11 @@
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:kirei/data_model/city_response.dart';
 import 'package:kirei/data_model/country_response.dart';
-import 'package:kirei/data_model/login_response.dart';
-import 'package:kirei/data_model/payment_type_response.dart';
 import 'package:kirei/data_model/pickup_points_response.dart';
 import 'package:kirei/data_model/state_response.dart';
 import 'package:kirei/providers/cart_count_update.dart';
+import 'package:kirei/providers/version_change.dart';
 import 'package:kirei/repositories/address_repository.dart';
-import 'package:kirei/repositories/auth_repository.dart';
 import 'package:kirei/repositories/pickup_points_repository.dart';
 import 'package:kirei/screens/address.dart';
 import 'package:flutter/material.dart';
@@ -16,27 +14,18 @@ import 'package:kirei/my_theme.dart';
 import 'package:kirei/screens/order_failed_page.dart';
 import 'package:kirei/screens/order_list.dart';
 import 'package:kirei/screens/order_success_page.dart';
-import 'package:kirei/screens/stripe_screen.dart';
-import 'package:kirei/screens/paypal_screen.dart';
-import 'package:kirei/screens/razorpay_screen.dart';
-import 'package:kirei/screens/paystack_screen.dart';
-import 'package:kirei/screens/iyzico_screen.dart';
 import 'package:kirei/screens/bkash_screen.dart';
 import 'package:kirei/screens/nagad_screen.dart';
 import 'package:kirei/screens/sslcommerz_screen.dart';
-import 'package:kirei/screens/flutterwave_screen.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:kirei/repositories/payment_repository.dart';
 import 'package:kirei/repositories/cart_repository.dart';
 import 'package:kirei/repositories/coupon_repository.dart';
 import 'package:kirei/helpers/shimmer_helper.dart';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/custom/toast_component.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
-import 'package:kirei/screens/offline_screen.dart';
-import 'package:kirei/screens/paytm_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Checkout extends StatefulWidget {
@@ -141,23 +130,11 @@ class _CheckoutState extends State<Checkout> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    /*print("user data");
-    print(is_logged_in.$);
-    print(access_token.value);
-    print(user_id.$);
-    print(user_name.$);*/
-    //r print(widget.address);
-    print(widget.product_ids);
-    print(widget.product_quantities);
-    print("valuereeeu555");
 
-    print(widget.isPreorder);
-    // if (is_logged_in.$ == true) {
-    //   fetchAll();
-    // }
+
     fetchAll();
-    //buildAddressList();
-    print('what is there ${_shippingAddressList}' );
+
+
   }
 
   @override
@@ -173,7 +150,7 @@ class _CheckoutState extends State<Checkout> {
       if (pick_up_status.$) {
         fetchPickupPoints();
       }
-      //fetchPickupPoints();
+
     }
     setState(() {});
 
@@ -185,54 +162,30 @@ class _CheckoutState extends State<Checkout> {
         payment_type = "wallet_payment";
       } else {
         fetchSummary();
-        //payment_type = payment_type;
+
       }
     }
   }
 
-  // applyCouponCode(){
-  //   var discount = int.parse(_totalString) - int.parse(_totalString * ())
-  // }
 
   fetchShippingAddressList() async {
 
-    print('result#1' +success.toString());
+
     var addressResponse = await AddressRepository().getAddressList();
 
     success = addressResponse['success'];
-    print('result#2' +success.toString());
-    //print('result#5' +success.toString());
-    //_shippingAddressList.addAll(addressResponse.data);
+
+
     _shippingAddressList.addAll(addressResponse['data']);
-    //_shippingAddressList.add(addressResponse['data']);
-
-    // for (var address in addressResponse['data']) {
-    //     _shippingAddressList.add(address);
-    //
-    // }
 
 
-    print("_shippingAddressList = "+ _shippingAddressList.length.toString());
 
-    print("_shippingAddressList array "+ _shippingAddressList.toString());
 
-    print("_shippingAddressList cityID "+ _shippingAddressList[0]["city_id"].toString());
-    print("_shippingAddressList zoneId "+ _shippingAddressList[0]["zone_id"].toString());
-    print("_shippingAddressList areaId "+ _shippingAddressList[0]["area_id"].toString());
 
-    // print("_shippingAddressList area "+ _selected_country.id.toString());
-    // print("_shippingAddressList zone "+ _selected_city.id.toString());
-    // print("_shippingAddressList city "+ _selected_state.id.toString());
-
-    print("_nameController ="+ _nameController.text);
-    print("_addressController"+ _addressController.text.toString());
-    print("phone controller"+ _shippingAddressList[0]['phone']);
-    print("phone controller"+ _shippingAddressList[0]['address']);
 
 
     if (success == true) {
       _phoneController.text = _shippingAddressList[0]['phone'];
-      //_nameController.text = user_name.$;
       _nameController.text = _shippingAddressList[0]['name'];
       _seleted_shipping_address = _shippingAddressList[0]['id'];
       _addressController.text = _shippingAddressList[0]['address'];
@@ -240,39 +193,27 @@ class _CheckoutState extends State<Checkout> {
       _cityController.text = _shippingAddressList[0]['zone_name'];
       _countryController.text = _shippingAddressList[0]['area_name'];
       _selectedCity_id = _shippingAddressList[0]['city_id'];
-      print('_selected_city.id ${_selectedCity_id}');
       _selectedZone_id = _shippingAddressList[0]['zone_id'];
       _selectedArea_id = _shippingAddressList[0]['area_id'];
 
-      print('not working');
-      // print('_selected_state.id' +_selected_state.id.toString());
 
-      // _shippingAddressList.forEach((address) {
-      //   if (address.set_default == 1 && _shippingOptionIsAddress) {
-      //     _seleted_shipping_address = address.id;
-      //   }
-      // });
     }
     _isInitial = false;
     setState(() {});
 
-    //getSetShippingCost();
+
   }
 
   getSetShippingCost() async {
     var shippingCostResponse;
     if (_shippingOptionIsAddress) {
-      // shippingCostResponse = await AddressRepository().getShippingCostResponse(
-      //     user_id: user_id.$, address_id: _seleted_shipping_address);
+;
     } else {
-      // shippingCostResponse = await AddressRepository().getShippingCostResponse(
-      //     user_id: user_id.$,
-      //     pick_up_id: _seleted_shipping_pickup_point,
-      //     shipping_type: "pickup_point");
+
     }
 
     if (shippingCostResponse.result == true) {
-      // _shipping_cost_string = shippingCostResponse.value_string;
+
       setState(() {});
     }
   }
@@ -301,11 +242,11 @@ class _CheckoutState extends State<Checkout> {
     if (!_shippingOptionIsAddress) {
       _seleted_shipping_pickup_point = _pickupList.first.id;
     }
-    // getSetShippingCost();
+
   }
 
   fetchSummary() async {
-    print('fetch Summary');
+
     var cartSummaryResponse = await CartRepository().getCartSummaryResponse();
 
     if (cartSummaryResponse != null) {
@@ -348,8 +289,7 @@ class _CheckoutState extends State<Checkout> {
     _cityList.clear();
     _pickupList.clear();
     _countryList.clear();
-    // _shipping_cost_string = ". . .";
-    // _shipping_cost_string = ". . .";
+
     _isInitial = true;
     _shippingOptionIsAddress = true;
     _seleted_shipping_pickup_point = 0;
@@ -383,29 +323,6 @@ class _CheckoutState extends State<Checkout> {
     fetchAll();
   }
 
-// onAddressSwitch() async {
-//     _shipping_cost_string = ". . .";
-//     setState(() {});
-//     getSetShippingCost();
-//   }
-
-//   changeShippingOption(bool option) {
-//     if (option) {
-//       _seleted_shipping_pickup_point = 0;
-
-//       _shippingAddressList.length > 0
-//           ? _seleted_shipping_address = _shippingAddressList.first.id
-//           : _seleted_shipping_address = 0;
-//     } else {
-//       _seleted_shipping_address = 0;
-//       _pickupList.length > 0
-//           ? _seleted_shipping_pickup_point = _pickupList.first.id
-//           : _seleted_shipping_pickup_point = 0;
-//     }
-//     _shippingOptionIsAddress = option;
-//     getSetShippingCost();
-//     setState(() {});
-//   }
 
   onPressProceed() async {
 
@@ -426,39 +343,12 @@ class _CheckoutState extends State<Checkout> {
     }
 
 
-    // else {
-    //   pay_by_cod();
-    // }
 
-    //print('this is shipping id: ${_shippingAddressList[0]['city_id']}');
-
-    // print("shippingaddress111" + _shippingAddressList[0].address);
-
-    // if (_shippingOptionIsAddress && _seleted_shipping_address == 0) {
-    //   ToastComponent.showDialog("Please select a shipping address", context);
-    //   return;
-    // }
-
-    // print("kireibd1000: ${_selected_state.id}");
-    // print("kireibd1000: ${_selected_city.id}");
-    // print("kireibd1000: ${_selected_country.id}");
-
-    // if (_selected_state.id == null && _selected_city.id == null  && _selected_country.id == null ) {
-    //
-    //   ToastComponent.showDialog("Please select a shipping address", context);
-    //   return;
-    // }
-
-    // if (!_shippingOptionIsAddress && _seleted_shipping_pickup_point == 0) {
-    //   ToastComponent.showDialog("Please select a pickup point", context);
-    //   return;
-    // }
     if(!_termsChecked){
       ToastComponent.showDialog("Please agree to the terms and conditions", context,   gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
     };
-    //print(_shippingAddressList[0]);
-    // Prepare request body
+
     List<String> productIdsStrings = widget.product_ids.split(',');
     List<int> productIds = productIdsStrings.map(int.parse).toList();
 
@@ -496,11 +386,11 @@ class _CheckoutState extends State<Checkout> {
     requestBody["payment_type"] = _selected_payment_method;
     requestBody["note"] = _orderNoteController.text;
     requestBody["type"] = 'app';
-    requestBody["version"] = "2.0.8";
+    requestBody["version"] = "${Provider.of<VersionChange>(context, listen: false).latestVersion}";
 
     if (_nameController.text == "" || requestBody["shipping_name"] == "") {
       ToastComponent.showDialog(
-        //AppLocalizations.of(context).address_screen_address_warning, context,
+
           "Name  is required", context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
@@ -508,7 +398,6 @@ class _CheckoutState extends State<Checkout> {
 
     if (_phoneController.text == "" || requestBody["shipping_phone"] == "") {
       ToastComponent.showDialog(
-        //AppLocalizations.of(context).address_screen_country_warning, context,
           "Phone is required", context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
@@ -516,14 +405,12 @@ class _CheckoutState extends State<Checkout> {
 
     if (_addressController.text == "" || requestBody["shipping_address"] == "") {
       ToastComponent.showDialog(
-        //AppLocalizations.of(context).address_screen_state_warning, context,
           "Address is required", context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
     }
         if (_couponController.text != "" && _coupon_applied == false) {
       ToastComponent.showDialog(
-        //AppLocalizations.of(context).address_screen_state_warning, context,
           "Apply Your Coupon First or Clear", context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
@@ -531,7 +418,6 @@ class _CheckoutState extends State<Checkout> {
 
     if ( _stateController.text == "" || requestBody["shipping_city_id"] == "") {
       ToastComponent.showDialog(
-        //AppLocalizations.of(context).address_screen_city_warning, context,
           "City is required", context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
@@ -539,7 +425,6 @@ class _CheckoutState extends State<Checkout> {
 
     if (_cityController.text == "" || requestBody["shipping_zone_id"] == "") {
       ToastComponent.showDialog(
-        //AppLocalizations.of(context).address_screen_city_warning, context,
           "Zone is required", context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
@@ -666,17 +551,6 @@ class _CheckoutState extends State<Checkout> {
             }
 
           }
-          // ToastComponent.showDialog(
-          //   orderCreateResponse.message,
-          //   context,
-          //   gravity: Toast.CENTER,
-          //   duration: Toast.LENGTH_LONG,
-          // );
-
-          //if(_selected_payment_method == );
-          // Navigator.push(context, MaterialPageRoute(builder: (context) {
-          //   return OrderList(from_checkout: true);
-          // }));
       } else{
           ToastComponent.showDialog(
             "Something went wrong",
@@ -706,8 +580,6 @@ class _CheckoutState extends State<Checkout> {
     var couponApplyResponse =
     await CouponRepository().getCouponApplyResponse(coupon_code);
 
-    // ToastComponent.showDialog(couponApplyResponse.message, context,
-    //     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
     fetchSummary();
 
     if (couponApplyResponse.result == true) {
@@ -802,8 +674,6 @@ class _CheckoutState extends State<Checkout> {
       });
     }
 
-    //print(_selected_payment_method);
-    //print(_selected_payment_method_key);
   }
 
   onPressDetails() {
@@ -1065,16 +935,14 @@ class _CheckoutState extends State<Checkout> {
     _selected_country = country;
     _selectedArea_id = country.id;
     print('_selectedArea_id ${_selectedArea_id}');
-    // _selected_state = null;
-    // _selected_city = null;
+
     setState(() {});
 
     setModalState(() {
       _countryController.text = country.name;
       _selectedArea_id = country.id;
       print('_selectedArea_id ${_selectedArea_id}');
-      // _stateController.text = "";
-      // _cityController.text = "";
+
     });
   }
 
@@ -1167,72 +1035,13 @@ class _CheckoutState extends State<Checkout> {
     afterAddingAnAddress();
   }
 
-  // buildAddressList() {
-  //   print("is Initial: ${_isInitial}");
-  //   if (is_logged_in == false) {
-  //     return Container(
-  //         height: 100,
-  //         child: Center(
-  //             child: Text(
-  //               AppLocalizations.of(context).common_login_warning,
-  //               style: TextStyle(color: MyTheme.secondary),
-  //             )));
-  //   } else if (_isInitial && _shippingAddressList.length == 0) {
-  //     return SingleChildScrollView(
-  //         child: ShimmerHelper()
-  //             .buildListShimmer(item_count: 5, item_height: 100.0));
-  //   } else if (_shippingAddressList.length > 0) {
-  //     return SingleChildScrollView(
-  //       child: ListView.builder(
-  //         itemCount: _shippingAddressList.length,
-  //         scrollDirection: Axis.vertical,
-  //         physics: NeverScrollableScrollPhysics(),
-  //         shrinkWrap: true,
-  //         itemBuilder: (context, index) {
-  //            //_nameController.text = _shippingAddressList[index].name;
-  //            _nameController.text = user_name.$;
-  //           _phoneController.text = _shippingAddressList[index].phone;
-  //           // _emailController.text = _shippingAddressList[index].email;
-  //           _addressController.text = _shippingAddressList[index].address;
-  //           _cityController.text = _shippingAddressList[index].zone;
-  //           _stateController.text = _shippingAddressList[index].city;
-  //           _countryController.text = _shippingAddressList[index].area;
-  //
-  //           // print("foysal: ${_phoneController.text}");
-  //           // print("foysal: ${_shippingAddressList[index].phone}");
-  //           return Padding(
-  //             padding: const EdgeInsets.only(bottom: 4.0),
-  //             //child: buildAddressItemCard(index),
-  //             //child: fetchPreviousData(index),
-  //           );
-  //         },
-  //       ),
-  //     );
-  //   } else if (!_isInitial && _shippingAddressList.length == 0) {
-  //     return Container(
-  //         height: 100,
-  //         child: Center(
-  //             child: Text(
-  //               AppLocalizations.of(context).common_no_address_added,
-  //               style: TextStyle(color: MyTheme.secondary),
-  //             )));
-  //   }
-  // }
 
   GestureDetector buildAddressItemCard(index){
     return GestureDetector(
       onDoubleTap: () {
-        // if (_default_shipping_address != _shippingAddressList[index].id) {
-        //   onAddressSwitch(index);
-        // }
+
       },
       child: Card(
-        // shape: RoundedRectangleBorder(
-        //   side: _default_shipping_address == _shippingAddressList[index].id
-        //       ? BorderSide(color: MyTheme.primary, width: 2.0)
-        //       : BorderSide(color: MyTheme.light_grey, width: 1.0),
-        //   borderRadius: BorderRadius.circular(8.0),
-        // ),
         elevation: 0.0,
         child: Stack(
           children: [
@@ -1353,34 +1162,6 @@ class _CheckoutState extends State<Checkout> {
                     ),
                   ),
 
-                  // Padding(
-                  //   padding: const EdgeInsets.only(bottom: 8.0),
-                  //   child: Row(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: [
-                  //       Container(
-                  //         width: 75,
-                  //         child: Text(
-                  //           AppLocalizations.of(context)
-                  //               .address_screen_postal_code,
-                  //           style: TextStyle(
-                  //             color: MyTheme.secondary,
-                  //           ),
-                  //         ),
-                  //       ),
-                  //       Container(
-                  //         width: 200,
-                  //         child: Text(
-                  //           _shippingAddressList[index].postal_code,
-                  //           maxLines: 2,
-                  //           style: TextStyle(
-                  //               color: MyTheme.dark_grey,
-                  //               fontWeight: FontWeight.w600),
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Row(
@@ -1412,42 +1193,6 @@ class _CheckoutState extends State<Checkout> {
                 ],
               ),
             ),
-            // app_language_rtl.$
-            //     ? Positioned(
-            //         left: 0.0,
-            //         top: 0.0,
-            //         child: InkWell(
-            //           onTap: () {
-            //             buildShowUpdateFormDialog(context, index);
-            //           },
-            //           child: Padding(
-            //             padding: const EdgeInsets.only(
-            //                 top: 16.0, left: 16.0, right: 16.0, bottom: 12.0),
-            //             child: Icon(
-            //               Icons.edit,
-            //               color: MyTheme.dark_grey,
-            //               size: 16,
-            //             ),
-            //           ),
-            //         )
-            //         )
-            //     : Positioned(
-            //         right: 0.0,
-            //         top: 0.0,
-            //         child: InkWell(
-            //           onTap: () {
-            //             buildShowUpdateFormDialog(context, index);
-            //           },
-            //           child: Padding(
-            //             padding: const EdgeInsets.only(
-            //                 top: 16.0, left: 16.0, right: 16.0, bottom: 12.0),
-            //             child: Icon(
-            //               Icons.edit,
-            //               color: MyTheme.dark_grey,
-            //               size: 16,
-            //             ),
-            //           ),
-            //         )),
             app_language_rtl.$
                 ? Positioned(
                 left: 0,
@@ -1975,36 +1720,6 @@ class _CheckoutState extends State<Checkout> {
                 ],
               )),
 
-          // Divider(
-          //   height: 5,
-          //   color: MyTheme.dark_grey,
-          // ),
-
-          // Padding(
-          //     padding: const EdgeInsets.only(bottom: 8),
-          //     child: Row(
-          //       children: [
-          //         Container(
-          //           width: 120,
-          //           child: Text(
-          //             AppLocalizations.of(context).checkout_screen_tax,
-          //             textAlign: TextAlign.end,
-          //             style: TextStyle(
-          //                 color: MyTheme.secondary,
-          //                 fontSize: 14,
-          //                 fontWeight: FontWeight.w600),
-          //           ),
-          //         ),
-          //         Spacer(),
-          //         Text(
-          //           _taxString ?? '',
-          //           style: TextStyle(
-          //               color: MyTheme.secondary,
-          //               fontSize: 14,
-          //               fontWeight: FontWeight.w600),
-          //         ),
-          //       ],
-          //     )),
           Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Row(
@@ -2205,11 +1920,6 @@ class _CheckoutState extends State<Checkout> {
             child: buildShowAddFormDialog(context),
           ) : ExpansionTile(
 
-            // title:  Text(_nameController.text.toString() ?? 'No Name',
-            //   style: TextStyle(
-            //     color: MyTheme.secondary,
-            //   ),
-            // ),
 
             title: RichText(
               textAlign: TextAlign.left,
@@ -2232,28 +1942,6 @@ class _CheckoutState extends State<Checkout> {
 
             ),
 
-            // Row(
-            //
-            //   children: [
-            //     Text("Delivering to",
-            //       style: TextStyle(
-            //         color: MyTheme.secondary,
-            //       ),
-            //     ),
-            //     // Text(" ${_addressController.text.toString().toUpperCase()}",
-            //     //   style: TextStyle(
-            //     //     color: MyTheme.secondary,
-            //     //     fontWeight: FontWeight.bold
-            //     //   ),
-            //     // ),
-            //     Text(_addressController.text.toString().length > 5 ? " ${_addressController.text.toString().substring(0,5).toUpperCase()}..." :" ${_addressController.text.toString()}" ,
-            //       style: TextStyle(
-            //           color: MyTheme.secondary,
-            //           fontWeight: FontWeight.bold
-            //       ),
-            //     ),
-            //   ],
-            // ),
 
             subtitle: Column(
               //crossAxisAlignment: CrossAxisAlignment.center,
@@ -2299,23 +1987,6 @@ class _CheckoutState extends State<Checkout> {
                   ],
                 ),
 
-                // SizedBox(
-                //   height: mHeight * 0.03,
-                // ),
-
-                // success == false ||  initialExpanded == true? Container(
-                //     margin: EdgeInsets.only(
-                //         left: 32, bottom: 8
-                //     ),
-                //     height: 36,
-                //     width: double.infinity,
-                //     decoration: BoxDecoration(
-                //         color: Colors.green
-                //     ),
-                //     child: Center(child:
-                //     Text( "Confirm Delivery Address"
-                //       , style: TextStyle(color: MyTheme.white, fontWeight: FontWeight.bold),)
-                //     )) :
                 Container(
                     margin: EdgeInsets.only(
                         left: 32, top: 16, bottom: 8
@@ -2339,7 +2010,6 @@ class _CheckoutState extends State<Checkout> {
               width: 0,
             ),
 
-            //trailing: Text(success == false ? _addressController.text.toString() == "" ? "" :  "Change Address" : 'Change Address' , style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),),
 
             children: [
 
@@ -2399,59 +2069,6 @@ class _CheckoutState extends State<Checkout> {
                         delegate: SliverChildListDelegate(
                             [
 
-                              // Padding(
-                              //   padding: const EdgeInsets.only(
-                              //       left: 16.0, right: 16.0, top: 16.0),
-                              //   child: _shippingOptionIsAddress
-                              //       ? buildShippingInfoList()
-                              //       : buildPickupPoint(),
-                              // ),
-                              // _shippingOptionIsAddress
-                              //     ? Container(
-                              //   height: 40,
-                              //   child: Center(
-                              //     child: InkWell(
-                              //       onTap: () {
-                              //         Navigator.push(
-                              //           context,
-                              //           MaterialPageRoute(
-                              //             builder: (context) {
-                              //               return Address(
-                              //                 from_shipping_info: true,
-                              //               );
-                              //             },
-                              //           ),
-                              //         ).then((value) {
-                              //           onPopped(value);
-                              //         });
-                              //
-                              //         //Address().getDialog(context);
-                              //         // Address().foysal;
-                              //         //print("User info: ${LoginResponse().access_token}");
-                              //
-                              //       },
-                              //       child: Visibility(
-                              //         visible: _shippingAddressList.length == 0,
-                              //         child: Padding(
-                              //           padding: const EdgeInsets.all(8.0),
-                              //           child: Text(
-                              //             AppLocalizations.of(context)
-                              //                 .shipping_info_screen_go_to_address,
-                              //             style: TextStyle(
-                              //               fontSize: 14,
-                              //               decoration:
-                              //               TextDecoration.underline,
-                              //               color: MyTheme.primary,
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ),
-                              // )
-                              //     : Container(),
-
-
 
                             ]
                         ),
@@ -2463,61 +2080,7 @@ class _CheckoutState extends State<Checkout> {
               // Positioned(top: 0.0, child: customAppBar(context)),
 
 
-              ///add note er code
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 20.0),
-              //   child: widget.isWalletRecharge
-              //       ? Container()
-              //       : Container(
-              //     decoration: BoxDecoration(
-              //       color: Colors.white,
-              //       /*border: Border(
-              //           top: BorderSide(color: MyTheme.light_grey,width: 1.0),
-              //         )*/
-              //     ),
-              //     height:
-              //     widget.manual_payment_from_order_details ? 80 : 210,
-              //     child: Padding(
-              //       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-              //       child: Column(
-              //         children: [
-              //           Padding(
-              //             padding: const EdgeInsets.only(
-              //                 left: 8.0, right: 8.0, bottom: 10.0),
-              //             child: TextFormField(
-              //               decoration: InputDecoration(
-              //                 // labelText: 'Order Note',
-              //                 hintText: 'Add a note to your order',
-              //               ),
-              //               onChanged: (value) {
-              //                 setState(() {
-              //                   _orderNote = value;
-              //                 });
-              //               },
-              //             ),
-              //           ),
-              //           // SizedBox(
-              //           //   height: 10,
-              //           // ),
-              //           //
-              //           // grandTotalSection(),
-              //           //
-              //           // SizedBox(
-              //           //   height: 10,
-              //           // ),
-              //           //
-              //           // widget.manual_payment_from_order_details == false
-              //           //     ? Padding(
-              //           //   padding: const EdgeInsets.only(bottom: 0.0),
-              //           //   child: buildApplyCouponRow(context),
-              //           // )
-              //           //     : Container(),
-              //
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // ),
+
               Container(
                 padding: EdgeInsets.all(8),
                 //height: 550,
@@ -2536,26 +2099,7 @@ class _CheckoutState extends State<Checkout> {
                         ),
                       ),
                     ),
-                    //
-                    // SizedBox(
-                    //   height: 5,
-                    // ),
 
-                    // Accordion(
-                    //
-                    //   scrollIntoViewOfItems: ScrollIntoViewOfItems.none,
-                    //   //header: ,
-                    //   children: [
-                    //     AccordionSection(
-                    //
-                    //         header: Text('test'),
-                    //         content: buildShowAddFormDialog(context)
-                    //     ),
-                    //   ],
-                    // ),
-                    // Container(
-                    // child: buildAddressExpandedTile(initialExpanded: false),
-                    // ),
 
                     SizedBox(
                       height: mHeight * 0.008,
@@ -2604,8 +2148,6 @@ class _CheckoutState extends State<Checkout> {
                       //color: Colors.pink,
                       child: buildDetails(),
                     ),
-
-                    //grandTotalSection(),
 
                     SizedBox(
                       height: 16,
@@ -2673,59 +2215,6 @@ class _CheckoutState extends State<Checkout> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
 
-                          ///address related code
-                          // Padding(
-                          //   padding: const EdgeInsets.only(
-                          //       left: 16.0, right: 16.0, top: 16.0),
-                          //   child: _shippingOptionIsAddress
-                          //       ? buildShippingInfoList()
-                          //       : buildPickupPoint(),
-                          // ),
-                          // _shippingOptionIsAddress
-                          //     ? Container(
-                          //   height: 40,
-                          //   child: Center(
-                          //     child: InkWell(
-                          //       onTap: () {
-                          //         Navigator.push(
-                          //           context,
-                          //           MaterialPageRoute(
-                          //             builder: (context) {
-                          //               return Address(
-                          //                 from_shipping_info: true,
-                          //               );
-                          //             },
-                          //           ),
-                          //         ).then((value) {
-                          //           onPopped(value);
-                          //         });
-                          //
-                          //         //Address().getDialog(context);
-                          //         // Address().foysal;
-                          //         //print("User info: ${LoginResponse().access_token}");
-                          //
-                          //       },
-                          //       child: Visibility(
-                          //         visible: _shippingAddressList.length == 0,
-                          //         child: Padding(
-                          //           padding: const EdgeInsets.all(8.0),
-                          //           child: Text(
-                          //             AppLocalizations.of(context)
-                          //                 .shipping_info_screen_go_to_address,
-                          //             style: TextStyle(
-                          //               fontSize: 14,
-                          //               decoration:
-                          //               TextDecoration.underline,
-                          //               color: MyTheme.primary,
-                          //             ),
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // )
-                          //     : Container(),
-
                           Container(
                             color: MyTheme.white,
                             // margin: EdgeInsets.symmetric(horizontal: 5),
@@ -2773,102 +2262,7 @@ class _CheckoutState extends State<Checkout> {
                 ),
               ),
 
-              // Container(
-              //   margin: EdgeInsets.only(
-              //       top: 20
-              //   ),
-              //   child: Column(
-              //     mainAxisAlignment: MainAxisAlignment.end,
-              //     crossAxisAlignment: CrossAxisAlignment.center,
-              //     children: [
-              //
-              //       ///address related code
-              //       // Padding(
-              //       //   padding: const EdgeInsets.only(
-              //       //       left: 16.0, right: 16.0, top: 16.0),
-              //       //   child: _shippingOptionIsAddress
-              //       //       ? buildShippingInfoList()
-              //       //       : buildPickupPoint(),
-              //       // ),
-              //       // _shippingOptionIsAddress
-              //       //     ? Container(
-              //       //   height: 40,
-              //       //   child: Center(
-              //       //     child: InkWell(
-              //       //       onTap: () {
-              //       //         Navigator.push(
-              //       //           context,
-              //       //           MaterialPageRoute(
-              //       //             builder: (context) {
-              //       //               return Address(
-              //       //                 from_shipping_info: true,
-              //       //               );
-              //       //             },
-              //       //           ),
-              //       //         ).then((value) {
-              //       //           onPopped(value);
-              //       //         });
-              //       //
-              //       //         //Address().getDialog(context);
-              //       //         // Address().foysal;
-              //       //         //print("User info: ${LoginResponse().access_token}");
-              //       //
-              //       //       },
-              //       //       child: Visibility(
-              //       //         visible: _shippingAddressList.length == 0,
-              //       //         child: Padding(
-              //       //           padding: const EdgeInsets.all(8.0),
-              //       //           child: Text(
-              //       //             AppLocalizations.of(context)
-              //       //                 .shipping_info_screen_go_to_address,
-              //       //             style: TextStyle(
-              //       //               fontSize: 14,
-              //       //               decoration:
-              //       //               TextDecoration.underline,
-              //       //               color: MyTheme.primary,
-              //       //             ),
-              //       //           ),
-              //       //         ),
-              //       //       ),
-              //       //     ),
-              //       //   ),
-              //       // )
-              //       //     : Container(),
-              //
-              //       Padding(
-              //         padding:
-              //         const EdgeInsets.only(left: 16.0, right: 16.0),
-              //         child: buildPaymentMethodList(),
-              //       ),
-              //
-              //       Padding(
-              //         padding: const EdgeInsets.only(top: 0.0, bottom:10),
-              //         child: Row(
-              //           children: [
-              //             Checkbox(
-              //               value: _termsChecked,
-              //               onChanged: (value) {
-              //                 setState(() {
-              //                   _termsChecked = value;
-              //                 });
-              //               },
-              //             ),
-              //             Flexible(
-              //               child: Text(
-              //                 "I HAVE READ AND AGREE TO THE KIREI'S TERMS AND CONDITIONS, PRIVACY POLICY, AND REFUND POLICY.",
-              //                 maxLines: 2,
-              //                 style: TextStyle(
-              //                   fontSize: 14,
-              //                   fontWeight: FontWeight.w500,
-              //                 ),
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
+
             ],
           ),
         ),
@@ -3026,13 +2420,6 @@ class _CheckoutState extends State<Checkout> {
   GestureDetector buildShippingInfoItemCard(index) {
     return GestureDetector(
       onTap: () {
-        // if (_seleted_shipping_address != _shippingAddressList[index].id) {
-        //   _seleted_shipping_address = _shippingAddressList[index].id;
-
-        //   onAddressSwitch();
-        // }
-        // //detectShippingOption();
-        // setState(() {});
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -3434,21 +2821,6 @@ class _CheckoutState extends State<Checkout> {
         ),
       );
 
-      // return SingleChildScrollView(
-      //   // child: ListView.builder(
-      //   //   itemCount: _paymentTypeList.length,
-      //   //   scrollDirection: Axis.vertical,
-      //   //   //physics: NeverScrollableScrollPhysics(),
-      //   //   shrinkWrap: true,
-      //   //   itemBuilder: (context, index) {
-      //   //
-      //   //   },
-      //   // ),
-      //
-      //   child: GridView.count(
-      //     crossAxisCount: 2,
-      //   )
-      // );
     } else if (!_isInitial && _paymentTypeList.length == 0) {
       return Container(
           height: 100,
@@ -3475,13 +2847,6 @@ class _CheckoutState extends State<Checkout> {
       child: Stack(
         children: [
           Card(
-            // shape: RoundedRectangleBorder(
-            //   side: _selected_payment_method_key ==
-            //           _paymentTypeList[index].payment_type_key
-            //       ? BorderSide(color: MyTheme.primary, width: 2.0)
-            //       : BorderSide(color: MyTheme.light_grey, width: 1.0),
-            //   borderRadius: BorderRadius.circular(8.0),
-            // ),
             elevation: 0.0,
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -3504,28 +2869,6 @@ class _CheckoutState extends State<Checkout> {
                                 : _paymentTypeList[index].image,
                             fit: BoxFit.fitWidth,
                           ))),
-                  // Container(
-                  //   width: 150,
-                  //   child: Column(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: [
-                  //       Padding(
-                  //         padding: EdgeInsets.only(left: 8.0),
-                  //         child: Text(
-                  //           _paymentTypeList[index].title,
-                  //           textAlign: TextAlign.left,
-                  //           overflow: TextOverflow.ellipsis,
-                  //           maxLines: 2,
-                  //           style: TextStyle(
-                  //               color: MyTheme.secondary,
-                  //               fontSize: 14,
-                  //               height: 1.6,
-                  //               fontWeight: FontWeight.w400),
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
                 ]),
           ),
           Positioned(
@@ -3598,9 +2941,6 @@ class _CheckoutState extends State<Checkout> {
                     fontWeight: FontWeight.w600),
               ),
               onPressed: () {
-                // print("_selected_phone.number${_phoneController.text}");
-                //print("_selected_.id${_selected_state.id}");
-                // print('working');
                 _shippingAddressList == null ? onAddressAdd(context) : Container();
                 //onPressPlaceOrderOrProceed();
                 print('working2');

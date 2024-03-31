@@ -2,13 +2,14 @@ import 'dart:ui';
 
 import 'package:kirei/app_config.dart';
 import 'package:kirei/my_theme.dart';
+import 'package:kirei/providers/version_change.dart';
 import 'package:kirei/screens/main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:package_info/package_info.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
+import 'package:provider/provider.dart';
 
 class Splash extends StatefulWidget {
   @override
@@ -29,8 +30,8 @@ class _SplashState extends State<Splash> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
     super.initState();
     _initPackageInfo();
+    Provider.of<VersionChange>(context, listen: false).changeVersion();
   }
-
   @override
   void dispose() {
     //before going to other screen show statusbar
@@ -78,16 +79,10 @@ class _SplashState extends State<Splash> {
             color: Colors.white,
           ),
         ),
-        //image: Image.asset("assets/splash_screen_logo.png",alignment: Alignment.center),
+
         image: Image.asset("assets/splash_screen_logo_new.png",),
-        //backgroundColor: MyTheme.primary,
+
         backgroundColor: MyTheme.white,
-        // backgroundImage:
-        //     Image.asset("assets/image_02.png"),
-        // gradientBackground: FlutterGradients.happyMemories(
-        //   type: GradientType.linear,
-        //   center: Alignment.center,
-        // ),
         photoSize: 60.0,
         backgroundPhotoSize: 140.0,
       ),

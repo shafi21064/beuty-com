@@ -6,14 +6,10 @@ import 'package:kirei/my_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/repositories/cart_repository.dart';
-import 'package:kirei/screens/cart.dart';
 import 'package:kirei/screens/login.dart';
 import 'package:kirei/screens/product_details.dart';
-import 'package:kirei/app_config.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class MiniProductCard extends StatefulWidget {
@@ -67,40 +63,23 @@ class _MiniProductCardState extends State<MiniProductCard> {
 
 
     if (is_logged_in.$ == false) {
-      // ToastComponent.showDialog(AppLocalizations.of(context).common_login_warning, context,
-      //     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+
       Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
       return;
     }
 
-    // print(widget.id);
-    // print(_variant);
-    // print(user_id.$);
-    //print(_quantity);
+
     print(access_token.$);
     var cartAddResponse = await CartRepository()
-        .getCartAddResponse(widget.id, _variant, user_id.$, _quantity,widget.preorderAvailable);
+        .getCartAddResponse(widget.id, _variant, user_id.$, _quantity,widget.preorderAvailable, context);
 
     if (cartAddResponse.result == false) {
       ToastComponent.showDialog(cartAddResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
     } else {
-      //print("KireiBd999:"+cartAddResponse.cart_quantity.toString());
       if (mode == "add_to_cart") {
-        //fetchData();
-        // if (snackbar != null && context != null) {
-        //   Scaffold.of(context).showSnackBar(snackbar);
-        // }
 
-        // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-        // //var cartItem = sharedPreferences.getInt("cartItemCount");
-        // // cartItem++;
-        // print("KireiBd999:"+cartAddResponse.cart_quantity.toString());
-        // sharedPreferences.setInt("cartItemCount", cartAddResponse.cart_quantity );
-        //  print("kirei vai3: + ${sharedPreferences.getInt("cartItemCount")}" );
-        //
-        // Provider.of<CartCountUpdate>(context, listen: true).getCurrentCartValue();
 
         setState(() {});
 
@@ -115,17 +94,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
   fetchData() async {
     print(user_id.$);
 
-    // var cartResponseList =
-    // await CartRepository().getCartResponseList(user_id.$);
-    //
-    // if (cartResponseList != null && cartResponseList.length > 0) {
-    //   // _shopList = cartResponseList;
-    //   // for (var shop in _shopList) {
-    //   //   for (var item in shop.cart_items) {
-    //   //     cartItemCount+= item.quantity;
-    //   //   }
-    //   // }
-    // }
+
     _isInitial = false;
     //getSetCartTotal();
     setState(() {});
@@ -140,7 +109,6 @@ class _MiniProductCardState extends State<MiniProductCard> {
   @override
   Widget build(BuildContext context) {
     var addCartCount = Provider.of<CartCountUpdate>(context, listen: true);
-   // var discountPercentage = ((((int.parse(widget.price) - int.parse(widget.sale_price))/(int.parse(widget.price)))*100 ).toStringAsFixed(0).toString());
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -159,49 +127,7 @@ elevation: 0, // Set the elevation to 0 for no shadow
                 //width: double.infinity,
                 width: MediaQuery.of(context).size.width,
                 height: (MediaQuery.of(context).size.width - 36) / 3,
-                // child: Stack(
-                //   clipBehavior: Clip.none,
-                //   children: [
-                //     ClipRRect(
-                //         child: widget.image == ''
-                //             ? Image.asset(
-                //           'assets/placeholder.png',
-                //           fit: BoxFit.fitWidth,
-                //         )
-                //             : FadeInImage.assetNetwork(
-                //           placeholder: 'assets/placeholder.png',
-                //           image: widget.image,
-                //           fit: BoxFit.fill,
-                //         )),
-                //     Visibility(
-                //       visible: widget.sale_price != widget.price,
-                //       child: Positioned(
-                //         left: 5,
-                //         top: 5,
-                //         child: Container(
-                //           height: 33,
-                //           width: 33,
-                //           alignment: Alignment.center,
-                //           decoration: BoxDecoration(
-                //               color: MyTheme.primary,
-                //               shape: BoxShape.circle
-                //           ),
-                //           child: Padding(
-                //             padding: const EdgeInsets.all(2),
-                //             child: Text('-${widget.discount}%',
-                //             style: TextStyle(
-                //               fontWeight: FontWeight.bold,
-                //               color: MyTheme.white,
-                //               fontSize: 10
-                //             ),
-                //             ),
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //
-                //   ],
-                // ),
+
             child: Stack(
               children: [
                 Center(
@@ -260,7 +186,6 @@ elevation: 0, // Set the elevation to 0 for no shadow
                 child: RaisedButton(
                   onPressed: () {
                     onPressAddToCart(context);
-                    //if(widget.stock>0 || widget.preorderAvailable == 1 && is_logged_in.$ == true) {
                     
                     if(is_logged_in.$ != false){
 
@@ -282,9 +207,7 @@ elevation: 0, // Set the elevation to 0 for no shadow
                   padding: EdgeInsets.all(0.0),
                   child: Ink(
                     child: Container(
-                      // color: widget.stock > 0
-                      //     ? MyTheme.add_to_cart_button
-                      //     : Color.fromRGBO(192, 53, 50, 1),
+
                       color:
                       widget.preorderAvailable == 1
                           ? Color.fromRGBO(23, 162, 190, 1)

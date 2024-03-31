@@ -76,11 +76,6 @@ class _SslCommerzScreenState extends State<SslCommerzScreen> {
     var sslUrlResponse = await PaymentRepository().getSslcommerzBeginResponse(
         widget.payment_type, widget.order_id, widget.amount);
 
-    print('bkash result3 ${sslUrlResponse.message}');
-    print('bkash result ${sslUrlResponse.url}');
-    print('ss result ${sslUrlResponse.result}');
-    //print('bkash result ${sslUrlResponse.token}');
-
     if (sslUrlResponse.result == false) {
       ToastComponent.showDialog(sslUrlResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
@@ -130,7 +125,6 @@ class _SslCommerzScreenState extends State<SslCommerzScreen> {
         print('${widget.order_id}');
         //print('${responseJSON['payment_details']}');
         payment_details = responseJSON['payment_details'];
-        print('payment success');
         //return true;
         onPaymentSuccess(payment_details);
       }

@@ -17,7 +17,7 @@ class CartAddResponse {
 
   bool result;
   String message;
-  int cart_quantity;
+  String cart_quantity;
 
   factory CartAddResponse.fromJson(Map<String, dynamic> json) => CartAddResponse(
     result: json["result"],

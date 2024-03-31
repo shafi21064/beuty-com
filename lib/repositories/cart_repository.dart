@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
@@ -9,14 +10,17 @@ import 'package:kirei/data_model/cart_process_response.dart';
 import 'package:kirei/data_model/cart_add_response.dart';
 import 'package:kirei/data_model/cart_summary_response.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
+import 'package:kirei/providers/version_change.dart';
+import 'package:provider/provider.dart';
 
 class CartRepository {
   Future<List<CartResponse>> getCartResponseList(
     @required int user_id,
+      @required BuildContext context
   ) async {
     Uri url = Uri.parse("${ENDP.GET_CARTS}");
     var post_body = jsonEncode({
-      "version": "2.0.8",
+      "version": "${Provider.of<VersionChange>(context, listen: false).latestVersion}",
     });
     final response = await http.post(
       url,
@@ -73,6 +77,7 @@ print(post_body);
       @required int user_id,
       @required int _quantity,
       @required dynamic preorderAvailable,
+  @required BuildContext context
       ) async {
         print(preorderAvailable);
     var post_body = jsonEncode({
@@ -82,7 +87,7 @@ print(post_body);
       "quantity": "$_quantity",
       "is_preorder": "$preorderAvailable",
       "cost_matrix": AppConfig.purchase_code,
-      "version": "2.0.8",
+      "version": "${Provider.of<VersionChange>(context, listen: false).latestVersion}",
     });
 
     print(post_body);

@@ -1,16 +1,11 @@
-// import 'package:google_sign_in/google_sign_in.dart';
-import 'package:kirei/app_config.dart';
+
+
 import 'package:kirei/my_theme.dart';
-import 'package:kirei/other_config.dart';
 import 'package:kirei/screens/otp.dart';
-import 'package:kirei/social_config.dart';
 import 'package:kirei/ui_sections/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kirei/custom/input_decorations.dart';
-import 'package:kirei/custom/intl_phone_input.dart';
-// import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:kirei/screens/registration.dart';
@@ -20,13 +15,9 @@ import 'package:kirei/custom/toast_component.dart';
 import 'package:toast/toast.dart';
 import 'package:kirei/repositories/auth_repository.dart';
 import 'package:kirei/helpers/auth_helper.dart';
-// import 'package:google_sign_in/google_sign_in.dart';
-
-// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
-import 'package:kirei/repositories/profile_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-// import 'package:twitter_login/twitter_login.dart';
+
 
 class Login extends StatefulWidget {
   @override
@@ -84,7 +75,7 @@ class _LoginState extends State<Login> {
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
     } else if (_login_by == 'otp' && validPhoneNumber) {
-      var loginResponse = await AuthRepository().getLoginOTPResponse(_phone);
+      var loginResponse = await AuthRepository().getLoginOTPResponse(_phone, context);
       if (loginResponse.result == false) {
         ToastComponent.showDialog(loginResponse.message, context,
             gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
@@ -109,7 +100,7 @@ class _LoginState extends State<Login> {
     }
 
     var loginResponse = await AuthRepository().getLoginResponse(
-        _login_by == 'email' ? email : _phone, password, rememberMe);
+        _login_by == 'email' ? email : _phone, password, rememberMe, context);
     if (loginResponse.result == false) {
       ToastComponent.showDialog(loginResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);

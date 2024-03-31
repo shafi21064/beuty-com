@@ -348,8 +348,6 @@ class _FeedListState extends State<FeedList> {
         future: future,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            //snapshot.hasError
-            print("Community Hash list error");
             print(snapshot.error.toString());
             return Container(
               height: 10,

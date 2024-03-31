@@ -47,7 +47,7 @@ class _CommonWebviewScreenState extends State<CommonWebviewScreen> {
           },
           onWebResourceError: (error) {},
           onPageFinished: (page) {
-            //print(page.toString());
+
           },
         ),
       ),

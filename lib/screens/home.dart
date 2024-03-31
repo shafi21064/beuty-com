@@ -119,8 +119,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     fetchAll();
 
     _mainScrollController.addListener(() {
-      //print("position: " + _xcrollController.position.pixels.toString());
-      //print("max: " + _xcrollController.position.maxScrollExtent.toString());
+
 
       if (_mainScrollController.position.pixels ==
           _mainScrollController.position.maxScrollExtent) {
@@ -174,7 +173,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     var categoryResponse =
     await CategoryRepository().getHomeFeaturedCategories();
     print(categoryResponse);
-    // print("featuredCategory-------->" + categoryResponse.categories.toString());
 
     _featuredCategoryList.addAll(categoryResponse);
     print(_featuredCategoryList);
@@ -182,33 +180,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     setState(() {});
   }
 
-  // fetchAllCategory(int index) async {
-  //   var allCategory = await CategoryRepository().getCategories();
-  //   //print(allCategory);
-  //   _allCategories.addAll(allCategory.categories[index].children);
-  //   print(' ${_allCategories[index].id}');
-  //   _isAllCategoryIntial = false;
-  //   setState(() {});
-  // }
-
-  // fetchBestSellingProducts() async {
-  //   var productResponse = await ProductRepository().getBestSellingProducts();
-  //   _bestSellingProductList.addAll(productResponse.products);
-  //   print("recomeened-------->${_bestSellingProductList}");
-  //   _isBestSellingProductInitial = false;
-  //   _totalBestSellingProductData = productResponse.products.length;
-  //   _showProductLoadingContainer = false;
-  //   setState(() {});
-  // }
 
   fetchHomeProducts() async {
     var productResponse = await ProductRepository().getHomeProducts();
 
-    // _featuredProductList.addAll(productResponse.featuredProducts);
+
     _hotDealsProductList.addAll(productResponse.featuredProducts);
      _newArrivalProductList.addAll(productResponse.newProducts);
      _bestSellingProductList.addAll(productResponse.bestsellingProducts);
-    // print("recomeened-------->${_featuredProductList}");
+
     _isBestSellingProductInitial = false;
     _totalBestSellingProductData = productResponse.bestsellingProducts.length;
     _isNewArrivalsProductInitial = false;
@@ -329,7 +309,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
-    //print(MediaQuery.of(context).viewPadding.top);
+
     final theme = Theme.of(context);
     return WillPopScope(
       onWillPop: () async {
