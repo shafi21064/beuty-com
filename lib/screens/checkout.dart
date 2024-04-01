@@ -396,6 +396,21 @@ class _CheckoutState extends State<Checkout> {
           "Phone is required", context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
+    } else if(_phoneController.text.length > 11){
+      ToastComponent.showDialog(
+          "Invalid Phone", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    } else if(_phoneController.text.length < 11){
+      ToastComponent.showDialog(
+          "Invalid Phone", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    }else if(!_phoneController.text.startsWith("0")){
+      ToastComponent.showDialog(
+          "Invalid Phone", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
     }
 
     if (_addressController.text == "" || requestBody["shipping_address"] == "") {

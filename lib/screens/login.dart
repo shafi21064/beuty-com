@@ -498,24 +498,24 @@ class _LoginState extends State<Login> {
                                       ],
                                     ),
                                     Spacer(), // Add a spacer to push the next widget to the right
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(
-                                                builder: (context) {
-                                          return PasswordForget();
-                                        }));
-                                      },
-                                      child: Text(
-                                        AppLocalizations.of(context)
-                                            .login_screen_forgot_password,
-                                        style: TextStyle(
-                                          color: MyTheme.primary,
-                                          //fontStyle: FontStyle.italic,
-                                          decoration: TextDecoration.underline,
-                                        ),
-                                      ),
-                                    ),
+                                    // GestureDetector(
+                                    //   onTap: () {
+                                    //     Navigator.push(context,
+                                    //         MaterialPageRoute(
+                                    //             builder: (context) {
+                                    //       return PasswordForget();
+                                    //     }));
+                                    //   },
+                                    //   child: Text(
+                                    //     AppLocalizations.of(context)
+                                    //         .login_screen_forgot_password,
+                                    //     style: TextStyle(
+                                    //       color: MyTheme.primary,
+                                    //       //fontStyle: FontStyle.italic,
+                                    //       decoration: TextDecoration.underline,
+                                    //     ),
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
                               )
@@ -706,35 +706,32 @@ class _LoginState extends State<Login> {
                             )),
                           ),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: RaisedButton(
-                        //     onPressed: () {
-                        //       Navigator.push(context,
-                        //           MaterialPageRoute(builder: (context) {
-                        //         return Registration();
-                        //       }));
-                        //     },
-                        //     shape: RoundedRectangleBorder(
-                        //         borderRadius: BorderRadius.circular(2.0)),
-                        //     padding: EdgeInsets.all(0.0),
-                        //     child: Ink(
-                        //       decoration: BoxDecoration(
-                        //           borderRadius: BorderRadius.circular(10.0)),
-                        //       child: Container(
-                        //         constraints: BoxConstraints(
-                        //             maxWidth: 300.0, minHeight: 50.0),
-                        //         alignment: Alignment.center,
-                        //         child: Text(
-                        //           "Sign Up",
-                        //           textAlign: TextAlign.center,
-                        //           style: GoogleFonts.ubuntu(
-                        //               color: Colors.white, fontSize: 20),
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
+
+                        Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(
+                                      builder: (context) {
+                                        return PasswordForget();
+                                      }));
+                            },
+                            child: Center(
+                              child: Text(
+                                AppLocalizations.of(context)
+                                    .login_screen_forgot_password,
+                                style: TextStyle(
+                                  color: MyTheme.primary,
+                                  //fontStyle: FontStyle.italic,
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 16
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
                         Visibility(
                           visible:
                               allow_google_login.$ || allow_facebook_login.$,

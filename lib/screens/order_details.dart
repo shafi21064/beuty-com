@@ -1394,7 +1394,7 @@ class _OrderDetailsState extends State<OrderDetails> {
           borderRadius: BorderRadius.circular(16.0),
     color: payment_status == "paid"
     ? Colors.green
-        : payment_status == "cod" || payment_status == "cash_on_delivery"
+        : payment_status == "cod"
     ? Colors.orange
         : Colors.red,
       ),

@@ -180,6 +180,23 @@ class _OtpState extends State<Otp> {
                             ],
                           ),
                         ),
+
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: InkWell(
+                            onTap: () {
+                              onTapResend();
+                            },
+                            child: Text(
+                                AppLocalizations.of(context).otp_screen_resend_code,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: MyTheme.primary,
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 13)),
+                          ),
+                        ),
+
                         Padding(
                           padding:  EdgeInsets.only(top: 40.0, left: 0, right: 0,bottom: 8),
                           child: RaisedButton(
@@ -211,21 +228,6 @@ class _OtpState extends State<Otp> {
                     ),
                   ),
 
-                  Padding(
-                    padding: const EdgeInsets.only(top: 100),
-                    child: InkWell(
-                      onTap: () {
-                        onTapResend();
-                      },
-                      child: Text(
-                          AppLocalizations.of(context).otp_screen_resend_code,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: MyTheme.primary,
-                              decoration: TextDecoration.underline,
-                              fontSize: 13)),
-                    ),
-                  ),
                 ],
               )),
             )

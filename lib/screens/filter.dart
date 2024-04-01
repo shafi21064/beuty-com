@@ -1121,6 +1121,7 @@ class _FilterState extends State<Filter> {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
+                        Provider.of<CategoryPassingController>(context, listen: false).setCategoryKey(_selectedCategory);
                         var min = _minPriceController.text;
                         var max = _maxPriceController.text;
                         bool apply = true;
