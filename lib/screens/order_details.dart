@@ -387,14 +387,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                   parent: AlwaysScrollableScrollPhysics()),
               slivers: [
 
-                // SliverToBoxAdapter(
-                //   child: Padding(
-                //       padding: const EdgeInsets.all(16.0),
-                //       child: _orderDetails != null
-                //           ? buildTimeLineTiles()
-                //           : buildTimeLineShimmer()),
-                // ),
-
                 SliverList(
                     delegate: SliverChildListDelegate([
                   Padding(
@@ -1127,13 +1119,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                                   color: MyTheme.secondary,
                                 ),
                               ),
-                              // Text(
-                              //   "${AppLocalizations.of(context).order_details_screen_country}: ${_orderDetails?.shipping_address.country??''}",
-                              //   maxLines: 3,
-                              //   style: TextStyle(
-                              //     color: MyTheme.secondary,
-                              //   ),
-                              // ),
                               Text(
                                 "${AppLocalizations.of(context).order_details_screen_state}: ${_orderDetails?.shipping_address.state??''}",
                                 maxLines: 3,
@@ -1148,13 +1133,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                                   color: MyTheme.secondary,
                                 ),
                               ),
-                              // Text(
-                              //   "${AppLocalizations.of(context).order_details_screen_postal_code}: ${_orderDetails?.shipping_address.postal_code??''}",
-                              //   maxLines: 3,
-                              //   style: TextStyle(
-                              //     color: MyTheme.secondary,
-                              //   ),
-                              // ),
                             ],
                           )
                         : Column(
@@ -1414,7 +1392,6 @@ class _OrderDetailsState extends State<OrderDetails> {
       width: 16,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
-          //color: payment_status == "paid" ? Colors.green : Colors.red),
     color: payment_status == "paid"
     ? Colors.green
         : payment_status == "cod" || payment_status == "cash_on_delivery"

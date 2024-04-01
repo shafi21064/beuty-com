@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:kirei/helpers/auth_helper.dart';
 import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/providers/category_passing_controller.dart';
@@ -24,7 +23,6 @@ SharedPreferences sharedPreferences;
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

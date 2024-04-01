@@ -2,10 +2,7 @@ import 'package:kirei/my_theme.dart';
 import 'package:kirei/screens/reset_otp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kirei/custom/input_decorations.dart';
-import 'package:kirei/custom/intl_phone_input.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:kirei/screens/password_otp.dart';
 import 'package:kirei/custom/toast_component.dart';
 import 'package:toast/toast.dart';
 import 'package:kirei/repositories/auth_repository.dart';
@@ -81,8 +78,6 @@ class _PasswordForgetState extends State<PasswordForget> {
           children: [
             Container(
               width: _screen_width * (3 / 4),
-              // child: Image.asset(
-              //     "assets/splash_login_registration_background_image.png"),
             ),
             Container(
               width: double.infinity,
@@ -131,69 +126,19 @@ class _PasswordForgetState extends State<PasswordForget> {
                             children: [
                               Container(
                                 height: 36,
-                                // child: CustomInternationalPhoneNumberInput(
-                                //   onInputChanged: (PhoneNumber number) {
-                                //     print(number.phoneNumber);
-                                //     setState(() {
-                                //       _phone = number.phoneNumber;
-                                //     });
-                                //   },
-                                //   onInputValidated: (bool value) {
-                                //     print(value);
-                                //   },
-                                //   selectorConfig: SelectorConfig(
-                                //     selectorType: PhoneInputSelectorType.DIALOG,
-                                //   ),
-                                //   ignoreBlank: false,
-                                //   autoValidateMode: AutovalidateMode.disabled,
-                                //   selectorTextStyle:
-                                //       TextStyle(color: MyTheme.secondary),
-                                //   initialValue: phoneCode,
-                                //   textFieldController: _phoneNumberController,
-                                //   formatInput: true,
-                                //   keyboardType: TextInputType.numberWithOptions(
-                                //       signed: true, decimal: true),
-                                //   inputDecoration: InputDecorations
-                                //       .buildInputDecoration_phone(
-                                //           hint_text: "01710 333 558"),
-                                //   onSaved: (PhoneNumber number) {
-                                //     print('On Saved: $number');
-                                //   },
-                                // ),
                                 child: Container(
                                   height: 56,
                                   child: TextField(
                                     controller: _phoneNumberController,
                                     onChanged: (number) {
-                                      //print(number.phoneNumber);
-                                      // setState(() {
                                       _phone = "${number}";
-                                      //validPhoneNumber=true;
-                                      // });
                                     },
 
-                                    // onSubmitted: (value){
-                                    //   print("value${value}");
-                                    //   print("value${_phone}");
-                                    // },
                                     autofocus: false,
                                     autocorrect: true,
                                     decoration: InputDecoration(
                                       hintText: '01*********',
-                                      // prefixIcon: _login_by == "email"
-                                      //     ? Icon(Icons.email)
-                                      //     : Icon(Icons.local_phone_outlined),
                                       hintStyle: TextStyle(color: Colors.grey),
-                                      // border: UnderlineInputBorder(
-                                      //   borderSide:BorderSide(
-                                      //     color: MyTheme.primary
-                                      //   )
-                                      // ),
-                                      // enabledBorder: UnderlineInputBorder(
-                                      //     borderSide:BorderSide(
-                                      //         color: MyTheme.primary
-                                      //     )
-                                      // ),
                                       filled: true,
                                       fillColor: Colors.white70,
                                     ),
@@ -213,24 +158,6 @@ class _PasswordForgetState extends State<PasswordForget> {
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(12.0)),
                             ),
-                            // child: FlatButton(
-                            //   minWidth: MediaQuery.of(context).size.width,
-                            //   //height: 50,
-                            //   color: MyTheme.primary,
-                            //   shape: RoundedRectangleBorder(
-                            //       borderRadius: const BorderRadius.all(
-                            //           Radius.circular(12.0))),
-                            //   child: Text(
-                            //     "Send Code",
-                            //     style: TextStyle(
-                            //         color: Colors.white,
-                            //         fontSize: 14,
-                            //         fontWeight: FontWeight.w600),
-                            //   ),
-                            //   onPressed: () {
-                            //     onPressSendCode();
-                            //   },
-                            // ),
                             child: RaisedButton(
                               onPressed: (){
                                 onPressSendCode();
@@ -246,7 +173,6 @@ class _PasswordForgetState extends State<PasswordForget> {
                                       maxWidth: 300.0, minHeight: 50.0),
                                   alignment: Alignment.center,
                                   child: Text(
-                                    //AppLocalizations.of(context).otp_screen_confirm,
                                       "Send Code",
                                     style: TextStyle(
                                         color: Colors.white,

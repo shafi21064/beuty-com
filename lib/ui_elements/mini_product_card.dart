@@ -119,7 +119,6 @@ class _MiniProductCardState extends State<MiniProductCard> {
 elevation: 0, // Set the elevation to 0 for no shadow
   
         child: Column(
-             //mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(

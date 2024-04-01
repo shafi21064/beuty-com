@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/data_model/offline_wallet_recharge_response.dart';
 import 'package:kirei/helpers/endpoints.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';

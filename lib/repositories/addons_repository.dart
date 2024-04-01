@@ -1,4 +1,3 @@
-import 'package:kirei/app_config.dart';
 import 'package:kirei/data_model/addons_response.dart';
 import 'package:kirei/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;

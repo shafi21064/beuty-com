@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kirei/custom/toast_component.dart';
 import 'package:toast/toast.dart';
-import 'dart:io';
 import 'dart:convert';
 import 'package:kirei/repositories/payment_repository.dart';
 import 'package:kirei/my_theme.dart';
@@ -127,8 +126,6 @@ class _IyzicoScreenState extends State<IyzicoScreen> {
     String initial_url =
         "${AppConfig.BASE_URL}/iyzico/init?payment_type=${widget.payment_type}&combined_order_id=${_combined_order_id}&amount=${widget.amount}&user_id=${user_id.$}";
 
-    //print("init url");
-    //print(initial_url);
 
     if (_order_init == false &&
         _combined_order_id == 0 &&

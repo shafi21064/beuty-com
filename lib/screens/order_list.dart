@@ -103,7 +103,6 @@ class _OrderListState extends State<OrderList> {
       }
     });
 
-    print("_orderList.length"+ _orderList.length.toString());
   }
 
   @override
@@ -364,15 +363,6 @@ class _OrderListState extends State<OrderList> {
           centerTitle: false,
           backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
-          // actions: [
-          //   //new Container(),
-          //   IconButton(
-          //       onPressed: (){
-          //         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=> Main()), (route) => false);
-          //       },
-          //       icon: Icon(Icons.home_outlined, color: MyTheme.primary,)
-          //   )
-          // ],
           elevation: 0.0,
           titleSpacing: 0,
           flexibleSpace: Padding(
@@ -506,25 +496,12 @@ class _OrderListState extends State<OrderList> {
               child: Row(
                 children: [
 
-                  // Padding(
-                  //   padding: app_language_rtl.$
-                  //       ? const EdgeInsets.only(left: 8.0)
-                  //       : const EdgeInsets.only(right: 8.0),
-                  //   child: Icon(
-                  //     Icons.calendar_today_outlined,
-                  //     size: 16,
-                  //     color: MyTheme.secondary,
-                  //   ),
-                  // ),
-
-                  //Text('Order Number: ' + _orderList[index].id.toString()?? '',
                   Text('Order Number: ' + _orderList[index]["id"].toString()?? '',
                       style: TextStyle(color: MyTheme.secondary, fontSize: 13)),
                   Spacer(),
                   Column(
                     children: [
                       Text(
-                  //'${_orderList[index].grandTotal.toString()}' ?? '',
                         '${_orderList[index]["grand_total"].toString()}' ?? '',
                         style: TextStyle(
                             color: MyTheme.primary,
@@ -542,23 +519,11 @@ class _OrderListState extends State<OrderList> {
               child: Row(
                 children: [
 
-                  // Padding(
-                  //   padding: app_language_rtl.$
-                  //       ? const EdgeInsets.only(left: 8.0)
-                  //       : const EdgeInsets.only(right: 8.0),
-                  //   child: Icon(
-                  //     Icons.credit_card,
-                  //     size: 16,
-                  //     color: MyTheme.secondary,
-                  //   ),
-                  // ),
-
                   Text(
                     "${AppLocalizations.of(context).order_list_screen_payment_status} - ",
                     style: TextStyle(color: MyTheme.secondary, fontSize: 13),
                   ),
                   Text(
-                    //_orderList[index].paymentStatusString ?? '',
                     _orderList[index]["payment_status_string"].toString() ?? '',
                     style: TextStyle(color: MyTheme.secondary, fontSize: 15, fontWeight: FontWeight.bold),
                   ),
@@ -567,8 +532,6 @@ class _OrderListState extends State<OrderList> {
                         ? const EdgeInsets.only(right: 8.0)
                         : const EdgeInsets.only(left: 8.0),
                     child: buildPaymentStatusCheckContainer(
-                        //_orderList[index].paymentStatus
-                        //_orderList[index]["payment_status_string"]
                         _orderList[index]["payment_status"]
                     ),
                    ),
@@ -579,16 +542,6 @@ class _OrderListState extends State<OrderList> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
 
-                // Padding(
-                //   padding: app_language_rtl.$
-                //       ? const EdgeInsets.only(left: 8.0)
-                //       : const EdgeInsets.only(right: 8.0),
-                //   child: Icon(
-                //     Icons.local_shipping_outlined,
-                //     size: 16,
-                //     color: MyTheme.secondary,
-                //   ),
-                // ),
 
                 Row(
                   children: [
@@ -599,7 +552,6 @@ class _OrderListState extends State<OrderList> {
                     ),
 
                     Text(
-                      //_orderList[index].deliveryStatusString ?? '',
                       _orderList[index]["delivery_status_string"] ?? '',
                       style: TextStyle(color: MyTheme.secondary, fontSize: 13),
                     ),
@@ -607,7 +559,6 @@ class _OrderListState extends State<OrderList> {
                 ),
 
                 Text(
-                  //_orderList[index].date ?? '',
                   _orderList[index]["date"] ?? '',
                   style: TextStyle(color: MyTheme.secondary, fontSize: 13, fontWeight: FontWeight.w600),
                 ),
@@ -625,7 +576,6 @@ class _OrderListState extends State<OrderList> {
       width: 16,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
-          //color: payment_status == "paid" ? Colors.green : Colors.red
         color: payment_status == "paid"
             ? Colors.green
             : payment_status == "cod" || payment_status == "cash_on_delivery"

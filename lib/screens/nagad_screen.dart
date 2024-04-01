@@ -82,8 +82,6 @@ class _NagadScreenState extends State<NagadScreen> {
 
     setState(() {});
 
-    //print(_initial_url);
-    //print(_initial_url_fetched);
   }
 
   @override
@@ -169,7 +167,6 @@ class _NagadScreenState extends State<NagadScreen> {
             },
             onWebResourceError: (error) {},
             onPageFinished: (page) {
-              //print(page.toString());
 
               if (page.contains("/nagad/verify/") ||
                   page.contains('/check-out/confirm-payment/')) {

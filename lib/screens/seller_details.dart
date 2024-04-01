@@ -3,12 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:kirei/ui_elements/product_card.dart';
 import 'package:kirei/ui_elements/list_product_card.dart';
-import 'package:kirei/ui_elements/mini_product_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:kirei/repositories/shop_repository.dart';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/shimmer_helper.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -60,7 +57,6 @@ class _SellerDetailsState extends State<SellerDetails> {
   fetchProductDetails() async {
     var shopDetailsResponse = await ShopRepository().getShopInfo(id: widget.id);
 
-    //print('ss:' + shopDetailsResponse.toString());
     if (shopDetailsResponse.shops.length > 0) {
       _shopDetails = shopDetailsResponse.shops[0];
     }
@@ -237,8 +233,6 @@ class _SellerDetailsState extends State<SellerDetails> {
               .buildProductGridShimmer(scontroller: _scrollController));
     } else if (_featuredProducts.length > 0) {
       return GridView.builder(
-        // 2
-        //addAutomaticKeepAlives: true,
         itemCount: _featuredProducts.length,
         //controller: _scrollController,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -249,14 +243,7 @@ class _SellerDetailsState extends State<SellerDetails> {
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemBuilder: (context, index) {
-          // 3
-          // return ProductCard(
-          //     id: _featuredProducts[index].id,
-          //     image: _featuredProducts[index].thumbnail_image,
-          //     name: _featuredProducts[index].name,
-          //     main_price: _featuredProducts[index].main_price,
-          //     stroked_price: _featuredProducts[index].stroked_price,
-          //     has_discount: _featuredProducts[index].has_discount);
+
         },
       );
     } else {
@@ -468,14 +455,6 @@ class _SellerDetailsState extends State<SellerDetails> {
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(right: 3.0),
-                // child: MiniProductCard(
-                //   id: _newArrivalProducts[index].id,
-                //   image: _newArrivalProducts[index].thumbnail_image,
-                //   name: _newArrivalProducts[index].name,
-                //   main_price: _newArrivalProducts[index].main_price,
-                //   stroked_price: _newArrivalProducts[index].stroked_price,
-                //   has_discount: _newArrivalProducts[index].has_discount,
-                // ),
               );
             },
           ),
@@ -588,7 +567,6 @@ class _SellerDetailsState extends State<SellerDetails> {
           borderRadius: BorderRadius.circular(5),
           border:
               Border.all(color: Color.fromRGBO(112, 112, 112, .3), width: .5),
-          //shape: BoxShape.rectangle,
         ),
         child: ClipRRect(
             borderRadius: BorderRadius.circular(5),

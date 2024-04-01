@@ -7,8 +7,6 @@ import 'dart:convert';
 import 'package:kirei/repositories/payment_repository.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:kirei/screens/order_list.dart';
-import 'package:kirei/screens/wallet.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'order_success_page.dart';
@@ -72,11 +70,6 @@ class _BkashScreenState extends State<BkashScreen> {
     var bkashUrlResponse = await PaymentRepository().getBkashBeginResponse(
         widget.payment_type, widget.order_id, widget.amount);
 
-    print('bkash result3 ${bkashUrlResponse.message}');
-    print('bkash result ${bkashUrlResponse.url}');
-    print('bkash result ${bkashUrlResponse.result}');
-    print('bkash result ${bkashUrlResponse.token}');
-
     if (bkashUrlResponse.result == false) {
       ToastComponent.showDialog(bkashUrlResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
@@ -116,14 +109,10 @@ class _BkashScreenState extends State<BkashScreen> {
               message:responseJSON["message"],
               type: "danger",
             )), (route) => false);
-        //Navigator.pop(context);
       } else if (responseJSON["result"] == true) {
         print('${responseJSON['payment_details']}');
         print('${widget.order_id}');
-        //print('${responseJSON['payment_details']}');
         payment_details = responseJSON['payment_details'];
-         print('payment success');
-         //return true;
         onPaymentSuccess(payment_details);
       }
     });
@@ -158,8 +147,6 @@ class _BkashScreenState extends State<BkashScreen> {
   }
 
   buildBody() {
-
-        print('bkash 22');
       return SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Container(
@@ -173,7 +160,6 @@ class _BkashScreenState extends State<BkashScreen> {
               _webViewController.loadUrl(widget.bkash_initial_url);
             },
             onWebResourceError: (error) {
-              print('bkash 11');
               print(error);
               Navigator.pushAndRemoveUntil(context,
                   MaterialPageRoute(builder: (_)=> OrderSuccessPage(
@@ -184,10 +170,6 @@ class _BkashScreenState extends State<BkashScreen> {
             },
             onPageFinished: (page) {
               readResponse();
-              //  print("page.toString()");
-              //  print(page.toString());
-
-             
             },
           ),
         ),

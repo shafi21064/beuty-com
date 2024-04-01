@@ -259,13 +259,8 @@ class _LoginState extends State<Login> {
       child: Scaffold(
         backgroundColor: Colors.white,
         drawer: MainDrawer(),
-        // appBar: buildAppBar(context),
         body: Stack(
           children: [
-            // Container(
-            //   width: _screen_width * (3 / 4),
-            //   child: Image.asset("assets/image_02.png"),
-            // ),
             Container(
               width: double.infinity,
               child: SingleChildScrollView(
@@ -422,63 +417,21 @@ class _LoginState extends State<Login> {
                                     child: TextField(
                                       controller: _phoneNumberController,
                                       onChanged: (number) {
-                                        //print(number.phoneNumber);
-                                       // setState(() {
                                           _phone = "${number}";
                                           validPhoneNumber=true;
-                                       // });
                                       },
 
-                                      // onSubmitted: (value){
-                                      //   print("value${value}");
-                                      //   print("value${_phone}");
-                                      // },
                                       autofocus: false,
                                       autocorrect: true,
                                       decoration: InputDecoration(
                                         hintText: '01*********',
-                                        // prefixIcon: _login_by == "email"
-                                        //     ? Icon(Icons.email)
-                                        //     : Icon(Icons.local_phone_outlined),
                                         hintStyle: TextStyle(color: Colors.grey),
-                                        // border: UnderlineInputBorder(
-                                        //   borderSide:BorderSide(
-                                        //     color: MyTheme.primary
-                                        //   )
-                                        // ),
-                                        // enabledBorder: UnderlineInputBorder(
-                                        //     borderSide:BorderSide(
-                                        //         color: MyTheme.primary
-                                        //     )
-                                        // ),
                                         filled: true,
                                         fillColor: Colors.white70,
                                       ),
                                     ),
                                   ),
                                 ),
-                                // GestureDetector(
-                                //   onTap: () {
-                                //     setState(() {
-                                //       _login_by = "email";
-                                //     });
-                                //   },
-                                //   child: Row(
-                                //     mainAxisAlignment: MainAxisAlignment.end,
-                                //     crossAxisAlignment: CrossAxisAlignment.end,
-                                //     children: [
-                                //       Icon(
-                                //         Icons.email_outlined,
-                                //         size: 18,
-                                //       ),
-                                //       Text(
-                                //         " Use Email",
-                                //         style: GoogleFonts.ubuntu(
-                                //             color: Colors.grey, fontSize: 16),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // )
                               ],
                             ),
                           ),
@@ -532,7 +485,6 @@ class _LoginState extends State<Login> {
                                           onChanged: (value) {
                                             setState(() {
                                               rememberMe = !rememberMe;
-                                              // print(rememberMe);
                                             });
                                           },
                                         ),
@@ -862,35 +814,4 @@ class _LoginState extends State<Login> {
     );
   }
 
-  //    AppBar buildAppBar(BuildContext context) {
-  //   return AppBar(
-  //     centerTitle: true,
-  //     flexibleSpace: Container(
-  //       decoration: BoxDecoration(
-
-  //       ),
-  //     ),
-  //     leading: GestureDetector(
-  //       onTap: () {
-  //         _scaffoldKey.currentState.openDrawer();
-  //       },
-  //       child: Builder(
-  //         builder: (context) => Padding(
-  //           padding:
-  //               const EdgeInsets.symmetric(vertical: 18.0, horizontal: 0.0),
-  //           child: Container(
-  //             child: Image.asset('assets/hamburger.png',
-  //                 height: 16, color: Theme.of(context).primaryIconTheme.color),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //     title: Text(
-  //       AppLocalizations.of(context).cart_screen_shopping_cart,
-  //       style: TextStyle(fontSize: 18, color: Colors.white),
-  //     ),
-  //     elevation: 0.0,
-  //     titleSpacing: 0,
-  //   );
-  // }
 }

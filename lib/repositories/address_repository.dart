@@ -1,9 +1,7 @@
-import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:kirei/data_model/address_response.dart';
 import 'package:kirei/data_model/address_add_response.dart';
 import 'package:kirei/data_model/address_update_response.dart';
 import 'package:kirei/data_model/address_update_location_response.dart';
@@ -18,20 +16,6 @@ import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter/foundation.dart';
 
 class AddressRepository {
-  // Future<AddressResponse> getAddressList() async {
-  //   Uri url = Uri.parse("${ENDP.AddrList}");
-  //   final response = await http.get(
-  //     url,
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "Authorization": "Bearer ${access_token.$}",
-  //       "App-Language": app_language.$,
-  //     },
-  //   );
-  //   print("response.body.toString()${response.body.toString()}");
-  //
-  //   return addressResponseFromJson(response.body);
-  // }
 
   Future<dynamic> getAddressList() async {
     Uri url = Uri.parse("${ENDP.AddrList}");
@@ -46,7 +30,6 @@ class AddressRepository {
     print("response.body.toString()${response.body.toString()}");
     return jsonDecode(response.body);
 
-    //return addressResponseFromJson(jsonDecode(response.body));
   }
 
 
@@ -89,9 +72,6 @@ class AddressRepository {
 
   Future<AddressAddResponse> getAddressUpdateAddResponse(
       {@required String address,
-        // @required String area,
-        // @required String zone,
-        // @required String city,
         @required int area,
         @required int zone,
         @required int city,

@@ -1,17 +1,11 @@
-import 'package:kirei/helpers/api.dart';
-import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:kirei/screens/video_description_screen.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
 import 'package:kirei/custom/toast_component.dart';
-import 'package:kirei/repositories/extra_repository.dart';
-import 'package:comment_box/comment/comment.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../app_config.dart';
 import '../my_theme.dart';
 
 class ViewYT extends StatefulWidget {
@@ -148,43 +142,6 @@ class _ViewYTState extends State<ViewYT> {
                       ),
                     ),
 
-                    /*Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.symmetric(vertical: 18),
-                            decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(12)
-                            ),
-                            child: Text("Read Book", style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600
-                            ),),
-                          ),
-                        ),
-                        SizedBox(width: 20,),
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.symmetric(vertical: 18),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Colors.red,width: 2
-                                ),
-                                borderRadius: BorderRadius.circular(12)
-                            ),
-                            child: Text("More info", style: TextStyle(
-                                color: Colors.teal,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600
-                            ),),
-                          ),
-                        )
-                      ],
-                    )*/
                   ],
                 ),
               )

@@ -42,7 +42,6 @@ class _PaytmScreenState extends State<PaytmScreen> {
     checkPhoneAvailability().then((val) {
       print(val);
       if (widget.payment_type == "cart_payment") {
-        print('hello');
         createOrder();
       }
     });
@@ -96,7 +95,6 @@ class _PaytmScreenState extends State<PaytmScreen> {
         .then((data) {
       var decodedJSON = jsonDecode(data);
       Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
-      //print(data.toString());
       if (responseJSON["result"] == false) {
         Toast.show(responseJSON["message"], context,
             duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
@@ -144,11 +142,8 @@ class _PaytmScreenState extends State<PaytmScreen> {
               _webViewController.loadUrl(initial_url);
             },
             onWebResourceError: (error) {
-              //(error.description);
-              //print(error.errorCode);
             },
             onPageFinished: (page) {
-              //print(page.toString());
 
               if (page.contains("/paytm/payment/callback")) {
                 getData();

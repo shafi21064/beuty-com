@@ -19,25 +19,6 @@ import 'package:kirei/providers/version_change.dart';
 import 'package:provider/provider.dart';
 
 class AuthRepository {
-  // Future<LoginResponse> getLoginResponse(
-  //     @required String email, @required String password) async {
-  //   var post_body = jsonEncode({
-  //     "email": "${email}",
-  //     "password": "$password",
-  //     "identity_matrix": AppConfig.purchase_code
-  //   });
-
-  //   Uri url = Uri.parse("${ENDP.LOGIN}");
-  //   final response = await http.post(url,
-  //       headers: {
-  //         "Accept": "*/*",
-  //         "Content-Type": "application/json",
-  //         "App-Language": app_language.$,
-  //       },
-  //       body: post_body);
-  //   print(post_body);
-  //   return loginResponseFromJson(response.body);
-  // }
 
   Future<LoginResponse> getLoginResponse(@required String email,
       @required String password, @required bool remember_me, @required BuildContext context) async {
@@ -74,8 +55,6 @@ class AuthRepository {
         },
         body: post_body);
     print(response.body);
-    print("Logininfo"+response.body);
-    print(response.body);
     return loginResponseFromJson(response.body);
   }
 
@@ -99,10 +78,8 @@ class AuthRepository {
           "App-Language": app_language.$,
         },
         body: post_body);
-    print(post_body);
-    print("post_body"+post_body);
+
     print(response.body.toString());
-    print("post_body1"+response.body.toString());
     return loginResponseFromJson(response.body);
   }
 
@@ -146,7 +123,6 @@ class AuthRepository {
         },
         body: post_body);
     print(response.body);
-
     return signupResponseFromJson(response.body);
   }
 
@@ -170,28 +146,12 @@ class AuthRepository {
     return signupResponseFromJson(response.body);
   }
 
-  // Future<ResendCodeResponse> getResendCodeResponse(
-  //     @required int user_id, @required String verify_by) async {
-  //   var post_body =
-  //       jsonEncode({"user_id": "$user_id", "register_by": "$verify_by"});
-  //
-  //   Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/resend_code");
-  //   final response = await http.post(url,
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "App-Language": app_language.$,
-  //       },
-  //       body: post_body);
-  //
-  //   return resendCodeResponseFromJson(response.body);
-  // }
 
   Future<ResendCodeResponse> getResendCodeResponse(
       @required int phone) async {
     var post_body =
     jsonEncode({"email": phone,});
 
-    //Uri url = Uri.parse("${AppConfig.BASE_URL}/send-reset-otp");
     Uri url = Uri.parse("${AppConfig.BASE_URL}/send-login-otp");
     final response = await http.post(url,
         headers: {

@@ -1,5 +1,4 @@
 import 'package:kirei/repositories/offline_wallet_recharge_repository.dart';
-import 'package:kirei/screens/main.dart';
 import 'package:kirei/screens/wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
@@ -155,7 +154,7 @@ class _OfflineState extends State<OfflineScreen> {
           AppLocalizations.of(context).common_give_photo_permission, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
     } else if (status.isGranted) {
-      //file = await ImagePicker.pickImage(source: ImageSource.camera);
+
       _photo_file = await _picker.pickImage(source: ImageSource.gallery);
 
       if (_photo_file == null) {

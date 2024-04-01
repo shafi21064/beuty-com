@@ -1,4 +1,3 @@
-import 'package:kirei/data_model/questions_response.dart';
 import 'package:kirei/repositories/questions_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
@@ -45,8 +44,6 @@ class _ProductQuestionsState extends State<ProductQuestions> {
     fetchData();
 
     _xcrollController.addListener(() {
-      //print("position: " + _xcrollController.position.pixels.toString());
-      //print("max: " + _xcrollController.position.maxScrollExtent.toString());
 
       if (_xcrollController.position.pixels ==
           _xcrollController.position.maxScrollExtent) {
@@ -90,16 +87,9 @@ class _ProductQuestionsState extends State<ProductQuestions> {
   }
 
   onTapReviewSubmit(context) async {
-    // if (is_logged_in.$ == false) {
-    //   ToastComponent.showDialog("You need to login to give a review", context,
-    //       gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-    //   return;
-    // }
 
-    //return;
     var myQuestionText = _myQuestionTextController.text.toString();
     var myNameText = _myNameTextController.text.toString();
-    //print(chatText);
     if (myQuestionText == "") {
       ToastComponent.showDialog(
           AppLocalizations.of(context)
@@ -194,7 +184,6 @@ class _ProductQuestionsState extends State<ProductQuestions> {
         child: Container(
           decoration: new BoxDecoration(color: Colors.white54.withOpacity(0.6)),
           height: 120,
-          //color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.only(
                 top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),

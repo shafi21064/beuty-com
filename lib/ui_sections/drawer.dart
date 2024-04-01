@@ -5,30 +5,19 @@ import 'package:kirei/my_theme.dart';
 import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/providers/category_passing_controller.dart';
 import 'package:kirei/repositories/category_repository.dart';
-import 'package:kirei/screens/BeautyBooks.dart';
 import 'package:kirei/screens/appointment.dart';
 import 'package:kirei/screens/beauty_tips.dart';
-import 'package:kirei/screens/blogs.dart';
-import 'package:kirei/screens/change_language.dart';
 import 'package:kirei/screens/common_webview_screen.dart';
-import 'package:kirei/screens/filter.dart';
-import 'package:kirei/screens/kireiYT.dart';
 import 'package:kirei/screens/newsfeed.dart';
 import 'package:kirei/screens/registration.dart';
-import 'package:kirei/screens/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:kirei/screens/main.dart';
-import 'package:kirei/screens/profile.dart';
 import 'package:kirei/screens/order_list.dart';
-import 'package:kirei/screens/wishlist.dart';
 
 import 'package:kirei/screens/login.dart';
-import 'package:kirei/screens/messenger_list.dart';
 import 'package:kirei/screens/wallet.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/auth_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -68,23 +57,12 @@ class _MainDrawerState extends State<MainDrawer> {
   onTapLogout(context) async {
     AuthHelper().clearUserData();
 
-    // var logoutResponse = await AuthRepository().getLogoutResponse();
-    //
-    // if (logoutResponse.result == true) {
-    //   ToastComponent.showDialog(logoutResponse.message, context,
-    //       gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-    //
-    //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //     return Login();
-    //   }));
-    // }
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
       return Main();
     }), (route) => false);
   }
 
   Future<void> _launchUrl(Uri url) async {
-    // final Uri _url = Uri.parse('https://flutter.dev');
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch $url');
     }
@@ -107,11 +85,7 @@ class _MainDrawerState extends State<MainDrawer> {
                     ? ListTile(
                     leading: CircleAvatar(
                       backgroundImage:
-            //NetworkImage(
-                        // "${avatar_original.$}" ??
-                        //     "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png",
                           avatar_original.$ != null ? NetworkImage("${avatar_original.$}") : AssetImage('assets/placeholder.png') //TODO:change the avatar
-                      //),
                     ),
                     title: Text("${user_name.$}"),
                     subtitle: Text(
@@ -124,10 +98,6 @@ class _MainDrawerState extends State<MainDrawer> {
                 Divider(),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    // leading: Image.asset("assets/home.png",
-                    //     height: 16,
-                    //     color:
-                    //         Theme.of(context).buttonTheme.colorScheme.primary),
                     title: Text(
                         AppLocalizations.of(context)
                             .main_drawer_home
@@ -142,10 +112,6 @@ class _MainDrawerState extends State<MainDrawer> {
                 ),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    // leading: Image.asset("assets/blog.jpg",
-                    //     height: 22,
-                    //     color:
-                    //         Theme.of(context).buttonTheme.colorScheme.primary),
                     title: Text('New Arrivals'.toUpperCase(),
                         style: TextStyle(
                           fontSize: 13,
@@ -159,8 +125,6 @@ class _MainDrawerState extends State<MainDrawer> {
                 Consumer<CategoryPassingController>(
                     builder: (widget, value, child) {
                       return ExpansionTile(
-                        // leading: Icon(Icons.category,
-                        //     color: Theme.of(context).buttonTheme.colorScheme.primary),
                         title: Row(
                           children: [
                             Text(
@@ -264,27 +228,10 @@ class _MainDrawerState extends State<MainDrawer> {
                       );
                     }
                 ),
-                // ListTile(
-                //     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                //     // leading: Image.asset("assets/blog.jpg",
-                //     //     height: 22,
-                //     //     color:
-                //     //         Theme.of(context).buttonTheme.colorScheme.primary),
-                //     title: Text('brands'.toUpperCase(),
-                //         style: TextStyle(
-                //           fontSize: 13,
-                //         )),
-                //     onTap: () {
-                //       // Navigator.push(context,
-                //       //     MaterialPageRoute(builder: (context) {
-                //       //   return BeautyTips();
-                //       // }));
-                //     }),
 
                 ListTile(
                     visualDensity:
                     VisualDensity(horizontal: -4, vertical: -4),
-                    // leading: Image.asset("assets/placeholder.png", height: 24),
                     title: Row(
                       children: [
                         Text('BRANDS',
@@ -341,10 +288,6 @@ class _MainDrawerState extends State<MainDrawer> {
 
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    // leading: Image.asset("assets/blog.jpg",
-                    //     height: 22,
-                    //     color:
-                    //         Theme.of(context).buttonTheme.colorScheme.primary),
                     title: Text('beauty tips'.toUpperCase(),
                         style: TextStyle(
                           fontSize: 13,
@@ -355,27 +298,10 @@ class _MainDrawerState extends State<MainDrawer> {
                             return BeautyTips();
                           }));
                     }),
-                // ListTile(
-                //     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                //     // leading: Image.asset("assets/blog.jpg",
-                //     //     height: 22,
-                //     //     color:
-                //     //         Theme.of(context).buttonTheme.colorScheme.primary),
-                //     title: Text('personal recommendation'.toUpperCase(),
-                //         style: TextStyle(
-                //           fontSize: 13,
-                //         )),
-                //     onTap: () {
-                //       // Navigator.push(context,
-                //       //     MaterialPageRoute(builder: (context) {
-                //       //   return BeautyTips();
-                //       // }));
-                //     }),
 
                 ListTile(
                     visualDensity:
                     VisualDensity(horizontal: -4, vertical: -4),
-                    // leading: Image.asset("assets/placeholder.png", height: 24),
                     title: Text('PERSONAL RECOMMENDATION',
                         style: TextStyle(fontSize: 13)),
                     onTap: () {
@@ -390,10 +316,6 @@ class _MainDrawerState extends State<MainDrawer> {
 
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    // leading: Image.asset(
-                    //   "assets/community.png",
-                    //   height: 25,
-                    // ),
                     title: Text('Community'.toUpperCase(),
                         style: TextStyle(fontSize: 13)),
                     onTap: () {
@@ -404,10 +326,6 @@ class _MainDrawerState extends State<MainDrawer> {
                     }),
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    // leading: Image.asset("assets/blog.jpg",
-                    //     height: 22,
-                    //     color:
-                    //         Theme.of(context).buttonTheme.colorScheme.primary),
                     title: Text('Appointment'.toUpperCase(),
                         style: TextStyle(
                           fontSize: 13,
@@ -419,43 +337,9 @@ class _MainDrawerState extends State<MainDrawer> {
                           }));
                     }),
 
-                // ListTile(
-                //     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                //     // leading: Image.asset("assets/blog.jpg",
-                //     //     height: 22,
-                //     //     color:
-                //     //         Theme.of(context).buttonTheme.colorScheme.primary),
-                //     title: Text('Blog'.toUpperCase(),
-                //         style: TextStyle(
-                //           fontSize: 13,
-                //         )),
-                //     onTap: () {
-                //       Navigator.push(context,
-                //           MaterialPageRoute(builder: (context) {
-                //         return Blogs();
-                //       }));
-                //     }),
-                // ListTile(
-                //     visualDensity:
-                //     VisualDensity(horizontal: -4, vertical: -4),
-                //     // leading: Image.asset("assets/placeholder.png", height: 24),
-                //     title: Text('Blog'.toUpperCase(),
-                //         style: TextStyle(fontSize: 13)),
-                //     onTap: () {
-                //       Navigator.push(context,
-                //           MaterialPageRoute(builder: (context) {
-                //             return CommonWebviewScreen(
-                //               //url: "https://kireibd.com/contact-us?type=app",
-                //               url: "https://beta.kireibd.com/blogs",
-                //               //page_name: "Blog",
-                //             );
-                //           }));
-                //     }),
-
                 ListTile(
                     visualDensity:
                     VisualDensity(horizontal: -4, vertical: -4),
-                    // leading: Image.asset("assets/placeholder.png", height: 24),
                     title: Text('BLOG',
                         style: TextStyle(fontSize: 13)),
                     onTap: () {
@@ -469,8 +353,6 @@ class _MainDrawerState extends State<MainDrawer> {
                     }),
 
                 ExpansionTile(
-                  // leading: Icon(Icons.category,
-                  //     color: Theme.of(context).buttonTheme.colorScheme.primary),
                     title: Row(
                       children: [
                         Text(
@@ -510,7 +392,6 @@ class _MainDrawerState extends State<MainDrawer> {
                             ListTile(
                                 visualDensity:
                                 VisualDensity(horizontal: -4, vertical: -4),
-                                // leading: Image.asset("assets/placeholder.png", height: 24),
                                 title: Text('Who We Are?',
                                     style: TextStyle(fontSize: 13)),
                                 onTap: () {
@@ -525,7 +406,6 @@ class _MainDrawerState extends State<MainDrawer> {
                             ListTile(
                                 visualDensity:
                                 VisualDensity(horizontal: -4, vertical: -4),
-                                // leading: Image.asset("assets/placeholder.png", height: 24),
                                 title: Text('FAQs', style: TextStyle(fontSize: 13)),
                                 onTap: () {
                                   Navigator.push(context,
@@ -539,7 +419,6 @@ class _MainDrawerState extends State<MainDrawer> {
                             ListTile(
                                 visualDensity:
                                 VisualDensity(horizontal: -4, vertical: -4),
-                                // leading: Image.asset("assets/placeholder.png", height: 24),
                                 title: Text('Contact us',
                                     style: TextStyle(fontSize: 13)),
                                 onTap: () {
@@ -554,7 +433,6 @@ class _MainDrawerState extends State<MainDrawer> {
                             ListTile(
                                 visualDensity:
                                 VisualDensity(horizontal: -4, vertical: -4),
-                                // leading: Image.asset("assets/placeholder.png", height: 24),
                                 title: Text('Testimonials',
                                     style: TextStyle(fontSize: 13)),
                                 onTap: () {
@@ -569,7 +447,6 @@ class _MainDrawerState extends State<MainDrawer> {
                             ListTile(
                                 visualDensity:
                                 VisualDensity(horizontal: -4, vertical: -4),
-                                // leading: Image.asset("assets/placeholder.png", height: 24),
                                 title: Text('Privacy & Policy',
                                     style: TextStyle(fontSize: 13)),
                                 onTap: () {
@@ -585,7 +462,6 @@ class _MainDrawerState extends State<MainDrawer> {
                             ListTile(
                                 visualDensity:
                                 VisualDensity(horizontal: -4, vertical: -4),
-                                // leading: Image.asset("assets/placeholder.png", height: 24),
                                 title: Text('Terms & Conditions',
                                     style: TextStyle(fontSize: 13)),
                                 onTap: () {
@@ -601,7 +477,6 @@ class _MainDrawerState extends State<MainDrawer> {
                             ListTile(
                                 visualDensity:
                                 VisualDensity(horizontal: -4, vertical: -4),
-                                // leading: Image.asset("assets/placeholder.png", height: 24),
                                 title: Text('Returns & Refunds',
                                     style: TextStyle(fontSize: 13)),
                                 onTap: () {
@@ -617,7 +492,6 @@ class _MainDrawerState extends State<MainDrawer> {
                             ListTile(
                                 visualDensity:
                                 VisualDensity(horizontal: -4, vertical: -4),
-                                // leading: Image.asset("assets/placeholder.png", height: 24),
                                 title: Text('Responsible Disclosure',
                                     style: TextStyle(fontSize: 13)),
                                 onTap: () {
@@ -634,21 +508,6 @@ class _MainDrawerState extends State<MainDrawer> {
                         ),
                       )
                     ]),
-                // ListTile(
-                //     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                //     // leading: Image.asset("assets/placeholder.png", height: 24),
-                //     title:
-                //         Text('Return Policy', style: TextStyle(fontSize: 13)),
-                //     onTap: () {
-                //       Navigator.push(context,
-                //           MaterialPageRoute(builder: (context) {
-                //         return CommonWebviewScreen(
-                //           url: "https://kireibd.com/contact-us",
-                //           page_name: AppLocalizations.of(context)
-                //               .product_details_screen_return_policy,
-                //         );
-                //       }));
-                //     }),
                 is_logged_in.$ == true
                     ? Column(
                   children: [
@@ -659,12 +518,6 @@ class _MainDrawerState extends State<MainDrawer> {
                           AppLocalizations.of(context)
                               .main_drawer_profile
                               .toUpperCase(),
-                          // style: TextStyle(
-                          //     color: Theme.of(context)
-                          //         .buttonTheme
-                          //         .colorScheme
-                          //         .primary,
-                          //     fontSize: 13)
                         ),
                         onTap: () {
                           Navigator.push(context,
@@ -686,24 +539,6 @@ class _MainDrawerState extends State<MainDrawer> {
                                 return OrderList(from_checkout: false);
                               }));
                         }),
-                    // ListTile(
-                    //     visualDensity:
-                    //         VisualDensity(horizontal: -4, vertical: -4),
-                    //     title: Text(
-                    //         AppLocalizations.of(context)
-                    //             .main_drawer_messages,
-                    //         style: TextStyle(
-                    //             color: Theme.of(context)
-                    //                 .buttonTheme
-                    //                 .colorScheme
-                    //                 .primary,
-                    //             fontSize: 13)),
-                    //     onTap: () {
-                    //       Navigator.push(context,
-                    //           MaterialPageRoute(builder: (context) {
-                    //         return MessengerList();
-                    //       }));
-                    //     }),
                     wallet_system_status.$
                         ? ListTile(
                         visualDensity: VisualDensity(
@@ -730,32 +565,12 @@ class _MainDrawerState extends State<MainDrawer> {
                   ],
                 )
                     : Container(),
-                //Divider(height: 24),
 
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.0005,
                 ),
 
                 is_logged_in.$ == false
-                // ? ListTile(
-                //     visualDensity:
-                //         VisualDensity(horizontal: -4, vertical: -4),
-                //     // leading: Image.asset("assets/login.png",
-                //     //     height: 16,
-                //     //     color: Theme.of(context)
-                //     //         .buttonTheme
-                //     //         .colorScheme
-                //     //         .primary),
-                //     title: Text(
-                //         AppLocalizations.of(context).main_drawer_login,
-                //         style: TextStyle(fontSize: 13)),
-                //     onTap: () {
-                //       Navigator.push(context,
-                //           MaterialPageRoute(builder: (context) {
-                //         return Login();
-                //       }));
-                //     },
-                //   )
                     ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -825,9 +640,6 @@ class _MainDrawerState extends State<MainDrawer> {
                               horizontal: -4,
                               vertical: -4
                           ),
-                          // leading: Image.asset("assets/logout.png",
-                          //     height: 16,
-                          //     color: Color.fromRGBO(153, 153, 153, 1)),
                           title: Text(
                             AppLocalizations.of(context)
                                 .main_drawer_logout
@@ -857,7 +669,6 @@ class _MainDrawerState extends State<MainDrawer> {
                         height: MediaQuery.of(context).size.height * 0.05,
                         width: MediaQuery.of(context).size.width * 0.1,
                         decoration: BoxDecoration(
-                          //image: DecorationImage(image: AssetImage("assets/youtube.png"))
                         ),
                         child: Image.asset("assets/facebook.png", fit: BoxFit.cover,),
                       ),
@@ -875,7 +686,6 @@ class _MainDrawerState extends State<MainDrawer> {
                         height: MediaQuery.of(context).size.height * 0.05,
                         width: MediaQuery.of(context).size.width * 0.1,
                         decoration: BoxDecoration(
-                          //image: DecorationImage(image: AssetImage("assets/youtube.png"))
                         ),
                         child: Image.asset("assets/youtube.png", fit: BoxFit.cover,),
                       ),),
@@ -892,7 +702,6 @@ class _MainDrawerState extends State<MainDrawer> {
                         height: MediaQuery.of(context).size.height * 0.05,
                         width: MediaQuery.of(context).size.width * 0.1,
                         decoration: BoxDecoration(
-                          //image: DecorationImage(image: AssetImage("assets/youtube.png"))
                         ),
                         child: Image.asset("assets/instagram.png", fit: BoxFit.cover,),
                       ),

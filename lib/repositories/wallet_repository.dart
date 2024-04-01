@@ -14,16 +14,12 @@ class WalletRepository {
         "App-Language": app_language.$,
       },
     );
-    //print("wallet token ${access_token.$}");
-
-    //print("wallet ${response.body.toString()}");
     return walletBalanceResponseFromJson(response.body);
   }
 
   Future<WalletRechargeResponse> getRechargeList({int page = 1}) async {
     Uri url = Uri.parse(
         "${AppConfig.BASE_URL}/wallet/history?page=${page}");
-
     final response = await http.get(
       url,
       headers: {
@@ -32,8 +28,6 @@ class WalletRepository {
       },
     );
 
-    //print("url:" +url.toString());
-    //print(response.body);
     return walletRechargeResponseFromJson(response.body);
   }
 }

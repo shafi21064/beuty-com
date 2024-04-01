@@ -83,8 +83,6 @@ class _PaypalScreenState extends State<PaypalScreen> {
 
     setState(() {});
 
-    print(_initial_url);
-    print(_initial_url_fetched);
   }
 
   @override
@@ -105,7 +103,6 @@ class _PaypalScreenState extends State<PaypalScreen> {
         .then((data) {
       var decodedJSON = jsonDecode(data);
       Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
-      //print(data.toString());
       if (responseJSON["result"] == false) {
         Toast.show(responseJSON["message"], context,
             duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
@@ -157,7 +154,6 @@ class _PaypalScreenState extends State<PaypalScreen> {
             },
             onWebResourceError: (error) {},
             onPageFinished: (page) {
-              //print(page.toString());
 
               if (page.contains("/paypal/payment/done")) {
                 getData();

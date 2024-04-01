@@ -34,8 +34,6 @@ class _BrandProductsState extends State<BrandProducts> {
     fetchData();
 
     _xcrollController.addListener(() {
-      //print("position: " + _xcrollController.position.pixels.toString());
-      //print("max: " + _xcrollController.position.maxScrollExtent.toString());
 
       if (_xcrollController.position.pixels ==
           _xcrollController.position.maxScrollExtent) {
@@ -123,9 +121,6 @@ class _BrandProductsState extends State<BrandProducts> {
             controller: _searchController,
             onTap: () {},
             onChanged: (txt) {
-              /*_searchKey = txt;
-              reset();
-              fetchData();*/
             },
             onSubmitted: (txt) {
               _searchKey = txt;
@@ -181,8 +176,6 @@ class _BrandProductsState extends State<BrandProducts> {
           physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics()),
           child: GridView.builder(
-            // 2
-            //addAutomaticKeepAlives: true,
             itemCount: _productList.length,
             controller: _scrollController,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -197,11 +190,9 @@ class _BrandProductsState extends State<BrandProducts> {
               // 3
               return ProductCard(
                 id: _productList[index].id,
-                // image: _productList[index].thumbnail_image,
                 name: _productList[index].name,
                 price: _productList[index].main_price,
                 sale_price: _productList[index].stroked_price,
-                //has_discount: _productList[index].has_discount
               );
             },
           ),

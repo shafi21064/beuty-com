@@ -8,11 +8,9 @@ import 'package:kirei/screens/login.dart';
 import 'package:kirei/screens/main.dart';
 import 'package:kirei/screens/product_questions.dart';
 import 'package:kirei/screens/product_reviews.dart';
-import 'package:kirei/ui_elements/list_product_card.dart';
 import 'package:kirei/ui_elements/mini_product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
-import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:expandable/expandable.dart';
@@ -21,7 +19,6 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:kirei/repositories/product_repository.dart';
 import 'package:kirei/repositories/wishlist_repository.dart';
 import 'package:kirei/repositories/cart_repository.dart';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/shimmer_helper.dart';
 import 'package:kirei/helpers/color_helper.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
@@ -29,10 +26,8 @@ import 'package:kirei/custom/toast_component.dart';
 import 'package:kirei/repositories/chat_repository.dart';
 import 'package:kirei/screens/chat.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'dart:async';
-import 'package:kirei/screens/video_description_screen.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:kirei/screens/brand_products.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -140,18 +135,14 @@ class _ProductDetailsState extends State<ProductDetails> {
     _productDetails = productDetailsResponse.detailed_products;
     print(productDetailsResponse);
 
-    //showPreorderDate = _productDetails.preorderAvailable ? true : false;
 
     var description = _productDetails.shortDescription;
     var document = parse(description);
     var body = document.body;
     if (body == null && body.text.trim().isEmpty) {
       _isDescriptionEmpty = true;
-      print(_isDescriptionEmpty);
     }
 
-    // sellerChatTitleController.text =
-    //     productDetailsResponse.detailed_products.name;
 
     setProductDetailValues();
 
@@ -189,7 +180,6 @@ class _ProductDetailsState extends State<ProductDetails> {
       showPreorderDate = _productDetails.preorderDeliveryDate;
       preorderAvailable = _productDetails.preorderAvailable;
       _appbarPriceString = _productDetails.salePrice.toString();
-      // _singlePrice = _productDetails.calculable_price;
       _singlePriceString = _productDetails.salePrice;
       _description = _productDetails.description;
       calculateTotalPrice();
@@ -1083,7 +1073,6 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   Row buildSellerRow(BuildContext context) {
-    //print("sl:" +  _productDetails.shop_logo);
     return Row(
       children: [
         _productDetails.added_by == "admin"
@@ -1099,7 +1088,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                     borderRadius: BorderRadius.circular(2.0),
                     border: Border.all(
                         color: Color.fromRGBO(112, 112, 112, .3), width: 0.5),
-                    //shape: BoxShape.rectangle,
                   ),
                   child: FadeInImage.assetNetwork(
                     placeholder: 'assets/placeholder.png',
@@ -1206,9 +1194,6 @@ class _ProductDetailsState extends State<ProductDetails> {
           height: 36,
           width: 120,
           decoration: BoxDecoration(
-            // border:
-            //     Border.all(color: Color.fromRGBO(222, 222, 222, 1), width: 1),
-            // borderRadius: BorderRadius.circular(36.0),
               color: Colors.white),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1239,8 +1224,6 @@ class _ProductDetailsState extends State<ProductDetails> {
           width: MediaQuery.of(context).size.width * 0.15,),
 
         Text(
-          //   //"(${_stock} ${AppLocalizations.of(context).product_details_screen_available})",
-          //_stock != 0 ? 'In Stock' : 'Stock Out',
           _productDetails.preorderAvailable == 0 ? _stock != 0 ? 'In Stock' : 'Stock Out' : "Coming soon",
           style: TextStyle(
             //color: Color.fromRGBO(152, 152, 153, 1),
@@ -1347,7 +1330,6 @@ class _ProductDetailsState extends State<ProductDetails> {
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
-          // child: buildChoiceOpiton(_productDetails.choice_options, index),
         );
       },
     );
@@ -1409,7 +1391,6 @@ class _ProductDetailsState extends State<ProductDetails> {
           : EdgeInsets.only(right: 8.0),
       child: InkWell(
         onTap: () {
-          //  _onVariantChange(choice_options_index, option);
         },
         child: Container(
           decoration: BoxDecoration(
@@ -1633,7 +1614,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                     return TypeAheadField(
                       // ignore: missing_return
                       suggestionsCallback: (pattern) async {
-                        //return await BackendService.getSuggestions(pattern);
                         if (pattern != "") {
                           var suggestions = await SearchRepository()
                               .getSearchSuggestionListResponse(
@@ -1726,7 +1706,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                         _searchController.text = suggestion.name;
                         _searchKey = suggestion.name;
                         setState(() {});
-                        //_onSearchSubmit();
                       },
                       textFieldConfiguration: TextFieldConfiguration(
                         onTap: () {},
@@ -1735,8 +1714,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                           _searchKey = txt;
                           value.setSearchKey(_searchKey);
                           Navigator.push(context, MaterialPageRoute(builder: (_)=> Main(pageIndex: 1,)));
-                          //setState(() {});
-                          //_onSearchSubmit();
                         },
                         style: TextStyle(color: MyTheme.white),
                         autofocus: false,
@@ -1795,7 +1772,6 @@ class _ProductDetailsState extends State<ProductDetails> {
           color: Colors.transparent,
           height: 44,
           child: Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Visibility(
                 visible: preorderAvailable ==1,
@@ -1813,8 +1789,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                             buildUpdateGoToCart();
                             onPressBuyNow(context, _isGoToCart);
                           },
-                          // shape: RoundedRectangleBorder(
-                          //     borderRadius: BorderRadius.circular(80.0)),
                           padding: EdgeInsets.all(0.0),
                           child: Ink(
                             color: MyTheme.secondary,
@@ -1866,12 +1840,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                         builder: (widget, value, child) {
                           return RaisedButton(
                             onPressed: () {
-                              //onPressAddToCart(context, _addedToCartSnackbar);
                               value.setCartValue(_quantity);
                               buildUpdateGoToCart();
                             },
-                            // shape: RoundedRectangleBorder(
-                            //     borderRadius: BorderRadius.circular(80.0)),
                             padding: EdgeInsets.all(0.0),
                             child: Ink(
                               color: MyTheme.secondary,
@@ -1927,8 +1898,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
                                   alignment: Alignment.center,
                                   child: Text(
-                                    // AppLocalizations.of(context)
-                                    //     .product_details_screen_button_buy_now,
                                     _isGoToCart == true ? "Go to Cart" : "Buy Now",
                                     style: TextStyle(
                                         color: Colors.white,
@@ -1953,7 +1922,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                   height: 44,
                   child: RaisedButton(
                     onPressed: () {
-                      // onPressBuyNow(context, _isGoToCart);
                     },
                     padding: EdgeInsets.all(0.0),
                     child: Ink(
@@ -2008,7 +1976,6 @@ class _ProductDetailsState extends State<ProductDetails> {
             ),
             itemPadding: EdgeInsets.only(right: 1.0),
             onRatingUpdate: (rating) {
-              //print(rating);
             },
           ),
         ),
@@ -2234,9 +2201,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                           value.setIngredientsKey(ingredients);
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            // return Filter(
-                            //   key_ingredients: ingredients,
-                            // );
                                 return Main(pageIndex: 1,);
                           }));
                         },
@@ -2309,9 +2273,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                           // Handle the click on the ingredients (add your logic here)
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            // return Filter(
-                            //   good_for: good_for,
-                            // );
                                 return Main(pageIndex: 1,);
                           }));
                         },
@@ -2383,9 +2344,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                             value.setCategoryKey(category);
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              // return Filter(
-                              //   category: category,
-                              // );
                                   return Main(pageIndex: 1,);
                             }));
                           },
@@ -2443,9 +2401,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                         value.setTagsKey(tag);
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                              // return Filter(
-                              //   tag: tag,
-                              // );
                               return Main(
                                 pageIndex: 1,
                               );
@@ -2507,7 +2462,6 @@ class _ProductDetailsState extends State<ProductDetails> {
         ],
       );
     } else if (_topProducts.length > 0) {
-      print("top: $_topProducts");
       return SingleChildScrollView(
         child: SizedBox(
           height: 250,
@@ -2809,7 +2763,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                       return GestureDetector(
                         onTap: () {
                           _currentImage = itemIndex;
-                          print(_currentImage);
                           setState(() {});
                         },
                         child: Container(
@@ -2824,7 +2777,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ? MyTheme.secondary
                                     : Color.fromRGBO(112, 112, 112, .3),
                                 width: _currentImage == itemIndex ? 2 : 1),
-                            //shape: BoxShape.rectangle,
                           ),
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),

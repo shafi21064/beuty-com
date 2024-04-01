@@ -33,8 +33,6 @@ class _CategoryProductsState extends State<CategoryProducts> {
     fetchData();
 
     _xcrollController.addListener(() {
-      //print("position: " + _xcrollController.position.pixels.toString());
-      //print("max: " + _xcrollController.position.maxScrollExtent.toString());
 
       if (_xcrollController.position.pixels ==
           _xcrollController.position.maxScrollExtent) {
@@ -60,7 +58,6 @@ class _CategoryProductsState extends State<CategoryProducts> {
         page: _page,
         name: _searchKey == "" ? widget.category_name : _searchKey);
     _productList.addAll(productResponse.products);
-    //  print(_productList[0].);
     _isInitial = false;
     _totalData = productResponse.meta.total;
     _showLoadingContainer = false;
@@ -113,12 +110,6 @@ class _CategoryProductsState extends State<CategoryProducts> {
     return AppBar(
       backgroundColor: Colors.white,
       toolbarHeight: 75,
-      /*bottom: PreferredSize(
-          child: Container(
-            color: MyTheme.light_grey,
-            height: 1.0,
-          ),
-          preferredSize: Size.fromHeight(4.0)),*/
       leading: Builder(
         builder: (context) => IconButton(
           icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
@@ -131,9 +122,6 @@ class _CategoryProductsState extends State<CategoryProducts> {
             controller: _searchController,
             onTap: () {},
             onChanged: (txt) {
-              /*_searchKey = txt;
-              reset();
-              fetchData();*/
             },
             onSubmitted: (txt) {
               _searchKey = txt;
@@ -188,8 +176,6 @@ class _CategoryProductsState extends State<CategoryProducts> {
           physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics()),
           child: GridView.builder(
-            // 2
-            //addAutomaticKeepAlives: true,
             itemCount: _productList.length,
             controller: _scrollController,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

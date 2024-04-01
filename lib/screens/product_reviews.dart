@@ -10,7 +10,6 @@ import 'package:toast/toast.dart';
 import 'package:flutter/services.dart';
 import 'package:expandable/expandable.dart';
 import 'package:kirei/repositories/review_repositories.dart';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/shimmer_helper.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -151,7 +150,6 @@ class _ProductReviewsState extends State<ProductReviews> {
                 onRefresh: _onRefresh,
                 displacement: 0,
                 child: CustomScrollView(
-                  //controller: _xcrollController,
                   physics: const BouncingScrollPhysics(
                       parent: AlwaysScrollableScrollPhysics()),
                   slivers: [
@@ -188,7 +186,6 @@ class _ProductReviewsState extends State<ProductReviews> {
         child: Container(
           decoration: new BoxDecoration(color: Colors.white54.withOpacity(0.6)),
           height: 120,
-          //color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.only(
                 top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
@@ -265,7 +262,6 @@ class _ProductReviewsState extends State<ProductReviews> {
                 borderRadius: BorderRadius.circular(35),
                 border: Border.all(
                     color: Color.fromRGBO(112, 112, 112, .3), width: 1),
-                //shape: BoxShape.rectangle,
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(35),
@@ -273,7 +269,6 @@ class _ProductReviewsState extends State<ProductReviews> {
                   placeholder: 'assets/placeholder.png',
                   image: _reviewList[index].avatar != null
                       ? _reviewList[index].avatar
-                      //: "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png",
                       : "assets/placeholder.png",
                   fit: BoxFit.cover,
                 ),
@@ -482,7 +477,6 @@ class _ProductReviewsState extends State<ProductReviews> {
                     borderRadius: BorderRadius.circular(35),
                     border: Border.all(
                         color: Color.fromRGBO(112, 112, 112, .3), width: 1),
-                    //shape: BoxShape.rectangle,
                   ),
                   child: Center(
                     child: Icon(

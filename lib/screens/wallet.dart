@@ -9,7 +9,6 @@ import 'package:kirei/repositories/wallet_repository.dart';
 import 'package:kirei/helpers/shimmer_helper.dart';
 import 'package:kirei/custom/toast_component.dart';
 import 'package:toast/toast.dart';
-import 'package:kirei/screens/recharge_wallet.dart';
 import 'package:kirei/screens/main.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -121,9 +120,6 @@ class _WalletState extends State<Wallet> {
         manual_payment_from_order_details: true,
       );
     }));
-    // Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //   return RechargeWallet(amount: amount );
-    // }));
   }
 
   @override

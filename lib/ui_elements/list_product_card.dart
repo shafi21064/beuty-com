@@ -1,7 +1,6 @@
 import 'package:kirei/my_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/screens/product_details.dart';
-import 'package:kirei/app_config.dart';
 
 class ListProductCard extends StatefulWidget {
   int id;

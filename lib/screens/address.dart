@@ -74,7 +74,6 @@ class _AddressState extends State<Address> {
   }
 
   fetchShippingAddressList() async {
-    print("enter fetchShippingAddressList");
     var addressResponse = await AddressRepository().getAddressList();
     print(addressResponse);
     _shippingAddressList.addAll(addressResponse['data']);
@@ -82,7 +81,6 @@ class _AddressState extends State<Address> {
     setState(() {
       _isInitial = false;
     });
-    print(_shippingAddressList);
     if (_shippingAddressList.length > 0) {
 
 
@@ -90,25 +88,20 @@ class _AddressState extends State<Address> {
 
       if (_shippingAddressList != null) {
         _phoneController.text = _shippingAddressList[0]['phone'];
-        //_nameController.text = user_name.$;
         _nameController.text = _shippingAddressList[0]['name'];
-        //_seleted_shipping_address = _shippingAddressList[0]['id'];
         _addressController.text = _shippingAddressList[0]['address'];
         _stateController.text = _shippingAddressList[0]['city_name'];
         _cityController.text = _shippingAddressList[0]['zone_name'];
         _countryController.text = _shippingAddressList[0]['area_name'];
         _selectedCity_id = _shippingAddressList[0]['city_id'];
-        //print('_selected_city.id ${_selectedCity_id}');
         _selectedZone_id = _shippingAddressList[0]['zone_id'];
         _selectedArea_id = _shippingAddressList[0]['area_id'];
 
-        print('not working');
 
       } else {
         _phoneController.text = user_name.$ ;
       }
 
-      print("fetchShippingAddressList");
     }
 
     if (mounted) {
@@ -252,7 +245,6 @@ class _AddressState extends State<Address> {
     var area = _countryController.text.toString();
     var zone = _cityController.text.toString();
 
-    //print(city + zone + area);
 
     if (address == "") {
       ToastComponent.showDialog(
@@ -363,24 +355,17 @@ class _AddressState extends State<Address> {
     if (_selected_country != null && country.id == _selected_country.id) {
       setModalState(() {
         _selectedArea_id = country.id;
-        print('_selectedArea_id ${_selectedArea_id}');
         _countryController.text = country.name;
       });
       return;
     }
     _selected_country = country;
     _selectedArea_id = country.id;
-    print('_selectedArea_id ${_selectedArea_id}');
-    // _selected_state = null;
-    // _selected_city = null;
     setState(() {});
 
     setModalState(() {
       _countryController.text = country.name;
       _selectedArea_id = country.id;
-      print('_selectedArea_id ${_selectedArea_id}');
-      // _stateController.text = "";
-      // _cityController.text = "";
     });
   }
 
@@ -389,7 +374,6 @@ class _AddressState extends State<Address> {
     if (_selected_state != null && state.id == _selected_state.id) {
       setModalState(() {
         _selectedCity_id = state.id;
-        print('_selectedCity_id ${_selectedCity_id}');
         _stateController.text = state.name;
       });
       return;
@@ -397,13 +381,11 @@ class _AddressState extends State<Address> {
     _selected_state = state;
 
     _selectedCity_id = state.id;
-    print('_selectedCity_id ${_selectedCity_id}');
     _selected_city = null;
     setState(() {});
     setModalState(() {
       _stateController.text = state.name;
       _selectedCity_id = state.id;
-      print('_selectedCity_id ${_selectedCity_id}');
       _cityController.text = "";
     });
   }
@@ -414,7 +396,6 @@ class _AddressState extends State<Address> {
       setModalState(() {
 
         _selectedZone_id = city.id;
-        print('_selectedZone_id ${_selectedZone_id}');
         _cityController.text = city.name;
       });
       return;
@@ -422,12 +403,10 @@ class _AddressState extends State<Address> {
     _selected_city = city;
     setState(() {
       _selectedZone_id = city.id;
-      print('_selectedZone_id ${_selectedZone_id}');
     });
     setModalState(() {
       _cityController.text = city.name;
       _selectedZone_id = city.id;
-      print('_selectedZone_id ${_selectedZone_id}');
     });
   }
 
@@ -492,8 +471,6 @@ class _AddressState extends State<Address> {
     return StatefulBuilder(builder: (BuildContext context,
         StateSetter setModalState /*You can rename this!*/) {
       return ListView(
-        // mainAxisSize: MainAxisSize.min,
-        // crossAxisAlignment: CrossAxisAlignment.start,
         shrinkWrap: true,
 
         physics: NeverScrollableScrollPhysics(),
@@ -516,9 +493,6 @@ class _AddressState extends State<Address> {
                 controller: _nameController,
                 autofocus: false,
                 decoration: InputDecoration(
-                  // hintText: AppLocalizations
-                  //     .of(context)
-                  //     .address_screen_enter_name,
                     hintText: "Enter Name",
                     hintStyle: TextStyle(
                         fontSize: 12.0, color: MyTheme.light_grey),
@@ -762,7 +736,6 @@ class _AddressState extends State<Address> {
                   );
                 },
                 itemBuilder: (context, city) {
-                  //print(suggestion.toString());
                   return ListTile(
                     dense: true,
                     title: Text(
@@ -848,7 +821,6 @@ class _AddressState extends State<Address> {
                   );
                 },
                 itemBuilder: (context, city) {
-                  //print(suggestion.toString());
                   return ListTile(
                     dense: true,
                     title: Text(
@@ -874,15 +846,11 @@ class _AddressState extends State<Address> {
                 },
                 textFieldConfiguration: TextFieldConfiguration(
                   onTap: () {},
-                  //autofocus: true,
                   controller: _countryController,
                   onSubmitted: (txt) {
                     // keep blank
                   },
                   decoration: InputDecoration(
-                    // hintText: AppLocalizations
-                    //     .of(context)
-                    //     .address_screen_enter_zone,
                       hintText: "Select Area",
                       hintStyle: TextStyle(
                           fontSize: 12.0,
@@ -939,13 +907,9 @@ class _AddressState extends State<Address> {
   var loading = false;
 
   saveOrUpdateAddress() async{
-    // setState(() {
-    //   loading = true;
-    // });
 
     if (_nameController.text == "") {
       ToastComponent.showDialog(
-          //AppLocalizations.of(context).address_screen_address_warning, context,
           "Name  is required", context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
@@ -953,7 +917,6 @@ class _AddressState extends State<Address> {
 
     if (_phoneController.text == "") {
       ToastComponent.showDialog(
-          //AppLocalizations.of(context).address_screen_country_warning, context,
           "Phone is required", context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
@@ -961,7 +924,6 @@ class _AddressState extends State<Address> {
 
     if (_addressController.text == "") {
       ToastComponent.showDialog(
-          //AppLocalizations.of(context).address_screen_state_warning, context,
           "Address is required", context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
@@ -969,7 +931,6 @@ class _AddressState extends State<Address> {
 
     if ( _stateController.text == "") {
       ToastComponent.showDialog(
-          //AppLocalizations.of(context).address_screen_city_warning, context,
          "City is required", context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
@@ -977,7 +938,6 @@ class _AddressState extends State<Address> {
 
     if (_cityController.text == "") {
       ToastComponent.showDialog(
-          //AppLocalizations.of(context).address_screen_city_warning, context,
           "Zone is required", context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
@@ -1155,12 +1115,6 @@ class _AddressState extends State<Address> {
                           height: 40,
                           child: TypeAheadField(
                             suggestionsCallback: (name) async {
-                              // if (_selected_country_list_for_update[index] ==
-                              //     null) {
-                              //   var stateResponse = await AddressRepository()
-                              //       .getCityByCountry( country_id: "3069"); // blank response
-                              //   return stateResponse.states;
-                              // }
                               var stateResponse = await AddressRepository()
                                   .getCityByCountry(
                                 country_id: "3069",
@@ -1179,7 +1133,6 @@ class _AddressState extends State<Address> {
                               );
                             },
                             itemBuilder: (context, state) {
-                              //print(suggestion.toString());
                               return ListTile(
                                 dense: true,
                                 title: Text(
@@ -1205,12 +1158,8 @@ class _AddressState extends State<Address> {
                             },
                             textFieldConfiguration: TextFieldConfiguration(
                               onTap: () {},
-                              //autofocus: true,
                               controller: _stateControllerListForUpdate[index],
                               onSubmitted: (txt) {
-                                // _searchKey = txt;
-                                // setState(() {});
-                                // _onSearchSubmit();
                               },
                               decoration: InputDecoration(
                                   hintText: AppLocalizations.of(context)
@@ -1250,12 +1199,6 @@ class _AddressState extends State<Address> {
                           height: 40,
                           child: TypeAheadField(
                             suggestionsCallback: (name) async {
-                              // if (_selected_state_list_for_update[index] ==
-                              //     null) {
-                              //   var cityResponse = await AddressRepository()
-                              //       .getZoneByCity(); // blank response
-                              //   return cityResponse.cities;
-                              // }
                               var cityResponse = await AddressRepository()
                                   .getZoneByCity(
                                       state_id:
@@ -1276,7 +1219,6 @@ class _AddressState extends State<Address> {
                               );
                             },
                             itemBuilder: (context, city) {
-                              //print(suggestion.toString());
                               return ListTile(
                                 dense: true,
                                 title: Text(
@@ -1302,10 +1244,8 @@ class _AddressState extends State<Address> {
                             },
                             textFieldConfiguration: TextFieldConfiguration(
                               onTap: () {},
-                              //autofocus: true,
                               controller: _cityControllerListForUpdate[index],
                               onSubmitted: (txt) {
-                                // keep blank
                               },
                               decoration: InputDecoration(
                                   hintText: AppLocalizations.of(context)
@@ -1358,7 +1298,6 @@ class _AddressState extends State<Address> {
                               );
                             },
                             itemBuilder: (context, country) {
-                              //print(suggestion.toString());
                               return ListTile(
                                 dense: true,
                                 title: Text(
@@ -1384,7 +1323,6 @@ class _AddressState extends State<Address> {
                             },
                             textFieldConfiguration: TextFieldConfiguration(
                               onTap: () {},
-                              //autofocus: true,
                               controller:
                                   _countryControllerListForUpdate[index],
                               onSubmitted: (txt) {
@@ -1591,7 +1529,6 @@ class _AddressState extends State<Address> {
   }
 
   buildAddressList() {
-    print("is Initial: ${_isInitial}");
     if (is_logged_in == false) {
       return Container(
           height: 100,

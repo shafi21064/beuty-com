@@ -39,7 +39,6 @@ class ProfileRepository {
     final response = await http.post(url,
         headers: {"Content-Type": "application/json", "Authorization": "Bearer ${access_token.$}","App-Language": app_language.$,},body: post_body );
 
-    //print(response.body.toString());
     return profileUpdateResponseFromJson(response.body);
   }
 
@@ -60,19 +59,16 @@ class ProfileRepository {
       @required String image,@required String filename) async {
 
     var post_body = jsonEncode({"image": "${image}", "filename": "$filename"});
-    //print(post_body.toString());
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/profile/update-image");
     final response = await http.post(url,
         headers: {"Content-Type": "application/json", "Authorization": "Bearer ${access_token.$}","App-Language": app_language.$,},body: post_body );
 
-    //print(response.body.toString());
     return profileImageUpdateResponseFromJson(response.body);
   }
 
   Future<PhoneEmailAvailabilityResponse> getPhoneEmailAvailabilityResponse() async {
 
-    //var post_body = jsonEncode({"user_id":"${user_id.$}"});
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/profile/check-phone-and-email");
     final response = await http.post(url,

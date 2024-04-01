@@ -260,7 +260,6 @@ class _ChatState extends State<Chat> {
                       borderRadius: BorderRadius.circular(35),
                       border: Border.all(
                           color: Color.fromRGBO(112, 112, 112, .3), width: 1),
-                      //shape: BoxShape.rectangle,
                     ),
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(35),

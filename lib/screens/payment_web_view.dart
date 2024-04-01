@@ -63,7 +63,6 @@ class _PaymentWebviewScreenState extends State<PaymentWebviewScreen> {
           },
           onWebResourceError: (error) {},
           onPageFinished: (page) {
-            //print(page.toString());
 
             if (page.contains("/bkash/api/success")) {
               ToastComponent.showDialog("Payment Successfull", context,

@@ -22,19 +22,6 @@ import 'package:kirei/data_model/sslcommerz_begin_response.dart';
 class PaymentRepository {
   Future<List<PaymentTypeResponse>> getPaymentResponseList(
       {mode = "", list = "both"}) async {
-   //  Uri url = Uri.parse(
-   //      "${AppConfig.BASE_URL}/payment-types?mode=${mode}&list=${list}");
-   //  final response = await http.get(url, headers: {
-   //    "App-Language": app_language.$,
-   //  });
-   // // print('payment ${response.body}');
-   //
-   //  print('url : ${url}');
-   //  print('returns : ${paymentTypeResponseFromJson(response.body)}');
-   //
-   //  return paymentTypeResponseFromJson(response.body);
-
-    // Load the JSON file from the assets folder
     String jsonData = await rootBundle.loadString('assets/payment_list.json');
 
     // Parse the JSON data
@@ -66,7 +53,6 @@ class PaymentRepository {
       "App-Language": app_language.$,
     });
 
-    //print(response.body.toString());
     return paypalUrlResponseFromJson(response.body);
   }
 
@@ -81,8 +67,6 @@ class PaymentRepository {
       "App-Language": app_language.$,
     });
 
-    //print(url);
-    //print(response.body.toString());
     return flutterwaveUrlResponseFromJson(response.body);
   }
 
@@ -130,7 +114,6 @@ class PaymentRepository {
 
 
 
-    print('StatusCode' +response.statusCode.toString());
     return orderCreateResponseCODFromJson(response.body);
   }
 
@@ -339,7 +322,6 @@ class PaymentRepository {
         },
         body: post_body);
 
-    //print(response.body.toString());
     return nagadPaymentProcessResponseFromJson(response.body);
   }
 }

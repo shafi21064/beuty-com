@@ -1,13 +1,8 @@
-import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/auth_helper.dart';
 import 'package:kirei/my_theme.dart';
-import 'package:kirei/repositories/profile_repository.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kirei/custom/input_decorations.dart';
-import 'package:kirei/custom/intl_phone_input.dart';
-import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:kirei/screens/otp.dart';
@@ -17,8 +12,6 @@ import 'package:toast/toast.dart';
 import 'package:kirei/repositories/auth_repository.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../other_config.dart';
 import 'main.dart';
 
 class Registration extends StatefulWidget {
@@ -197,10 +190,6 @@ class _RegistrationState extends State<Registration> {
         backgroundColor: Colors.white,
         body: Stack(
           children: [
-            // Container(
-            //   width: _screen_width * (3 / 4),
-            //   child: Image.asset("assets/image_02.png"),
-            // ),
             Container(
               width: double.infinity,
               child: SingleChildScrollView(
@@ -273,42 +262,6 @@ class _RegistrationState extends State<Registration> {
                                 fontWeight: FontWeight.w600),
                           ),
                         ),
-                        // if (_register_by == "email")
-                        //   Padding(
-                        //     padding: const EdgeInsets.only(bottom: 8.0),
-                        //     child: Column(
-                        //       crossAxisAlignment: CrossAxisAlignment.end,
-                        //       children: [
-                        //         Container(
-                        //           height: 36,
-                        //           child: TextField(
-                        //             controller: _emailController,
-                        //             autofocus: false,
-                        //             decoration:
-                        //                 InputDecorations.buildInputDecoration_1(
-                        //                     hint_text: "johndoe@example.com"),
-                        //           ),
-                        //         ),
-                        //         // GestureDetector(
-                        //         //         onTap: () {
-                        //         //           setState(() {
-                        //         //             _register_by = "phone";
-                        //         //           });
-                        //         //         },
-                        //         //         child: Text(
-                        //         //           AppLocalizations.of(context)
-                        //         //               .registration_screen_or_register_with_phone,
-                        //         //           style: TextStyle(
-                        //         //               color: MyTheme.primary,
-                        //         //               fontStyle: FontStyle.italic,
-                        //         //               decoration:
-                        //         //                   TextDecoration.underline),
-                        //         //         ),
-                        //         //       )
-
-                        //       ],
-                        //     ),
-                        //   )
 
                         Padding(
                           padding: const EdgeInsets.only(bottom: 8.0, ),
@@ -317,66 +270,19 @@ class _RegistrationState extends State<Registration> {
                             children: [
                               Container(
                                 height: 36,
-                                // child: CustomInternationalPhoneNumberInput(
-                                //   onInputChanged: (PhoneNumber number) {
-                                //     print(number.phoneNumber);
-                                //     setState(() {
-                                //       _phone = number.phoneNumber;
-                                //     });
-                                //   },
-                                //   onInputValidated: (bool value) {
-                                //     if (value) {
-                                //       // Valid phone number, do something
-                                //       validPhoneNumber = true;
-                                //     } else {
-                                //       // Invalid phone number, show an error
-                                //       _phone = "";
-                                //     }
-                                //   },
-                                //   selectorConfig: SelectorConfig(
-                                //     showFlags: false,
-                                //     selectorType: PhoneInputSelectorType.DROPDOWN,
-                                //   ),
-                                //   ignoreBlank: false,
-                                //   autoValidateMode: AutovalidateMode.disabled,
-                                //   selectorTextStyle:
-                                //       TextStyle(color: MyTheme.white),
-                                //   initialValue: phoneCode,
-                                //   textFieldController: _phoneNumberController,
-                                //   formatInput: true,
-                                //   keyboardType: TextInputType.numberWithOptions(
-                                //       signed: true, decimal: true),
-                                //   inputDecoration: InputDecorations
-                                //       .buildInputDecoration_phone(
-                                //           hint_text: "01*********"),
-                                //   onSaved: (PhoneNumber number) {
-                                //     //print('On Saved: $number');
-                                //   },
-                                //   countries: ["BD"],
-                                // ),
                                 child: Container(
                                   height: 56,
                                   child: TextField(
                                     controller: _phoneNumberController,
                                     onChanged: (number) {
-                                      //print(number.phoneNumber);
-                                      // setState(() {
                                       _phone = "${number}";
                                       validPhoneNumber=true;
-                                      // });
                                     },
 
-                                    // onSubmitted: (value){
-                                    //   print("value${value}");
-                                    //   print("value${_phone}");
-                                    // },
                                     autofocus: false,
                                     autocorrect: true,
                                     decoration: InputDecoration(
                                       hintText: '01*********',
-                                      // prefixIcon: _login_by == "email"
-                                      //     ? Icon(Icons.email)
-                                      //     : Icon(Icons.local_phone_outlined),
                                       hintStyle: TextStyle(color: Colors.grey),
                                       filled: true,
                                       fillColor: Colors.white70,
@@ -565,87 +471,6 @@ class _RegistrationState extends State<Registration> {
                                 ),
                         ),
 
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: RaisedButton(
-                        //     onPressed: () {
-                        //       setState(() {
-                        //         _register_by = "otp";
-                        //       });
-                        //     },
-                        //     shape: RoundedRectangleBorder(
-                        //       borderRadius: BorderRadius.circular(2.0),
-                        //     ),
-                        //     padding: EdgeInsets.all(0.0),
-                        //     child: Ink(
-                        //       decoration:
-                        //           BoxDecoration(color: MyTheme.facebook_bg),
-                        //       child: Container(
-                        //         constraints: BoxConstraints(
-                        //             maxWidth: 300.0, minHeight: 50.0),
-                        //         alignment: Alignment.center,
-                        //         child: Row(
-                        //           mainAxisAlignment: MainAxisAlignment.center,
-                        //           children: [
-                        //             Icon(
-                        //               Icons
-                        //                   .facebook_outlined, // You can replace this with the Google Icon
-                        //               color: Colors.white,
-                        //             ),
-                        //             SizedBox(width: 10),
-                        //             Text(
-                        //               "REGISTER WITH FACEBOOK",
-                        //               textAlign: TextAlign.center,
-                        //               style: GoogleFonts.openSans(
-                        //                   color: Colors.white, fontSize: 16),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: RaisedButton(
-                        //     onPressed: () {
-                        //       setState(() {
-                        //         _register_by = "otp";
-                        //       });
-                        //     },
-                        //     shape: RoundedRectangleBorder(
-                        //       borderRadius: BorderRadius.circular(2.0),
-                        //     ),
-                        //     padding: EdgeInsets.all(0.0),
-                        //     child: Ink(
-                        //       decoration:
-                        //           BoxDecoration(color: MyTheme.google_bg),
-                        //       child: Container(
-                        //         constraints: BoxConstraints(
-                        //             maxWidth: 300.0, minHeight: 50.0),
-                        //         alignment: Alignment.center,
-                        //         child: Row(
-                        //           mainAxisAlignment: MainAxisAlignment.center,
-                        //           children: [
-                        //             Image.asset(
-                        //               'assets/icon_google.png', // Replace with the actual path to your Google icon
-                        //               // Adjust the width as needed
-                        //               color: Colors
-                        //                   .white, // Set the desired color for the icon
-                        //             ),
-                        //             SizedBox(width: 10),
-                        //             Text(
-                        //               "REGISTER WITH GOOGLE",
-                        //               textAlign: TextAlign.center,
-                        //               style: GoogleFonts.openSans(
-                        //                   color: Colors.white, fontSize: 16),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
 
                         GestureDetector(
                           onTap: () {
@@ -667,35 +492,6 @@ class _RegistrationState extends State<Registration> {
                             )),
                           ),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: RaisedButton(
-                        //     onPressed: () {
-                        //       Navigator.push(context,
-                        //           MaterialPageRoute(builder: (context) {
-                        //         return Login();
-                        //       }));
-                        //     },
-                        //     shape: RoundedRectangleBorder(
-                        //         borderRadius: BorderRadius.circular(2.0)),
-                        //     padding: EdgeInsets.all(0.0),
-                        //     child: Ink(
-                        //       decoration: BoxDecoration(
-                        //           borderRadius: BorderRadius.circular(10.0)),
-                        //       child: Container(
-                        //         constraints: BoxConstraints(
-                        //             maxWidth: 300.0, minHeight: 50.0),
-                        //         alignment: Alignment.center,
-                        //         child: Text(
-                        //           "Sign In",
-                        //           textAlign: TextAlign.center,
-                        //           style: GoogleFonts.openSans(
-                        //               color: Colors.white, fontSize: 16),
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   )

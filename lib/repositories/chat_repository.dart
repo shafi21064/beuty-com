@@ -1,4 +1,3 @@
-import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -68,8 +67,6 @@ class ChatRepository {
         "App-Language": app_language.$
       },
     );
-    /* print("${AppConfig.BASE_URL}/chat/get-new-messages/${conversation_id}/${last_message_id}");
-    print(response.body.toString());*/
     return messageResponseFromJson(response.body);
   }
 

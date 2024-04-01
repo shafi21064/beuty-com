@@ -224,7 +224,6 @@ class _CheckoutState extends State<Checkout> {
     _paymentTypeList
         .addAll(paymentTypeResponseList);
 
-    print('payment method:  ${_paymentTypeList.length}');
     if (_paymentTypeList.length > 0) {
       _selected_payment_method = _paymentTypeList[0].payment_type;
       _selected_payment_method_key = _paymentTypeList[0].payment_type_key;
@@ -299,8 +298,6 @@ class _CheckoutState extends State<Checkout> {
   }
 
   Future<void> _onRefresh() async {
-    // reset();
-    // fetchAll();
     reset();
     if (is_logged_in.$ == true) {
       fetchAll();
@@ -308,9 +305,7 @@ class _CheckoutState extends State<Checkout> {
   }
 
   onAddressSwitch() async {
-    //_shipping_cost_string = ". . .";
     setState(() {});
-    //getSetShippingCost();
   }
 
   onPopped(value) {
@@ -442,10 +437,6 @@ class _CheckoutState extends State<Checkout> {
 
         var orderCreateResponse =
         await PaymentRepository().getOrderCreateResponseFromCod(requestBody);
-        print('orderCreateResponse ${orderCreateResponse.data?.paymentUrl}');
-        print('orderCreateResponseResult ${orderCreateResponse.data?.payment}');
-        print('orderCreateResponse# ${orderCreateResponse}');
-        //print("orderCreateResponse${orderCreateResponse}");
         // Check if the widget is mounted before updating the UI
         if (mounted) {
           Navigator.of(loadingcontext).pop();
@@ -463,7 +454,6 @@ class _CheckoutState extends State<Checkout> {
           } else{
             if (_selected_payment_method == "bkash") {
               print('bkash_initial_url ${orderCreateResponse.data.paymentUrl}');
-              print('navigating to bkash');
               if(orderCreateResponse.data?.paymentUrl != null) {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return BkashScreen(
@@ -906,7 +896,6 @@ class _CheckoutState extends State<Checkout> {
       setModalState(() {
 
         _selectedZone_id = city.id;
-        print('_selectedZone_id ${_selectedZone_id}');
         _cityController.text = city.name;
       });
       return;
@@ -914,12 +903,10 @@ class _CheckoutState extends State<Checkout> {
     _selected_city = city;
     setState(() {
       _selectedZone_id = city.id;
-      print('_selectedZone_id ${_selectedZone_id}');
     });
     setModalState(() {
       _cityController.text = city.name;
       _selectedZone_id = city.id;
-      print('_selectedZone_id ${_selectedZone_id}');
     });
   }
 
@@ -927,21 +914,18 @@ class _CheckoutState extends State<Checkout> {
     if (_selected_country != null && country.id == _selected_country.id) {
       setModalState(() {
         _selectedArea_id = country.id;
-        print('_selectedArea_id ${_selectedArea_id}');
         _countryController.text = country.name;
       });
       return;
     }
     _selected_country = country;
     _selectedArea_id = country.id;
-    print('_selectedArea_id ${_selectedArea_id}');
 
     setState(() {});
 
     setModalState(() {
       _countryController.text = country.name;
       _selectedArea_id = country.id;
-      print('_selectedArea_id ${_selectedArea_id}');
 
     });
   }
@@ -950,7 +934,6 @@ class _CheckoutState extends State<Checkout> {
     if (_selected_state != null && state.id == _selected_state.id) {
       setModalState(() {
         _selectedCity_id = state.id;
-        print('_selectedCity_id ${_selectedCity_id}');
         _stateController.text = state.name;
       });
       return;
@@ -958,13 +941,11 @@ class _CheckoutState extends State<Checkout> {
     _selected_state = state;
 
     _selectedCity_id = state.id;
-    print('_selectedCity_id ${_selectedCity_id}');
     _selected_city = null;
     setState(() {});
     setModalState(() {
       _stateController.text = state.name;
       _selectedCity_id = state.id;
-      print('_selectedCity_id ${_selectedCity_id}');
       _cityController.text = "";
     });
   }
@@ -980,7 +961,6 @@ class _CheckoutState extends State<Checkout> {
     var email = _emailController.text.toString();
     var note = _orderNoteController.text.toString();
 
-    //print(city + zone + area);
 
     if (address == "") {
       ToastComponent.showDialog(
@@ -1228,31 +1208,6 @@ class _CheckoutState extends State<Checkout> {
                     ),
                   ),
                 )),
-            // OtherConfig.USE_GOOGLE_MAP
-            //     ? Positioned(
-            //         right: 0,
-            //         top: 80.0,
-            //         child: InkWell(
-            //           onTap: () {
-            //             Navigator.push(context,
-            //                 MaterialPageRoute(builder: (context) {
-            //               return MapLocation(
-            //                   address: _shippingAddressList[index]);
-            //             })).then((value) {
-            //               onPopped(value);
-            //             });
-            //           },
-            //           child: Padding(
-            //             padding: const EdgeInsets.only(
-            //                 top: 12.0, left: 16.0, right: 16.0, bottom: 16.0),
-            //             child: Icon(
-            //               Icons.location_on,
-            //               color: MyTheme.dark_grey,
-            //               size: 16,
-            //             ),
-            //           ),
-            //         ))
-            //     : Container()
           ],
         ),
       ),
@@ -1263,8 +1218,6 @@ class _CheckoutState extends State<Checkout> {
     return StatefulBuilder(builder: (BuildContext context,
         StateSetter setModalState /*You can rename this!*/) {
       return ListView(
-        // mainAxisSize: MainAxisSize.min,
-        // crossAxisAlignment: CrossAxisAlignment.start,
         shrinkWrap: true,
 
         physics: NeverScrollableScrollPhysics(),
@@ -1287,9 +1240,6 @@ class _CheckoutState extends State<Checkout> {
                 controller: _nameController,
                 autofocus: false,
                 decoration: InputDecoration(
-                  // hintText: AppLocalizations
-                  //     .of(context)
-                  //     .address_screen_enter_name,
                     hintText: "Enter Name",
                     hintStyle: TextStyle(
                         fontSize: 12.0, color: MyTheme.light_grey),
@@ -1367,9 +1317,6 @@ class _CheckoutState extends State<Checkout> {
                 controller: _emailController,
                 autofocus: false,
                 decoration: InputDecoration(
-                  // hintText: AppLocalizations
-                  //     .of(context)
-                  //     .address_screen_enter_phone + '*',
                     hintText: "Enter Email",
                     hintStyle: TextStyle(
                         fontSize: 12.0, color: MyTheme.light_grey),
@@ -1506,9 +1453,6 @@ class _CheckoutState extends State<Checkout> {
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
-              // "${AppLocalizations
-              //     .of(context)
-              //     .address_screen_city} *",
                 "Zone *",
                 style: TextStyle(
                     color: MyTheme.secondary, fontSize: 12)),
@@ -1539,7 +1483,6 @@ class _CheckoutState extends State<Checkout> {
                   );
                 },
                 itemBuilder: (context, city) {
-                  //print(suggestion.toString());
                   return ListTile(
                     dense: true,
                     title: Text(
@@ -1565,15 +1508,11 @@ class _CheckoutState extends State<Checkout> {
                 },
                 textFieldConfiguration: TextFieldConfiguration(
                   onTap: () {},
-                  //autofocus: true,
                   controller: _cityController,
                   onSubmitted: (txt) {
                     // keep blank
                   },
                   decoration: InputDecoration(
-                    // hintText: AppLocalizations
-                    //     .of(context)
-                    //     .address_screen_enter_zone,
                       hintText: "Select Zone",
                       hintStyle: TextStyle(
                           fontSize: 12.0,
@@ -1628,7 +1567,6 @@ class _CheckoutState extends State<Checkout> {
                   );
                 },
                 itemBuilder: (context, city) {
-                  //print(suggestion.toString());
                   return ListTile(
                     dense: true,
                     title: Text(
@@ -1660,9 +1598,6 @@ class _CheckoutState extends State<Checkout> {
                     // keep blank
                   },
                   decoration: InputDecoration(
-                    // hintText: AppLocalizations
-                    //     .of(context)
-                    //     .address_screen_enter_zone,
                       hintText: "Select Area",
                       hintStyle: TextStyle(
                           fontSize: 12.0,
@@ -1727,8 +1662,6 @@ class _CheckoutState extends State<Checkout> {
                 children: [
                   Text(
                     "Shipping Cost",
-                    // AppLocalizations.of(context)
-                    //     .checkout_screen_shipping_cost,
                     textAlign: TextAlign.end,
                     style: TextStyle(
                         color: MyTheme.secondary,
@@ -1754,8 +1687,6 @@ class _CheckoutState extends State<Checkout> {
                 children: [
                   Text(
                     "Discount",
-                    // AppLocalizations.of(context)
-                    //     .checkout_screen_discount,
                     textAlign: TextAlign.end,
                     style: TextStyle(
                         color: MyTheme.secondary,
@@ -1778,7 +1709,6 @@ class _CheckoutState extends State<Checkout> {
             children: [
               Text(
                 "Total",
-                //AppLocalizations.of(context).checkout_screen_total_amount,
                 textAlign: TextAlign.end,
                 style: TextStyle(
                     color: MyTheme.secondary,
@@ -1895,8 +1825,6 @@ class _CheckoutState extends State<Checkout> {
 
 
   buildAddressExpandedTile() {
-    // int maxTextLen = 10;
-    print('result#10' + success.toString());
     return Card(
         shape: RoundedRectangleBorder(
           side: BorderSide(color: MyTheme.light_grey, width: 0.0),
@@ -1906,8 +1834,6 @@ class _CheckoutState extends State<Checkout> {
         elevation: 0.0,
         child: Padding(
           padding:  EdgeInsets.only(
-            //left: 32,
-            //right: 30,
               top: 8.0, bottom: 8.0),
           child: success == false || _nameController.text == 'Guest'? Container(
             margin: EdgeInsets.only(
@@ -1944,7 +1870,6 @@ class _CheckoutState extends State<Checkout> {
 
 
             subtitle: Column(
-              //crossAxisAlignment: CrossAxisAlignment.center,
               children: [
 
                 SizedBox(
@@ -2132,8 +2057,6 @@ class _CheckoutState extends State<Checkout> {
                         ),
 
                         Container(
-                          //height: 300,
-                          //color: Colors.grey,
                           child: buildCartSellerItemCard(),
                         ),
                       ],
@@ -2144,8 +2067,6 @@ class _CheckoutState extends State<Checkout> {
                     ),
 
                     Container(
-                      //height: 110,
-                      //color: Colors.pink,
                       child: buildDetails(),
                     ),
 
@@ -2182,9 +2103,6 @@ class _CheckoutState extends State<Checkout> {
                                 maxLines: null,
                                 keyboardType: TextInputType.multiline,
                                 decoration: InputDecoration(
-                                  // hintText: AppLocalizations
-                                  //     .of(context)
-                                  //     .address_screen_enter_address,
                                     hintText: "Notes about your order, e.g. special notes for delivery.",
                                     hintStyle: TextStyle(
                                         fontSize: 12.0, color: MyTheme.dark_grey),
@@ -2217,7 +2135,6 @@ class _CheckoutState extends State<Checkout> {
 
                           Container(
                             color: MyTheme.white,
-                            // margin: EdgeInsets.symmetric(horizontal: 5),
                             padding: EdgeInsets.all(5),
                             child: Column(
                               children: [
@@ -2309,7 +2226,6 @@ class _CheckoutState extends State<Checkout> {
             height: 42,
             child: FlatButton(
               minWidth: MediaQuery.of(context).size.width,
-              //height: 50,
               color: MyTheme.secondary,
               shape: RoundedRectangleBorder(
                   borderRadius: const BorderRadius.only(
@@ -2334,7 +2250,6 @@ class _CheckoutState extends State<Checkout> {
             height: 42,
             child: FlatButton(
 
-              //height: 50,
               color: MyTheme.primary,
               shape: RoundedRectangleBorder(
                   borderRadius: const BorderRadius.only(
@@ -2427,7 +2342,6 @@ class _CheckoutState extends State<Checkout> {
                   Address()), // Replace AddressScreen with the actual screen you want to navigate to
         );
 
-        //Address().foysal;
       },
       child: Card(
         shape: RoundedRectangleBorder(
@@ -2710,7 +2624,6 @@ class _CheckoutState extends State<Checkout> {
           _seleted_shipping_pickup_point = _pickupList[index].id;
           onAddressSwitch();
         }
-        //detectShippingOption();
         setState(() {});
       },
       child: Card(
@@ -2792,7 +2705,6 @@ class _CheckoutState extends State<Checkout> {
   }
 
   buildPaymentMethodList() {
-    print("Payment type: ${_paymentTypeList.length}");
     if (_isInitial && _paymentTypeList.length == 0) {
       return SingleChildScrollView(
           child: ShimmerHelper()
@@ -2857,10 +2769,6 @@ class _CheckoutState extends State<Checkout> {
                       child: Padding(
                           padding: const EdgeInsets.only(left: 30.0, right: 5, top: 5,bottom: 5),
                           child:
-                          /*Image.asset(
-                          _paymentTypeList[index].image,
-                          fit: BoxFit.fitWidth,
-                        ),*/
                           FadeInImage.assetNetwork(
                             placeholder: 'assets/placeholder.png',
                             image: _paymentTypeList[index].payment_type ==
@@ -2942,8 +2850,6 @@ class _CheckoutState extends State<Checkout> {
               ),
               onPressed: () {
                 _shippingAddressList == null ? onAddressAdd(context) : Container();
-                //onPressPlaceOrderOrProceed();
-                print('working2');
                 onPressProceed();
               },
             )
@@ -2959,7 +2865,6 @@ class _CheckoutState extends State<Checkout> {
       height: 45,
       width: double.infinity,
       decoration: BoxDecoration(
-        //borderRadius: BorderRadius.circular(2.0),
           color: MyTheme.secondary
       ),
       child: Row(
@@ -2976,7 +2881,6 @@ class _CheckoutState extends State<Checkout> {
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: Text(
-              //_discountedPrice ?? _totalString,
               _totalString,
               style: TextStyle(color: MyTheme.white, fontSize: 14),
             ),

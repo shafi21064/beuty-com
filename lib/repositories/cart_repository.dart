@@ -145,8 +145,6 @@ print(post_body);
 
     print("cart Quantity res ${response.body}");
     
-    //return cartSummaryResponseFromJson(response.body);
-    
     return jsonDecode(response.body);
   }
 }

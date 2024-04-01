@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/services.dart';
 import 'package:kirei/app_config.dart';
 import 'package:kirei/data_model/feature_category_response.dart';
@@ -138,7 +136,6 @@ class _FilterState extends State<Filter> {
     var filteredBrandResponse =
     await SkinTypesRepository().getFilterPageSkinTypes();
     _filterBrandList.addAll(filteredBrandResponse.skinTypes);
-    print(_filterBrandList);
     _filteredBrandsCalled = true;
     setState(() {});
   }
@@ -273,7 +270,6 @@ class _FilterState extends State<Filter> {
     var providerValue = Provider.of<CategoryPassingController>(context, listen: false);
     var productResponse = await ProductRepository().getFilteredProducts(
       page: _productPage,
-      //name: _searchKey,
       name: providerValue.searchKey ?? _searchKey,
       sort_key: _selectedSort,
       categories:
@@ -287,11 +283,9 @@ class _FilterState extends State<Filter> {
       key_ingredients: providerValue.ingredientsKey ?? widget.key_ingredients,
       max: _maxPriceController.text.toString(),
       min: _minPriceController.text.toString(),
-      //search: widget.search.toString(),
     );
 
     _productList.addAll(productResponse.products);
-    print("foysal111"+_productList.toString());
     _isProductInitial = false;
     _totalProductData = productResponse.meta.total;
     _showProductLoadingContainer = false;
@@ -472,7 +466,6 @@ class _FilterState extends State<Filter> {
         body: Stack(
           clipBehavior: Clip.none,
           children: [
-            // buildAppBar(context),
             _selectedFilter.option_key == 'product'
                 ? buildProductList()
                 : (_selectedFilter.option_key == 'brands'
@@ -486,7 +479,6 @@ class _FilterState extends State<Filter> {
             ),
 
             Align(
-              //alignment: Alignment.bottomCenter,
                 child: _selectedFilter.option_key == 'product'
                     ? buildProductLoadingContainer()
                     : (_selectedFilter.option_key == 'brands'
@@ -513,7 +505,6 @@ class _FilterState extends State<Filter> {
             color: MyTheme.primary,
           ),
           padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-          //padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
           child: Column(
             children: [
               buildTopAppbar(context),
@@ -893,17 +884,14 @@ class _FilterState extends State<Filter> {
                       _searchController.text = suggestion.name;
                       _searchKey = suggestion.name;
                       setState(() {});
-                     // _onSearchSubmit();
                     },
                     textFieldConfiguration: TextFieldConfiguration(
                       onTap: () {},
                       controller: _searchController,
                       onSubmitted: (txt) {
                         _searchKey = txt;
-                        //setState(() {});
                         value.setSearchKey(_searchKey);
                         Navigator.push(context, MaterialPageRoute(builder: (_)=> Main(pageIndex: 1,)));
-                        //_onSearchSubmit();
                       },
                       style: TextStyle(color: MyTheme.white),
                       autofocus: false,
@@ -1215,7 +1203,6 @@ class _FilterState extends State<Filter> {
             value: category.name,
             onChanged: (value) {
               setState(() {
-                debugPrint("Val=$value");
                 _selectedCategory = value;
               });
             },
@@ -1241,8 +1228,6 @@ class _FilterState extends State<Filter> {
   buildProductScrollableList() {
     if (_isProductInitial && _productList.length == 0) {
       return Container(
-        //margin: widget.category!= null? EdgeInsets.only(top: 150) : EdgeInsets.only(top: 0),
-        //padding: widget.category!= null? EdgeInsets.only(top: 200) : EdgeInsets.only(top: 0),
           margin:EdgeInsets.only(top: 100),
           padding:EdgeInsets.only(top: 35),
           child: ListView(
@@ -1254,8 +1239,6 @@ class _FilterState extends State<Filter> {
           ));
     } else if (_productList.length > 0) {
       return Container(
-        //margin:  EdgeInsets.only(top: 5),
-        //padding: EdgeInsets.only(top: 8),
         child: RefreshIndicator(
           color: Colors.white,
           backgroundColor: MyTheme.primary,
@@ -1274,8 +1257,6 @@ class _FilterState extends State<Filter> {
                 //Text('data'),
                 buildScrollableSubCategory() ?? SizedBox(),
                 GridView.builder(
-                  // 2
-                  //addAutomaticKeepAlives: true,
                   itemCount: _productList.length,
                   controller: _scrollController,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -1352,8 +1333,6 @@ class _FilterState extends State<Filter> {
                 //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
               ),
               GridView.builder(
-                // 2
-                //addAutomaticKeepAlives: true,
                 itemCount: _brandList.length,
                 controller: _scrollController,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -1489,8 +1468,6 @@ class _FilterState extends State<Filter> {
                 //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
               ),
               GridView.builder(
-                // 2
-                //addAutomaticKeepAlives: true,
                 itemCount: _shopList.length,
                 controller: _scrollController,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -1584,10 +1561,8 @@ class _FilterState extends State<Filter> {
     var providerValue = Provider.of<CategoryPassingController>(context, listen: false);
     if(!_shimmerShow && _allSubCategories.length == 0){
       _isSubcategoryExist == false;
-      //providerValue.resetCategoryKeyValue();
     }else if (_allSubCategories.length > 0){
       _isSubcategoryExist == true;
-      //providerValue.resetCategoryKeyValue();
       return Card(
         margin : EdgeInsets.symmetric(vertical: 2, horizontal: 0),
         elevation: 5,
@@ -1621,7 +1596,6 @@ class _FilterState extends State<Filter> {
                               width: 56,
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                //borderRadius: BorderRadius.circular(30),
                                   shape: BoxShape.circle,
                                   border: Border.all(color: MyTheme.light_grey, width: 1)
                               ),

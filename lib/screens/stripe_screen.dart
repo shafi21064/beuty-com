@@ -77,7 +77,6 @@ class _StripeScreenState extends State<StripeScreen> {
         .then((data) {
       var decodedJSON = jsonDecode(data);
       Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
-      //print(data.toString());
       if (responseJSON["result"] == false) {
         Toast.show(responseJSON["message"], context,
             duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
@@ -102,8 +101,6 @@ class _StripeScreenState extends State<StripeScreen> {
     String initial_url =
         "${AppConfig.BASE_URL}/stripe?payment_type=${widget.payment_type}&combined_order_id=${_combined_order_id}&amount=${widget.amount}&user_id=${user_id.$}";
 
-    //print("init url");
-    //print(initial_url);
 
     if (_order_init == false &&
         _combined_order_id == 0 &&
@@ -127,7 +124,6 @@ class _StripeScreenState extends State<StripeScreen> {
             },
             onWebResourceError: (error) {},
             onPageFinished: (page) {
-              //print(page.toString());
 
               if (page.contains("/stripe/success")) {
                 getData();

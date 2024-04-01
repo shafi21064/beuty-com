@@ -1,8 +1,6 @@
-import 'package:kirei/app_config.dart';
 import 'package:kirei/data_model/business_setting_response.dart';
 import 'package:kirei/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 
 class BusinessSettingRepository{
@@ -18,7 +16,6 @@ class BusinessSettingRepository{
     ];
   String params= businessSettings.join(',');
     var body = {
-      //'keys':params
       "keys":params
     };
     print("business ${body}");

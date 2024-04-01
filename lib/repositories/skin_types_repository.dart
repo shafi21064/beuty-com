@@ -1,8 +1,7 @@
-import 'package:kirei/app_config.dart';
+
 import 'package:kirei/data_model/skin_type_response.dart';
 import 'package:kirei/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
-import 'package:kirei/data_model/brand_response.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 
 class SkinTypesRepository {

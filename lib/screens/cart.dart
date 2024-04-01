@@ -131,14 +131,10 @@ class CartState extends State<Cart> {
         _shopList[seller_index].cart_items[item_index].upper_limit) {
       _shopList[seller_index].cart_items[item_index].quantity++;
       getSetCartTotal();
-      print('product id ${_shopList[seller_index].cart_items[item_index].id}');
-      print(
-          'product quantity ${_shopList[seller_index].cart_items[item_index].quantity}');
 
       var responseData = await CartRepository().getCartQuantityResponse(
           _shopList[seller_index].cart_items[item_index].id,
           _shopList[seller_index].cart_items[item_index].quantity);
-      print("responseData"+ responseData["result"].toString());
 
       if(responseData["result"].toString() == "false"){
         ToastComponent.showDialog(
@@ -380,9 +376,6 @@ class CartState extends State<Cart> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        /*border: Border(
-                  top: BorderSide(color: MyTheme.light_grey,width: 1.0),
-                )*/
       ),
 
       height: widget.has_bottomnav ? 188 : 150,
@@ -457,8 +450,6 @@ class CartState extends State<Cart> {
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           color: MyTheme.secondary,
-                          // constraints:
-                          //     BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
                           alignment: Alignment.center,
                           child: Text(
                             AppLocalizations.of(context)
@@ -785,9 +776,6 @@ class CartState extends State<Cart> {
                     color: MyTheme.secondary,
                     size: 18,
                   ),
-                  // shape: CircleBorder(
-                  //   side: new BorderSide(color: MyTheme.light_grey, width: 1.0),
-                  // ),
                   color: Colors.white,
                   onPressed: () {
                     onQuantityIncrease(seller_index, item_index, increaseItem);
