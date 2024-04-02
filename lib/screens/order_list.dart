@@ -224,6 +224,8 @@ class _OrderListState extends State<OrderList> {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return Main();
             }));
+          }else {
+             Navigator.of(context).pop();
           }
         },
         child: Directionality(

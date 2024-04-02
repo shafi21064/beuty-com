@@ -18,7 +18,7 @@ class WishListChekResponse {
 
   String message;
   bool is_in_wishlist;
-  String product_id;
+  dynamic product_id;
   int wishlist_id;
 
   factory WishListChekResponse.fromJson(Map<String, dynamic> json) => WishListChekResponse(

@@ -368,6 +368,8 @@ class _OrderDetailsState extends State<OrderDetails> {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return Main();
           }));
+        }else {
+           Navigator.of(context).pop();
         }
       },
       child: Directionality(

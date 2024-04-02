@@ -11,6 +11,8 @@ import 'package:kirei/screens/splash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_value/shared_value.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
+import 'package:upgrader/upgrader.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'app_config.dart';
 import 'package:one_context/one_context.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -20,6 +22,14 @@ import 'package:kirei/providers/locale_provider.dart';
 import 'lang_config.dart';
 
 SharedPreferences sharedPreferences;
+Future<void> _launchUrl(Uri url) async {
+  if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+    throw Exception('Could not launch $url');
+  }
+}
+
+
+
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +37,7 @@ main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  await Upgrader.clearSavedSettings();
   sharedPreferences = await SharedPreferences.getInstance();
   print("app_mobile_language.1isEmpty${app_mobile_language.$.isEmpty}");
   // AddonsHelper().setAddonsData();
@@ -122,11 +133,18 @@ class _MyAppState extends State<MyApp> {
                   ],
                   locale: provider.locale,
                   supportedLocales: LangConfig().supportedLocales(),
-                  home: Splash(),
+                  //home: Splash(),
+                  home: UpgradeAlert(
+                      upgrader: Upgrader(
+                       onUpdate: (){
+                         _launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=com.thetork.kirei&hl=en_US'));
+                       },
+                      ),
+                      child: Splash()
+                  ),
                   //home: Main(),
                 ));
               });
         }));
   }
 }
-

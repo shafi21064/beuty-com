@@ -25,7 +25,7 @@ class CategoryPassingController with ChangeNotifier{
   }
 
   void setTypeKey(typeKeyValue){
-    _categoryKey = typeKeyValue;
+    _typeKey = typeKeyValue;
     notifyListeners();
   }
 

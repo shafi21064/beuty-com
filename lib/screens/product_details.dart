@@ -201,7 +201,8 @@ class _ProductDetailsState extends State<ProductDetails> {
       });
 
       _productDetails.productCategories.forEach((productCategory) {
-        _categories.add(productCategory.name);
+        //_categories.add(productCategory.name);
+        _categories.add(productCategory.slug);
       });
 
       _productDetails.productTags.forEach((productTag) {
@@ -2340,6 +2341,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       builder: (widget, value, child) {
                         return InkWell(
                           onTap: () {
+                            print("KireiBD191:${category}");
                             // Handle the click on the ingredients (add your logic here)
                             value.setCategoryKey(category);
                             Navigator.push(context,
