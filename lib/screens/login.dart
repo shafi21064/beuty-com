@@ -1,6 +1,10 @@
 
 
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kirei/my_theme.dart';
+import 'package:kirei/other_config.dart';
+import 'package:kirei/repositories/profile_repository.dart';
 import 'package:kirei/screens/otp.dart';
 import 'package:kirei/ui_sections/drawer.dart';
 import 'package:flutter/material.dart';
@@ -110,33 +114,33 @@ class _LoginState extends State<Login> {
       AuthHelper().setUserData(loginResponse);
       AuthHelper().fetch_and_set();
       // push notification starts
-      // if (OtherConfig.USE_PUSH_NOTIFICATION) {
-      //   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+      if (OtherConfig.USE_PUSH_NOTIFICATION) {
+        final FirebaseMessaging _fcm = FirebaseMessaging.instance;
 
-      //   await _fcm.requestPermission(
-      //     alert: true,
-      //     announcement: false,
-      //     badge: true,
-      //     carPlay: false,
-      //     criticalAlert: false,
-      //     provisional: false,
-      //     sound: true,
-      //   );
+        await _fcm.requestPermission(
+          alert: true,
+          announcement: false,
+          badge: true,
+          carPlay: false,
+          criticalAlert: false,
+          provisional: false,
+          sound: true,
+        );
 
-      //   String fcmToken = await _fcm.getToken();
+        String fcmToken = await _fcm.getToken();
 
-      //   if (fcmToken != null) {
-      //     print("--fcm token--");
-      //     print(fcmToken);
-      //     if (is_logged_in.$ == true) {
-      //       print("true------------------------");
-      //       // update device token
-      //       var deviceTokenUpdateResponse = await ProfileRepository()
-      //           .getDeviceTokenUpdateResponse(fcmToken);
-      //       print("hmmmm------------------------");
-      //     }
-      //   }
-      // }
+        if (fcmToken != null) {
+          print("--fcm token--");
+          print(fcmToken);
+          if (is_logged_in.$ == true) {
+            print("true------------------------");
+            // update device token
+            var deviceTokenUpdateResponse = await ProfileRepository()
+                .getDeviceTokenUpdateResponse(fcmToken);
+            print("hmmmm------------------------");
+          }
+        }
+      }
 
       //push norification ends
 

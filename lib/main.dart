@@ -1,7 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:kirei/firebase_options.dart';
 import 'package:kirei/helpers/auth_helper.dart';
+import 'package:kirei/other_config.dart';
 import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/providers/category_passing_controller.dart';
 import 'package:kirei/providers/version_change.dart';
+import 'package:kirei/services/push_notification_service.dart';
 import 'package:kirei/theme/appThemes.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
@@ -29,10 +33,12 @@ Future<void> _launchUrl(Uri url) async {
 }
 
 
-
-
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    name: "KireiBD",
+    options: DefaultFirebaseOptions.currentPlatform
+  );
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -73,11 +79,11 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    // if (OtherConfig.USE_PUSH_NOTIFICATION) {
-    //   Future.delayed(Duration(milliseconds: 100), () async {
-    //     PushNotificationService().initialise();
-    //   });
-    // }
+    if (OtherConfig.USE_PUSH_NOTIFICATION) {
+      Future.delayed(Duration(milliseconds: 100), () async {
+        PushNotificationService().initialise();
+      });
+    }
   }
 
   @override
@@ -139,6 +145,8 @@ class _MyAppState extends State<MyApp> {
                        onUpdate: (){
                          _launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=com.thetork.kirei&hl=en_US'));
                        },
+                        showIgnore: false,
+                        //showLater: false,
                       ),
                       child: Splash()
                   ),
