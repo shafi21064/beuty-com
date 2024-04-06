@@ -219,6 +219,40 @@ class _LoginState extends State<Login> {
     //   print("error is ....... $e");
     //   // TODO
     // }
+
+    try {
+
+      final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication googleAuth = await googleUser?.authentication;
+
+      // final credential = GoogleAuthProvider.credential(
+      //   accessToken: googleAuth?.accessToken,
+      //   idToken: googleAuth?.idToken,
+      // );
+
+        var loginResponse = await AuthRepository().getSocialLoginResponse(
+            "google", googleUser.displayName, googleUser.email, googleUser.id,
+            access_token: googleAuth.accessToken);
+
+        if (loginResponse.result == false) {
+          ToastComponent.showDialog(loginResponse.message, context,
+              gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        } else {
+          ToastComponent.showDialog(loginResponse.message, context,
+              gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+          AuthHelper().setUserData(loginResponse);
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return Main();
+          }));
+        }
+        GoogleSignIn().disconnect();
+
+      } on Exception catch (e) {
+        print("error is ....... $e");
+        // TODO
+      }
+
   }
 
   onPressedTwitterLogin() async {
@@ -652,43 +686,45 @@ class _LoginState extends State<Login> {
                         //     ),
                         //   ),
                         // ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: RaisedButton(
-                        //     onPressed: onPressedGoogleLogin,
-                        //     shape: RoundedRectangleBorder(
-                        //       borderRadius: BorderRadius.circular(2.0),
-                        //     ),
-                        //     padding: EdgeInsets.all(0.0),
-                        //     child: Ink(
-                        //       decoration:
-                        //           BoxDecoration(color: MyTheme.google_bg),
-                        //       child: Container(
-                        //         constraints: BoxConstraints(
-                        //             maxWidth: 300.0, minHeight: 50.0),
-                        //         alignment: Alignment.center,
-                        //         child: Row(
-                        //           mainAxisAlignment: MainAxisAlignment.center,
-                        //           children: [
-                        //             Image.asset(
-                        //               'assets/icon_google.png', // Replace with the actual path to your Google icon
-                        //               // Adjust the width as needed
-                        //               color: Colors
-                        //                   .white, // Set the desired color for the icon
-                        //             ),
-                        //             SizedBox(width: 10),
-                        //             Text(
-                        //               "LOGIN WITH GOOGLE",
-                        //               textAlign: TextAlign.center,
-                        //               style: GoogleFonts.ubuntu(
-                        //                   color: Colors.white, fontSize: 16),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 8.0, bottom: 8.0, right: 0.0, left: 0.0,
+                          ),
+                          child: RaisedButton(
+                            onPressed: onPressedGoogleLogin,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(2.0),
+                            ),
+                            padding: EdgeInsets.all(0.0),
+                            child: Ink(
+                              decoration:
+                                  BoxDecoration(color: MyTheme.google_bg),
+                              child: Container(
+                                constraints: BoxConstraints(
+                                    maxWidth: 300.0, minHeight: 50.0),
+                                alignment: Alignment.center,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icon_google.png', // Replace with the actual path to your Google icon
+                                      // Adjust the width as needed
+                                      color: Colors
+                                          .white, // Set the desired color for the icon
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      "LOGIN WITH GOOGLE",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.ubuntu(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(context,

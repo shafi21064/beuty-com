@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kirei/helpers/auth_helper.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:flutter/material.dart';
@@ -181,6 +182,74 @@ class _RegistrationState extends State<Registration> {
       }));
       ;
     }
+  }
+
+  onPressedGoogleRegister() async {
+    // try {
+    //   print("Kireiapp");
+    //   final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    //
+    //   print(googleUser.toString());
+    //
+    //   GoogleSignInAuthentication googleSignInAuthentication =
+    //       await googleUser.authentication;
+    //   String accessToken = googleSignInAuthentication.accessToken;
+    //
+    //   var loginResponse = await AuthRepository().getSocialLoginResponse(
+    //       "google", googleUser.displayName, googleUser.email, googleUser.id,
+    //       access_token: accessToken);
+    //   print("Kireiapp5");
+    //   if (loginResponse.result == false) {
+    //     print("Kireiapp5");
+    //     ToastComponent.showDialog(loginResponse.message, context,
+    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    //   } else {
+    //     print("Kireiapp6");
+    //     ToastComponent.showDialog(loginResponse.message, context,
+    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    //     AuthHelper().setUserData(loginResponse);
+    //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //       return Main();
+    //     }));
+    //   }
+    //   GoogleSignIn().disconnect();
+    // } on Exception catch (e) {
+    //   print("error is ....... $e");
+    //   // TODO
+    // }
+
+    try {
+      final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication googleAuth = await googleUser?.authentication;
+
+      // final credential = GoogleAuthProvider.credential(
+      //   accessToken: googleAuth?.accessToken,
+      //   idToken: googleAuth?.idToken,
+      // );
+
+      var loginResponse = await AuthRepository().getSocialLoginResponse(
+          "google", googleUser.displayName, googleUser.email, googleUser.id,
+          access_token: googleAuth.accessToken);
+
+      if (loginResponse.result == false) {
+        ToastComponent.showDialog(loginResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      } else {
+        ToastComponent.showDialog(loginResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        AuthHelper().setUserData(loginResponse);
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return Main();
+        }));
+      }
+      GoogleSignIn().disconnect();
+
+    } on Exception catch (e) {
+      print("error is ....... $e");
+      // TODO
+    }
+
   }
 
   @override
@@ -472,6 +541,45 @@ class _RegistrationState extends State<Registration> {
                                     ),
                                   ),
                                 ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 8.0, bottom: 8.0, right: 0.0, left: 0.0,
+                          ),
+                          child: RaisedButton(
+                            onPressed: onPressedGoogleRegister,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(2.0),
+                            ),
+                            padding: EdgeInsets.all(0.0),
+                            child: Ink(
+                              decoration:
+                              BoxDecoration(color: MyTheme.google_bg),
+                              child: Container(
+                                constraints: BoxConstraints(
+                                    maxWidth: 300.0, minHeight: 50.0),
+                                alignment: Alignment.center,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icon_google.png', // Replace with the actual path to your Google icon
+                                      // Adjust the width as needed
+                                      color: Colors
+                                          .white, // Set the desired color for the icon
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      "REGISTER WITH GOOGLE",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.ubuntu(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
 
 
