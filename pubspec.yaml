@@ -94,6 +94,8 @@ dependencies:
   upgrader: ^4.11.1
   firebase_core: ^1.12.0
   firebase_messaging: ^11.2.7
+  flutter_share: ^2.0.0
+#  share_plus: ^4.5.3
 dependency_overrides:
   firebase_messaging_platform_interface: 3.1.6
 

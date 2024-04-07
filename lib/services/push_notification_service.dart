@@ -212,11 +212,18 @@ class PushNotificationService {
 
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      _serialiseAndNavigate(message);
+      if(message!= null){
+        _serialiseAndNavigate(message);
+      }
     });
 
 
     FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
+
+    RemoteMessage message = await FirebaseMessaging.instance.getInitialMessage();
+    if(message != null){
+      _serialiseAndNavigate(message);
+    }
 
   }
 

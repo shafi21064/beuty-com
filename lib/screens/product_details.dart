@@ -1,3 +1,4 @@
+import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/providers/category_passing_controller.dart';
@@ -575,6 +576,15 @@ class _ProductDetailsState extends State<ProductDetails> {
     });
   }
 
+  Future<void> share(String link) async {
+    await FlutterShare.share(
+        title: 'Sharing Link',
+        text: 'Share Product link',
+        linkUrl: '$link',
+        //chooserTitle: 'Example Chooser Title'
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
@@ -709,7 +719,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           0.0,
                         ),
 
-                        child: showPreorderDate == null ? ShimmerHelper().buildBasicShimmer( height: 30) : _productDetails.preorderDeliveryDate != "30-11--0001" ? Text("Will Available on ${_productDetails.preorderDeliveryDate}", style: TextStyle(
+                        child: showPreorderDate == null ? ShimmerHelper().buildBasicShimmer( height: 30) : _productDetails != null && _productDetails.preorderDeliveryDate != "30-11--0001" ? Text("Will Available on ${_productDetails.preorderDeliveryDate}", style: TextStyle(
                           color: MyTheme.dark_grey,
                           fontWeight: FontWeight.bold,
                         ),) : Container(),
@@ -1989,6 +1999,19 @@ class _ProductDetailsState extends State<ProductDetails> {
           ),
         ),
         Spacer(),
+
+        IconButton(
+            onPressed: () {
+              share(_productDetails.product_link.toString());
+        },
+            icon: Icon(
+                Icons.share,
+                //color: Color.fromRGBO(230, 46, 4, 1),
+                color: MyTheme.secondary,
+              size: 20,
+            )
+        ),
+
         _isInWishList
             ? InkWell(
                 onTap: () {
