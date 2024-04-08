@@ -1177,6 +1177,30 @@ class _OrderDetailsState extends State<OrderDetails> {
                 ],
               ),
             ),
+            // SizedBox(
+            //   height: MediaQuery.of(context).size.height * 0.01,
+            // ),
+            // InkWell(
+            //   onTap: (){
+            //
+            //   },
+            //   child: Container(
+            //     height: 40,
+            //     decoration: BoxDecoration(
+            //       border: Border.all(
+            //         color: Colors.red,
+            //         width: 2,
+            //       )
+            //     ),
+            //     child: Center(child: Text("Re-order",
+            //     style: TextStyle(
+            //       fontSize: 18,
+            //       fontWeight: FontWeight.w500,
+            //       color: Colors.black,
+            //     ),
+            //     )),
+            //   ),
+            // ),
           ],
         ),
       ),

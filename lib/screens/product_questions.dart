@@ -183,7 +183,7 @@ class _ProductQuestionsState extends State<ProductQuestions> {
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Container(
           decoration: new BoxDecoration(color: Colors.white54.withOpacity(0.6)),
-          height: 120,
+          height: MediaQuery.of(context).viewPadding.bottom > 30 ? 150 : 130,
           child: Padding(
             padding: const EdgeInsets.only(
                 top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
@@ -612,6 +612,11 @@ class _ProductQuestionsState extends State<ProductQuestions> {
               ),
             ),
           ],
+        ),
+        MediaQuery.of(context).viewPadding.bottom > 30 ? SizedBox(
+          height: 20,
+        ) : SizedBox(
+          height: 10,
         ),
       ],
     );

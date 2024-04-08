@@ -83,6 +83,7 @@ class ExtraRepository {
       "banner": "${image}",
       "filename": "$filename",
       "description": "$description",
+      "type": "app",
       // "title": "$title",
      // "hashtags": "$hashtags",
     });
