@@ -360,6 +360,35 @@ class _OrderDetailsState extends State<OrderDetails> {
     fetchAll();
   }
 
+  bool loading = false;
+
+  void reOrder(int id) async{
+    setState(() {
+      loading = true;
+    });
+    var response = await OrderRepository().getReOrder(id: id);
+    setState(() {
+      loading = false;
+    });
+
+    if(response["result"] == true){
+      ToastComponent.showDialog(response["message"].toString(), context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG).then((){
+        setState(() {
+          loading = false;
+        });
+      });
+    } else {
+      ToastComponent.showDialog(response["message"].toString(), context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG).then((){
+        setState(() {
+          loading = false;
+        });
+      });
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -1177,30 +1206,31 @@ class _OrderDetailsState extends State<OrderDetails> {
                 ],
               ),
             ),
-            // SizedBox(
-            //   height: MediaQuery.of(context).size.height * 0.01,
-            // ),
-            // InkWell(
-            //   onTap: (){
-            //
-            //   },
-            //   child: Container(
-            //     height: 40,
-            //     decoration: BoxDecoration(
-            //       border: Border.all(
-            //         color: Colors.red,
-            //         width: 2,
-            //       )
-            //     ),
-            //     child: Center(child: Text("Re-order",
-            //     style: TextStyle(
-            //       fontSize: 18,
-            //       fontWeight: FontWeight.w500,
-            //       color: Colors.black,
-            //     ),
-            //     )),
-            //   ),
-            // ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.01,
+            ),
+            InkWell(
+              onTap: (){
+                reOrder(_orderDetails?.id);
+              },
+              child: Container(
+                height: 40,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.red,
+                    width: 2,
+                  )
+                ),
+                child: Center(
+                    child: loading == true ? CircularProgressIndicator(color: MyTheme.primary,): Text("Re-order",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+                )),
+              ),
+            ),
           ],
         ),
       ),
@@ -1420,7 +1450,7 @@ class _OrderDetailsState extends State<OrderDetails> {
           borderRadius: BorderRadius.circular(16.0),
     color: payment_status == "paid"
     ? Colors.green
-        : payment_status == "cod"
+        : payment_status == "COD"
     ? Colors.orange
         : Colors.red,
       ),

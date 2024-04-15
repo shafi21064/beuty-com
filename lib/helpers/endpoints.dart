@@ -85,4 +85,6 @@ class ENDP {
       "${AppConfig.BASE_URL}/purchase-history-details/";
   static const PURCHASE_HISTORY_ITEM =
       "${AppConfig.BASE_URL}/purchase-history-items/";
+  static const RE_ORDER =
+      "${AppConfig.BASE_URL}/reorder/";
 }

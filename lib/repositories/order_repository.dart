@@ -46,4 +46,16 @@ class OrderRepository {
     print(response.body.toString());
     return orderItemlResponseFromJson(response.body);
   }
+
+  Future<dynamic> getReOrder({@required int id = 0}) async {
+    Uri url = Uri.parse("${ENDP.RE_ORDER}"+id.toString());
+
+    final response = await http.get(url, headers: {
+      "Authorization": "Bearer ${access_token.$}",
+      "App-Language": app_language.$,
+    });
+    print("ReOrder Message: ${response.body}");
+    //return orderDetailResponseFromJson(response.body);
+    return jsonDecode(response.body);
+  }
 }
