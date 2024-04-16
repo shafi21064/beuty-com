@@ -89,6 +89,7 @@ class _AddressState extends State<Address> {
       if (_shippingAddressList != null) {
         _phoneController.text = _shippingAddressList[0]['phone'];
         _nameController.text = _shippingAddressList[0]['name'];
+        _emailController.text = _shippingAddressList[0]["email"];
         _addressController.text = _shippingAddressList[0]['address'];
         _stateController.text = _shippingAddressList[0]['city_name'];
         _cityController.text = _shippingAddressList[0]['zone_name'];

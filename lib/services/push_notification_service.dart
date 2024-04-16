@@ -186,6 +186,90 @@ class PushNotificationService {
 
 }
 
+// class PushNotificationService {
+//   Future initialise() async {
+//     // Request permission and get FCM token
+//     await _fcm.requestPermission(
+//       alert: true,
+//       announcement: false,
+//       badge: true,
+//       carPlay: false,
+//       criticalAlert: false,
+//       provisional: false,
+//       sound: true,
+//     );
+//     String fcmToken = await _fcm.getToken();
+//
+//     if (fcmToken != null) {
+//       print("--fcm token--");
+//       print(fcmToken);
+//       if (is_logged_in.$ == true) {
+//         // Update device token
+//         var deviceTokenUpdateResponse =
+//             await ProfileRepository().getDeviceTokenUpdateResponse(fcmToken);
+//       }
+//     }
+//
+//     // Handle initial message if the app is opened from a terminated state
+//     FirebaseMessaging.instance.getInitialMessage().then(_handleMessage);
+//
+//     // Handle messages received while the app is in the foreground
+//     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+//       _handleMessage(message);
+//     });
+//
+//     // Handle messages received when the app is opened from the background or terminated
+//     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+//       _handleMessage(message);
+//     });
+//
+//     // Set up background message handling
+//     FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
+//   }
+//
+//   Future<void> _handleBackgroundMessage(RemoteMessage message) async {
+//     // Handle background message
+//     print("Handling a background message: ${message.messageId}");
+//     _handleMessage(message);
+//   }
+//
+//   void _handleMessage(RemoteMessage message) {
+//     // Handle both foreground and background messages
+//     print("Handling message: $message");
+//
+//     // Extract notification data
+//     String title = message.notification?.title ?? "";
+//     String body = message.notification?.body ?? "";
+//
+//     // Show notification dialog or navigate to a screen
+//     OneContext().showDialog(
+//       builder: (context) => AlertDialog(
+//         content: ListTile(
+//           title: Text(title),
+//           subtitle: Text(body),
+//         ),
+//         actions: <Widget>[
+//           FlatButton(
+//             child: Text('Close'),
+//             onPressed: () => Navigator.of(context).pop(),
+//           ),
+//           FlatButton(
+//             child: Text('GO'),
+//             onPressed: () {
+//               // Navigate to the desired screen
+//               Navigator.of(context).pushAndRemoveUntil(
+//                 MaterialPageRoute(
+//                   builder: (context) => NotificationDetails(title, body),
+//                 ),
+//                 (route) => false,
+//               );
+//             },
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 // class PushNotificationService {
 //   Future initialise() async {

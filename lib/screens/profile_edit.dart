@@ -154,7 +154,7 @@ class _ProfileEditState extends State<ProfileEdit> {
         await ProfileRepository().getProfileUpdateResponse(
       name,
       change_password ? password : "",
-          currentPassword,
+          currentPassword != null ? currentPassword : "",
     );
 
     if (profileUpdateResponse.result == false) {
@@ -348,11 +348,25 @@ class _ProfileEditState extends State<ProfileEdit> {
 
             Padding(
               padding: const EdgeInsets.only(bottom: 4.0),
-              child: Text(
-                //AppLocalizations.of(context).profile_edit_screen_password,
-                "Current Password",
-                style: TextStyle(
-                    color: MyTheme.primary, fontWeight: FontWeight.w600),
+              child: Row(
+                children: [
+                  Text(
+                    //AppLocalizations.of(context).profile_edit_screen_password,
+                    "Current Password",
+                    style: TextStyle(
+                        color: MyTheme.primary, fontWeight: FontWeight.w600),
+                  ),
+
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.05,),
+
+                  Text(
+                    //AppLocalizations.of(context).profile_edit_screen_password,
+                    //"(Skip this field if you are a OTP user or )",
+                    "(Skip this field if you have no password)",
+                    style: TextStyle(
+                        color: MyTheme.secondary, fontWeight: FontWeight.w600, fontSize: 12),
+                  ),
+                ],
               ),
             ),
             Padding(

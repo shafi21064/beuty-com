@@ -187,6 +187,7 @@ class _CheckoutState extends State<Checkout> {
     if (success == true) {
       _phoneController.text = _shippingAddressList[0]['phone'];
       _nameController.text = _shippingAddressList[0]['name'];
+      _emailController.text = _shippingAddressList[0]["email"];
       _seleted_shipping_address = _shippingAddressList[0]['id'];
       _addressController.text = _shippingAddressList[0]['address'];
       _stateController.text = _shippingAddressList[0]['city_name'];

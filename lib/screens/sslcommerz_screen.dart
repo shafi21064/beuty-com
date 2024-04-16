@@ -1,3 +1,6 @@
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:kirei/custom/toast_component.dart';
 import 'package:toast/toast.dart';
@@ -41,7 +44,9 @@ class _SslCommerzScreenState extends State<SslCommerzScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    if (Platform.isAndroid) {
+      WebView.platform = SurfaceAndroidWebView();
+    }
   }
 
 
