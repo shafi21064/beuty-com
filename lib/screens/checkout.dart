@@ -1403,6 +1403,7 @@ class _CheckoutState extends State<Checkout> {
             child: Container(
               height: 40,
               child: TypeAheadField(
+                direction: AxisDirection.up,
                 suggestionsCallback: (pattern) async {
                   var stateResponse = await AddressRepository()
                       .getCityByCountry(country_id: "3069");
@@ -1478,6 +1479,7 @@ class _CheckoutState extends State<Checkout> {
             child: Container(
               height: 40,
               child: TypeAheadField(
+                direction: AxisDirection.up,
                 suggestionsCallback: (name) async {
                   var cityResponse = await AddressRepository()
                       .getZoneByCity(
@@ -1563,6 +1565,7 @@ class _CheckoutState extends State<Checkout> {
             child: Container(
               height: 40,
               child: TypeAheadField(
+                direction: AxisDirection.up,
                 suggestionsCallback: (name) async {
                   var countryResponse = await AddressRepository()
                       .getAreaByZone(id: _selected_city.id);

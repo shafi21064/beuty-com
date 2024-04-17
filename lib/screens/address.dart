@@ -641,6 +641,7 @@ class _AddressState extends State<Address> {
             child: Container(
               height: 40,
               child: TypeAheadField(
+                direction: AxisDirection.up,
                 suggestionsCallback: (pattern) async {
                   var stateResponse = await AddressRepository()
                       .getCityByCountry(country_id: "3069");
@@ -716,6 +717,7 @@ class _AddressState extends State<Address> {
             child: Container(
               height: 40,
               child: TypeAheadField(
+                direction: AxisDirection.up,
                 suggestionsCallback: (name) async {
                   var cityResponse = await AddressRepository()
                       .getZoneByCity(
@@ -802,6 +804,7 @@ class _AddressState extends State<Address> {
             child: Container(
               height: 40,
               child: TypeAheadField(
+                direction: AxisDirection.up,
                 suggestionsCallback: (name) async {
                   var countryResponse = await AddressRepository()
                       .getAreaByZone(id: _selected_city.id);
@@ -897,9 +900,6 @@ class _AddressState extends State<Address> {
             ),
           ),
 
-          SizedBox(
-            height: 150,
-          ),
         ],
       );
     });
@@ -1011,9 +1011,6 @@ class _AddressState extends State<Address> {
                   child: buildShowAddFormDialog(context),
                 ),
 
-                SizedBox(
-                  height: 100,
-                )
               ]))
             ],
           ),
