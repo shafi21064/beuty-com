@@ -25,6 +25,7 @@ class ProductReviews extends StatefulWidget {
 
 class _ProductReviewsState extends State<ProductReviews> {
   final TextEditingController _myReviewTextController = TextEditingController();
+  final TextEditingController _guestUserNameTextController = TextEditingController();
   ScrollController _xcrollController = ScrollController();
   ScrollController scrollController = ScrollController();
 
@@ -35,6 +36,7 @@ class _ProductReviewsState extends State<ProductReviews> {
   int _page = 1;
   int _totalData = 0;
   bool _showLoadingContainer = false;
+  bool userName = is_logged_in.$ == true ? false : true;
 
   @override
   void initState() {
@@ -77,6 +79,7 @@ class _ProductReviewsState extends State<ProductReviews> {
     _showLoadingContainer = false;
     _my_rating = 0.0;
     _myReviewTextController.text = "";
+    _guestUserNameTextController.text = "";
     setState(() {});
   }
 
@@ -94,11 +97,19 @@ class _ProductReviewsState extends State<ProductReviews> {
 
     //return;
     var myReviewText = _myReviewTextController.text.toString();
+    var guestUserName = _guestUserNameTextController.text.toString();
 
     if (myReviewText == "") {
       ToastComponent.showDialog(
           AppLocalizations.of(context)
               .product_reviews_screen_review_empty_warning,
+          context,
+          gravity: Toast.CENTER,
+          duration: Toast.LENGTH_LONG);
+      return;
+    } else if (guestUserName == "") {
+      ToastComponent.showDialog(
+          "Enter your name please",
           context,
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
@@ -113,7 +124,7 @@ class _ProductReviewsState extends State<ProductReviews> {
     }
 
     var reviewSubmitResponse = await ReviewRepository()
-        .getReviewSubmitResponse(widget.id, _my_rating.toInt(), myReviewText);
+        .getReviewSubmitResponse(widget.id, _my_rating.toInt(), myReviewText,);
 
     if (reviewSubmitResponse.result == false) {
       ToastComponent.showDialog(reviewSubmitResponse.message, context,
@@ -185,7 +196,7 @@ class _ProductReviewsState extends State<ProductReviews> {
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Container(
           decoration: new BoxDecoration(color: Colors.white54.withOpacity(0.6)),
-          height: MediaQuery.of(context).viewPadding.bottom > 30 ? 150 : 120,
+          height: userName == true? MediaQuery.of(context).viewPadding.bottom > 30 ? 260 : 230 : MediaQuery.of(context).viewPadding.bottom > 30 ? 173 : 143,
           child: Padding(
             padding: const EdgeInsets.only(
                 top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
@@ -403,32 +414,42 @@ class _ProductReviewsState extends State<ProductReviews> {
 
   buildGiveReviewSection(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-          child: RatingBar.builder(
-            itemSize: 20.0,
-            initialRating: _my_rating,
-            minRating: 1,
-            direction: Axis.horizontal,
-            allowHalfRating: false,
-            itemCount: 5,
-            glowColor: Colors.amber,
-            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-            itemBuilder: (context, _) {
-              return Icon(FontAwesome.star, color: Colors.amber);
-            },
-            onRatingUpdate: (rating) {
-              setState(() {
-                _my_rating = rating;
-              });
-            },
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+            child: RatingBar.builder(
+              itemSize: 20.0,
+              initialRating: _my_rating,
+              minRating: 1,
+              direction: Axis.horizontal,
+              allowHalfRating: false,
+              itemCount: 5,
+              glowColor: Colors.amber,
+              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+              itemBuilder: (context, _) {
+                return Icon(FontAwesome.star, color: Colors.amber);
+              },
+              onRatingUpdate: (rating) {
+                setState(() {
+                  _my_rating = rating;
+                });
+              },
+            ),
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
+
+        Visibility(
+          visible: userName,
+          child:Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Enter Name *",
+              style: TextStyle(),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.005,),
+              Container(
               height: 40,
               width: (MediaQuery.of(context).size.width - 32) * (4 / 5),
               child: TextField(
@@ -437,10 +458,59 @@ class _ProductReviewsState extends State<ProductReviews> {
                 inputFormatters: [
                   LengthLimitingTextInputFormatter(125),
                 ],
+                controller: _guestUserNameTextController,
+                decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Color.fromRGBO(251, 251, 251, 1),
+                    // hintText: AppLocalizations.of(context)
+                    //     .product_reviews_screen_type_your_review_here,
+                    hintText: "Type your name here",
+                    hintStyle:
+                    TextStyle(fontSize: 14.0, color: MyTheme.light_grey),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                      BorderSide(color: MyTheme.light_grey, width: 0.5),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(35.0),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                      BorderSide(color: MyTheme.dark_grey, width: 0.5),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(35.0),
+                      ),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 16.0)),
+              ),
+                      ),
+
+              SizedBox(height: MediaQuery.of(context).size.height * 0.009,)
+            ],
+          ), ),
+
+        Text("Your review *",
+          style: TextStyle(),
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.005,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: userName == true ? 80 : 40 ,
+              width: (MediaQuery.of(context).size.width - 32) * (4 / 5),
+              child: TextField(
+                autofocus: false,
+                maxLines: null,
+                expands: userName == true ? true : false,
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(125),
+                ],
                 controller: _myReviewTextController,
                 decoration: InputDecoration(
                     filled: true,
                     fillColor: Color.fromRGBO(251, 251, 251, 1),
+                    isCollapsed: userName == true ? true : false,
                     hintText: AppLocalizations.of(context)
                         .product_reviews_screen_type_your_review_here,
                     hintStyle:
@@ -459,7 +529,7 @@ class _ProductReviewsState extends State<ProductReviews> {
                         Radius.circular(35.0),
                       ),
                     ),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 16.0)),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 8)),
               ),
             ),
             Padding(

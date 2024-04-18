@@ -1457,7 +1457,7 @@ class _OrderDetailsState extends State<OrderDetails> {
       child: Padding(
         padding: const EdgeInsets.all(3),
         child: Icon(
-            payment_status == "paid" || payment_status == "cod"  ? FontAwesome.check : FontAwesome.times,
+            payment_status == "paid" || payment_status == "COD"  ? FontAwesome.check : FontAwesome.times,
             color: Colors.white,
             size: 10),
       ),

@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:kirei/custom/toast_component.dart';
 import 'package:kirei/screens/order_details.dart';
 import 'package:kirei/screens/main.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:one_context/one_context.dart';
+import 'package:toast/toast.dart';
 
 class PaymentStatus {
   String option_key;
@@ -77,6 +80,7 @@ class _OrderListState extends State<OrderList> {
 
   //------------------------------------
   List<dynamic> _orderList = [];
+  Map<int, bool> _isLoadingMap = {};
   bool _isInitial = true;
   int _page = 1;
   int _totalData = 0;
@@ -215,6 +219,56 @@ class _OrderListState extends State<OrderList> {
     }
     return items;
   }
+
+  void reOrder(int index,int id) async{
+    setState(() {
+      _isLoadingMap[index] = true;
+    });
+    var response = await OrderRepository().getReOrder(id: id);
+    setState(() {
+      _isLoadingMap[index] = false;
+    });
+
+    if(response["result"] == true){
+      ToastComponent.showDialog(response["message"].toString(), context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG).then((){
+        setState(() {
+          _isLoadingMap[index] = false;
+        });
+      });
+    } else {
+      ToastComponent.showDialog(response["message"].toString(), context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG).then((){
+        setState(() {
+          _isLoadingMap[index] = false;
+        });
+      });
+    }
+
+  }
+
+  // void reOrder(int index, int id) async {
+  //   // Set loading state to true for the tapped item
+  //   setState(() {
+  //     _isLoadingMap[index] = true;
+  //   });
+  //
+  //   // Simulate an asynchronous operation, for example, a network call
+  //   var response = await OrderRepository().getReOrder(id: id);
+  //
+  //   // After the operation, set loading state to false for the tapped item
+  //   setState(() {
+  //     _isLoadingMap[index] = false;
+  //   });
+  //
+  //   // Show appropriate toast message based on the response
+  //   ToastComponent.showDialog(
+  //     response["message"].toString(),
+  //     context,
+  //     gravity: Toast.CENTER,
+  //     duration: Toast.LENGTH_LONG,
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -482,6 +536,7 @@ class _OrderListState extends State<OrderList> {
   }
 
   Card buildOrderListItemCard(int index) {
+    bool isLoading = _isLoadingMap.containsKey(index) ? _isLoadingMap[index] : false;
     return Card(
       shape: RoundedRectangleBorder(
         side: new BorderSide(color: MyTheme.light_grey, width: 1.0),
@@ -519,24 +574,34 @@ class _OrderListState extends State<OrderList> {
             Padding(
               padding: const EdgeInsets.only(bottom: 4.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
 
-                  Text(
-                    "${AppLocalizations.of(context).order_list_screen_payment_status} - ",
-                    style: TextStyle(color: MyTheme.secondary, fontSize: 13),
-                  ),
-                  Text(
-                    _orderList[index]["payment_status_string"].toString() ?? '',
-                    style: TextStyle(color: MyTheme.secondary, fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                  Padding(
-                    padding: app_language_rtl.$
-                        ? const EdgeInsets.only(right: 8.0)
-                        : const EdgeInsets.only(left: 8.0),
-                    child: buildPaymentStatusCheckContainer(
-                        _orderList[index]["payment_status"]
+                Row(
+                  children: [
+                    Text(
+                      "${AppLocalizations.of(context).order_list_screen_payment_status} - ",
+                      style: TextStyle(color: MyTheme.secondary, fontSize: 13),
                     ),
-                   ),
+                    Text(
+                      _orderList[index]["payment_status_string"].toString() ?? '',
+                      style: TextStyle(color: MyTheme.secondary, fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                    Padding(
+                      padding: app_language_rtl.$
+                          ? const EdgeInsets.only(right: 8.0)
+                          : const EdgeInsets.only(left: 8.0),
+                      child: buildPaymentStatusCheckContainer(
+                          _orderList[index]["payment_status"]
+                      ),
+                    ),
+                  ],
+                ),
+
+                  Text(
+                    _orderList[index]["date"] ?? '',
+                    style: TextStyle(color: MyTheme.secondary, fontSize: 13, fontWeight: FontWeight.w500),
+                  ),
                 ],
               ),
             ),
@@ -560,9 +625,34 @@ class _OrderListState extends State<OrderList> {
                   ],
                 ),
 
-                Text(
-                  _orderList[index]["date"] ?? '',
-                  style: TextStyle(color: MyTheme.secondary, fontSize: 13, fontWeight: FontWeight.w600),
+                // Text(
+                //   _orderList[index]["date"] ?? '',
+                //   style: TextStyle(color: MyTheme.secondary, fontSize: 13, fontWeight: FontWeight.w600),
+                // ),
+
+                GestureDetector(
+                  onTap: (){
+                    reOrder(index, _orderList[index]["id"]);
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.028,
+                    width: MediaQuery.of(context).size.height * 0.074,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1,
+                        color: MyTheme.primary,
+                      ),
+                      //color: MyTheme.secondary
+                    ),
+                    child: Center(
+                      child: isLoading ? CircularProgressIndicator(color: MyTheme.primary,): Text("Re-order",
+                      //child: Text("Re-order",
+                      style: TextStyle(
+                          color: MyTheme.secondary, fontSize: 11, fontWeight: FontWeight.w600
+                      ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             )
@@ -587,7 +677,7 @@ class _OrderListState extends State<OrderList> {
       child: Padding(
         padding: const EdgeInsets.all(3),
         child: Icon(
-            payment_status == "paid" || payment_status == "cod" ? FontAwesome.check : FontAwesome.times,
+            payment_status == "paid" || payment_status == "COD" ? FontAwesome.check : FontAwesome.times,
             color: Colors.white,
             size: 10),
       ),
