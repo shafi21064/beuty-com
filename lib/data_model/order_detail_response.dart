@@ -151,6 +151,10 @@ class ShippingAddress {
     this.country,
     this.state,
     this.city,
+    this.area,
+    this.city_id,
+    this.zone_id,
+    this.area_id,
     this.postal_code,
     this.phone,
     this.checkout_type,
@@ -162,6 +166,10 @@ class ShippingAddress {
   String country;
   String state;
   String city;
+  String area;
+  int city_id;
+  int zone_id;
+  int area_id;
   String postal_code;
   String phone;
   String checkout_type;
@@ -173,6 +181,10 @@ class ShippingAddress {
     country: json["country"] == null ? null : json["country"],
     state: json["state"] == null ? null : json["state"],
     city: json["city"] == null ? null : json["city"],
+    area: json["area"] == null ? null : json["area"],
+    city_id: json["city_id"] == null ? null : json["city_id"],
+    zone_id: json["zone_id"] == null ? null : json["zone_id"],
+    area_id: json["area_id"] == null ? null : json["area_id"],
     postal_code: json["postal_code"] == null ? null : json["postal_code"],
     phone: json["phone"] == null ? null : json["phone"],
     checkout_type: json["checkout_type"] == null ? null : json["checkout_type"],
@@ -185,6 +197,10 @@ class ShippingAddress {
     "country": country == null ? null : country,
     "state": state == null ? null : state,
     "city": city == null ? null : city,
+    "area": area == null ? null : area,
+    "city_id": city_id == null ? null : city_id,
+    "zone_id": zone_id == null ? null : zone_id,
+    "area_id": area_id == null ? null : area_id,
     "postal_code": postal_code == null ? null : postal_code,
     "phone": phone == null ? null : phone,
     "checkout_type": checkout_type == null ? null : checkout_type,

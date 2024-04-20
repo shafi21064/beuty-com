@@ -347,7 +347,7 @@ class _MainDrawerState extends State<MainDrawer> {
                           MaterialPageRoute(builder: (context) {
                             return CommonWebviewScreen(
                               url: "https://kireibd.com/blogs?type=app",
-                              page_name: "Blog",
+                              page_name: "Blogs",
                             );
                           }));
                     }),

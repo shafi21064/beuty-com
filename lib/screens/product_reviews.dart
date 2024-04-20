@@ -124,7 +124,7 @@ class _ProductReviewsState extends State<ProductReviews> {
     }
 
     var reviewSubmitResponse = await ReviewRepository()
-        .getReviewSubmitResponse(widget.id, _my_rating.toInt(), myReviewText,);
+        .getReviewSubmitResponse(widget.id, _my_rating.toInt(), myReviewText, guestUserName);
 
     if (reviewSubmitResponse.result == false) {
       ToastComponent.showDialog(reviewSubmitResponse.message, context,

@@ -27,12 +27,14 @@ class ReviewRepository {
     @required int product_id,
     @required int rating,
     @required String comment,
+     String guestUserName,
   ) async {
     var post_body = jsonEncode({
       "product_id": "${product_id}",
       "user_id": "${user_id.$}",
       "rating": "$rating",
-      "comment": "$comment"
+      "comment": "$comment",
+      "name": "$guestUserName",
     });
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/reviews/submit");
