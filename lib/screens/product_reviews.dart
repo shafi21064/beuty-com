@@ -89,11 +89,11 @@ class _ProductReviewsState extends State<ProductReviews> {
   }
 
   onTapReviewSubmit(context) async {
-    if (is_logged_in.$ == false) {
-      ToastComponent.showDialog("You need to login to give a review", context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-      return;
-    }
+    // if (is_logged_in.$ == false) {
+    //   ToastComponent.showDialog("You need to login to give a review", context,
+    //       gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    //   return;
+    // }
 
     //return;
     var myReviewText = _myReviewTextController.text.toString();
@@ -107,13 +107,15 @@ class _ProductReviewsState extends State<ProductReviews> {
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
       return;
-    } else if (guestUserName == "") {
-      ToastComponent.showDialog(
-          "Enter your name please",
-          context,
-          gravity: Toast.CENTER,
-          duration: Toast.LENGTH_LONG);
-      return;
+    } else if (userName == true) {
+      if(guestUserName == ""){
+        ToastComponent.showDialog(
+            "Enter your name please",
+            context,
+            gravity: Toast.CENTER,
+            duration: Toast.LENGTH_LONG);
+        return;
+      }
     } else if (_my_rating < 1.0) {
       ToastComponent.showDialog(
           AppLocalizations.of(context).product_reviews_screen_star_warning,
