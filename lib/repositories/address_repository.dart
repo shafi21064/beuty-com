@@ -1,3 +1,4 @@
+import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -104,6 +105,37 @@ class AddressRepository {
     print(url);
     print("initialState: "+response.body.toString());
     return addressAddResponseFromJson(response.body);
+  }
+
+  Future<dynamic> getOrderProcessAddressUpdateResponse(
+      {@required int order_id,
+      @required String shipping_name,
+        @required String shipping_address,
+        @required int shipping_area_id,
+        @required int shipping_city_id,
+        @required int shipping_zone_id,
+        @required String shipping_phone}) async {
+    var post_body = jsonEncode({
+      "shipping_name" : "$shipping_name",
+      "shipping_address": "$shipping_address",
+      "shipping_area_id": shipping_area_id,
+      "shipping_city_id": shipping_city_id,
+      "shipping_zone_id": shipping_zone_id,
+      "shipping_phone": "$shipping_phone"
+    });
+
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/order/shipping-update/${order_id}");
+    final response = await http.post(url,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${access_token.$}",
+          "App-Language": app_language.$
+        },
+        body: post_body);
+    print(response.body.toString());
+    print("URL:$url");
+    return jsonDecode(response.body);
+    //return addressUpdateResponseFromJson(response.body);
   }
 
   Future<AddressUpdateResponse> getAddressUpdateResponse(

@@ -88,6 +88,7 @@ class User {
     this.avatar,
     this.avatar_original,
     this.phone,
+    this.password_saved,
   });
 
   int id;
@@ -97,6 +98,7 @@ class User {
   String avatar;
   String avatar_original;
   String phone;
+  bool password_saved;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
@@ -107,6 +109,7 @@ class User {
         avatar_original: json["avatar_original"] ,
            // "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png",
         phone: json["phone"],
+        password_saved: json["password_saved"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -117,5 +120,6 @@ class User {
         "avatar": avatar,
         "avatar_original": avatar_original,
         "phone": phone,
+        "password_saved" : password_saved,
       };
 }

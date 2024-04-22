@@ -4,6 +4,7 @@ import 'package:kirei/data_model/category_response.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/providers/category_passing_controller.dart';
+import 'package:kirei/providers/version_change.dart';
 import 'package:kirei/repositories/category_repository.dart';
 import 'package:kirei/screens/appointment.dart';
 import 'package:kirei/screens/beauty_tips.dart';
@@ -713,11 +714,14 @@ class _MainDrawerState extends State<MainDrawer> {
                   height: MediaQuery.of(context).size.height * 0.015,
                 ),
 
-                Text("Version: 2.0.8",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500
-                ),
-                ),
+               Consumer<VersionChange>(
+                   builder: (context, value, child){
+                     return Text("version: ${value.latestVersion}",
+                       style: TextStyle(
+                           fontWeight: FontWeight.w500
+                       ),
+                     );
+               }),
 
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,

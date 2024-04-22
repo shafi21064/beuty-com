@@ -50,6 +50,7 @@ class _OrderDetailsState extends State<OrderDetails> {
   TextEditingController _stateController = TextEditingController();
   TextEditingController _countryController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
   bool _showReasonWarning = false;
   int _selectedCity_id;
   int _selectedZone_id;
@@ -91,6 +92,7 @@ class _OrderDetailsState extends State<OrderDetails> {
       setStepIndex(_orderDetails?.delivery_status);
 
       if(_orderDetails != null){
+        _nameController.text = _orderDetails.shipping_address.name;
         _phoneController.text = _orderDetails.shipping_address.phone;
         _addressController.text = _orderDetails.shipping_address.address;
          _cityController.text = _orderDetails.shipping_address.city;
@@ -487,13 +489,49 @@ class _OrderDetailsState extends State<OrderDetails> {
           physics: NeverScrollableScrollPhysics(),
           //physics: ScrollPhysics(),
           children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                  AppLocalizations
+                      .of(context)
+                      .address_screen_name ,
+                  style: TextStyle(
+                      color: MyTheme.secondary, fontSize: 12)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Container(
+                height: 40,
+                child: TextField(
+                  controller: _nameController,
+                  autofocus: false,
+                  decoration: InputDecoration(
+                      hintText: "Enter Name",
+                      hintStyle: TextStyle(
+                          fontSize: 12.0, color: MyTheme.light_grey),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(0),
+                        borderSide: BorderSide(
+                            color: MyTheme.light_grey, width: 2),
+
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(0),
+                        borderSide: BorderSide(
+                            color: MyTheme.light_grey, width: 2.0),
+                      ),
+                      contentPadding:
+                      EdgeInsets.symmetric(horizontal: 8.0)),
+                ),
+              ),
+            ),
 
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Text(
                   AppLocalizations
                       .of(context)
-                      .address_screen_phone +' *',
+                      .address_screen_phone,
                   style: TextStyle(
                       color: MyTheme.secondary, fontSize: 12)),
             ),
@@ -532,7 +570,7 @@ class _OrderDetailsState extends State<OrderDetails> {
               child: Text(
                   "${AppLocalizations
                       .of(context)
-                      .address_screen_address} *",
+                      .address_screen_address}",
                   style: TextStyle(
                       color: MyTheme.secondary, fontSize: 12)),
             ),
@@ -569,7 +607,7 @@ class _OrderDetailsState extends State<OrderDetails> {
 
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text("City *",
+              child: Text("City ",
                   style: TextStyle(
                       color: MyTheme.secondary, fontSize: 12)),
             ),
@@ -645,7 +683,7 @@ class _OrderDetailsState extends State<OrderDetails> {
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Text(
-                  "Zone *",
+                  "Zone",
                   style: TextStyle(
                       color: MyTheme.secondary, fontSize: 12)),
             ),
@@ -850,6 +888,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                   child: InkWell(
                     onTap: (){
                       //saveOrUpdateAddress();
+                      processOrderAddressUpdate(widget.id);
+                      Navigator.of(context).pop();
                     },
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.05,
@@ -874,6 +914,34 @@ class _OrderDetailsState extends State<OrderDetails> {
       }),
     );
   }
+
+  void processOrderAddressUpdate(int oderId)async{
+
+    try{
+      var response = await AddressRepository().getOrderProcessAddressUpdateResponse(
+        order_id: oderId,
+        shipping_name: _nameController.text,
+        shipping_address: _addressController.text,
+        shipping_city_id: _selectedCity_id,
+        shipping_zone_id: _selectedZone_id,
+        shipping_area_id:_selectedArea_id ,
+        shipping_phone: _phoneController.text,
+      );
+
+      if(response["result"] == true){
+        ToastComponent.showDialog("${response["message"]}", context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      } else{
+        ToastComponent.showDialog("${response["message"]}", context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      }
+    } on Exception catch(e){
+      print("error is .... ${e.toString()}");
+    } catch(e){
+      print("e is ${e.toString()}");
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {

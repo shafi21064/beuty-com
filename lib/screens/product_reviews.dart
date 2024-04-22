@@ -101,13 +101,22 @@ class _ProductReviewsState extends State<ProductReviews> {
 
     if (myReviewText == "") {
       ToastComponent.showDialog(
-          AppLocalizations.of(context)
+          AppLocalizations
+              .of(context)
               .product_reviews_screen_review_empty_warning,
           context,
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
       return;
-    } else if (userName == true) {
+    } else if (_my_rating < 1.0) {
+      ToastComponent.showDialog(
+          AppLocalizations.of(context).product_reviews_screen_star_warning,
+          context,
+          gravity: Toast.CENTER,
+          duration: Toast.LENGTH_LONG);
+      return;
+    }
+    else if (userName == true) {
       if(guestUserName == ""){
         ToastComponent.showDialog(
             "Enter your name please",
@@ -116,13 +125,6 @@ class _ProductReviewsState extends State<ProductReviews> {
             duration: Toast.LENGTH_LONG);
         return;
       }
-    } else if (_my_rating < 1.0) {
-      ToastComponent.showDialog(
-          AppLocalizations.of(context).product_reviews_screen_star_warning,
-          context,
-          gravity: Toast.CENTER,
-          duration: Toast.LENGTH_LONG);
-      return;
     }
 
     var reviewSubmitResponse = await ReviewRepository()
@@ -299,7 +301,7 @@ class _ProductReviewsState extends State<ProductReviews> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          _reviewList[index].user_name,
+                          "${_reviewList[index].user_name}",
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
@@ -312,7 +314,7 @@ class _ProductReviewsState extends State<ProductReviews> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 4.0),
                           child: Text(
-                            _reviewList[index].time,
+                            "${_reviewList[index].time}",
                             style: TextStyle(color: MyTheme.dark_grey),
                           ),
                         ),
