@@ -100,8 +100,6 @@ class _ChangeLanguageState extends State<ChangeLanguage> {
       app_language_rtl.$ = _list[_selected_index].rtl;
       app_language_rtl.save();
 
-      // var local_provider = new LocaleProvider();
-      // local_provider.setLocale(_list[_selected_index].code);
       Provider.of<LocaleProvider>(context, listen: false)
           .setLocale(_list[_selected_index].mobile_app_code);
 
@@ -222,10 +220,6 @@ class _ChangeLanguageState extends State<ChangeLanguage> {
                       child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child:
-                              /*Image.asset(
-                          _list[index].image,
-                          fit: BoxFit.fitWidth,
-                        ),*/
                               FadeInImage.assetNetwork(
                             placeholder: 'assets/placeholder.png',
                             image: _list[index].image,

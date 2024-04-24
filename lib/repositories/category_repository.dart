@@ -1,5 +1,4 @@
 import 'package:flutter/services.dart';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/data_model/feature_category_response.dart';
 import 'package:kirei/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
@@ -8,14 +7,6 @@ import 'package:kirei/helpers/shared_value_helper.dart';
 
 class CategoryRepository {
   Future<CategoryResponse> getCategories({parent_id = 0}) async {
-    // Uri url = Uri.parse("${ENDP.GET_CATEGORIES}");
-    // final response = await http.get(url, headers: {
-    //   "App-Language": app_language.$,
-    // });
-    // // print("${ENDP.GET_CATEGORIES}");
-    // // print("All categoriesssss: ${response.body.toString()}");
-    // print('category' +categoryResponseFromJson(response.body).toString());
-    // return categoryResponseFromJson(response.body);
     String jsonData = await rootBundle.loadString('assets/categories.json');
 
     // Parse the JSON data
@@ -43,9 +34,6 @@ class CategoryRepository {
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
-    //print(response.body.toString());
-    //print("--featured cat--");
-    // print(response.body);
     return categoryResponseFromJson(response.body);
   }
 

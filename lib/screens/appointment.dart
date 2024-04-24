@@ -1,10 +1,7 @@
 import 'package:kirei/custom/toast_component.dart';
-import 'package:kirei/dummy_data/payment_methods.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/repositories/appointment_repository.dart';
-import 'package:kirei/screens/bkash_screen.dart';
-import 'package:kirei/screens/common_webview_screen.dart';
 import 'package:kirei/screens/payment_web_view.dart';
 import 'package:kirei/ui_sections/drawer.dart';
 import 'package:flutter/material.dart';
@@ -33,13 +30,6 @@ class _AppointmentState extends State<Appointment> {
     String whatsappNumber = contactNumberController.text.toString();
     String problem = problemController.text.toString();
     String paymentType = paymentMethod;
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => BkashScreen(
-    //         amount: 499.00, payment_type: "bkash", payment_method_key: "bkash"),
-    //   ),
-    // );
 
     var reviewSubmitResponse = await AppointmentRepository().submitAppointment(
         age: age,
@@ -215,14 +205,6 @@ class _AppointmentState extends State<Appointment> {
     return name;
   }
 
-  // void printFormValues() {
-  //   print('Full Name: ${fullNameController.text}');
-  //   print('Age: ${ageController.text}');
-  //   print('Contact Number: ${contactNumberController.text}');
-  //   print('WhatsApp Number: ${whatsappNumberController.text}');
-  //   print('Problem: ${problemController.text}');
-  //   print('Payment Method: $paymentMethod');
-  // }
 
   Widget buildStarTextFormField({
     TextEditingController controller,

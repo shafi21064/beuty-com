@@ -1,27 +1,15 @@
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:kirei/custom/CommonFunctoins.dart';
-import 'package:kirei/data_model/category_response.dart';
-import 'package:kirei/data_model/shop_details_response.dart';
-import 'package:kirei/helpers/addons_helper.dart';
-import 'package:kirei/helpers/business_setting_helper.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/providers/category_passing_controller.dart';
-import 'package:kirei/providers/locale_provider.dart';
 import 'package:kirei/repositories/search_repository.dart';
 import 'package:kirei/screens/appointment.dart';
 import 'package:kirei/screens/beauty_tips.dart';
 import 'package:kirei/screens/filter.dart';
-import 'package:kirei/screens/flash_deal_list.dart';
 import 'package:kirei/screens/login.dart';
 import 'package:kirei/screens/main.dart';
 import 'package:kirei/screens/newsfeed.dart';
-import 'package:kirei/screens/personal_recommendation.dart';
 import 'package:kirei/screens/product_details.dart';
-import 'package:kirei/screens/profile.dart';
-import 'package:kirei/screens/todays_deal_products.dart';
-import 'package:kirei/screens/top_selling_products.dart';
-import 'package:kirei/screens/category_products.dart';
-import 'package:kirei/screens/category_list.dart';
 import 'package:kirei/theme/appThemes.dart';
 import 'package:kirei/ui_elements/mini_product_card.dart';
 import 'package:kirei/ui_sections/drawer.dart';
@@ -32,19 +20,12 @@ import 'package:kirei/repositories/sliders_repository.dart';
 import 'package:kirei/repositories/category_repository.dart';
 import 'package:kirei/repositories/product_repository.dart';
 import 'package:kirei/app_config.dart';
-import 'package:flutter_gradients/flutter_gradients.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:kirei/custom/toast_component.dart';
-import 'package:toast/toast.dart';
-import 'package:kirei/ui_elements/product_card.dart';
 import 'package:kirei/helpers/shimmer_helper.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'BeautyBooks.dart';
-import 'kireiYT.dart';
 
 class Home extends StatefulWidget {
   Home({Key key, this.title, this.show_back_button = false, go_back = true, this.cartItemCount})
@@ -119,8 +100,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     fetchAll();
 
     _mainScrollController.addListener(() {
-      //print("position: " + _xcrollController.position.pixels.toString());
-      //print("max: " + _xcrollController.position.maxScrollExtent.toString());
+
 
       if (_mainScrollController.position.pixels ==
           _mainScrollController.position.maxScrollExtent) {
@@ -174,7 +154,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     var categoryResponse =
     await CategoryRepository().getHomeFeaturedCategories();
     print(categoryResponse);
-    // print("featuredCategory-------->" + categoryResponse.categories.toString());
 
     _featuredCategoryList.addAll(categoryResponse);
     print(_featuredCategoryList);
@@ -182,33 +161,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     setState(() {});
   }
 
-  // fetchAllCategory(int index) async {
-  //   var allCategory = await CategoryRepository().getCategories();
-  //   //print(allCategory);
-  //   _allCategories.addAll(allCategory.categories[index].children);
-  //   print(' ${_allCategories[index].id}');
-  //   _isAllCategoryIntial = false;
-  //   setState(() {});
-  // }
-
-  // fetchBestSellingProducts() async {
-  //   var productResponse = await ProductRepository().getBestSellingProducts();
-  //   _bestSellingProductList.addAll(productResponse.products);
-  //   print("recomeened-------->${_bestSellingProductList}");
-  //   _isBestSellingProductInitial = false;
-  //   _totalBestSellingProductData = productResponse.products.length;
-  //   _showProductLoadingContainer = false;
-  //   setState(() {});
-  // }
 
   fetchHomeProducts() async {
     var productResponse = await ProductRepository().getHomeProducts();
 
-    // _featuredProductList.addAll(productResponse.featuredProducts);
+
     _hotDealsProductList.addAll(productResponse.featuredProducts);
      _newArrivalProductList.addAll(productResponse.newProducts);
      _bestSellingProductList.addAll(productResponse.bestsellingProducts);
-    // print("recomeened-------->${_featuredProductList}");
+
     _isBestSellingProductInitial = false;
     _totalBestSellingProductData = productResponse.bestsellingProducts.length;
     _isNewArrivalsProductInitial = false;
@@ -329,7 +290,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
-    //print(MediaQuery.of(context).viewPadding.top);
+
     final theme = Theme.of(context);
     return WillPopScope(
       onWillPop: () async {
@@ -536,7 +497,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                       controller: _searchController,
                                                       onSubmitted: (txt) {
                                                         _searchKey = txt;
-                                                        //setState(() {});
                                                         value.setSearchKey(_searchKey);
                                                         print('navigating to filter');
 
@@ -562,10 +522,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                               color: MyTheme
                                                                   .secondary),
                                                           alignLabelWithHint: true,
-                                                          // focusedBorder: OutlineInputBorder(
-                                                          //   borderSide:
-                                                          //       BorderSide(color: MyTheme.white, width: 0.0),
-                                                          // ),
                                                           contentPadding:
                                                           EdgeInsets.only(
                                                               left: 30,
@@ -640,49 +596,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                     ),
                                   ]),
                                 ),
-                                
-                                // SliverList(
-                                //   delegate: SliverChildListDelegate([
-                                //     Padding(
-                                //       padding: const EdgeInsets.fromLTRB(
-                                //         16.0,
-                                //         16.0,
-                                //         16.0,
-                                //         0.0,
-                                //       ),
-                                //       child: Column(
-                                //         crossAxisAlignment:
-                                //         CrossAxisAlignment.start,
-                                //         children: [
-                                //           Text(
-                                //             AppLocalizations.of(context)
-                                //                 .home_screen_recommended_products,
-                                //             style: TextStyle(
-                                //                 fontSize: 16,
-                                //                 fontWeight: FontWeight.w600,
-                                //                 color: MyTheme.secondary),
-                                //           ),
-                                //         ],
-                                //       ),
-                                //     ),
-                                //     SingleChildScrollView(
-                                //       child: Column(
-                                //         children: [
-                                //           Padding(
-                                //             padding: const EdgeInsets.fromLTRB(
-                                //               4.0,
-                                //               16.0,
-                                //               8.0,
-                                //               0.0,
-                                //             ),
-                                //             child: buildHomeRecommendedProducts(
-                                //                 context),
-                                //           ),
-                                //         ],
-                                //       ),
-                                //     ),
-                                //   ]),
-                                // ),
+
                                 SliverList(
                                   delegate: SliverChildListDelegate([
                                     Padding(
@@ -867,116 +781,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     );
   }
 
-  // buildHomeFeaturedCategories(context) {
-  //   if (_isCategoryInitial && _featuredCategoryList.length == 0) {
-  //     return Row(
-  //       children: [
-  //         Padding(
-  //             padding: const EdgeInsets.only(right: 8.0),
-  //             child: ShimmerHelper().buildBasicShimmer(
-  //                 height: 120.0,
-  //                 width: (MediaQuery.of(context).size.width - 32) / 3)),
-  //         Padding(
-  //             padding: const EdgeInsets.only(right: 8.0),
-  //             child: ShimmerHelper().buildBasicShimmer(
-  //                 height: 120.0,
-  //                 width: (MediaQuery.of(context).size.width - 32) / 3)),
-  //         Padding(
-  //             padding: const EdgeInsets.only(right: 0.0),
-  //             child: ShimmerHelper().buildBasicShimmer(
-  //                 height: 120.0,
-  //                 width: (MediaQuery.of(context).size.width - 32) / 3)),
-  //       ],
-  //     );
-  //   } else if (_featuredCategoryList.length > 0) {
-  //     //snapshot.hasData
-  //     return ListView.builder(
-  //         scrollDirection: Axis.horizontal,
-  //         itemCount: _featuredCategoryList.length,
-  //         itemExtent: 120,
-  //         itemBuilder: (context, index) {
-  //           return Padding(
-  //             padding: const EdgeInsets.symmetric(horizontal: 3),
-  //             child: GestureDetector(
-  //               onTap: () {
-  //                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-  //                   return Filter(
-  //                     // category_id: _featuredCategoryList[index].id,
-  //                     category: _featuredCategoryList[index].name,
-  //                   );
-  //                 }));
-  //               },
-  //               child: Card(
-  //                 clipBehavior: Clip.antiAliasWithSaveLayer,
-  //                 // shape: RoundedRectangleBorder(
-  //                 //   side: new BorderSide(color: MyTheme.light_grey, width: 0.0),
-  //                 //   borderRadius: BorderRadius.circular(16.0),
-  //                 // ),
-  //                 // elevation: 77,
-  //                 child: Column(
-  //                   mainAxisAlignment: MainAxisAlignment.center,
-  //                   children: <Widget>[
-  //                     Container(
-  //                         //width: 100,
-
-  //                         height: 120,
-  //                         child: ClipRRect(
-  //                             // borderRadius: BorderRadius.vertical(
-  //                             //     top: Radius.circular(16),
-  //                             //     bottom: Radius.zero),
-
-  //                             child: _featuredCategoryList[index].banner == ''
-  //                                 ? Image.asset(
-  //                                     'assets/placeholder.png',
-  //                                     fit: BoxFit.fitWidth,
-  //                                   )
-  //                                 : FadeInImage.assetNetwork(
-  //                                     placeholder: 'assets/placeholder.png',
-  //                                     image:
-  //                                         _featuredCategoryList[index].banner,
-  //                                     fit: BoxFit.fitWidth,
-  //                                   ))),
-  //                     Padding(
-  //                       padding: EdgeInsets.fromLTRB(8, 8, 8, 4),
-  //                       child: Container(
-  //                         height: 32,
-  //                         child: Text(
-  //                           _featuredCategoryList[index].name,
-  //                           textAlign: TextAlign.center,
-  //                           overflow: TextOverflow.ellipsis,
-  //                           maxLines: 2,
-  //                           style: TextStyle(
-  //                               fontSize: 11, color: MyTheme.secondary),
-  //                         ),
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ),
-  //             ),
-  //           );
-  //         });
-  //   } else if (!_isCategoryInitial && _featuredCategoryList.length == 0) {
-  //     return Container(
-  //         height: 120,
-  //         child: Center(
-  //             child: Text(
-  //           AppLocalizations.of(context).home_screen_no_category_found,
-  //           style: TextStyle(color: MyTheme.secondary),
-  //         )));
-  //   } else {
-  //     // should not be happening
-  //     return Container(
-  //       height: 120,
-  //     );
-  //   }
-  // }
 
   buildHomeBestSellingProducts(context) {
     if (_isBestSellingProductInitial && _bestSellingProductList.length == 0) {
-      // return SingleChildScrollView(
-      //     child: ShimmerHelper()
-      //         .buildProductGridShimmer(scontroller: _productScrollController));
       return SingleChildScrollView(
           child: ShimmerHelper()
               .buildHomeProductGridShimmer(scontroller: _productScrollController));
@@ -1019,77 +826,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       return Container(); // should never be happening
     }
   }
-
-  // buildHomeFeaturedProducts(context) {
-  //   if (_isFeaturedProuctInitial && _featuredProductList.length == 0) {
-  //     return SingleChildScrollView(
-  //         child: ShimmerHelper()
-  //             .buildProductGridShimmer(scontroller: _productScrollController));
-  //   } else if (_featuredProductList.length > 0) {
-  //     //snapshot.hasData
-  //     return SingleChildScrollView(
-  //       child: SizedBox(
-  //         height: 250,
-  //         child: ListView.builder(
-  //           itemCount: _featuredProductList.length,
-  //           scrollDirection: Axis.horizontal,
-  //           itemExtent: MediaQuery.of(context).size.width / 2.5,
-  //           itemBuilder: (context, index) {
-  //             return Padding(
-  //               padding: const EdgeInsets.only(right: 5, left: 5),
-  //               child: MiniProductCard(
-  //                 preorderAvailable: _featuredProductList[index].preorderAvailable,
-
-  //                 id: _featuredProductList[index].id,
-  //                 image: _featuredProductList[index].pictures[0].url,
-  //                 ratings: _featuredProductList[index].ratings,
-  //                 name: _featuredProductList[index].name,
-  //                 price: _featuredProductList[index].price.toString(),
-  //                 sale_price: _featuredProductList[index].sale_price.toString(),
-  //                 slug: _featuredProductList[index].slug,
-  //                 reviews: _featuredCategoryList[index].reviews,
-  //                 stock: _featuredCategoryList[index].stock,
-  //                 discount: _featuredCategoryList[index].discount,
-  //               ),
-  //             );
-  //           },
-  //         ),
-  //       ),
-  //     );
-  //     // return GridView.builder(
-  //     //   // 2
-  //     //   //addAutomaticKeepAlives: true,
-  //     //   itemCount: _featuredProductList.length,
-  //     //   controller: _productScrollController,
-  //     //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-  //     //       crossAxisCount: 2,
-  //     //       crossAxisSpacing: 10,
-  //     //       mainAxisSpacing: 10,
-  //     //       childAspectRatio: 0.618),
-  //     //   padding: EdgeInsets.all(8),
-  //     //   physics: NeverScrollableScrollPhysics(),
-  //     //   shrinkWrap: true,
-  //     //   itemBuilder: (context, index) {
-  //     //     // 3
-  //     //     return ProductCard(
-  //     //       id: _featuredProductList[index].id,
-  //     //       image: _featuredProductList[index].pictures[0].url,
-  //     //       ratings: _featuredProductList[index].ratings,
-  //     //       name: _featuredProductList[index].name,
-  //     //       price: _featuredProductList[index].price.toString(),
-  //     //       sale_price: _featuredProductList[index].sale_price.toString(),
-  //     //       slug:_featuredProductList[index].slug,
-  //     //     );
-  //     //   },
-  //     // );
-  //   } else if (_totalFeaturedProductData == 0) {
-  //     return Center(
-  //         child: Text(
-  //             AppLocalizations.of(context).common_no_product_is_available));
-  //   } else {
-  //     return Container(); // should never be happening
-  //   }
-  // }
 
   buildHomeRecommendedProducts(context) {
     if (_isRecommendedProuctInitial && _recommendedProductList.length == 0) {
@@ -1498,16 +1234,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     width: 56,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      // color:
-                      //     Theme.of(context).buttonTheme.colorScheme.primary,
-                      // boxShadow: [
-                      //   BoxShadow(
-                      //     color: Colors.grey.withOpacity(1.0),
-                      //     spreadRadius: 0,
-                      //     blurRadius: 9,
-                      //     offset: Offset(0, 1),
-                      //   ),
-                      // ]
                     ),
                     child: ClipOval(
                       child: Image.asset(
@@ -1608,7 +1334,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             offset: Offset(0, 1),
                           ),
                         ]),
-                    //<div style="padding:3px">hjgh</div>
                     child: ClipOval(
                       child: Image.asset(
                         "assets/haircare.jpeg",
@@ -1711,7 +1436,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             offset: Offset(0, 1),
                           ),
                         ]),
-                    //<div style="padding:3px">hjgh</div>
                     child: ClipOval(
                       child: Image.asset(
                         "assets/Supplements.jpeg",
@@ -1856,16 +1580,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       width: 56,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        // color:
-                        //     Theme.of(context).buttonTheme.colorScheme.primary,
-                        // boxShadow: [
-                        //   BoxShadow(
-                        //     color: Colors.grey.withOpacity(1.0),
-                        //     spreadRadius: 0,
-                        //     blurRadius: 9,
-                        //     offset: Offset(0, 1),
-                        //   ),
-                        // ],
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(0.0),
@@ -1903,16 +1617,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       width: 56,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        // color:
-                        //     Theme.of(context).buttonTheme.colorScheme.primary,
-                        // boxShadow: [
-                        //   BoxShadow(
-                        //     color: Colors.grey.withOpacity(1.0),
-                        //     spreadRadius: 0,
-                        //     blurRadius: 9,
-                        //     offset: Offset(0, 1),
-                        //   ),
-                        // ]
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(0.0),
@@ -1950,16 +1654,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     width: 56,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      // color:
-                      //     Theme.of(context).buttonTheme.colorScheme.primary,
-                      // boxShadow: [
-                      //   BoxShadow(
-                      //     color: Colors.grey.withOpacity(1.0),
-                      //     spreadRadius: 0,
-                      //     blurRadius: 9,
-                      //     offset: Offset(0, 1),
-                      //   ),
-                      // ]
+
                     ),
                     //<div style="padding:3px">hjgh</div>
                     child: ClipOval(
@@ -2037,7 +1732,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             placeholder: 'assets/placeholder.png',
                             //placeholder: 'assets/placeholder.png',
                             image: i ?? '',
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fill,
                           ))),
                   Align(
                     alignment: Alignment.bottomCenter,
@@ -2154,14 +1849,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                               color: Colors.blueGrey[50]),
                           child: Row(
                             children: [
-                              //Text('Search ',style: TextStyle(color: Colors.blueGrey),),
-                              // Padding(
-                              //   padding: const EdgeInsets.all(8.0),
-                              //   child: Icon(
-                              //     Icons.search_sharp,
-                              //     color: Colors.blueGrey,
-                              //   ),
-                              // ),
                             ],
                           )))
                 ],
@@ -2174,27 +1861,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       elevation: 0.0,
       titleSpacing: 0,
 
-      // actions: <Widget>[
-      //   InkWell(
-      //     onTap: () {
-      //       ToastComponent.showDialog(
-      //           AppLocalizations.of(context).common_coming_soon, context,
-      //           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-      //     },
-      //     child: Visibility(
-      //       visible: true,
-      //       child: Padding(
-      //         padding:
-      //             const EdgeInsets.symmetric(vertical: 18.0, horizontal: 12.0),
-      //         child: Image.asset(
-      //           'assets/bell.png',
-      //           height: 16,
-      //           color: MyTheme.dark_grey,
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      // ],
 
       actions: <Widget>[
 
@@ -2262,8 +1928,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     ),
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      // image: NetworkImage("${avatar_original.$}" ??
-                      //     "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png"), //TODO:change the avatar
+                        //TODO:change the avatar
                         image: avatar_original.$ != null ? NetworkImage("${avatar_original.$}") : AssetImage('assets/placeholder.png') //TODO:change the avatar
                     ),
                   ),

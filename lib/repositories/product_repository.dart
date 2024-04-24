@@ -1,7 +1,5 @@
-import 'package:flutter/services.dart';
 import 'package:kirei/app_config.dart';
 import 'package:kirei/data_model/product_mini_response_old.dart';
-import 'package:kirei/dummy_data/products.dart';
 import 'package:http/http.dart' as http;
 import 'package:kirei/data_model/product_mini_response_home.dart';
 import 'package:kirei/data_model/product_details_response_new.dart';
@@ -43,11 +41,6 @@ class ProductRepository {
     });
     print(response.body);
     return productMiniResponseFromJson(response.body);
-  //   String jsonData = await rootBundle.loadString('assets/recommended.json');
-
-  //   // Parse the JSON data
-  // ProductMiniResponse productResponse = productMiniResponseFromJson(jsonData);
-  //   return productResponse;
   }
 
   Future<ProductMiniResponse> getTrendingProducts() async {
@@ -58,41 +51,8 @@ class ProductRepository {
     });
     print(response.body);
     return productMiniResponseFromJson(response.body);
-    // String jsonData = await rootBundle.loadString('assets/trending.json');
-
-    // // Parse the JSON data
-    // ProductMiniResponse productResponse = productMiniResponseFromJson(jsonData);
-    // return productResponse;
   }
 
-  // Future<ProductMiniResponseHome> getHotDealsProducts() async {
-  //   Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products");
-
-  //   final response = await http.get(url, headers: {
-  //     "App-Language": app_language.$,
-  //   });
-  //   print(response.body);
-  //   return productMiniResponseHomeFromJson(response.body, key: "featured_products");
-  // }
-
-  //  Future<ProductMiniResponseHome> getNewArrivalsProducts() async {
-  //   Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products");
-
-  //   final response = await http.get(url, headers: {
-  //     "App-Language": app_language.$,
-  //   });
-  //   print(response.body);
-  //   return productMiniResponseHomeFromJson(response.body, key: "new_products");
-  // }
-
-  // Future<ProductMiniResponseHome> getBestSellingProducts() async {
-  //   Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products");
-  //   final response = await http.get(url, headers: {
-  //     "App-Language": app_language.$,
-  //   });
-  //   return productMiniResponseHomeFromJson(response.body,
-  //       key: "bestselling_products");
-  // }
 
   Future<ProductMiniResponse> getTodaysDealProducts() async {
     Uri url = Uri.parse("${AppConfig.BASE_URL}/products/todays-deal");

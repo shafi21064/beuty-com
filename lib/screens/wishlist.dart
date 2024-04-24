@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/helpers/shimmer_helper.dart';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/repositories/cart_repository.dart';
 import 'package:kirei/repositories/wishlist_repository.dart';
-import 'package:kirei/screens/cart.dart';
 import 'package:kirei/screens/login.dart';
 import 'package:kirei/screens/main.dart';
 import 'package:kirei/screens/product_details.dart';
@@ -48,7 +46,7 @@ class _WishlistState extends State<Wishlist> {
     _wishlistItems.addAll(wishlistResponse.wishlist_items);
     _wishlistInit = false;
     setState(() {});
-    //isPreOrder = _wishlistItems[index].preorder_available;
+
   }
 
   reset() {
@@ -80,27 +78,22 @@ class _WishlistState extends State<Wishlist> {
   String _variant="";
 
   onPressAddToCart(context, int id,int preorder) {
-    //print("IdValue1:" + id.toString());
+
     addToCart(mode: "add_to_cart", context: context, id: id,preorder: preorder);
   }
   addToCart({mode, context = null, snackbar = null, id,preorder}) async {
 
-    //print("IdValue2:" + id.toString());
+
 
     if (is_logged_in.$ == false) {
-      // ToastComponent.showDialog(AppLocalizations.of(context).common_login_warning, context,
-      //     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+
       Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
       return;
     }
 
-    // print(widget.id);
-    // print(_variant);
-    // print(user_id.$);
-    //print(_quantity);
     print(access_token.$);
     var cartAddResponse = await CartRepository()
-        .getCartAddResponse(id, _variant, user_id.$, _quantity,preorder);
+        .getCartAddResponse(id, _variant, user_id.$, _quantity,preorder, context);
 
     if (cartAddResponse.result == false) {
       ToastComponent.showDialog(cartAddResponse.message, context,
@@ -108,16 +101,6 @@ class _WishlistState extends State<Wishlist> {
       return;
     } else {
       if (mode == "add_to_cart") {
-        //fetchData();
-        // if (snackbar != null && context != null) {
-        //   Scaffold.of(context).showSnackBar(snackbar);
-        // }
-
-        // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-        // var cartItem = sharedPreferences.getInt("cartItemCount");
-        // cartItem++;
-        // sharedPreferences.setInt("cartItemCount", cartItem);
-        // print("kirei vai3: + ${sharedPreferences.getInt("cartItemCount")}" );
 
 
 
@@ -448,7 +431,7 @@ Widget build(BuildContext context) {
                                   maxLines: 1,
                                   style: TextStyle(
                                       //color: MyTheme.primary,
-                                      color: _wishlistItems[index].product.stock == 0 ? MyTheme.primary : Colors.green,
+                                      color: _wishlistItems[index].product.preorderAvailable==1? Color.fromRGBO(23, 162, 190, 1) : _wishlistItems[index].product.stock == 0 ? MyTheme.primary : Colors.green,
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -493,12 +476,7 @@ Widget build(BuildContext context) {
                     var addCartCount = Provider.of<CartCountUpdate>(context, listen: false);
 
                     onPressAddToCart(context, _wishlistItems[index].product.id,_wishlistItems[index].product.preorderAvailable);
-                    // setState(() {
-                    //   //print("IdValue:" + _wishlistItems[index].product.id.toString());
-                    // });
-                    // if(_wishlistItems[index].product.stock > 0 && is_logged_in.$ == true) {
-                    //   addCartCount.getIncrease();
-                    // }
+
                      if(is_logged_in.$ != false){
 
                       if( _wishlistItems[index].product.preorderAvailable == 1){
@@ -509,7 +487,6 @@ Widget build(BuildContext context) {
                       }
 
                     }
-                    //print(_wishlistItems.length.toString());
                   },
                   icon: Icon(Icons.add_shopping_cart, color: MyTheme.dark_grey,)
               )

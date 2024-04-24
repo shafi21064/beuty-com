@@ -1,4 +1,3 @@
-import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -11,7 +10,6 @@ class FileRepository {
   Future<SimpleImageUploadResponse> getSimpleImageUploadResponse(
       @required String image, @required String filename) async {
     var post_body = jsonEncode({"image": "${image}", "filename": "$filename"});
-    //print(post_body.toString());
 
     Uri url = Uri.parse("${ENDP.IMAGE_UPLOAD}");
     final response = await http.post(url,
@@ -22,7 +20,6 @@ class FileRepository {
         },
         body: post_body);
 
-    //print(response.body.toString());
     return simpleImageUploadResponseFromJson(response.body);
   }
 }

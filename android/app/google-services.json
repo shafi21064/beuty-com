@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "851647099831",
-    "project_id": "kirei-bd",
-    "storage_bucket": "kirei-bd.appspot.com"
+    "project_number": "379616346839",
+    "project_id": "push-notification-3fa23",
+    "storage_bucket": "push-notification-3fa23.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:851647099831:android:33f28e7a40ab816534ee32",
+        "mobilesdk_app_id": "1:379616346839:android:6ea35dcaa29a737ebd2692",
         "android_client_info": {
           "package_name": "com.thetork.kirei"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "851647099831-hk0h401884jkraf1iea2qa2527g0npnn.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCrBJ0caJ17EhZ5QoXqG5Rh13jQuektJAo"
+          "current_key": "AIzaSyAgl_5sN6czkcOxmFZ3dqhnoMfYZGNfEVM"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "851647099831-hk0h401884jkraf1iea2qa2527g0npnn.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

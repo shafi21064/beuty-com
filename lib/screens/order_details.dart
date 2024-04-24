@@ -1,6 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:kirei/data_model/city_response.dart';
+import 'package:kirei/data_model/country_response.dart';
+import 'package:kirei/data_model/state_response.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:kirei/repositories/address_repository.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 import 'package:kirei/repositories/order_repository.dart';
 import 'package:kirei/helpers/shimmer_helper.dart';
@@ -39,7 +45,19 @@ class _OrderDetailsState extends State<OrderDetails> {
   ];
 
   TextEditingController _refundReasonController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _cityController = TextEditingController();
+  TextEditingController _stateController = TextEditingController();
+  TextEditingController _countryController = TextEditingController();
+  TextEditingController _addressController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
   bool _showReasonWarning = false;
+  int _selectedCity_id;
+  int _selectedZone_id;
+  int _selectedArea_id;
+  City _selected_city;
+  Country _selected_country;
+  MyState _selected_state;
 
   //init
   int _stepIndex = 0;
@@ -72,6 +90,18 @@ class _OrderDetailsState extends State<OrderDetails> {
     if (orderDetailsResponse.detailed_orders.length > 0) {
       _orderDetails = orderDetailsResponse.detailed_orders[0];
       setStepIndex(_orderDetails?.delivery_status);
+
+      if(_orderDetails != null){
+        _nameController.text = _orderDetails.shipping_address.name;
+        _phoneController.text = _orderDetails.shipping_address.phone;
+        _addressController.text = _orderDetails.shipping_address.address;
+         _cityController.text = _orderDetails.shipping_address.city;
+         _stateController.text = _orderDetails.shipping_address.state;
+         _countryController.text = _orderDetails.shipping_address.area;
+        _selectedCity_id = _orderDetails.shipping_address.city_id;
+        _selectedZone_id = _orderDetails.shipping_address.zone_id;
+        _selectedArea_id = _orderDetails.shipping_address.area_id;
+      }
     }
 
     setState(() {});
@@ -360,6 +390,566 @@ class _OrderDetailsState extends State<OrderDetails> {
     fetchAll();
   }
 
+  bool loading = false;
+
+  void reOrder(int id) async{
+    setState(() {
+      loading = true;
+    });
+    var response = await OrderRepository().getReOrder(id: id);
+    setState(() {
+      loading = false;
+    });
+
+    if(response["result"] == true){
+      ToastComponent.showDialog(response["message"].toString(), context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG).then((){
+        setState(() {
+          loading = false;
+        });
+      });
+    } else {
+      ToastComponent.showDialog(response["message"].toString(), context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG).then((){
+        setState(() {
+          loading = false;
+        });
+      });
+    }
+
+  }
+
+  onSelectAreaDuringAdd(country, setModalState) {
+    if (_selected_country != null && country.id == _selected_country.id) {
+      setModalState(() {
+        _selectedArea_id = country.id;
+        _countryController.text = country.name;
+      });
+      return;
+    }
+    _selected_country = country;
+    _selectedArea_id = country.id;
+    setState(() {});
+
+    setModalState(() {
+      _countryController.text = country.name;
+      _selectedArea_id = country.id;
+    });
+  }
+
+  onSelectCityDuringAdd(state, setModalState) {
+
+    if (_selected_state != null && state.id == _selected_state.id) {
+      setModalState(() {
+        _selectedCity_id = state.id;
+        _stateController.text = state.name;
+      });
+      return;
+    }
+    _selected_state = state;
+
+    _selectedCity_id = state.id;
+    _selected_city = null;
+    setState(() {});
+    setModalState(() {
+      _stateController.text = state.name;
+      _selectedCity_id = state.id;
+      _cityController.text = "";
+    });
+  }
+
+  onSelectZoneDuringAdd(city, setModalState) {
+
+    if (_selected_city != null && city.id == _selected_city.id) {
+      setModalState(() {
+
+        _selectedZone_id = city.id;
+        _cityController.text = city.name;
+      });
+      return;
+    }
+    _selected_city = city;
+    setState(() {
+      _selectedZone_id = city.id;
+    });
+    setModalState(() {
+      _cityController.text = city.name;
+      _selectedZone_id = city.id;
+    });
+  }
+
+  buildShowUpdateFormDialog(BuildContext context,) {
+    return Container(
+      //height: MediaQuery.of(context).size.height * 0.75,
+      width: MediaQuery.of(context).size.width,
+      child: StatefulBuilder(builder: (BuildContext context,
+          StateSetter setModalState /*You can rename this!*/) {
+        return ListView(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          //physics: ScrollPhysics(),
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                  AppLocalizations
+                      .of(context)
+                      .address_screen_name ,
+                  style: TextStyle(
+                      color: MyTheme.secondary, fontSize: 12)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Container(
+                height: 40,
+                child: TextField(
+                  controller: _nameController,
+                  autofocus: false,
+                  decoration: InputDecoration(
+                      hintText: "Enter Name",
+                      hintStyle: TextStyle(
+                          fontSize: 12.0, color: MyTheme.light_grey),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(0),
+                        borderSide: BorderSide(
+                            color: MyTheme.light_grey, width: 2),
+
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(0),
+                        borderSide: BorderSide(
+                            color: MyTheme.light_grey, width: 2.0),
+                      ),
+                      contentPadding:
+                      EdgeInsets.symmetric(horizontal: 8.0)),
+                ),
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                  AppLocalizations
+                      .of(context)
+                      .address_screen_phone,
+                  style: TextStyle(
+                      color: MyTheme.secondary, fontSize: 12)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Container(
+                height: 40,
+                child: TextField(
+                  controller: _phoneController,
+                  autofocus: false,
+                  decoration: InputDecoration(
+                      hintText: AppLocalizations
+                          .of(context)
+                          .address_screen_enter_phone ,
+                      hintStyle: TextStyle(
+                          fontSize: 12.0, color: MyTheme.light_grey),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(0),
+                        borderSide: BorderSide(
+                            color: MyTheme.light_grey, width: 2.0),
+
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(0),
+                        borderSide: BorderSide(
+                            color: MyTheme.light_grey, width: 2.0),
+                      ),
+                      contentPadding:
+                      EdgeInsets.symmetric(horizontal: 8.0)),
+                ),
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                  "${AppLocalizations
+                      .of(context)
+                      .address_screen_address}",
+                  style: TextStyle(
+                      color: MyTheme.secondary, fontSize: 12)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Container(
+                height: 55,
+                child: TextField(
+                  controller: _addressController,
+                  autofocus: false,
+                  maxLines: null,
+                  keyboardType: TextInputType.multiline,
+                  decoration: InputDecoration(
+                      hintText: AppLocalizations
+                          .of(context)
+                          .address_screen_enter_address,
+                      hintStyle: TextStyle(
+                          fontSize: 12.0, color: MyTheme.light_grey),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(0),
+                        borderSide: BorderSide(
+                            color: MyTheme.light_grey, width: 2.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(0),
+                        borderSide: BorderSide(
+                            color: MyTheme.light_grey, width: 2.0),
+                      ),
+                      contentPadding: EdgeInsets.only(
+                          left: 8.0, top: 16.0, bottom: 16.0)),
+                ),
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text("City ",
+                  style: TextStyle(
+                      color: MyTheme.secondary, fontSize: 12)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Container(
+                height: 40,
+                child: TypeAheadField(
+                  direction: AxisDirection.up,
+                  suggestionsCallback: (pattern) async {
+                    var stateResponse = await AddressRepository()
+                        .getCityByCountry(country_id: "3069");
+                    return stateResponse.states.where((state) =>
+                        state.name.toLowerCase().contains(pattern.toLowerCase())
+                    );
+                  },
+                  loadingBuilder: (context) {
+                    return Container(
+                      height: 50,
+                      child: Center(
+                        child: Text(
+                          AppLocalizations.of(context).address_screen_loading_states,
+                          style: TextStyle(color: MyTheme.dark_grey),
+                        ),
+                      ),
+                    );
+                  },
+                  itemBuilder: (context, state) {
+                    return ListTile(
+                      dense: true,
+                      title: Text(
+                        state.name,
+                        style: TextStyle(color: MyTheme.secondary),
+                      ),
+                    );
+                  },
+                  noItemsFoundBuilder: (context) {
+                    return Container(
+                      height: 50,
+                      child: Center(
+                        child: Text(
+                          AppLocalizations.of(context).address_screen_no_state_available,
+                          style: TextStyle(color: MyTheme.dark_grey),
+                        ),
+                      ),
+                    );
+                  },
+                  onSuggestionSelected: (state) {
+                    onSelectCityDuringAdd(state, setModalState);
+                  },
+                  textFieldConfiguration: TextFieldConfiguration(
+                    onTap: () {},
+                    controller: _stateController,
+                    decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context).address_screen_enter_state,
+                      hintStyle: TextStyle(fontSize: 12.0, color: MyTheme.light_grey),
+                      suffixIcon: Icon(Icons.arrow_drop_down_sharp),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(0),
+                        borderSide: BorderSide(color: MyTheme.light_grey, width: 2.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(0),
+                        borderSide: BorderSide(color: MyTheme.light_grey, width: 2.0),
+                      ),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                  "Zone",
+                  style: TextStyle(
+                      color: MyTheme.secondary, fontSize: 12)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Container(
+                height: 40,
+                child: TypeAheadField(
+                  direction: AxisDirection.up,
+                  suggestionsCallback: (name) async {
+                    var cityResponse = await AddressRepository()
+                        .getZoneByCity(
+                        state_id: _selected_state.id);
+                    return cityResponse.cities.where((element) =>
+                        element.name.toLowerCase().contains(name.toLowerCase())
+                    );
+                  },
+                  loadingBuilder: (context) {
+                    return Container(
+                      height: 50,
+                      child: Center(
+                          child: Text(
+                              AppLocalizations
+                                  .of(context)
+                                  .address_screen_loading_cities,
+                              style: TextStyle(
+                                  color: MyTheme.dark_grey))),
+                    );
+                  },
+                  itemBuilder: (context, city) {
+                    return ListTile(
+                      dense: true,
+                      title: Text(
+                        city.name,
+                        style: TextStyle(color: MyTheme.secondary),
+                      ),
+                    );
+                  },
+                  noItemsFoundBuilder: (context) {
+                    return Container(
+                      height: 50,
+                      child: Center(
+                          child: Text(
+                              AppLocalizations
+                                  .of(context)
+                                  .address_screen_no_city_available,
+                              style: TextStyle(
+                                  color: MyTheme.dark_grey))),
+                    );
+                  },
+                  onSuggestionSelected: (city) {
+                    onSelectZoneDuringAdd(city, setModalState);
+                  },
+                  textFieldConfiguration: TextFieldConfiguration(
+                    onTap: () {},
+                    //autofocus: true,
+                    controller: _cityController,
+                    onSubmitted: (txt) {
+                      // keep blank
+                    },
+                    decoration: InputDecoration(
+                        hintText: "Select Zone",
+                        hintStyle: TextStyle(
+                            fontSize: 12.0,
+                            color: MyTheme.light_grey),
+                        suffixIcon: Icon(Icons.arrow_drop_down_sharp),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(0),
+                          borderSide: BorderSide(
+                              color: MyTheme.light_grey, width: 2.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(0),
+                          borderSide: BorderSide(
+                              color: MyTheme.light_grey, width: 2.0),
+                        ),
+                        contentPadding:
+                        EdgeInsets.symmetric(horizontal: 8.0)),
+                  ),
+                ),
+
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text("Area ",
+                  style: TextStyle(
+                      color: MyTheme.secondary, fontSize: 12)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Container(
+                height: 40,
+                child: TypeAheadField(
+                  direction: AxisDirection.up,
+                  suggestionsCallback: (name) async {
+                    var countryResponse = await AddressRepository()
+                        .getAreaByZone(id: _selected_city.id);
+                    return countryResponse.countries.where((element) =>
+                        element.name.toLowerCase().contains(name.toLowerCase())
+                    );
+                  },
+                  loadingBuilder: (context) {
+                    return Container(
+                      height: 50,
+                      child: Center(
+                          child: Text(
+                              AppLocalizations
+                                  .of(context)
+                                  .address_screen_loading_cities,
+                              style: TextStyle(
+                                  color: MyTheme.dark_grey))),
+                    );
+                  },
+                  itemBuilder: (context, city) {
+                    return ListTile(
+                      dense: true,
+                      title: Text(
+                        city.name,
+                        style: TextStyle(color: MyTheme.secondary),
+                      ),
+                    );
+                  },
+                  noItemsFoundBuilder: (context) {
+                    return Container(
+                      height: 50,
+                      child: Center(
+                          child: Text(
+                              AppLocalizations
+                                  .of(context)
+                                  .address_screen_no_city_available,
+                              style: TextStyle(
+                                  color: MyTheme.dark_grey))),
+                    );
+                  },
+                  onSuggestionSelected: (city) {
+                    onSelectAreaDuringAdd(city, setModalState);
+                  },
+                  textFieldConfiguration: TextFieldConfiguration(
+                    onTap: () {},
+                    controller: _countryController,
+                    onSubmitted: (txt) {
+                      // keep blank
+                    },
+                    decoration: InputDecoration(
+                        hintText: "Select Area",
+                        hintStyle: TextStyle(
+                            fontSize: 12.0,
+                            color: MyTheme.light_grey),
+                        suffixIcon: Icon(Icons.arrow_drop_down_sharp),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(0),
+                          borderSide: BorderSide(
+                              color: MyTheme.light_grey, width: 2.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(0),
+                          borderSide: BorderSide(
+                              color: MyTheme.light_grey, width: 2.0),
+                        ),
+                        contentPadding:
+                        EdgeInsets.symmetric(horizontal: 8.0)),
+                  ),
+                ),
+              ),
+            ),
+
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom: 16.0),
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.height * 0.1,
+                      decoration: BoxDecoration(
+                        // border: Border.all(
+                        //   width: 2,
+                        //   color: MyTheme.primary
+                        // )
+                        color: MyTheme.primary,
+                      ),
+                      child: Center(child: Text("Cancel" ,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: MyTheme.white
+                        ),
+                      )),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 16.0),
+                  child: InkWell(
+                    onTap: (){
+                      //saveOrUpdateAddress();
+                      processOrderAddressUpdate(widget.id);
+                      Navigator.of(context).pop();
+                      // _onPageRefresh();
+                      setState(() {
+
+                      });
+                      //_onPageRefresh();
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.height * 0.1,
+                      decoration: BoxDecoration(
+                        color: MyTheme.secondary,
+                      ),
+                      child: Center(child: Text("Update" ,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: MyTheme.white
+                        ),
+                      )),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+          ],
+        );
+      }),
+    );
+  }
+
+  void processOrderAddressUpdate(int oderId)async{
+
+    try{
+      var response = await AddressRepository().getOrderProcessAddressUpdateResponse(
+        order_id: oderId,
+        shipping_name: _nameController.text,
+        shipping_address: _addressController.text,
+        shipping_city_id: _selectedCity_id,
+        shipping_zone_id: _selectedZone_id,
+        shipping_area_id:_selectedArea_id ,
+        shipping_phone: _phoneController.text,
+      ).then((value){
+        _onPageRefresh();
+      });
+
+      if(response["result"] == true){
+        ToastComponent.showDialog("${response["message"]}", context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      } else{
+        ToastComponent.showDialog("${response["message"]}", context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      }
+    } on Exception catch(e){
+      print("error is .... ${e.toString()}");
+    } catch(e){
+      print("e is ${e.toString()}");
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -368,12 +958,15 @@ class _OrderDetailsState extends State<OrderDetails> {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return Main();
           }));
+        }else {
+           Navigator.of(context).pop();
         }
       },
       child: Directionality(
         textDirection:
             app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
         child: Scaffold(
+          resizeToAvoidBottomInset: true,
           backgroundColor: Colors.white,
           appBar: buildAppBar(context),
 
@@ -386,14 +979,6 @@ class _OrderDetailsState extends State<OrderDetails> {
               physics: const BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics()),
               slivers: [
-
-                // SliverToBoxAdapter(
-                //   child: Padding(
-                //       padding: const EdgeInsets.all(16.0),
-                //       child: _orderDetails != null
-                //           ? buildTimeLineTiles()
-                //           : buildTimeLineShimmer()),
-                // ),
 
                 SliverList(
                     delegate: SliverChildListDelegate([
@@ -1127,13 +1712,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                                   color: MyTheme.secondary,
                                 ),
                               ),
-                              // Text(
-                              //   "${AppLocalizations.of(context).order_details_screen_country}: ${_orderDetails?.shipping_address.country??''}",
-                              //   maxLines: 3,
-                              //   style: TextStyle(
-                              //     color: MyTheme.secondary,
-                              //   ),
-                              // ),
                               Text(
                                 "${AppLocalizations.of(context).order_details_screen_state}: ${_orderDetails?.shipping_address.state??''}",
                                 maxLines: 3,
@@ -1148,13 +1726,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                                   color: MyTheme.secondary,
                                 ),
                               ),
-                              // Text(
-                              //   "${AppLocalizations.of(context).order_details_screen_postal_code}: ${_orderDetails?.shipping_address.postal_code??''}",
-                              //   maxLines: 3,
-                              //   style: TextStyle(
-                              //     color: MyTheme.secondary,
-                              //   ),
-                              // ),
                             ],
                           )
                         : Column(
@@ -1195,6 +1766,79 @@ class _OrderDetailsState extends State<OrderDetails> {
                         fontWeight: FontWeight.w600),
                   ),
                 ],
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.01,
+            ),
+            InkWell(
+              onTap: (){
+                reOrder(_orderDetails?.id);
+              },
+              child: Container(
+                height: 40,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.red,
+                    width: 2,
+                  )
+                ),
+                child: Center(
+                    child: loading == true ? CircularProgressIndicator(color: MyTheme.primary,): Text("Re-order",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+                )),
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.01,
+            ),
+            Visibility(
+              visible: _orderDetails?.delivery_status_string == "Processing" ? true : false,
+              child: InkWell(
+                onTap: (){
+                  //reOrder(_orderDetails?.id);
+                  showDialog(
+                      context: context,
+                      builder: (context){
+                        return AlertDialog(
+                          title: Center(child: Text("Update Info",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          )),
+                          content: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child:buildShowUpdateFormDialog(context),
+
+                          ),
+
+                        );
+                      }
+                  );
+                },
+                child: Container(
+                  height: 40,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: MyTheme.preorder,
+                        width: 2,
+                      )
+                    //color: MyTheme.preorder
+                  ),
+                  child: Center(
+                      child: Text("Update-info",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
+                      )),
+                ),
               ),
             ),
           ],
@@ -1414,17 +2058,16 @@ class _OrderDetailsState extends State<OrderDetails> {
       width: 16,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
-          //color: payment_status == "paid" ? Colors.green : Colors.red),
     color: payment_status == "paid"
     ? Colors.green
-        : payment_status == "cod" || payment_status == "cash_on_delivery"
+        : payment_status == "COD"
     ? Colors.orange
         : Colors.red,
       ),
       child: Padding(
         padding: const EdgeInsets.all(3),
         child: Icon(
-            payment_status == "paid" || payment_status == "cod"  ? FontAwesome.check : FontAwesome.times,
+            payment_status == "paid" || payment_status == "COD"  ? FontAwesome.check : FontAwesome.times,
             color: Colors.white,
             size: 10),
       ),

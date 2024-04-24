@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
-import 'package:kirei/ui_elements/product_card.dart';
 import 'package:kirei/repositories/product_repository.dart';
 import 'package:kirei/helpers/shimmer_helper.dart';
 import 'package:kirei/helpers/string_helper.dart';
@@ -38,13 +37,10 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
 
   _buildSearchList(search_key) async {
     _searchList.clear();
-    print(_fullList.length);
 
     if (search_key.isEmpty) {
       _searchList.addAll(_fullList);
       setState(() {});
-      //print("_searchList.length on empty " + _searchList.length.toString());
-      //print("_fullList.length on empty " + _fullList.length.toString());
     } else {
       for (var i = 0; i < _fullList.length; i++) {
         if (StringHelper().stringContains(_fullList[i].name, search_key)) {
@@ -53,8 +49,6 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
         }
       }
 
-      //print("_searchList.length with txt " + _searchList.length.toString());
-      //print("_fullList.length with txt " + _fullList.length.toString());
     }
   }
 
@@ -81,12 +75,6 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
     return AppBar(
       backgroundColor: Colors.white,
       toolbarHeight: 75,
-      /*bottom: PreferredSize(
-          child: Container(
-            color: MyTheme.light_grey,
-            height: 1.0,
-          ),
-          preferredSize: Size.fromHeight(4.0)),*/
       leading: Builder(
         builder: (context) => IconButton(
           icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
@@ -98,10 +86,7 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
           child: TextField(
             controller: _searchController,
             onChanged: (txt) {
-              print(txt);
               _buildSearchList(txt);
-              // print(_searchList.toString());
-              // print(_searchList.length);
             },
             onTap: () {},
             autofocus: true,
@@ -137,24 +122,18 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
         future: _future,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            //snapshot.hasError
-            //print("product error");
-            //print(snapshot.error.toString());
             return Container();
           } else if (snapshot.hasData) {
             var productResponse = snapshot.data;
             if (_fullList.length == 0) {
               _fullList.addAll(productResponse.products);
               _searchList.addAll(productResponse.products);
-              //print('xcalled');
             }
 
-            //print('called');
 
             return SingleChildScrollView(
               child: GridView.builder(
-                // 2
-                //addAutomaticKeepAlives: true,
+
                 itemCount: _searchList.length,
                 controller: _scrollController,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -166,14 +145,6 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  // 3
-                  // return ProductCard(
-                  //     id: _searchList[index].id,
-                  //     image: _searchList[index].thumbnail_image,
-                  //     name: _searchList[index].name,
-                  //     main_price: _searchList[index].main_price,
-                  //     stroked_price: _searchList[index].stroked_price,
-                  //     has_discount: _searchList[index].has_discount);
                 },
               ),
             );

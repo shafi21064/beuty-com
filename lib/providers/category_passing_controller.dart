@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 
 class CategoryPassingController with ChangeNotifier{
 
@@ -26,7 +25,7 @@ class CategoryPassingController with ChangeNotifier{
   }
 
   void setTypeKey(typeKeyValue){
-    _categoryKey = typeKeyValue;
+    _typeKey = typeKeyValue;
     notifyListeners();
   }
 

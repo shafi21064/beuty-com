@@ -3,12 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/custom/toast_component.dart';
-import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kirei/screens/main.dart';
-import 'package:kirei/screens/profile.dart';
 import 'package:toast/toast.dart';
 import 'package:kirei/custom/input_decorations.dart';
 import 'package:kirei/repositories/profile_repository.dart';
@@ -28,8 +25,6 @@ class _ProfileEditState extends State<ProfileEdit> {
 
   TextEditingController _nameController =
       TextEditingController(text: "${user_name.$}");
-  // TextEditingController _phoneController =
-  //     TextEditingController(text: "${user_email.$}");
    TextEditingController _currentPasswordController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _passwordConfirmController = TextEditingController();
@@ -66,7 +61,6 @@ class _ProfileEditState extends State<ProfileEdit> {
           AppLocalizations.of(context).common_give_photo_permission, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
     } else if (status.isGranted) {
-      //file = await ImagePicker.pickImage(source: ImageSource.camera);
       _file = await _picker.pickImage(source: ImageSource.gallery);
 
       if (_file == null) {
@@ -160,7 +154,7 @@ class _ProfileEditState extends State<ProfileEdit> {
         await ProfileRepository().getProfileUpdateResponse(
       name,
       change_password ? password : "",
-          currentPassword,
+          currentPassword != null ? currentPassword : "",
     );
 
     if (profileUpdateResponse.result == false) {
@@ -177,6 +171,25 @@ class _ProfileEditState extends State<ProfileEdit> {
     }
   }
 
+
+  bool stringToBool(String s) {
+    String lowerCaseS = s.toLowerCase();
+    if (lowerCaseS == 'true' || lowerCaseS == 'yes' || lowerCaseS == '1' ||
+        lowerCaseS == 'on') {
+      return true;
+    } else
+    if (lowerCaseS == 'false' || lowerCaseS == 'no' || lowerCaseS == '0' ||
+        lowerCaseS == 'off') {
+      return false;
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    // print("KireiBD999: ${stringToBool(user_have_password.$)}");
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -352,57 +365,58 @@ class _ProfileEditState extends State<ProfileEdit> {
               ),
             ),
 
-            // Padding(
-            //   padding: const EdgeInsets.only(bottom: 4.0),
-            //   child: Text(
-            //     //AppLocalizations.of(context).profile_edit_screen_name,
-            //     "Phone",
-            //     style: TextStyle(
-            //         color: Colors.orangeAccent, fontWeight: FontWeight.w600),
-            //   ),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.only(bottom: 8.0),
-            //   child: Container(
-            //     height: 36,
-            //     child: TextField(
-            //       controller: _phoneController,
-            //       autofocus: false,
-            //       decoration: InputDecorations.buildInputDecoration_1(
-            //           hint_text: "01*********"),
-            //     ),
-            //   ),
-            // ),
-            //
-            Padding(
-              padding: const EdgeInsets.only(bottom: 4.0),
-              child: Text(
-                //AppLocalizations.of(context).profile_edit_screen_password,
-                "Current Password",
-                style: TextStyle(
-                    color: MyTheme.primary, fontWeight: FontWeight.w600),
+            Visibility(
+              visible: stringToBool(user_have_password.$),
+              //visible: value1,
+              child:
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 4.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          //AppLocalizations.of(context).profile_edit_screen_password,
+                          "Current Password",
+                          style: TextStyle(
+                              color: MyTheme.primary, fontWeight: FontWeight.w600),
+                        ),
+
+                        SizedBox(width: MediaQuery.of(context).size.width * 0.05,),
+
+                        // Text(
+                        //   //AppLocalizations.of(context).profile_edit_screen_password,
+                        //   //"(Skip this field if you are a OTP user or )",
+                        //   "(Skip this field if you have no password)",
+                        //   style: TextStyle(
+                        //       color: MyTheme.secondary, fontWeight: FontWeight.w600, fontSize: 12),
+                        // ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Container(
+                      height: 36,
+                      child: TextField(
+                        controller: _currentPasswordController,
+                        autofocus: false,
+                        obscureText: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        decoration: InputDecorations.buildInputDecoration_1(
+                            hint_text: "• • • • • • • •"),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Container(
-                height: 36,
-                child: TextField(
-                  controller: _currentPasswordController,
-                  autofocus: false,
-                  obscureText: true,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  decoration: InputDecorations.buildInputDecoration_1(
-                      hint_text: "• • • • • • • •"),
-                ),
-              ),
-            ),
+
 
             Padding(
               padding: const EdgeInsets.only(bottom: 4.0),
               child: Text(
-                //AppLocalizations.of(context).profile_edit_screen_password,
                 "New Password",
                 style: TextStyle(
                     color: MyTheme.primary, fontWeight: FontWeight.w600),
@@ -440,8 +454,6 @@ class _ProfileEditState extends State<ProfileEdit> {
             Padding(
               padding: const EdgeInsets.only(bottom: 4.0),
               child: Text(
-                // AppLocalizations.of(context)
-                //     .profile_edit_screen_retype_password,
                 "Confirm New Password",
                 style: TextStyle(
                     color: MyTheme.primary, fontWeight: FontWeight.w600),

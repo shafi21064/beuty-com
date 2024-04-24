@@ -126,9 +126,6 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
         return OrderList(from_checkout: true);
       }));
 
-      /*OneContext().push(MaterialPageRoute(builder: (_) {
-        return OrderList(from_checkout: true);
-      }));*/
     } else if (widget.payment_type == "wallet_payment") {
       print("d");
       Navigator.push(context, MaterialPageRoute(builder: (context) {

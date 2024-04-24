@@ -1,32 +1,11 @@
-import 'dart:io';
-
-import 'package:kirei/helpers/file_helper.dart';
-import 'package:kirei/repositories/extra_repository.dart';
-import 'package:kirei/screens/BeautyBooks.dart';
-import 'package:kirei/screens/blog_view.dart';
-import 'package:kirei/screens/blogs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/screens/common_webview_screen.dart';
 import 'package:kirei/ui_sections/drawer.dart';
-import 'package:kirei/custom/toast_component.dart';
-import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:like_button/like_button.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:readmore/readmore.dart';
-import 'package:toast/toast.dart';
-import 'package:kirei/screens/category_products.dart';
-import 'package:kirei/repositories/category_repository.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_tags/flutter_tags.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'comments.dart';
 
 class BeautyTips extends StatefulWidget {
   BeautyTips({Key key}) : super(key: key);
@@ -63,11 +42,6 @@ class _BeautyTipsState extends State<BeautyTips> {
               color: Colors.transparent,
               child: GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => Blogs()),
-                  // );
-
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) {
                         return CommonWebviewScreen(
@@ -118,7 +92,6 @@ class _BeautyTipsState extends State<BeautyTips> {
               ),
               child: GestureDetector(
                 onTap: () {
-                  print("clicked");
                   _launchUrl(Uri.parse("https://www.youtube.com/@j-beautybykirei213"));
                 },
                 child: Column(
@@ -192,15 +165,8 @@ class _BeautyTipsState extends State<BeautyTips> {
     return name;
   }
 
-  
 
-//   Future<void> _launchUrl(dynamic youtube_url) async {
-//     if (!await launchUrl(youtube_url)) {
-//       throw Exception('Could not launch $youtube_url');
-//     }
-// }
   Future<void> _launchUrl(Uri url) async {
-    // final Uri _url = Uri.parse('https://flutter.dev');
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch $url');
     }

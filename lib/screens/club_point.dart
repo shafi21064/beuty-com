@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/repositories/clubpoint_repository.dart';
 import 'package:kirei/helpers/shimmer_helper.dart';
 import 'package:kirei/custom/toast_component.dart';
@@ -32,8 +31,6 @@ class _ClubpointState extends State<Clubpoint> {
     fetchData();
 
     _xcrollController.addListener(() {
-      //print("position: " + _xcrollController.position.pixels.toString());
-      //print("max: " + _xcrollController.position.maxScrollExtent.toString());
 
       if (_xcrollController.position.pixels ==
           _xcrollController.position.maxScrollExtent) {
@@ -79,8 +76,6 @@ class _ClubpointState extends State<Clubpoint> {
       ToastComponent.showDialog(clubpointToWalletResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
     } else {
-      /*ToastComponent.showDialog(clubpointToWalletResponse.message, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);*/
       Scaffold.of(context).showSnackBar(_convertedSnackbar);
 
       _converted_ids.add(item_id);

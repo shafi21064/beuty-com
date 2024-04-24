@@ -9,6 +9,7 @@ import 'package:kirei/helpers/shared_value_helper.dart';
 class WishListRepository {
   Future<WishlistResponse> getUserWishlist() async {
     Uri url = Uri.parse("${AppConfig.BASE_URL}/wishlists");
+    print(url);
     final response = await http.get(
       url,
       headers: {
@@ -17,7 +18,6 @@ class WishListRepository {
       },
     );
     print("Apiresponse: ${response.body}");
-    debugPrint("Apiresponse2: ${response.body}");
     return wishlistResponseFromJson(response.body);
   }
 

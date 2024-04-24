@@ -1,6 +1,5 @@
 import 'package:kirei/my_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/screens/brand_products.dart';
 
 class BrandSquareCard extends StatefulWidget {

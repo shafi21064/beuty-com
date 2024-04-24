@@ -10,17 +10,12 @@ import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:like_button/like_button.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:readmore/readmore.dart';
 import 'package:toast/toast.dart';
-import 'package:kirei/screens/category_products.dart';
-import 'package:kirei/repositories/category_repository.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_tags/flutter_tags.dart';
 import 'comments.dart';
 
 class FeedList extends StatefulWidget {
@@ -72,7 +67,6 @@ class _FeedListState extends State<FeedList> {
           AppLocalizations.of(context).common_give_photo_permission, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
     } else if (status.isGranted) {
-      //file = await ImagePicker.pickImage(source: ImageSource.camera);
       _file = await _picker.pickImage(source: ImageSource.gallery);
 
       if (_file == null) {
@@ -104,9 +98,7 @@ class _FeedListState extends State<FeedList> {
         await ExtraRepository().getNewCommunityPostResponse(
             base64Image,
             fileName,
-            //  _titleController.text.toString(),
             _descriptionController.text.toString()
-            // _hashtagsController.text.toString(),
             );
 
     if (newCommunityPostResponse.result == false) {
@@ -280,23 +272,6 @@ class _FeedListState extends State<FeedList> {
                       ),
                     ),
                   ),
-                  // Container(
-                  //     margin: EdgeInsets.only(left: 15, top: 12, bottom: 12),
-                  //     child: Container(
-                  //       decoration: BoxDecoration(
-                  //         border: Border(
-                  //             left: BorderSide(color: Colors.teal, width: 5)),
-                  //       ),
-                  //       child: Text(
-                  //         ' HashTags',
-                  //         style: GoogleFonts.ubuntu(
-                  //             color: Colors.red[800], fontSize: 18),
-                  //       ),
-                  //     )),
-                  // SizedBox(
-                  //   child: buildFeedHashList(),
-                  //   height: 42,
-                  // ),
                   buildFeedList(),
                 ]))
               ],
@@ -348,8 +323,6 @@ class _FeedListState extends State<FeedList> {
         future: future,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            //snapshot.hasError
-            print("Community Hash list error");
             print(snapshot.error.toString());
             return Container(
               height: 10,
@@ -449,8 +422,6 @@ class _FeedListState extends State<FeedList> {
         future: future,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            //snapshot.hasError
-            print("Community post list error");
             print(snapshot.error.toString());
             return Container(
               height: 10,
@@ -681,8 +652,6 @@ class _FeedListState extends State<FeedList> {
               Padding(
                 padding: EdgeInsets.fromLTRB(6, 8, 8, 0),
                 child: LikeButton(
-                  // onTap: addLike(compostResponse.data[index].id),
-                  // ignore: missing_return
                   onTap: (bool isLiked) async {
                     if (1 == 1) {
                       addLike(compostResponse.data[index].id.toString());

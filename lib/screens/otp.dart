@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:kirei/helpers/auth_helper.dart';
 import 'package:kirei/my_theme.dart';
@@ -6,10 +5,8 @@ import 'package:kirei/screens/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kirei/custom/input_decorations.dart';
-import 'package:kirei/screens/login.dart';
 import 'package:kirei/repositories/auth_repository.dart';
 import 'package:kirei/custom/toast_component.dart';
-import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -38,34 +35,10 @@ class _OtpState extends State<Otp> {
   TextEditingController _verificationCodeController = TextEditingController();
 
 
-  // int start = 20;
-  //  Timer timer;
-  //
-  //  void timeCount(){
-  //
-  //      timer = Timer.periodic(Duration(seconds: 1), (timer) {
-  //        if (start == 0) {
-  //          timer.cancel();
-  //        } else {
-  //          setState(() {
-  //            start--;
-  //          });
-  //          print(start);
-  //        }
-  //
-  //    });
-  //  }
-  //
-  //  void timeReset(){
-  //    setState(() {
-  //      start = 20;
-  //    });
-  //    timeCount();
-  //  }
+
 
   @override
   void initState() {
-     //timeCount();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
     super.initState();
   }
@@ -75,22 +48,10 @@ class _OtpState extends State<Otp> {
     //before going to other screen show statusbar
     SystemChrome.setEnabledSystemUIMode(
         SystemUiMode.manual, overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
-   // timer.cancel();
     super.dispose();
   }
 
-  // onTapResend() async {
-  //   var resendCodeResponse = await AuthRepository()
-  //       .getResendCodeResponse(widget.user_id, widget.verify_by);
-  //
-  //   if (resendCodeResponse.result == false) {
-  //     ToastComponent.showDialog(resendCodeResponse.message, context,
-  //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-  //   } else {
-  //     ToastComponent.showDialog(resendCodeResponse.message, context,
-  //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-  //   }
-  // }
+
 
   onTapResend() async {
     var resendCodeResponse = await AuthRepository()
@@ -124,11 +85,9 @@ class _OtpState extends State<Otp> {
               .getSignUpOtpConfirmCodeResponse(widget.phoneNumber, code);
 
       if (confirmCodeResponse == false) {
-        // ToastComponent.showDialog(confirmCodeResponse.message, context,
-        //     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+
       } else {
-        // ToastComponent.showDialog(confirmCodeResponse.message, context,
-        //     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+
         print(widget.responseData);
         AuthHelper().setUserDataFromOTP(confirmCodeResponse);
 
@@ -150,11 +109,7 @@ class _OtpState extends State<Otp> {
         backgroundColor: Colors.white,
         body: Stack(
           children: [
-            // Container(
-            //   width: _screen_width * (3 / 4),
-            //   child: Image.asset(
-            //       "assets/splash_login_registration_background_image.png"),
-            // ),
+
             Container(
               width: double.infinity,
               child: SingleChildScrollView(
@@ -166,7 +121,6 @@ class _OtpState extends State<Otp> {
                     child: Container(
                       width: 75,
                       height: 75,
-                      //child: Image.asset('assets/Frame.png'),
                       child: Image.asset('assets/logo.png'),
                     ),
                   ),
@@ -226,37 +180,24 @@ class _OtpState extends State<Otp> {
                             ],
                           ),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(top: 40.0),
-                        //   child: Container(
-                        //     height: 45,
-                        //     decoration: BoxDecoration(
-                        //         border: Border.all(
-                        //             color: MyTheme.light_grey, width: 1),
-                        //         borderRadius: const BorderRadius.all(
-                        //             Radius.circular(12.0))),
-                        //     child: FlatButton(
-                        //       minWidth: MediaQuery.of(context).size.width,
-                        //       //height: 50,
-                        //       color: MyTheme.primary,
-                        //       shape: RoundedRectangleBorder(
-                        //           borderRadius: const BorderRadius.all(
-                        //               Radius.circular(12.0))),
-                        //       child: Text(
-                        //         AppLocalizations.of(context).otp_screen_confirm,
-                        //         style: TextStyle(
-                        //             color: Colors.white,
-                        //             fontSize: 14,
-                        //             fontWeight: FontWeight.w600),
-                        //       ),
-                        //       onPressed: () {
-                        //         onPressConfirm();
-                        //       },
-                        //     ),
-                        //   ),
-                        // ),
+
                         Padding(
-                          //padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.only(top: 5),
+                          child: InkWell(
+                            onTap: () {
+                              onTapResend();
+                            },
+                            child: Text(
+                                AppLocalizations.of(context).otp_screen_resend_code,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: MyTheme.primary,
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 13)),
+                          ),
+                        ),
+
+                        Padding(
                           padding:  EdgeInsets.only(top: 40.0, left: 0, right: 0,bottom: 8),
                           child: RaisedButton(
                             onPressed: (){
@@ -287,52 +228,6 @@ class _OtpState extends State<Otp> {
                     ),
                   ),
 
-                  // start !=0 ?
-                  // Padding(
-                  //   padding: const EdgeInsets.only(top: 100),
-                  //   child: Text(
-                  //       // AppLocalizations.of(context).otp_screen_resend_code,
-                  //     "Resend After: ${start.toString()}",
-                  //       textAlign: TextAlign.center,
-                  //       style: TextStyle(
-                  //           color: MyTheme.primary,
-                  //           //decoration: TextDecoration.underline,
-                  //           fontSize: 13)),
-                  // ) :
-                  Padding(
-                    padding: const EdgeInsets.only(top: 100),
-                    child: InkWell(
-                      onTap: () {
-                        onTapResend();
-                        //     .then(
-                        //     (){
-                        //       timeReset();
-                        //     }
-                        // );
-                      },
-                      child: Text(
-                          AppLocalizations.of(context).otp_screen_resend_code,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: MyTheme.primary,
-                              decoration: TextDecoration.underline,
-                              fontSize: 13)),
-                    ),
-                  ),
-
-                  // SizedBox(
-                  //   height: 10,
-                  // ),
-                  //
-                  // start !=0 ? Text(
-                  //   //'Resend OTP in ${value.start.toString()} seconds',
-                  //   "Resend After: ${start.toString()}",
-                  //   style: TextStyle(fontSize: 18),
-                  // ) : Text(
-                  //   //'Resend OTP in ${value.start.toString()} seconds',
-                  //   "Resend Code",
-                  //   style: TextStyle(fontSize: 18),
-                  // ),
                 ],
               )),
             )

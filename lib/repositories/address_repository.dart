@@ -3,7 +3,6 @@ import 'package:kirei/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:kirei/data_model/address_response.dart';
 import 'package:kirei/data_model/address_add_response.dart';
 import 'package:kirei/data_model/address_update_response.dart';
 import 'package:kirei/data_model/address_update_location_response.dart';
@@ -18,20 +17,6 @@ import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter/foundation.dart';
 
 class AddressRepository {
-  // Future<AddressResponse> getAddressList() async {
-  //   Uri url = Uri.parse("${ENDP.AddrList}");
-  //   final response = await http.get(
-  //     url,
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "Authorization": "Bearer ${access_token.$}",
-  //       "App-Language": app_language.$,
-  //     },
-  //   );
-  //   print("response.body.toString()${response.body.toString()}");
-  //
-  //   return addressResponseFromJson(response.body);
-  // }
 
   Future<dynamic> getAddressList() async {
     Uri url = Uri.parse("${ENDP.AddrList}");
@@ -46,7 +31,6 @@ class AddressRepository {
     print("response.body.toString()${response.body.toString()}");
     return jsonDecode(response.body);
 
-    //return addressResponseFromJson(jsonDecode(response.body));
   }
 
 
@@ -89,9 +73,6 @@ class AddressRepository {
 
   Future<AddressAddResponse> getAddressUpdateAddResponse(
       {@required String address,
-        // @required String area,
-        // @required String zone,
-        // @required String city,
         @required int area,
         @required int zone,
         @required int city,
@@ -124,6 +105,37 @@ class AddressRepository {
     print(url);
     print("initialState: "+response.body.toString());
     return addressAddResponseFromJson(response.body);
+  }
+
+  Future<dynamic> getOrderProcessAddressUpdateResponse(
+      {@required int order_id,
+      @required String shipping_name,
+        @required String shipping_address,
+        @required int shipping_area_id,
+        @required int shipping_city_id,
+        @required int shipping_zone_id,
+        @required String shipping_phone}) async {
+    var post_body = jsonEncode({
+      "shipping_name" : "$shipping_name",
+      "shipping_address": "$shipping_address",
+      "shipping_area_id": shipping_area_id,
+      "shipping_city_id": shipping_city_id,
+      "shipping_zone_id": shipping_zone_id,
+      "shipping_phone": "$shipping_phone"
+    });
+
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/order/shipping-update/${order_id}");
+    final response = await http.post(url,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${access_token.$}",
+          "App-Language": app_language.$
+        },
+        body: post_body);
+    print(response.body.toString());
+    print("URL:$url");
+    return jsonDecode(response.body);
+    //return addressUpdateResponseFromJson(response.body);
   }
 
   Future<AddressUpdateResponse> getAddressUpdateResponse(

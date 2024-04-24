@@ -1,30 +1,12 @@
 import 'package:kirei/helpers/api.dart';
-import 'package:kirei/helpers/file_helper.dart';
-import 'package:kirei/repositories/extra_repository.dart';
-import 'package:kirei/repositories/viewBB.dart';
 import 'package:kirei/screens/viewYT.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/ui_sections/drawer.dart';
-import 'package:kirei/custom/toast_component.dart';
-import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:like_button/like_button.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:readmore/readmore.dart';
-import 'package:toast/toast.dart';
-import 'package:kirei/screens/category_products.dart';
-import 'package:kirei/repositories/category_repository.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_tags/flutter_tags.dart';
-import 'comments.dart';
-
 class kireiYT extends StatefulWidget {
   kireiYT({Key key}) : super(key: key);
 
@@ -112,7 +94,6 @@ class _kireiYTState extends State<kireiYT> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
                                       Container(
-                                        // height: 170,
                                         child: Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,

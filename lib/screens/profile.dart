@@ -6,20 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/ui_sections/drawer.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/screens/wallet.dart';
 import 'package:kirei/screens/profile_edit.dart';
 import 'package:kirei/screens/address.dart';
 import 'package:kirei/screens/order_list.dart';
-import 'package:kirei/screens/club_point.dart';
-import 'package:kirei/screens/refund_request.dart';
 import 'package:kirei/repositories/profile_repository.dart';
-import 'package:kirei/custom/toast_component.dart';
-import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toast/toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'main.dart';
@@ -40,16 +34,6 @@ class _ProfileState extends State<Profile> {
   onTapLogout(context) async {
     AuthHelper().clearUserData();
 
-    // var logoutResponse = await AuthRepository().getLogoutResponse();
-    //
-    // if (logoutResponse.result == true) {
-    //   ToastComponent.showDialog(logoutResponse.message, context,
-    //       gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-    //
-    //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //     return Login();
-    //   }));
-    // }
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setInt("cartItemCount", 0) ;
 
@@ -129,13 +113,12 @@ class _ProfileState extends State<Profile> {
         ? blank_zeros
         : txt;
 
-    // print(txt + " " + default_length.toString());
-    // print(newtxt);
+
 
     if (default_length > txt.length) {
       newtxt = leading_zeros + newtxt;
     }
-    //print(newtxt);
+
 
     return newtxt;
   }
@@ -199,12 +182,7 @@ class _ProfileState extends State<Profile> {
                     height: 24,
                   ),
                 ),
-                //buildHorizontalMenu(),
                 buildDetailsMenu(),
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(vertical: 16.0),
-                // ),
-                //buildHorizontalMenu2(),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Divider(
@@ -469,37 +447,6 @@ class _ProfileState extends State<Profile> {
           ),
         ),
 
-        /*InkWell(
-          onTap: () {
-            ToastComponent.showDialog("Coming soon", context,
-                gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-          },
-          child: Column(
-            children: [
-              Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    color: MyTheme.light_grey,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child:
-                        Icon(Icons.message_outlined, color: Colors.redAccent),
-                  )),
-              Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: Text(
-                  "Message",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: MyTheme.secondary, fontWeight: FontWeight.w300),
-                ),
-              )
-            ],
-          ),
-        ),*/
       ],
     );
   }
@@ -641,37 +588,6 @@ class _ProfileState extends State<Profile> {
           ),
         ),
 
-        /*InkWell(
-          onTap: () {
-            ToastComponent.showDialog("Coming soon", context,
-                gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-          },
-          child: Column(
-            children: [
-              Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    color: MyTheme.light_grey,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child:
-                        Icon(Icons.message_outlined, color: Colors.redAccent),
-                  )),
-              Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: Text(
-                  "Message",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: MyTheme.secondary, fontWeight: FontWeight.w300),
-                ),
-              )
-            ],
-          ),
-        ),*/
       ],
     );
   }

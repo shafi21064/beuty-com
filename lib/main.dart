@@ -1,10 +1,11 @@
-import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:kirei/firebase_options.dart';
 import 'package:kirei/helpers/auth_helper.dart';
+import 'package:kirei/other_config.dart';
 import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/providers/category_passing_controller.dart';
-import 'package:kirei/screens/filter.dart';
-import 'package:kirei/screens/order_failed_page.dart';
-import 'package:kirei/screens/order_success_page.dart';
+import 'package:kirei/providers/version_change.dart';
+import 'package:kirei/services/push_notification_service.dart';
 import 'package:kirei/theme/appThemes.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,8 @@ import 'package:kirei/screens/splash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_value/shared_value.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
+import 'package:upgrader/upgrader.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'app_config.dart';
 import 'package:one_context/one_context.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -23,16 +26,25 @@ import 'package:kirei/providers/locale_provider.dart';
 import 'lang_config.dart';
 
 SharedPreferences sharedPreferences;
+Future<void> _launchUrl(Uri url) async {
+  if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+    throw Exception('Could not launch $url');
+  }
+}
+
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Firebase.initializeApp();
+  await Firebase.initializeApp(
+    name: "KireiBD",
+    options: DefaultFirebaseOptions.currentPlatform
+  );
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  await Upgrader.clearSavedSettings();
   sharedPreferences = await SharedPreferences.getInstance();
-
   print("app_mobile_language.1isEmpty${app_mobile_language.$.isEmpty}");
   // AddonsHelper().setAddonsData();
   // BusinessSettingHelper().setBusinessSettingData();
@@ -67,11 +79,11 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    // if (OtherConfig.USE_PUSH_NOTIFICATION) {
-    //   Future.delayed(Duration(milliseconds: 100), () async {
-    //     PushNotificationService().initialise();
-    //   });
-    // }
+    if (OtherConfig.USE_PUSH_NOTIFICATION) {
+      Future.delayed(Duration(milliseconds: 100), () async {
+        PushNotificationService().initialise();
+      });
+    }
   }
 
   @override
@@ -84,6 +96,7 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider(create: (_) => LocaleProvider()),
           ChangeNotifierProvider(create: (_) => CartCountUpdate()),
           ChangeNotifierProvider(create: (_) => CategoryPassingController()),
+          ChangeNotifierProvider(create: (_) => VersionChange()),
         ],
         child: Consumer<LocaleProvider>(builder: (context, provider, snapshot) {
           return DynamicTheme(
@@ -126,37 +139,20 @@ class _MyAppState extends State<MyApp> {
                   ],
                   locale: provider.locale,
                   supportedLocales: LangConfig().supportedLocales(),
-                  home: Splash(),
-                  //home: WebViewExample(),
+                  //home: Splash(),
+                  home: UpgradeAlert(
+                      upgrader: Upgrader(
+                       onUpdate: (){
+                         _launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=com.thetork.kirei&hl=en_US'));
+                       },
+                        showIgnore: false,
+                        //showLater: false,
+                      ),
+                      child: Splash()
+                  ),
                   //home: Main(),
                 ));
               });
         }));
   }
 }
-
-// class WebViewExample extends StatefulWidget {
-//   @override
-//   _WebViewExampleState createState() => _WebViewExampleState();
-// }
-//
-// class _WebViewExampleState extends State<WebViewExample> {
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     if (Platform.isAndroid) {
-//       WebView.platform = SurfaceAndroidWebView();
-//     }
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return WebView(
-//       initialUrl: 'https://www.google.com',
-//       javascriptMode: JavascriptMode.unrestricted,
-//       gestureNavigationEnabled: true,
-//
-//     );
-//   }
-// }

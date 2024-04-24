@@ -35,11 +35,11 @@ class CartCountUpdate extends ChangeNotifier {
     notifyListeners();
   }
 
- getDelete() async {
+ getDelete(BuildContext context) async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
   var cartResponseList =
-      await CartRepository().getCartResponseList(user_id.$);
+      await CartRepository().getCartResponseList(user_id.$,context);
 
   print('cartResponse list ${cartResponseList}');
 

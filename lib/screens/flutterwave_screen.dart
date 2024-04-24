@@ -83,8 +83,6 @@ class _FlutterwaveScreenState extends State<FlutterwaveScreen> {
 
     setState(() {});
 
-    //print(_initial_url);
-    //print(_initial_url_fetched);
   }
 
   @override
@@ -105,7 +103,6 @@ class _FlutterwaveScreenState extends State<FlutterwaveScreen> {
         .then((data) {
       var decodedJSON = jsonDecode(data);
       Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
-      //print(data.toString());
       if (responseJSON["result"] == false) {
         Toast.show(responseJSON["message"], context,
             duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
@@ -155,11 +152,8 @@ class _FlutterwaveScreenState extends State<FlutterwaveScreen> {
               _webViewController.loadUrl(_initial_url);
             },
             onWebResourceError: (error) {
-              //(error.description);
-              //print(error.errorCode);
             },
             onPageFinished: (page) {
-              //print(page.toString());
 
               if (page.contains("/flutterwave/payment/callback")) {
                 getData();

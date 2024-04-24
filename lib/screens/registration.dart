@@ -1,15 +1,14 @@
-import 'package:kirei/app_config.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kirei/helpers/auth_helper.dart';
 import 'package:kirei/my_theme.dart';
-import 'package:kirei/repositories/profile_repository.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kirei/custom/input_decorations.dart';
-import 'package:kirei/custom/intl_phone_input.dart';
-import 'package:flutter_gradients/flutter_gradients.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:kirei/other_config.dart';
+import 'package:kirei/repositories/profile_repository.dart';
 import 'package:kirei/screens/otp.dart';
 import 'package:kirei/screens/login.dart';
 import 'package:kirei/custom/toast_component.dart';
@@ -17,8 +16,6 @@ import 'package:toast/toast.dart';
 import 'package:kirei/repositories/auth_repository.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../other_config.dart';
 import 'main.dart';
 
 class Registration extends StatefulWidget {
@@ -116,7 +113,7 @@ class _RegistrationState extends State<Registration> {
           duration: Toast.LENGTH_LONG);
       return;
     } else if (_register_by == "otp") {
-      var signupResponse = await AuthRepository().getSignupOtpResponse(_phone);
+      var signupResponse = await AuthRepository().getSignupOtpResponse(_phone, context);
       if (signupResponse.result == false) {
         ToastComponent.showDialog(signupResponse.message, context,
             gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
@@ -141,7 +138,7 @@ class _RegistrationState extends State<Registration> {
         //email,
         password,
         password_confirm,
-        _register_by);
+        _register_by, context);
 
     if (signupResponse.result == false) {
       ToastComponent.showDialog(signupResponse.message, context,
@@ -151,33 +148,33 @@ class _RegistrationState extends State<Registration> {
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       AuthHelper().setUserData(signupResponse);
       // push notification starts
-      // if (OtherConfig.USE_PUSH_NOTIFICATION) {
-      //   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+      if (OtherConfig.USE_PUSH_NOTIFICATION) {
+        final FirebaseMessaging _fcm = FirebaseMessaging.instance;
 
-      //   await _fcm.requestPermission(
-      //     alert: true,
-      //     announcement: false,
-      //     badge: true,
-      //     carPlay: false,
-      //     criticalAlert: false,
-      //     provisional: false,
-      //     sound: true,
-      //   );
+        await _fcm.requestPermission(
+          alert: true,
+          announcement: false,
+          badge: true,
+          carPlay: false,
+          criticalAlert: false,
+          provisional: false,
+          sound: true,
+        );
 
-      //   String fcmToken = await _fcm.getToken();
+        String fcmToken = await _fcm.getToken();
 
-      //   if (fcmToken != null) {
-      //     print("--fcm token--");
-      //     print(fcmToken);
-      //     if (is_logged_in.$ == true) {
-      //       print("true------------------------");
-      //       // update device token
-      //       var deviceTokenUpdateResponse = await ProfileRepository()
-      //           .getDeviceTokenUpdateResponse(fcmToken);
-      //       print("hmmmm------------------------");
-      //     }
-      //   }
-      // }
+        if (fcmToken != null) {
+          print("--fcm token--");
+          print(fcmToken);
+          if (is_logged_in.$ == true) {
+            print("true------------------------");
+            // update device token
+            var deviceTokenUpdateResponse = await ProfileRepository()
+                .getDeviceTokenUpdateResponse(fcmToken);
+            print("hmmmm------------------------");
+          }
+        }
+      }
 
       //push norification ends
       Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -185,6 +182,74 @@ class _RegistrationState extends State<Registration> {
       }));
       ;
     }
+  }
+
+  onPressedGoogleRegister() async {
+    // try {
+    //   print("Kireiapp");
+    //   final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    //
+    //   print(googleUser.toString());
+    //
+    //   GoogleSignInAuthentication googleSignInAuthentication =
+    //       await googleUser.authentication;
+    //   String accessToken = googleSignInAuthentication.accessToken;
+    //
+    //   var loginResponse = await AuthRepository().getSocialLoginResponse(
+    //       "google", googleUser.displayName, googleUser.email, googleUser.id,
+    //       access_token: accessToken);
+    //   print("Kireiapp5");
+    //   if (loginResponse.result == false) {
+    //     print("Kireiapp5");
+    //     ToastComponent.showDialog(loginResponse.message, context,
+    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    //   } else {
+    //     print("Kireiapp6");
+    //     ToastComponent.showDialog(loginResponse.message, context,
+    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    //     AuthHelper().setUserData(loginResponse);
+    //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //       return Main();
+    //     }));
+    //   }
+    //   GoogleSignIn().disconnect();
+    // } on Exception catch (e) {
+    //   print("error is ....... $e");
+    //   // TODO
+    // }
+
+    try {
+      final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication googleAuth = await googleUser?.authentication;
+
+      // final credential = GoogleAuthProvider.credential(
+      //   accessToken: googleAuth?.accessToken,
+      //   idToken: googleAuth?.idToken,
+      // );
+
+      var loginResponse = await AuthRepository().getSocialLoginResponse(
+          "google", googleUser.displayName, googleUser.email, googleUser.id,
+          access_token: googleAuth.accessToken);
+
+      if (loginResponse.result == false) {
+        ToastComponent.showDialog(loginResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      } else {
+        ToastComponent.showDialog(loginResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        AuthHelper().setUserData(loginResponse);
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return Main();
+        }));
+      }
+      GoogleSignIn().disconnect();
+
+    } on Exception catch (e) {
+      print("error is ....... $e");
+      // TODO
+    }
+
   }
 
   @override
@@ -197,10 +262,6 @@ class _RegistrationState extends State<Registration> {
         backgroundColor: Colors.white,
         body: Stack(
           children: [
-            // Container(
-            //   width: _screen_width * (3 / 4),
-            //   child: Image.asset("assets/image_02.png"),
-            // ),
             Container(
               width: double.infinity,
               child: SingleChildScrollView(
@@ -273,42 +334,6 @@ class _RegistrationState extends State<Registration> {
                                 fontWeight: FontWeight.w600),
                           ),
                         ),
-                        // if (_register_by == "email")
-                        //   Padding(
-                        //     padding: const EdgeInsets.only(bottom: 8.0),
-                        //     child: Column(
-                        //       crossAxisAlignment: CrossAxisAlignment.end,
-                        //       children: [
-                        //         Container(
-                        //           height: 36,
-                        //           child: TextField(
-                        //             controller: _emailController,
-                        //             autofocus: false,
-                        //             decoration:
-                        //                 InputDecorations.buildInputDecoration_1(
-                        //                     hint_text: "johndoe@example.com"),
-                        //           ),
-                        //         ),
-                        //         // GestureDetector(
-                        //         //         onTap: () {
-                        //         //           setState(() {
-                        //         //             _register_by = "phone";
-                        //         //           });
-                        //         //         },
-                        //         //         child: Text(
-                        //         //           AppLocalizations.of(context)
-                        //         //               .registration_screen_or_register_with_phone,
-                        //         //           style: TextStyle(
-                        //         //               color: MyTheme.primary,
-                        //         //               fontStyle: FontStyle.italic,
-                        //         //               decoration:
-                        //         //                   TextDecoration.underline),
-                        //         //         ),
-                        //         //       )
-
-                        //       ],
-                        //     ),
-                        //   )
 
                         Padding(
                           padding: const EdgeInsets.only(bottom: 8.0, ),
@@ -317,66 +342,19 @@ class _RegistrationState extends State<Registration> {
                             children: [
                               Container(
                                 height: 36,
-                                // child: CustomInternationalPhoneNumberInput(
-                                //   onInputChanged: (PhoneNumber number) {
-                                //     print(number.phoneNumber);
-                                //     setState(() {
-                                //       _phone = number.phoneNumber;
-                                //     });
-                                //   },
-                                //   onInputValidated: (bool value) {
-                                //     if (value) {
-                                //       // Valid phone number, do something
-                                //       validPhoneNumber = true;
-                                //     } else {
-                                //       // Invalid phone number, show an error
-                                //       _phone = "";
-                                //     }
-                                //   },
-                                //   selectorConfig: SelectorConfig(
-                                //     showFlags: false,
-                                //     selectorType: PhoneInputSelectorType.DROPDOWN,
-                                //   ),
-                                //   ignoreBlank: false,
-                                //   autoValidateMode: AutovalidateMode.disabled,
-                                //   selectorTextStyle:
-                                //       TextStyle(color: MyTheme.white),
-                                //   initialValue: phoneCode,
-                                //   textFieldController: _phoneNumberController,
-                                //   formatInput: true,
-                                //   keyboardType: TextInputType.numberWithOptions(
-                                //       signed: true, decimal: true),
-                                //   inputDecoration: InputDecorations
-                                //       .buildInputDecoration_phone(
-                                //           hint_text: "01*********"),
-                                //   onSaved: (PhoneNumber number) {
-                                //     //print('On Saved: $number');
-                                //   },
-                                //   countries: ["BD"],
-                                // ),
                                 child: Container(
                                   height: 56,
                                   child: TextField(
                                     controller: _phoneNumberController,
                                     onChanged: (number) {
-                                      //print(number.phoneNumber);
-                                      // setState(() {
                                       _phone = "${number}";
                                       validPhoneNumber=true;
-                                      // });
                                     },
 
-                                    // onSubmitted: (value){
-                                    //   print("value${value}");
-                                    //   print("value${_phone}");
-                                    // },
                                     autofocus: false,
                                     autocorrect: true,
                                     decoration: InputDecoration(
                                       hintText: '01*********',
-                                      // prefixIcon: _login_by == "email"
-                                      //     ? Icon(Icons.email)
-                                      //     : Icon(Icons.local_phone_outlined),
                                       hintStyle: TextStyle(color: Colors.grey),
                                       filled: true,
                                       fillColor: Colors.white70,
@@ -564,62 +542,19 @@ class _RegistrationState extends State<Registration> {
                                   ),
                                 ),
                         ),
-
                         // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: RaisedButton(
-                        //     onPressed: () {
-                        //       setState(() {
-                        //         _register_by = "otp";
-                        //       });
-                        //     },
-                        //     shape: RoundedRectangleBorder(
-                        //       borderRadius: BorderRadius.circular(2.0),
-                        //     ),
-                        //     padding: EdgeInsets.all(0.0),
-                        //     child: Ink(
-                        //       decoration:
-                        //           BoxDecoration(color: MyTheme.facebook_bg),
-                        //       child: Container(
-                        //         constraints: BoxConstraints(
-                        //             maxWidth: 300.0, minHeight: 50.0),
-                        //         alignment: Alignment.center,
-                        //         child: Row(
-                        //           mainAxisAlignment: MainAxisAlignment.center,
-                        //           children: [
-                        //             Icon(
-                        //               Icons
-                        //                   .facebook_outlined, // You can replace this with the Google Icon
-                        //               color: Colors.white,
-                        //             ),
-                        //             SizedBox(width: 10),
-                        //             Text(
-                        //               "REGISTER WITH FACEBOOK",
-                        //               textAlign: TextAlign.center,
-                        //               style: GoogleFonts.openSans(
-                        //                   color: Colors.white, fontSize: 16),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     ),
+                        //   padding: const EdgeInsets.only(
+                        //     top: 8.0, bottom: 8.0, right: 0.0, left: 0.0,
                         //   ),
-                        // ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
                         //   child: RaisedButton(
-                        //     onPressed: () {
-                        //       setState(() {
-                        //         _register_by = "otp";
-                        //       });
-                        //     },
+                        //     onPressed: onPressedGoogleRegister,
                         //     shape: RoundedRectangleBorder(
                         //       borderRadius: BorderRadius.circular(2.0),
                         //     ),
                         //     padding: EdgeInsets.all(0.0),
                         //     child: Ink(
                         //       decoration:
-                        //           BoxDecoration(color: MyTheme.google_bg),
+                        //       BoxDecoration(color: MyTheme.google_bg),
                         //       child: Container(
                         //         constraints: BoxConstraints(
                         //             maxWidth: 300.0, minHeight: 50.0),
@@ -637,7 +572,7 @@ class _RegistrationState extends State<Registration> {
                         //             Text(
                         //               "REGISTER WITH GOOGLE",
                         //               textAlign: TextAlign.center,
-                        //               style: GoogleFonts.openSans(
+                        //               style: GoogleFonts.ubuntu(
                         //                   color: Colors.white, fontSize: 16),
                         //             ),
                         //           ],
@@ -646,6 +581,7 @@ class _RegistrationState extends State<Registration> {
                         //     ),
                         //   ),
                         // ),
+
 
                         GestureDetector(
                           onTap: () {
@@ -667,35 +603,6 @@ class _RegistrationState extends State<Registration> {
                             )),
                           ),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: RaisedButton(
-                        //     onPressed: () {
-                        //       Navigator.push(context,
-                        //           MaterialPageRoute(builder: (context) {
-                        //         return Login();
-                        //       }));
-                        //     },
-                        //     shape: RoundedRectangleBorder(
-                        //         borderRadius: BorderRadius.circular(2.0)),
-                        //     padding: EdgeInsets.all(0.0),
-                        //     child: Ink(
-                        //       decoration: BoxDecoration(
-                        //           borderRadius: BorderRadius.circular(10.0)),
-                        //       child: Container(
-                        //         constraints: BoxConstraints(
-                        //             maxWidth: 300.0, minHeight: 50.0),
-                        //         alignment: Alignment.center,
-                        //         child: Text(
-                        //           "Sign In",
-                        //           textAlign: TextAlign.center,
-                        //           style: GoogleFonts.openSans(
-                        //               color: Colors.white, fontSize: 16),
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   )

@@ -1,4 +1,3 @@
-import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -32,7 +31,6 @@ class OfflinePaymentRepository {
         },
         body: post_body);
 
-   // print("hello" + response.body.toString());
     return offlinePaymentSubmitResponseFromJson(response.body);
   }
 

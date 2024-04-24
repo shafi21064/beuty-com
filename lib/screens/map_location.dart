@@ -92,19 +92,12 @@ class MapLocationState extends State<MapLocation>
       useCurrentLocation: false,
       //selectInitialPosition: true,
       onMapCreated: _onMapCreated,
-      //initialMapType: MapType.terrain,
-
-      //usePlaceDetailSearch: true,
       onPlacePicked: (result) {
         selectedPlace = result;
         Navigator.of(context).pop();
         setState(() {});
       },
-      //forceSearchOnZoomChanged: true,
-      //automaticallyImplyAppBarLeading: false,
-      //autocompleteLanguage: "ko",
-      //region: 'au',
-      //selectInitialPosition: true,
+
       selectedPlaceWidgetBuilder:
           (_, selectedPlace, state, isSearchBarFocused) {
         print("state: $state, isSearchBarFocused: $isSearchBarFocused");

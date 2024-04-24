@@ -7,7 +7,6 @@ import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'dart:async';
 import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_5.dart';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/repositories/chat_repository.dart';
 import 'package:kirei/helpers/shimmer_helper.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
@@ -93,7 +92,6 @@ class _ChatState extends State<Chat> {
   onTapSendMessage() async {
     var chatText = _chatTextController.text.toString();
     _chatTextController.clear();
-    //print(chatText);
     if (chatText != "") {
       final DateTime now = DateTime.now();
       final intl.DateFormat date_formatter = intl.DateFormat('yyyy-MM-dd');
@@ -262,7 +260,6 @@ class _ChatState extends State<Chat> {
                       borderRadius: BorderRadius.circular(35),
                       border: Border.all(
                           color: Color.fromRGBO(112, 112, 112, .3), width: 1),
-                      //shape: BoxShape.rectangle,
                     ),
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(35),

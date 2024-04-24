@@ -66,13 +66,9 @@ class _ProductCardState extends State<ProductCard> {
       return;
     }
 
-    // print(widget.id);
-    // print(_variant);
-    // print(user_id.$);
-    //print(_quantity);
     print(access_token.$);
     var cartAddResponse = await CartRepository()
-        .getCartAddResponse(widget.id, _variant, user_id.$, _quantity,widget.preorderAvailable);
+        .getCartAddResponse(widget.id, _variant, user_id.$, _quantity,widget.preorderAvailable, context);
 
     if (cartAddResponse.result == false) {
       ToastComponent.showDialog(cartAddResponse.message, context,
@@ -80,9 +76,6 @@ class _ProductCardState extends State<ProductCard> {
       return;
     } else {
       if (mode == "add_to_cart") {
-        // if (snackbar != null && context != null) {
-        //   Scaffold.of(context).showSnackBar(snackbar);
-        // }
         ToastComponent.showDialog(cartAddResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
        
@@ -113,12 +106,6 @@ class _ProductCardState extends State<ProductCard> {
         //clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration:
             BoxDecoration(borderRadius: BorderRadius.circular(0), boxShadow: [
-          // BoxShadow(
-          //   color: Colors.grey.withOpacity(0.09),
-          //   spreadRadius: 0,
-          //   blurRadius: 3,
-          //   offset: Offset(0, 1),
-          // ),
         ]),
 
         child: Column(
@@ -126,10 +113,7 @@ class _ProductCardState extends State<ProductCard> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                  //width: double.infinity,
-                  //width: MediaQuery.of(context).size.width / 2 - .5,
                   padding: EdgeInsets.only(bottom: 8),
-                  //height: 158,
                   height: ((MediaQuery.of(context).size.width - 32) / 2.5),
                   child: Stack(
                     children: [
@@ -183,7 +167,6 @@ class _ProductCardState extends State<ProductCard> {
                   )),
               Container(
                 width: MediaQuery.of(context).size.width / 2 - .5,
-                //width: MediaQuery.of(context).size.width * 0.35,
                 height: 40,
                 child: RaisedButton(
                   onPressed: () {
@@ -203,10 +186,6 @@ class _ProductCardState extends State<ProductCard> {
                       borderRadius: BorderRadius.circular(0.0)),
                   padding: EdgeInsets.all(0.0),
                   child: Ink(
-                    // color: MyTheme.add_to_cart_button,
-                    // decoration: BoxDecoration(color: MyTheme.add_to_cart_button
-                    //
-                    //     ),
                     child: Container(
                       color:
                       widget.preorderAvailable == 1
@@ -271,7 +250,6 @@ class _ProductCardState extends State<ProductCard> {
                       ),
                     ),
                     Row(
-                      // mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
                           padding: EdgeInsets.fromLTRB(0, 0, 0, 4),

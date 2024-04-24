@@ -6,7 +6,6 @@ import 'package:toast/toast.dart';
 import 'package:kirei/screens/flash_deal_products.dart';
 import 'package:kirei/repositories/flash_deal_repository.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -39,9 +38,6 @@ class _FlashDealListState extends State<FlashDealList> {
         future: FlashDealRepository().getFlashDeals(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            //snapshot.hasError
-            //print("flashDeal error");
-            //print(snapshot.error.toString());
             return Container();
           } else if (snapshot.hasData) {
             //snapshot.hasData
@@ -135,13 +131,9 @@ class _FlashDealListState extends State<FlashDealList> {
         ? blank_zeros
         : txt;
 
-    // print(txt + " " + default_length.toString());
-    // print(newtxt);
-
     if (default_length > txt.length) {
       newtxt = leading_zeros + newtxt;
     }
-    //print(newtxt);
 
     return newtxt;
   }

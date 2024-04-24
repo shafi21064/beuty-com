@@ -11,21 +11,6 @@ class OrderFailedPage extends StatelessWidget {
       flexibleSpace: Container(
         decoration: BoxDecoration(color: MyTheme.primary),
       ),
-      // leading: GestureDetector(
-      //   onTap: () {
-      //     _scaffoldKey.currentState.openDrawer();
-      //   },
-      //   child: Builder(
-      //     builder: (context) => Padding(
-      //       padding:
-      //       const EdgeInsets.symmetric(vertical: 18.0, horizontal: 0.0),
-      //       child: Container(
-      //         child: Image.asset('assets/hamburger.png',
-      //             height: 16, color: Theme.of(context).primaryIconTheme.color),
-      //       ),
-      //     ),
-      //   ),
-      // ),
       title: Text(
         "Order Status",
         style: TextStyle(fontSize: 18, color: Colors.white),

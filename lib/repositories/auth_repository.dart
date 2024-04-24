@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:kirei/app_config.dart';
 import 'package:kirei/data_model/cart_add_response.dart';
 import 'package:kirei/helpers/endpoints.dart';
@@ -13,35 +15,18 @@ import 'package:kirei/data_model/user_by_token.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'package:kirei/helpers/shared_value_helper.dart';
+import 'package:kirei/providers/version_change.dart';
+import 'package:provider/provider.dart';
 
 class AuthRepository {
-  // Future<LoginResponse> getLoginResponse(
-  //     @required String email, @required String password) async {
-  //   var post_body = jsonEncode({
-  //     "email": "${email}",
-  //     "password": "$password",
-  //     "identity_matrix": AppConfig.purchase_code
-  //   });
-
-  //   Uri url = Uri.parse("${ENDP.LOGIN}");
-  //   final response = await http.post(url,
-  //       headers: {
-  //         "Accept": "*/*",
-  //         "Content-Type": "application/json",
-  //         "App-Language": app_language.$,
-  //       },
-  //       body: post_body);
-  //   print(post_body);
-  //   return loginResponseFromJson(response.body);
-  // }
 
   Future<LoginResponse> getLoginResponse(@required String email,
-      @required String password, @required bool remember_me) async {
+      @required String password, @required bool remember_me, @required BuildContext context) async {
     var post_body = jsonEncode({
       "email": "${email}",
       "password": "$password",
       "remember_me": remember_me,
-      "version": "2.0.8",
+      "version": "${Provider.of<VersionChange>(context, listen: false).latestVersion}",
     });
 
     Uri url = Uri.parse("${ENDP.LOGIN}");
@@ -56,9 +41,9 @@ class AuthRepository {
     return loginResponseFromJson(response.body);
   }
 
-  Future<LoginResponse> getLoginOTPResponse(@required String phone) async {
+  Future<LoginResponse> getLoginOTPResponse(@required String phone, @required BuildContext context) async {
     var post_body = jsonEncode({"email": "${phone}",
-      "version": "2.0.8",
+      "version": "${Provider.of<VersionChange>(context, listen: false).latestVersion}",
     });
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/send-login-otp");
@@ -69,8 +54,6 @@ class AuthRepository {
           "App-Language": app_language.$,
         },
         body: post_body);
-    print(response.body);
-    print("Logininfo"+response.body);
     print(response.body);
     return loginResponseFromJson(response.body);
   }
@@ -95,10 +78,8 @@ class AuthRepository {
           "App-Language": app_language.$,
         },
         body: post_body);
-    print(post_body);
-    print("post_body"+post_body);
+
     print(response.body.toString());
-    print("post_body1"+response.body.toString());
     return loginResponseFromJson(response.body);
   }
 
@@ -122,14 +103,16 @@ class AuthRepository {
       @required String email_or_phone,
       @required String password,
       @required String passowrd_confirmation,
-      @required String register_by) async {
+      @required String register_by,
+      @required BuildContext context,
+      ) async {
     var post_body = jsonEncode({
       "name": "$name",
       "email_or_phone": "${email_or_phone}",
       "password": "$password",
       "password_confirmation": "${passowrd_confirmation}",
       "register_by": "$register_by",
-      "version": "2.0.8",
+      "version": "${Provider.of<VersionChange>(context, listen: false).latestVersion}",
     });
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/signup");
@@ -140,16 +123,15 @@ class AuthRepository {
         },
         body: post_body);
     print(response.body);
-
     return signupResponseFromJson(response.body);
   }
 
   Future<SignupResponse> getSignupOtpResponse(
-    @required String phone,
+    @required String phone,@required BuildContext context
   ) async {
     var post_body = jsonEncode({
       "email": "${phone}",
-      "version": "2.0.8",
+      "version": "${Provider.of<VersionChange>(context, listen: false).latestVersion}",
     });
     print(post_body);
     Uri url = Uri.parse("${AppConfig.BASE_URL}/send-signup-otp");
@@ -164,28 +146,12 @@ class AuthRepository {
     return signupResponseFromJson(response.body);
   }
 
-  // Future<ResendCodeResponse> getResendCodeResponse(
-  //     @required int user_id, @required String verify_by) async {
-  //   var post_body =
-  //       jsonEncode({"user_id": "$user_id", "register_by": "$verify_by"});
-  //
-  //   Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/resend_code");
-  //   final response = await http.post(url,
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "App-Language": app_language.$,
-  //       },
-  //       body: post_body);
-  //
-  //   return resendCodeResponseFromJson(response.body);
-  // }
 
   Future<ResendCodeResponse> getResendCodeResponse(
       @required int phone) async {
     var post_body =
     jsonEncode({"email": phone,});
 
-    //Uri url = Uri.parse("${AppConfig.BASE_URL}/send-reset-otp");
     Uri url = Uri.parse("${AppConfig.BASE_URL}/send-login-otp");
     final response = await http.post(url,
         headers: {

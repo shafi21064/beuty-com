@@ -35,8 +35,6 @@ class _SellerProductsState extends State<SellerProducts> {
     fetchData();
 
     _xcrollController.addListener(() {
-      //print("position: " + _xcrollController.position.pixels.toString());
-      //print("max: " + _xcrollController.position.maxScrollExtent.toString());
 
       if (_xcrollController.position.pixels ==
           _xcrollController.position.maxScrollExtent) {
@@ -127,9 +125,6 @@ class _SellerProductsState extends State<SellerProducts> {
             controller: _searchController,
             onTap: () {},
             onChanged: (txt) {
-              /*_searchKey = txt;
-              reset();
-              fetchData();*/
             },
             onSubmitted: (txt) {
               _searchKey = txt;
@@ -201,11 +196,9 @@ class _SellerProductsState extends State<SellerProducts> {
               // 3
               return ProductCard(
                 id: _productList[index].id,
-                //image: _productList[index].thumbnail_image,
                 name: _productList[index].name,
                 price: _productList[index].price,
                 sale_price: _productList[index].sale_price,
-                //  has_discount: _productList[index].has_discount,
               );
             },
           ),

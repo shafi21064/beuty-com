@@ -21,7 +21,6 @@ class PasswordOtp extends StatefulWidget {
 
 class _PasswordOtpState extends State<PasswordOtp> {
   //controllers
-  // TextEditingController _codeController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _passwordConfirmController = TextEditingController();
 
@@ -105,18 +104,6 @@ class _PasswordOtpState extends State<PasswordOtp> {
     }
   }
 
-  // onTapResend() async {
-  //   var passwordResendCodeResponse = await AuthRepository()
-  //       .getPasswordResendCodeResponse(widget.email_or_code, widget.verify_by);
-
-  //   if (passwordResendCodeResponse.result == false) {
-  //     ToastComponent.showDialog(passwordResendCodeResponse.message, context,
-  //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-  //   } else {
-  //     ToastComponent.showDialog(passwordResendCodeResponse.message, context,
-  //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -131,8 +118,6 @@ class _PasswordOtpState extends State<PasswordOtp> {
           children: [
             Container(
               width: _screen_width * (3 / 4),
-              // child: Image.asset(
-              //     "assets/splash_login_registration_background_image.png"),
             ),
             Container(
               width: double.infinity,
@@ -176,24 +161,6 @@ class _PasswordOtpState extends State<PasswordOtp> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Padding(
-                        //   padding: const EdgeInsets.only(bottom: 8.0),
-                        //   child: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.end,
-                        //     children: [
-                        //       Container(
-                        //         height: 36,
-                        //         child: TextField(
-                        //           controller: _codeController,
-                        //           autofocus: false,
-                        //           decoration:
-                        //               InputDecorations.buildInputDecoration_1(
-                        //                   hint_text: "A X B 4 J H"),
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 4.0),
                           child: Text(
@@ -267,25 +234,6 @@ class _PasswordOtpState extends State<PasswordOtp> {
                                     color: MyTheme.light_grey, width: 1),
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(12.0))),
-                            // child: FlatButton(
-                            //   minWidth: MediaQuery.of(context).size.width,
-                            //   //height: 50,
-                            //   color: MyTheme.primary,
-                            //   shape: RoundedRectangleBorder(
-                            //       borderRadius: const BorderRadius.all(
-                            //           Radius.circular(12.0))),
-                            //   child: Text(
-                            //     AppLocalizations.of(context)
-                            //         .common_confirm_ucfirst,
-                            //     style: TextStyle(
-                            //         color: Colors.white,
-                            //         fontSize: 14,
-                            //         fontWeight: FontWeight.w600),
-                            //   ),
-                            //   onPressed: () {
-                            //     onPressConfirm();
-                            //   },
-                            // ),
 
                             child: RaisedButton(
                               onPressed: (){
@@ -316,20 +264,6 @@ class _PasswordOtpState extends State<PasswordOtp> {
                       ],
                     ),
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(top: 100),
-                  //   child: InkWell(
-                  //     onTap: () {
-                  //       onTapResend();
-                  //     },
-                  //     child: Text(AppLocalizations.of(context).password_otp_screen_resend_code,
-                  //         textAlign: TextAlign.center,
-                  //         style: TextStyle(
-                  //             color: MyTheme.primary,
-                  //             decoration: TextDecoration.underline,
-                  //             fontSize: 13)),
-                  //   ),
-                  // ),
                 ],
               )),
             )

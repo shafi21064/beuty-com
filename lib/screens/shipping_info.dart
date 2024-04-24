@@ -2,9 +2,7 @@ import 'dart:convert';
 
 import 'package:kirei/custom/scroll_to_hide_widget.dart';
 import 'package:kirei/data_model/pickup_points_response.dart';
-import 'package:kirei/repositories/order_repository.dart';
 import 'package:kirei/repositories/pickup_points_repository.dart';
-import 'package:kirei/screens/checkout.dart';
 
 import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
@@ -15,7 +13,6 @@ import 'package:kirei/helpers/shimmer_helper.dart';
 import 'package:kirei/data_model/city_response.dart';
 import 'package:kirei/data_model/country_response.dart';
 import 'package:kirei/custom/toast_component.dart';
-import 'package:toast/toast.dart';
 import 'package:kirei/screens/address.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -65,12 +62,6 @@ class _ShippingInfoState extends State<ShippingInfo> {
     // TODO: implement initState
     super.initState();
 
-    print(widget.product_ids);
-    /*print("user data");
-    print(is_logged_in.$);
-    print(access_token.value);
-    print(user_id.$);
-    print(user_name.$);*/
 
     if (is_logged_in.$ == true) {
       fetchAll();
@@ -84,7 +75,6 @@ class _ShippingInfoState extends State<ShippingInfo> {
       if (pick_up_status.$) {
         fetchPickupPoints();
       }
-      //fetchPickupPoints();
     }
     setState(() {});
   }
@@ -121,13 +111,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
   getSetShippingCost() async {
     var shippingCostResponse;
     if (_shippingOptionIsAddress) {
-      // shippingCostResponse = await AddressRepository().getShippingCostResponse(
-      //     user_id: user_id.$, address_id: _seleted_shipping_address);
     } else {
-      // shippingCostResponse = await AddressRepository().getShippingCostResponse(
-      //     user_id: user_id.$,
-      //     pick_up_id: _seleted_shipping_pickup_point,
-      //     shipping_type: "pickup_point");
     }
 
     if (shippingCostResponse.result == true) {
@@ -230,82 +214,9 @@ class _ShippingInfoState extends State<ShippingInfo> {
     requestBody["payment_type"] = _selectedPaymentMethod;
 
     // Call API
-    print(requestBody);
-    // var response=await OrderRepository()
 
-    // Handle response
-    // if (response.success) {
-    //   ToastComponent.showDialog("Order placed successfully!", context);
-    //   Navigator.of(context).pop();
-    // } else {
-    //   ToastComponent.showDialog(response.message, context);
-    // }
   }
 
-  // onPressProceed(context) async {
-  //   // detectShippingOption();
-
-  //   //pickup point is not enable so address must be added
-  //   // if (!pick_up_status.$) {
-  //   //   if (_seleted_shipping_address == 0) {
-  //   //     ToastComponent.showDialog(
-  //   //         AppLocalizations.of(context)
-  //   //             .shipping_info_screen_address_choice_warning,
-  //   //         context,
-  //   //         gravity: Toast.CENTER,
-  //   //         duration: Toast.LENGTH_LONG);
-  //   //     return;
-  //   //   }
-  //   // }
-
-  //   // // pickup point is enable now we want to check address or pickup point is selected
-  //   // if (_seleted_shipping_address == 0 && _seleted_shipping_pickup_point == 0) {
-  //   //   ToastComponent.showDialog(
-  //   //       AppLocalizations.of(context)
-  //   //           .shipping_info_screen_address_or_pickup_choice_warning,
-  //   //       context,
-  //   //       gravity: Toast.CENTER,
-  //   //       duration: Toast.LENGTH_LONG);
-  //   //   return;
-  //   // }
-
-  //   // var addressUpdateInCartResponse;
-
-  //   // if (_seleted_shipping_address != 0) {
-  //   //   addressUpdateInCartResponse = await AddressRepository()
-  //   //       .getAddressUpdateInCartResponse(
-  //   //           address_id: _seleted_shipping_address);
-  //   // } else {
-  //   //   addressUpdateInCartResponse = await AddressRepository()
-  //   //       .getAddressUpdateInCartResponse(
-  //   //           pickup_point_id: _seleted_shipping_pickup_point);
-  //   // }
-
-  //   // if (addressUpdateInCartResponse.result == false) {
-  //   //   ToastComponent.showDialog(addressUpdateInCartResponse.message, context,
-  //   //       gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-  //   //   return;
-  //   // }
-
-  //   // ToastComponent.showDialog(addressUpdateInCartResponse.message, context,
-  //   //     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-
-  //   // Navigator.push(context, MaterialPageRoute(builder: (context) {
-  //   //   return Checkout(
-  //   //       title: AppLocalizations.of(context).checkout_screen_checkout,
-  //   //       product_ids: widget.product_ids,
-  //   //       product_quantities: widget.product_quantities,
-  //   //       address: _seleted_shipping_address,
-  //   //       isWalletRecharge: false);
-  //   // })).then((value) {
-  //   //   onPopped(value);
-  //   // });
-  //   // } else if (_seleted_shipping_pickup_point != 0) {
-  //   //   print("Selected pickup point ");
-  //   // } else {
-  //   //   print("..........something is wrong...........");
-  //   // }
-  // }
 
   @override
   void dispose() {
@@ -469,7 +380,6 @@ class _ShippingInfoState extends State<ShippingInfo> {
 
           onAddressSwitch();
         }
-        //detectShippingOption();
         setState(() {});
       },
       child: Card(
@@ -707,7 +617,6 @@ class _ShippingInfoState extends State<ShippingInfo> {
           _seleted_shipping_pickup_point = _pickupList[index].id;
           onAddressSwitch();
         }
-        //detectShippingOption();
         setState(() {});
       },
       child: Card(
@@ -939,7 +848,6 @@ class _ShippingInfoState extends State<ShippingInfo> {
                     childHeight: 40,
                   )
                 : Container(),
-            //:Container()
           ],
         ),
       ),

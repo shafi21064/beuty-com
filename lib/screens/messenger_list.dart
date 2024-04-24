@@ -3,7 +3,6 @@ import 'package:kirei/my_theme.dart';
 import 'package:kirei/screens/chat.dart';
 import 'package:kirei/repositories/chat_repository.dart';
 import 'package:kirei/helpers/shimmer_helper.dart';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -29,8 +28,6 @@ class _MessengerListState extends State<MessengerList> {
     fetchData();
 
     _xcrollController.addListener(() {
-      //print("position: " + _xcrollController.position.pixels.toString());
-      //print("max: " + _xcrollController.position.maxScrollExtent.toString());
 
       if (_xcrollController.position.pixels ==
           _xcrollController.position.maxScrollExtent) {
@@ -190,7 +187,6 @@ class _MessengerListState extends State<MessengerList> {
               borderRadius: BorderRadius.circular(35),
               border: Border.all(
                   color: Color.fromRGBO(112, 112, 112, .3), width: 1),
-              //shape: BoxShape.rectangle,
             ),
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(35),

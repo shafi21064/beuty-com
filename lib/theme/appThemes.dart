@@ -125,22 +125,4 @@ final themeCollection = ThemeCollection(themes: {
       ), colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red).copyWith(secondary: Colors.red)),
 
 
-/*  AppThemes.DarkBlue: dark.copyWith(
-      accentColor: Colors.blue,
-      buttonTheme: ButtonThemeData(
-          colorScheme: ColorScheme.light(
-
-            secondary: Colors.white,
-          )),
-
-      textTheme:TextTheme(
-        bodyText1: TextStyle( color: Colors.white),
-        bodyText2: TextStyle( color: Colors.white),
-      )
-      ,
-      floatingActionButtonTheme:
-      darkFABTheme.copyWith(backgroundColor: Colors.blue)),*/
-
-
-
 });

@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:kirei/custom/toast_component.dart';
 import 'package:kirei/screens/order_details.dart';
 import 'package:kirei/screens/main.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:one_context/one_context.dart';
+import 'package:toast/toast.dart';
 
 class PaymentStatus {
   String option_key;
@@ -77,6 +80,7 @@ class _OrderListState extends State<OrderList> {
 
   //------------------------------------
   List<dynamic> _orderList = [];
+  Map<int, bool> _isLoadingMap = {};
   bool _isInitial = true;
   int _page = 1;
   int _totalData = 0;
@@ -92,8 +96,6 @@ class _OrderListState extends State<OrderList> {
     fetchData();
 
     _xcrollController.addListener(() {
-      //print("position: " + _xcrollController.position.pixels.toString());
-      //print("max: " + _xcrollController.position.maxScrollExtent.toString());
 
       if (_xcrollController.position.pixels ==
           _xcrollController.position.maxScrollExtent) {
@@ -105,7 +107,6 @@ class _OrderListState extends State<OrderList> {
       }
     });
 
-    print("_orderList.length"+ _orderList.length.toString());
   }
 
   @override
@@ -178,15 +179,15 @@ class _OrderListState extends State<OrderList> {
         page: _page,
         payment_status: _selectedPaymentStatus.option_key,
         delivery_status: _selectedDeliveryStatus.option_key);
-    //print("or:"+orderResponse.toJson().toString());
+
    _orderList.addAll(orderResponse["data"]);
-   // _orderList.addAll(orderResponse.data);
+
 
     print("orderResponse ${orderResponse.toString()}");
-    //_orderList.add(orderResponse.data);
-    print("_orderList: ${_orderList.toString()}");
+
+
     _isInitial = false;
-    // _totalData = orderResponse.meta.total;
+
     _showLoadingContainer = false;
     setState(() {});
   }
@@ -219,6 +220,56 @@ class _OrderListState extends State<OrderList> {
     return items;
   }
 
+  void reOrder(int index,int id) async{
+    setState(() {
+      _isLoadingMap[index] = true;
+    });
+    var response = await OrderRepository().getReOrder(id: id);
+    setState(() {
+      _isLoadingMap[index] = false;
+    });
+
+    if(response["result"] == true){
+      ToastComponent.showDialog(response["message"].toString(), context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG).then((){
+        setState(() {
+          _isLoadingMap[index] = false;
+        });
+      });
+    } else {
+      ToastComponent.showDialog(response["message"].toString(), context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG).then((){
+        setState(() {
+          _isLoadingMap[index] = false;
+        });
+      });
+    }
+
+  }
+
+  // void reOrder(int index, int id) async {
+  //   // Set loading state to true for the tapped item
+  //   setState(() {
+  //     _isLoadingMap[index] = true;
+  //   });
+  //
+  //   // Simulate an asynchronous operation, for example, a network call
+  //   var response = await OrderRepository().getReOrder(id: id);
+  //
+  //   // After the operation, set loading state to false for the tapped item
+  //   setState(() {
+  //     _isLoadingMap[index] = false;
+  //   });
+  //
+  //   // Show appropriate toast message based on the response
+  //   ToastComponent.showDialog(
+  //     response["message"].toString(),
+  //     context,
+  //     gravity: Toast.CENTER,
+  //     duration: Toast.LENGTH_LONG,
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -227,6 +278,8 @@ class _OrderListState extends State<OrderList> {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return Main();
             }));
+          }else {
+             Navigator.of(context).pop();
           }
         },
         child: Directionality(
@@ -366,15 +419,6 @@ class _OrderListState extends State<OrderList> {
           centerTitle: false,
           backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
-          // actions: [
-          //   //new Container(),
-          //   IconButton(
-          //       onPressed: (){
-          //         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=> Main()), (route) => false);
-          //       },
-          //       icon: Icon(Icons.home_outlined, color: MyTheme.primary,)
-          //   )
-          // ],
           elevation: 0.0,
           titleSpacing: 0,
           flexibleSpace: Padding(
@@ -492,6 +536,7 @@ class _OrderListState extends State<OrderList> {
   }
 
   Card buildOrderListItemCard(int index) {
+    bool isLoading = _isLoadingMap.containsKey(index) ? _isLoadingMap[index] : false;
     return Card(
       shape: RoundedRectangleBorder(
         side: new BorderSide(color: MyTheme.light_grey, width: 1.0),
@@ -508,25 +553,12 @@ class _OrderListState extends State<OrderList> {
               child: Row(
                 children: [
 
-                  // Padding(
-                  //   padding: app_language_rtl.$
-                  //       ? const EdgeInsets.only(left: 8.0)
-                  //       : const EdgeInsets.only(right: 8.0),
-                  //   child: Icon(
-                  //     Icons.calendar_today_outlined,
-                  //     size: 16,
-                  //     color: MyTheme.secondary,
-                  //   ),
-                  // ),
-
-                  //Text('Order Number: ' + _orderList[index].id.toString()?? '',
                   Text('Order Number: ' + _orderList[index]["id"].toString()?? '',
                       style: TextStyle(color: MyTheme.secondary, fontSize: 13)),
                   Spacer(),
                   Column(
                     children: [
                       Text(
-                  //'${_orderList[index].grandTotal.toString()}' ?? '',
                         '${_orderList[index]["grand_total"].toString()}' ?? '',
                         style: TextStyle(
                             color: MyTheme.primary,
@@ -542,38 +574,34 @@ class _OrderListState extends State<OrderList> {
             Padding(
               padding: const EdgeInsets.only(bottom: 4.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
 
-                  // Padding(
-                  //   padding: app_language_rtl.$
-                  //       ? const EdgeInsets.only(left: 8.0)
-                  //       : const EdgeInsets.only(right: 8.0),
-                  //   child: Icon(
-                  //     Icons.credit_card,
-                  //     size: 16,
-                  //     color: MyTheme.secondary,
-                  //   ),
-                  // ),
+                Row(
+                  children: [
+                    Text(
+                      "${AppLocalizations.of(context).order_list_screen_payment_status} - ",
+                      style: TextStyle(color: MyTheme.secondary, fontSize: 13),
+                    ),
+                    Text(
+                      _orderList[index]["payment_status_string"].toString() ?? '',
+                      style: TextStyle(color: MyTheme.secondary, fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                    Padding(
+                      padding: app_language_rtl.$
+                          ? const EdgeInsets.only(right: 8.0)
+                          : const EdgeInsets.only(left: 8.0),
+                      child: buildPaymentStatusCheckContainer(
+                          _orderList[index]["payment_status"]
+                      ),
+                    ),
+                  ],
+                ),
 
                   Text(
-                    "${AppLocalizations.of(context).order_list_screen_payment_status} - ",
-                    style: TextStyle(color: MyTheme.secondary, fontSize: 13),
+                    _orderList[index]["date"] ?? '',
+                    style: TextStyle(color: MyTheme.secondary, fontSize: 13, fontWeight: FontWeight.w500),
                   ),
-                  Text(
-                    //_orderList[index].paymentStatusString ?? '',
-                    _orderList[index]["payment_status_string"].toString() ?? '',
-                    style: TextStyle(color: MyTheme.secondary, fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                  Padding(
-                    padding: app_language_rtl.$
-                        ? const EdgeInsets.only(right: 8.0)
-                        : const EdgeInsets.only(left: 8.0),
-                    child: buildPaymentStatusCheckContainer(
-                        //_orderList[index].paymentStatus
-                        //_orderList[index]["payment_status_string"]
-                        _orderList[index]["payment_status"]
-                    ),
-                   ),
                 ],
               ),
             ),
@@ -581,16 +609,6 @@ class _OrderListState extends State<OrderList> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
 
-                // Padding(
-                //   padding: app_language_rtl.$
-                //       ? const EdgeInsets.only(left: 8.0)
-                //       : const EdgeInsets.only(right: 8.0),
-                //   child: Icon(
-                //     Icons.local_shipping_outlined,
-                //     size: 16,
-                //     color: MyTheme.secondary,
-                //   ),
-                // ),
 
                 Row(
                   children: [
@@ -601,17 +619,40 @@ class _OrderListState extends State<OrderList> {
                     ),
 
                     Text(
-                      //_orderList[index].deliveryStatusString ?? '',
                       _orderList[index]["delivery_status_string"] ?? '',
                       style: TextStyle(color: MyTheme.secondary, fontSize: 13),
                     ),
                   ],
                 ),
 
-                Text(
-                  //_orderList[index].date ?? '',
-                  _orderList[index]["date"] ?? '',
-                  style: TextStyle(color: MyTheme.secondary, fontSize: 13, fontWeight: FontWeight.w600),
+                // Text(
+                //   _orderList[index]["date"] ?? '',
+                //   style: TextStyle(color: MyTheme.secondary, fontSize: 13, fontWeight: FontWeight.w600),
+                // ),
+
+                GestureDetector(
+                  onTap: (){
+                    reOrder(index, _orderList[index]["id"]);
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.028,
+                    width: MediaQuery.of(context).size.height * 0.074,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1,
+                        color: MyTheme.primary,
+                      ),
+                      //color: MyTheme.secondary
+                    ),
+                    child: Center(
+                      child: isLoading ? CircularProgressIndicator(color: MyTheme.primary,): Text("Re-order",
+                      //child: Text("Re-order",
+                      style: TextStyle(
+                          color: MyTheme.secondary, fontSize: 11, fontWeight: FontWeight.w600
+                      ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             )
@@ -627,17 +668,16 @@ class _OrderListState extends State<OrderList> {
       width: 16,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
-          //color: payment_status == "paid" ? Colors.green : Colors.red
         color: payment_status == "paid"
             ? Colors.green
-            : payment_status == "cod" || payment_status == "cash_on_delivery"
+            : payment_status == "COD"
             ? Colors.orange
             : Colors.red,
       ),
       child: Padding(
         padding: const EdgeInsets.all(3),
         child: Icon(
-            payment_status == "paid" || payment_status == "cod" ? FontAwesome.check : FontAwesome.times,
+            payment_status == "paid" || payment_status == "COD" ? FontAwesome.check : FontAwesome.times,
             color: Colors.white,
             size: 10),
       ),

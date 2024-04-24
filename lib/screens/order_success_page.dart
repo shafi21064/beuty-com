@@ -4,7 +4,6 @@ import 'package:kirei/my_theme.dart';
 import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/repositories/order_repository.dart';
 import 'package:kirei/screens/main.dart';
-import 'package:kirei/screens/order_details.dart';
 import 'package:kirei/screens/order_list.dart';
 import 'package:provider/provider.dart';
 
@@ -43,13 +42,13 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
   @override
   void initState() {
     // TODO: implement initState
-    //print("orderDetails: ${orderDetails}");
-    fetchOrderDetails();
-    //print("orderDetails1: ${orderDetails}");
-    fetchOrderedItems();
-    //print("UserID1:${orderDetails?.user_id}");
 
-    //Provider.of<CartCountUpdate>(context).getReset();
+    fetchOrderDetails();
+
+    fetchOrderedItems();
+
+
+
     super.initState();
   }
 
@@ -61,9 +60,9 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
     await OrderRepository().getOrderDetails(id: widget.orderId);
 
     if (orderDetailsResponse.detailed_orders.length > 0) {
-      //orderDetails = orderDetailsResponse.detailed_orders[0];
+
       orderDetails = orderDetailsResponse.detailed_orders[0];
-      //print("orderDetails2: ${orderDetails}");
+
     }
 
     setState(() {});
@@ -73,7 +72,7 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
     var orderItemResponse =
     await OrderRepository().getOrderItems(id: widget.orderId);
     orderedItemList.addAll(orderItemResponse.ordered_items);
-    //orderItemsInit = true;
+
 
     setState(() {});
   }
@@ -98,7 +97,6 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
               width: width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                //color: Colors.green,
                 border: Border.all(
                   width: 2,
                   color: Colors.green,
@@ -134,7 +132,6 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
              width: width,
              decoration: BoxDecoration(
                  borderRadius: BorderRadius.circular(10),
-                 //color: Colors.green,
                  border: Border.all(
                    width: 2,
                    color: MyTheme.primary,
@@ -169,68 +166,6 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
               height: MediaQuery.of(context).size.height * 0.03,
             ),
 
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     Column(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: [
-            //         Text("Order Number"),
-            //         SizedBox(
-            //           height: MediaQuery.of(context).size.height * 0.01,
-            //         ),
-            //         Text("${orderDetails?.id.toString()}",
-            //         style: TextStyle(
-            //           fontWeight: FontWeight.bold
-            //         ),
-            //         ),
-            //       ],
-            //     ),
-            //     Column(
-            //       children: [
-            //         Text("Date"),
-            //         SizedBox(
-            //           height: MediaQuery.of(context).size.height * 0.01,
-            //         ),
-            //         Text("${orderDetails?.date.toString()}",
-            //           style: TextStyle(
-            //               fontWeight: FontWeight.bold
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //     Column(
-            //       children: [
-            //         Text("Total"),
-            //         SizedBox(
-            //           height: MediaQuery.of(context).size.height * 0.01,
-            //         ),
-            //         Text("${orderDetails?.grand_total.toString()}",
-            //           style: TextStyle(
-            //               fontWeight: FontWeight.bold
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //     Column(
-            //       children: [
-            //         Text("Payment Method"),
-            //         SizedBox(
-            //           height: MediaQuery.of(context).size.height * 0.01,
-            //         ),
-            //         Text("${orderDetails?.payment_type.toString()}",
-            //           style: TextStyle(
-            //               fontWeight: FontWeight.bold
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ],
-            // ),
-            //
-            // SizedBox(
-            //   height: MediaQuery.of(context).size.height * 0.03,
-            // ),
 
             Text("Order Summary",
             style: TextStyle(

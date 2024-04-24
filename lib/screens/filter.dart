@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/services.dart';
 import 'package:kirei/app_config.dart';
 import 'package:kirei/data_model/feature_category_response.dart';
@@ -14,8 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:kirei/ui_elements/product_card.dart';
 import 'package:kirei/ui_elements/shop_square_card.dart';
 import 'package:kirei/ui_elements/brand_square_card.dart';
-import 'package:flutter_gradients/flutter_gradients.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 import 'package:kirei/custom/toast_component.dart';
@@ -42,10 +38,7 @@ class WhichFilter {
     return <WhichFilter>[
       WhichFilter('product',
           AppLocalizations.of(OneContext().context).filter_screen_product),
-      // WhichFilter('sellers',
-      //     AppLocalizations.of(OneContext().context).filter_screen_sellers),
-      // WhichFilter('brands',
-      //     AppLocalizations.of(OneContext().context).filter_screen_brands),
+
     ];
   }
 }
@@ -73,12 +66,6 @@ class Filter extends StatefulWidget {
   String type;
   int categoryIndex;
 
-  // dynamic _searchBar;
-  // get searchBar => _searchBar;
-  //
-  // get searchBarTwo(BuildContext context){
-  //   _searchBar = _FilterState().buildTopAppbar(context);
-  // }
 
   @override
   _FilterState createState() => _FilterState();
@@ -148,9 +135,7 @@ class _FilterState extends State<Filter> {
   fetchFilteredBrands() async {
     var filteredBrandResponse =
     await SkinTypesRepository().getFilterPageSkinTypes();
-    print("callllllled");
     _filterBrandList.addAll(filteredBrandResponse.skinTypes);
-    print(_filterBrandList);
     _filteredBrandsCalled = true;
     setState(() {});
   }
@@ -163,32 +148,11 @@ class _FilterState extends State<Filter> {
     setState(() {});
   }
 
-  // fetchAllCategory() async {
-  //   var allCategory = await CategoryRepository().getCategories();
-  //   //print(allCategory);
-  //   _allSubCategories.addAll(allCategory.categories);
-  //   print('sub category ${_allSubCategories.toString()}');
-  //   // for()
-  //   //print('_allSubCategories: ${_allSubCategories.toString()}');
-  //   _isAllCategoryInitial = false;
-  //   setState(() {});
-  // }
+
   var _featuredCategoryList = [];
   bool _isCategoryInitial = true;
 
-  // fetchFeaturedCategories() async {
-  //   var categoryResponse =
-  //   await CategoryRepository().getHomeFeaturedCategories();
-  //
-  //   //print(categoryResponse);
-  //   // print("featuredCategory-------->" + categoryResponse.categories.toString());
-  //
-  //   _featuredCategoryList.addAll(categoryResponse);
-  //   //print(_featuredCategoryList);
-  //   //print(''_featuredCategoryList);
-  //   _isCategoryInitial = false;
-  //   setState(() {});
-  // }
+
   Future<List<FeaturedCategory>> getSubCategories() async {
     var categoryKey = Provider.of<CategoryPassingController>(context, listen: false);
     if(categoryKey.categoryKey == null || categoryKey.categoryKey == ''){
@@ -198,32 +162,13 @@ class _FilterState extends State<Filter> {
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
-  //   String jsonData = await rootBundle.loadString('assets/categories.json');
-  //     List<dynamic> data = jsonDecode(jsonData);
 
-  // var categoryData = data.firstWhere(
-  //   (category) => category['slug'] == categoryKey.categoryKey,
-  //   orElse: () => null,
-  // );
-  //List<dynamic> childrenData = categoryData['children'] ?? [];
-
-
-    // Uri url = Uri.parse("${AppConfig.BASE_URL}/sub-categories/${categoryKey.categoryKey}");
-    // final response = await http.get(url, headers: {
-    //   "App-Language": app_language.$,
-    // });
-    // print("${ENDP.GET_CATEGORIES}");
-    //  print("categoriesssss1: ${response.body.toString()}");
-    // print(featuredCategoryListFromJson(response.body).toString()) ;
      List<FeaturedCategory> categories = featuredCategoryListFromJson(response.body);
 
-  // List<FeaturedCategory> categories = featuredCategoryListFromJson(jsonEncode(childrenData));
+
     _shimmerShow = false;
 
-    // print("Categories:");
-    // categories.forEach((category) {
-    //   print(category); // This will implicitly call toString() method of FeaturedCategory
-    // });
+
     _allSubCategories = categories;
     if(_allSubCategories.length > 0){
       _isSubcategoryExist = true;
@@ -236,41 +181,12 @@ class _FilterState extends State<Filter> {
   bool _shimmerShow = true;
 
 
-  // bool _isVisible = true;
-  // double _scrollPosition = 0.0;
-  // double _scrollThreshold = 50.0; // Adjust as needed
 
-  // void _scrollListener() {
-  //   double newPosition = _scrollController.position.pixels;
-  //   setState(() {
-  //     if (newPosition > _scrollPosition && _isVisible) {
-  //       _isVisible = false;
-  //     } else if (newPosition < _scrollPosition && !_isVisible) {
-  //       _isVisible = true;
-  //     }
-  //     _scrollPosition = newPosition;
-  //   });
-  // }
-
-  // visibileMethod(){
-  //
-  //   if(widget.category == "skin-care" || widget.category == "hair-care" || widget.category == "make-up" || widget.category == "body-care"){
-  //     isTrue = true;
-  //   } else {
-  //     isTrue = false;
-  //
-  //   }
-  // }
 
   @override
   void initState() {
     init();
     getSubCategories();
-    //fetchFeaturedCategories();
-    //fetchAllCategory();
-    //print(_allSubCategories);
-    // print(widget.categoryIndex);
-    //visibileMethod();
     super.initState();
   }
 
@@ -352,11 +268,8 @@ class _FilterState extends State<Filter> {
 
   fetchProductData() async {
     var providerValue = Provider.of<CategoryPassingController>(context, listen: false);
-    //print("sc:"+_selectedCategories.join(",").toString());
-    //print("sb:"+_selectedBrands.join(",").toString());
     var productResponse = await ProductRepository().getFilteredProducts(
       page: _productPage,
-      //name: _searchKey,
       name: providerValue.searchKey ?? _searchKey,
       sort_key: _selectedSort,
       categories:
@@ -364,21 +277,15 @@ class _FilterState extends State<Filter> {
       skin_type: providerValue.skinTypesKey != null
           ? providerValue.skinTypesKey
           : _selectedBrands.join(",").toString(),
-      // skin_type: widget.selected_skin != null
-      //     ? widget.selected_skin
-      //     : _selectedBrands.join(",").toString(),
-      //tag: widget.tag,
       tag: providerValue.tagsKey,
       good_for: providerValue.goodForKey ?? widget.good_for,
       type: providerValue.typeKey,
       key_ingredients: providerValue.ingredientsKey ?? widget.key_ingredients,
       max: _maxPriceController.text.toString(),
       min: _minPriceController.text.toString(),
-      //search: widget.search.toString(),
     );
 
     _productList.addAll(productResponse.products);
-    print("foysal111"+_productList.toString());
     _isProductInitial = false;
     _totalProductData = productResponse.meta.total;
     _showProductLoadingContainer = false;
@@ -420,8 +327,6 @@ class _FilterState extends State<Filter> {
     _isShopInitial = false;
     _totalShopData = shopResponse.meta.total;
     _showShopLoadingContainer = false;
-    //print("_shopPage:" + _shopPage.toString());
-    //print("_totalShopData:" + _totalShopData.toString());
     setState(() {});
   }
 
@@ -561,7 +466,6 @@ class _FilterState extends State<Filter> {
         body: Stack(
           clipBehavior: Clip.none,
           children: [
-            // buildAppBar(context),
             _selectedFilter.option_key == 'product'
                 ? buildProductList()
                 : (_selectedFilter.option_key == 'brands'
@@ -575,7 +479,6 @@ class _FilterState extends State<Filter> {
             ),
 
             Align(
-              //alignment: Alignment.bottomCenter,
                 child: _selectedFilter.option_key == 'product'
                     ? buildProductLoadingContainer()
                     : (_selectedFilter.option_key == 'brands'
@@ -583,22 +486,6 @@ class _FilterState extends State<Filter> {
                     : buildShopLoadingContainer())),
 
 
-            // Align(
-            //    //alignment: Alignment.bottomCenter,
-            //     child: _selectedFilter.option_key == 'product'
-            //         ? buildProductLoadingContainer()
-            //         : (_selectedFilter.option_key == 'brands'
-            //         ? buildBrandLoadingContainer()
-            //         : buildShopLoadingContainer())
-            // )
-
-            // Visibility(
-            //   visible: widget.category != null,
-            //   child: Positioned(
-            //     bottom: 0,
-            //       child: buildBottomButton()
-            //   ),
-            // )
           ],
         ),
       ),
@@ -618,123 +505,22 @@ class _FilterState extends State<Filter> {
             color: MyTheme.primary,
           ),
           padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-          //padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
           child: Column(
             children: [
               buildTopAppbar(context),
               buildBottomAppBar(context),
-              // buildScrollableSubCategory() ?? SizedBox(),
 
-
-              //widget.category != null ? buildScrollableSubCategory() : Container()
-              //buildScrollableSubCategory()
-
-              //buildSubCategoryList(context)
             ],
           ),
         ));
   }
 
-  // AppBar buildAppBar(BuildContext context) {
-  //   return AppBar(
-  //     backgroundColor: Colors.white,
-  //     centerTitle: true,
-  //     leading: Builder(
-  //       builder: (context) => IconButton(
-  //           icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
-  //           onPressed: () {
-  //
-  //             return Navigator.of(context).pop();
-  //
-  //           }),
-  //     ),
-  //     title: Text(
-  //       AppLocalizations.of(context).order_details_screen_order_details,
-  //       style: TextStyle(fontSize: 16, color: MyTheme.primary),
-  //     ),
-  //     elevation: 0.0,
-  //     titleSpacing: 0,
-  //   );
-  // }
-
-  // AppBar buildAppBar(BuildContext context) {
-  //   return AppBar(
-  //     centerTitle: true,
-  //     flexibleSpace: Container(
-  //       decoration: BoxDecoration(
-  //
-  //       ),
-  //     ),
-  //     leading: GestureDetector(
-  //       onTap: () {
-  //         _scaffoldKey.currentState.openDrawer();
-  //       },
-  //       child: Builder(
-  //         builder: (context) => Padding(
-  //           padding:
-  //               const EdgeInsets.symmetric(vertical: 18.0, horizontal: 0.0),
-  //           child: Container(
-  //             child: Image.asset('assets/hamburger.png',
-  //                 height: 16, color: Theme.of(context).primaryIconTheme.color),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //     title: Text(
-  //       AppLocalizations.of(context).cart_screen_shopping_cart,
-  //       style: TextStyle(fontSize: 18, color: Colors.white),
-  //     ),
-  //     elevation: 0.0,
-  //     titleSpacing: 0,
-  //   );
-  // }
 
   Row buildBottomAppBar(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Container(
-        //   decoration: BoxDecoration(
-        //     color: Colors.white,
-        //
-        //   ),
-        //   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        //   height: 36,
-        //   width: MediaQuery.of(context).size.width * .33,
-        //   child: new DropdownButton<WhichFilter>(
-        //     dropdownColor: MyTheme.primary,
-        //     style: new TextStyle(
-        //       color: Colors.white,
-        //     ),
-        //     icon: Padding(
-        //       padding: app_language_rtl.$
-        //           ? const EdgeInsets.only(right: 16.0)
-        //           : const EdgeInsets.only(left: 16.0),
-        //       // child: Icon(
-        //       //   Icons.expand_more,
-        //       //   color: Colors.white,
-        //       // ),
-        //     ),
-        //     hint: Text(
-        //       AppLocalizations.of(context).filter_screen_products,
-        //       style: TextStyle(
-        //         color: Colors.black,
-        //         fontSize: 13,
-        //       ),
-        //     ),
-        //     iconSize: 14,
-        //     underline: SizedBox(),
-        //     value: _selectedFilter,
-        //     //items: _dropdownWhichFilterItems,
-        //     onChanged: (WhichFilter selectedFilter) {
-        //       setState(() {
-        //         _selectedFilter = selectedFilter;
-        //       });
 
-        //       //  _onWhichFilterChange();
-        //     },
-        //   ),
-        // ),
         GestureDetector(
           onTap: () {
             _selectedFilter.option_key == "product"
@@ -1098,17 +884,14 @@ class _FilterState extends State<Filter> {
                       _searchController.text = suggestion.name;
                       _searchKey = suggestion.name;
                       setState(() {});
-                     // _onSearchSubmit();
                     },
                     textFieldConfiguration: TextFieldConfiguration(
                       onTap: () {},
                       controller: _searchController,
                       onSubmitted: (txt) {
                         _searchKey = txt;
-                        //setState(() {});
                         value.setSearchKey(_searchKey);
                         Navigator.push(context, MaterialPageRoute(builder: (_)=> Main(pageIndex: 1,)));
-                        //_onSearchSubmit();
                       },
                       style: TextStyle(color: MyTheme.white),
                       autofocus: false,
@@ -1120,10 +903,6 @@ class _FilterState extends State<Filter> {
                           hintStyle:
                           TextStyle(fontSize: 14.0, color: MyTheme.light_grey),
                           alignLabelWithHint: true,
-                          // focusedBorder: OutlineInputBorder(
-                          //   borderSide:
-                          //       BorderSide(color: MyTheme.white, width: 0.0),
-                          // ),
                           contentPadding: EdgeInsets.only(left: 30)),
                     ),
                   );
@@ -1342,6 +1121,7 @@ class _FilterState extends State<Filter> {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
+                        Provider.of<CategoryPassingController>(context, listen: false).setCategoryKey(_selectedCategory);
                         var min = _minPriceController.text;
                         var max = _maxPriceController.text;
                         bool apply = true;
@@ -1424,7 +1204,6 @@ class _FilterState extends State<Filter> {
             value: category.name,
             onChanged: (value) {
               setState(() {
-                debugPrint("Val=$value");
                 _selectedCategory = value;
               });
             },
@@ -1450,8 +1229,6 @@ class _FilterState extends State<Filter> {
   buildProductScrollableList() {
     if (_isProductInitial && _productList.length == 0) {
       return Container(
-        //margin: widget.category!= null? EdgeInsets.only(top: 150) : EdgeInsets.only(top: 0),
-        //padding: widget.category!= null? EdgeInsets.only(top: 200) : EdgeInsets.only(top: 0),
           margin:EdgeInsets.only(top: 100),
           padding:EdgeInsets.only(top: 35),
           child: ListView(
@@ -1463,8 +1240,6 @@ class _FilterState extends State<Filter> {
           ));
     } else if (_productList.length > 0) {
       return Container(
-        //margin:  EdgeInsets.only(top: 5),
-        //padding: EdgeInsets.only(top: 8),
         child: RefreshIndicator(
           color: Colors.white,
           backgroundColor: MyTheme.primary,
@@ -1483,8 +1258,6 @@ class _FilterState extends State<Filter> {
                 //Text('data'),
                 buildScrollableSubCategory() ?? SizedBox(),
                 GridView.builder(
-                  // 2
-                  //addAutomaticKeepAlives: true,
                   itemCount: _productList.length,
                   controller: _scrollController,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -1561,8 +1334,6 @@ class _FilterState extends State<Filter> {
                 //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
               ),
               GridView.builder(
-                // 2
-                //addAutomaticKeepAlives: true,
                 itemCount: _brandList.length,
                 controller: _scrollController,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -1698,8 +1469,6 @@ class _FilterState extends State<Filter> {
                 //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
               ),
               GridView.builder(
-                // 2
-                //addAutomaticKeepAlives: true,
                 itemCount: _shopList.length,
                 controller: _scrollController,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -1793,10 +1562,8 @@ class _FilterState extends State<Filter> {
     var providerValue = Provider.of<CategoryPassingController>(context, listen: false);
     if(!_shimmerShow && _allSubCategories.length == 0){
       _isSubcategoryExist == false;
-      //providerValue.resetCategoryKeyValue();
     }else if (_allSubCategories.length > 0){
       _isSubcategoryExist == true;
-      //providerValue.resetCategoryKeyValue();
       return Card(
         margin : EdgeInsets.symmetric(vertical: 2, horizontal: 0),
         elevation: 5,
@@ -1830,7 +1597,6 @@ class _FilterState extends State<Filter> {
                               width: 56,
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                //borderRadius: BorderRadius.circular(30),
                                   shape: BoxShape.circle,
                                   border: Border.all(color: MyTheme.light_grey, width: 1)
                               ),

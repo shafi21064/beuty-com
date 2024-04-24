@@ -72,21 +72,18 @@ class _PaystackScreenState extends State<PaystackScreen> {
   }
 
   void getData() {
-    print('called.........');
     var payment_details = '';
     _webViewController
         .evaluateJavascript("document.body.innerText")
         .then((data) {
       var decodedJSON = jsonDecode(data);
       Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
-      //print(responseJSON.toString());
       if (responseJSON["result"] == false) {
         Toast.show(responseJSON["message"], context,
             duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
 
         Navigator.pop(context);
       } else if (responseJSON["result"] == true) {
-        print("a");
         payment_details = responseJSON['payment_details'];
         onPaymentSuccess(payment_details);
       }
@@ -94,14 +91,12 @@ class _PaystackScreenState extends State<PaystackScreen> {
   }
 
   onPaymentSuccess(payment_details) async {
-    print("b");
 
     var paystackPaymentSuccessResponse = await PaymentRepository()
         .getPaystackPaymentSuccessResponse(widget.payment_type, widget.amount,
             _combined_order_id, payment_details);
 
     if (paystackPaymentSuccessResponse.result == false) {
-      print("c");
       Toast.show(paystackPaymentSuccessResponse.message, context,
           duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
       Navigator.pop(context);
@@ -115,7 +110,6 @@ class _PaystackScreenState extends State<PaystackScreen> {
         return OrderList(from_checkout: true);
       }));
     } else if (widget.payment_type == "wallet_payment") {
-      print("d");
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return Wallet(from_recharge: true);
       }));
@@ -125,9 +119,6 @@ class _PaystackScreenState extends State<PaystackScreen> {
   buildBody() {
     String initial_url =
         "${AppConfig.BASE_URL}/paystack/init?payment_type=${widget.payment_type}&combined_order_id=${_combined_order_id}&amount=${widget.amount}&user_id=${user_id.$}";
-
-    //print("init url");
-    //print(initial_url);
 
     if (_order_init == false &&
         _combined_order_id == 0 &&

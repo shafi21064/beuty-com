@@ -10,7 +10,6 @@ import 'package:toast/toast.dart';
 import 'package:flutter/services.dart';
 import 'package:expandable/expandable.dart';
 import 'package:kirei/repositories/review_repositories.dart';
-import 'package:kirei/app_config.dart';
 import 'package:kirei/helpers/shimmer_helper.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,6 +25,7 @@ class ProductReviews extends StatefulWidget {
 
 class _ProductReviewsState extends State<ProductReviews> {
   final TextEditingController _myReviewTextController = TextEditingController();
+  final TextEditingController _guestUserNameTextController = TextEditingController();
   ScrollController _xcrollController = ScrollController();
   ScrollController scrollController = ScrollController();
 
@@ -36,6 +36,7 @@ class _ProductReviewsState extends State<ProductReviews> {
   int _page = 1;
   int _totalData = 0;
   bool _showLoadingContainer = false;
+  bool userName = is_logged_in.$ == true ? false : true;
 
   @override
   void initState() {
@@ -45,8 +46,6 @@ class _ProductReviewsState extends State<ProductReviews> {
     fetchData();
 
     _xcrollController.addListener(() {
-      //print("position: " + _xcrollController.position.pixels.toString());
-      //print("max: " + _xcrollController.position.maxScrollExtent.toString());
 
       if (_xcrollController.position.pixels ==
           _xcrollController.position.maxScrollExtent) {
@@ -80,6 +79,7 @@ class _ProductReviewsState extends State<ProductReviews> {
     _showLoadingContainer = false;
     _my_rating = 0.0;
     _myReviewTextController.text = "";
+    _guestUserNameTextController.text = "";
     setState(() {});
   }
 
@@ -89,18 +89,20 @@ class _ProductReviewsState extends State<ProductReviews> {
   }
 
   onTapReviewSubmit(context) async {
-    if (is_logged_in.$ == false) {
-      ToastComponent.showDialog("You need to login to give a review", context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-      return;
-    }
+    // if (is_logged_in.$ == false) {
+    //   ToastComponent.showDialog("You need to login to give a review", context,
+    //       gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    //   return;
+    // }
 
     //return;
     var myReviewText = _myReviewTextController.text.toString();
-    //print(chatText);
+    var guestUserName = _guestUserNameTextController.text.toString() == "" ? user_name.$ : _guestUserNameTextController.text.toString();
+
     if (myReviewText == "") {
       ToastComponent.showDialog(
-          AppLocalizations.of(context)
+          AppLocalizations
+              .of(context)
               .product_reviews_screen_review_empty_warning,
           context,
           gravity: Toast.CENTER,
@@ -114,9 +116,19 @@ class _ProductReviewsState extends State<ProductReviews> {
           duration: Toast.LENGTH_LONG);
       return;
     }
+    else if (userName == true) {
+      if(guestUserName == ""){
+        ToastComponent.showDialog(
+            "Enter your name please",
+            context,
+            gravity: Toast.CENTER,
+            duration: Toast.LENGTH_LONG);
+        return;
+      }
+    }
 
     var reviewSubmitResponse = await ReviewRepository()
-        .getReviewSubmitResponse(widget.id, _my_rating.toInt(), myReviewText);
+        .getReviewSubmitResponse(widget.id, _my_rating.toInt(), myReviewText, guestUserName);
 
     if (reviewSubmitResponse.result == false) {
       ToastComponent.showDialog(reviewSubmitResponse.message, context,
@@ -153,7 +165,6 @@ class _ProductReviewsState extends State<ProductReviews> {
                 onRefresh: _onRefresh,
                 displacement: 0,
                 child: CustomScrollView(
-                  //controller: _xcrollController,
                   physics: const BouncingScrollPhysics(
                       parent: AlwaysScrollableScrollPhysics()),
                   slivers: [
@@ -189,8 +200,7 @@ class _ProductReviewsState extends State<ProductReviews> {
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Container(
           decoration: new BoxDecoration(color: Colors.white54.withOpacity(0.6)),
-          height: 120,
-          //color: Colors.white,
+          height: userName == true? MediaQuery.of(context).viewPadding.bottom > 30 ? 260 : 230 : MediaQuery.of(context).viewPadding.bottom > 30 ? 173 : 143,
           child: Padding(
             padding: const EdgeInsets.only(
                 top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
@@ -267,7 +277,6 @@ class _ProductReviewsState extends State<ProductReviews> {
                 borderRadius: BorderRadius.circular(35),
                 border: Border.all(
                     color: Color.fromRGBO(112, 112, 112, .3), width: 1),
-                //shape: BoxShape.rectangle,
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(35),
@@ -275,7 +284,6 @@ class _ProductReviewsState extends State<ProductReviews> {
                   placeholder: 'assets/placeholder.png',
                   image: _reviewList[index].avatar != null
                       ? _reviewList[index].avatar
-                      //: "https://www.sealtightroofingexperts.com/wp-content/uploads/2023/04/avataaars-2.png",
                       : "assets/placeholder.png",
                   fit: BoxFit.cover,
                 ),
@@ -293,7 +301,7 @@ class _ProductReviewsState extends State<ProductReviews> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          _reviewList[index].user_name,
+                          _reviewList[index].user_name == null ? "Guest" : _reviewList[index].user_name,
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
@@ -306,7 +314,7 @@ class _ProductReviewsState extends State<ProductReviews> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 4.0),
                           child: Text(
-                            _reviewList[index].time,
+                            "${_reviewList[index].time}",
                             style: TextStyle(color: MyTheme.dark_grey),
                           ),
                         ),
@@ -410,32 +418,42 @@ class _ProductReviewsState extends State<ProductReviews> {
 
   buildGiveReviewSection(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-          child: RatingBar.builder(
-            itemSize: 20.0,
-            initialRating: _my_rating,
-            minRating: 1,
-            direction: Axis.horizontal,
-            allowHalfRating: false,
-            itemCount: 5,
-            glowColor: Colors.amber,
-            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-            itemBuilder: (context, _) {
-              return Icon(FontAwesome.star, color: Colors.amber);
-            },
-            onRatingUpdate: (rating) {
-              setState(() {
-                _my_rating = rating;
-              });
-            },
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+            child: RatingBar.builder(
+              itemSize: 20.0,
+              initialRating: _my_rating,
+              minRating: 1,
+              direction: Axis.horizontal,
+              allowHalfRating: false,
+              itemCount: 5,
+              glowColor: Colors.amber,
+              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+              itemBuilder: (context, _) {
+                return Icon(FontAwesome.star, color: Colors.amber);
+              },
+              onRatingUpdate: (rating) {
+                setState(() {
+                  _my_rating = rating;
+                });
+              },
+            ),
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
+
+        Visibility(
+          visible: userName,
+          child:Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Enter Name *",
+              style: TextStyle(),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.005,),
+              Container(
               height: 40,
               width: (MediaQuery.of(context).size.width - 32) * (4 / 5),
               child: TextField(
@@ -444,10 +462,59 @@ class _ProductReviewsState extends State<ProductReviews> {
                 inputFormatters: [
                   LengthLimitingTextInputFormatter(125),
                 ],
+                controller: _guestUserNameTextController,
+                decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Color.fromRGBO(251, 251, 251, 1),
+                    // hintText: AppLocalizations.of(context)
+                    //     .product_reviews_screen_type_your_review_here,
+                    hintText: "Type your name here",
+                    hintStyle:
+                    TextStyle(fontSize: 14.0, color: MyTheme.light_grey),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                      BorderSide(color: MyTheme.light_grey, width: 0.5),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(35.0),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                      BorderSide(color: MyTheme.dark_grey, width: 0.5),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(35.0),
+                      ),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 16.0)),
+              ),
+                      ),
+
+              SizedBox(height: MediaQuery.of(context).size.height * 0.009,)
+            ],
+          ), ),
+
+        Text("Your review *",
+          style: TextStyle(),
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.005,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: userName == true ? 80 : 40 ,
+              width: (MediaQuery.of(context).size.width - 32) * (4 / 5),
+              child: TextField(
+                autofocus: false,
+                maxLines: null,
+                expands: userName == true ? true : false,
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(125),
+                ],
                 controller: _myReviewTextController,
                 decoration: InputDecoration(
                     filled: true,
                     fillColor: Color.fromRGBO(251, 251, 251, 1),
+                    isCollapsed: userName == true ? true : false,
                     hintText: AppLocalizations.of(context)
                         .product_reviews_screen_type_your_review_here,
                     hintStyle:
@@ -466,7 +533,7 @@ class _ProductReviewsState extends State<ProductReviews> {
                         Radius.circular(35.0),
                       ),
                     ),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 16.0)),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 8)),
               ),
             ),
             Padding(
@@ -484,7 +551,6 @@ class _ProductReviewsState extends State<ProductReviews> {
                     borderRadius: BorderRadius.circular(35),
                     border: Border.all(
                         color: Color.fromRGBO(112, 112, 112, .3), width: 1),
-                    //shape: BoxShape.rectangle,
                   ),
                   child: Center(
                     child: Icon(
@@ -499,7 +565,7 @@ class _ProductReviewsState extends State<ProductReviews> {
           ],
         ),
         MediaQuery.of(context).viewPadding.bottom > 30 ? SizedBox(
-          height: 10,
+          height: 20,
         ) : SizedBox(
           height: 2,
         ),

@@ -41,11 +41,6 @@ class _RechargeWalletState extends State<RechargeWallet> {
     // TODO: implement initState
     super.initState();
 
-    /*print("user data");
-    print(is_logged_in.$);
-    print(access_token.value);
-    print(user_id.$);
-    print(user_name.$);*/
 
     fetchAll();
   }
@@ -257,8 +252,6 @@ class _RechargeWalletState extends State<RechargeWallet> {
       });
     }
 
-    //print(_selected_payment_method);
-    //print(_selected_payment_method_key);
   }
 
   @override
@@ -372,10 +365,6 @@ class _RechargeWalletState extends State<RechargeWallet> {
                       child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child:
-                              /*Image.asset(
-                          _paymentTypeList[index].image,
-                          fit: BoxFit.fitWidth,
-                        ),*/
                               FadeInImage.assetNetwork(
                             placeholder: 'assets/placeholder.png',
                             image: _paymentTypeList[index].image,

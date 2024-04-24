@@ -1,11 +1,8 @@
-import 'package:kirei/helpers/auth_helper.dart';
 import 'package:kirei/my_theme.dart';
-import 'package:kirei/screens/main.dart';
 import 'package:kirei/screens/password_otp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kirei/custom/input_decorations.dart';
-import 'package:kirei/screens/login.dart';
 import 'package:kirei/repositories/auth_repository.dart';
 import 'package:kirei/custom/toast_component.dart';
 import 'package:toast/toast.dart';
@@ -144,24 +141,6 @@ class _ResetOtpState extends State<ResetOTP> {
                                     color: MyTheme.light_grey, width: 1),
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(12.0))),
-                            // child: FlatButton(
-                            //   minWidth: MediaQuery.of(context).size.width,
-                            //   //height: 50,
-                            //   color: MyTheme.primary,
-                            //   shape: RoundedRectangleBorder(
-                            //       borderRadius: const BorderRadius.all(
-                            //           Radius.circular(12.0))),
-                            //   child: Text(
-                            //     AppLocalizations.of(context).otp_screen_confirm,
-                            //     style: TextStyle(
-                            //         color: Colors.white,
-                            //         fontSize: 14,
-                            //         fontWeight: FontWeight.w600),
-                            //   ),
-                            //   onPressed: () {
-                            //     onPressConfirm();
-                            //   },
-                            // ),
                             child: RaisedButton(
                               onPressed: (){
                                 onPressConfirm();
