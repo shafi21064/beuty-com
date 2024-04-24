@@ -171,6 +171,25 @@ class _ProfileEditState extends State<ProfileEdit> {
     }
   }
 
+
+  bool stringToBool(String s) {
+    String lowerCaseS = s.toLowerCase();
+    if (lowerCaseS == 'true' || lowerCaseS == 'yes' || lowerCaseS == '1' ||
+        lowerCaseS == 'on') {
+      return true;
+    } else
+    if (lowerCaseS == 'false' || lowerCaseS == 'no' || lowerCaseS == '0' ||
+        lowerCaseS == 'off') {
+      return false;
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    // print("KireiBD999: ${stringToBool(user_have_password.$)}");
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -346,44 +365,54 @@ class _ProfileEditState extends State<ProfileEdit> {
               ),
             ),
 
-            Padding(
-              padding: const EdgeInsets.only(bottom: 4.0),
-              child: Row(
+            Visibility(
+              visible: stringToBool(user_have_password.$),
+              //visible: value1,
+              child:
+              Column(
                 children: [
-                  Text(
-                    //AppLocalizations.of(context).profile_edit_screen_password,
-                    "Current Password",
-                    style: TextStyle(
-                        color: MyTheme.primary, fontWeight: FontWeight.w600),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 4.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          //AppLocalizations.of(context).profile_edit_screen_password,
+                          "Current Password",
+                          style: TextStyle(
+                              color: MyTheme.primary, fontWeight: FontWeight.w600),
+                        ),
+
+                        SizedBox(width: MediaQuery.of(context).size.width * 0.05,),
+
+                        // Text(
+                        //   //AppLocalizations.of(context).profile_edit_screen_password,
+                        //   //"(Skip this field if you are a OTP user or )",
+                        //   "(Skip this field if you have no password)",
+                        //   style: TextStyle(
+                        //       color: MyTheme.secondary, fontWeight: FontWeight.w600, fontSize: 12),
+                        // ),
+                      ],
+                    ),
                   ),
-
-                  SizedBox(width: MediaQuery.of(context).size.width * 0.05,),
-
-                  Text(
-                    //AppLocalizations.of(context).profile_edit_screen_password,
-                    //"(Skip this field if you are a OTP user or )",
-                    "(Skip this field if you have no password)",
-                    style: TextStyle(
-                        color: MyTheme.secondary, fontWeight: FontWeight.w600, fontSize: 12),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Container(
+                      height: 36,
+                      child: TextField(
+                        controller: _currentPasswordController,
+                        autofocus: false,
+                        obscureText: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        decoration: InputDecorations.buildInputDecoration_1(
+                            hint_text: "• • • • • • • •"),
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Container(
-                height: 36,
-                child: TextField(
-                  controller: _currentPasswordController,
-                  autofocus: false,
-                  obscureText: true,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  decoration: InputDecorations.buildInputDecoration_1(
-                      hint_text: "• • • • • • • •"),
-                ),
-              ),
-            ),
+
 
             Padding(
               padding: const EdgeInsets.only(bottom: 4.0),

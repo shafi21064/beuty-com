@@ -31,7 +31,7 @@ class ReviewRepository {
   ) async {
     var post_body = jsonEncode({
       "product_id": "${product_id}",
-      //"user_id": "${user_id.$}",
+      "user_id": "${user_id.$}",
       "rating": "$rating",
       "comment": "$comment",
       "name": "$guestUserName",

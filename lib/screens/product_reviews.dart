@@ -97,7 +97,7 @@ class _ProductReviewsState extends State<ProductReviews> {
 
     //return;
     var myReviewText = _myReviewTextController.text.toString();
-    var guestUserName = _guestUserNameTextController.text.toString();
+    var guestUserName = _guestUserNameTextController.text.toString() == "" ? user_name.$ : _guestUserNameTextController.text.toString();
 
     if (myReviewText == "") {
       ToastComponent.showDialog(
@@ -301,7 +301,7 @@ class _ProductReviewsState extends State<ProductReviews> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          "${_reviewList[index].user_name}",
+                          _reviewList[index].user_name == null ? "Guest" : _reviewList[index].user_name,
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,

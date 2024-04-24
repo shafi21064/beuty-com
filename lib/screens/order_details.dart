@@ -480,7 +480,7 @@ class _OrderDetailsState extends State<OrderDetails> {
 
   buildShowUpdateFormDialog(BuildContext context,) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.6,
+      //height: MediaQuery.of(context).size.height * 0.75,
       width: MediaQuery.of(context).size.width,
       child: StatefulBuilder(builder: (BuildContext context,
           StateSetter setModalState /*You can rename this!*/) {
@@ -890,6 +890,11 @@ class _OrderDetailsState extends State<OrderDetails> {
                       //saveOrUpdateAddress();
                       processOrderAddressUpdate(widget.id);
                       Navigator.of(context).pop();
+                      // _onPageRefresh();
+                      setState(() {
+
+                      });
+                      //_onPageRefresh();
                     },
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.05,
@@ -926,7 +931,9 @@ class _OrderDetailsState extends State<OrderDetails> {
         shipping_zone_id: _selectedZone_id,
         shipping_area_id:_selectedArea_id ,
         shipping_phone: _phoneController.text,
-      );
+      ).then((value){
+        _onPageRefresh();
+      });
 
       if(response["result"] == true){
         ToastComponent.showDialog("${response["message"]}", context,
@@ -1805,6 +1812,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                           ),
                           )),
                           content: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
                             child:buildShowUpdateFormDialog(context),
 
                           ),

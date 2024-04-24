@@ -1,8 +1,10 @@
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:kirei/repositories/auth_repository.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthHelper {
-  setUserData(loginResponse) {
+  setUserData(loginResponse) async{
     print(loginResponse);
     if (loginResponse.result == true) {
       is_logged_in.$ = true;
@@ -17,6 +19,8 @@ class AuthHelper {
       user_email.save();
       user_phone.$ = loginResponse.user?.phone;
       user_phone.save();
+      user_have_password.$ = "${loginResponse.user?.password_saved}";
+      user_have_password.save();
       avatar_original.$ = loginResponse.user?.avatar_original ?? '';
       avatar_original.save();
     }
@@ -40,6 +44,8 @@ class AuthHelper {
       user_email.save();
       user_phone.$ = loginResponse.user?.email ?? '';
       user_phone.save();
+      user_have_password.$ = "${loginResponse.user?.password_saved}";
+      user_have_password.save();
       avatar_original.$ = loginResponse.user?.avatar_original ?? '';
       avatar_original.save();
     }
@@ -58,6 +64,8 @@ class AuthHelper {
     user_email.save();
     user_phone.$ = "";
     user_phone.save();
+    user_have_password.$ = "";
+    user_have_password.save();
     avatar_original.$ = "";
     avatar_original.save();
   }
@@ -76,6 +84,8 @@ class AuthHelper {
       user_email.save();
       user_phone.$ = userByTokenResponse.phone;
       user_phone.save();
+      user_have_password.$ = "${userByTokenResponse.password_saved}";
+      user_have_password.save();
       avatar_original.$ = userByTokenResponse.avatar_original ?? '';
       avatar_original.save();
     } else {
@@ -89,6 +99,8 @@ class AuthHelper {
       user_email.save();
       user_phone.$ = "";
       user_phone.save();
+      user_have_password.$ = "";
+      user_have_password.save();
       avatar_original.$ = "";
       avatar_original.save();
     }
