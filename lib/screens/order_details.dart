@@ -1778,17 +1778,18 @@ class _OrderDetailsState extends State<OrderDetails> {
               child: Container(
                 height: 40,
                 decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.red,
-                    width: 2,
-                  )
+                  // border: Border.all(
+                  //   color: Colors.red,
+                  //   width: 2,
+                  // ),
+                  color: MyTheme.add_to_cart_button
                 ),
                 child: Center(
-                    child: loading == true ? CircularProgressIndicator(color: MyTheme.primary,): Text("Re-order",
+                    child: loading == true ? CircularProgressIndicator(color: MyTheme.white,): Text("Re-order",
                 style: TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  color: MyTheme.white,
                 ),
                 )),
               ),
@@ -1807,7 +1808,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         return AlertDialog(
                           title: Center(child: Text("Update Info",
                           style: TextStyle(
-                            fontSize: 22,
+                            fontSize: 18,
                             fontWeight: FontWeight.w600,
                           ),
                           )),
@@ -1824,11 +1825,11 @@ class _OrderDetailsState extends State<OrderDetails> {
                 child: Container(
                   height: 40,
                   decoration: BoxDecoration(
-                      border: Border.all(
-                        color: MyTheme.preorder,
-                        width: 2,
-                      )
-                    //color: MyTheme.preorder
+                      // border: Border.all(
+                      //   color: MyTheme.preorder,
+                      //   width: 2,
+                      // )
+                    color: MyTheme.preorder
                   ),
                   child: Center(
                       child: Text("Update-info",

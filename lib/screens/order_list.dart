@@ -553,7 +553,7 @@ class _OrderListState extends State<OrderList> {
               child: Row(
                 children: [
 
-                  Text('Order Number: ' + _orderList[index]["id"].toString()?? '',
+                  Text('Order Number : ' + _orderList[index]["id"].toString()?? '',
                       style: TextStyle(color: MyTheme.secondary, fontSize: 13)),
                   Spacer(),
                   Column(
@@ -614,7 +614,7 @@ class _OrderListState extends State<OrderList> {
                   children: [
 
                     Text(
-                      "${AppLocalizations.of(context).order_list_screen_delivery_status} -",
+                      "${AppLocalizations.of(context).order_list_screen_delivery_status} - ",
                       style: TextStyle(color: MyTheme.secondary, fontSize: 13),
                     ),
 
@@ -638,17 +638,18 @@ class _OrderListState extends State<OrderList> {
                     height: MediaQuery.of(context).size.height * 0.028,
                     width: MediaQuery.of(context).size.height * 0.074,
                     decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 1,
-                        color: MyTheme.primary,
-                      ),
-                      //color: MyTheme.secondary
+                      // border: Border.all(
+                      //   width: 1,
+                      //   color: MyTheme.primary,
+                      // ),
+
+                      color: MyTheme.add_to_cart_button
                     ),
                     child: Center(
-                      child: isLoading ? CircularProgressIndicator(color: MyTheme.primary,): Text("Re-order",
+                      child: isLoading ? CircularProgressIndicator(color: MyTheme.white,): Text("Re-order",
                       //child: Text("Re-order",
                       style: TextStyle(
-                          color: MyTheme.secondary, fontSize: 11, fontWeight: FontWeight.w600
+                          color: MyTheme.white, fontSize: 11, fontWeight: FontWeight.w600
                       ),
                       ),
                     ),
