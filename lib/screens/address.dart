@@ -943,6 +943,11 @@ class _AddressState extends State<Address> {
           "Address is required", context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
+    } else if(_addressController.text.length < 10) {
+      ToastComponent.showDialog(
+          "Address have to be minimum 10 character", context,
+           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
     }
 
     if ( _stateController.text == "") {

@@ -36,7 +36,7 @@ class _ProductReviewsState extends State<ProductReviews> {
   int _page = 1;
   int _totalData = 0;
   bool _showLoadingContainer = false;
-  bool userName = is_logged_in.$ == true ? false : true;
+  //bool userName = is_logged_in.$ == true ? false : true;
 
   @override
   void initState() {
@@ -97,7 +97,8 @@ class _ProductReviewsState extends State<ProductReviews> {
 
     //return;
     var myReviewText = _myReviewTextController.text.toString();
-    var guestUserName = _guestUserNameTextController.text.toString() == "" ? user_name.$ : _guestUserNameTextController.text.toString();
+    //var guestUserName = _guestUserNameTextController.text.toString() == "" ? user_name.$ : _guestUserNameTextController.text.toString();
+    var guestUserName = _guestUserNameTextController.text.toString();
 
     if (myReviewText == "") {
       ToastComponent.showDialog(
@@ -108,7 +109,15 @@ class _ProductReviewsState extends State<ProductReviews> {
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
       return;
-    } else if (_my_rating < 1.0) {
+    } else if(guestUserName == ""){
+      ToastComponent.showDialog(
+          "Enter your name please",
+          context,
+          gravity: Toast.CENTER,
+          duration: Toast.LENGTH_LONG);
+      return;
+    }
+    else if (_my_rating < 1.0) {
       ToastComponent.showDialog(
           AppLocalizations.of(context).product_reviews_screen_star_warning,
           context,
@@ -116,15 +125,23 @@ class _ProductReviewsState extends State<ProductReviews> {
           duration: Toast.LENGTH_LONG);
       return;
     }
-    else if (userName == true) {
-      if(guestUserName == ""){
-        ToastComponent.showDialog(
-            "Enter your name please",
-            context,
-            gravity: Toast.CENTER,
-            duration: Toast.LENGTH_LONG);
-        return;
-      }
+    // else if (userName == true) {
+    //   if(guestUserName == ""){
+    //     ToastComponent.showDialog(
+    //         "Enter your name please",
+    //         context,
+    //         gravity: Toast.CENTER,
+    //         duration: Toast.LENGTH_LONG);
+    //     return;
+    //   }
+    // }
+    else if(guestUserName == ""){
+      ToastComponent.showDialog(
+          "Enter your name please",
+          context,
+          gravity: Toast.CENTER,
+          duration: Toast.LENGTH_LONG);
+      return;
     }
 
     var reviewSubmitResponse = await ReviewRepository()
@@ -200,7 +217,8 @@ class _ProductReviewsState extends State<ProductReviews> {
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Container(
           decoration: new BoxDecoration(color: Colors.white54.withOpacity(0.6)),
-          height: userName == true? MediaQuery.of(context).viewPadding.bottom > 30 ? 260 : 230 : MediaQuery.of(context).viewPadding.bottom > 30 ? 173 : 143,
+          //height: userName == true? MediaQuery.of(context).viewPadding.bottom > 30 ? 260 : 230 : MediaQuery.of(context).viewPadding.bottom > 30 ? 173 : 143,
+          height: MediaQuery.of(context).viewPadding.bottom > 30 ? 260 : 230,
           child: Padding(
             padding: const EdgeInsets.only(
                 top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
@@ -444,9 +462,10 @@ class _ProductReviewsState extends State<ProductReviews> {
           ),
         ),
 
-        Visibility(
-          visible: userName,
-          child:Column(
+        // Visibility(
+        //   visible: userName,
+        //  child:
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("Enter Name *",
@@ -491,7 +510,8 @@ class _ProductReviewsState extends State<ProductReviews> {
 
               SizedBox(height: MediaQuery.of(context).size.height * 0.009,)
             ],
-          ), ),
+          ),
+        //),
 
         Text("Your review *",
           style: TextStyle(),
@@ -501,12 +521,14 @@ class _ProductReviewsState extends State<ProductReviews> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              height: userName == true ? 80 : 40 ,
+              //height: userName == true ? 80 : 40 ,
+              height: 80,
               width: (MediaQuery.of(context).size.width - 32) * (4 / 5),
               child: TextField(
                 autofocus: false,
                 maxLines: null,
-                expands: userName == true ? true : false,
+                //expands: userName == true ? true : false,
+                expands: true,
                 inputFormatters: [
                   LengthLimitingTextInputFormatter(125),
                 ],
@@ -514,7 +536,8 @@ class _ProductReviewsState extends State<ProductReviews> {
                 decoration: InputDecoration(
                     filled: true,
                     fillColor: Color.fromRGBO(251, 251, 251, 1),
-                    isCollapsed: userName == true ? true : false,
+                    //isCollapsed: userName == true ? true : false,
+                    isCollapsed:  true,
                     hintText: AppLocalizations.of(context)
                         .product_reviews_screen_type_your_review_here,
                     hintStyle:

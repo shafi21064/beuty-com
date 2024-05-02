@@ -889,8 +889,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                     onTap: (){
                       //saveOrUpdateAddress();
                       processOrderAddressUpdate(widget.id);
-                      Navigator.of(context).pop();
-                      // _onPageRefresh();
+                      _addressController.text.length >= 10 ? Navigator.of(context).pop() : ToastComponent.showDialog(
+                          "Address have to be minimum 10 character", context,
+                          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+                       //_onPageRefresh();
                       setState(() {
 
                       });
@@ -923,6 +925,61 @@ class _OrderDetailsState extends State<OrderDetails> {
   void processOrderAddressUpdate(int oderId)async{
 
     try{
+      if (_nameController.text == "") {
+        ToastComponent.showDialog(
+            "Name  is required", context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        return;
+      }
+
+      if (_phoneController.text == "") {
+        ToastComponent.showDialog(
+            "Phone is required", context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        return;
+      } else if(_phoneController.text.length > 11){
+        ToastComponent.showDialog(
+            "Invalid Phone", context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        return;
+      } else if(_phoneController.text.length < 11){
+        ToastComponent.showDialog(
+            "Invalid Phone", context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        return;
+      }else if(!_phoneController.text.startsWith("0")){
+        ToastComponent.showDialog(
+            "Invalid Phone", context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        return;
+      }
+
+      if (_addressController.text == "") {
+        ToastComponent.showDialog(
+            "Address is required", context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        return;
+      } else if(_addressController.text.length < 10) {
+        ToastComponent.showDialog(
+            "Address have to be minimum 10 character", context,
+            gravity: Toast.TOP, duration: Toast.LENGTH_LONG);
+        return;
+      }
+
+      if ( _stateController.text == "") {
+        ToastComponent.showDialog(
+            "City is required", context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        return;
+      }
+
+      if (_cityController.text == "") {
+        ToastComponent.showDialog(
+            "Zone is required", context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        return;
+      }
+
       var response = await AddressRepository().getOrderProcessAddressUpdateResponse(
         order_id: oderId,
         shipping_name: _nameController.text,
@@ -1802,6 +1859,7 @@ class _OrderDetailsState extends State<OrderDetails> {
               child: InkWell(
                 onTap: (){
                   //reOrder(_orderDetails?.id);
+                  _onPageRefresh();
                   showDialog(
                       context: context,
                       builder: (context){
