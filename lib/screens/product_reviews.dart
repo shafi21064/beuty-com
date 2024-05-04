@@ -298,13 +298,14 @@ class _ProductReviewsState extends State<ProductReviews> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(35),
-                child: FadeInImage.assetNetwork(
-                  placeholder: 'assets/placeholder.png',
-                  image: _reviewList[index].avatar != null
-                      ? _reviewList[index].avatar
-                      : "assets/placeholder.png",
-                  fit: BoxFit.cover,
-                ),
+                  //child: FadeInImage.assetNetwork(
+                  //   placeholder: 'assets/placeholder.png',
+                  //   image: _reviewList[index].avatar != null
+                  //       ? _reviewList[index].avatar
+                  //       : "assets/placeholder.png",
+                  //   fit: BoxFit.cover,
+                  // ),
+                  child: Image.asset("assets/avater.png")
               ),
             ),
             Column(
