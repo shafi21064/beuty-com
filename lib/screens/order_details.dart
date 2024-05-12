@@ -6,7 +6,9 @@ import 'package:kirei/data_model/country_response.dart';
 import 'package:kirei/data_model/state_response.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/repositories/address_repository.dart';
+import 'package:provider/provider.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 import 'package:kirei/repositories/order_repository.dart';
 import 'package:kirei/helpers/shimmer_helper.dart';
@@ -402,6 +404,8 @@ class _OrderDetailsState extends State<OrderDetails> {
     });
 
     if(response["result"] == true){
+      Provider.of<CartCountUpdate>(context, listen: false).getReorderCart(response["data"]["cart_quantity"].toString());
+      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Main(pageIndex: 2,)));
       ToastComponent.showDialog(response["message"].toString(), context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG).then((){
         setState(() {

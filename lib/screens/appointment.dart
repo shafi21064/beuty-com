@@ -41,10 +41,10 @@ class _AppointmentState extends State<Appointment> {
 
     print(reviewSubmitResponse);
 
-    if (reviewSubmitResponse.statusCode == '0000') {
+    if (reviewSubmitResponse.result == true) {
       // Redirect to bKash URL
-      String bkashURL = reviewSubmitResponse.bkashURL;
-      ToastComponent.showDialog(reviewSubmitResponse.statusMessage, context,
+      String bkashURL = reviewSubmitResponse.data.paymentUrl;
+      ToastComponent.showDialog(reviewSubmitResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
 
       if (bkashURL.isNotEmpty) {
@@ -55,8 +55,8 @@ class _AppointmentState extends State<Appointment> {
           ),
         );
       }
-    } else if(reviewSubmitResponse.statusCode == "2049") {
-      ToastComponent.showDialog(reviewSubmitResponse.statusMessage, context,
+    } else if(reviewSubmitResponse.result == false) {
+      ToastComponent.showDialog(reviewSubmitResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
     }
 
@@ -205,7 +205,14 @@ class _AppointmentState extends State<Appointment> {
     return name;
   }
 
-
+  // void printFormValues() {
+  //   print('Full Name: ${fullNameController.text}');
+  //   print('Age: ${ageController.text}');
+  //   print('Contact Number: ${contactNumberController.text}');
+  //   print('WhatsApp Number: ${whatsappNumberController.text}');
+  //   print('Problem: ${problemController.text}');
+  //   print('Payment Method: $paymentMethod');
+  // }
   Widget buildStarTextFormField({
     TextEditingController controller,
     String label,

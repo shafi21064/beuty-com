@@ -651,7 +651,9 @@ class _LoginState extends State<Login> {
                                 ),
                         ),
                         // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
+                        //   padding: const EdgeInsets.only(
+                        //     top: 8.0, bottom: 8.0, right: 0.0, left: 0.0,
+                        //   ),
                         //   child: RaisedButton(
                         //     onPressed: onPressedFacebookLogin,
                         //     shape: RoundedRectangleBorder(

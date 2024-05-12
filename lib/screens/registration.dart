@@ -184,6 +184,42 @@ class _RegistrationState extends State<Registration> {
     }
   }
 
+  onPressedFacebookLogin() async {
+    // final facebookLogin =
+    //     await FacebookAuth.instance.login(loginBehavior: LoginBehavior.webOnly);
+
+    // if (facebookLogin.status == LoginStatus.success) {
+    //   // get the user data
+    //   // by default we get the userId, email,name and picture
+    //   final userData = await FacebookAuth.instance.getUserData();
+    //   var loginResponse = await AuthRepository().getSocialLoginResponse(
+    //       "facebook",
+    //       userData['name'].toString(),
+    //       userData['email'].toString(),
+    //       userData['id'].toString(),
+    //       access_token: facebookLogin.accessToken.token);
+    //   print("..........................${loginResponse.toString()}");
+    //   if (loginResponse.result == false) {
+    //     ToastComponent.showDialog(loginResponse.message, context,
+    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    //   } else {
+    //     ToastComponent.showDialog(loginResponse.message, context,
+    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    //     AuthHelper().setUserData(loginResponse);
+    //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //       return Main();
+    //     }));
+    //     FacebookAuth.instance.logOut();
+    //   }
+    //   // final userData = await FacebookAuth.instance.getUserData(fields: "email,birthday,friends,gender,link");
+
+    // } else {
+    //   print("....Facebook auth Failed.........");
+    //   print(facebookLogin.status);
+    //   print(facebookLogin.message);
+    // }
+  }
+
   onPressedGoogleRegister() async {
     // try {
     //   print("Kireiapp");
@@ -547,14 +583,14 @@ class _RegistrationState extends State<Registration> {
                         //     top: 8.0, bottom: 8.0, right: 0.0, left: 0.0,
                         //   ),
                         //   child: RaisedButton(
-                        //     onPressed: onPressedGoogleRegister,
+                        //     onPressed: onPressedFacebookLogin,
                         //     shape: RoundedRectangleBorder(
                         //       borderRadius: BorderRadius.circular(2.0),
                         //     ),
                         //     padding: EdgeInsets.all(0.0),
                         //     child: Ink(
                         //       decoration:
-                        //       BoxDecoration(color: MyTheme.google_bg),
+                        //       BoxDecoration(color: MyTheme.facebook_bg),
                         //       child: Container(
                         //         constraints: BoxConstraints(
                         //             maxWidth: 300.0, minHeight: 50.0),
@@ -562,15 +598,14 @@ class _RegistrationState extends State<Registration> {
                         //         child: Row(
                         //           mainAxisAlignment: MainAxisAlignment.center,
                         //           children: [
-                        //             Image.asset(
-                        //               'assets/icon_google.png', // Replace with the actual path to your Google icon
-                        //               // Adjust the width as needed
-                        //               color: Colors
-                        //                   .white, // Set the desired color for the icon
+                        //             Icon(
+                        //               Icons
+                        //                   .facebook_outlined, // You can replace this with the Google Icon
+                        //               color: Colors.white,
                         //             ),
                         //             SizedBox(width: 10),
                         //             Text(
-                        //               "REGISTER WITH GOOGLE",
+                        //               "LOGIN WITH FACEBOOK",
                         //               textAlign: TextAlign.center,
                         //               style: GoogleFonts.ubuntu(
                         //                   color: Colors.white, fontSize: 16),
@@ -581,6 +616,46 @@ class _RegistrationState extends State<Registration> {
                         //     ),
                         //   ),
                         // ),
+
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 8.0, bottom: 8.0, right: 0.0, left: 0.0,
+                          ),
+                          child: RaisedButton(
+                            onPressed: onPressedGoogleRegister,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(2.0),
+                            ),
+                            padding: EdgeInsets.all(0.0),
+                            child: Ink(
+                              decoration:
+                              BoxDecoration(color: MyTheme.google_bg),
+                              child: Container(
+                                constraints: BoxConstraints(
+                                    maxWidth: 300.0, minHeight: 50.0),
+                                alignment: Alignment.center,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icon_google.png', // Replace with the actual path to your Google icon
+                                      // Adjust the width as needed
+                                      color: Colors
+                                          .white, // Set the desired color for the icon
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      "REGISTER WITH GOOGLE",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.ubuntu(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
 
 
                         GestureDetector(
