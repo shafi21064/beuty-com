@@ -12,7 +12,20 @@
           "package_name": "com.thetork.kirei"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "379616346839-dr1rmohcbspisrh65igr175j64bop6uc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.thetork.kirei",
+            "certificate_hash": "3556ff557d34fc87f2be22347170127125b1d881"
+          }
+        },
+        {
+          "client_id": "379616346839-1fn7gc8i7oa74ame77nh9ouiii54aa1r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAgl_5sN6czkcOxmFZ3dqhnoMfYZGNfEVM"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "379616346839-1fn7gc8i7oa74ame77nh9ouiii54aa1r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "379616346839-037pbok2ptdebm0gacemp917aji4m5jl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.thetork.kirei"
+              }
+            }
+          ]
         }
       }
     }
