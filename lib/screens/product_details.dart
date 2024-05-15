@@ -719,7 +719,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           0.0,
                         ),
 
-                        child: showPreorderDate == null ? ShimmerHelper().buildBasicShimmer( height: 30) : _productDetails != null && _productDetails.preorderDeliveryDate != "30-11--0001" ? Text("Will Available on ${_productDetails.preorderDeliveryDate}", style: TextStyle(
+                        child: showPreorderDate == null ? ShimmerHelper().buildBasicShimmer( height: 30) : _productDetails != null && _productDetails.preorderDeliveryDate != "30-11--0001" && _productDetails.preorderAvailable != 0 ? Text("Will Available on ${_productDetails.preorderDeliveryDate}", style: TextStyle(
                           color: MyTheme.dark_grey,
                           fontWeight: FontWeight.bold,
                         ),) : Container(),
