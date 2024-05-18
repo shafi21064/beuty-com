@@ -100,9 +100,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     // TODO: implement initState
     super.initState();
     // In initState()
-    if (AppConfig.purchase_code == "") {
-      initPiratedAnimation();
-    }
+    // if (AppConfig.purchase_code == "") {
+    //   initPiratedAnimation();
+    // }
 
     fetchAll();
 
