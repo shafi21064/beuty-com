@@ -1,7 +1,10 @@
 
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:kirei/data_model/login_response.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/other_config.dart';
 import 'package:kirei/repositories/profile_repository.dart';
@@ -150,41 +153,89 @@ class _LoginState extends State<Login> {
     }
   }
 
-  onPressedFacebookLogin() async {
-    // final facebookLogin =
-    //     await FacebookAuth.instance.login(loginBehavior: LoginBehavior.webOnly);
+  // Future<void> _loginWithFacebook() async {
+  //   final result = await FacebookAuth.logIn(['email']);
+  //   switch (result.status) {
+  //     case FacebookLoginStatus.loggedIn:
+  //     // You're logged in with Facebook, use result.accessToken to make API calls.
+  //       break;
+  //     case FacebookLoginStatus.cancelledByUser:
+  //     // User cancelled the login.
+  //       break;
+  //     case FacebookLoginStatus.error:
+  //     // There was an error during login.
+  //       break;
+  //   }
+  // }
 
-    // if (facebookLogin.status == LoginStatus.success) {
-    //   // get the user data
-    //   // by default we get the userId, email,name and picture
-    //   final userData = await FacebookAuth.instance.getUserData();
-    //   var loginResponse = await AuthRepository().getSocialLoginResponse(
-    //       "facebook",
-    //       userData['name'].toString(),
-    //       userData['email'].toString(),
-    //       userData['id'].toString(),
-    //       access_token: facebookLogin.accessToken.token);
-    //   print("..........................${loginResponse.toString()}");
-    //   if (loginResponse.result == false) {
-    //     ToastComponent.showDialog(loginResponse.message, context,
-    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-    //   } else {
-    //     ToastComponent.showDialog(loginResponse.message, context,
-    //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-    //     AuthHelper().setUserData(loginResponse);
-    //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //       return Main();
-    //     }));
-    //     FacebookAuth.instance.logOut();
-    //   }
-    //   // final userData = await FacebookAuth.instance.getUserData(fields: "email,birthday,friends,gender,link");
 
-    // } else {
-    //   print("....Facebook auth Failed.........");
-    //   print(facebookLogin.status);
-    //   print(facebookLogin.message);
-    // }
+
+  Future<void> signInWithFacebook() async {
+    final LoginResult result = await FacebookAuth.instance.login();
+
+    if (result.status == LoginStatus.success) {
+      final AccessToken accessToken = result.accessToken;
+      final userData = await FacebookAuth.instance.getUserData();
+
+      print('this is our facebook response $userData');
+
+      var loginResponse = AuthRepository().getSocialLoginResponse(
+          "facebook",
+          userData["name"].toString(),
+          userData["email"].toString(),
+          userData["id"].toString(),
+        access_token: accessToken.token
+      );
+
+      print('this is login response $loginResponse');
+
+    } else {
+      print(result.status);
+      print(result.message);
+    }
   }
+
+
+  // onPressedFacebookLogin() async {
+  //   final facebookLogin =
+  //       await FacebookAuth.instance.login();
+  //
+  //   final OAuthCredential facebookCredential =  FacebookAuthProvider.credential(facebookLogin.accessToken.token);
+  //
+  //  FirebaseAuth.instance.signInWithCredential(facebookCredential);
+  //
+  //
+  //   if (facebookLogin.status == 'success') {
+  //     // get the user data
+  //     // by default we get the userId, email,name and picture
+  //     final userData = await FacebookAuth.instance.getUserData();
+  //     var loginResponse = await AuthRepository().getSocialLoginResponse(
+  //         "facebook",
+  //         userData['name'].toString(),
+  //         userData['email'].toString(),
+  //         userData['id'].toString(),
+  //         access_token: facebookLogin.accessToken.token);
+  //     print("..........................${loginResponse.toString()}");
+  //     if (loginResponse.result == false) {
+  //       ToastComponent.showDialog(loginResponse.message, context,
+  //           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+  //     } else {
+  //       ToastComponent.showDialog(loginResponse.message, context,
+  //           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+  //       AuthHelper().setUserData(loginResponse);
+  //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+  //         return Main();
+  //       }));
+  //       FacebookAuth.instance.logOut();
+  //     }
+  //     // final userData = await FacebookAuth.instance.getUserData(fields: "email,birthday,friends,gender,link");
+  //
+  //   } else {
+  //     print("....Facebook auth Failed.........");
+  //     print(facebookLogin.status);
+  //     print(facebookLogin.message);
+  //   }
+  // }
 
   onPressedGoogleLogin() async {
     // try {
@@ -650,44 +701,46 @@ class _LoginState extends State<Login> {
                                   ),
                                 ),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(
-                        //     top: 8.0, bottom: 8.0, right: 0.0, left: 0.0,
-                        //   ),
-                        //   child: RaisedButton(
-                        //     onPressed: onPressedFacebookLogin,
-                        //     shape: RoundedRectangleBorder(
-                        //       borderRadius: BorderRadius.circular(2.0),
-                        //     ),
-                        //     padding: EdgeInsets.all(0.0),
-                        //     child: Ink(
-                        //       decoration:
-                        //           BoxDecoration(color: MyTheme.facebook_bg),
-                        //       child: Container(
-                        //         constraints: BoxConstraints(
-                        //             maxWidth: 300.0, minHeight: 50.0),
-                        //         alignment: Alignment.center,
-                        //         child: Row(
-                        //           mainAxisAlignment: MainAxisAlignment.center,
-                        //           children: [
-                        //             Icon(
-                        //               Icons
-                        //                   .facebook_outlined, // You can replace this with the Google Icon
-                        //               color: Colors.white,
-                        //             ),
-                        //             SizedBox(width: 10),
-                        //             Text(
-                        //               "LOGIN WITH FACEBOOK",
-                        //               textAlign: TextAlign.center,
-                        //               style: GoogleFonts.ubuntu(
-                        //                   color: Colors.white, fontSize: 16),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 8.0, bottom: 8.0, right: 0.0, left: 0.0,
+                          ),
+                          child: RaisedButton(
+                            onPressed: (){
+                              signInWithFacebook();
+                            },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(2.0),
+                            ),
+                            padding: EdgeInsets.all(0.0),
+                            child: Ink(
+                              decoration:
+                                  BoxDecoration(color: MyTheme.facebook_bg),
+                              child: Container(
+                                constraints: BoxConstraints(
+                                    maxWidth: 300.0, minHeight: 50.0),
+                                alignment: Alignment.center,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons
+                                          .facebook_outlined, // You can replace this with the Google Icon
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      "LOGIN WITH FACEBOOK",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.ubuntu(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(
                               top: 8.0, bottom: 8.0, right: 0.0, left: 0.0,
@@ -814,7 +867,7 @@ class _LoginState extends State<Login> {
                                     visible: allow_facebook_login.$,
                                     child: InkWell(
                                       onTap: () {
-                                        onPressedFacebookLogin();
+                                        //onPressedFacebookLogin();
                                       },
                                       child: Container(
                                         width: 28,

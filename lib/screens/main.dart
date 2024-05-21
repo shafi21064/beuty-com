@@ -25,10 +25,10 @@ import '../data_model/product_mini_response_old.dart';
 // ignore: must_be_immutable
 class Main extends StatefulWidget {
   int pageIndex;
-  //List<Product> data;
+  List<Product> data;
   //String filterSlug;
   Main({Key key, go_back = true, this.pageIndex,
-    //this.data
+    this.data
   }) : super(key: key);
 
   // ignore: non_constant_identifier_names

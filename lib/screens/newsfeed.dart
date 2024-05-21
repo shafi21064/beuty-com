@@ -78,6 +78,7 @@ class _FeedListState extends State<FeedList> {
 
       //return;
       base64Image = FileHelper.getBase64FormateFile(_file.path);
+      //List<int> imageBytes = FileHelper.getBinaryFormateFile(_file.path);
       setState(() {
         fileName = _file.path.split("/").last;
       });
