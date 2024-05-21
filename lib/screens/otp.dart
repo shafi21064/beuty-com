@@ -1,6 +1,7 @@
-
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:kirei/helpers/auth_helper.dart';
 import 'package:kirei/my_theme.dart';
+import 'package:kirei/repositories/profile_repository.dart';
 import 'package:kirei/screens/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +11,8 @@ import 'package:kirei/custom/toast_component.dart';
 import 'package:toast/toast.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../other_config.dart';
 
 class Otp extends StatefulWidget {
   Otp(
@@ -34,28 +37,25 @@ class _OtpState extends State<Otp> {
   //controllers
   TextEditingController _verificationCodeController = TextEditingController();
 
-
-
-
   @override
   void initState() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     super.initState();
   }
 
   @override
   void dispose() {
     //before going to other screen show statusbar
-    SystemChrome.setEnabledSystemUIMode(
-        SystemUiMode.manual, overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     super.dispose();
   }
 
-
-
   onTapResend() async {
-    var resendCodeResponse = await AuthRepository()
-        .getResendCodeResponse(int.parse(widget.phoneNumber),);
+    var resendCodeResponse = await AuthRepository().getResendCodeResponse(
+      int.parse(widget.phoneNumber),
+    );
 
     if (resendCodeResponse.result == false) {
       ToastComponent.showDialog(resendCodeResponse.message, context,
@@ -78,17 +78,52 @@ class _OtpState extends State<Otp> {
       return;
     }
     if (widget.verify_by == 'otp') {
-      var confirmCodeResponse = widget.prev_screen == "Login"
+      dynamic confirmCodeResponse = widget.prev_screen == "Login"
           ? await AuthRepository()
               .getLogInOtpConfirmCodeResponse(widget.phoneNumber, code)
           : await AuthRepository()
               .getSignUpOtpConfirmCodeResponse(widget.phoneNumber, code);
-
-      if (confirmCodeResponse == false) {
-
+      print(confirmCodeResponse);
+      if (confirmCodeResponse.result == false) {
+        ToastComponent.showDialog(confirmCodeResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       } else {
+        ToastComponent.showDialog(confirmCodeResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        AuthHelper().setUserData(confirmCodeResponse);
+        AuthHelper().fetch_and_set();
+        // push notification starts
+        if (OtherConfig.USE_PUSH_NOTIFICATION) {
+          final FirebaseMessaging _fcm = FirebaseMessaging.instance;
 
-        print(widget.responseData);
+          await _fcm.requestPermission(
+            alert: true,
+            announcement: false,
+            badge: true,
+            carPlay: false,
+            criticalAlert: false,
+            provisional: false,
+            sound: true,
+          );
+
+          String fcmToken = await _fcm.getToken();
+          print(fcmToken);
+          if (fcmToken != null) {
+            print("--fcm token--");
+            print(fcmToken);
+            if (is_logged_in.$ == true) {
+              print("true------------------------");
+              // update device token
+              var deviceTokenUpdateResponse = await ProfileRepository()
+                  .getDeviceTokenUpdateResponse(fcmToken);
+              print(deviceTokenUpdateResponse);
+            }
+          }
+        }
+
+        //push norification ends
+
+        // print(widget.responseData);
         AuthHelper().setUserDataFromOTP(confirmCodeResponse);
 
         Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -109,7 +144,6 @@ class _OtpState extends State<Otp> {
         backgroundColor: Colors.white,
         body: Stack(
           children: [
-
             Container(
               width: double.infinity,
               child: SingleChildScrollView(
@@ -180,7 +214,6 @@ class _OtpState extends State<Otp> {
                             ],
                           ),
                         ),
-
                         Padding(
                           padding: const EdgeInsets.only(top: 5),
                           child: InkWell(
@@ -188,7 +221,8 @@ class _OtpState extends State<Otp> {
                               onTapResend();
                             },
                             child: Text(
-                                AppLocalizations.of(context).otp_screen_resend_code,
+                                AppLocalizations.of(context)
+                                    .otp_screen_resend_code,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: MyTheme.primary,
@@ -196,11 +230,11 @@ class _OtpState extends State<Otp> {
                                     fontSize: 13)),
                           ),
                         ),
-
                         Padding(
-                          padding:  EdgeInsets.only(top: 40.0, left: 0, right: 0,bottom: 8),
+                          padding: EdgeInsets.only(
+                              top: 40.0, left: 0, right: 0, bottom: 8),
                           child: RaisedButton(
-                            onPressed: (){
+                            onPressed: () {
                               onPressConfirm();
                             },
                             shape: RoundedRectangleBorder(
@@ -208,18 +242,19 @@ class _OtpState extends State<Otp> {
                             padding: EdgeInsets.all(0.0),
                             child: Ink(
                               decoration:
-                              BoxDecoration(color: MyTheme.secondary),
+                                  BoxDecoration(color: MyTheme.secondary),
                               child: Container(
                                 constraints: BoxConstraints(
                                     maxWidth: 300.0, minHeight: 50.0),
                                 alignment: Alignment.center,
-                                      child: Text(
-                                        AppLocalizations.of(context).otp_screen_confirm,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600),
-                                      ),
+                                child: Text(
+                                  AppLocalizations.of(context)
+                                      .otp_screen_confirm,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600),
+                                ),
                               ),
                             ),
                           ),
@@ -227,7 +262,6 @@ class _OtpState extends State<Otp> {
                       ],
                     ),
                   ),
-
                 ],
               )),
             )

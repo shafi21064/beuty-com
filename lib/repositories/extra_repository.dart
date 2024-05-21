@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:image_picker/image_picker.dart';
 import 'package:kirei/app_config.dart';
 import 'package:kirei/data_model/extra/BlogPostResponse.dart';
 import 'package:kirei/data_model/extra/CommunityCommentResponse.dart';
@@ -44,17 +46,30 @@ class ExtraRepository {
 
   //Community View- Posts
 
+  // Future<CommunityPost> getCommunityPosts() async {
+  //   Uri url = Uri.parse("${ENDP.COMMUNITY_POSTS}");
+  //   final response = await http.get(url, headers: {
+  //     "Content-Type": "application/json",
+  //     "Authorization": "Bearer ${access_token.$}",
+  //     "App-Language": app_language.$
+  //   });
+  //   print(url);
+  //   print(response.body.toString());
+  //
+  //   return CommunityPost.fromJson(jsonDecode(response.body));
+  // }
+
   Future<CommunityPostResponse> getCommunityPosts() async {
     Uri url = Uri.parse("${ENDP.COMMUNITY_POSTS}");
-    final response = await http.get(url, headers: {
-      "Content-Type": "application/json", "Authorization": "Bearer "+access_token.$,
+    final response = await http.get(url,
+        headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer ${access_token.$}",
       "App-Language": app_language.$
     });
-    print(url);
-    print(response.body.toString());
-
     return communityPostResponseFromJson(response.body);
   }
+
 
   Future<CommunityHashtags> getCommunityHashTags() async {
     Uri url = Uri.parse("${ENDP.COMMUNITY_HASH}");
@@ -71,35 +86,89 @@ class ExtraRepository {
 
   ////Community Create- Post
 
+  // Future<NewCommunityPostResponse> getNewCommunityPostResponse(
+  //     String image,
+  //     String filename,
+  //    // String title,
+  //     String description,
+  //   //  String hashtags
+  //
+  //     ) async {
+  //   var post_body = jsonEncode({
+  //     "banner": "${image}",
+  //     "filename": "$filename",
+  //     "description": "$description",
+  //     // "title": "$title",
+  //    // "hashtags": "$hashtags",
+  //   });
+  //   print("PostData: ${post_body.toString()}");
+  //
+  //   Uri url = Uri.parse("${ENDP.COMMUNITY_POST_CREATE}");
+  //   final response = await http.post(url,
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "Authorization": "Bearer "+access_token.$,
+  //         "App-Language": app_language.$,
+  //       },
+  //       body: post_body);
+  //
+  //   print("KireiBdApp100: ${response.body.toString()}");
+  //   return newCommunityPostResponseFromJson(response.body);
+  // }
+
   Future<NewCommunityPostResponse> getNewCommunityPostResponse(
-      String image,
+      File imageFile,
       String filename,
-     // String title,
       String description,
-    //  String hashtags
-
       ) async {
-    var post_body = jsonEncode({
-      "banner": "${image}",
-      "filename": "$filename",
-      "description": "$description",
-      "type": "app",
-      // "title": "$title",
-     // "hashtags": "$hashtags",
+    // Ensure the file exists
+    if (!imageFile.existsSync()) {
+      print("File does not exist");
+      throw Exception("File does not exist");
+    }
+
+    // Define the endpoint URL
+    Uri url = Uri.parse("${ENDP.COMMUNITY_POST_CREATE}"); // Replace with your actual endpoint URL
+
+    // Create the multipart request
+    var request = http.MultipartRequest('POST', url);
+
+    // Add the file to the request
+    request.files.add(
+      await http.MultipartFile.fromPath(
+        'banner', // The name of the field in the request, should match the expected field name on server
+        imageFile.path,
+        filename: filename,
+      ),
+    );
+
+    // Add other fields to the request
+    request.fields['description'] = description;
+    request.fields['type'] = 'app';
+
+    // Add headers to the request
+    request.headers.addAll({
+      "Authorization": "Bearer ${access_token.$}", // Replace with your actual access token
+      "App-Language": app_language.$, // Replace with the actual language if needed
     });
-    print("PostData: ${post_body.toString()}");
 
-    Uri url = Uri.parse("${ENDP.COMMUNITY_POST_CREATE}");
-    final response = await http.post(url,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer "+access_token.$,
-          "App-Language": app_language.$,
-        },
-        body: post_body);
+    try {
+      // Send the request and get the response
+      var response = await request.send();
 
-    print("KireiBdApp100: ${response.body.toString()}");
-    return newCommunityPostResponseFromJson(response.body);
+      // Check the response status
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        print("Image uploaded successfully: $responseBody");
+        return newCommunityPostResponseFromJson(responseBody);
+      } else {
+        print("Image upload failed with status: ${response.statusCode}");
+        throw Exception('Failed to create post');
+      }
+    } catch (e) {
+      print("Exception occurred: $e");
+      throw e;
+    }
   }
 
 

@@ -87,4 +87,3 @@ class Datum {
     "comments_count": commentsCount,
   };
 }
-
