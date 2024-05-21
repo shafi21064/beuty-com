@@ -1,5 +1,3 @@
-
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kirei/my_theme.dart';
@@ -21,7 +19,6 @@ import 'package:kirei/repositories/auth_repository.dart';
 import 'package:kirei/helpers/auth_helper.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 class Login extends StatefulWidget {
   @override
@@ -45,15 +42,16 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     //on Splash Screen hide statusbar
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     super.initState();
   }
 
   @override
   void dispose() {
     //before going to other screen show statusbar
-    SystemChrome.setEnabledSystemUIMode(
-        SystemUiMode.manual, overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     super.dispose();
   }
 
@@ -79,7 +77,8 @@ class _LoginState extends State<Login> {
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
     } else if (_login_by == 'otp' && validPhoneNumber) {
-      var loginResponse = await AuthRepository().getLoginOTPResponse(_phone, context);
+      var loginResponse =
+          await AuthRepository().getLoginOTPResponse(_phone, context);
       if (loginResponse.result == false) {
         ToastComponent.showDialog(loginResponse.message, context,
             gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
@@ -128,7 +127,7 @@ class _LoginState extends State<Login> {
         );
 
         String fcmToken = await _fcm.getToken();
-
+        print(fcmToken);
         if (fcmToken != null) {
           print("--fcm token--");
           print(fcmToken);
@@ -137,7 +136,7 @@ class _LoginState extends State<Login> {
             // update device token
             var deviceTokenUpdateResponse = await ProfileRepository()
                 .getDeviceTokenUpdateResponse(fcmToken);
-            print("hmmmm------------------------");
+            print(deviceTokenUpdateResponse);
           }
         }
       }
@@ -221,38 +220,36 @@ class _LoginState extends State<Login> {
     // }
 
     try {
-
       final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
 
-      final GoogleSignInAuthentication googleAuth = await googleUser?.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser?.authentication;
 
       // final credential = GoogleAuthProvider.credential(
       //   accessToken: googleAuth?.accessToken,
       //   idToken: googleAuth?.idToken,
       // );
 
-        var loginResponse = await AuthRepository().getSocialLoginResponse(
-            "google", googleUser.displayName, googleUser.email, googleUser.id,
-            access_token: googleAuth.accessToken);
+      var loginResponse = await AuthRepository().getSocialLoginResponse(
+          "google", googleUser.displayName, googleUser.email, googleUser.id,
+          access_token: googleAuth.accessToken);
 
-        if (loginResponse.result == false) {
-          ToastComponent.showDialog(loginResponse.message, context,
-              gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-        } else {
-          ToastComponent.showDialog(loginResponse.message, context,
-              gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-          AuthHelper().setUserData(loginResponse);
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return Main();
-          }));
-        }
-        GoogleSignIn().disconnect();
-
-      } on Exception catch (e) {
-        print("error is ....... $e");
-        // TODO
+      if (loginResponse.result == false) {
+        ToastComponent.showDialog(loginResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      } else {
+        ToastComponent.showDialog(loginResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        AuthHelper().setUserData(loginResponse);
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return Main();
+        }));
       }
-
+      GoogleSignIn().disconnect();
+    } on Exception catch (e) {
+      print("error is ....... $e");
+      // TODO
+    }
   }
 
   onPressedTwitterLogin() async {
@@ -384,9 +381,8 @@ class _LoginState extends State<Login> {
                         else
                           Padding(
                             padding:
-                            const EdgeInsets.only(bottom: 4.0, top: 10),
-                            child: Text(
-                              "Phone",
+                                const EdgeInsets.only(bottom: 4.0, top: 10),
+                            child: Text("Phone",
                                 style: GoogleFonts.ubuntu(
                                     color: Theme.of(context)
                                         .buttonTheme
@@ -395,84 +391,83 @@ class _LoginState extends State<Login> {
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600)),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Container(
-                                  //padding: EdgeInsets.only(right: 10),
-                                  padding: const EdgeInsets.only(bottom: 4.0),
-                                  height: 36,
-                                  // child: CustomInternationalPhoneNumberInput(
-                                  //   onInputChanged: (PhoneNumber number) {
-                                  //     print(number.phoneNumber);
-                                  //     setState(() {
-                                  //       _phone = number.phoneNumber;
-                                  //     });
-                                  //   },
-                                  //   onInputValidated: (bool value) {
-                                  //     if (value) {
-                                  //       validPhoneNumber = true;
-                                  //     } else {
-                                  //       _phone = '';
-                                  //     }
-                                  //   },
-                                  //   selectorConfig: SelectorConfig(
-                                  //     showFlags: false,
-                                  //     selectorType:
-                                  //         PhoneInputSelectorType.DROPDOWN,
-                                  //
-                                  //   ),
-                                  //
-                                  //   ignoreBlank: false,
-                                  //   autoValidateMode: AutovalidateMode.disabled,
-                                  //   selectorTextStyle:
-                                  //       TextStyle(color: MyTheme.secondary),
-                                  //   textStyle:
-                                  //       TextStyle(color: MyTheme.secondary),
-                                  //   initialValue: phoneCode,
-                                  //   //initialValue: null,
-                                  //   textFieldController: _phoneNumberController,
-                                  //   formatInput: true,
-                                  //   keyboardType:
-                                  //       TextInputType.numberWithOptions(
-                                  //           signed: true, decimal: true),
-                                  //   inputDecoration: InputDecorations
-                                  //       .buildInputDecoration_phone(
-                                  //           hint_text: "01*********"),
-                                  //   // inputBorder: OutlineInputBorder( // Customize the input border
-                                  //   //   borderRadius: BorderRadius.zero,
-                                  //   //   borderSide: BorderSide(color: Colors.black), // Customize the border color
-                                  //   // ),
-                                  //   onSaved: (PhoneNumber number) {
-                                  //     print('On Saved: $number');
-                                  //   },
-                                  //   countries: ["BD"],
-                                  // ),
-                                  child: Container(
-                                    height: 56,
-                                    child: TextField(
-                                      controller: _phoneNumberController,
-                                      onChanged: (number) {
-                                          _phone = "${number}";
-                                          validPhoneNumber=true;
-                                      },
-
-                                      autofocus: false,
-                                      autocorrect: true,
-                                      decoration: InputDecoration(
-                                        hintText: '01*********',
-                                        hintStyle: TextStyle(color: Colors.grey),
-                                        filled: true,
-                                        fillColor: Colors.white70,
-                                      ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Container(
+                                //padding: EdgeInsets.only(right: 10),
+                                padding: const EdgeInsets.only(bottom: 4.0),
+                                height: 36,
+                                // child: CustomInternationalPhoneNumberInput(
+                                //   onInputChanged: (PhoneNumber number) {
+                                //     print(number.phoneNumber);
+                                //     setState(() {
+                                //       _phone = number.phoneNumber;
+                                //     });
+                                //   },
+                                //   onInputValidated: (bool value) {
+                                //     if (value) {
+                                //       validPhoneNumber = true;
+                                //     } else {
+                                //       _phone = '';
+                                //     }
+                                //   },
+                                //   selectorConfig: SelectorConfig(
+                                //     showFlags: false,
+                                //     selectorType:
+                                //         PhoneInputSelectorType.DROPDOWN,
+                                //
+                                //   ),
+                                //
+                                //   ignoreBlank: false,
+                                //   autoValidateMode: AutovalidateMode.disabled,
+                                //   selectorTextStyle:
+                                //       TextStyle(color: MyTheme.secondary),
+                                //   textStyle:
+                                //       TextStyle(color: MyTheme.secondary),
+                                //   initialValue: phoneCode,
+                                //   //initialValue: null,
+                                //   textFieldController: _phoneNumberController,
+                                //   formatInput: true,
+                                //   keyboardType:
+                                //       TextInputType.numberWithOptions(
+                                //           signed: true, decimal: true),
+                                //   inputDecoration: InputDecorations
+                                //       .buildInputDecoration_phone(
+                                //           hint_text: "01*********"),
+                                //   // inputBorder: OutlineInputBorder( // Customize the input border
+                                //   //   borderRadius: BorderRadius.zero,
+                                //   //   borderSide: BorderSide(color: Colors.black), // Customize the border color
+                                //   // ),
+                                //   onSaved: (PhoneNumber number) {
+                                //     print('On Saved: $number');
+                                //   },
+                                //   countries: ["BD"],
+                                // ),
+                                child: Container(
+                                  height: 56,
+                                  child: TextField(
+                                    controller: _phoneNumberController,
+                                    onChanged: (number) {
+                                      _phone = "${number}";
+                                      validPhoneNumber = true;
+                                    },
+                                    autofocus: false,
+                                    autocorrect: true,
+                                    decoration: InputDecoration(
+                                      hintText: '01*********',
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      filled: true,
+                                      fillColor: Colors.white70,
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
+                        ),
                         Visibility(
                           visible: _login_by == "phone",
                           child: Padding(
@@ -562,7 +557,8 @@ class _LoginState extends State<Login> {
                         ),
                         Padding(
                           //padding: const EdgeInsets.all(8.0),
-                          padding:  EdgeInsets.only(top: 8.0, left: 0, right: 0,bottom: 8),
+                          padding: EdgeInsets.only(
+                              top: 8.0, left: 0, right: 0, bottom: 8),
                           child: RaisedButton(
                             onPressed: onPressedLogin,
                             shape: RoundedRectangleBorder(
@@ -596,7 +592,8 @@ class _LoginState extends State<Login> {
                         ),
                         Padding(
                           //padding: const EdgeInsets.all(8.0),
-                          padding:  EdgeInsets.only(top: 8.0, left: 0, right: 0,bottom: 8),
+                          padding: EdgeInsets.only(
+                              top: 8.0, left: 0, right: 0, bottom: 8),
                           child: _login_by != "otp"
                               ? RaisedButton(
                                   onPressed: () {
@@ -651,7 +648,9 @@ class _LoginState extends State<Login> {
                                 ),
                         ),
                         // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
+                        //   padding: const EdgeInsets.only(
+                        //     top: 8.0, bottom: 8.0, right: 0.0, left: 0.0,
+                        //   ),
                         //   child: RaisedButton(
                         //     onPressed: onPressedFacebookLogin,
                         //     shape: RoundedRectangleBorder(
@@ -686,45 +685,48 @@ class _LoginState extends State<Login> {
                         //     ),
                         //   ),
                         // ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(
-                        //       top: 8.0, bottom: 8.0, right: 0.0, left: 0.0,
-                        //   ),
-                        //   child: RaisedButton(
-                        //     onPressed: onPressedGoogleLogin,
-                        //     shape: RoundedRectangleBorder(
-                        //       borderRadius: BorderRadius.circular(2.0),
-                        //     ),
-                        //     padding: EdgeInsets.all(0.0),
-                        //     child: Ink(
-                        //       decoration:
-                        //           BoxDecoration(color: MyTheme.google_bg),
-                        //       child: Container(
-                        //         constraints: BoxConstraints(
-                        //             maxWidth: 300.0, minHeight: 50.0),
-                        //         alignment: Alignment.center,
-                        //         child: Row(
-                        //           mainAxisAlignment: MainAxisAlignment.center,
-                        //           children: [
-                        //             Image.asset(
-                        //               'assets/icon_google.png', // Replace with the actual path to your Google icon
-                        //               // Adjust the width as needed
-                        //               color: Colors
-                        //                   .white, // Set the desired color for the icon
-                        //             ),
-                        //             SizedBox(width: 10),
-                        //             Text(
-                        //               "LOGIN WITH GOOGLE",
-                        //               textAlign: TextAlign.center,
-                        //               style: GoogleFonts.ubuntu(
-                        //                   color: Colors.white, fontSize: 16),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 8.0,
+                            bottom: 8.0,
+                            right: 0.0,
+                            left: 0.0,
+                          ),
+                          child: RaisedButton(
+                            onPressed: onPressedGoogleLogin,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(2.0),
+                            ),
+                            padding: EdgeInsets.all(0.0),
+                            child: Ink(
+                              decoration:
+                                  BoxDecoration(color: MyTheme.google_bg),
+                              child: Container(
+                                constraints: BoxConstraints(
+                                    maxWidth: 300.0, minHeight: 50.0),
+                                alignment: Alignment.center,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icon_google.png', // Replace with the actual path to your Google icon
+                                      // Adjust the width as needed
+                                      color: Colors
+                                          .white, // Set the desired color for the icon
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      "LOGIN WITH GOOGLE",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.ubuntu(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(context,
@@ -752,21 +754,19 @@ class _LoginState extends State<Login> {
                           child: GestureDetector(
                             onTap: () {
                               Navigator.push(context,
-                                  MaterialPageRoute(
-                                      builder: (context) {
-                                        return PasswordForget();
-                                      }));
+                                  MaterialPageRoute(builder: (context) {
+                                return PasswordForget();
+                              }));
                             },
                             child: Center(
                               child: Text(
                                 AppLocalizations.of(context)
                                     .login_screen_forgot_password,
                                 style: TextStyle(
-                                  color: MyTheme.primary,
-                                  //fontStyle: FontStyle.italic,
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 16
-                                ),
+                                    color: MyTheme.primary,
+                                    //fontStyle: FontStyle.italic,
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 16),
                               ),
                             ),
                           ),
@@ -850,5 +850,4 @@ class _LoginState extends State<Login> {
       ),
     );
   }
-
 }

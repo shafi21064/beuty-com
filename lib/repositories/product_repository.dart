@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:kirei/app_config.dart';
 import 'package:kirei/data_model/product_mini_response_old.dart';
 import 'package:http/http.dart' as http;
@@ -6,10 +7,13 @@ import 'package:kirei/data_model/product_details_response_new.dart';
 import 'package:kirei/data_model/variant_response.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
+import 'package:kirei/providers/version_change.dart';
+import 'package:provider/provider.dart';
 
 class ProductRepository {
-  Future<ProductMiniResponseHome> getHomeProducts() async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products?version=2.0.8");
+  Future<ProductMiniResponseHome> getHomeProducts(BuildContext context) async {
+    //Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products?version=2.0.8");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/home-products?version=${Provider.of<VersionChange>(context, listen: false).latestVersion}");
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });

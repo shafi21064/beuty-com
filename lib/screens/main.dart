@@ -20,12 +20,16 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../data_model/product_mini_response_old.dart';
 
 // ignore: must_be_immutable
 class Main extends StatefulWidget {
   int pageIndex;
+  //List<Product> data;
   //String filterSlug;
-  Main({Key key, go_back = true, this.pageIndex, }) : super(key: key);
+  Main({Key key, go_back = true, this.pageIndex,
+    //this.data
+  }) : super(key: key);
 
   // ignore: non_constant_identifier_names
   bool go_back;
@@ -44,7 +48,7 @@ class _MainState extends State<Main> {
     Profile(),
   ];
 
-
+ // List<Widget> _children;
 
   void onTapped(int i) {
 
@@ -72,6 +76,12 @@ class _MainState extends State<Main> {
 
 
     super.initState();
+    // _children = [
+    //   Home(),
+    //   Filter(data: widget.data,),
+    //   Cart(has_bottomnav: true),
+    //   Profile(),
+    // ];
     if (is_logged_in.$ == true) {
       fetchData();
     }

@@ -46,18 +46,17 @@ class PushNotificationService {
       (Map<String, dynamic> message) async => _serialiseAndNavigate(message);
     });
 
-        FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
-
+    FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
   }
 
-    // Handle background messages
+  // Handle background messages
   Future<void> _handleBackgroundMessage(RemoteMessage message) async {
     print("Handling a background message: ${message.messageId}");
-        (Map<String, dynamic> message) async => _serialiseAndNavigate(message);
+    (Map<String, dynamic> message) async => _serialiseAndNavigate(message);
   }
 
   void _showMessage(RemoteMessage message) {
-    //print("onMessage: $message");
+    // print("onMessage: $message");
 
     OneContext().showDialog(
       // barrierDismissible: false,
@@ -90,12 +89,12 @@ class PushNotificationService {
               // }
 
               Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context)=>
-                      NotificationDetails(
-                          message.notification.title,
-                          message.notification.body,
-                      )
-                  ), (route) => false);
+                  MaterialPageRoute(
+                      builder: (context) => NotificationDetails(
+                            message.notification.title,
+                            message.notification.body,
+                          )),
+                  (route) => false);
             },
           ),
         ],
@@ -107,25 +106,25 @@ class PushNotificationService {
     print(message.toString());
     if (is_logged_in.$ == false) {
       OneContext().showDialog(
-        // barrierDismissible: false,
+          // barrierDismissible: false,
           builder: (context) => AlertDialog(
-            title: new Text("You are not logged in"),
-            content: new Text("Please log in"),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('close'),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              FlatButton(
-                  child: Text('Login'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    OneContext().push(MaterialPageRoute(builder: (_) {
-                      return Login();
-                    }));
-                  }),
-            ],
-          ));
+                title: new Text("You are not logged in"),
+                content: new Text("Please log in"),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('close'),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  FlatButton(
+                      child: Text('Login'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        OneContext().push(MaterialPageRoute(builder: (_) {
+                          return Login();
+                        }));
+                      }),
+                ],
+              ));
       return;
     }
     // if (message['data']['item_type'] == 'order') {
@@ -169,21 +168,20 @@ class PushNotificationService {
               // }
 
               Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context)=>
-                      NotificationDetails(
-                        //message.notification.title,
-                        //message.notification.body,
-                        message["notification"]["title"],
-                        message["notification"]["body"],
-                      )
-                  ), (route) => false);
+                  MaterialPageRoute(
+                      builder: (context) => NotificationDetails(
+                            //message.notification.title,
+                            //message.notification.body,
+                            message["notification"]["title"],
+                            message["notification"]["body"],
+                          )),
+                  (route) => false);
             },
           ),
         ],
       ),
     );
   }
-
 }
 
 // class PushNotificationService {

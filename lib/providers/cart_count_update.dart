@@ -28,6 +28,15 @@ class CartCountUpdate extends ChangeNotifier {
     }
   }
 
+  getReorderCart(String item) async{
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    //_cartCount = sharedPreferences.getInt("cartItemCount") ?? 0;
+    _cartCount = 0;
+    _cartCount +=  int.parse(item);
+    sharedPreferences.setInt("cartItemCount", _cartCount);
+    notifyListeners();
+  }
+
   getReset() async {
     _cartCount = 0;
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

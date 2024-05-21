@@ -419,6 +419,11 @@ class _CheckoutState extends State<Checkout> {
           "Address is required", context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
+    } else if(_addressController.text.length < 10) {
+      ToastComponent.showDialog(
+          "Address have to be minimum 10 character", context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
     }
         if (_couponController.text != "" && _coupon_applied == false) {
       ToastComponent.showDialog(
@@ -1481,12 +1486,16 @@ class _CheckoutState extends State<Checkout> {
               child: TypeAheadField(
                 direction: AxisDirection.up,
                 suggestionsCallback: (name) async {
-                  var cityResponse = await AddressRepository()
-                      .getZoneByCity(
-                      state_id: _selected_state.id);
-                  return cityResponse.cities.where((element) =>
-                      element.name.toLowerCase().contains(name.toLowerCase())
-                  );
+                    try{
+                      var cityResponse = await AddressRepository()
+                          .getZoneByCity(
+                          state_id: _selected_state.id);
+                      return cityResponse.cities.where((element) =>
+                          element.name.toLowerCase().contains(name.toLowerCase())
+                      );
+                    } catch(e){
+                      throw ("Please Select City First");
+                    }
                 },
                 loadingBuilder: (context) {
                   return Container(
@@ -1567,11 +1576,15 @@ class _CheckoutState extends State<Checkout> {
               child: TypeAheadField(
                 direction: AxisDirection.up,
                 suggestionsCallback: (name) async {
-                  var countryResponse = await AddressRepository()
-                      .getAreaByZone(id: _selected_city.id);
-                  return countryResponse.countries.where((element) =>
-                      element.name.toLowerCase().contains(name.toLowerCase())
-                  );
+                  try{
+                    var countryResponse = await AddressRepository()
+                        .getAreaByZone(id: _selected_city.id);
+                    return countryResponse.countries.where((element) =>
+                        element.name.toLowerCase().contains(name.toLowerCase())
+                    );
+                  } catch(e){
+                    throw ("Please Select City and Zone");
+                  }
                 },
                 loadingBuilder: (context) {
                   return Container(

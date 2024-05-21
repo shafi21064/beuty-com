@@ -1,5 +1,10 @@
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kirei/custom/CommonFunctoins.dart';
+import 'package:kirei/custom/toast_component.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/providers/category_passing_controller.dart';
 import 'package:kirei/repositories/search_repository.dart';
@@ -20,11 +25,13 @@ import 'package:kirei/repositories/sliders_repository.dart';
 import 'package:kirei/repositories/category_repository.dart';
 import 'package:kirei/repositories/product_repository.dart';
 import 'package:kirei/app_config.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:kirei/helpers/shimmer_helper.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:toast/toast.dart';
 
 
 class Home extends StatefulWidget {
@@ -163,7 +170,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
 
   fetchHomeProducts() async {
-    var productResponse = await ProductRepository().getHomeProducts();
+    var productResponse = await ProductRepository().getHomeProducts(context);
 
 
     _hotDealsProductList.addAll(productResponse.featuredProducts);
@@ -286,6 +293,72 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     pirated_logo_controller?.dispose();
     _mainScrollController.dispose();
   }
+
+  // ///upload image for search product by multipart request
+  // //for image uploading
+  // final ImagePicker _picker = ImagePicker();
+  // XFile _file;
+  //
+  // chooseAndUploadImageForSearchProduct(context) async {
+  //
+  //   var status = await Permission.photos.request();
+  //
+  //   if (status.isDenied) {
+  //     // We didn't ask for permission yet.
+  //     showDialog(
+  //         context: context,
+  //         builder: (BuildContext context) => CupertinoAlertDialog(
+  //           title:
+  //           Text(AppLocalizations.of(context).common_photo_permission),
+  //           content: Text(
+  //               AppLocalizations.of(context).common_app_needs_permission),
+  //           actions: <Widget>[
+  //             CupertinoDialogAction(
+  //               child: Text(AppLocalizations.of(context).common_deny),
+  //               onPressed: () => Navigator.of(context).pop(),
+  //             ),
+  //             CupertinoDialogAction(
+  //               child: Text(AppLocalizations.of(context).common_settings),
+  //               onPressed: () => openAppSettings(),
+  //             ),
+  //           ],
+  //         ));
+  //   } else if (status.isRestricted) {
+  //     ToastComponent.showDialog(
+  //         AppLocalizations.of(context).common_give_photo_permission, context,
+  //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+  //   } else if (status.isGranted) {
+  //     _file = await _picker.pickImage(source: ImageSource.gallery);
+  //
+  //     if (_file == null) {
+  //       ToastComponent.showDialog(
+  //           AppLocalizations
+  //               .of(context)
+  //               .common_no_file_chosen, context,
+  //           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+  //       return;
+  //     }
+  //
+  //     List<int> imageBytes = File(_file.path).readAsBytesSync();
+  //     Uint8List imageUint8List = Uint8List.fromList(imageBytes);
+  //
+  //     var productSearchByImageResponse =
+  //     await SearchRepository().getSearchByImageProductListResponse(
+  //        imageName: _file.path.split('/').last,
+  //        imageBytes: imageUint8List,
+  //     );
+  //
+  //     if(productSearchByImageResponse.products.isNotEmpty){
+  //         Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Main(pageIndex: 1,data: productSearchByImageResponse.products,)));
+  //     } else{
+  //       ToastComponent.showDialog(
+  //           "Some thing went wrong",
+  //           context,
+  //           gravity: Toast.CENTER,
+  //           duration: Toast.LENGTH_LONG);
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -513,6 +586,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                             color:
                                                             MyTheme.secondary,
                                                           ),
+                                                          // suffixIcon: IconButton(
+                                                          //     onPressed: (){
+                                                          //       chooseAndUploadImageForSearchProduct(context);
+                                                          //     },
+                                                          //     icon: Icon(
+                                                          //       Icons.camera_alt,
+                                                          //       color: MyTheme.secondary,
+                                                          //     ),
+                                                          // ),
                                                           hintText: AppLocalizations
                                                               .of(context)
                                                               .filter_screen_search_here,

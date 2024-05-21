@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:kirei/custom/toast_component.dart';
+import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/screens/order_details.dart';
 import 'package:kirei/screens/main.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:kirei/repositories/order_repository.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -228,8 +230,9 @@ class _OrderListState extends State<OrderList> {
     setState(() {
       _isLoadingMap[index] = false;
     });
-
     if(response["result"] == true){
+      Provider.of<CartCountUpdate>(context, listen: false).getReorderCart(response["data"]["cart_quantity"].toString());
+      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Main(pageIndex: 2,)));
       ToastComponent.showDialog(response["message"].toString(), context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG).then((){
         setState(() {
@@ -247,28 +250,6 @@ class _OrderListState extends State<OrderList> {
 
   }
 
-  // void reOrder(int index, int id) async {
-  //   // Set loading state to true for the tapped item
-  //   setState(() {
-  //     _isLoadingMap[index] = true;
-  //   });
-  //
-  //   // Simulate an asynchronous operation, for example, a network call
-  //   var response = await OrderRepository().getReOrder(id: id);
-  //
-  //   // After the operation, set loading state to false for the tapped item
-  //   setState(() {
-  //     _isLoadingMap[index] = false;
-  //   });
-  //
-  //   // Show appropriate toast message based on the response
-  //   ToastComponent.showDialog(
-  //     response["message"].toString(),
-  //     context,
-  //     gravity: Toast.CENTER,
-  //     duration: Toast.LENGTH_LONG,
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -553,7 +534,7 @@ class _OrderListState extends State<OrderList> {
               child: Row(
                 children: [
 
-                  Text('Order Number: ' + _orderList[index]["id"].toString()?? '',
+                  Text('Order Number : ' + _orderList[index]["id"].toString()?? '',
                       style: TextStyle(color: MyTheme.secondary, fontSize: 13)),
                   Spacer(),
                   Column(
@@ -614,7 +595,7 @@ class _OrderListState extends State<OrderList> {
                   children: [
 
                     Text(
-                      "${AppLocalizations.of(context).order_list_screen_delivery_status} -",
+                      "${AppLocalizations.of(context).order_list_screen_delivery_status} - ",
                       style: TextStyle(color: MyTheme.secondary, fontSize: 13),
                     ),
 
@@ -638,17 +619,18 @@ class _OrderListState extends State<OrderList> {
                     height: MediaQuery.of(context).size.height * 0.028,
                     width: MediaQuery.of(context).size.height * 0.074,
                     decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 1,
-                        color: MyTheme.primary,
-                      ),
-                      //color: MyTheme.secondary
+                      // border: Border.all(
+                      //   width: 1,
+                      //   color: MyTheme.primary,
+                      // ),
+
+                      color: MyTheme.add_to_cart_button
                     ),
                     child: Center(
-                      child: isLoading ? CircularProgressIndicator(color: MyTheme.primary,): Text("Re-order",
+                      child: isLoading ? CircularProgressIndicator(color: MyTheme.white,): Text("Re-order",
                       //child: Text("Re-order",
                       style: TextStyle(
-                          color: MyTheme.secondary, fontSize: 11, fontWeight: FontWeight.w600
+                          color: MyTheme.white, fontSize: 11, fontWeight: FontWeight.w600
                       ),
                       ),
                     ),
