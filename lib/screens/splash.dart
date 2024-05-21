@@ -27,16 +27,18 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     //on Splash Screen hide statusbar
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top]);
     super.initState();
     _initPackageInfo();
     Provider.of<VersionChange>(context, listen: false).changeVersion();
   }
+
   @override
   void dispose() {
     //before going to other screen show statusbar
-    SystemChrome.setEnabledSystemUIMode(
-        SystemUiMode.manual, overlays: [SystemUiOverlay.top, SystemUiOverlay.top]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top, SystemUiOverlay.top]);
     super.dispose();
   }
 
@@ -57,7 +59,6 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return Center(
       child: CustomSplashScreen(
-
         //comment this
         seconds: 3,
 
@@ -80,7 +81,9 @@ class _SplashState extends State<Splash> {
           ),
         ),
 
-        image: Image.asset("assets/splash_screen_logo_new.png",),
+        image: Image.asset(
+          "assets/logo.png",
+        ),
 
         backgroundColor: MyTheme.white,
         photoSize: 60.0,
@@ -139,6 +142,7 @@ class CustomSplashScreen extends StatefulWidget {
 
   /// RouteSettings name for pushing a route with custom name (if left out in MaterialApp route names) to navigator stack (Contribution by Ramis Mustafa)
   final String routeName;
+
   /// expects a function that returns a future, when this future is returned it will navigate
   final Future<dynamic> navigateAfterFuture;
 
@@ -166,22 +170,23 @@ class CustomSplashScreen extends StatefulWidget {
     this.routeName,
   });
 
-  factory CustomSplashScreen.timer(
-          {@required int seconds,
-          Color loaderColor,
-          Color backgroundColor,
-          double photoSize,
-          Text loadingText,
-          Image image,
-          Route pageRoute,
-          dynamic onClick,
-          dynamic navigateAfterSeconds,
-          Text title,
-          TextStyle styleTextUnderTheLoader,
-          ImageProvider imageBackground,
-          Gradient gradientBackground,
-          bool useLoader,
-          String routeName,}) =>
+  factory CustomSplashScreen.timer({
+    @required int seconds,
+    Color loaderColor,
+    Color backgroundColor,
+    double photoSize,
+    Text loadingText,
+    Image image,
+    Route pageRoute,
+    dynamic onClick,
+    dynamic navigateAfterSeconds,
+    Text title,
+    TextStyle styleTextUnderTheLoader,
+    ImageProvider imageBackground,
+    Gradient gradientBackground,
+    bool useLoader,
+    String routeName,
+  }) =>
       CustomSplashScreen(
         loaderColor: loaderColor,
         seconds: seconds,
@@ -200,24 +205,24 @@ class CustomSplashScreen extends StatefulWidget {
         routeName: routeName,
       );
 
-  factory CustomSplashScreen.network(
-          {@required Future<dynamic> navigateAfterFuture,
-          Color loaderColor,
-          Color backgroundColor,
-          double photoSize,
-          double backgroundPhotoSize,
-          Text loadingText,
-          Image image,
-          Route pageRoute,
-          dynamic onClick,
-          dynamic navigateAfterSeconds,
-          Text title,
-          TextStyle styleTextUnderTheLoader,
-          ImageProvider imageBackground,
-          Gradient gradientBackground,
-          bool useLoader,
-          String routeName,
-          }) =>
+  factory CustomSplashScreen.network({
+    @required Future<dynamic> navigateAfterFuture,
+    Color loaderColor,
+    Color backgroundColor,
+    double photoSize,
+    double backgroundPhotoSize,
+    Text loadingText,
+    Image image,
+    Route pageRoute,
+    dynamic onClick,
+    dynamic navigateAfterSeconds,
+    Text title,
+    TextStyle styleTextUnderTheLoader,
+    ImageProvider imageBackground,
+    Gradient gradientBackground,
+    bool useLoader,
+    String routeName,
+  }) =>
       CustomSplashScreen(
         loaderColor: loaderColor,
         navigateAfterFuture: navigateAfterFuture,
@@ -342,8 +347,7 @@ class _CustomSplashScreenState extends State<CustomSplashScreen> {
                                 backgroundColor: Colors.transparent,
                                 child: Hero(
                                   tag: "splashscreenImage",
-                                  child: Container(
-                                      child: widget.image),
+                                  child: Container(child: widget.image),
                                 ),
                                 radius: widget.photoSize,
                               ),
