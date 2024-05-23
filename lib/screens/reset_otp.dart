@@ -25,15 +25,16 @@ class _ResetOtpState extends State<ResetOTP> {
   @override
   void initState() {
     //on Splash Screen hide statusbar
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     super.initState();
   }
 
   @override
   void dispose() {
     //before going to other screen show statusbar
-    SystemChrome.setEnabledSystemUIMode(
-        SystemUiMode.manual, overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     super.dispose();
   }
 
@@ -94,8 +95,7 @@ class _ResetOtpState extends State<ResetOTP> {
                     child: Container(
                       width: 75,
                       height: 75,
-                      child: Image.asset(
-                          'assets/login_registration_form_logo.png'),
+                      child: Image.asset('assets/logo.png'),
                     ),
                   ),
                   Padding(
@@ -142,7 +142,7 @@ class _ResetOtpState extends State<ResetOTP> {
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(12.0))),
                             child: RaisedButton(
-                              onPressed: (){
+                              onPressed: () {
                                 onPressConfirm();
                               },
                               shape: RoundedRectangleBorder(
@@ -150,13 +150,14 @@ class _ResetOtpState extends State<ResetOTP> {
                               padding: EdgeInsets.all(0.0),
                               child: Ink(
                                 decoration:
-                                BoxDecoration(color: MyTheme.secondary),
+                                    BoxDecoration(color: MyTheme.secondary),
                                 child: Container(
                                   constraints: BoxConstraints(
                                       maxWidth: 300.0, minHeight: 50.0),
                                   alignment: Alignment.center,
                                   child: Text(
-                                    AppLocalizations.of(context).otp_screen_confirm,
+                                    AppLocalizations.of(context)
+                                        .otp_screen_confirm,
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 14,
