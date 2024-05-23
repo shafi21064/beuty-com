@@ -100,9 +100,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     // TODO: implement initState
     super.initState();
     // In initState()
-    if (AppConfig.purchase_code == "") {
-      initPiratedAnimation();
-    }
+    // if (AppConfig.purchase_code == "") {
+    //   initPiratedAnimation();
+    // }
 
     fetchAll();
 
@@ -296,69 +296,69 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   // ///upload image for search product by multipart request
   // //for image uploading
-  // final ImagePicker _picker = ImagePicker();
-  // XFile _file;
-  //
-  // chooseAndUploadImageForSearchProduct(context) async {
-  //
-  //   var status = await Permission.photos.request();
-  //
-  //   if (status.isDenied) {
-  //     // We didn't ask for permission yet.
-  //     showDialog(
-  //         context: context,
-  //         builder: (BuildContext context) => CupertinoAlertDialog(
-  //           title:
-  //           Text(AppLocalizations.of(context).common_photo_permission),
-  //           content: Text(
-  //               AppLocalizations.of(context).common_app_needs_permission),
-  //           actions: <Widget>[
-  //             CupertinoDialogAction(
-  //               child: Text(AppLocalizations.of(context).common_deny),
-  //               onPressed: () => Navigator.of(context).pop(),
-  //             ),
-  //             CupertinoDialogAction(
-  //               child: Text(AppLocalizations.of(context).common_settings),
-  //               onPressed: () => openAppSettings(),
-  //             ),
-  //           ],
-  //         ));
-  //   } else if (status.isRestricted) {
-  //     ToastComponent.showDialog(
-  //         AppLocalizations.of(context).common_give_photo_permission, context,
-  //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-  //   } else if (status.isGranted) {
-  //     _file = await _picker.pickImage(source: ImageSource.gallery);
-  //
-  //     if (_file == null) {
-  //       ToastComponent.showDialog(
-  //           AppLocalizations
-  //               .of(context)
-  //               .common_no_file_chosen, context,
-  //           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-  //       return;
-  //     }
-  //
-  //     List<int> imageBytes = File(_file.path).readAsBytesSync();
-  //     Uint8List imageUint8List = Uint8List.fromList(imageBytes);
-  //
-  //     var productSearchByImageResponse =
-  //     await SearchRepository().getSearchByImageProductListResponse(
-  //        imageName: _file.path.split('/').last,
-  //        imageBytes: imageUint8List,
-  //     );
-  //
-  //     if(productSearchByImageResponse.products.isNotEmpty){
-  //         Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Main(pageIndex: 1,data: productSearchByImageResponse.products,)));
-  //     } else{
-  //       ToastComponent.showDialog(
-  //           "Some thing went wrong",
-  //           context,
-  //           gravity: Toast.CENTER,
-  //           duration: Toast.LENGTH_LONG);
-  //     }
-  //   }
-  // }
+  final ImagePicker _picker = ImagePicker();
+  XFile _file;
+
+  chooseAndUploadImageForSearchProduct(context) async {
+
+    var status = await Permission.photos.request();
+
+    if (status.isDenied) {
+      // We didn't ask for permission yet.
+      showDialog(
+          context: context,
+          builder: (BuildContext context) => CupertinoAlertDialog(
+            title:
+            Text(AppLocalizations.of(context).common_photo_permission),
+            content: Text(
+                AppLocalizations.of(context).common_app_needs_permission),
+            actions: <Widget>[
+              CupertinoDialogAction(
+                child: Text(AppLocalizations.of(context).common_deny),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              CupertinoDialogAction(
+                child: Text(AppLocalizations.of(context).common_settings),
+                onPressed: () => openAppSettings(),
+              ),
+            ],
+          ));
+    } else if (status.isRestricted) {
+      ToastComponent.showDialog(
+          AppLocalizations.of(context).common_give_photo_permission, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    } else if (status.isGranted) {
+      _file = await _picker.pickImage(source: ImageSource.gallery);
+
+      if (_file == null) {
+        ToastComponent.showDialog(
+            AppLocalizations
+                .of(context)
+                .common_no_file_chosen, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        return;
+      }
+
+      List<int> imageBytes = File(_file.path).readAsBytesSync();
+      Uint8List imageUint8List = Uint8List.fromList(imageBytes);
+
+      var productSearchByImageResponse =
+      await SearchRepository().getSearchByImageProductListResponse(
+         imageName: _file.path.split('/').last,
+         imageBytes: imageUint8List,
+      );
+
+      if(productSearchByImageResponse.products.isNotEmpty){
+          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Main(pageIndex: 1,data: productSearchByImageResponse.products,)));
+      } else{
+        ToastComponent.showDialog(
+            "Some thing went wrong",
+            context,
+            gravity: Toast.CENTER,
+            duration: Toast.LENGTH_LONG);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -586,15 +586,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                             color:
                                                             MyTheme.secondary,
                                                           ),
-                                                          // suffixIcon: IconButton(
-                                                          //     onPressed: (){
-                                                          //       chooseAndUploadImageForSearchProduct(context);
-                                                          //     },
-                                                          //     icon: Icon(
-                                                          //       Icons.camera_alt,
-                                                          //       color: MyTheme.secondary,
-                                                          //     ),
-                                                          // ),
+                                                          suffixIcon: IconButton(
+                                                              onPressed: (){
+                                                                chooseAndUploadImageForSearchProduct(context);
+                                                              },
+                                                              icon: Icon(
+                                                                Icons.camera_alt,
+                                                                color: MyTheme.secondary,
+                                                              ),
+                                                          ),
                                                           hintText: AppLocalizations
                                                               .of(context)
                                                               .filter_screen_search_here,

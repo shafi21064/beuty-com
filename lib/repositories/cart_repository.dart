@@ -82,11 +82,11 @@ print(post_body);
         print(preorderAvailable);
     var post_body = jsonEncode({
       "id": "${id}",
-      "variant": "$variant",
+      //"variant": "$variant",
       "user_id": "$user_id",
       "quantity": "$_quantity",
       "is_preorder": "$preorderAvailable",
-      "cost_matrix": AppConfig.purchase_code,
+      //"cost_matrix": AppConfig.purchase_code,
       "version": "${Provider.of<VersionChange>(context, listen: false).latestVersion}",
     });
 

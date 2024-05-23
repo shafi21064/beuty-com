@@ -306,13 +306,17 @@ class _MainDrawerState extends State<MainDrawer> {
                     title: Text('PERSONAL RECOMMENDATION',
                         style: TextStyle(fontSize: 13)),
                     onTap: () {
+                      if(is_logged_in.$){
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                             return CommonWebviewScreen(
-                              url: "https://kireibd.com/personal-recommendation/skincare-recommendation?type=app",
+                              url: "https://kireibd.com/personal-recommendation/skincare-recommendation?user_id=${user_id.$}&type=app",
                               page_name: "Personal Recommendation",
                             );
                           }));
+                      }else{
+                        Navigator.push(context, MaterialPageRoute(builder: (_)=> Login()));
+                      }
                     }),
 
                 ListTile(

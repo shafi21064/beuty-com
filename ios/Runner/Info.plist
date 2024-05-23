@@ -85,5 +85,62 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+
+    <!-- Permission options for the `camera` group -->
+    <key>NSCameraUsageDescription</key>
+    <string>User can upload and change her profile picture from Camera</string>
+
+	<!-- Permission options for the `photos` group -->
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>User can upload and change her profile picture from PhotoLibrary</string>
+
+    <key>NSContactsUsageDescription</key>
+    <string>contacts</string>
+
+    <key>NSCalendarsUsageDescription</key>
+    <string>calendar</string>
+
+    <key>NSAppleMusicUsageDescription </key>
+    <string>app music</string>
+
+    <key>NSMotionUsageDescription</key>
+    <string>motion</string>
+
+    <key>NSSpeechRecognitionUsageDescription </key>
+    <string>speech recognition</string>
+
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>location always</string>
+
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>location when in use</string>
+
+
+
+
+
+
+    <!-- Facebook Login configuration -->
+        <key>CFBundleURLTypes</key>
+        <array>
+            <dict>
+                <key>CFBundleURLSchemes</key>
+                <array>
+                    <string>fb950110338385665</string>
+                </array>
+            </dict>
+        </array>
+        <key>FacebookAppID</key>
+        <string>7989294924414445</string>
+        <key>FacebookDisplayName</key>
+        <string>Kirei</string>
+
+        <key>LSApplicationQueriesSchemes</key>
+        <array>
+            <string>fbapi</string>
+            <string>fb-messenger-share-api</string>
+            <string>fbauth2</string>
+            <string>fbshareextension</string>
+        </array>
 </dict>
 </plist>
