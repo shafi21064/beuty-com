@@ -310,7 +310,7 @@ class _MainDrawerState extends State<MainDrawer> {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                             return CommonWebviewScreen(
-                              url: "https://kireibd.com/personal-recommendation/skincare-recommendation?user_id=${user_id.$}type=app",
+                              url: "https://kireibd.com/personal-recommendation/skincare-recommendation?user_id=${user_id.$}&type=app",
                               page_name: "Personal Recommendation",
                             );
                           }));
