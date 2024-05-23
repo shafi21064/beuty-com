@@ -306,6 +306,7 @@ class _MainDrawerState extends State<MainDrawer> {
                     title: Text('PERSONAL RECOMMENDATION',
                         style: TextStyle(fontSize: 13)),
                     onTap: () {
+                      if(is_logged_in.$){
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                             return CommonWebviewScreen(
@@ -313,6 +314,9 @@ class _MainDrawerState extends State<MainDrawer> {
                               page_name: "Personal Recommendation",
                             );
                           }));
+                      }else{
+                        Navigator.push(context, MaterialPageRoute(builder: (_)=> Login()));
+                      }
                     }),
 
                 ListTile(
