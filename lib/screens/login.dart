@@ -176,7 +176,7 @@ class _LoginState extends State<Login> {
       final AccessToken accessToken = result.accessToken;
       final userData = await FacebookAuth.instance.getUserData();
 
-      print('this is our facebook response $userData');
+      print('this is our facebook response ${userData}');
 
       var loginResponse = AuthRepository().getSocialLoginResponse(
           "facebook",
@@ -186,7 +186,7 @@ class _LoginState extends State<Login> {
         access_token: accessToken.token
       );
 
-      print('this is login response $loginResponse');
+      debugPrint('this is login response $loginResponse');
 
     } else {
       print(result.status);

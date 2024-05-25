@@ -85,6 +85,8 @@ dependencies {
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:28.0.1')
     implementation("com.google.firebase:firebase-iid")
+    implementation 'com.facebook.android:facebook-login:latest.release'
+
 
     // When using the BoM, you don't specify versions in Firebase library dependencies
 

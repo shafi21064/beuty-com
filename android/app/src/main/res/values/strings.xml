@@ -4,6 +4,7 @@
 
     <string name="facebook_app_id">7989294924414445</string>
     <string name="fb_login_protocol_scheme">fb7989294924414445</string>
+    <string name="facebook_client_token">a80730de25ce0a033cd49f0396ef5aa3</string>
 
     <!-- Replace "000000000000" with your Facebook App ID here. -->
 <!--    <string name="facebook_app_id">7989294924414445</string>-->
