@@ -176,27 +176,30 @@ class _ProductReviewsState extends State<ProductReviews> {
           appBar: buildAppBar(context),
           body: Stack(
             children: [
-              RefreshIndicator(
-                color: MyTheme.primary,
-                backgroundColor: Colors.white,
-                onRefresh: _onRefresh,
-                displacement: 0,
-                child: CustomScrollView(
-                  physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics()),
-                  slivers: [
-                    SliverList(
-                      delegate: SliverChildListDelegate([
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: buildProductReviewsList(),
-                        ),
-                        Container(
-                          height: 120,
-                        )
-                      ]),
-                    )
-                  ],
+              Container(
+                height: MediaQuery.of(context).size.height * 0.8,
+                child: RefreshIndicator(
+                  color: MyTheme.primary,
+                  backgroundColor: Colors.white,
+                  onRefresh: _onRefresh,
+                  displacement: 0,
+                  child: CustomScrollView(
+                    physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics()),
+                    slivers: [
+                      SliverList(
+                        delegate: SliverChildListDelegate([
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: buildProductReviewsList(),
+                          ),
+                          Container(
+                            height: 120,
+                          )
+                        ]),
+                      )
+                    ],
+                  ),
                 ),
               ), //original
               Align(
@@ -216,6 +219,7 @@ class _ProductReviewsState extends State<ProductReviews> {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Container(
+          margin: EdgeInsets.only(bottom: 20),
           decoration: new BoxDecoration(color: Colors.white54.withOpacity(0.6)),
           //height: userName == true? MediaQuery.of(context).viewPadding.bottom > 30 ? 260 : 230 : MediaQuery.of(context).viewPadding.bottom > 30 ? 173 : 143,
           height: MediaQuery.of(context).viewPadding.bottom > 30 ? 260 : 230,
@@ -298,14 +302,14 @@ class _ProductReviewsState extends State<ProductReviews> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(35),
-                  //child: FadeInImage.assetNetwork(
-                  //   placeholder: 'assets/placeholder.png',
+                  // child: FadeInImage.assetNetwork(
+                  //   placeholder: 'assets/avater.png',
                   //   image: _reviewList[index].avatar != null
                   //       ? _reviewList[index].avatar
-                  //       : "assets/placeholder.png",
+                  //       : "assets/avater.png",
                   //   fit: BoxFit.cover,
                   // ),
-                  child: Image.asset("assets/avater.png")
+                  child: _reviewList[index].avatar != null? Image.network(_reviewList[index].avatar) : Image.asset('assets/avater.png')
               ),
             ),
             Column(
