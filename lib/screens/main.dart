@@ -41,14 +41,14 @@ class Main extends StatefulWidget {
 class _MainState extends State<Main> {
   int _currentIndex = 0;
 
-  var _children = [
-    Home(),
-    Filter(),
-    Cart(has_bottomnav: true),
-    Profile(),
-  ];
+  // var _children = [
+  //   Home(),
+  //   Filter(data: widget.data,),
+  //   Cart(has_bottomnav: true),
+  //   Profile(),
+  // ];
 
- // List<Widget> _children;
+  List<Widget> _children;
 
   void onTapped(int i) {
 
@@ -76,12 +76,12 @@ class _MainState extends State<Main> {
 
 
     super.initState();
-    // _children = [
-    //   Home(),
-    //   Filter(data: widget.data,),
-    //   Cart(has_bottomnav: true),
-    //   Profile(),
-    // ];
+    _children = [
+      Home(),
+      Filter(data: widget.data,),
+      Cart(has_bottomnav: true),
+      Profile(),
+    ];
     if (is_logged_in.$ == true) {
       fetchData();
     }

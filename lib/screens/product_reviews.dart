@@ -177,7 +177,7 @@ class _ProductReviewsState extends State<ProductReviews> {
           body: Stack(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.8,
+                height: MediaQuery.of(context).size.height * 0.6,
                 child: RefreshIndicator(
                   color: MyTheme.primary,
                   backgroundColor: Colors.white,
@@ -219,7 +219,7 @@ class _ProductReviewsState extends State<ProductReviews> {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Container(
-          margin: EdgeInsets.only(bottom: 20),
+          margin: EdgeInsets.only(bottom: 8),
           decoration: new BoxDecoration(color: Colors.white54.withOpacity(0.6)),
           //height: userName == true? MediaQuery.of(context).viewPadding.bottom > 30 ? 260 : 230 : MediaQuery.of(context).viewPadding.bottom > 30 ? 173 : 143,
           height: MediaQuery.of(context).viewPadding.bottom > 30 ? 260 : 230,
@@ -408,7 +408,7 @@ class _ProductReviewsState extends State<ProductReviews> {
                                 ? AppLocalizations.of(context).common_view_more
                                 : AppLocalizations.of(context).common_show_less,
                             style: TextStyle(
-                                color: MyTheme.secondary, fontSize: 11),
+                                color: MyTheme.primary, fontSize: 12, fontWeight: FontWeight.bold, decoration: TextDecoration.underline),
                           ),
                           onPressed: () {
                             controller.toggle();
