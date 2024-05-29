@@ -1,5 +1,6 @@
 import 'package:kirei/helpers/auth_helper.dart';
 import 'package:kirei/providers/cart_count_update.dart';
+import 'package:kirei/screens/delete_screen.dart';
 import 'package:kirei/screens/theme.dart';
 import 'package:kirei/screens/wishlist.dart';
 import 'package:flutter/material.dart';
@@ -295,6 +296,29 @@ class _ProfileState extends State<Profile> {
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: MyTheme.dark_grey
+                    ),),
+                  Divider(
+                    thickness:1 ,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return DeleteScreen();
+              }));},
+            child: Container(margin: EdgeInsets.only(top: 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Delete Account",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: MyTheme.dark_grey
                     ),),
                   Divider(
                     thickness:1 ,

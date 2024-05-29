@@ -475,8 +475,8 @@ class _ProfileEditState extends State<ProfileEdit> {
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Spacer(),
                 Container(
                   height: 40.0,
                   width: 120,

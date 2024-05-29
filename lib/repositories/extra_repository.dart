@@ -8,6 +8,7 @@ import 'package:kirei/data_model/extra/CommunityCommentResponse.dart';
 import 'package:kirei/data_model/extra/NewCommunityPostResponse.dart';
 import 'package:kirei/data_model/extra/addCommunityComment.dart';
 import 'package:kirei/data_model/extra/addCommunityLike.dart';
+import 'package:kirei/data_model/extra/deactive_account_model.dart';
 import 'package:kirei/data_model/extra_community_HashTags_response.dart';
 import 'package:kirei/data_model/extra_community_response.dart';
 import 'package:kirei/helpers/endpoints.dart';
@@ -237,7 +238,20 @@ class ExtraRepository {
     return communityCommentResponseFromJson(response.body);
   }
 
+  ///De-active Account
+  Future<DeactivationResponse> deActiveUserAccount() async{
+    final response = await http.post(Uri.parse(ENDP.deleteAccount),
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer "+access_token.$,
+    });
 
-
+    if(response.statusCode == 200){
+      var responseBody = jsonDecode(response.body);
+      return DeactivationResponse.fromJson(responseBody);
+    }else{
+      throw Error();
+    }
+  }
 
 }
