@@ -55,7 +55,7 @@ class Filter extends StatefulWidget {
         this.category,
         this.categoryIndex,
         this.key_ingredients,
-        //this.data,
+        this.data,
       })
       : super(key: key);
 
@@ -67,7 +67,7 @@ class Filter extends StatefulWidget {
   String category;
   String type;
   int categoryIndex;
-  //List<Product> data;
+  List<Product> data;
 
 
   @override
@@ -288,7 +288,7 @@ class _FilterState extends State<Filter> {
       min: _minPriceController.text.toString(),
     );
 
-    //widget.data != null ? _productList = widget.data : _productList.addAll(productResponse.products);
+    widget.data != null ? _productList = widget.data : _productList.addAll(productResponse.products);
     _productList.addAll(productResponse.products);
     _isProductInitial = false;
     _totalProductData = productResponse.meta.total;
@@ -512,8 +512,8 @@ class _FilterState extends State<Filter> {
           child: Column(
             children: [
               buildTopAppbar(context),
-              //widget.data != null ? SizedBox() : buildBottomAppBar(context),
-              buildBottomAppBar(context),
+              widget.data != null ? SizedBox() : buildBottomAppBar(context),
+              //buildBottomAppBar(context),
 
             ],
           ),
@@ -1256,8 +1256,8 @@ class _FilterState extends State<Filter> {
             child: Column(
               children: [
                 SizedBox(
-                    //height: widget.data != null ? (MediaQuery.of(context).viewPadding.top > 41 ? 115 : 135) : MediaQuery.of(context).viewPadding.top > 30 ? 180 : 135
-                  height: MediaQuery.of(context).viewPadding.top > 30 ? 180 : 135,
+                    height: widget.data != null ? (MediaQuery.of(context).viewPadding.top > 41 ? 115 : 135) : MediaQuery.of(context).viewPadding.top > 30 ? 180 : 135
+                 // height: MediaQuery.of(context).viewPadding.top > 30 ? 180 : 135,
                   //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
                ),
                 //Text('data'),

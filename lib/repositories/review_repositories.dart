@@ -18,6 +18,7 @@ class ReviewRepository {
         "Content-Type": "application/json",
         "Authorization": "Bearer ${access_token.$}",
         "App-Language": app_language.$,
+        "type": "app"
       },
     );
     return reviewResponseFromJson(response.body);
