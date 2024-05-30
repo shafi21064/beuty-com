@@ -10,6 +10,7 @@ import 'package:kirei/screens/appointment.dart';
 import 'package:kirei/screens/beauty_tips.dart';
 import 'package:kirei/screens/common_webview_screen.dart';
 import 'package:kirei/screens/newsfeed.dart';
+import 'package:kirei/screens/recomedation_screen.dart';
 import 'package:kirei/screens/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -303,16 +304,13 @@ class _MainDrawerState extends State<MainDrawer> {
                 ListTile(
                     visualDensity:
                     VisualDensity(horizontal: -4, vertical: -4),
-                    title: Text('PERSONAL RECOMMENDATION',
+                    title: Text('AI RECOMMENDATION',
                         style: TextStyle(fontSize: 13)),
                     onTap: () {
                       if(is_logged_in.$){
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                            return CommonWebviewScreen(
-                              url: "https://kireibd.com/personal-recommendation/skincare-recommendation?user_id=${user_id.$}&type=app",
-                              page_name: "Personal Recommendation",
-                            );
+                            return RecomendationScreen();
                           }));
                       }else{
                         Navigator.push(context, MaterialPageRoute(builder: (_)=> Login()));
