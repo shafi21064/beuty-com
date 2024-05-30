@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -21,6 +23,9 @@ class _CommonWebviewScreenState extends State<CommonWebviewScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    if (Platform.isAndroid) {
+      WebView.platform = SurfaceAndroidWebView();
+    }
   }
 
   @override

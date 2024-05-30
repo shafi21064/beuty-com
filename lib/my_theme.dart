@@ -13,6 +13,7 @@ class MyTheme {
   static Color add_to_cart_button = Color.fromRGBO(42, 43, 45, 1);
   static Color facebook_bg = Color.fromRGBO(76, 105, 186, 1);
   static Color google_bg = Color.fromRGBO(221, 75, 57, 1);
+  static Color apple_bg = Color(0xff161618);
   static Color preorder=Color.fromRGBO(23, 162, 190, 1);
 
 

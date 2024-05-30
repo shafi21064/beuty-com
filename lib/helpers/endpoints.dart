@@ -87,4 +87,6 @@ class ENDP {
       "${AppConfig.BASE_URL}/purchase-history-items/";
   static const RE_ORDER =
       "${AppConfig.BASE_URL}/reorder/";
+
+  static const deleteAccount = '${AppConfig.BASE_URL}/auth/deactive-account';
 }
