@@ -96,6 +96,7 @@ dependencies:
   firebase_messaging: ^11.2.7
   flutter_share: ^2.0.0
   modal_progress_hud_nsn: ^0.3.0
+  sign_in_with_apple: ^3.3.0
 #  share_plus: ^4.5.3
 dependency_overrides:
   firebase_messaging_platform_interface: 3.1.6

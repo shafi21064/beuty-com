@@ -17,6 +17,7 @@ import 'package:kirei/screens/registration.dart';
 import 'package:kirei/screens/main.dart';
 import 'package:kirei/screens/password_forget.dart';
 import 'package:kirei/custom/toast_component.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:toast/toast.dart';
 import 'package:kirei/repositories/auth_repository.dart';
 import 'package:kirei/helpers/auth_helper.dart';
@@ -167,8 +168,6 @@ class _LoginState extends State<Login> {
   //   }
   // }
 
-
-
   Future<void> signInWithFacebook() async {
     final LoginResult result = await FacebookAuth.instance.login();
 
@@ -183,17 +182,14 @@ class _LoginState extends State<Login> {
           userData["name"].toString(),
           userData["email"].toString(),
           userData["id"].toString(),
-        access_token: accessToken.token
-      );
+          access_token: accessToken.token);
 
       debugPrint('this is login response $loginResponse');
-
     } else {
       print(result.status);
       print(result.message);
     }
   }
-
 
   // onPressedFacebookLogin() async {
   //   final facebookLogin =
@@ -334,6 +330,18 @@ class _LoginState extends State<Login> {
     //   print("error is ....... $e");
     //   // TODO
     // }
+  }
+
+  Future<UserCredential>onPressAppleLogin()async{
+    final credential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+    );
+
+    print(credential);
+
   }
 
   @override
@@ -581,7 +589,8 @@ class _LoginState extends State<Login> {
                                         ),
                                       ],
                                     ),
-                                    Spacer(), // Add a spacer to push the next widget to the right
+                                    Spacer(),
+                                    // Add a spacer to push the next widget to the right
                                     // GestureDetector(
                                     //   onTap: () {
                                     //     Navigator.push(context,
@@ -700,10 +709,13 @@ class _LoginState extends State<Login> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
-                            top: 8.0, bottom: 8.0, right: 0.0, left: 0.0,
+                            top: 8.0,
+                            bottom: 8.0,
+                            right: 0.0,
+                            left: 0.0,
                           ),
                           child: RaisedButton(
-                            onPressed: (){
+                            onPressed: () {
                               signInWithFacebook();
                             },
                             shape: RoundedRectangleBorder(
@@ -721,8 +733,8 @@ class _LoginState extends State<Login> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
-                                      Icons
-                                          .facebook_outlined, // You can replace this with the Google Icon
+                                      Icons.facebook_outlined,
+                                      // You can replace this with the Google Icon
                                       color: Colors.white,
                                     ),
                                     SizedBox(width: 10),
@@ -762,7 +774,8 @@ class _LoginState extends State<Login> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Image.asset(
-                                      'assets/icon_google.png', // Replace with the actual path to your Google icon
+                                      'assets/icon_google.png',
+                                      // Replace with the actual path to your Google icon
                                       // Adjust the width as needed
                                       color: Colors
                                           .white, // Set the desired color for the icon
@@ -770,6 +783,50 @@ class _LoginState extends State<Login> {
                                     SizedBox(width: 10),
                                     Text(
                                       "LOGIN WITH GOOGLE",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.ubuntu(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 8.0,
+                            bottom: 8.0,
+                            right: 0.0,
+                            left: 0.0,
+                          ),
+                          child: RaisedButton(
+                            onPressed: ()=>onPressAppleLogin(),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(2.0),
+                            ),
+                            padding: EdgeInsets.all(0.0),
+                            child: Ink(
+                              decoration:
+                              BoxDecoration(color: MyTheme.apple_bg),
+                              child: Container(
+                                height: 50,
+                                padding: EdgeInsets.symmetric(vertical: 8),
+                                alignment: Alignment.center,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/apple-logo.png',
+
+                                      // Replace with the actual path to your Google icon
+                                      // Adjust the width as needed
+                                      color: Colors
+                                          .white, // Set the desired color for the icon
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      "LOGIN WITH APPLE",
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.ubuntu(
                                           color: Colors.white, fontSize: 16),
@@ -801,7 +858,6 @@ class _LoginState extends State<Login> {
                             )),
                           ),
                         ),
-
                         Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: GestureDetector(
@@ -824,7 +880,6 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                         ),
-
                         Visibility(
                           visible:
                               allow_google_login.$ || allow_facebook_login.$,
@@ -874,6 +929,22 @@ class _LoginState extends State<Login> {
                                       ),
                                     ),
                                   ),
+                                  // SignInWithAppleButton(
+                                  //   onPressed: () async {
+                                  //     final credential = await SignInWithApple
+                                  //         .getAppleIDCredential(
+                                  //       scopes: [
+                                  //         AppleIDAuthorizationScopes.email,
+                                  //         AppleIDAuthorizationScopes.fullName,
+                                  //       ],
+                                  //     );
+                                  //
+                                  //     print(credential);
+                                  //
+                                  //     // Now send the credential (especially `credential.authorizationCode`) to your server to create a session
+                                  //     // after they have been validated with Apple (see `Integration` section for more information on how to do this)
+                                  //   },
+                                  // ),
                                   Visibility(
                                     visible: allow_twitter_login.$,
                                     child: InkWell(
