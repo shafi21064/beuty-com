@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:math';
+import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -331,18 +334,51 @@ class _LoginState extends State<Login> {
     //   // TODO
     // }
   }
+///////////////////////// Apple Log In /////////////////////////////////////////
+//   Future<UserCredential> onPressAppleLogin() async {
+//     try {
+//       final rawNonce = generateNonce();
+//       final nonce = sha256ofString(rawNonce);
+//
+//       final appleCredential = await SignInWithApple.getAppleIDCredential(
+//         scopes: [
+//           AppleIDAuthorizationScopes.email,
+//           AppleIDAuthorizationScopes.fullName,
+//         ],
+//         // webAuthenticationOptions: WebAuthenticationOptions(
+//         //   clientId: 'YOUR_CLIENT_ID', // Replace with your Client ID
+//         //   redirectUri: Uri.parse(
+//         //     'https://YOUR_PROJECT_ID.firebaseapp.com/__/auth/handler', // Replace with your redirect URI
+//         //   ),
+//         // ),
+//         nonce: nonce,
+//       );
+//
+//       final oauthCredential = OAuthProvider("apple.com").credential(
+//         idToken: appleCredential.identityToken,
+//         rawNonce: rawNonce,
+//       );
+//
+//       final userCredential = await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+//       return userCredential;
+//     } catch (e) {
+//       print("Error during Apple Sign-In: $e");
+//       throw e;
+//     }
+//   }
+//
+//   String generateNonce([int length = 32]) {
+//     final charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
+//     final random = Random.secure();
+//     return List.generate(length, (_) => charset[random.nextInt(charset.length)]).join();
+//   }
+//
+//   String sha256ofString(String input) {
+//     final bytes = utf8.encode(input);
+//     final digest = sha256.convert(bytes);
+//     return digest.toString();
+//   }
 
-  Future<UserCredential>onPressAppleLogin()async{
-    final credential = await SignInWithApple.getAppleIDCredential(
-      scopes: [
-        AppleIDAuthorizationScopes.email,
-        AppleIDAuthorizationScopes.fullName,
-      ],
-    );
-
-    print(credential);
-
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -801,7 +837,9 @@ class _LoginState extends State<Login> {
                             left: 0.0,
                           ),
                           child: RaisedButton(
-                            onPressed: ()=>onPressAppleLogin(),
+                            onPressed: (){
+                              //onPressAppleLogin()
+                            },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(2.0),
                             ),
