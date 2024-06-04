@@ -24,6 +24,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:kirei/providers/locale_provider.dart';
 import 'lang_config.dart';
+import 'screens/recomendation_pages/recommendetion_controller.dart';
 
 SharedPreferences sharedPreferences;
 Future<void> _launchUrl(Uri url) async {
@@ -97,6 +98,7 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider(create: (_) => CartCountUpdate()),
           ChangeNotifierProvider(create: (_) => CategoryPassingController()),
           ChangeNotifierProvider(create: (_) => VersionChange()),
+          ChangeNotifierProvider(create: (_) => RecommendationController()),
         ],
         child: Consumer<LocaleProvider>(builder: (context, provider, snapshot) {
           return DynamicTheme(

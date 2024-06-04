@@ -10,7 +10,7 @@ import 'package:kirei/screens/appointment.dart';
 import 'package:kirei/screens/beauty_tips.dart';
 import 'package:kirei/screens/common_webview_screen.dart';
 import 'package:kirei/screens/newsfeed.dart';
-import 'package:kirei/screens/recomedation_screen.dart';
+import 'package:kirei/screens/recomendation_pages/screeen/skin_care_goal/recomedation_screen_goal_one.dart';
 import 'package:kirei/screens/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -310,7 +310,7 @@ class _MainDrawerState extends State<MainDrawer> {
                       if(is_logged_in.$){
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                            return RecomendationScreen();
+                            return RecomendationScreenGoalOne();
                           }));
                       }else{
                         Navigator.push(context, MaterialPageRoute(builder: (_)=> Login()));
