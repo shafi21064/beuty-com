@@ -34,7 +34,7 @@ class _RecomendationScreenGoalOneState extends State<RecomendationScreenGoalOne>
                 SizedBox(
                   height: 16,
                 ),
-                buildHeaderProgressbar(historyProgress: 1, goalProgress: .1),
+                buildHeaderProgressbar(historyProgress: 1, goalProgress: 0),
                 SizedBox(
                   height: 25,
                 ),
@@ -163,7 +163,7 @@ class _RecomendationScreenGoalOneState extends State<RecomendationScreenGoalOne>
         LinearPercentIndicator(
           width: MediaQuery.of(context).size.width * 1,
           lineHeight: 5.0,
-          percent: percent / 10,
+          percent: percent / 2,
           backgroundColor: Colors.grey[350],
           progressColor: MyTheme.secondary,
         ),
@@ -171,7 +171,7 @@ class _RecomendationScreenGoalOneState extends State<RecomendationScreenGoalOne>
           height: 8,
         ),
         Text(
-          '${percent}/10',
+          '${percent}/2',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         )
       ],

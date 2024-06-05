@@ -1,24 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/custom/toast_component.dart';
+import 'package:kirei/screens/recomendation_pages/screeen/acne/recomedation_screen_acne_two.dart';
+import 'package:kirei/screens/recomendation_pages/screeen/recommended_products.dart';
+import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_allergic(3).dart';
+import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_three.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 import '../../../../my_theme.dart';
 import '../../recommendetion_controller.dart';
-import 'recomedation_screen_eight.dart';
 
-class RecomendationScreenSeven extends StatefulWidget {
-  const RecomendationScreenSeven({
+class RecomendationScreenDullness extends StatefulWidget {
+  const RecomendationScreenDullness({
     Key key,
   }) : super(key: key);
 
   @override
-  State<RecomendationScreenSeven> createState() => _RecomendationScreenSevenState();
+  State<RecomendationScreenDullness> createState() =>
+      _RecomendationScreenDullnessState();
 }
 
-class _RecomendationScreenSevenState extends State<RecomendationScreenSeven> {
+class _RecomendationScreenDullnessState
+    extends State<RecomendationScreenDullness> {
   int selectedValue;
 
   @override
@@ -34,13 +39,11 @@ class _RecomendationScreenSevenState extends State<RecomendationScreenSeven> {
             SizedBox(
               height: 16,
             ),
-            buildHeaderProgressbar(
-                historyProgress: .8,
-                goalProgress: 0),
+            buildHeaderProgressbar(historyProgress: 1, goalProgress: 1),
             SizedBox(
               height: 25,
             ),
-            buildLinearProgressbar(percent: 8),
+            buildLinearProgressbar(percent: 1),
             SizedBox(
               height: 25,
             ),
@@ -50,8 +53,9 @@ class _RecomendationScreenSevenState extends State<RecomendationScreenSeven> {
                   child: Text(
                 RecommendationController()
                     .questions
-                    .skincareHistoryQuestions
-                    .questions[6]
+                    .relatedQuestionsBasedOnPrimaryConcern
+                    .primaryConcerns['dullness']
+                    .questions[0]
                     .question,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               )),
@@ -62,19 +66,20 @@ class _RecomendationScreenSevenState extends State<RecomendationScreenSeven> {
             ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                //itemCount: QuestionnaireProvider().questions[0].skincareHistoryQuestions.questions[0].options.length,
                 itemCount: RecommendationController()
                     .questions
-                    .skincareHistoryQuestions
-                    .questions[6]
+                    .relatedQuestionsBasedOnPrimaryConcern
+                    .primaryConcerns['dullness']
+                    .questions[0]
                     .options
                     .length,
                 itemBuilder: (BuildContext context, int index) {
                   return buildQuestionContainer(
                       ansText: RecommendationController()
                           .questions
-                          .skincareHistoryQuestions
-                          .questions[6]
+                          .relatedQuestionsBasedOnPrimaryConcern
+                          .primaryConcerns['dullness']
+                          .questions[0]
                           .options[index],
                       selectedAns: index);
                 }),
@@ -126,7 +131,7 @@ class _RecomendationScreenSevenState extends State<RecomendationScreenSeven> {
             width: 8,
           ),
           CircularPercentIndicator(
-            radius: 9,
+            radius: 10,
             lineWidth: 2.0,
             percent: percent,
             progressColor: MyTheme.primary,
@@ -150,7 +155,7 @@ class _RecomendationScreenSevenState extends State<RecomendationScreenSeven> {
           width: 8,
         ),
         Container(
-          width: 9,
+          width: 10,
           height: 1,
           color: Colors.red,
         ),
@@ -169,7 +174,7 @@ class _RecomendationScreenSevenState extends State<RecomendationScreenSeven> {
         LinearPercentIndicator(
           width: MediaQuery.of(context).size.width * 1,
           lineHeight: 5.0,
-          percent: percent / 10,
+          percent: percent / 1,
           backgroundColor: Colors.grey[350],
           progressColor: MyTheme.secondary,
         ),
@@ -177,7 +182,7 @@ class _RecomendationScreenSevenState extends State<RecomendationScreenSeven> {
           height: 8,
         ),
         Text(
-          '${percent}/10',
+          '${percent}/1',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         )
       ],
@@ -203,6 +208,7 @@ class _RecomendationScreenSevenState extends State<RecomendationScreenSeven> {
                 onChanged: (value) {
                   setState(() {
                     selectedValue = value;
+                    print(value);
                   });
                 },
               );
@@ -210,9 +216,12 @@ class _RecomendationScreenSevenState extends State<RecomendationScreenSeven> {
             SizedBox(
               width: 8,
             ),
-            Text(
-              ansText,
-              style: TextStyle(fontWeight: FontWeight.bold),
+            SizedBox(
+              width: 250,
+              child: Text(
+                ansText,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             )
           ],
         ),
@@ -224,16 +233,20 @@ class _RecomendationScreenSevenState extends State<RecomendationScreenSeven> {
     return Consumer<RecommendationController>(
         builder: (context, provider, child) {
       return InkWell(
-        onTap: () {
-          if(selectedValue == null){
-            ToastComponent.showDialog(
-                'Ans is required', context,
+        onTap: () async {
+          if (selectedValue == null) {
+            ToastComponent.showDialog('Ans is required', context,
                 gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
             return;
           }
-          provider.selectedSkinSensitive = String.fromCharCode(65 + selectedValue).toLowerCase();
-          print(provider.selectedSkinSensitive);
-          Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenEight()));
+          provider.dullnessOneSelected =
+              String.fromCharCode(65 + selectedValue).toLowerCase();
+          print(provider.dullnessOneSelected);
+          await provider.sendData();
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (_) => RecommendedProducts()),
+              (route) => false);
         },
         child: Container(
           alignment: Alignment.center,

@@ -35,12 +35,12 @@ class _RecomendationScreenNineState extends State<RecomendationScreenNine> {
               height: 16,
             ),
             buildHeaderProgressbar(
-                historyProgress: .10,
-                goalProgress: 10),
+                historyProgress: 1,
+                goalProgress: 0),
             SizedBox(
               height: 25,
             ),
-            buildLinearProgressbar(percent: 9),
+            buildLinearProgressbar(percent: 10),
             SizedBox(
               height: 25,
             ),

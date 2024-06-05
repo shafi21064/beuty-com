@@ -1,6 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/custom/toast_component.dart';
+import 'package:kirei/screens/recomendation_pages/screeen/acne/recomedation_screen_acne_one.dart';
+import 'package:kirei/screens/recomendation_pages/screeen/anti_aging/recomedation_screen_aging_one.dart';
+import 'package:kirei/screens/recomendation_pages/screeen/blackheds/recomedation_screen_blackheads_one.dart';
+import 'package:kirei/screens/recomendation_pages/screeen/dehydred/recomedation_screen_dehydred_one.dart';
+import 'package:kirei/screens/recomendation_pages/screeen/dullness/recomedation_screen_dullness_one.dart';
+import 'package:kirei/screens/recomendation_pages/screeen/hyperpigmentation/recomedation_screen_pigmentation_one.dart';
 import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_five.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -36,7 +42,7 @@ class _RecomendationScreenGoalTwoState extends State<RecomendationScreenGoalTwo>
             ),
             buildHeaderProgressbar(
                 historyProgress: 1,
-                goalProgress: .2),
+                goalProgress: 0),
             SizedBox(
               height: 25,
             ),
@@ -169,7 +175,7 @@ class _RecomendationScreenGoalTwoState extends State<RecomendationScreenGoalTwo>
         LinearPercentIndicator(
           width: MediaQuery.of(context).size.width * 1,
           lineHeight: 5.0,
-          percent: percent / 9,
+          percent: percent / 2,
           backgroundColor: Colors.grey[350],
           progressColor: MyTheme.secondary,
         ),
@@ -177,7 +183,7 @@ class _RecomendationScreenGoalTwoState extends State<RecomendationScreenGoalTwo>
           height: 8,
         ),
         Text(
-          '${percent}/10',
+          '${percent}/2',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         )
       ],
@@ -231,9 +237,21 @@ class _RecomendationScreenGoalTwoState extends State<RecomendationScreenGoalTwo>
                 gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
             return;
           }
-          provider.selectedRational = String.fromCharCode(65 + selectedValue).toLowerCase();
-          print(provider.selectedRational);
-          Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenFive()));
+          if(provider.skinCareConcern[0] == 'a'){
+          Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenAcne()));
+          }else if(provider.skinCareConcern[0] == 'b'){
+          Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenAging()));
+          }else if(provider.skinCareConcern[0] == 'c'){
+          Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenBlackHeads()));
+          }else if(provider.skinCareConcern[0] == 'd'){
+            Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenPigmentation()));
+          }else if(provider.skinCareConcern[0] == 'e'){
+            Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenDullness()));
+          }else if(provider.skinCareConcern[0] == 'f'){
+            Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenDehydred()));
+          }
+          provider.selectedSkinType = String.fromCharCode(65 + selectedValue).toLowerCase();
+          print(provider.selectedSkinType);
         },
         child: Container(
           alignment: Alignment.center,

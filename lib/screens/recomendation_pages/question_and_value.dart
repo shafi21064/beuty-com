@@ -40,7 +40,7 @@ Map<String, dynamic> recommendationQuestionAndAns = {
       },
       {
         "question": "How sensitive is your skin?",
-        "options": ["No", "Somewhat sensitive", "Very sensitive"]
+        "options": ["Rarely sensitive", "Somewhat sensitive", "Often sensitive", "Very sensitive"]
       },
       {
         "question":
@@ -49,7 +49,7 @@ Map<String, dynamic> recommendationQuestionAndAns = {
       },
       {
         "question": "Does skincare products easily irritate your skin?",
-        "options": ["Yes", "No"]
+        "options": ["Never", "Rarely", "Sometimes", "Often"]
       },
     ]
   },
@@ -86,7 +86,7 @@ Map<String, dynamic> recommendationQuestionAndAns = {
       },
       {
         "question": "What is your skin type?",
-        "options": ["Normal", "Oily", "Dry", "Combination"]
+        "options": [ "Oily","Combination", "Dry", "Normal", "I don't know" ]
       },
       {
         "question": "How does your skin feel in the morning?",
@@ -142,7 +142,7 @@ Map<String, dynamic> recommendationQuestionAndAns = {
         },
         {
           "question": "Do you see more pimple on your period?",
-          "options": ["Yes", "No"]
+          "options": ["Yes", "No", "Not sure"]
         },
         {
           "question": "How often do you see red big inflammed pimples?",
@@ -185,8 +185,16 @@ Map<String, dynamic> recommendationQuestionAndAns = {
     "blackheads_whiteheads": {
       "questions": [
         {
-          "question": "Do you get blackheads often?",
-          "options": ["Yes", "No"]
+          "question": "Do you have open (blackhead) or closed (whitehead) comedones?",
+          "options": ["Blackheads", "Whiteheads", "Both", "Not sure"]
+        },
+        {
+          "question": "Where do you see the most clogged pores?",
+          "options": ["Mostly around the nose", "Nose and cheek", "All around the face", "I don't have any"]
+        },
+        {
+          "question": "Where do you have the most amount of mini bumps?",
+          "options": ["Forehead", "T zone", "All over the face", "None of the above"]
         },
         {
           "question": "Do you get whiteheads often?",
@@ -206,7 +214,7 @@ Map<String, dynamic> recommendationQuestionAndAns = {
       "questions": [
         {
           "question": "Do you get dark spots or discoloration after your pimples?",
-          "options": ["Yes", "No"]
+          "options": ["Yes", "No", "I don't know"]
         },
         {
           "question": "Do you notice more hyperpigmentation or dark spots after sun exposure?",

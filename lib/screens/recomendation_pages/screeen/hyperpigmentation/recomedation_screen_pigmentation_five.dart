@@ -1,25 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/custom/toast_component.dart';
-import 'package:kirei/screens/recomendation_pages/screeen/skin_care_goal/recomedation_screen_goal_two.dart';
-import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_seven.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 import '../../../../my_theme.dart';
 import '../../recommendetion_controller.dart';
+import '../recommended_products.dart';
 
-class RecomendationScreenSix extends StatefulWidget {
-  const RecomendationScreenSix({
+
+class RecomendationScreenPigmentationFive extends StatefulWidget {
+  const RecomendationScreenPigmentationFive({
     Key key,
   }) : super(key: key);
 
   @override
-  State<RecomendationScreenSix> createState() => _RecomendationScreenSixState();
+  State<RecomendationScreenPigmentationFive> createState() => _RecomendationScreenPigmentationFiveState();
 }
 
-class _RecomendationScreenSixState extends State<RecomendationScreenSix> {
+class _RecomendationScreenPigmentationFiveState extends State<RecomendationScreenPigmentationFive> {
   List<int> selectedValues = []; // To store selected values
 
   @override
@@ -35,11 +35,11 @@ class _RecomendationScreenSixState extends State<RecomendationScreenSix> {
                 SizedBox(
                   height: 16,
                 ),
-                buildHeaderProgressbar(historyProgress: .7, goalProgress: 0),
+                buildHeaderProgressbar(historyProgress: 1, goalProgress: 5/5),
                 SizedBox(
                   height: 25,
                 ),
-                buildLinearProgressbar(percent: 7),
+                buildLinearProgressbar(percent: 5),
                 SizedBox(
                   height: 25,
                 ),
@@ -47,11 +47,8 @@ class _RecomendationScreenSixState extends State<RecomendationScreenSix> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Center(
                       child: Text(
-                        RecommendationController()
-                            .questions
-                            .skincareGoalQuestions
-                            .questions[0]
-                            .question,
+            RecommendationController()
+                .questions.relatedQuestionsBasedOnPrimaryConcern.primaryConcerns['hyperpigmentation'].questions[4].question,
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       )),
                 ),
@@ -62,18 +59,11 @@ class _RecomendationScreenSixState extends State<RecomendationScreenSix> {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: RecommendationController()
-                        .questions
-                        .skincareGoalQuestions
-                        .questions[0]
-                        .options
-                        .length,
+                        .questions.relatedQuestionsBasedOnPrimaryConcern.primaryConcerns['hyperpigmentation'].questions[4].options.length,
                     itemBuilder: (BuildContext context, int index) {
                       return buildQuestionContainer(
                           ansText: RecommendationController()
-                              .questions
-                              .skincareGoalQuestions
-                              .questions[0]
-                              .options[index],
+                              .questions.relatedQuestionsBasedOnPrimaryConcern.primaryConcerns['hyperpigmentation'].questions[4].question[index],
                           selectedAns: index);
                     }),
                 Padding(
@@ -164,7 +154,7 @@ class _RecomendationScreenSixState extends State<RecomendationScreenSix> {
         LinearPercentIndicator(
           width: MediaQuery.of(context).size.width * 1,
           lineHeight: 5.0,
-          percent: percent / 10,
+          percent: percent / 5,
           backgroundColor: Colors.grey[350],
           progressColor: MyTheme.secondary,
         ),
@@ -172,7 +162,7 @@ class _RecomendationScreenSixState extends State<RecomendationScreenSix> {
           height: 8,
         ),
         Text(
-          '${percent}/10',
+          '${percent}/5',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         )
       ],
@@ -222,18 +212,22 @@ class _RecomendationScreenSixState extends State<RecomendationScreenSix> {
     return Consumer<RecommendationController>(
         builder: (context, provider, child) {
           return InkWell(
-            onTap: () {
+            onTap: () async{
               if (selectedValues.isEmpty) {
                 ToastComponent.showDialog(
                     'Ans is required', context,
                     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
                 return;
               }
-              provider.skinCareConcern = selectedValues
+              provider.pigmentationFiveSelected = selectedValues
                   .map((index) => String.fromCharCode(65 + index).toLowerCase())
                   .toList();
-              print(provider.skinCareConcern);
-              Navigator.push(context, MaterialPageRoute(builder: (_) => RecomendationScreenSeven()));
+              print(provider.pigmentationFiveSelected);
+              await provider.sendData();
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (_) => RecommendedProducts()),
+                      (route) => false);
             },
             child: Container(
               alignment: Alignment.center,

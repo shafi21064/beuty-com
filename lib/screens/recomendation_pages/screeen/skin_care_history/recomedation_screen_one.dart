@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/custom/toast_component.dart';
+import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_three.dart';
 import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_two.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -9,16 +10,16 @@ import 'package:toast/toast.dart';
 import '../../../../my_theme.dart';
 import '../../recommendetion_controller.dart';
 
-class RecomendationScreen extends StatefulWidget {
-  const RecomendationScreen({
+class RecomendationSearchScreen extends StatefulWidget {
+  const RecomendationSearchScreen({
     Key key,
   }) : super(key: key);
 
   @override
-  State<RecomendationScreen> createState() => _RecomendationScreenState();
+  State<RecomendationSearchScreen> createState() => _RecomendationSearchScreenState();
 }
 
-class _RecomendationScreenState extends State<RecomendationScreen> {
+class _RecomendationSearchScreenState extends State<RecomendationSearchScreen> {
   int selectedValue;
 
   TextEditingController ageController = TextEditingController();
@@ -37,19 +38,19 @@ class _RecomendationScreenState extends State<RecomendationScreen> {
               height: 16,
             ),
             buildHeaderProgressbar(
-                historyProgress: provider.skinHistoryProgress,
-                goalProgress: provider.skinGoalProgress),
+                historyProgress: .1,
+                goalProgress: 0),
             SizedBox(
               height: 25,
             ),
-            buildLinearProgressbar(percent: provider.progressValue),
+            buildLinearProgressbar(percent: 1),
             SizedBox(
               height: 25,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Center(
-                  child: Text( ' What is your age*',
+                  child: Text( "What's your Age?",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               )),
             ),
@@ -120,7 +121,7 @@ class _RecomendationScreenState extends State<RecomendationScreen> {
             width: 8,
           ),
           CircularPercentIndicator(
-            radius: 10,
+            radius: 9,
             lineWidth: 2.0,
             percent: percent,
             progressColor: MyTheme.primary,
@@ -144,7 +145,7 @@ class _RecomendationScreenState extends State<RecomendationScreen> {
           width: 8,
         ),
         Container(
-          width: 10,
+          width: 9,
           height: 1,
           color: Colors.red,
         ),
@@ -229,12 +230,6 @@ class _RecomendationScreenState extends State<RecomendationScreen> {
       return InkWell(
         onTap: () {
           print(ageController.text);
-          if(ageController.text == '' || ageController.text == null){
-            ToastComponent.showDialog(
-                'Age is required', context,
-                gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-            return;
-          }
           Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenTwo()));
           provider.selectedAge = ageController.text;
           print(provider.selectedAge);

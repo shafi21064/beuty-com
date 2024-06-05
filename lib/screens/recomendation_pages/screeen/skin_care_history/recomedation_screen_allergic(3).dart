@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kirei/custom/toast_component.dart';
+import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_four.dart';
 import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_three.dart';
-import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_two.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -164,7 +163,7 @@ class _RecomendationScreenAllergicState extends State<RecomendationScreenAllergi
         LinearPercentIndicator(
           width: MediaQuery.of(context).size.width * 1,
           lineHeight: 5.0,
-          percent: percent / 9,
+          percent: percent / 10,
           backgroundColor: Colors.grey[350],
           progressColor: MyTheme.secondary,
         ),
@@ -172,7 +171,7 @@ class _RecomendationScreenAllergicState extends State<RecomendationScreenAllergi
           height: 8,
         ),
         Text(
-          '${percent}/9',
+          '${percent}/10',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         )
       ],
@@ -230,6 +229,10 @@ class _RecomendationScreenAllergicState extends State<RecomendationScreenAllergi
       return InkWell(
         onTap: () {
           print(ageController.text);
+          if(provider.selectedGender == 'a'){
+          Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenFour()));
+          return;
+          }
           Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenThree()));
           provider.selectedAlergy = ageController.text;
           print(provider.selectedAlergy);

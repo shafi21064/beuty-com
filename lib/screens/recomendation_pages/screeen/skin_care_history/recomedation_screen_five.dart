@@ -169,7 +169,7 @@ class _RecomendationScreenFiveState extends State<RecomendationScreenFive> {
         LinearPercentIndicator(
           width: MediaQuery.of(context).size.width * 1,
           lineHeight: 5.0,
-          percent: percent / 9,
+          percent: percent / 10,
           backgroundColor: Colors.grey[350],
           progressColor: MyTheme.secondary,
         ),
