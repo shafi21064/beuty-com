@@ -289,7 +289,7 @@ class _FilterState extends State<Filter> {
     );
 
     widget.data != null ? _productList = widget.data : _productList.addAll(productResponse.products);
-    _productList.addAll(productResponse.products);
+    // _productList.addAll(productResponse.products);
     _isProductInitial = false;
     _totalProductData = productResponse.meta.total;
     _showProductLoadingContainer = false;
@@ -471,10 +471,11 @@ class _FilterState extends State<Filter> {
           clipBehavior: Clip.none,
           children: [
             _selectedFilter.option_key == 'product'
-                ? buildProductList()
+                ?
+            buildProductList()
                 : (_selectedFilter.option_key == 'brands'
-                ? buildBrandList()
-                : buildShopList()),
+                    ? buildBrandList()
+                    : buildShopList()),
             Positioned(
               top: 0.0,
               left: 0.0,
@@ -1277,6 +1278,7 @@ class _FilterState extends State<Filter> {
                     // 3
                     return ProductCard(
                       preorderAvailable: _productList[index].preorderAvailable,
+                      requestAvailable: _productList[index].requestAvailable,
                       id: _productList[index].id,
                       name: _productList[index].name,
                       price: _productList[index].price.toString(),

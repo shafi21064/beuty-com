@@ -883,6 +883,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 padding: const EdgeInsets.only(right: 5, left: 5),
                 child: MiniProductCard(
                   preorderAvailable: _bestSellingProductList[index].preorderAvailable,
+                  requestAvailable: _bestSellingProductList[index].requestAvailable,
                   id: _bestSellingProductList[index].id,
                   image: _bestSellingProductList[index].pictures[0].url,
                   ratings: _bestSellingProductList[index].ratings,
@@ -1914,7 +1915,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         //left: MediaQuery.of(context).size.width / 3.7),
                           left: 15),
                       child: Image.asset(
-                        "assets/logo.png",
+                        "assets/login_registration_form_logo.png",
                       )),
                   GestureDetector(
                       onTap: () {

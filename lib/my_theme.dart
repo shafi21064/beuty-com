@@ -15,6 +15,7 @@ class MyTheme {
   static Color google_bg = Color.fromRGBO(221, 75, 57, 1);
   static Color apple_bg = Color(0xff161618);
   static Color preorder=Color.fromRGBO(23, 162, 190, 1);
+  static Color request=Color.fromRGBO(254, 230, 170, 1);
 
 
   //testing shimmer

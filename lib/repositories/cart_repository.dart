@@ -77,6 +77,7 @@ print(post_body);
       @required int user_id,
       @required int _quantity,
       @required dynamic preorderAvailable,
+      @required dynamic requestAvailable,
   @required BuildContext context
       ) async {
         print(preorderAvailable);
@@ -86,6 +87,7 @@ print(post_body);
       "user_id": "$user_id",
       "quantity": "$_quantity",
       "is_preorder": "$preorderAvailable",
+      "is_request": "$requestAvailable",
       //"cost_matrix": AppConfig.purchase_code,
       "version": "${Provider.of<VersionChange>(context, listen: false).latestVersion}",
     });

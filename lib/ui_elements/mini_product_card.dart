@@ -25,6 +25,7 @@ class MiniProductCard extends StatefulWidget {
   int stock;
   int discount;
   int preorderAvailable;
+  int requestAvailable;
 
   MiniProductCard({
     Key key,
@@ -38,7 +39,8 @@ class MiniProductCard extends StatefulWidget {
     this.reviews,
     this.stock,
     this.discount,
-    this.preorderAvailable
+    this.preorderAvailable,
+    this.requestAvailable
 
   }) : super(key: key);
 
@@ -71,7 +73,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
 
     print(access_token.$);
     var cartAddResponse = await CartRepository()
-        .getCartAddResponse(widget.id, _variant, user_id.$, _quantity,widget.preorderAvailable, context);
+        .getCartAddResponse(widget.id, _variant, user_id.$, _quantity,widget.preorderAvailable, widget.requestAvailable, context);
 
     if (cartAddResponse.result == false) {
       ToastComponent.showDialog(cartAddResponse.message, context,
@@ -188,7 +190,7 @@ elevation: 0, // Set the elevation to 0 for no shadow
                     
                     if(is_logged_in.$ != false){
 
-                      if( widget.preorderAvailable == 1){
+                      if(widget.preorderAvailable == 1 || widget.requestAvailable == 1){
                         addCartCount.getReset();
                         addCartCount.getIncrease();
                       } else if(widget.stock>0){
@@ -196,8 +198,6 @@ elevation: 0, // Set the elevation to 0 for no shadow
                       }
 
                     }
-
-
                     print(_shopList.length.toString());
 
                   },
@@ -209,11 +209,11 @@ elevation: 0, // Set the elevation to 0 for no shadow
 
                       color:
                       widget.preorderAvailable == 1
-                          ? Color.fromRGBO(23, 162, 190, 1)
+                          ? MyTheme.preorder
                           :
                       (widget.stock > 0
                           ? MyTheme.add_to_cart_button
-                          : Color.fromRGBO(192, 53, 50, 1)),
+                          : widget.requestAvailable == 1? MyTheme.request : Color.fromRGBO(192, 53, 50, 1)),
                       constraints:
                           BoxConstraints(maxWidth: 300.0, minHeight: 30.0),
                       alignment: Alignment.center,
@@ -221,11 +221,11 @@ elevation: 0, // Set the elevation to 0 for no shadow
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Visibility(
-                            visible: widget.stock > 0 || widget.preorderAvailable == 1,
+                            visible: widget.stock > 0 || widget.preorderAvailable == 1 || widget.requestAvailable == 1,
                             child: Icon(
                               Icons.shopping_bag_outlined,
                               size: 15,
-                              color: Colors.white, // Set the icon color
+                              color: widget.requestAvailable == 1? MyTheme.secondary : Colors.white, // Set the icon color
                             ),
                           ),
                           SizedBox(
@@ -236,9 +236,9 @@ elevation: 0, // Set the elevation to 0 for no shadow
     ? "Preorder Now".toUpperCase()
     : (widget.stock > 0 
       ? "Add to Cart".toUpperCase()
-      : "Out of Stock".toUpperCase()),
+      : widget.requestAvailable == 1 ? "Request stock".toUpperCase() : "Out of Stock".toUpperCase()),
   style: TextStyle(
-    color: Colors.white,
+    color: widget.requestAvailable == 1? MyTheme.secondary : Colors.white,
     fontSize: 12,
     fontWeight: FontWeight.w300,
   ),

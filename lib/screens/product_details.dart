@@ -96,11 +96,11 @@ class _ProductDetailsState extends State<ProductDetails> {
   bool _isGoToCart = false;
   var showPreorderDate;
   var preorderAvailable;
+  var requestAvailable;
 
   buildUpdateGoToCart(){
     _isGoToCart = true;
     setState(() {
-
     });
   }
 
@@ -180,6 +180,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     if (_productDetails != null) {
       showPreorderDate = _productDetails.preorderDeliveryDate;
       preorderAvailable = _productDetails.preorderAvailable;
+      requestAvailable = _productDetails.requestAvailable;
       _appbarPriceString = _productDetails.salePrice.toString();
       _singlePriceString = _productDetails.salePrice;
       _description = _productDetails.description;
@@ -327,7 +328,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     print(access_token.$);
     var cartAddResponse = await CartRepository()
-        .getCartAddResponse(widget.id, _variant, user_id.$, _quantity,preorderAvailable, context );
+        .getCartAddResponse(widget.id, _variant, user_id.$, _quantity,preorderAvailable,requestAvailable, context );
     if (cartAddResponse.result == false) {
       ToastComponent.showDialog(cartAddResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
@@ -1785,7 +1786,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           child: Row(
             children: [
               Visibility(
-                visible: preorderAvailable ==1,
+                visible: preorderAvailable ==1 || requestAvailable == 1,
                 //visible: _stock > 0,
                 child: Container(
                   width: MediaQuery.of(context).size.width * 1,
@@ -1807,14 +1808,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 constraints:
                                 BoxConstraints(maxWidth: double.infinity, minHeight: 50.0),
                                 alignment: Alignment.center,
-                                color: Color(0xff138496),
+                                color: requestAvailable != 1?  Color(0xff138496) : MyTheme.request,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
                                       Icons
                                           .shopping_bag_outlined, // Use the appropriate cart icon
-                                      color: Colors.white,
+                                      color: requestAvailable != 1? Colors.white : MyTheme.secondary,
                                       size: 17,
                                     ),
                                     SizedBox(
@@ -1822,10 +1823,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ),
                                     // Add some space between the icon and text
                                     Text(
-
-                                      "PREORDER NOW!",
+                                      requestAvailable != 1?
+                                      "PREORDER NOW!" : "REQUEST STOCK",
                                       style: TextStyle(
-                                        color: Colors.white,
+                                        color: requestAvailable != 1? Colors.white : MyTheme.secondary,
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -1926,7 +1927,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
 
               Visibility(
-                visible: widget.stock == 0 && preorderAvailable == 0,
+                visible: widget.stock == 0 && preorderAvailable == 0 && requestAvailable == 0,
                 //visible: _stock == 0,
                 child: Container(
                   width: MediaQuery.of(context).size.width,

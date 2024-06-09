@@ -81,7 +81,7 @@ class _WishlistState extends State<Wishlist> {
 
     addToCart(mode: "add_to_cart", context: context, id: id,preorder: preorder);
   }
-  addToCart({mode, context = null, snackbar = null, id,preorder}) async {
+  addToCart({mode, context = null, snackbar = null, id,preorder, requestOrder}) async {
 
 
 
@@ -93,7 +93,7 @@ class _WishlistState extends State<Wishlist> {
 
     print(access_token.$);
     var cartAddResponse = await CartRepository()
-        .getCartAddResponse(id, _variant, user_id.$, _quantity,preorder, context);
+        .getCartAddResponse(id, _variant, user_id.$, _quantity,preorder, requestOrder, context);
 
     if (cartAddResponse.result == false) {
       ToastComponent.showDialog(cartAddResponse.message, context,

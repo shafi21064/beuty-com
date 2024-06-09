@@ -127,6 +127,7 @@ class CartState extends State<Cart> {
 
   onQuantityIncrease(
       seller_index, item_index, VoidCallback increaseItem) async {
+    print('working');
     if (_shopList[seller_index].cart_items[item_index].quantity <
         _shopList[seller_index].cart_items[item_index].upper_limit) {
       _shopList[seller_index].cart_items[item_index].quantity++;

@@ -117,6 +117,7 @@ class Product {
     this.stock,
     this.discount,
     this.preorderAvailable,
+    this.requestAvailable
     // this.sales,
     // this.links,
   });
@@ -132,6 +133,7 @@ class Product {
   int reviews;
   int stock;
   int preorderAvailable;
+  int requestAvailable;
   int discount;
   // int sales;
   // Links links;
@@ -155,6 +157,7 @@ class Product {
       slug: json["slug"],
       discount: json["discount"],
       preorderAvailable: json["preorder_available"],
+    requestAvailable: json["request_available"],
       // sales: json["sales"],
       // links: Links.fromJson(json["links"]),
       );
@@ -175,6 +178,7 @@ class Product {
             productCategories.map((x) => x.toJson())),
         "pictures": List<Picture>.from(pictures.map((x) => x.toJson())),
         "preorder_available": preorderAvailable,
+        "request_available": requestAvailable,
         // "sales": sales,
         // "links": links.toJson(),
       };

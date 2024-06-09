@@ -51,6 +51,7 @@ class DetailedProduct {
     this.goodFor,
     this.preorderAmount,
     this.preorderAvailable,
+    this.requestAvailable,
     this.preorderDeliveryDate,
     this.salePrice,
     this.saleCount,
@@ -91,6 +92,7 @@ class DetailedProduct {
   List<GoodFor> goodFor;
   dynamic preorderAmount;
   int preorderAvailable;
+  int requestAvailable;
   String preorderDeliveryDate;
   int salePrice;
   int saleCount;
@@ -135,6 +137,7 @@ class DetailedProduct {
             json["good_for"].map((x) => GoodFor.fromJson(x))),
         preorderAmount: json["preorder_amount"],
         preorderAvailable: json["preorder_available"],
+        requestAvailable: json["request_available"],
         preorderDeliveryDate: json["preorder_delivery_date"],
         salePrice: json["sale_price"],
         saleCount: json["sale_count"],
@@ -184,6 +187,7 @@ class DetailedProduct {
         "good_for": List<GoodFor>.from(goodFor.map((x) => x.toJson())),
         "preorder_amount": preorderAmount,
         "preorder_available": preorderAvailable,
+        "request_available": requestAvailable,
         "preorder_delivery_date": preorderDeliveryDate,
         "sale_price": salePrice,
         "sale_count": saleCount,
