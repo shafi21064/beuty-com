@@ -86,7 +86,7 @@ Map<String, dynamic> recommendationQuestionAndAns = {
       },
       {
         "question": "What is your skin type?",
-        "options": [ "Oily","Combination", "Dry", "Normal", "I don't know" ]
+        "options": ["Oily","Combination" "Oily to combination", "Dry", "Normal", "I don't know"]
       },
       {
         "question": "How does your skin feel in the morning?",
@@ -222,7 +222,7 @@ Map<String, dynamic> recommendationQuestionAndAns = {
         },
         {
           "question": "What types of dark spots or pigmentation you have on your skin?",
-          "options": ["Large dark patches", "Melasma", "Freckles", "PDL", "No spots"]
+          "options": ["Large dark patches", "Melasma", "Freckles", "PDL", "Acne spot", "No spots"]
         },
         {
           "question": "Did your dark spots or hyperpigmentation have worsen after childbirth?",

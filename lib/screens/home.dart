@@ -431,6 +431,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                             .getSearchSuggestionListResponse(
                                                           query_key: pattern,
                                                         );
+                                                        print('this is sugetion ${suggestions.products}');
 
                                                         return suggestions.products;
                                                       }
@@ -451,11 +452,23 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                     },
                                                     itemBuilder:
                                                         (context, suggestion) {
+                                                      print('this is sugetion $suggestion');
                                                       return Visibility(
                                                         visible: _searchController
                                                             .text !=
                                                             "",
-                                                        child: ListTile(
+                                                        child: suggestion == null? Container(
+                                                          height: 50,
+                                                          child: Center(
+                                                              child: Text(
+                                                                AppLocalizations.of(
+                                                                    context)
+                                                                    .filter_screen_loading_suggestions,
+                                                                style: TextStyle(
+                                                                    color: MyTheme
+                                                                        .dark_grey),
+                                                              )),
+                                                        ) : ListTile(
                                                           onTap: () {
                                                             Navigator.push(context,
                                                                 MaterialPageRoute(

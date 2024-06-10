@@ -239,7 +239,7 @@ class ExtraRepository {
   }
 
   ///De-active Account
-  Future<DeactivationResponse> deActiveUserAccount() async{
+  Future<DeActiveAccountResponse> deActiveUserAccount() async{
     final response = await http.post(Uri.parse(ENDP.deleteAccount),
     headers: {
       "Content-Type": "application/json",
@@ -248,7 +248,7 @@ class ExtraRepository {
 
     if(response.statusCode == 200){
       var responseBody = jsonDecode(response.body);
-      return DeactivationResponse.fromJson(responseBody);
+      return DeActiveAccountResponse.fromJson(responseBody);
     }else{
       throw Error();
     }

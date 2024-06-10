@@ -1,20 +1,25 @@
-class DeactivationResponse {
-  bool result;
+import 'dart:convert';
+
+class DeActiveAccountResponse {
+  bool success;
   String message;
 
-  DeactivationResponse({this.result, this.message});
+  DeActiveAccountResponse({
+    this.success,
+    this.message,
+  });
 
-  factory DeactivationResponse.fromJson(Map<String, dynamic> json) {
-    return DeactivationResponse(
-      result: json['result'],
-      message: json['message'],
-    );
-  }
+  factory DeActiveAccountResponse.fromRawJson(String str) => DeActiveAccountResponse.fromJson(json.decode(str));
 
-  Map<String, dynamic> toJson() {
-    return {
-      'result': result,
-      'message': message,
-    };
-  }
+  String toRawJson() => json.encode(toJson());
+
+  factory DeActiveAccountResponse.fromJson(Map<String, dynamic> json) => DeActiveAccountResponse(
+    success: json["success"],
+    message: json["message"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "success": success,
+    "message": message,
+  };
 }

@@ -17,7 +17,7 @@ class DeleteScreen extends StatefulWidget {
 class _DeleteScreenState extends State<DeleteScreen> {
   bool isChecked = false;
   bool isLoading = false;
-  DeactivationResponse deActiveResponse = DeactivationResponse();
+  DeActiveAccountResponse deActiveResponse = DeActiveAccountResponse();
 
   Future<void> deActiveAccount() async {
     setState(() {
@@ -29,7 +29,7 @@ class _DeleteScreenState extends State<DeleteScreen> {
         isLoading = false;
       });
       buildFinalStatusMessage(
-          status: deActiveResponse.result ? 'User has deactivated.' : 'Failed to deactivate account.');
+          status: deActiveResponse.success == true ? 'User has deactivated.' : 'Failed to deactivate account.');
     } catch (error) {
       setState(() {
         isLoading = false;
@@ -149,15 +149,14 @@ class _DeleteScreenState extends State<DeleteScreen> {
                   ),
                   onPressed: () {
                     Navigator.of(context, rootNavigator: true).pop();
-                    setState(() {
-                      isLoading = true;
-                    });
-                    deActiveAccount().then((value) => {
-                      setState(() {
-                        isLoading = false;
-                      }),
-                      buildFinalStatusMessage(status: deActiveResponse.result==true? 'Account Deleted' : 'Deletion Failed'),
-                    });
+                    // setState(() {
+                    //   isLoading = true;
+                    // });
+                    deActiveAccount();
+                      // setState(() {
+                      //   isLoading = false;
+                      // }),
+                     // print(deActiveResponse.result
                   },
                 ),
               ],
