@@ -452,23 +452,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                     },
                                                     itemBuilder:
                                                         (context, suggestion) {
-                                                      print('this is sugetion $suggestion');
                                                       return Visibility(
                                                         visible: _searchController
                                                             .text !=
                                                             "",
-                                                        child: suggestion == null? Container(
-                                                          height: 50,
-                                                          child: Center(
-                                                              child: Text(
-                                                                AppLocalizations.of(
-                                                                    context)
-                                                                    .filter_screen_loading_suggestions,
-                                                                style: TextStyle(
-                                                                    color: MyTheme
-                                                                        .dark_grey),
-                                                              )),
-                                                        ) : ListTile(
+                                                        child:
+                                                        ListTile(
                                                           onTap: () {
                                                             Navigator.push(context,
                                                                 MaterialPageRoute(
