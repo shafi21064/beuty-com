@@ -354,10 +354,28 @@ class _LoginState extends State<Login> {
         nonce: nonce,
       );
 
+
       final oauthCredential = OAuthProvider("apple.com").credential(
         idToken: appleCredential.identityToken,
         rawNonce: rawNonce,
       );
+
+      var loginResponse = await AuthRepository().getSocialLoginResponse(
+          "apple", appleCredential.givenName, appleCredential.email, appleCredential.authorizationCode,
+          access_token: appleCredential.identityToken);
+
+      if (loginResponse.result == false) {
+        ToastComponent.showDialog(loginResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      } else {
+        ToastComponent.showDialog(loginResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        AuthHelper().setUserData(loginResponse);
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return Main();
+        }));
+      }
+      // GoogleSignIn().disconnect();
 
       final userCredential = await FirebaseAuth.instance.signInWithCredential(oauthCredential);
       return userCredential;

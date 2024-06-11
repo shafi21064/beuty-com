@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:kirei/custom/toast_component.dart';
 import 'package:kirei/data_model/category_response.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/providers/cart_count_update.dart';
@@ -26,6 +27,7 @@ import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:kirei/helpers/auth_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MainDrawer extends StatefulWidget {
@@ -311,6 +313,8 @@ class _MainDrawerState extends State<MainDrawer> {
                         style: TextStyle(fontSize: 13)),
                     onTap: () {
                       if(is_logged_in.$){
+                        ToastComponent.showDialog("Please log in ", context,
+                            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                             return RecomendationSearchScreen();
