@@ -5,6 +5,7 @@ import 'package:kirei/other_config.dart';
 import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/providers/category_passing_controller.dart';
 import 'package:kirei/providers/version_change.dart';
+import 'package:kirei/screens/routes.dart';
 import 'package:kirei/services/push_notification_service.dart';
 import 'package:kirei/theme/appThemes.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
@@ -106,9 +107,11 @@ class _MyAppState extends State<MyApp> {
               defaultThemeId: AppThemes.Default,
               builder: (context, theme) {
                 return Container(
-                    child: MaterialApp(
+                    child: MaterialApp.router(
+                      routeInformationParser: AppRoutes().router.routeInformationParser,
+                      routerDelegate: AppRoutes().router.routerDelegate,
                   builder: OneContext().builder,
-                  navigatorKey: OneContext().navigator.key,
+                 // navigatorKey: OneContext().navigator.key,
                   title: AppConfig.app_name,
 
                   debugShowCheckedModeBanner: false,
@@ -140,18 +143,18 @@ class _MyAppState extends State<MyApp> {
                     AppLocalizations.delegate,
                   ],
                   locale: provider.locale,
-                  supportedLocales: LangConfig().supportedLocales(),
+
                   //home: Splash(),
-                  home: UpgradeAlert(
-                      upgrader: Upgrader(
-                       onUpdate: (){
-                         _launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=com.thetork.kirei&hl=en_US'));
-                       },
-                        showIgnore: false,
-                        //showLater: false,
-                      ),
-                      child: Splash()
-                  ),
+                  // home: UpgradeAlert(
+                  //     upgrader: Upgrader(
+                  //      onUpdate: (){
+                  //        _launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=com.thetork.kirei&hl=en_US'));
+                  //      },
+                  //       showIgnore: false,
+                  //       //showLater: false,
+                  //     ),
+                  //     child: Splash()
+                  // ),
                   //home: Main(),
                 ));
               });

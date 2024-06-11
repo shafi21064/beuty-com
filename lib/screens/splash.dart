@@ -60,12 +60,12 @@ class _SplashState extends State<Splash> {
     return Center(
       child: CustomSplashScreen(
         //comment this
-        seconds: 3,
+        // seconds: 3,
 
         //comment this
-        navigateAfterSeconds: Main(),
+        // navigateAfterSeconds: Main(),
 
-        //navigateAfterFuture: loadFromFuture(), //uncomment this
+        navigateAfterFuture: loadFromFuture(), //uncomment this
         title: Text(
           "V " + _packageInfo.version,
           style: TextStyle(
