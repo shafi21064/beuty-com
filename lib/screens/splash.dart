@@ -26,12 +26,21 @@ class _SplashState extends State<Splash> {
 
   @override
   void initState() {
+    print('navigated one');
+    Future.delayed(Duration(seconds: 3), (){
+    print('navigated two');
+
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=> Main()), (route) => false);
+      print('navigated');
+    });
+
     //on Splash Screen hide statusbar
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.top]);
     super.initState();
     _initPackageInfo();
     Provider.of<VersionChange>(context, listen: false).changeVersion();
+
   }
 
   @override
@@ -58,37 +67,38 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: CustomSplashScreen(
-        //comment this
-        // seconds: 3,
-
-        //comment this
-        // navigateAfterSeconds: Main(),
-
-        navigateAfterFuture: loadFromFuture(), //uncomment this
-        title: Text(
-          "V " + _packageInfo.version,
-          style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 14.0, color: Colors.white),
-        ),
-        useLoader: true,
-        loadingText: Text(
-          AppConfig.copyright_text,
-          style: TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 13.0,
-            color: Colors.white,
-          ),
-        ),
-
-        image: Image.asset(
-          "assets/logo.png",
-        ),
-
-        backgroundColor: MyTheme.white,
-        photoSize: 60.0,
-        backgroundPhotoSize: 140.0,
-      ),
+      child: Image.asset('assets/logo.png'),
+      // child: CustomSplashScreen(
+      //   //comment this
+      //   // seconds: 3,
+      //
+      //   //comment this
+      //   // navigateAfterSeconds: Main(),
+      //
+      //   navigateAfterFuture: loadFromFuture(), //uncomment this
+      //   title: Text(
+      //     "V " + _packageInfo.version,
+      //     style: TextStyle(
+      //         fontWeight: FontWeight.bold, fontSize: 14.0, color: Colors.white),
+      //   ),
+      //   useLoader: true,
+      //   loadingText: Text(
+      //     AppConfig.copyright_text,
+      //     style: TextStyle(
+      //       fontWeight: FontWeight.w400,
+      //       fontSize: 13.0,
+      //       color: Colors.white,
+      //     ),
+      //   ),
+      //
+      //   image: Image.asset(
+      //     "assets/logo.png",
+      //   ),
+      //
+      //   backgroundColor: MyTheme.white,
+      //   photoSize: 60.0,
+      //   backgroundPhotoSize: 140.0,
+      // ),
     );
   }
 }
