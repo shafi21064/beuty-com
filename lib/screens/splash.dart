@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:go_router/go_router.dart';
 import 'package:kirei/app_config.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/providers/version_change.dart';
@@ -30,8 +31,10 @@ class _SplashState extends State<Splash> {
     Future.delayed(Duration(seconds: 3), (){
     print('navigated two');
 
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=> Main()), (route) => false);
-      print('navigated');
+      // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=> Main()), (route) => false);
+      // print('navigated');
+    context.go('/bottomNav');
+    print('navigated three');
     });
 
     //on Splash Screen hide statusbar
@@ -67,7 +70,10 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Image.asset('assets/logo.png'),
+      child: SizedBox(
+        height: 150,
+          width: 150,
+          child: Image.asset('assets/logo.png')),
       // child: CustomSplashScreen(
       //   //comment this
       //   // seconds: 3,

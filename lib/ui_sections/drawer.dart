@@ -313,20 +313,20 @@ class _MainDrawerState extends State<MainDrawer> {
                         style: TextStyle(fontSize: 13)),
                     onTap: () {
                       if(is_logged_in.$){
-                        ToastComponent.showDialog("Please log in ", context,
-                            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                             return RecomendationSearchScreen();
                           }));
                       }else{
                         Navigator.push(context, MaterialPageRoute(builder: (_)=> Login()));
+                        ToastComponent.showDialog("Please log in first", context,
+                            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
                       }
                     }),
 
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    title: Text('Community'.toUpperCase(),
+                    title: Text('Kirei Community'.toUpperCase(),
                         style: TextStyle(fontSize: 13)),
                     onTap: () {
                       Navigator.push(context,

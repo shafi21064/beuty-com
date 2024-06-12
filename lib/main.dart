@@ -5,7 +5,7 @@ import 'package:kirei/other_config.dart';
 import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/providers/category_passing_controller.dart';
 import 'package:kirei/providers/version_change.dart';
-import 'package:kirei/screens/routes.dart';
+import 'package:kirei/routes.dart';
 import 'package:kirei/services/push_notification_service.dart';
 import 'package:kirei/theme/appThemes.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,6 +8,7 @@ import 'package:kirei/custom/CommonFunctoins.dart';
 import 'package:kirei/custom/toast_component.dart';
 import 'package:kirei/my_theme.dart';
 import 'package:kirei/providers/category_passing_controller.dart';
+import 'package:kirei/repositories/profile_repository.dart';
 import 'package:kirei/repositories/search_repository.dart';
 import 'package:kirei/screens/appointment.dart';
 import 'package:kirei/screens/beauty_tips.dart';
@@ -32,6 +34,8 @@ import 'package:kirei/helpers/shimmer_helper.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toast/toast.dart';
+
+import '../other_config.dart';
 
 
 class Home extends StatefulWidget {
@@ -124,6 +128,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         //fetchNewArrivalsProducts();
       }
     });
+
+    if(is_logged_in.$ ){
+      getDeviceFcmToken();
+    }
   }
 
   onPopped(value) async {
@@ -292,6 +300,36 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     super.dispose();
     pirated_logo_controller?.dispose();
     _mainScrollController.dispose();
+  }
+
+  getDeviceFcmToken() async{
+    if (OtherConfig.USE_PUSH_NOTIFICATION) {
+      final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+
+      await _fcm.requestPermission(
+        alert: true,
+        announcement: false,
+        badge: true,
+        carPlay: false,
+        criticalAlert: false,
+        provisional: false,
+        sound: true,
+      );
+
+      String fcmToken = await _fcm.getToken();
+      print(fcmToken);
+      if (fcmToken != null) {
+        print("--fcm token--");
+        print(fcmToken);
+        if (is_logged_in.$ == true) {
+          print("true------------------------");
+          // update device token
+          var deviceTokenUpdateResponse = await ProfileRepository()
+              .getDeviceTokenUpdateResponse(fcmToken);
+          print(deviceTokenUpdateResponse);
+        }
+      }
+    }
   }
 
   // ///upload image for search product by multipart request
@@ -1924,11 +1962,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
+                    height: 150,
+                     // width: 100,
                       margin: EdgeInsets.only(
                         //left: MediaQuery.of(context).size.width / 3.7),
                           left: 15),
                       child: Image.asset(
                         "assets/login_registration_form_logo.png",
+                        fit: BoxFit.fill,
                       )),
                   GestureDetector(
                       onTap: () {

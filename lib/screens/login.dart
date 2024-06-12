@@ -120,33 +120,6 @@ class _LoginState extends State<Login> {
       AuthHelper().setUserData(loginResponse);
       AuthHelper().fetch_and_set();
       // push notification starts
-      if (OtherConfig.USE_PUSH_NOTIFICATION) {
-        final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-
-        await _fcm.requestPermission(
-          alert: true,
-          announcement: false,
-          badge: true,
-          carPlay: false,
-          criticalAlert: false,
-          provisional: false,
-          sound: true,
-        );
-
-        String fcmToken = await _fcm.getToken();
-        print(fcmToken);
-        if (fcmToken != null) {
-          print("--fcm token--");
-          print(fcmToken);
-          if (is_logged_in.$ == true) {
-            print("true------------------------");
-            // update device token
-            var deviceTokenUpdateResponse = await ProfileRepository()
-                .getDeviceTokenUpdateResponse(fcmToken);
-            print(deviceTokenUpdateResponse);
-          }
-        }
-      }
 
       //push norification ends
 
