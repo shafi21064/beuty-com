@@ -44,7 +44,12 @@ class AppRoutes{
         path: '/product/:id',
         builder: (context, state) {
           final String id = state.params['id'];
-          return ProductDetails(slug: id);
+          if (id == null || id.isEmpty) {
+            // Handle the case where the id is null or empty
+            print('ID parameter is missing or empty');
+          }else {
+            return ProductDetails(slug: id);
+          }
         },
       ),
     ],

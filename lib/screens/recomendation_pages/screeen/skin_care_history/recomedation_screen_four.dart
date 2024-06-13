@@ -201,11 +201,6 @@ class _RecomendationScreenFourState extends State<RecomendationScreenFour> {
                 value: selectedAns,
                 groupValue: selectedValue,
                 onChanged: (value) {
-                  provider.selectedAge = RecommendationController()
-                      .questions
-                      .skincareHistoryQuestions
-                      .questions[3]
-                      .options[selectedAns];
                   setState(() {
                     selectedValue = value;
                     print(value);

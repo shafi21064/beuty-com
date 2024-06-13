@@ -202,11 +202,6 @@ class _RecomendationScreenTwoState extends State<RecomendationScreenTwo> {
                 value: selectedAns,
                 groupValue: selectedValue,
                 onChanged: (value) {
-                  provider.selectedAge = RecommendationController()
-                      .questions
-                      .skincareHistoryQuestions
-                      .questions[1]
-                      .options[selectedAns];
                   setState(() {
                     selectedValue = value;
                     print(value);

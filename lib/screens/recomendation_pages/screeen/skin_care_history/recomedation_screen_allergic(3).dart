@@ -195,11 +195,6 @@ class _RecomendationScreenAllergicState extends State<RecomendationScreenAllergi
                 value: selectedAns,
                 groupValue: selectedValue,
                 onChanged: (value) {
-                  provider.selectedAge = RecommendationController()
-                      .questions
-                      .skincareHistoryQuestions
-                      .questions[0]
-                      .options[selectedAns];
                   setState(() {
                     print(RecommendationController()
                         .questions
@@ -229,7 +224,7 @@ class _RecomendationScreenAllergicState extends State<RecomendationScreenAllergi
       return InkWell(
         onTap: () {
           print(ageController.text);
-          if(provider.selectedGender == 'a'){
+          if(provider.selectedGender == 'a' || int.parse(provider.selectedAge) <= 15){
           Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenFour()));
           return;
           }
