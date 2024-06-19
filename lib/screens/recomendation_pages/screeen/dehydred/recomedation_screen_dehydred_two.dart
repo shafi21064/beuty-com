@@ -233,10 +233,14 @@ class _RecomendationScreendehydredTwoState extends State<RecomendationScreendehy
               provider.dehydredTwoSelected = String.fromCharCode(65 + selectedValue).toLowerCase();
               print(provider.dehydredTwoSelected);
               await provider.sendData();
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (_) => RecommendedProducts()),
-                      (route) => false);
+
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => RecommendedProducts()));
+              });
+              // Navigator.pushAndRemoveUntil(
+              //     context,
+              //     MaterialPageRoute(builder: (_) => RecommendedProducts()),
+              //         (route) => false);
             },
             child: Container(
               alignment: Alignment.center,

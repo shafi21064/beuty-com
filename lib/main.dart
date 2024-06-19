@@ -1,10 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kirei/firebase_options.dart';
 import 'package:kirei/helpers/auth_helper.dart';
 import 'package:kirei/other_config.dart';
 import 'package:kirei/providers/cart_count_update.dart';
 import 'package:kirei/providers/category_passing_controller.dart';
 import 'package:kirei/providers/version_change.dart';
+import 'package:kirei/routes.dart';
 import 'package:kirei/services/push_notification_service.dart';
 import 'package:kirei/theme/appThemes.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
@@ -15,6 +17,7 @@ import 'package:kirei/screens/splash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_value/shared_value.dart';
 import 'package:kirei/helpers/shared_value_helper.dart';
+import 'package:uni_links/uni_links.dart';
 import 'package:upgrader/upgrader.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'app_config.dart';
@@ -64,13 +67,17 @@ main() async {
 
   runApp(
     SharedValue.wrapApp(
-      MyApp(),
+      MyApp(
+        router: AppRoutes().router,
+      ),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+  final GoRouter router;
+  const MyApp({this.router});
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -86,6 +93,39 @@ class _MyAppState extends State<MyApp> {
       });
     }
   }
+
+
+  Future<void> _initDeepLink() async {
+    try {
+      final initialLink = await getInitialLink();
+      if (initialLink != null) {
+        _handleDeepLink(initialLink);
+      }
+    } on Exception catch (e) {
+      print('Failed to get initial link: $e');
+    }
+
+    linkStream.listen((String link) {
+      if (link != null) {
+        _handleDeepLink(link);
+      }
+    });
+  }
+
+  void _handleDeepLink(String url) {
+    final uri = Uri.parse(url);
+    if (uri.pathSegments.length == 2 && uri.pathSegments[0] == 'details') {
+      final id = uri.pathSegments[1];
+      if (id != null && id.isNotEmpty) {
+        widget.router.go('/details/$id');
+      } else {
+        // Handle the case where the id is not valid
+        print('Invalid ID in the URL');
+      }
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -106,9 +146,11 @@ class _MyAppState extends State<MyApp> {
               defaultThemeId: AppThemes.Default,
               builder: (context, theme) {
                 return Container(
-                    child: MaterialApp(
+                    child: MaterialApp.router(
+                      routeInformationParser: widget.router.routeInformationParser,
+                      routerDelegate: widget.router.routerDelegate,
                   builder: OneContext().builder,
-                  navigatorKey: OneContext().navigator.key,
+                 // navigatorKey: OneContext().navigator.key,
                   title: AppConfig.app_name,
 
                   debugShowCheckedModeBanner: false,
@@ -140,18 +182,18 @@ class _MyAppState extends State<MyApp> {
                     AppLocalizations.delegate,
                   ],
                   locale: provider.locale,
-                  supportedLocales: LangConfig().supportedLocales(),
+
                   //home: Splash(),
-                  home: UpgradeAlert(
-                      upgrader: Upgrader(
-                       onUpdate: (){
-                         _launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=com.thetork.kirei&hl=en_US'));
-                       },
-                        showIgnore: false,
-                        //showLater: false,
-                      ),
-                      child: Splash()
-                  ),
+                  // home: UpgradeAlert(
+                  //     upgrader: Upgrader(
+                  //      onUpdate: (){
+                  //        _launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=com.thetork.kirei&hl=en_US'));
+                  //      },
+                  //       showIgnore: false,
+                  //       //showLater: false,
+                  //     ),
+                  //     child: Splash()
+                  // ),
                   //home: Main(),
                 ));
               });

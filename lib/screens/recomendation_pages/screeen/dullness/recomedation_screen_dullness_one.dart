@@ -243,10 +243,10 @@ class _RecomendationScreenDullnessState
               String.fromCharCode(65 + selectedValue).toLowerCase();
           print(provider.dullnessOneSelected);
           await provider.sendData();
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (_) => RecommendedProducts()),
-              (route) => false);
+
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => RecommendedProducts()));
+          });
         },
         child: Container(
           alignment: Alignment.center,

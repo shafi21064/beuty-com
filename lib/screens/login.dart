@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -40,6 +41,7 @@ class _LoginState extends State<Login> {
   String _phone = "";
   bool validPhoneNumber = false;
   bool rememberMe = false;
+  bool isLoading = false;
 
   //controllers
   TextEditingController _phoneNumberController = TextEditingController();
@@ -120,33 +122,6 @@ class _LoginState extends State<Login> {
       AuthHelper().setUserData(loginResponse);
       AuthHelper().fetch_and_set();
       // push notification starts
-      if (OtherConfig.USE_PUSH_NOTIFICATION) {
-        final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-
-        await _fcm.requestPermission(
-          alert: true,
-          announcement: false,
-          badge: true,
-          carPlay: false,
-          criticalAlert: false,
-          provisional: false,
-          sound: true,
-        );
-
-        String fcmToken = await _fcm.getToken();
-        print(fcmToken);
-        if (fcmToken != null) {
-          print("--fcm token--");
-          print(fcmToken);
-          if (is_logged_in.$ == true) {
-            print("true------------------------");
-            // update device token
-            var deviceTokenUpdateResponse = await ProfileRepository()
-                .getDeviceTokenUpdateResponse(fcmToken);
-            print(deviceTokenUpdateResponse);
-          }
-        }
-      }
 
       //push norification ends
 
@@ -269,11 +244,16 @@ class _LoginState extends State<Login> {
     //   // TODO
     // }
 
+
     try {
       final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
 
       final GoogleSignInAuthentication googleAuth =
           await googleUser?.authentication;
+
+      setState(() {
+        isLoading = true;
+      });
 
       // final credential = GoogleAuthProvider.credential(
       //   accessToken: googleAuth?.accessToken,
@@ -285,9 +265,16 @@ class _LoginState extends State<Login> {
           access_token: googleAuth.accessToken);
 
       if (loginResponse.result == false) {
+        setState(() {
+          isLoading = false;
+        });
         ToastComponent.showDialog(loginResponse.message, context,
             gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+
       } else {
+        setState(() {
+          isLoading = false;
+        });
         ToastComponent.showDialog(loginResponse.message, context,
             gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
         AuthHelper().setUserData(loginResponse);
@@ -367,7 +354,7 @@ class _LoginState extends State<Login> {
       if (loginResponse.result == false) {
         ToastComponent.showDialog(loginResponse.message, context,
             gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-      } else {
+      } else if(loginResponse.result == true) {
         ToastComponent.showDialog(loginResponse.message, context,
             gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
         AuthHelper().setUserData(loginResponse);
@@ -407,7 +394,7 @@ class _LoginState extends State<Login> {
       child: Scaffold(
         backgroundColor: Colors.white,
         drawer: MainDrawer(),
-        body: Stack(
+        body: isLoading? Center(child: CircularProgressIndicator()) : Stack(
           children: [
             Container(
               width: double.infinity,
@@ -847,47 +834,50 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 8.0,
-                            bottom: 8.0,
-                            right: 0.0,
-                            left: 0.0,
-                          ),
-                          child: RaisedButton(
-                            onPressed: (){
-                              onPressAppleLogin();
-                            },
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(2.0),
+                        Visibility(
+                          visible: !Platform.isAndroid,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              top: 8.0,
+                              bottom: 8.0,
+                              right: 0.0,
+                              left: 0.0,
                             ),
-                            padding: EdgeInsets.all(0.0),
-                            child: Ink(
-                              decoration:
-                              BoxDecoration(color: MyTheme.apple_bg),
-                              child: Container(
-                                height: 50,
-                                padding: EdgeInsets.symmetric(vertical: 8),
-                                alignment: Alignment.center,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/apple-logo.png',
+                            child: RaisedButton(
+                              onPressed: (){
+                                onPressAppleLogin();
+                              },
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(2.0),
+                              ),
+                              padding: EdgeInsets.all(0.0),
+                              child: Ink(
+                                decoration:
+                                BoxDecoration(color: MyTheme.apple_bg),
+                                child: Container(
+                                  height: 50,
+                                  padding: EdgeInsets.symmetric(vertical: 8),
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/apple-logo.png',
 
-                                      // Replace with the actual path to your Google icon
-                                      // Adjust the width as needed
-                                      color: Colors
-                                          .white, // Set the desired color for the icon
-                                    ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      "LOGIN WITH APPLE",
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.ubuntu(
-                                          color: Colors.white, fontSize: 16),
-                                    ),
-                                  ],
+                                        // Replace with the actual path to your Google icon
+                                        // Adjust the width as needed
+                                        color: Colors
+                                            .white, // Set the desired color for the icon
+                                      ),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        "LOGIN WITH APPLE",
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.ubuntu(
+                                            color: Colors.white, fontSize: 16),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

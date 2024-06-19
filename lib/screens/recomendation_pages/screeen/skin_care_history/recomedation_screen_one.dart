@@ -196,11 +196,6 @@ class _RecomendationSearchScreenState extends State<RecomendationSearchScreen> {
                 value: selectedAns,
                 groupValue: selectedValue,
                 onChanged: (value) {
-                  provider.selectedAge = RecommendationController()
-                      .questions
-                      .skincareHistoryQuestions
-                      .questions[0]
-                      .options[selectedAns];
                   setState(() {
                     print(RecommendationController()
                         .questions

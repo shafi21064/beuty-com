@@ -232,6 +232,7 @@ class _RecomendationScreenAgingTwoState extends State<RecomendationScreenAgingTw
               }
               provider.agingTwoSelected = String.fromCharCode(65 + selectedValue).toLowerCase();
               print(provider.agingTwoSelected);
+
               Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenAgingThree()));
             },
             child: Container(

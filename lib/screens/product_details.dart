@@ -41,7 +41,7 @@ class ProductDetails extends StatefulWidget {
   int stock;
   String sale_price;
   String price;
-  ProductDetails({Key key, this.id, this.slug, this.discount, this.sale_price, this.price, this.stock}) : super(key: key);
+  ProductDetails({Key key, this.slug, this.id, this.discount, this.sale_price, this.price, this.stock}) : super(key: key);
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
@@ -131,7 +131,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   fetchProductDetails() async {
     var productDetailsResponse =
-        await ProductRepository().getProductDetails(id: widget.id);
+        await ProductRepository().getProductDetails(id: widget.slug);
 
     _productDetails = productDetailsResponse.detailed_products;
     print(productDetailsResponse);
@@ -224,7 +224,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   fetchWishListCheckInfo() async {
     var wishListCheckResponse =
         await WishListRepository().isProductInUserWishList(
-      product_id: widget.id,
+      product_id: widget.slug,
     );
     print(wishListCheckResponse);
     _isInWishList = wishListCheckResponse.is_in_wishlist;
@@ -233,7 +233,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   addToWishList() async {
     var wishListCheckResponse =
-        await WishListRepository().add(product_id: widget.id);
+        await WishListRepository().add(product_id: widget.slug);
     ToastComponent.showDialog(
         "Added to Wishlist", context,
         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
@@ -243,7 +243,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   removeFromWishList() async {
     var wishListCheckResponse =
-        await WishListRepository().remove(product_id: widget.id);
+        await WishListRepository().remove(product_id: widget.slug);
     ToastComponent.showDialog(
         "Remove from Wishlist", context,
         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
@@ -547,7 +547,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     var conversationCreateResponse = await ChatRepository()
         .getCreateConversationResponse(
-            product_id: widget.id, title: title, message: message);
+            product_id: widget.slug, title: title, message: message);
 
     if (conversationCreateResponse.result == false) {
       ToastComponent.showDialog(
@@ -588,6 +588,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(BuildContext context) {
+    print('this our slug ${widget.slug}');
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     SnackBar _addedToCartSnackbar = SnackBar(
       content: Text(
@@ -929,12 +930,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return ProductReviews(id: widget.id);
-                        })).then((value) {
-                          onPopped(value);
-                        });
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) {
+                        //   return ProductReviews(id: widget.slug);
+                        // })).then((value) {
+                        //   onPopped(value);
+                        // });
                       },
                       child: Container(
                         height: 40,
@@ -972,12 +973,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return ProductQuestions(id: widget.id);
-                        })).then((value) {
-                          onPopped(value);
-                        });
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) {
+                        //   return ProductQuestions(id: widget.id);
+                        // })).then((value) {
+                        //   onPopped(value);
+                        // });
                       },
                       child: Container(
                         height: 40,
@@ -1651,11 +1652,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                           visible: _searchController.text != "",
                           child: ListTile(
                             onTap:(){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                return ProductDetails(id: suggestion.id, stock: suggestion.stock,);
-                              })).then((value) {
-                                onPopped(value);
-                              });
+                              // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              //   return ProductDetails(id: suggestion.id, stock: suggestion.stock,);
+                              // })).then((value) {
+                              //   onPopped(value);
+                              // });
 
                             },
                             contentPadding: EdgeInsets.only(top: 5),
@@ -1968,11 +1969,11 @@ class _ProductDetailsState extends State<ProductDetails> {
       children: [
         GestureDetector(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return ProductReviews(id: widget.id);
-            })).then((value) {
-              onPopped(value);
-            });
+            // Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //   return ProductReviews(id: widget.id);
+            // })).then((value) {
+            //   onPopped(value);
+            // });
           },
           child: RatingBar(
             itemSize: 18.0,

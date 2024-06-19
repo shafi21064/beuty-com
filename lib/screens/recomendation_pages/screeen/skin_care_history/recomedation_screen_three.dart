@@ -201,19 +201,9 @@ class _RecomendationScreenThreeState extends State<RecomendationScreenThree> {
                 value: selectedAns,
                 groupValue: selectedValue,
                 onChanged: (value) {
-                  provider.selectedAge = RecommendationController()
-                      .questions
-                      .skincareHistoryQuestions
-                      .questions[2]
-                      .options[selectedAns];
                   setState(() {
                     selectedValue = value;
                     print(value);
-                    print(RecommendationController()
-                        .questions
-                        .skincareHistoryQuestions
-                        .questions[2]
-                        .options[selectedAns]);
                   });
                 },
               );

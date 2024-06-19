@@ -232,10 +232,15 @@ class _RecomendationScreenAcneFiveState extends State<RecomendationScreenAcneFiv
               provider.acneFiveSelected = String.fromCharCode(65 + selectedValue).toLowerCase();
               print(provider.acneFiveSelected);
               await provider.sendData();
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (_) => RecommendedProducts()),
-                      (route) => false);
+
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => RecommendedProducts()));
+              });
+
+              // Navigator.pushAndRemoveUntil(
+              //     context,
+              //     MaterialPageRoute(builder: (_) => RecommendedProducts()),
+              //         (route) => false);
             },
             child: Container(
               alignment: Alignment.center,

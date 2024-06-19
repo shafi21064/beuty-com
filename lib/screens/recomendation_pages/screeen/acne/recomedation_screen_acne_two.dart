@@ -230,7 +230,7 @@ class _RecomendationScreenAcneTwoState extends State<RecomendationScreenAcneTwo>
               }
               provider.acneTwoSelected = String.fromCharCode(65 + selectedValue).toLowerCase();
               print(provider.acneTwoSelected);
-              if(provider.selectedGender == 'a'){
+              if(provider.selectedGender == 'a' || int.parse(provider.selectedAge) <= 10){
                 Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenAcneFour()));
                 return;
               }

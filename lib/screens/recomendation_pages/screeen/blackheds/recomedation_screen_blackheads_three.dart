@@ -233,10 +233,10 @@ class _RecomendationScreenBlackHeadsThreeState extends State<RecomendationScreen
               provider.blackHeadsThreeSelected = String.fromCharCode(65 + selectedValue).toLowerCase();
               print(provider.blackHeadsThreeSelected);
               await provider.sendData();
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (_) => RecommendedProducts()),
-                      (route) => false);
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => RecommendedProducts()));
+              });
+
             },
             child: Container(
               alignment: Alignment.center,
