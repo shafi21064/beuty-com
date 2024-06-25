@@ -39,11 +39,11 @@ class _RecomendationScreenPigmentationState extends State<RecomendationScreenPig
                 ),
                 buildHeaderProgressbar(
                     historyProgress: 1,
-                    goalProgress: 1/5),
+                    goalProgress: 1/3),
                 SizedBox(
                   height: 25,
                 ),
-                buildLinearProgressbar(percent: 2),
+                buildLinearProgressbar(percent: 1),
                 SizedBox(
                   height: 25,
                 ),
@@ -101,7 +101,7 @@ class _RecomendationScreenPigmentationState extends State<RecomendationScreenPig
     );
   }
 
-  buildCircularProgressIndicator({String titleText, double percent}) {
+  buildCircularProgressIndicator({String titleText, double percent, bool isHistory = false}) {
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -138,7 +138,7 @@ class _RecomendationScreenPigmentationState extends State<RecomendationScreenPig
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         buildCircularProgressIndicator(
-            titleText: 'Skin care History', percent: historyProgress),
+            titleText: 'Skin care History', percent: historyProgress, isHistory: true),
         SizedBox(
           width: 8,
         ),
@@ -162,7 +162,7 @@ class _RecomendationScreenPigmentationState extends State<RecomendationScreenPig
         LinearPercentIndicator(
           width: MediaQuery.of(context).size.width * 1,
           lineHeight: 5.0,
-          percent: percent / 5,
+          percent: percent / 3,
           backgroundColor: Colors.grey[350],
           progressColor: MyTheme.secondary,
         ),
@@ -170,7 +170,7 @@ class _RecomendationScreenPigmentationState extends State<RecomendationScreenPig
           height: 8,
         ),
         Text(
-          '${percent}/5',
+          '${percent}/3',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         )
       ],

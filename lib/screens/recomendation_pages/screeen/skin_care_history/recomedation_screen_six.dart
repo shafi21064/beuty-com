@@ -49,8 +49,8 @@ class _RecomendationScreenSixState extends State<RecomendationScreenSix> {
                       child: Text(
                         RecommendationController()
                             .questions
-                            .skincareGoalQuestions
-                            .questions[0]
+                            .skincareHistoryQuestions
+                            .questions[5]
                             .question,
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       )),
@@ -63,16 +63,16 @@ class _RecomendationScreenSixState extends State<RecomendationScreenSix> {
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: RecommendationController()
                         .questions
-                        .skincareGoalQuestions
-                        .questions[0]
+                        .skincareHistoryQuestions
+                        .questions[5]
                         .options
                         .length,
                     itemBuilder: (BuildContext context, int index) {
                       return buildQuestionContainer(
                           ansText: RecommendationController()
                               .questions
-                              .skincareGoalQuestions
-                              .questions[0]
+                              .skincareHistoryQuestions
+                              .questions[5]
                               .options[index],
                           selectedAns: index);
                     }),
@@ -164,7 +164,7 @@ class _RecomendationScreenSixState extends State<RecomendationScreenSix> {
         LinearPercentIndicator(
           width: MediaQuery.of(context).size.width * 1,
           lineHeight: 5.0,
-          percent: percent / 10,
+          percent: percent /9,
           backgroundColor: Colors.grey[350],
           progressColor: MyTheme.secondary,
         ),
@@ -172,7 +172,7 @@ class _RecomendationScreenSixState extends State<RecomendationScreenSix> {
           height: 8,
         ),
         Text(
-          '${percent}/10',
+          '${percent}/9',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         )
       ],

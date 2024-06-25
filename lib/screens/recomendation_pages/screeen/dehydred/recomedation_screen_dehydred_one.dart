@@ -101,7 +101,7 @@ class _RecomendationScreenDehydredState extends State<RecomendationScreenDehydre
     );
   }
 
-  buildCircularProgressIndicator({String titleText, double percent}) {
+  buildCircularProgressIndicator({String titleText, double percent, bool isHistory = false}) {
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -138,7 +138,7 @@ class _RecomendationScreenDehydredState extends State<RecomendationScreenDehydre
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         buildCircularProgressIndicator(
-            titleText: 'Skin care History', percent: historyProgress),
+            titleText: 'Skin care History', percent: historyProgress, isHistory: true),
         SizedBox(
           width: 8,
         ),

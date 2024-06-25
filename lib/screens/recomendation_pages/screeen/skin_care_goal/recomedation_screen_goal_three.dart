@@ -7,18 +7,18 @@ import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 import '../../../../my_theme.dart';
 import '../../recommendetion_controller.dart';
-import 'recomedation_screen_four.dart';
+import 'recomedation_screen_goal_four.dart';
 
-class RecomendationScreenThree extends StatefulWidget {
-  const RecomendationScreenThree({
+class RecomendationScreenGoalThree extends StatefulWidget {
+  const RecomendationScreenGoalThree({
     Key key,
   }) : super(key: key);
 
   @override
-  State<RecomendationScreenThree> createState() => _RecomendationScreenThreeState();
+  State<RecomendationScreenGoalThree> createState() => _RecomendationScreenGoalThreeState();
 }
 
-class _RecomendationScreenThreeState extends State<RecomendationScreenThree> {
+class _RecomendationScreenGoalThreeState extends State<RecomendationScreenGoalThree> {
   int selectedValue;
 
   @override
@@ -35,12 +35,12 @@ class _RecomendationScreenThreeState extends State<RecomendationScreenThree> {
               height: 16,
             ),
             buildHeaderProgressbar(
-                historyProgress: .4,
-                goalProgress: 0),
+                historyProgress: 1,
+                goalProgress: 3/6),
             SizedBox(
               height: 25,
             ),
-            buildLinearProgressbar(percent: 4),
+            buildLinearProgressbar(percent: 3),
             SizedBox(
               height: 25,
             ),
@@ -50,7 +50,7 @@ class _RecomendationScreenThreeState extends State<RecomendationScreenThree> {
                   child: Text(
                 RecommendationController()
                     .questions
-                    .skincareHistoryQuestions
+                    .skincareGoalQuestions
                     .questions[2]
                     .question,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -65,7 +65,7 @@ class _RecomendationScreenThreeState extends State<RecomendationScreenThree> {
                 //itemCount: QuestionnaireProvider().questions[0].skincareHistoryQuestions.questions[0].options.length,
                 itemCount: RecommendationController()
                     .questions
-                    .skincareHistoryQuestions
+                    .skincareGoalQuestions
                     .questions[2]
                     .options
                     .length,
@@ -73,7 +73,7 @@ class _RecomendationScreenThreeState extends State<RecomendationScreenThree> {
                   return buildQuestionContainer(
                       ansText: RecommendationController()
                           .questions
-                          .skincareHistoryQuestions
+                          .skincareGoalQuestions
                           .questions[2]
                           .options[index],
                       selectedAns: index);
@@ -108,7 +108,7 @@ class _RecomendationScreenThreeState extends State<RecomendationScreenThree> {
     );
   }
 
-  buildCircularProgressIndicator({String titleText, double percent}) {
+  buildCircularProgressIndicator({String titleText, double percent, bool isHistory}) {
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -124,9 +124,15 @@ class _RecomendationScreenThreeState extends State<RecomendationScreenThree> {
           ),
           SizedBox(
             width: 8,
-          ),
+          ),isHistory?
+          Container(height: 25,
+            width: 25,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, color: MyTheme.primary),
+            child: Icon(Icons.check, size: 15, color: MyTheme.white,),
+          ) :
           CircularPercentIndicator(
-            radius: 10,
+            radius: 9,
             lineWidth: 2.0,
             percent: percent,
             progressColor: MyTheme.primary,
@@ -145,12 +151,12 @@ class _RecomendationScreenThreeState extends State<RecomendationScreenThree> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         buildCircularProgressIndicator(
-            titleText: 'Skin care History', percent: historyProgress),
+            titleText: 'Skin care History', percent: historyProgress, isHistory: true),
         SizedBox(
           width: 8,
         ),
         Container(
-          width: 10,
+          width: 9,
           height: 1,
           color: Colors.red,
         ),
@@ -158,7 +164,7 @@ class _RecomendationScreenThreeState extends State<RecomendationScreenThree> {
           width: 8,
         ),
         buildCircularProgressIndicator(
-            titleText: 'Skin care Goal', percent: goalProgress),
+            titleText: 'Skin care Goal', percent: goalProgress, isHistory: false),
       ],
     );
   }
@@ -169,7 +175,7 @@ class _RecomendationScreenThreeState extends State<RecomendationScreenThree> {
         LinearPercentIndicator(
           width: MediaQuery.of(context).size.width * 1,
           lineHeight: 5.0,
-          percent: percent / 9,
+          percent: percent / 6,
           backgroundColor: Colors.grey[350],
           progressColor: MyTheme.secondary,
         ),
@@ -177,7 +183,7 @@ class _RecomendationScreenThreeState extends State<RecomendationScreenThree> {
           height: 8,
         ),
         Text(
-          '${percent}/9',
+          '${percent}/6',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         )
       ],
@@ -203,7 +209,6 @@ class _RecomendationScreenThreeState extends State<RecomendationScreenThree> {
                 onChanged: (value) {
                   setState(() {
                     selectedValue = value;
-                    print(value);
                   });
                 },
               );
@@ -226,9 +231,15 @@ class _RecomendationScreenThreeState extends State<RecomendationScreenThree> {
         builder: (context, provider, child) {
       return InkWell(
         onTap: () {
-          provider.selectedPregnant = String.fromCharCode(65 + selectedValue).toLowerCase();
-          print(provider.selectedPregnant);
-          Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenFour()));
+          if(selectedValue == null){
+            ToastComponent.showDialog(
+                'Ans is required', context,
+                gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+            return;
+          }
+          Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenGoalFour()));
+          provider.morningFeel = String.fromCharCode(65 + selectedValue).toLowerCase();
+          print(provider.morningFeel);
         },
         child: Container(
           alignment: Alignment.center,

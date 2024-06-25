@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/custom/toast_component.dart';
+import 'package:kirei/screens/recomendation_pages/question_model.dart';
 import 'package:kirei/screens/recomendation_pages/screeen/acne/recomedation_screen_acne_two.dart';
+import 'package:kirei/screens/recomendation_pages/screeen/anti_aging/recomedation_screen_aging_two.dart';
 import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_allergic(3).dart';
 import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_three.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -9,6 +11,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 import '../../../../my_theme.dart';
+import '../../question_and_value.dart';
 import '../../recommendetion_controller.dart';
 
 class RecomendationScreenAging extends StatefulWidget {
@@ -38,7 +41,7 @@ class _RecomendationScreenAgingState extends State<RecomendationScreenAging> {
                 ),
                 buildHeaderProgressbar(
                     historyProgress: 1,
-                    goalProgress: 1/3),
+                    goalProgress: 1/2),
                 SizedBox(
                   height: 25,
                 ),
@@ -58,18 +61,23 @@ class _RecomendationScreenAgingState extends State<RecomendationScreenAging> {
                 SizedBox(
                   height: 8,
                 ),
-                ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: RecommendationController()
-                    .questions.relatedQuestionsBasedOnPrimaryConcern.primaryConcerns['anti_aging'].questions[0].options.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return buildQuestionContainer(
-                          ansText: RecommendationController()
-                              .questions
-                              .relatedQuestionsBasedOnPrimaryConcern.primaryConcerns['anti_aging'].questions[0].options[index],
-                          selectedAns: index);
-                    }),
+                SizedBox(
+                  height: 290,
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      //physics: NeverScrollableScrollPhysics(),
+                      itemCount: RecommendationController()
+                      .questions.relatedQuestionsBasedOnPrimaryConcern.primaryConcerns['anti_aging'].questions[0].options.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return buildQuestionContainer(
+                            ansText: RecommendationController()
+                                .questions
+                                .relatedQuestionsBasedOnPrimaryConcern.primaryConcerns['anti_aging'].questions[0].options[index],
+                            selectedAns: index,
+                        image: recommendationQuestionAndAns['related_questions_based_on_primary_concern']['anti_aging']['questions'][0]['images'][index]);
+                      }),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Row(
@@ -100,7 +108,7 @@ class _RecomendationScreenAgingState extends State<RecomendationScreenAging> {
     );
   }
 
-  buildCircularProgressIndicator({String titleText, double percent}) {
+  buildCircularProgressIndicator({String titleText, double percent, bool isHistory}) {
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -117,6 +125,13 @@ class _RecomendationScreenAgingState extends State<RecomendationScreenAging> {
           SizedBox(
             width: 8,
           ),
+          isHistory?
+          Container(height: 25,
+            width: 25,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, color: MyTheme.primary),
+            child: Icon(Icons.check, size: 15, color: MyTheme.white,),
+          ) :
           CircularPercentIndicator(
             radius: 10,
             lineWidth: 2.0,
@@ -137,7 +152,7 @@ class _RecomendationScreenAgingState extends State<RecomendationScreenAging> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         buildCircularProgressIndicator(
-            titleText: 'Skin care History', percent: historyProgress),
+            titleText: 'Skin care History', percent: historyProgress, isHistory: true),
         SizedBox(
           width: 8,
         ),
@@ -150,7 +165,7 @@ class _RecomendationScreenAgingState extends State<RecomendationScreenAging> {
           width: 8,
         ),
         buildCircularProgressIndicator(
-            titleText: 'Skin care Goal', percent: goalProgress),
+            titleText: 'Skin care Goal', percent: goalProgress, isHistory: false),
       ],
     );
   }
@@ -161,7 +176,7 @@ class _RecomendationScreenAgingState extends State<RecomendationScreenAging> {
         LinearPercentIndicator(
           width: MediaQuery.of(context).size.width * 1,
           lineHeight: 5.0,
-          percent: percent / 3,
+          percent: percent / 2,
           backgroundColor: Colors.grey[350],
           progressColor: MyTheme.secondary,
         ),
@@ -169,49 +184,59 @@ class _RecomendationScreenAgingState extends State<RecomendationScreenAging> {
           height: 8,
         ),
         Text(
-          '${percent}/3',
+          '${percent}/2',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         )
       ],
     );
   }
 
-  buildQuestionContainer({int selectedAns, String ansText}) {
+  buildQuestionContainer({int selectedAns, String ansText, String image}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        width: MediaQuery.of(context).size.width,
-        height: 70,
+        padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            border: Border.all(width: 2, color: Colors.grey[300])),
-        child: Row(
+          color: MyTheme.white,
+            //border: Border.all(width: 2, color: Colors.grey[300])
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Consumer<RecommendationController>(
-                builder: (context, provider, child) {
-                  return Radio<int>(
-                    value: selectedAns,
-                    groupValue: selectedValue,
-                    onChanged: (value) {
-                      
-                      setState(() {
-                        selectedValue = value;
-                        print(value);
-                        
-                      });
-                    },
-                  );
-                }),
             SizedBox(
-              width: 8,
+                height: 200, width: 200,child: Image.asset(image, fit: BoxFit.fill,)),
+            SizedBox(
+              height: 10,
             ),
-            SizedBox(
-              width: 250,
-              child: Text(
-                ansText,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            )
+            Row(
+              children: [
+                Consumer<RecommendationController>(
+                    builder: (context, provider, child) {
+                      return Radio<int>(
+                        value: selectedAns,
+                        groupValue: selectedValue,
+                        onChanged: (value) {
+
+                          setState(() {
+                            selectedValue = value;
+                            print(value);
+
+                          });
+                        },
+                      );
+                    }),
+                SizedBox(
+                  width: 8,
+                ),
+                SizedBox(
+                  //width: 218,
+                  child: Text(
+                    ansText,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),
@@ -229,9 +254,9 @@ class _RecomendationScreenAgingState extends State<RecomendationScreenAging> {
                     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
                 return;
               }
-              provider.acneOneSelected = String.fromCharCode(65 + selectedValue).toLowerCase();
-              print(provider.acneOneSelected);
-              Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenAcneTwo()));
+              provider.agingOneSelected = String.fromCharCode(65 + selectedValue).toLowerCase();
+              print(provider.agingOneSelected);
+              Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenAgingTwo()));
             },
             child: Container(
               alignment: Alignment.center,

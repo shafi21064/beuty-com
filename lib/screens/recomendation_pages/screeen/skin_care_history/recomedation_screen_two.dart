@@ -170,7 +170,7 @@ class _RecomendationScreenTwoState extends State<RecomendationScreenTwo> {
         LinearPercentIndicator(
           width: MediaQuery.of(context).size.width * 1,
           lineHeight: 5.0,
-          percent: percent / 10,
+          percent: percent / 9,
           backgroundColor: Colors.grey[350],
           progressColor: MyTheme.secondary,
         ),
@@ -178,7 +178,7 @@ class _RecomendationScreenTwoState extends State<RecomendationScreenTwo> {
           height: 8,
         ),
         Text(
-          '${percent}/10',
+          '${percent}/9',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         )
       ],

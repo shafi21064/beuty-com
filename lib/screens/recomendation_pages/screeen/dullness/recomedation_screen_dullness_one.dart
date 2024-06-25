@@ -113,7 +113,7 @@ class _RecomendationScreenDullnessState
     );
   }
 
-  buildCircularProgressIndicator({String titleText, double percent}) {
+  buildCircularProgressIndicator({String titleText, double percent, bool isHistory = false}) {
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -130,6 +130,13 @@ class _RecomendationScreenDullnessState
           SizedBox(
             width: 8,
           ),
+          isHistory?
+          Container(height: 25,
+            width: 25,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, color: MyTheme.primary),
+            child: Icon(Icons.check, size: 15, color: MyTheme.white,),
+          ) :
           CircularPercentIndicator(
             radius: 10,
             lineWidth: 2.0,
@@ -150,7 +157,7 @@ class _RecomendationScreenDullnessState
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         buildCircularProgressIndicator(
-            titleText: 'Skin care History', percent: historyProgress),
+            titleText: 'Skin care History', percent: historyProgress, isHistory: true),
         SizedBox(
           width: 8,
         ),

@@ -120,7 +120,7 @@ class _RecomendationScreenAllergicState extends State<RecomendationScreenAllergi
             width: 8,
           ),
           CircularPercentIndicator(
-            radius: 9,
+            radius: 10,
             lineWidth: 2.0,
             percent: percent,
             progressColor: MyTheme.primary,
@@ -144,7 +144,7 @@ class _RecomendationScreenAllergicState extends State<RecomendationScreenAllergi
           width: 8,
         ),
         Container(
-          width: 9,
+          width: 10,
           height: 1,
           color: Colors.red,
         ),
@@ -163,7 +163,7 @@ class _RecomendationScreenAllergicState extends State<RecomendationScreenAllergi
         LinearPercentIndicator(
           width: MediaQuery.of(context).size.width * 1,
           lineHeight: 5.0,
-          percent: percent / 10,
+          percent: percent / 9,
           backgroundColor: Colors.grey[350],
           progressColor: MyTheme.secondary,
         ),
@@ -171,7 +171,7 @@ class _RecomendationScreenAllergicState extends State<RecomendationScreenAllergi
           height: 8,
         ),
         Text(
-          '${percent}/10',
+          '${percent}/9',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         )
       ],
@@ -224,7 +224,7 @@ class _RecomendationScreenAllergicState extends State<RecomendationScreenAllergi
       return InkWell(
         onTap: () {
           print(ageController.text);
-          if(provider.selectedGender == 'a' || int.parse(provider.selectedAge) <= 15){
+          if(provider.selectedGender == 'a' || provider.selectedAge == 'a'){
           Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenFour()));
           return;
           }

@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/custom/toast_component.dart';
+import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_allergic(3).dart';
 import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_three.dart';
-import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_two.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 import '../../../../my_theme.dart';
 import '../../recommendetion_controller.dart';
+import 'recomedation_screen_two.dart';
 
 class RecomendationSearchScreen extends StatefulWidget {
   const RecomendationSearchScreen({
@@ -22,8 +23,6 @@ class RecomendationSearchScreen extends StatefulWidget {
 class _RecomendationSearchScreenState extends State<RecomendationSearchScreen> {
   int selectedValue;
 
-  TextEditingController ageController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,58 +30,66 @@ class _RecomendationSearchScreenState extends State<RecomendationSearchScreen> {
       appBar: buildAppBar(context),
       body: Consumer<RecommendationController>(
           builder: (context, provider, child) {
-        return ListView(
-          physics: BouncingScrollPhysics(),
-          children: [
-            SizedBox(
-              height: 16,
-            ),
-            buildHeaderProgressbar(
-                historyProgress: .1,
-                goalProgress: 0),
-            SizedBox(
-              height: 25,
-            ),
-            buildLinearProgressbar(percent: 1),
-            SizedBox(
-              height: 25,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Center(
-                  child: Text( "What's your Age?",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              )),
-            ),
-            SizedBox(
-              height: 12,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: TextFormField(
-                controller: ageController,
-                decoration: InputDecoration(
-                  enabledBorder:  OutlineInputBorder(
-                      borderRadius: BorderRadius.zero,
-                      borderSide: BorderSide(color: Colors.grey[350], width: 2)
-                  ),
-                  focusedBorder:  OutlineInputBorder(
-                      borderRadius: BorderRadius.zero,
-                      borderSide: BorderSide(color: Colors.grey[350], width: 2)
-                  ),
+            return ListView(
+              physics: BouncingScrollPhysics(),
+              children: [
+                SizedBox(
+                  height: 16,
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [buildBackButton(), buildNextButton()],
-              ),
-            )
-          ],
-        );
-      }),
+                buildHeaderProgressbar(
+                    historyProgress: .1,
+                    goalProgress: 0),
+                SizedBox(
+                  height: 25,
+                ),
+                buildLinearProgressbar(percent: 1),
+                SizedBox(
+                  height: 25,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Center(
+                      child: Text(
+                        RecommendationController()
+                            .questions
+                            .skincareHistoryQuestions
+                            .questions[0]
+                            .question,
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      )),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    //itemCount: QuestionnaireProvider().questions[0].skincareHistoryQuestions.questions[0].options.length,
+                    itemCount: RecommendationController()
+                        .questions
+                        .skincareHistoryQuestions
+                        .questions[0]
+                        .options
+                        .length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return buildQuestionContainer(
+                          ansText: RecommendationController()
+                              .questions
+                              .skincareHistoryQuestions
+                              .questions[0]
+                              .options[index],
+                          selectedAns: index);
+                    }),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [buildBackButton(), buildNextButton()],
+                  ),
+                )
+              ],
+            );
+          }),
     );
   }
 
@@ -121,7 +128,7 @@ class _RecomendationSearchScreenState extends State<RecomendationSearchScreen> {
             width: 8,
           ),
           CircularPercentIndicator(
-            radius: 9,
+            radius: 10,
             lineWidth: 2.0,
             percent: percent,
             progressColor: MyTheme.primary,
@@ -145,7 +152,7 @@ class _RecomendationSearchScreenState extends State<RecomendationSearchScreen> {
           width: 8,
         ),
         Container(
-          width: 9,
+          width: 10,
           height: 1,
           color: Colors.red,
         ),
@@ -164,7 +171,7 @@ class _RecomendationSearchScreenState extends State<RecomendationSearchScreen> {
         LinearPercentIndicator(
           width: MediaQuery.of(context).size.width * 1,
           lineHeight: 5.0,
-          percent: percent / 10,
+          percent: percent / 9,
           backgroundColor: Colors.grey[350],
           progressColor: MyTheme.secondary,
         ),
@@ -172,7 +179,7 @@ class _RecomendationSearchScreenState extends State<RecomendationSearchScreen> {
           height: 8,
         ),
         Text(
-          '${percent}/10',
+          '${percent}/9',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         )
       ],
@@ -192,20 +199,22 @@ class _RecomendationSearchScreenState extends State<RecomendationSearchScreen> {
           children: [
             Consumer<RecommendationController>(
                 builder: (context, provider, child) {
-              return Radio<int>(
-                value: selectedAns,
-                groupValue: selectedValue,
-                onChanged: (value) {
-                  setState(() {
-                    print(RecommendationController()
-                        .questions
-                        .skincareHistoryQuestions
-                        .questions[0]
-                        .options[selectedAns]);
-                  });
-                },
-              );
-            }),
+                  return Radio<int>(
+                    value: selectedAns,
+                    groupValue: selectedValue,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedValue = value;
+                        print(value);
+                        print(RecommendationController()
+                            .questions
+                            .skincareHistoryQuestions
+                            .questions[0]
+                            .options[selectedAns]);
+                      });
+                    },
+                  );
+                }),
             SizedBox(
               width: 8,
             ),
@@ -222,71 +231,76 @@ class _RecomendationSearchScreenState extends State<RecomendationSearchScreen> {
   buildNextButton() {
     return Consumer<RecommendationController>(
         builder: (context, provider, child) {
-      return InkWell(
-        onTap: () {
-          print(ageController.text);
-          Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenTwo()));
-          provider.selectedAge = ageController.text;
-          print(provider.selectedAge);
-        },
-        child: Container(
-          alignment: Alignment.center,
-          height: 50,
-          width: 120,
-          color: MyTheme.secondary,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'NEXT',
-                style: TextStyle(
-                    color: MyTheme.white, fontWeight: FontWeight.bold),
+          return InkWell(
+            onTap: () {
+              if(selectedValue == null){
+                ToastComponent.showDialog(
+                    'Age is required', context,
+                    gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+                return;
+              }
+              provider.selectedAge = String.fromCharCode(65 + selectedValue).toLowerCase();
+              print(provider.selectedAge);
+              Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenTwo()));
+            },
+            child: Container(
+              alignment: Alignment.center,
+              height: 50,
+              width: 120,
+              color: MyTheme.secondary,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'NEXT',
+                    style: TextStyle(
+                        color: MyTheme.white, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    width: 12,
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    size: 16,
+                    color: MyTheme.white,
+                  )
+                ],
               ),
-              SizedBox(
-                width: 12,
-              ),
-              Icon(
-                Icons.arrow_forward_ios,
-                size: 16,
-                color: MyTheme.white,
-              )
-            ],
-          ),
-        ),
-      );
-    });
+            ),
+          );
+        });
   }
 
   buildBackButton() {
     return Consumer<RecommendationController>(
         builder: (context, provider, child) {
-      return InkWell(
-        onTap: () => Navigator.pop(context),
-        child: Container(
-          alignment: Alignment.center,
-          height: 50,
-          width: 120,
-          color: MyTheme.white,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.arrow_back_ios_new,
-                size: 16,
-                color: MyTheme.secondary,
+          return InkWell(
+            onTap: () => Navigator.pop(context),
+            child: Container(
+              alignment: Alignment.center,
+              height: 50,
+              width: 120,
+              color: MyTheme.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.arrow_back_ios_new,
+                    size: 16,
+                    color: MyTheme.secondary,
+                  ),
+                  SizedBox(
+                    width: 12,
+                  ),
+                  Text(
+                    'BACK',
+                    style: TextStyle(
+                        color: MyTheme.secondary, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-              SizedBox(
-                width: 12,
-              ),
-              Text(
-                'BACK',
-                style: TextStyle(
-                    color: MyTheme.secondary, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ),
-      );
-    });
+            ),
+          );
+        });
   }
 }

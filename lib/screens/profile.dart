@@ -309,29 +309,29 @@ class _ProfileState extends State<Profile> {
               ),
             ),
           ),
-          InkWell(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return MyRewardsScreen();
-              }));},
-            child: Container(margin: EdgeInsets.only(top: 5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "My Rewards",
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: MyTheme.dark_grey
-                    ),),
-                  Divider(
-                    thickness:1 ,
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // InkWell(
+          //   onTap: () {
+          //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+          //       return MyRewardsScreen();
+          //     }));},
+          //   child: Container(margin: EdgeInsets.only(top: 5),
+          //     child: Column(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+          //         Text(
+          //           "My Rewards",
+          //           style: TextStyle(
+          //               fontSize: 16,
+          //               fontWeight: FontWeight.w600,
+          //               color: MyTheme.dark_grey
+          //           ),),
+          //         Divider(
+          //           thickness:1 ,
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
           InkWell(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {

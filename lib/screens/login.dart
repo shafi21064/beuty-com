@@ -332,12 +332,12 @@ class _LoginState extends State<Login> {
           AppleIDAuthorizationScopes.email,
           AppleIDAuthorizationScopes.fullName,
         ],
-        // webAuthenticationOptions: WebAuthenticationOptions(
-        //   clientId: 'YOUR_CLIENT_ID', // Replace with your Client ID
-        //   redirectUri: Uri.parse(
-        //     'https://YOUR_PROJECT_ID.firebaseapp.com/__/auth/handler', // Replace with your redirect URI
-        //   ),
-        // ),
+        webAuthenticationOptions: WebAuthenticationOptions(
+          clientId: 'com.thetork.kirei.appleSignIn', // Replace with your Client ID
+          redirectUri: Uri.parse(
+            'https://com.thetork.kirei.firebaseapp.com/__/auth/handler', // Replace with your redirect URI
+          ),
+        ),
         nonce: nonce,
       );
 
@@ -346,6 +346,8 @@ class _LoginState extends State<Login> {
         idToken: appleCredential.identityToken,
         rawNonce: rawNonce,
       );
+
+
 
       var loginResponse = await AuthRepository().getSocialLoginResponse(
           "apple", appleCredential.givenName, appleCredential.email, appleCredential.authorizationCode,
@@ -835,7 +837,7 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         Visibility(
-                          visible: !Platform.isAndroid,
+                          //visible: !Platform.isAndroid,
                           child: Padding(
                             padding: const EdgeInsets.only(
                               top: 8.0,

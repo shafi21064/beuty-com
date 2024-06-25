@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:kirei/helpers/shared_value_helper.dart';
 import 'package:kirei/screens/recomendation_pages/model/products_response.dart';
 import 'package:kirei/screens/recomendation_pages/question_and_value.dart';
 import 'package:kirei/screens/recomendation_pages/question_model.dart';
@@ -35,12 +36,16 @@ class RecommendationController with ChangeNotifier {
   String selectedFollowingSkinCare = '';
   String selectedSkinSensitive = '';
   String selectedSkinBurning = '';
-  String selectedSkinIrritate = '';
+
 
 
   /// Skin Care Goal
   List skinCareConcern = [];
   String selectedSkinType = '';
+  String morningFeel = '';
+  String afterShower  = '';
+  String afterMoisturizer = '';
+  String selectedDamaged = '';
 
 
   ///Acne
@@ -53,7 +58,6 @@ class RecommendationController with ChangeNotifier {
   /// Anti-Aging
   String agingOneSelected = '';
   String agingTwoSelected = '';
-  String agingThreeSelected = '';
 
   ///BlackHeads
   String blackHeadsOneSelected = '';
@@ -62,10 +66,9 @@ class RecommendationController with ChangeNotifier {
 
   ///Hypigmentation
   String pigmentationOneSelected = '';
-  String pigmentationTwoSelected = '';
+  List pigmentationTwoSelected = [];
   List pigmentationThreeSelected = [];
-  String pigmentationFourSelected = '';
-  List pigmentationFiveSelected = [];
+
 
   ///Dullness
   String dullnessOneSelected = '';
@@ -97,15 +100,14 @@ class RecommendationController with ChangeNotifier {
         "sensitivity_related": {
           "q8": selectedSkinSensitive,
           "q9": selectedSkinBurning,
-          "q10": selectedSkinIrritate,
         },
         "skincare_goal": {
           "q1": skinCareConcern,
           "q2": selectedSkinType,
-          "q3": "",
-          "q4": "",
-          "q5": "",
-          "q6": "",
+          "q3": morningFeel,
+          "q4": afterShower,
+          "q5": afterMoisturizer,
+          "q6": selectedDamaged,
         },
         "acne_targeting_questions": {
           "q1": acneOneSelected,
@@ -117,26 +119,22 @@ class RecommendationController with ChangeNotifier {
         "anti_aging_related": {
           "q1": agingOneSelected,
           "q2": agingTwoSelected,
-          "q3": agingThreeSelected,
         },
         "closed_comedones_blackheads_whiteheads_related_questions": {
-          "q4": blackHeadsOneSelected,
-          "q5": blackHeadsTwoSelected,
-          "q6": blackHeadsThreeSelected,
+          "q3": blackHeadsOneSelected,
+          "q4": blackHeadsTwoSelected,
         },
         "hyperpigmentation_and_dark_spots_related_questions": {
-          "q7": pigmentationOneSelected,
-          "q8": pigmentationTwoSelected,
-          "q9": pigmentationThreeSelected,
-          "q10": pigmentationFourSelected,
-          "q11": pigmentationFiveSelected,
+          "q5": pigmentationOneSelected,
+          "q6": pigmentationTwoSelected,
+          "q7": pigmentationThreeSelected,
         },
         "dullness_related_questions": {
-          "q12": dullnessOneSelected,
+          "q8": dullnessOneSelected,
         },
         "dehydrated_skin_related_questions": {
-          "q13": dehydredOneSelected,
-          "q14": dehydredTwoSelected,
+          "q9": dehydredOneSelected,
+          "q10": dehydredTwoSelected,
         },
       },
       "order_by": "default",
@@ -160,6 +158,8 @@ class RecommendationController with ChangeNotifier {
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',
+        "Authorization": "Bearer ${access_token.$}",
+        "App-Language": app_language.$,
       },
       body: jsonEncode(formattedData),
     );

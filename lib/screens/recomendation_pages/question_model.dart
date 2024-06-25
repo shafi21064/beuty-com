@@ -135,13 +135,16 @@ class PrimaryConcernQuestions {
 class Question {
   String question;
   List<String> options;
+  //List<String> images;
 
-  Question({this.question, this.options});
+
+  Question({this.question, this.options,});
 
   factory Question.fromJson(Map<String, dynamic> json) {
     return Question(
       question: json['question'],
       options: List<String>.from(json['options']),
+      //images: List<String>.from(json['images']),
     );
   }
 
@@ -149,6 +152,7 @@ class Question {
     return {
       'question': question,
       'options': options,
+      //'images': images,
     };
   }
 }

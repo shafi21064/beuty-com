@@ -3,7 +3,7 @@ Map<String, dynamic> recommendationQuestionAndAns = {
     "questions": [
       {
         "question": "What is your age?",
-        "options": ["Under 18", "Above 18"]
+        "options": ["0-18 Years", "Above 18"]
       },
       {
         "question": "What is your gender?",
@@ -40,7 +40,7 @@ Map<String, dynamic> recommendationQuestionAndAns = {
       },
       {
         "question": "How sensitive is your skin?",
-        "options": ["Rarely sensitive", "Somewhat sensitive", "Often sensitive", "Very sensitive"]
+        "options": ["No", "Somewhat sensitive", "Very sensitive"]
       },
       {
         "question":
@@ -78,7 +78,7 @@ Map<String, dynamic> recommendationQuestionAndAns = {
         "options": [
           "Acne",
           "Anti-aging",
-          "Blackheads/Whiteheads",
+          "Closed comedones( blackheads, whiteheads)",
           "Hyperpigmentation",
           "Dullness",
           "Dehydrated skin"
@@ -86,7 +86,13 @@ Map<String, dynamic> recommendationQuestionAndAns = {
       },
       {
         "question": "What is your skin type?",
-        "options": ["Oily","Combination" "Oily to combination", "Dry", "Normal", "I don't know"]
+        "options": [
+          "Oily",
+          "Combination" "Oily to combination",
+          "Dry",
+          "Normal",
+          "I don't know"
+        ]
       },
       {
         "question": "How does your skin feel in the morning?",
@@ -157,80 +163,94 @@ Map<String, dynamic> recommendationQuestionAndAns = {
     "anti_aging": {
       "questions": [
         {
-          "question": "Do you see smile lines or wrinkles when you laugh?",
-          "options": ["Yes", "No", "Only on eye area"]
-        },
-        {
           "question": "Do you see wrinkles when your face is at rest?",
-          "options": ["Yes", "No", "Yes but only on eye area"]
+          "options": ["Yes", "No", "Yes but only on eye area"],
+          "images": [
+            "assets/recommendation/aging_1_1.png",
+            "assets/recommendation/aging_1_2.png",
+            "assets/recommendation/aging_1_3.png"
+          ]
         },
         {
-          "question": "Are you concerned about your skin elasticity, wrinkled or sagging?",
-          "options": ["Not concerned", "A little concerned", "Somewhat concerned", "Very concerned"]
-        },
-        {
-          "question": "Do you have open( blackhead) or closed (whitehead) comedones?",
-          "options": ["Blackheads", "Whiteheads", "Both", "Not sure"]
-        },
-        {
-          "question": "Where do you see the most clogged pores?",
-          "options": ["Mostly around the nose", "Nose and cheek", "All around the face", "I don’t have any"]
-        },
-        {
-          "question": "Where do you have the most amount of mini bumps?",
-          "options": ["Forehead", "Tzone", "All over the face", "None of the above"]
+          "question":
+              "Are you concerned about your skin elasticity, wrinkled or sagging?",
+          "options": [
+            "Not concerned",
+            "A little concerned",
+            "Somewhat concerned",
+            "Very concerned"
+          ],
         },
       ]
     },
     "blackheads_whiteheads": {
       "questions": [
         {
-          "question": "Do you have open (blackhead) or closed (whitehead) comedones?",
-          "options": ["Blackheads", "Whiteheads", "Both", "Not sure"]
-        },
-        {
-          "question": "Where do you see the most clogged pores?",
-          "options": ["Mostly around the nose", "Nose and cheek", "All around the face", "I don't have any"]
+          "question":
+              "Do you have open (blackhead) or closed (whitehead) comedones?",
+          "options": ["Blackheads", "Whiteheads", "Both", "Not sure"],
+          "images": [
+            "assets/recommendation/aging_3_1.png",
+            "assets/recommendation/aging_3_2.png",
+            "assets/recommendation/aging_3_3.png",
+            "assets/recommendation/aging_3_4.png"
+          ]
         },
         {
           "question": "Where do you have the most amount of mini bumps?",
-          "options": ["Forehead", "T zone", "All over the face", "None of the above"]
-        },
-        {
-          "question": "Do you get whiteheads often?",
-          "options": ["Yes", "No"]
-        },
-        {
-          "question": "How do you usually treat blackheads/whiteheads?",
           "options": [
-            "Over-the-counter",
-            "Prescription medication",
-            "Natural remedies"
+            "Forehead",
+            "T zone",
+            "All over the face",
+            "None of the above"
           ]
-        }
+        },
       ]
     },
     "hyperpigmentation": {
       "questions": [
         {
-          "question": "Do you get dark spots or discoloration after your pimples?",
-          "options": ["Yes", "No", "I don't know"]
+          "question":
+              "Do you get dark spots or discoloration after your pimples?",
+          "options": ["Yes", "No"],
         },
         {
-          "question": "Do you notice more hyperpigmentation or dark spots after sun exposure?",
-          "options": ["Yes", "No", "Iam not sure"]
+          "question":
+              "What types of dark spots or pigmentation you have on your skin?",
+          "options": [
+            "Large dark patches",
+            "Melasma",
+            "Freckles",
+            "PDL",
+            "Acne spot",
+            "No spots"
+          ],
+          "images": [
+            "assets/recommendation/pigmantation_2_1.png",
+            "assets/recommendation/pigmantation_2_2.png",
+            "assets/recommendation/pigmantation_2_3.png",
+            "assets/recommendation/pigmantation_2_4.png",
+            "assets/recommendation/pigmantation_2_5.png",
+            "assets/recommendation/pigmantation_2_6.png",
+          ]
+
         },
         {
-          "question": "What types of dark spots or pigmentation you have on your skin?",
-          "options": ["Large dark patches", "Melasma", "Freckles", "PDL", "Acne spot", "No spots"]
-        },
-        {
-          "question": "Did your dark spots or hyperpigmentation have worsen after childbirth?",
-          "options": ["Yes", "No", 'Not applicable']
-        },
-        {
-          "question": "Which part of skin contain hyperpigmentation or uneven skin tone?",
-          "options": ["Mouth area", "Acne spots", "Forehead", "I don’t have any hyperpigmentation"]
+          "question":
+              "Which part of skin contain hyperpigmentation or uneven skin tone?",
+          "options": [
+            "Mouth area",
+            "Acne spots",
+            "Forehead",
+            "I don’t have any hyperpigmentation"
+          ],
+          "images": [
+            "assets/recommendation/pigmantation_3_1.png",
+            "assets/recommendation/pigmantation_3_2.png",
+            "assets/recommendation/pigmantation_3_3.png",
+            "assets/recommendation/pigmantation_3_4.png",
+            "assets/recommendation/pigmantataion_3_5.png",
+          ]
         },
       ]
     },
@@ -252,7 +272,11 @@ Map<String, dynamic> recommendationQuestionAndAns = {
         {
           "question":
               "Do you feel that even though you use moisturizer you skin is tightening up from the inside?",
-          "options": ["Yes", "No", "I am not sure"]
+          "options": [
+            "Yes",
+            "No , skin looks and feels hydrated",
+            "I am not sure"
+          ]
         }
       ]
     }

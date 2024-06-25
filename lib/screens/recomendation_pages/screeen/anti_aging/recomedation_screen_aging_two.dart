@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/custom/toast_component.dart';
 import 'package:kirei/screens/recomendation_pages/screeen/acne/recomedation_screen_acne_two.dart';
-import 'package:kirei/screens/recomendation_pages/screeen/anti_aging/recomedation_screen_aging_three.dart';
+import 'package:kirei/screens/recomendation_pages/screeen/blackheds/recomedation_screen_blackhead_one.dart';
 import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_allergic(3).dart';
 import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_three.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 import '../../../../my_theme.dart';
 import '../../recommendetion_controller.dart';
+import '../recommended_products.dart';
 
 class RecomendationScreenAgingTwo extends StatefulWidget {
   const RecomendationScreenAgingTwo({
@@ -39,7 +40,7 @@ class _RecomendationScreenAgingTwoState extends State<RecomendationScreenAgingTw
                 ),
                 buildHeaderProgressbar(
                     historyProgress: 1,
-                    goalProgress: 2/3),
+                    goalProgress: 2/2),
                 SizedBox(
                   height: 25,
                 ),
@@ -101,7 +102,7 @@ class _RecomendationScreenAgingTwoState extends State<RecomendationScreenAgingTw
     );
   }
 
-  buildCircularProgressIndicator({String titleText, double percent}) {
+  buildCircularProgressIndicator({String titleText, double percent, bool isHistory = false}) {
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -138,7 +139,7 @@ class _RecomendationScreenAgingTwoState extends State<RecomendationScreenAgingTw
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         buildCircularProgressIndicator(
-            titleText: 'Skin care History', percent: historyProgress),
+            titleText: 'Skin care History', percent: historyProgress, isHistory: true),
         SizedBox(
           width: 8,
         ),
@@ -162,7 +163,7 @@ class _RecomendationScreenAgingTwoState extends State<RecomendationScreenAgingTw
         LinearPercentIndicator(
           width: MediaQuery.of(context).size.width * 1,
           lineHeight: 5.0,
-          percent: percent / 3,
+          percent: percent / 2,
           backgroundColor: Colors.grey[350],
           progressColor: MyTheme.secondary,
         ),
@@ -170,7 +171,7 @@ class _RecomendationScreenAgingTwoState extends State<RecomendationScreenAgingTw
           height: 8,
         ),
         Text(
-          '${percent}/3',
+          '${percent}/2',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         )
       ],
@@ -223,7 +224,7 @@ class _RecomendationScreenAgingTwoState extends State<RecomendationScreenAgingTw
     return Consumer<RecommendationController>(
         builder: (context, provider, child) {
           return InkWell(
-            onTap: () {
+            onTap: () async{
               if(selectedValue == null){
                 ToastComponent.showDialog(
                     'Ans is required', context,
@@ -233,7 +234,10 @@ class _RecomendationScreenAgingTwoState extends State<RecomendationScreenAgingTw
               provider.agingTwoSelected = String.fromCharCode(65 + selectedValue).toLowerCase();
               print(provider.agingTwoSelected);
 
-              Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenAgingThree()));
+              await provider.sendData();
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => RecommendedProducts()));
+              });
             },
             child: Container(
               alignment: Alignment.center,

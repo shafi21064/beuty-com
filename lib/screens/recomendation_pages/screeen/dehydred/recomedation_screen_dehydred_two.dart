@@ -101,7 +101,7 @@ class _RecomendationScreendehydredTwoState extends State<RecomendationScreendehy
     );
   }
 
-  buildCircularProgressIndicator({String titleText, double percent}) {
+  buildCircularProgressIndicator({String titleText, double percent, bool isHistory = false}) {
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -138,7 +138,7 @@ class _RecomendationScreendehydredTwoState extends State<RecomendationScreendehy
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         buildCircularProgressIndicator(
-            titleText: 'Skin care History', percent: historyProgress),
+            titleText: 'Skin care History', percent: historyProgress, isHistory: true),
         SizedBox(
           width: 8,
         ),
@@ -237,10 +237,6 @@ class _RecomendationScreendehydredTwoState extends State<RecomendationScreendehy
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => RecommendedProducts()));
               });
-              // Navigator.pushAndRemoveUntil(
-              //     context,
-              //     MaterialPageRoute(builder: (_) => RecommendedProducts()),
-              //         (route) => false);
             },
             child: Container(
               alignment: Alignment.center,

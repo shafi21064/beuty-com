@@ -1,16 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/custom/toast_component.dart';
-import 'package:kirei/screens/recomendation_pages/screeen/anti_aging/recomedation_screen_aging_two.dart';
 import 'package:kirei/screens/recomendation_pages/screeen/hyperpigmentation/recomedation_screen_pigmentation_three.dart';
-import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_allergic(3).dart';
-import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_three.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 import '../../../../my_theme.dart';
+import '../../question_and_value.dart';
 import '../../recommendetion_controller.dart';
+
 
 class RecomendationScreenPigmentationTwo extends StatefulWidget {
   const RecomendationScreenPigmentationTwo({
@@ -22,7 +21,7 @@ class RecomendationScreenPigmentationTwo extends StatefulWidget {
 }
 
 class _RecomendationScreenPigmentationTwoState extends State<RecomendationScreenPigmentationTwo> {
-  int selectedValue;
+  List<int> selectedValues = []; // To store selected values
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +36,7 @@ class _RecomendationScreenPigmentationTwoState extends State<RecomendationScreen
                 SizedBox(
                   height: 16,
                 ),
-                buildHeaderProgressbar(
-                    historyProgress: 1,
-                    goalProgress: 2/5),
+                buildHeaderProgressbar(historyProgress: 1, goalProgress: 2/3),
                 SizedBox(
                   height: 25,
                 ),
@@ -59,18 +56,22 @@ class _RecomendationScreenPigmentationTwoState extends State<RecomendationScreen
                 SizedBox(
                   height: 8,
                 ),
-                ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: RecommendationController()
-                    .questions.relatedQuestionsBasedOnPrimaryConcern.primaryConcerns['hyperpigmentation'].questions[1].options.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return buildQuestionContainer(
-                          ansText: RecommendationController()
-                              .questions
-                              .relatedQuestionsBasedOnPrimaryConcern.primaryConcerns['hyperpigmentation'].questions[1].options[index],
-                          selectedAns: index);
-                    }),
+                SizedBox(
+                  height: 290,
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: RecommendationController()
+                  .questions.relatedQuestionsBasedOnPrimaryConcern.primaryConcerns['hyperpigmentation'].questions[1].options.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return buildQuestionContainer(
+                            ansText: RecommendationController()
+                                .questions.relatedQuestionsBasedOnPrimaryConcern.primaryConcerns['hyperpigmentation'].questions[1].options[index],
+                            selectedAns: index,
+                          image: recommendationQuestionAndAns['related_questions_based_on_primary_concern']['hyperpigmentation']['questions'][1]['images'][index]
+                        );
+                      }),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Row(
@@ -93,7 +94,7 @@ class _RecomendationScreenPigmentationTwoState extends State<RecomendationScreen
         onPressed: () => Navigator.of(context).pop(),
       ),
       title: Text(
-        'Ai Recomendation',
+        'Ai Recommendation',
         style: TextStyle(fontSize: 16, color: MyTheme.white),
       ),
       elevation: 0.0,
@@ -101,7 +102,7 @@ class _RecomendationScreenPigmentationTwoState extends State<RecomendationScreen
     );
   }
 
-  buildCircularProgressIndicator({String titleText, double percent}) {
+  buildCircularProgressIndicator({String titleText, double percent, bool isHistory = false}) {
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -130,15 +131,12 @@ class _RecomendationScreenPigmentationTwoState extends State<RecomendationScreen
     );
   }
 
-  Row buildHeaderProgressbar({
-    double historyProgress,
-    double goalProgress,
-  }) {
+  Row buildHeaderProgressbar({double historyProgress, double goalProgress}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         buildCircularProgressIndicator(
-            titleText: 'Skin care History', percent: historyProgress),
+            titleText: 'Skin care History', percent: historyProgress, isHistory: true),
         SizedBox(
           width: 8,
         ),
@@ -162,7 +160,7 @@ class _RecomendationScreenPigmentationTwoState extends State<RecomendationScreen
         LinearPercentIndicator(
           width: MediaQuery.of(context).size.width * 1,
           lineHeight: 5.0,
-          percent: percent / 5,
+          percent: percent / 3,
           backgroundColor: Colors.grey[350],
           progressColor: MyTheme.secondary,
         ),
@@ -170,49 +168,57 @@ class _RecomendationScreenPigmentationTwoState extends State<RecomendationScreen
           height: 8,
         ),
         Text(
-          '${percent}/5',
+          '${percent}/3',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         )
       ],
     );
   }
 
-  buildQuestionContainer({int selectedAns, String ansText}) {
+  buildQuestionContainer({int selectedAns, String ansText, String image}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        width: MediaQuery.of(context).size.width,
-        height: 70,
+        padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
             border: Border.all(width: 2, color: Colors.grey[300])),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Consumer<RecommendationController>(
-                builder: (context, provider, child) {
-                  return Radio<int>(
-                    value: selectedAns,
-                    groupValue: selectedValue,
-                    onChanged: (value) {
-                      
-                      setState(() {
-                        selectedValue = value;
-                        print(value);
-                        
-                      });
-                    },
-                  );
-                }),
             SizedBox(
-              width: 8,
+              height: 200,
+              width: 200,
+              child: Image.asset(image, fit: BoxFit.fill),
             ),
-            SizedBox(
-              width: 250,
-              child: Text(
-                ansText,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            )
+            Row(
+              children: [
+                Consumer<RecommendationController>(
+                    builder: (context, provider, child) {
+                      return Checkbox(
+                          value: selectedValues.contains(selectedAns),
+                          onChanged: (value) {
+                            setState(() {
+                              if (value) {
+                                selectedValues.add(selectedAns);
+                              } else {
+                                selectedValues.remove(selectedAns);
+                              }
+                              print(selectedValues);
+                            });
+                          });
+                    }),
+                SizedBox(
+                  width: 8,
+                ),
+                SizedBox(
+                  //width: 250,
+                  child: Text(
+                    ansText,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),
@@ -224,15 +230,17 @@ class _RecomendationScreenPigmentationTwoState extends State<RecomendationScreen
         builder: (context, provider, child) {
           return InkWell(
             onTap: () {
-              if(selectedValue == null){
+              if (selectedValues.isEmpty) {
                 ToastComponent.showDialog(
                     'Ans is required', context,
                     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
                 return;
               }
-              provider.pigmentationTwoSelected = String.fromCharCode(65 + selectedValue).toLowerCase();
-              print(provider.pigmentationTwoSelected);
-              Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenPigmentationThree()));
+              provider.pigmentationTwoSelected = selectedValues
+                  .map((index) => String.fromCharCode(65 + index).toLowerCase())
+                  .toList();
+              print(provider.skinCareConcern);
+              Navigator.push(context, MaterialPageRoute(builder: (_) => RecomendationScreenPigmentationThree()));
             },
             child: Container(
               alignment: Alignment.center,

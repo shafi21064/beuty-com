@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/custom/toast_component.dart';
+import 'package:kirei/screens/recomendation_pages/screeen/skin_care_goal/recomedation_screen_goal_one.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,8 @@ class RecomendationScreenEight extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<RecomendationScreenEight> createState() => _RecomendationScreenEightState();
+  State<RecomendationScreenEight> createState() =>
+      _RecomendationScreenEightState();
 }
 
 class _RecomendationScreenEightState extends State<RecomendationScreenEight> {
@@ -28,66 +30,67 @@ class _RecomendationScreenEightState extends State<RecomendationScreenEight> {
       appBar: buildAppBar(context),
       body: Consumer<RecommendationController>(
           builder: (context, provider, child) {
-        return ListView(
-          physics: BouncingScrollPhysics(),
-          children: [
-            SizedBox(
-              height: 16,
-            ),
-            buildHeaderProgressbar(
-                historyProgress: .9,
-                goalProgress: 0),
-            SizedBox(
-              height: 25,
-            ),
-            buildLinearProgressbar(percent: 9),
-            SizedBox(
-              height: 25,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Center(
-                  child: Text(
-                RecommendationController()
-                    .questions
-                    .skincareHistoryQuestions
-                    .questions[7]
-                    .question,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              )),
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                //itemCount: QuestionnaireProvider().questions[0].skincareHistoryQuestions.questions[0].options.length,
-                itemCount: RecommendationController()
-                    .questions
-                    .skincareHistoryQuestions
-                    .questions[7]
-                    .options
-                    .length,
-                itemBuilder: (BuildContext context, int index) {
-                  return buildQuestionContainer(
-                      ansText: RecommendationController()
-                          .questions
-                          .skincareHistoryQuestions
-                          .questions[7]
-                          .options[index],
-                      selectedAns: index);
-                }),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [buildBackButton(), buildNextButton()],
-              ),
-            )
-          ],
-        );
-      }),
+            return ListView(
+              physics: BouncingScrollPhysics(),
+              children: [
+                SizedBox(
+                  height: 16,
+                ),
+                buildHeaderProgressbar(
+                    historyProgress: 1,
+                    goalProgress: 0),
+                SizedBox(
+                  height: 25,
+                ),
+                buildLinearProgressbar(percent: 9),
+                SizedBox(
+                  height: 25,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Center(
+                      child: Text(
+                        RecommendationController()
+                            .questions
+                            .skincareHistoryQuestions
+                            .questions[7]
+                            .question,
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      )),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    //itemCount: QuestionnaireProvider().questions[0].skincareHistoryQuestions.questions[0].options.length,
+                    itemCount: RecommendationController()
+                        .questions
+                        .skincareHistoryQuestions
+                        .questions[7]
+                        .options
+                        .length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return buildQuestionContainer(
+                          ansText: RecommendationController()
+                              .questions
+                              .skincareHistoryQuestions
+                              .questions[7]
+                              .options[index],
+                          selectedAns: index);
+                    }),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [buildBackButton(), buildNextButton()],
+                  ),
+                )
+              ],
+            );
+          }),
     );
   }
 
@@ -108,7 +111,7 @@ class _RecomendationScreenEightState extends State<RecomendationScreenEight> {
     );
   }
 
-  buildCircularProgressIndicator({String titleText, double percent}) {
+  buildCircularProgressIndicator({String titleText, double percent, bool isHistory}) {
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -125,8 +128,15 @@ class _RecomendationScreenEightState extends State<RecomendationScreenEight> {
           SizedBox(
             width: 8,
           ),
+          isHistory?
+          Container(height: 25,
+            width: 25,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, color: MyTheme.primary),
+            child: Icon(Icons.check, size: 15, color: MyTheme.white,),
+          ) :
           CircularPercentIndicator(
-            radius: 9,
+            radius: 10,
             lineWidth: 2.0,
             percent: percent,
             progressColor: MyTheme.primary,
@@ -145,12 +155,12 @@ class _RecomendationScreenEightState extends State<RecomendationScreenEight> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         buildCircularProgressIndicator(
-            titleText: 'Skin care History', percent: historyProgress),
+            titleText: 'Skin care History', percent: historyProgress, isHistory: true),
         SizedBox(
           width: 8,
         ),
         Container(
-          width: 9,
+          width: 10,
           height: 1,
           color: Colors.red,
         ),
@@ -158,7 +168,7 @@ class _RecomendationScreenEightState extends State<RecomendationScreenEight> {
           width: 8,
         ),
         buildCircularProgressIndicator(
-            titleText: 'Skin care Goal', percent: goalProgress),
+            titleText: 'Skin care Goal', percent: goalProgress, isHistory: false),
       ],
     );
   }
@@ -167,9 +177,12 @@ class _RecomendationScreenEightState extends State<RecomendationScreenEight> {
     return Column(
       children: [
         LinearPercentIndicator(
-          width: MediaQuery.of(context).size.width * 1,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width * 1,
           lineHeight: 5.0,
-          percent: percent / 10,
+          percent: percent / 9,
           backgroundColor: Colors.grey[350],
           progressColor: MyTheme.secondary,
         ),
@@ -177,7 +190,7 @@ class _RecomendationScreenEightState extends State<RecomendationScreenEight> {
           height: 8,
         ),
         Text(
-          '${percent}/10',
+          '${percent}/9',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         )
       ],
@@ -189,7 +202,10 @@ class _RecomendationScreenEightState extends State<RecomendationScreenEight> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16),
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
         height: 70,
         decoration: BoxDecoration(
             border: Border.all(width: 2, color: Colors.grey[300])),
@@ -197,22 +213,22 @@ class _RecomendationScreenEightState extends State<RecomendationScreenEight> {
           children: [
             Consumer<RecommendationController>(
                 builder: (context, provider, child) {
-              return Radio<int>(
-                value: selectedAns,
-                groupValue: selectedValue,
-                onChanged: (value) {
-                  setState(() {
-                    selectedValue = value;
-                    print(value);
-                    print(RecommendationController()
-                        .questions
-                        .skincareHistoryQuestions
-                        .questions[7]
-                        .options[selectedAns]);
-                  });
-                },
-              );
-            }),
+                  return Radio<int>(
+                    value: selectedAns,
+                    groupValue: selectedValue,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedValue = value;
+                        print(value);
+                        print(RecommendationController()
+                            .questions
+                            .skincareHistoryQuestions
+                            .questions[7]
+                            .options[selectedAns]);
+                      });
+                    },
+                  );
+                }),
             SizedBox(
               width: 8,
             ),
@@ -229,76 +245,78 @@ class _RecomendationScreenEightState extends State<RecomendationScreenEight> {
   buildNextButton() {
     return Consumer<RecommendationController>(
         builder: (context, provider, child) {
-      return InkWell(
-        onTap: () {
-          if(selectedValue == null){
-            ToastComponent.showDialog(
-                'Ans is required', context,
-                gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-            return;
-          }
-          provider.selectedSkinBurning = String.fromCharCode(65 + selectedValue).toLowerCase();
-          print(provider.selectedSkinBurning);
-          Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenNine()));
-        },
-        child: Container(
-          alignment: Alignment.center,
-          height: 50,
-          width: 120,
-          color: MyTheme.secondary,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'NEXT',
-                style: TextStyle(
-                    color: MyTheme.white, fontWeight: FontWeight.bold),
+          return InkWell(
+            onTap: () {
+              if (selectedValue == null) {
+                ToastComponent.showDialog(
+                    'Ans is required', context,
+                    gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+                return;
+              }
+              provider.selectedSkinBurning =
+                  String.fromCharCode(65 + selectedValue).toLowerCase();
+              print(provider.selectedSkinBurning);
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (_) => RecomendationScreenGoalOne()));
+            },
+            child: Container(
+              alignment: Alignment.center,
+              height: 50,
+              width: 120,
+              color: MyTheme.secondary,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'NEXT',
+                    style: TextStyle(
+                        color: MyTheme.white, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    width: 12,
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    size: 16,
+                    color: MyTheme.white,
+                  )
+                ],
               ),
-              SizedBox(
-                width: 12,
-              ),
-              Icon(
-                Icons.arrow_forward_ios,
-                size: 16,
-                color: MyTheme.white,
-              )
-            ],
-          ),
-        ),
-      );
-    });
+            ),
+          );
+        });
   }
 
   buildBackButton() {
     return Consumer<RecommendationController>(
         builder: (context, provider, child) {
-      return InkWell(
-        onTap: () => Navigator.pop(context),
-        child: Container(
-          alignment: Alignment.center,
-          height: 50,
-          width: 120,
-          color: MyTheme.white,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.arrow_back_ios_new,
-                size: 16,
-                color: MyTheme.secondary,
+          return InkWell(
+            onTap: () => Navigator.pop(context),
+            child: Container(
+              alignment: Alignment.center,
+              height: 50,
+              width: 120,
+              color: MyTheme.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.arrow_back_ios_new,
+                    size: 16,
+                    color: MyTheme.secondary,
+                  ),
+                  SizedBox(
+                    width: 12,
+                  ),
+                  Text(
+                    'BACK',
+                    style: TextStyle(
+                        color: MyTheme.secondary, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-              SizedBox(
-                width: 12,
-              ),
-              Text(
-                'BACK',
-                style: TextStyle(
-                    color: MyTheme.secondary, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ),
-      );
-    });
+            ),
+          );
+        });
   }
 }

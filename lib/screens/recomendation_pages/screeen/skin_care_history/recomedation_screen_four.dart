@@ -126,7 +126,7 @@ class _RecomendationScreenFourState extends State<RecomendationScreenFour> {
             width: 8,
           ),
           CircularPercentIndicator(
-            radius: 9,
+            radius: 10,
             lineWidth: 2.0,
             percent: percent,
             progressColor: MyTheme.primary,
@@ -150,7 +150,7 @@ class _RecomendationScreenFourState extends State<RecomendationScreenFour> {
           width: 8,
         ),
         Container(
-          width: 9,
+          width: 10,
           height: 1,
           color: Colors.red,
         ),
@@ -169,7 +169,7 @@ class _RecomendationScreenFourState extends State<RecomendationScreenFour> {
         LinearPercentIndicator(
           width: MediaQuery.of(context).size.width * 1,
           lineHeight: 5.0,
-          percent: percent / 10,
+          percent: percent / 9,
           backgroundColor: Colors.grey[350],
           progressColor: MyTheme.secondary,
         ),
@@ -177,7 +177,7 @@ class _RecomendationScreenFourState extends State<RecomendationScreenFour> {
           height: 8,
         ),
         Text(
-          '${percent}/10',
+          '${percent}/9',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         )
       ],

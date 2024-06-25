@@ -1,27 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kirei/custom/toast_component.dart';
-import 'package:kirei/screens/recomendation_pages/screeen/acne/recomedation_screen_acne_two.dart';
-import 'package:kirei/screens/recomendation_pages/screeen/blackheds/recomedation_screen_blackheads_two.dart';
-import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_allergic(3).dart';
-import 'package:kirei/screens/recomendation_pages/screeen/skin_care_history/recomedation_screen_three.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 import '../../../../my_theme.dart';
 import '../../recommendetion_controller.dart';
+import '../recommended_products.dart';
 
-class RecomendationScreenBlackHeads extends StatefulWidget {
-  const RecomendationScreenBlackHeads({
+class RecomendationScreenBlackHeadTwo extends StatefulWidget {
+  const RecomendationScreenBlackHeadTwo({
     Key key,
   }) : super(key: key);
 
   @override
-  State<RecomendationScreenBlackHeads> createState() => _RecomendationScreenBlackHeadsState();
+  State<RecomendationScreenBlackHeadTwo> createState() => _RecomendationScreenBlackHeadTwoState();
 }
 
-class _RecomendationScreenBlackHeadsState extends State<RecomendationScreenBlackHeads> {
+class _RecomendationScreenBlackHeadTwoState extends State<RecomendationScreenBlackHeadTwo> {
   int selectedValue;
 
   @override
@@ -39,21 +36,29 @@ class _RecomendationScreenBlackHeadsState extends State<RecomendationScreenBlack
                 ),
                 buildHeaderProgressbar(
                     historyProgress: 1,
-                    goalProgress: 1/3),
+                    goalProgress: 2/2),
                 SizedBox(
                   height: 25,
                 ),
-                buildLinearProgressbar(percent: 1),
+                buildLinearProgressbar(percent: 2),
                 SizedBox(
                   height: 25,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Center(
-                      child: Text(
-                        RecommendationController()
-                            .questions.relatedQuestionsBasedOnPrimaryConcern.primaryConcerns['blackheads_whiteheads'].questions[0].question,
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            width: 214,
+                              height: 160,
+                              child: Image.asset('assets/recommendation/aging_4.png')),
+                          Text(
+                            RecommendationController()
+                                .questions.relatedQuestionsBasedOnPrimaryConcern.primaryConcerns['blackheads_whiteheads'].questions[1].question,
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       )),
                 ),
                 SizedBox(
@@ -63,12 +68,12 @@ class _RecomendationScreenBlackHeadsState extends State<RecomendationScreenBlack
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: RecommendationController()
-                    .questions.relatedQuestionsBasedOnPrimaryConcern.primaryConcerns['blackheads_whiteheads'].questions[0].options.length,
+                    .questions.relatedQuestionsBasedOnPrimaryConcern.primaryConcerns['blackheads_whiteheads'].questions[1].options.length,
                     itemBuilder: (BuildContext context, int index) {
                       return buildQuestionContainer(
                           ansText: RecommendationController()
                               .questions
-                              .relatedQuestionsBasedOnPrimaryConcern.primaryConcerns['blackheads_whiteheads'].questions[0].options[index],
+                              .relatedQuestionsBasedOnPrimaryConcern.primaryConcerns['blackheads_whiteheads'].questions[1].options[index],
                           selectedAns: index);
                     }),
                 Padding(
@@ -101,7 +106,7 @@ class _RecomendationScreenBlackHeadsState extends State<RecomendationScreenBlack
     );
   }
 
-  buildCircularProgressIndicator({String titleText, double percent}) {
+  buildCircularProgressIndicator({String titleText, double percent, bool isHistory = false}) {
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -118,6 +123,13 @@ class _RecomendationScreenBlackHeadsState extends State<RecomendationScreenBlack
           SizedBox(
             width: 8,
           ),
+          isHistory?
+          Container(height: 25,
+            width: 25,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, color: MyTheme.primary),
+            child: Icon(Icons.check, size: 15, color: MyTheme.white,),
+          ) :
           CircularPercentIndicator(
             radius: 10,
             lineWidth: 2.0,
@@ -138,7 +150,7 @@ class _RecomendationScreenBlackHeadsState extends State<RecomendationScreenBlack
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         buildCircularProgressIndicator(
-            titleText: 'Skin care History', percent: historyProgress),
+            titleText: 'Skin care History', percent: historyProgress, isHistory: true),
         SizedBox(
           width: 8,
         ),
@@ -162,7 +174,7 @@ class _RecomendationScreenBlackHeadsState extends State<RecomendationScreenBlack
         LinearPercentIndicator(
           width: MediaQuery.of(context).size.width * 1,
           lineHeight: 5.0,
-          percent: percent / 3,
+          percent: percent / 2,
           backgroundColor: Colors.grey[350],
           progressColor: MyTheme.secondary,
         ),
@@ -170,7 +182,7 @@ class _RecomendationScreenBlackHeadsState extends State<RecomendationScreenBlack
           height: 8,
         ),
         Text(
-          '${percent}/3',
+          '${percent}/2',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         )
       ],
@@ -194,11 +206,11 @@ class _RecomendationScreenBlackHeadsState extends State<RecomendationScreenBlack
                     value: selectedAns,
                     groupValue: selectedValue,
                     onChanged: (value) {
-                      
+
                       setState(() {
                         selectedValue = value;
                         print(value);
-                        
+
                       });
                     },
                   );
@@ -223,16 +235,18 @@ class _RecomendationScreenBlackHeadsState extends State<RecomendationScreenBlack
     return Consumer<RecommendationController>(
         builder: (context, provider, child) {
           return InkWell(
-            onTap: () {
+            onTap: () async{
               if(selectedValue == null){
                 ToastComponent.showDialog(
                     'Ans is required', context,
                     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
                 return;
               }
-              provider.blackHeadsOneSelected = String.fromCharCode(65 + selectedValue).toLowerCase();
-              print(provider.blackHeadsOneSelected);
-              Navigator.push(context, MaterialPageRoute(builder: (_)=> RecomendationScreenBlackHeadsTwo()));
+              provider.blackHeadsTwoSelected = String.fromCharCode(65 + selectedValue).toLowerCase();
+              await provider.sendData();
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => RecommendedProducts()));
+              });
             },
             child: Container(
               alignment: Alignment.center,
