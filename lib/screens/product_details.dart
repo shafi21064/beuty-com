@@ -930,12 +930,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                     InkWell(
                       onTap: () {
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (context) {
-                        //   return ProductReviews(id: widget.slug);
-                        // })).then((value) {
-                        //   onPopped(value);
-                        // });
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return ProductReviews(id: widget.id);
+                        })).then((value) {
+                          onPopped(value);
+                        });
                       },
                       child: Container(
                         height: 40,
@@ -973,12 +973,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                     InkWell(
                       onTap: () {
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (context) {
-                        //   return ProductQuestions(id: widget.id);
-                        // })).then((value) {
-                        //   onPopped(value);
-                        // });
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return ProductQuestions(id: widget.id);
+                        })).then((value) {
+                          onPopped(value);
+                        });
                       },
                       child: Container(
                         height: 40,

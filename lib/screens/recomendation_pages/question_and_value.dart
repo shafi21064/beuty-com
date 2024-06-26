@@ -88,7 +88,8 @@ Map<String, dynamic> recommendationQuestionAndAns = {
         "question": "What is your skin type?",
         "options": [
           "Oily",
-          "Combination" "Oily to combination",
+          "Combination",
+          "Oily to combination",
           "Dry",
           "Normal",
           "I don't know"

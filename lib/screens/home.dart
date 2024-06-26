@@ -506,6 +506,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                                           id: suggestion
                                                                               .id,
                                                                         stock: suggestion.stock,
+                                                                        slug: suggestion.slug,
                                                                       );
                                                                     }))
                                                                 .then((value) {
