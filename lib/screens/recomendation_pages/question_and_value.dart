@@ -89,7 +89,7 @@ Map<String, dynamic> recommendationQuestionAndAns = {
         "options": [
           "Oily",
           "Combination",
-          "Oily to combination",
+          "Oily to Combination",
           "Dry",
           "Normal",
           "I don't know"

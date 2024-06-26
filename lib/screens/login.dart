@@ -837,7 +837,7 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         Visibility(
-                          //visible: !Platform.isAndroid,
+                          visible: !Platform.isAndroid,
                           child: Padding(
                             padding: const EdgeInsets.only(
                               top: 8.0,
