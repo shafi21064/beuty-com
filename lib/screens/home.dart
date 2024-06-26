@@ -1857,7 +1857,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             placeholder: 'assets/placeholder.png',
                             //placeholder: 'assets/placeholder.png',
                             image: i ?? '',
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                           ))),
                   Align(
                     alignment: Alignment.bottomCenter,
