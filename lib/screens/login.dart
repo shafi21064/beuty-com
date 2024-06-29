@@ -146,16 +146,17 @@ class _LoginState extends State<Login> {
   //   }
   // }
 
-  Future<void> signInWithFacebook() async {
-    final LoginResult result = await FacebookAuth.instance.login();
+  signInWithFacebook() async {
 
+    final LoginResult result = await FacebookAuth.instance.login();
+    LoginResponse loginResponse;
     if (result.status == LoginStatus.success) {
       final AccessToken accessToken = result.accessToken;
       final userData = await FacebookAuth.instance.getUserData();
 
       print('this is our facebook response ${userData}');
 
-      var loginResponse = AuthRepository().getSocialLoginResponse(
+      loginResponse = await AuthRepository().getSocialLoginResponse(
           "facebook",
           userData["name"].toString(),
           userData["email"].toString(),
@@ -163,10 +164,32 @@ class _LoginState extends State<Login> {
           access_token: accessToken.token);
 
       debugPrint('this is login response $loginResponse');
+
+      if (loginResponse.result == false) {
+        setState(() {
+          isLoading = false;
+        });
+        ToastComponent.showDialog(loginResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        ToastComponent.showDialog(loginResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        AuthHelper().setUserData(loginResponse);
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return Main();
+        }));
+      }
+
     } else {
       print(result.status);
       print(result.message);
     }
+
+
   }
 
   // onPressedFacebookLogin() async {
@@ -284,6 +307,9 @@ class _LoginState extends State<Login> {
       }
       GoogleSignIn().disconnect();
     } on Exception catch (e) {
+      setState(() {
+        isLoading = false;
+      });
       print("error is ....... $e");
       // TODO
     }
