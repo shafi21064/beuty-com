@@ -147,7 +147,6 @@ class _LoginState extends State<Login> {
   // }
 
   signInWithFacebook() async {
-
     final LoginResult result = await FacebookAuth.instance.login();
     LoginResponse loginResponse;
     if (result.status == LoginStatus.success) {
@@ -349,6 +348,7 @@ class _LoginState extends State<Login> {
   }
 ///////////////////////// Apple Log In /////////////////////////////////////////
   Future<UserCredential> onPressAppleLogin() async {
+    print('apple');
     try {
       final rawNonce = generateNonce();
       final nonce = sha256ofString(rawNonce);
@@ -358,12 +358,12 @@ class _LoginState extends State<Login> {
           AppleIDAuthorizationScopes.email,
           AppleIDAuthorizationScopes.fullName,
         ],
-        webAuthenticationOptions: WebAuthenticationOptions(
-          clientId: 'com.thetork.kirei.appleSignIn', // Replace with your Client ID
-          redirectUri: Uri.parse(
-            'https://com.thetork.kirei.firebaseapp.com/__/auth/handler', // Replace with your redirect URI
-          ),
-        ),
+        // webAuthenticationOptions: WebAuthenticationOptions(
+        //   clientId: '6502335026', // Replace with your Client ID
+        //   redirectUri: Uri.parse(
+        //     'https://com.thetork.kirei.firebaseapp.com/__/auth/handler', // Replace with your redirect URI
+        //   ),
+        // ),
         nonce: nonce,
       );
 
@@ -863,7 +863,7 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         Visibility(
-                          visible: !Platform.isAndroid,
+                          //visible: !Platform.isAndroid,
                           child: Padding(
                             padding: const EdgeInsets.only(
                               top: 8.0,
