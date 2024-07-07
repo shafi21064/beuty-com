@@ -324,18 +324,18 @@ class _CheckoutState extends State<Checkout> {
 
 
 
-    if (_grandTotalValue == 0.00) {
-      ToastComponent.showDialog(
-          AppLocalizations.of(context).common_nothing_to_pay, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-      return;
-    }
-
     if (_selected_payment_method == "") {
       ToastComponent.showDialog(
           AppLocalizations.of(context).common_payment_choice_warning, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
+    }
+
+    if(_selected_payment_method == "bkash" && _grandTotalValue < 1 || _selected_payment_method == "ssl" && _grandTotalValue < 10.00){
+        ToastComponent.showDialog(
+            "Minimum amount not reached. Please select cash on delivery", context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        return;
     }
 
 

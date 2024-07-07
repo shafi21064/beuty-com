@@ -128,8 +128,8 @@ class CartState extends State<Cart> {
   onQuantityIncrease(
       seller_index, item_index, VoidCallback increaseItem) async {
     print('working');
-    if (_shopList[seller_index].cart_items[item_index].quantity <
-        _shopList[seller_index].cart_items[item_index].upper_limit) {
+    // if (_shopList[seller_index].cart_items[item_index].quantity <
+    //     _shopList[seller_index].cart_items[item_index].upper_limit) {
       _shopList[seller_index].cart_items[item_index].quantity++;
       getSetCartTotal();
 
@@ -143,18 +143,18 @@ class CartState extends State<Cart> {
             context,
             gravity: Toast.CENTER,
             duration: Toast.LENGTH_LONG);
-      } else {
+      }
+      else {
         increaseItem();
         setState(() {});
       }
 
-    } else {
-      ToastComponent.showDialog(
-          "${AppLocalizations.of(context).cart_screen_cannot_order_more_than} ${_shopList[seller_index].cart_items[item_index].upper_limit} ${AppLocalizations.of(context).cart_screen_items_of_this}",
-          context,
-          gravity: Toast.CENTER,
-          duration: Toast.LENGTH_LONG);
-    }
+      // ToastComponent.showDialog(
+      //     "${AppLocalizations.of(context).cart_screen_cannot_order_more_than} ${_shopList[seller_index].cart_items[item_index].upper_limit} ${AppLocalizations.of(context).cart_screen_items_of_this}",
+      //     context,
+      //     gravity: Toast.CENTER,
+      //     duration: Toast.LENGTH_LONG);
+
   }
 
   onQuantityDecrease(seller_index, item_index, VoidCallback decreaseCartItem) {
